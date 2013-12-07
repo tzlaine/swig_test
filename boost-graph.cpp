@@ -335,11 +335,11 @@ bool operator== (hex_coord lhs, hex_coord rhs)
 
 
 enum hex_direction {
-    above,
-    below,
-    above_left,
     above_right,
+    above,
+    above_left,
     below_left,
+    below,
     below_right
 };
 
@@ -367,11 +367,11 @@ hex_coord adjacent_hex_coord (hex_coord hc, hex_direction hd)
 {
     typedef hex_coord (*fn) (hex_coord hc);
     fn fns[6] = {
-        hex_above,
-        hex_below,
-        hex_above_left,
         hex_above_right,
+        hex_above,
+        hex_above_left,
         hex_below_left,
+        hex_below,
         hex_below_right
     };
     return fns[hd](hc);
@@ -410,7 +410,7 @@ void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_heigh
         for (unsigned int x = 0; x < map_width; ++x) {
             for (unsigned int y = 0; y < map_height; ++y, ++i) {
                 hex_coord coord(x, y);
-                for (hex_direction d = hex_direction(0); d < hex_direction(6); d = hex_direction(d + 1)) {
+                for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, map_width, map_height)) {
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
