@@ -41,16 +41,16 @@ namespace graph {
 
         struct found_destination {};
 
-        short_circuiting_visitor (int dest_system) : destination_system (dest_system) {}
+        short_circuiting_visitor (int dest) : destination (dest) {}
 
         template <class Vertex, class Graph>
         void operator() (Vertex u, Graph& g)
         {
-            if (static_cast<int>(u) == destination_system)
+            if (static_cast<int>(u) == destination)
                 throw found_destination();
         }
 
-        const int destination_system;
+        const int destination;
     };
 
     template <class Graph, class Edge, class Vertex>
@@ -114,10 +114,7 @@ namespace graph {
         void finish_vertex (const Vertex& e, const Graph& g) {}
     };
 
-    ////////////////////////////////////////////////////////////////
-    // templated implementations of Universe graph search methods //
-    ////////////////////////////////////////////////////////////////
-    struct vertex_system_id_t {typedef boost::vertex_property_tag kind;}; ///< a system graph property map type
+    struct vertex_hex_id_t {typedef boost::vertex_property_tag kind;};
 
 
 #if 0
@@ -290,7 +287,7 @@ namespace graph {
 #endif
 
     typedef boost::property<
-        vertex_system_id_t,
+        vertex_hex_id_t,
         int,
         boost::property<boost::vertex_index_t, int>
     > vertex_property_t;
@@ -308,8 +305,8 @@ namespace graph {
         edge_property_t
     > graph;
 
-    typedef boost::property_map<graph, vertex_system_id_t>::const_type const_system_id_property_map;
-    typedef boost::property_map<graph, vertex_system_id_t>::type system_id_property_map;
+    typedef boost::property_map<graph, vertex_hex_id_t>::const_type const_hex_id_property_map;
+    typedef boost::property_map<graph, vertex_hex_id_t>::type hex_id_property_map;
 
     typedef boost::property_map<graph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap; // TODO
     typedef boost::property_map<graph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
@@ -391,8 +388,8 @@ unsigned int hex_id (hex_coord hc)
 
 void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_height)
 {
-    graph::system_id_property_map sys_id_property_map =
-        boost::get(graph::vertex_system_id_t(), g);
+    graph::hex_id_property_map sys_id_property_map =
+        boost::get(graph::vertex_hex_id_t(), g);
 
     graph::EdgeWeightPropertyMap edge_weight_map =
         boost::get(boost::edge_weight, g);
