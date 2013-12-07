@@ -316,6 +316,11 @@ namespace graph {
 }
 
 
+struct map
+{
+    unsigned int width;
+    unsigned int height;
+};
 
 struct hex_coord
 {
@@ -378,15 +383,15 @@ hex_coord adjacent_hex_coord (hex_coord hc, hex_direction hd)
 }
 
 
-bool on_map (hex_coord hc, unsigned int map_width, unsigned int map_height)
-{ return hc.x < map_width && hc.y < map_height; }
+bool on_map (hex_coord hc, map m)
+{ return hc.x < m.width && hc.y < m.height; }
 
 
 unsigned int hex_id (hex_coord hc)
 { return hc.x * 100 + hc.y; }
 
 
-void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_height)
+void init_graph (graph::graph& g, map m)
 {
     graph::hex_id_property_map sys_id_property_map =
         boost::get(graph::vertex_hex_id_t(), g);
@@ -396,8 +401,8 @@ void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_heigh
 
     {
         unsigned int i = 0;
-        for (unsigned int x = 0; x < map_width; ++x) {
-            for (unsigned int y = 0; y < map_height; ++y, ++i) {
+        for (unsigned int x = 0; x < m.width; ++x) {
+            for (unsigned int y = 0; y < m.height; ++y, ++i) {
                 unsigned int id = hex_id(hex_coord(x, y));
                 boost::add_vertex(g);
                 sys_id_property_map[i] = id;
@@ -407,12 +412,12 @@ void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_heigh
 
     {
         unsigned int i = 0;
-        for (unsigned int x = 0; x < map_width; ++x) {
-            for (unsigned int y = 0; y < map_height; ++y, ++i) {
+        for (unsigned int x = 0; x < m.width; ++x) {
+            for (unsigned int y = 0; y < m.height; ++y, ++i) {
                 hex_coord coord(x, y);
                 for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
-                    if (on_map(adjacent_coord, map_width, map_height)) {
+                    if (on_map(adjacent_coord, m)) {
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
                             boost::add_edge(i, hex_id(adjacent_coord), g);
                         edge_weight_map[add_edge_result.first] = 1.0; // TODO
@@ -427,7 +432,8 @@ void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_heigh
 int main ()
 {
     graph::graph g;
-    init_graph(g, 150, 24);
+    map m = {150, 24};
+    init_graph(g, m);
     std::cerr << "hello, graph!\n";
     return 0;
 }
