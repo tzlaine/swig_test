@@ -296,11 +296,9 @@ namespace graph {
 #endif
 
 }
-using namespace graph;  // to keep GCC 4.2 on OSX happy
 
-/////////////////////////////////////////////
-// struct GraphImpl
-/////////////////////////////////////////////
+using namespace graph; // TODO
+
 struct GraphImpl
 {
     typedef boost::property<
@@ -314,10 +312,6 @@ struct GraphImpl
         double
     > edge_property_t;
 
-    // declare main graph types, including properties declared above
-    // could add boost::disallow_parallel_edge_tag GraphProperty but it doesn't
-    // work for vecS vector-based lists and parallel edges can be avoided while
-    // creating the graph by filtering the edges to be added
     typedef boost::adjacency_list<
         boost::vecS,
         boost::vecS,
@@ -326,108 +320,17 @@ struct GraphImpl
         edge_property_t
     > SystemGraph;
 
-    // declare property map types for properties declared above
-    typedef boost::property_map<SystemGraph, vertex_system_id_t>::const_type        ConstSystemIDPropertyMap;
-    typedef boost::property_map<SystemGraph, vertex_system_id_t>::type              SystemIDPropertyMap;
-    typedef boost::property_map<SystemGraph, boost::vertex_index_t>::const_type     ConstIndexPropertyMap;
-    typedef boost::property_map<SystemGraph, boost::vertex_index_t>::type           IndexPropertyMap;
-    typedef boost::property_map<SystemGraph, boost::edge_weight_t>::const_type      ConstEdgeWeightPropertyMap;
-    typedef boost::property_map<SystemGraph, boost::edge_weight_t>::type            EdgeWeightPropertyMap;
+    typedef boost::property_map<SystemGraph, vertex_system_id_t>::const_type ConstSystemIDPropertyMap;
+    typedef boost::property_map<SystemGraph, vertex_system_id_t>::type SystemIDPropertyMap;
+    typedef boost::property_map<SystemGraph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap;
+    typedef boost::property_map<SystemGraph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
 
     typedef boost::graph_traits<GraphImpl::SystemGraph>::edge_descriptor EdgeDescriptor;
 
-    SystemGraph system_graph; ///< a graph in which the systems are vertices and the starlanes are edges
+    SystemGraph system_graph;
 };
 
 
-#if 0
-void Universe::InitializeSystemGraph(int for_empire_id) {
-    typedef boost::graph_traits<GraphImpl::SystemGraph>::edge_descriptor EdgeDescriptor;
-
-    for (int i = static_cast<int>(boost::num_vertices(m_graph_impl->system_graph)) - 1; i >= 0; --i) {
-        boost::clear_vertex(i, m_graph_impl->system_graph);
-        boost::remove_vertex(i, m_graph_impl->system_graph);
-    }
-
-    std::vector<int> system_ids = ::Objects().FindObjectIDs<System>();
-    //Logger().debugStream() << "InitializeSystemGraph(" << for_empire_id << ") system_ids: (" << system_ids.size() << ")";
-    //for (std::vector<int>::const_iterator it = system_ids.begin(); it != system_ids.end(); ++it)
-    //    Logger().debugStream() << " ... " << *it;
-
-    GraphImpl::SystemIDPropertyMap sys_id_property_map =
-        boost::get(vertex_system_id_t(), m_graph_impl->system_graph);
-
-    GraphImpl::EdgeWeightPropertyMap edge_weight_map =
-        boost::get(boost::edge_weight, m_graph_impl->system_graph);
-
-    std::map<int, int> system_id_graph_index_reverse_lookup_map;    // key is system ID, value is index in m_graph_impl->system_graph of system's vertex
-
-    for (int i = 0; i < static_cast<int>(system_ids.size()); ++i) {
-        // add a vertex to the graph for this system, and assign it the system's universe ID as a property
-        boost::add_vertex(m_graph_impl->system_graph);
-        int system_id = system_ids[i];
-        sys_id_property_map[i] = system_id;
-        // add record of index in m_graph_impl->system_graph of this system
-        system_id_graph_index_reverse_lookup_map[system_id] = i;
-    }
-
-    m_system_distances.resize(system_ids.size(), system_ids.size());
-    for (int i = 0; i < static_cast<int>(system_ids.size()); ++i) {
-        int system1_id = system_ids[i];
-        TemporaryPtr<const System> system1 = GetEmpireKnownSystem(system1_id, for_empire_id);
-
-        m_system_id_to_graph_index[system1_id] = i;
-
-        // add edges and edge weights
-        for (System::const_lane_iterator it = system1->begin_lanes(); it != system1->end_lanes(); ++it) {
-            // get id in universe of system at other end of lane
-            const int lane_dest_id = it->first;
-            // skip null lanes and only add edges in one direction, to avoid
-            // duplicating edges ( since this is an undirected graph, A->B
-            // duplicates B->A )
-            if (lane_dest_id >= system1_id)
-                continue;
-
-            // get m_graph_impl->system_graph index for this system
-            std::map<int, int>::iterator reverse_lookup_map_it = system_id_graph_index_reverse_lookup_map.find(lane_dest_id);
-            if (reverse_lookup_map_it == system_id_graph_index_reverse_lookup_map.end())
-                continue;   // couldn't find destination system id in reverse lookup map; don't add to graph
-            int lane_dest_graph_index = reverse_lookup_map_it->second;
-
-            std::pair<EdgeDescriptor, bool> add_edge_result =
-                boost::add_edge(i, lane_dest_graph_index, m_graph_impl->system_graph);
-
-            if (add_edge_result.second) {                   // if this is a non-duplicate starlane or wormhole
-                if (it->second) {                               // if this is a wormhole
-                    edge_weight_map[add_edge_result.first] = 0.1;   // arbitrary small distance
-                } else {                                        // if this is a starlane
-                    TemporaryPtr<const UniverseObject> system2 = GetUniverseObject(it->first);
-                    double x_dist = system2->X() - system1->X();
-                    double y_dist = system2->Y() - system1->Y();
-                    edge_weight_map[add_edge_result.first] = std::sqrt(x_dist*x_dist + y_dist*y_dist);
-                    //std::cout << "edge_weight_map " << system1_id << " to " << lane_dest_id << ": " << edge_weight_map[add_edge_result.first] << std::endl;
-                }
-            }
-        }
-
-        // define the straight-line system distances for this system
-        for (int j = 0; j < i; ++j) {
-            int system2_id = system_ids[j];
-            TemporaryPtr<const UniverseObject> system2 = GetUniverseObject(system2_id);
-            double x_dist = system2->X() - system1->X();
-            double y_dist = system2->Y() - system1->Y();
-            m_system_distances[i][j] = std::sqrt(x_dist*x_dist + y_dist*y_dist);
-        }
-        m_system_distances[i][i] = 0.0;
-    }
-
-    m_system_jumps.resize(system_ids.size(), system_ids.size());
-    constant_property<EdgeDescriptor, short> jump_weight = { 1 };
-    boost::johnson_all_pairs_shortest_paths(m_graph_impl->system_graph, m_system_jumps, boost::weight_map(jump_weight));
-
-    UpdateEmpireVisibilityFilteredSystemGraphs(for_empire_id);
-}
-#endif
 
 
 struct hex_coord
