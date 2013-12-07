@@ -4,6 +4,8 @@
 #include <boost/graph/filtered_graph.hpp>
 #include <boost/graph/johnson_all_pairs_shortest.hpp>
 
+#include <boost/array.hpp>
+
 #if 1
 #include <iostream>
 #endif
@@ -345,7 +347,8 @@ enum hex_direction {
     above_left,
     below_left,
     below,
-    below_right
+    below_right,
+    hex_directions
 };
 
 
@@ -389,6 +392,56 @@ bool on_map (hex_coord hc, map m)
 
 unsigned int hex_id (hex_coord hc)
 { return hc.x * 100 + hc.y; }
+
+
+// Static container for hex ids within R=2 of a central hex.
+struct neighbors
+{
+    typedef boost::array<hex_coord, 19> data_type;
+    typedef data_type::const_iterator iterator;
+
+    neighbors () : size (0) {}
+
+    std::size_t size;
+    data_type hexes;
+};
+
+neighbors::iterator begin (neighbors n)
+{ return n.hexes.begin(); }
+
+neighbors::iterator end (neighbors n)
+{ return n.hexes.begin() + n.size; }
+
+
+neighbors adjacent_hex_coords (hex_coord hc, map m, unsigned int r = 1)
+{
+    assert(r == 1 || r == 2);
+    neighbors retval;
+    if (on_map(hc, m)) {
+        retval.hexes[retval.size++] = hc;        
+        for (hex_direction d = above_right;
+             d < hex_directions;
+             d = hex_direction(d + 1)) {
+            hex_coord r1 = adjacent_hex_coord(hc, d);
+            if (on_map(r1, m)) {
+                retval.hexes[retval.size++] = r1;
+
+                {
+                    hex_coord r2 = adjacent_hex_coord(r1, d);
+                    if (on_map(r2, m))
+                        retval.hexes[retval.size++] = r2;
+                }
+
+                {
+                    hex_coord r2 = adjacent_hex_coord(r1, hex_direction(d + 1));
+                    if (on_map(r2, m))
+                        retval.hexes[retval.size++] = r2;
+                }
+            }
+        }
+    }
+    return retval;
+}
 
 
 void init_graph (graph::graph& g, map m)
