@@ -35,89 +35,83 @@ namespace boost {
 
 namespace graph {
 
-    /** Used to short-circuit the use of BFS (breadth-first search) or
-      * Dijkstra's algorithm for pathfinding when it finds the desired
-      * destination system. */
-    struct PathFindingShortCircuitingVisitor : public boost::base_visitor<PathFindingShortCircuitingVisitor>
+    struct short_circuiting_visitor : public boost::base_visitor<short_circuiting_visitor>
     {
         typedef boost::on_finish_vertex event_filter;
 
-        struct FoundDestination {}; // exception type thrown when destination is found
+        struct found_destination {};
 
-        PathFindingShortCircuitingVisitor(int dest_system) : destination_system(dest_system) {}
+        short_circuiting_visitor (int dest_system) : destination_system (dest_system) {}
+
         template <class Vertex, class Graph>
-        void operator()(Vertex u, Graph& g)
+        void operator() (Vertex u, Graph& g)
         {
             if (static_cast<int>(u) == destination_system)
-                throw FoundDestination();
+                throw found_destination();
         }
+
         const int destination_system;
     };
 
-    /** Complete BFS visitor implementing:
-      *  - predecessor recording
-      *  - short-circuit exit on found match
-      *  - maximum search depth 
-      */
     template <class Graph, class Edge, class Vertex>
-    class BFSVisitorImpl
+    class bfs_visitor
     {
     public:
-        class FoundDestination {}; 
-        class ReachedDepthLimit {};
+        class found_destination {}; 
+        class reached_depth_limit {};
 
     private:
         Vertex m_marker;
         Vertex m_stop;
         Vertex m_source;
-        Vertex * m_predecessors;
+        Vertex* m_predecessors;
         int m_levels_remaining;
         bool m_level_complete;
 
     public:
-        BFSVisitorImpl(const Vertex& start, const Vertex& stop, Vertex predecessors[], int max_depth)
-            : m_marker(start),
-              m_stop(stop),
-              m_source(start),
-              m_predecessors(predecessors),
-              m_levels_remaining(max_depth),
-              m_level_complete(false)
-        {}
+        bfs_visitor (const Vertex& start, const Vertex& stop, Vertex predecessors[], int max_depth) :
+            m_marker (start),
+            m_stop (stop),
+            m_source (start),
+            m_predecessors (predecessors),
+            m_levels_remaining (max_depth),
+            m_level_complete (false)
+            {}
 
-        void initialize_vertex(const Vertex& v, const Graph& g)
-        {}
+        void initialize_vertex (const Vertex& v, const Graph& g)
+            {}
 
-        void discover_vertex(const Vertex& v, const Graph& g) {
-            m_predecessors[static_cast<int>(v)] = m_source;
+        void discover_vertex (const Vertex& v, const Graph& g)
+            {
+                m_predecessors[static_cast<int>(v)] = m_source;
 
-            if (v == m_stop)
-                throw FoundDestination();
+                if (v == m_stop)
+                    throw found_destination();
 
-            if (m_level_complete) {
-                m_marker = v;
-                m_level_complete = false;
+                if (m_level_complete) {
+                    m_marker = v;
+                    m_level_complete = false;
+                }
             }
-        }
 
-        void examine_vertex(const Vertex& v, const Graph& g) {
-            if (v == m_marker) {
-                if (!m_levels_remaining)
-                    throw ReachedDepthLimit();
-                m_levels_remaining--;
-                m_level_complete = true;
+        void examine_vertex (const Vertex& v, const Graph& g)
+            {
+                if (v == m_marker) {
+                    if (!m_levels_remaining)
+                        throw reached_depth_limit();
+                    m_levels_remaining--;
+                    m_level_complete = true;
+                }
+
+                m_source = v; // avoid re-calculating source from edge
             }
-            
-            m_source = v; // avoid re-calculating source from edge
-        }
 
-        void examine_edge(const Edge& e, const Graph& g) {}
-        void tree_edge(const Edge& e, const Graph& g) {}    // wait till target is calculated
-
-
-        void non_tree_edge(const Edge& e, const Graph& g) {}
-        void gray_target(const Edge& e, const Graph& g) {}
-        void black_target(const Edge& e, const Graph& g) {}
-        void finish_vertex(const Vertex& e, const Graph& g) {}
+        void examine_edge (const Edge& e, const Graph& g) {}
+        void tree_edge (const Edge& e, const Graph& g) {}
+        void non_tree_edge (const Edge& e, const Graph& g) {}
+        void gray_target (const Edge& e, const Graph& g) {}
+        void black_target (const Edge& e, const Graph& g) {}
+        void finish_vertex (const Vertex& e, const Graph& g) {}
     };
 
     ////////////////////////////////////////////////////////////////
@@ -182,8 +176,8 @@ namespace graph {
         try {
             boost::dijkstra_shortest_paths(graph, system1_index, &predecessors[0], &distances[0], edge_weight_map, index_map, 
                                            std::less<double>(), std::plus<double>(), std::numeric_limits<int>::max(), 0, 
-                                           boost::make_dijkstra_visitor(PathFindingShortCircuitingVisitor(system2_index)));
-        } catch (const PathFindingShortCircuitingVisitor::FoundDestination&) {
+                                           boost::make_dijkstra_visitor(short_circuiting_visitor(system2_index)));
+        } catch (const short_circuiting_visitor::found_destination&) {
             // catching this just means that the destination was found, and so the algorithm was exited early, via exception
         }
 
@@ -244,17 +238,17 @@ namespace graph {
 
 
         // do the actual path finding using verbose boost magic...
-        typedef BFSVisitorImpl<Graph, typename boost::graph_traits<Graph>::edge_descriptor, int> BFSVisitor;
+        typedef bfs_visitor<Graph, typename boost::graph_traits<Graph>::edge_descriptor, int> BFSVisitor;
         try {
             boost::queue<int> buf;
             std::vector<int> colors(boost::num_vertices(graph));
 
             BFSVisitor bfsVisitor(system1_index, system2_index, &predecessors[0], max_jumps);
             boost::breadth_first_search(graph, system1_index, buf, bfsVisitor, &colors[0]);
-        } catch (const typename BFSVisitor::ReachedDepthLimit&) {
+        } catch (const typename BFSVisitor::reached_depth_limit&) {
             // catching this means the algorithm explored the neighborhood until max_jumps and didn't find anything
             return std::make_pair(std::list<int>(), -1);
-        } catch (const typename BFSVisitor::FoundDestination&) {
+        } catch (const typename BFSVisitor::found_destination&) {
             // catching this just means that the destination was found, and so the algorithm was exited early, via exception
         }
 
@@ -295,12 +289,6 @@ namespace graph {
     }
 #endif
 
-}
-
-using namespace graph; // TODO
-
-struct GraphImpl
-{
     typedef boost::property<
         vertex_system_id_t,
         int,
@@ -318,18 +306,17 @@ struct GraphImpl
         boost::undirectedS,
         vertex_property_t,
         edge_property_t
-    > SystemGraph;
+    > graph;
 
-    typedef boost::property_map<SystemGraph, vertex_system_id_t>::const_type ConstSystemIDPropertyMap;
-    typedef boost::property_map<SystemGraph, vertex_system_id_t>::type SystemIDPropertyMap;
-    typedef boost::property_map<SystemGraph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap;
-    typedef boost::property_map<SystemGraph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
+    typedef boost::property_map<graph, vertex_system_id_t>::const_type const_system_id_property_map;
+    typedef boost::property_map<graph, vertex_system_id_t>::type system_id_property_map;
 
-    typedef boost::graph_traits<GraphImpl::SystemGraph>::edge_descriptor EdgeDescriptor;
+    typedef boost::property_map<graph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap; // TODO
+    typedef boost::property_map<graph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
 
-    SystemGraph system_graph;
-};
+    typedef boost::graph_traits<graph>::edge_descriptor edge_descriptor;
 
+}
 
 
 
@@ -402,20 +389,20 @@ unsigned int hex_id (hex_coord hc)
 { return hc.x * 100 + hc.y; }
 
 
-void init_graph (GraphImpl& graph, unsigned int map_width, unsigned int map_height)
+void init_graph (graph::graph& g, unsigned int map_width, unsigned int map_height)
 {
-    GraphImpl::SystemIDPropertyMap sys_id_property_map =
-        boost::get(vertex_system_id_t(), graph.system_graph);
+    graph::system_id_property_map sys_id_property_map =
+        boost::get(graph::vertex_system_id_t(), g);
 
-    GraphImpl::EdgeWeightPropertyMap edge_weight_map =
-        boost::get(boost::edge_weight, graph.system_graph);
+    graph::EdgeWeightPropertyMap edge_weight_map =
+        boost::get(boost::edge_weight, g);
 
     {
         unsigned int i = 0;
         for (unsigned int x = 0; x < map_width; ++x) {
             for (unsigned int y = 0; y < map_height; ++y, ++i) {
                 unsigned int id = hex_id(hex_coord(x, y));
-                boost::add_vertex(graph.system_graph);
+                boost::add_vertex(g);
                 sys_id_property_map[i] = id;
             }
         }
@@ -429,8 +416,8 @@ void init_graph (GraphImpl& graph, unsigned int map_width, unsigned int map_heig
                 for (hex_direction d = hex_direction(0); d < hex_direction(6); d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, map_width, map_height)) {
-                        std::pair<GraphImpl::EdgeDescriptor, bool> add_edge_result =
-                            boost::add_edge(i, hex_id(adjacent_coord), graph.system_graph);
+                        std::pair<graph::edge_descriptor, bool> add_edge_result =
+                            boost::add_edge(i, hex_id(adjacent_coord), g);
                         edge_weight_map[add_edge_result.first] = 1.0; // TODO
                     }
                 }
@@ -442,8 +429,8 @@ void init_graph (GraphImpl& graph, unsigned int map_width, unsigned int map_heig
 #if 1
 int main ()
 {
-    GraphImpl graph;
-    init_graph(graph, 150, 24);
+    graph::graph g;
+    init_graph(g, 150, 24);
     std::cerr << "hello, graph!\n";
     return 0;
 }
