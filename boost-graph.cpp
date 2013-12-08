@@ -6,6 +6,11 @@
 
 #include <boost/array.hpp>
 
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+#include <fstream>
+
 #if 1
 #include <iostream>
 #endif
@@ -481,11 +486,25 @@ void init_graph (graph::graph& g, map m)
     }
 }
 
+map read_map ()
+{
+    std::ifstream ifs("map.json");
+    boost::property_tree::ptree pt;
+    boost::property_tree::json_parser::read_json(ifs, pt);
+
+#if 1
+    boost::property_tree::json_parser::write_json(std::cout, pt);
+#endif
+
+    map retval = {61, 19};
+    return retval;
+}
+
 #if 1
 int main ()
 {
     graph::graph g;
-    map m = {150, 24};
+    map m = read_map();
     init_graph(g, m);
     std::cerr << "hello, graph!\n";
     return 0;
