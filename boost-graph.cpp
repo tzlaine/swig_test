@@ -361,7 +361,6 @@ struct map
             coord (),
             owner (0),
             feature (none),
-            neutral_zone (false),
             num_neutral_zone_borders (0),
             neutral_zone_bordering ()
             {}
@@ -369,7 +368,6 @@ struct map
         hex_coord coord;
         unsigned int owner;
         feature_ feature;
-        bool neutral_zone;
         unsigned int num_neutral_zone_borders;
         unsigned int neutral_zone_bordering[3];
     };
@@ -535,6 +533,32 @@ void init_graph (graph::graph& g, map m)
     }
 }
 
+hex_coord hex_string_to_hex_coord (std::string str)
+{
+    const unsigned int hex_id = boost::lexical_cast<unsigned int>(
+        str[0] == '0' ? str.substr(1, 3) : str
+    );
+    unsigned int hex_x = hex_id / 100 - 1;
+    unsigned int hex_y = hex_id % 100 - 1;
+    return hex_coord(hex_x, hex_y);
+}
+
+map::feature_ feature_string_to_feature (std::string str)
+{
+    map::feature_ retval = map::none;
+    if (str == "BATS")
+        retval = map::bats;
+    else if (str == "SB")
+        retval = map::sb;
+    else if (str == "MIN")
+        retval = map::min;
+    else if (str == "MAJ")
+        retval = map::maj;
+    else if (str != "")
+        throw std::runtime_error("Invalid hex feature \"" + str + "\" found in map.json");
+    return retval;
+}
+
 map read_map ()
 {
     map retval;
@@ -552,8 +576,33 @@ map read_map ()
 
     const boost::property_tree::ptree& zones = pt.get_child("zones");
     for (const auto& zone : zones) {
-        if (zone.first == "Neutral Zone") {           
-            // TODO
+        if (zone.first == "Neutral Zone") {
+            std::map<unsigned int, std::string> owned_hexes;
+            const boost::property_tree::ptree& owned_hexes_ = zone.second.get_child("owned hexes");
+            for (const auto& owned_hex : owned_hexes_) {
+                owned_hexes[hex_id(hex_string_to_hex_coord(owned_hex.first))] = owned_hex.second.data(); // TODO: Convert this to an owner ID.
+            }
+
+            std::map<unsigned int, map::feature_> planets;
+            const boost::property_tree::ptree& planets_ = zone.second.get_child("planets");
+            for (const auto& planet : planets_) {
+                planets[hex_id(hex_string_to_hex_coord(planet.first))] = feature_string_to_feature(planet.second.data());
+            }
+
+            const boost::property_tree::ptree& hexes = zone.second.get_child("hexes");
+            for (const auto& hex : hexes) {
+                hex_coord hc = hex_string_to_hex_coord(hex.second.data());
+
+                assert(hc.x + hc.y * retval.width < retval.hexes.size());
+                map::hex& map_hex = retval.hexes[hc.x + hc.y * retval.width];
+
+                if (map_hex.coord != hex_coord())
+                    throw std::runtime_error("Duplicate definition of hex " + hex.second.data());
+
+                map_hex.coord = hc;
+                map_hex.owner = 0;
+                map_hex.feature = planets[hex_id(hc)];
+            }
         } else {
             unsigned int nation_id = retval.nations.size() + 1; // 0 reserved for neutral zone
             retval.nations.push_back(std::make_pair(nation_id, zone.first));
@@ -562,34 +611,18 @@ map read_map ()
             for (const auto& province : provinces) {
                 map::province map_province;
                 for (const auto& hex : province.second) {
-                    const unsigned int hex_id = boost::lexical_cast<unsigned int>(
-                        hex.first[0] == '0' ? hex.first.substr(1, 3) : hex.first
-                    );
-                    map_province.hexes.push_back(hex_id);
+                    hex_coord hc = hex_string_to_hex_coord(hex.first);
+                    map_province.hexes.push_back(hex_id(hc));
 
-                    unsigned int hex_x = hex_id / 100 - 1;
-                    unsigned int hex_y = hex_id % 100 - 1;
-
-                    assert(hex_x + hex_y * retval.width < retval.hexes.size());
-                    map::hex& map_hex = retval.hexes[hex_x + hex_y * retval.width];
+                    assert(hc.x + hc.y * retval.width < retval.hexes.size());
+                    map::hex& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
                     if (map_hex.coord != hex_coord())
                         throw std::runtime_error("Duplicate definition of hex " + hex.first);
 
-                    map_hex.coord = hex_coord(hex_x, hex_y);
+                    map_hex.coord = hc;
                     map_hex.owner = nation_id;
-
-                    const std::string& feature = hex.second.data();
-                    if (feature == "BATS")
-                        map_hex.feature = map::bats;
-                    else if (feature == "SB")
-                        map_hex.feature = map::sb;
-                    else if (feature == "MIN")
-                        map_hex.feature = map::min;
-                    else if (feature == "MAJ")
-                        map_hex.feature = map::maj;
-                    else if (feature != "")
-                        throw std::runtime_error("Invalid hex feature \"" + feature + "\" found in map.json");
+                    map_hex.feature = feature_string_to_feature(hex.second.data());
                 }
                 retval.provinces[nation_id].push_back(map_province);
 #if 0
@@ -600,6 +633,7 @@ map read_map ()
     }
 
     // TODO: Check that we didn't leave any hexes undefined.
+    // TODO: Fill in map::hex::*neutral_zone_border* values.
 
     return retval;
 }
