@@ -4,12 +4,13 @@
 #include <boost/graph/filtered_graph.hpp>
 #include <boost/graph/johnson_all_pairs_shortest.hpp>
 
-#include <boost/array.hpp>
-
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+#include <boost/lexical_cast.hpp>
+
 #include <fstream>
+#include <unordered_map>
 
 #if 1
 #include <iostream>
@@ -323,12 +324,6 @@ namespace graph {
 }
 
 
-struct map
-{
-    unsigned int width;
-    unsigned int height;
-};
-
 struct hex_coord
 {
     hex_coord () : x (1000), y (1000) {}
@@ -344,6 +339,60 @@ hex_coord hex_coord::invalid;
 
 bool operator== (hex_coord lhs, hex_coord rhs)
 { return lhs.x == rhs.x && lhs.y == rhs.y; }
+
+bool operator!= (hex_coord lhs, hex_coord rhs)
+{ return !(lhs == rhs); }
+
+
+struct map
+{
+    enum feature_ {
+        none,
+        bats,
+        sb,
+        min,
+        maj,
+        capitol
+    };
+
+    struct hex
+    {
+        hex () :
+            coord (),
+            owner (0),
+            feature (none),
+            neutral_zone (false),
+            num_neutral_zone_borders (0),
+            neutral_zone_bordering ()
+            {}
+
+        hex_coord coord;
+        unsigned int owner;
+        feature_ feature;
+        bool neutral_zone;
+        unsigned int num_neutral_zone_borders;
+        unsigned int neutral_zone_bordering[3];
+    };
+
+    struct province
+    {
+        std::vector<unsigned int> hexes;
+    };
+
+    map () :
+        width (0),
+        height (0)
+        {}
+
+    unsigned int width;
+    unsigned int height;
+
+    // TODO: Move this out into its own data file.  Contents of capitol hexes
+    // should be placed there as well.
+    std::vector<std::pair<unsigned int, std::string>> nations;
+    std::unordered_map<unsigned int, std::vector<province>> provinces; // key is owner ID
+    std::vector<hex> hexes;
+};
 
 
 enum hex_direction {
@@ -402,7 +451,7 @@ unsigned int hex_id (hex_coord hc)
 // Static container for hex ids within R=2 of a central hex.
 struct neighbors
 {
-    typedef boost::array<hex_coord, 19> data_type;
+    typedef std::array<hex_coord, 19> data_type;
     typedef data_type::const_iterator iterator;
 
     neighbors () : size (0) {}
@@ -488,15 +537,70 @@ void init_graph (graph::graph& g, map m)
 
 map read_map ()
 {
-    std::ifstream ifs("map.json");
+    map retval;
+
     boost::property_tree::ptree pt;
-    boost::property_tree::json_parser::read_json(ifs, pt);
+    {
+        std::ifstream ifs("map.json");
+        boost::property_tree::json_parser::read_json(ifs, pt);
+    }
 
-#if 1
-    boost::property_tree::json_parser::write_json(std::cout, pt);
+    retval.width = pt.get<unsigned int>("width");
+    retval.height = pt.get<unsigned int>("height");
+
+    retval.hexes.resize(retval.width * retval.height);
+
+    const boost::property_tree::ptree& zones = pt.get_child("zones");
+    for (const auto& zone : zones) {
+        if (zone.first == "Neutral Zone") {           
+            // TODO
+        } else {
+            unsigned int nation_id = retval.nations.size() + 1; // 0 reserved for neutral zone
+            retval.nations.push_back(std::make_pair(nation_id, zone.first));
+
+            const boost::property_tree::ptree& provinces = zone.second.get_child("provinces");
+            for (const auto& province : provinces) {
+                map::province map_province;
+                for (const auto& hex : province.second) {
+                    const unsigned int hex_id = boost::lexical_cast<unsigned int>(
+                        hex.first[0] == '0' ? hex.first.substr(1, 3) : hex.first
+                    );
+                    map_province.hexes.push_back(hex_id);
+
+                    unsigned int hex_x = hex_id / 100 - 1;
+                    unsigned int hex_y = hex_id % 100 - 1;
+
+                    assert(hex_x + hex_y * retval.width < retval.hexes.size());
+                    map::hex& map_hex = retval.hexes[hex_x + hex_y * retval.width];
+
+                    if (map_hex.coord != hex_coord())
+                        throw std::runtime_error("Duplicate definition of hex " + hex.first);
+
+                    map_hex.coord = hex_coord(hex_x, hex_y);
+                    map_hex.owner = nation_id;
+
+                    const std::string& feature = hex.second.data();
+                    if (feature == "BATS")
+                        map_hex.feature = map::bats;
+                    else if (feature == "SB")
+                        map_hex.feature = map::sb;
+                    else if (feature == "MIN")
+                        map_hex.feature = map::min;
+                    else if (feature == "MAJ")
+                        map_hex.feature = map::maj;
+                    else if (feature != "")
+                        throw std::runtime_error("Invalid hex feature \"" + feature + "\" found in map.json");
+                }
+                retval.provinces[nation_id].push_back(map_province);
+#if 0
+                boost::property_tree::json_parser::write_json(std::cout, province.second);
 #endif
+            }
+        }
+    }
 
-    map retval = {61, 19};
+    // TODO: Check that we didn't leave any hexes undefined.
+
     return retval;
 }
 
@@ -504,7 +608,7 @@ map read_map ()
 int main ()
 {
     graph::graph g;
-    map m = read_map();
+    const map m = read_map();
     init_graph(g, m);
     std::cerr << "hello, graph!\n";
     return 0;
