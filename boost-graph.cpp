@@ -574,23 +574,23 @@ map read_map ()
 
     retval.hexes.resize(retval.width * retval.height);
 
-    const boost::property_tree::ptree& zones = pt.get_child("zones");
-    for (const auto& zone : zones) {
+    boost::property_tree::ptree zones = pt.get_child("zones");
+    for (auto zone : zones) {
         if (zone.first == "Neutral Zone") {
             std::map<unsigned int, std::string> owned_hexes;
-            const boost::property_tree::ptree& owned_hexes_ = zone.second.get_child("owned hexes");
-            for (const auto& owned_hex : owned_hexes_) {
+            boost::property_tree::ptree owned_hexes_ = zone.second.get_child("owned hexes");
+            for (auto owned_hex : owned_hexes_) {
                 owned_hexes[hex_id(hex_string_to_hex_coord(owned_hex.first))] = owned_hex.second.data(); // TODO: Convert this to an owner ID.
             }
 
             std::map<unsigned int, map::feature_> planets;
-            const boost::property_tree::ptree& planets_ = zone.second.get_child("planets");
-            for (const auto& planet : planets_) {
+            boost::property_tree::ptree planets_ = zone.second.get_child("planets");
+            for (auto planet : planets_) {
                 planets[hex_id(hex_string_to_hex_coord(planet.first))] = feature_string_to_feature(planet.second.data());
             }
 
-            const boost::property_tree::ptree& hexes = zone.second.get_child("hexes");
-            for (const auto& hex : hexes) {
+            boost::property_tree::ptree hexes = zone.second.get_child("hexes");
+            for (auto hex : hexes) {
                 hex_coord hc = hex_string_to_hex_coord(hex.second.data());
 
                 assert(hc.x + hc.y * retval.width < retval.hexes.size());
@@ -607,10 +607,10 @@ map read_map ()
             unsigned int nation_id = retval.nations.size() + 1; // 0 reserved for neutral zone
             retval.nations.push_back(std::make_pair(nation_id, zone.first));
 
-            const boost::property_tree::ptree& provinces = zone.second.get_child("provinces");
-            for (const auto& province : provinces) {
+            boost::property_tree::ptree provinces = zone.second.get_child("provinces");
+            for (auto province : provinces) {
                 map::province map_province;
-                for (const auto& hex : province.second) {
+                for (auto hex : province.second) {
                     hex_coord hc = hex_string_to_hex_coord(hex.first);
                     map_province.hexes.push_back(hex_id(hc));
 
@@ -632,7 +632,17 @@ map read_map ()
         }
     }
 
-    // TODO: Check that we didn't leave any hexes undefined.
+    for (std::size_t i = 0; i < retval.hexes.size(); ++i) {
+        if (retval.hexes[i].coord == hex_coord()) {
+            unsigned int hex_x = i % retval.width + 1;
+            unsigned int hex_y = i / retval.width + 1;
+            std::string hex_str = std::to_string(hex_x * 100 + hex_y);
+            if (hex_str.size() == 3u)
+                hex_str = '0' + hex_str;
+            throw std::runtime_error("Hex " + hex_str + " not defined in map.json");
+        }
+    }
+
     // TODO: Fill in map::hex::*neutral_zone_border* values.
 
     return retval;
