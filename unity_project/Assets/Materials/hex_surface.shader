@@ -29,14 +29,14 @@ Shader "Custom/hex_shader"
             v2f o;
             o.position = mul(UNITY_MATRIX_MVP, v.vertex);
             o.color = _primary_color;
-            o.gradient = v.vertex.y;//(v.vertex.x == 0 && v.vertex.y == 0) ? 0 : 1; // TODO
+            o.gradient = 0.95;//(v.vertex.x == 0 && v.vertex.y == 0) ? 0 : 1; // TODO
             return o;
         }
 
         float4 frag (v2f i) : COLOR
         {
             float weight =
-                clamp(i.gradient - (1 - _border_thickness), 0, 1) / _border_thickness;
+                saturate(i.gradient - (1 - _border_thickness)) / _border_thickness;
             return lerp(_primary_color, _secondary_color, weight);
         }
 
