@@ -20,16 +20,14 @@ Shader "Custom/hex_shader"
         struct v2f
         {
             float4 position : SV_POSITION;
-            float4 color : COLOR0;
             float gradient : TEXCOORD4;
         };
 
-        v2f vert (appdata_base v)
+        v2f vert (appdata_full v)
         {
             v2f o;
             o.position = mul(UNITY_MATRIX_MVP, v.vertex);
-            o.color = _primary_color;
-            o.gradient = 0.95;//(v.vertex.x == 0 && v.vertex.y == 0) ? 0 : 1; // TODO
+            o.gradient = v.texcoord1.x;
             return o;
         }
 
@@ -37,6 +35,7 @@ Shader "Custom/hex_shader"
         {
             float weight =
                 saturate(i.gradient - (1 - _border_thickness)) / _border_thickness;
+            weight = pow(weight, 0.75);
             return lerp(_primary_color, _secondary_color, weight);
         }
 

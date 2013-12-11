@@ -3,7 +3,7 @@
 import SimpleJSON;
 import System.IO;
 
-var hex_surface : GameObject;
+var hex_surface : procedural_hex;
 
 private var map_width : int = 0;
 private var map_height : int = 0;
@@ -13,7 +13,8 @@ private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
 function place_tile (x : int, y : int, color : Color)
 {
-    var obj : GameObject = Instantiate(hex_surface);
+    var obj : procedural_hex = Instantiate(hex_surface);
+    obj.init(color, Color.black, 0.1);
     obj.transform.position =
         Vector3(x * 1.5, (map_height - 1 - y) * 2 * sin_60, 0) - map_origin;
     if (x % 2 == 1)
