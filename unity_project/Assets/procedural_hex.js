@@ -45,16 +45,8 @@ function init (primary : Color, secondary : Color, border_thick : float)
     mesh.uv = uv;
     mesh.uv2 = uv2;
 
-    var mesh_renderer : MeshRenderer = GetComponent(MeshRenderer);
-    mesh_renderer.material.SetColor('_primary_color', primary);
-    mesh_renderer.material.SetColor('_secondary_color', secondary);
-    mesh_renderer.material.SetFloat('_border_thickness', border_thick);
-}
-
-function Start ()
-{
-}
-
-function Update ()
-{
+//     var mesh_renderer : MeshRenderer = GetComponent(MeshRenderer);
+//     mesh_renderer.material.SetColor('_primary_color', primary);
+//     mesh_renderer.material.SetColor('_secondary_color', secondary);
+//     mesh_renderer.material.SetFloat('_border_thickness', border_thick);
 }

@@ -84,7 +84,33 @@ function Start ()
     }
 }
 
+private var hexes_combined = false;
+
+function combine_hexes ()
+{
+    var mesh_filter : MeshFilter = GetComponent(MeshFilter);
+    var procedural_hexes : procedural_hex[] = FindObjectsOfType(procedural_hex);
+
+    if (!procedural_hexes.Length)
+        return;
+
+    var mesh = new Mesh();
+    mesh_filter.mesh = mesh;
+
+    var combine : CombineInstance[] = new CombineInstance[procedural_hexes.Length];
+    for (var i = 0; i < procedural_hexes.Length; i++){
+        var hex_mesh_filter : MeshFilter = procedural_hexes[i].GetComponent(MeshFilter);
+	combine[i].mesh = hex_mesh_filter.mesh;
+	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
+	hex_mesh_filter.gameObject.active = false;
+    }
+    mesh.CombineMeshes(combine);
+
+    hexes_combined = true;
+}
+
 function Update ()
 {
-
+    if (!hexes_combined)
+        combine_hexes();
 }

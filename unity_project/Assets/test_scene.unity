@@ -83,8 +83,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 541918416}
   - 114: {fileID: 541918417}
+  - 33: {fileID: 541918419}
+  - 23: {fileID: 541918418}
   m_Layer: 0
-  m_Name: root
+  m_Name: map_hexes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,6 +115,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hex_surface: {fileID: 11400000, guid: e3b1e83f0b54422439264322b50dc79c, type: 2}
+--- !u!23 &541918418
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 541918415}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 10ddb4230a4b4a14eb9902124a5a51fd, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!33 &541918419
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 541918415}
+  m_Mesh: {fileID: 0}
 --- !u!1 &574380929
 GameObject:
   m_ObjectHideFlags: 0
