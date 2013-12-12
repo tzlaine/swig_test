@@ -20,53 +20,32 @@ function map_height ()
 { return map_origin.y * 2; }
 
 
-function place_tile (x : int, y : int, owner : int)
+function place_tile (h : hex)
 {
     var obj : procedural_hex = Instantiate(hex_surface);
-    obj.init(owner);
+    obj.init(h.owner_id);
     obj.transform.position =
-        Vector3(x * 1.5, (map_height_ - 1 - y) * 2 * sin_60, 0) - map_origin;
-    if (x % 2 == 1)
+        Vector3(h.x * 1.5, (map_height_ - 1 - h.y) * 2 * sin_60, 0) - map_origin;
+    if (h.x % 2 == 1)
         obj.transform.position.y -= sin_60;
-}
-
-function process_map_hex (hex_str : String, owner : int)
-{
-    if (hex_str[0] == '0')
-        hex_str = hex_str.Substring(1, 3);
-    var hex_id : int = int.Parse(hex_str);
-    var hex_x = hex_id / 100 - 1;
-    var hex_y = hex_id % 100 - 1;
-    place_tile(hex_x, hex_y, owner);
 }
 
 function Start ()
 {
+    var m : map_t = game_data_.map();
+
     // Get map data.
     var json = JSON.Parse(System.IO.File.ReadAllText('../map.json'));
 
     map_width_ = json['width'].AsInt;
     map_height_ = json['height'].AsInt;
-    map_origin = Vector3((map_width_ - 1) * 1.5 / 2, (map_height_ - 1) * 2 * sin_60 / 2, 0);
+    map_origin = Vector3((m.hexes.GetLength(0) - 1) * 1.5 / 2,
+                         (m.hexes.GetLength(1) - 1) * 2 * sin_60 / 2,
+                         0);
 
-    var zones = json['zones'];
-
-    for (var zone : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
-         zones) {
-        var id : int = game_data_.id(zone.Key);
-
-        var i : int = 0;
-        if (zone.Key == 'NZ') {
-            for (i = 0; i < zone.Value['hexes'].Count; ++i) {
-                process_map_hex(zone.Value['hexes'][i], id);
-            }
-        } else {
-            for (i = 0; i < zone.Value['provinces'].Count; ++i) {
-                for (var hex : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
-                     zone.Value['provinces'][i]) {
-                    process_map_hex(hex.Key, id);
-                }
-            }
+    for (var x = 0; x < m.hexes.GetLength(0); ++x) {
+        for (var y = 0; y < m.hexes.GetLength(1); ++y) {
+            place_tile(m.hexes[x, y]);
         }
     }
 }
