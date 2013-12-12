@@ -3,7 +3,7 @@
     "height": 19,
 
     "zones": {
-        "Federation": {
+        "FED": {
             "provinces": [
                 {
                     "2003": "none",
@@ -368,7 +368,7 @@
                 }
             ]
         },
-        "Gorn": {
+        "GOR": {
             "provinces": [
                 {
                     "3801": "BATS",
@@ -514,7 +514,7 @@
                 }
             ]
         },
-        "Hydran": {
+        "HYD": {
             "provinces": [
                 {
                     "0114": "BATS",
@@ -607,7 +607,7 @@
                 }
             ]
         },
-        "Interstellar Concordium": {
+        "ISC": {
             "provinces": [
                 {
                     "5206": "BATS",
@@ -777,7 +777,7 @@
                 }
             ]
         },
-        "Klingon": {
+        "KLI": {
             "provinces": [
                 {
                     "0906": "BATS",
@@ -972,7 +972,7 @@
                 }
             ]
         },
-        "Kzinti": {
+        "KZI": {
             "provinces": [
                 {
                     "0701": "BATS",
@@ -1062,7 +1062,7 @@
                 }
             ]
         },
-        "Lyran": {
+        "LYR": {
             "provinces": [
                 {
                     "0101": "none",
@@ -1181,7 +1181,7 @@
                 }
             ]
         },
-        "Lyran Democratic Republic": {
+        "LDR": {
             "provinces": [
                 {
                     "0611": "none",
@@ -1193,7 +1193,7 @@
                 }
             ]
         },
-        "Neutral Zone": {
+        "NZ": {
             "owned hexes": {
                 "0804": "WYN"
             },
@@ -1221,7 +1221,7 @@
                 "5603", "5602", "5601", "5703", "5702", "5701", "5802", "5801", "5902", "5901", "6002", "6001", "6103", "6102", "6101"
             ]
         },
-        "Romulan": {
+        "ROM": {
             "provinces": [
                 {
                     "3317": "BATS",
@@ -1464,7 +1464,7 @@
                 }
             ]
         },
-        "Tholian": {
+        "THO": {
             "provinces": [
                 {
                     "2719": "BATS",

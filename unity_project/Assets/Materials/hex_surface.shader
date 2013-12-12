@@ -21,12 +21,42 @@ Shader "Custom/hex_shader"
         {
             float4 position : SV_POSITION;
             float gradient : TEXCOORD4;
+            float4 primary_color : COLOR0;
         };
 
         v2f vert (appdata_full v)
         {
             v2f o;
             int vertex_index = v.vertex.z;
+            int owner_id = v.color.r * 255;
+
+            if (owner_id == 0)
+                o.primary_color = float4(57.0 / 255.0, 142.0 / 255.0, 230.0 / 255.0, 1); // FED
+            else if (owner_id == 1)
+                o.primary_color = float4(1, 1, 1, 1); // GOR
+            else if (owner_id == 2)
+                o.primary_color = float4(59.0 / 255.0, 137.0 / 255.0, 92.0 / 255.0, 1); // HYD
+            else if (owner_id == 3)
+                o.primary_color = float4(89.0 / 255.0, 89.0 / 255.0, 89.0 / 255.0, 1); // ISC
+            else if (owner_id == 4)
+                o.primary_color = float4(0, 0, 0, 1); // KLI
+            else if (owner_id == 5)
+                o.primary_color = float4(1, 1, 1, 1); // KZI
+            else if (owner_id == 6)
+                o.primary_color = float4(241.0 / 255.0, 241.0 / 255.0, 76.0 / 255.0, 1); // LYR
+            else if (owner_id == 7)
+                o.primary_color = float4(89.0 / 255.0, 89.0 / 255.0, 89.0 / 255.0, 1); // LDR
+            else if (owner_id == 8)
+                o.primary_color = float4(136.0 / 255.0, 136.0 / 255.0, 136.0 / 255.0, 1); // NZ
+            else if (owner_id == 9)
+                o.primary_color = float4(89.0 / 255.0, 89.0 / 255.0, 89.0 / 255.0, 1); // ORI
+            else if (owner_id == 10)
+                o.primary_color = float4(221, 0, 0, 1); // ROM
+            else if (owner_id == 11)
+                o.primary_color = float4(221, 1, 1, 1); // THO
+            else if (owner_id == 12)
+                o.primary_color = float4(136.0 / 255.0, 136.0 / 255.0, 136.0 / 255.0, 1); // WYN
+
             float4 vertex = float4(v.vertex.xy, 0, 1);
             o.position = mul(UNITY_MATRIX_MVP, vertex);
             o.gradient = v.texcoord1.x;
@@ -38,7 +68,7 @@ Shader "Custom/hex_shader"
             float weight =
                 saturate(i.gradient - (1 - _border_thickness)) / _border_thickness;
             weight = pow(weight, 0.75);
-            return lerp(_primary_color, _secondary_color, weight);
+            return lerp(i.primary_color, _secondary_color, weight);
         }
 
     ENDCG } }

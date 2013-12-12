@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hex_surface: {fileID: 11400000, guid: e3b1e83f0b54422439264322b50dc79c, type: 2}
+  game_data_: {fileID: 1305381365}
 --- !u!23 &541918418
 Renderer:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ GameObject:
   - 4: {fileID: 1305381366}
   - 114: {fileID: 1305381365}
   m_Layer: 0
-  m_Name: game_state_obj
+  m_Name: game_data_obj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

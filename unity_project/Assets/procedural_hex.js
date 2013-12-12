@@ -6,7 +6,7 @@ function vertex_to_uv (v : Vector3, uv_origin : Vector3, uv_unit : Vector3) : Ve
     return Vector2(delta.x / uv_unit.x, delta.y / uv_unit.y);
 }
 
-function init (primary : Color, secondary : Color, border_thick : float)
+function init (owner : int)
 {
     var mesh_filter : MeshFilter = GetComponent(MeshFilter);
     var mesh = new Mesh();
@@ -18,6 +18,11 @@ function init (primary : Color, secondary : Color, border_thick : float)
     var uv : Vector2[] = new Vector2[7];
     var uv2 : Vector2[] = new Vector2[7];
 
+    // Encode the ownership of the surrounding hexes into the colors and
+    // tangents.
+    var neighbors_1 : Color[] = new Color[7];
+    var neighbors_2 : Vector4[] = new Vector4[7];
+
     var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
     var cos_60 : float = Mathf.Cos(Mathf.Deg2Rad * 60);
     var uv_origin : Vector3 = new Vector3(-1, -sin_60, 0);
@@ -27,6 +32,8 @@ function init (primary : Color, secondary : Color, border_thick : float)
     normals[6] = -Vector3.forward;
     uv[6] = vertex_to_uv(vertices[6], uv_origin, uv_unit);
     uv2[6] = new Vector2(0, 0);
+    neighbors_1[6] = Color(owner / 255.0, owner / 255.0, owner / 255.0, owner / 255.0);
+    neighbors_2[6] = Vector4(owner / 255.0, owner / 255.0, owner / 255.0, 1);
 
     for (var i = 0; i < 6; ++i) {
         var theta : float = Mathf.Deg2Rad * 60 * i;
@@ -38,6 +45,10 @@ function init (primary : Color, secondary : Color, border_thick : float)
         triangles[i * 3 + 2] = 6;
         uv[i] = vertex_to_uv(vertices[i], uv_origin, uv_unit);
         uv2[i] = new Vector2(1, 0);
+
+        // TODO: Use real values.
+        neighbors_1[i] = Color(owner / 255.0, owner / 255.0, owner / 255.0, 1);
+        neighbors_2[i] = Vector4(owner / 255.0, owner / 255.0, owner / 255.0, 1);
     }
 
     mesh.vertices = vertices;
@@ -46,8 +57,6 @@ function init (primary : Color, secondary : Color, border_thick : float)
     mesh.uv = uv;
     mesh.uv2 = uv2;
 
-//     var mesh_renderer : MeshRenderer = GetComponent(MeshRenderer);
-//     mesh_renderer.material.SetColor('_primary_color', primary);
-//     mesh_renderer.material.SetColor('_secondary_color', secondary);
-//     mesh_renderer.material.SetFloat('_border_thickness', border_thick);
+    mesh.colors = neighbors_1;
+    mesh.tangents = neighbors_2;
 }
