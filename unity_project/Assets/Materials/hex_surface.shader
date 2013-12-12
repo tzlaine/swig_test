@@ -26,7 +26,9 @@ Shader "Custom/hex_shader"
         v2f vert (appdata_full v)
         {
             v2f o;
-            o.position = mul(UNITY_MATRIX_MVP, v.vertex);
+            int vertex_index = v.vertex.z;
+            float4 vertex = float4(v.vertex.xy, 0, 1);
+            o.position = mul(UNITY_MATRIX_MVP, vertex);
             o.gradient = v.texcoord1.x;
             return o;
         }

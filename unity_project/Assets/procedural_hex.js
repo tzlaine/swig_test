@@ -30,7 +30,8 @@ function init (primary : Color, secondary : Color, border_thick : float)
 
     for (var i = 0; i < 6; ++i) {
         var theta : float = Mathf.Deg2Rad * 60 * i;
-        vertices[i] = new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), 0);
+        // Encode the vertex index in z.
+        vertices[i] = new Vector3(Mathf.Cos(theta), Mathf.Sin(theta), i);
         normals[i] = -Vector3.forward;
         triangles[i * 3 + 0] = (i + 1) % 6;
         triangles[i * 3 + 1] = i;
