@@ -5,18 +5,26 @@ import System.IO;
 
 var hex_surface : procedural_hex;
 
-private var map_width : int = 0;
-private var map_height : int = 0;
+private var map_width_ : int = 0;
+private var map_height_ : int = 0;
 private var map_origin : Vector3 = Vector3(0, 0, 0);
 
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
+
+
+function map_width ()
+{ return map_origin.x * 2; }
+
+function map_height ()
+{ return map_origin.y * 2; }
+
 
 function place_tile (x : int, y : int, color : Color)
 {
     var obj : procedural_hex = Instantiate(hex_surface);
     obj.init(color, Color.black, 0.1);
     obj.transform.position =
-        Vector3(x * 1.5, (map_height - 1 - y) * 2 * sin_60, 0) - map_origin;
+        Vector3(x * 1.5, (map_height_ - 1 - y) * 2 * sin_60, 0) - map_origin;
     if (x % 2 == 1)
         obj.transform.position.y -= sin_60;
     obj.renderer.material.color = color;
@@ -37,9 +45,9 @@ function Start ()
     // Get map data.
     var map_data = JSON.Parse(System.IO.File.ReadAllText('../map.json'));
 
-    map_width = map_data['width'].AsInt;
-    map_height = map_data['height'].AsInt;
-    map_origin = Vector3((map_width - 1) * 1.5 / 2, (map_height - 1) * 2 * sin_60 / 2, 0);
+    map_width_ = map_data['width'].AsInt;
+    map_height_ = map_data['height'].AsInt;
+    map_origin = Vector3((map_width_ - 1) * 1.5 / 2, (map_height_ - 1) * 2 * sin_60 / 2, 0);
 
     var zones = map_data['zones'];
 
