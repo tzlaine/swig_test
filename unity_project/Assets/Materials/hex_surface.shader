@@ -2,9 +2,9 @@
 Shader "Custom/hex_shader"
 {
     Properties {
-        _primary_color ("Primary Color", Color) = (1,1,1,1)
-        _secondary_color ("Secondary Color", Color) = (0,0,0,1)
         _border_thickness ("Border Thickness", Range(0,1)) = 0.1
+        _primary_colors ("Primary Colors", 2D) = "white" {}
+        _secondary_colors ("Secondary Colors", 2D) = "white" {}
     }
 
     SubShader { Pass { CGPROGRAM
@@ -13,62 +13,42 @@ Shader "Custom/hex_shader"
         #pragma fragment frag
         #include "UnityCG.cginc"
 
-        float4 _primary_color;
-        float4 _secondary_color;
         float _border_thickness;
+        sampler2D _primary_colors;
+        sampler2D _secondary_colors;
 
         struct v2f
         {
             float4 position : SV_POSITION;
-            float gradient : TEXCOORD4;
-            float4 primary_color : COLOR0;
+            float2 gradient_owner : TEXCOORD4;
         };
 
         v2f vert (appdata_full v)
         {
             v2f o;
-            int vertex_index = v.vertex.z;
-            int owner_id = v.color.r * 255;
 
-            if (owner_id == 0)
-                o.primary_color = float4(57.0 / 255.0, 142.0 / 255.0, 230.0 / 255.0, 1); // FED
-            else if (owner_id == 1)
-                o.primary_color = float4(1, 1, 1, 1); // GOR
-            else if (owner_id == 2)
-                o.primary_color = float4(59.0 / 255.0, 137.0 / 255.0, 92.0 / 255.0, 1); // HYD
-            else if (owner_id == 3)
-                o.primary_color = float4(89.0 / 255.0, 89.0 / 255.0, 89.0 / 255.0, 1); // ISC
-            else if (owner_id == 4)
-                o.primary_color = float4(0, 0, 0, 1); // KLI
-            else if (owner_id == 5)
-                o.primary_color = float4(1, 1, 1, 1); // KZI
-            else if (owner_id == 6)
-                o.primary_color = float4(241.0 / 255.0, 241.0 / 255.0, 76.0 / 255.0, 1); // LYR
-            else if (owner_id == 7)
-                o.primary_color = float4(89.0 / 255.0, 89.0 / 255.0, 89.0 / 255.0, 1); // LDR
-            else if (owner_id == 8)
-                o.primary_color = float4(136.0 / 255.0, 136.0 / 255.0, 136.0 / 255.0, 1); // NZ
-            else if (owner_id == 9)
-                o.primary_color = float4(89.0 / 255.0, 89.0 / 255.0, 89.0 / 255.0, 1); // ORI
-            else if (owner_id == 10)
-                o.primary_color = float4(221, 0, 0, 1); // ROM
-            else if (owner_id == 11)
-                o.primary_color = float4(221, 1, 1, 1); // THO
-            else if (owner_id == 12)
-                o.primary_color = float4(136.0 / 255.0, 136.0 / 255.0, 136.0 / 255.0, 1); // WYN
+            int vertex_index = v.vertex.z;
 
             float4 vertex = float4(v.vertex.xy, 0, 1);
             o.position = mul(UNITY_MATRIX_MVP, vertex);
-            o.gradient = v.texcoord1.x;
+            o.gradient_owner.x = v.texcoord1.x; // Hex edge gradient.
+
+            // Pass through encoded owner ID, scaled for sampling.
+            o.gradient_owner.y = v.color.r * 4.0;
+
             return o;
         }
 
         float4 frag (v2f i) : COLOR
         {
+            float4 primary_color =
+                tex2D(_primary_colors, float2(i.gradient_owner.y, 0.5));
+            float4 secondary_color =
+                tex2D(_secondary_colors, float2(i.gradient_owner.y, 0.5));
             float weight =
-                saturate(i.gradient - (1 - _border_thickness)) / _border_thickness;
+                saturate(i.gradient_owner.x - (1 - _border_thickness)) / _border_thickness;
             weight = pow(weight, 0.75);
-            return lerp(i.primary_color, _secondary_color, weight);
+            return lerp(primary_color, secondary_color, weight);
         }
 
     ENDCG } }

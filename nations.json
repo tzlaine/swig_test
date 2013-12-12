@@ -94,6 +94,15 @@
              }
         }
     },
+    "LDR": {
+        "name": "Lyran Democratic Republic",
+        "short name": "LDR",
+        "primary color": "595959",
+        "secondary color": "000000",
+        "dim primary color": "2c2c2c",
+        "dim secondary color": "000000",
+        "capitol": {}
+    },
     "LYR": {
         "name": "Lyran",
         "short name": "Lyran",
@@ -109,15 +118,6 @@
                 "Frakmark": ["MAJ", "MIN", "MIN"]
             }
         }
-    },
-    "LDR": {
-        "name": "Lyran Democratic Republic",
-        "short name": "LDR",
-        "primary color": "595959",
-        "secondary color": "000000",
-        "dim primary color": "2c2c2c",
-        "dim secondary color": "000000",
-        "capitol": {}
     },
     "NZ": {
         "name": "Neutral Zone",
