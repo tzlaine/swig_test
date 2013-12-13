@@ -1,5 +1,6 @@
 ﻿var mouse_sensitivity : float = 15.0;
-var zoom_sensitivity : float = 1.0;
+var key_zoom_sensitivity : float = 1.0;
+var mousewheel_zoom_sensitivity : float = 1.0;
 var move_speed : float = 16.0;
 var min_distance : float = 5;
 var max_distance : float = 150;
@@ -7,10 +8,10 @@ var max_distance : float = 150;
 var map_geometry : place_tiles = null;
 
 private var anchor = Vector3.zero;
-private var distance = 100;
-private var rotation_x = 0.0;
-private var rotation_y = 0.0;
-private var max_rot = 70.0;
+private var distance : float = 100.0;
+private var rotation_x : float = 0.0;
+private var rotation_y : float = 0.0;
+private var max_rot : float = 70.0;
 private var dirty = true;
 
 function position_camera ()
@@ -26,11 +27,11 @@ function Start ()
 
 function Update ()
 {
-    var zoom_input = Input.GetAxis('Mouse ScrollWheel') + Input.GetAxis('Zoom');
-    if (zoom_input) {
-        distance = Mathf.Clamp(distance + zoom_sensitivity * zoom_input,
-                               min_distance,
-                               max_distance);
+    var zoom_input : float =
+        Input.GetAxis('Zoom') * key_zoom_sensitivity +
+        Input.GetAxis('Mouse ScrollWheel') * mousewheel_zoom_sensitivity;
+    if (zoom_input != 0) {
+        distance = Mathf.Clamp(distance + zoom_input, min_distance, max_distance);
         dirty = true;
     }
 
