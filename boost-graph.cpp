@@ -405,22 +405,22 @@ enum hex_direction {
 
 
 hex_coord hex_above (hex_coord hc)
-{ return hex_coord(0, -1); }
+{ return hex_coord(hc.x, hc.y - 1); }
 
 hex_coord hex_below (hex_coord hc)
-{ return hex_coord(0, 1); }
+{ return hex_coord(hc.x, hc.y + 1); }
 
 hex_coord hex_above_left (hex_coord hc)
-{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? -1 : 0)); }
-
-hex_coord hex_above_right (hex_coord hc)
-{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ?  0 : 1)); }
+{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)); }
 
 hex_coord hex_below_left (hex_coord hc)
-{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? -1 : 0)); }
+{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+
+hex_coord hex_above_right (hex_coord hc)
+{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)); }
 
 hex_coord hex_below_right (hex_coord hc)
-{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ?  0 : 1)); }
+{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
 
 
 hex_coord adjacent_hex_coord (hex_coord hc, hex_direction hd)

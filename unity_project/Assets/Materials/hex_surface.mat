@@ -31,7 +31,7 @@ Material:
       data:
         first:
           name: _border_thickness
-        second: .100000001
+        second: .125
     m_Colors:
       data:
         first:

@@ -42,15 +42,27 @@ class map_t
     var hexes : hex[,];
 };
 
-class hex_x_y
+class hex_coord
 {
+    public function hex_coord ()
+    {
+        x = 1000;
+        y = 1000;
+    }
+
+    public function hex_coord (x_ : int, y_ : int)
+    {
+        x = x_;
+        y = y_;
+    }
+
     var x : int;
     var y : int;
 };
 
-static function str_to_hex_x_y (hex_str : String) : hex_x_y
+static function str_to_hex_coord (hex_str : String) : hex_coord
 {
-    var retval = new hex_x_y();
+    var retval = new hex_coord();
     if (hex_str[0] == '0')
         hex_str = hex_str.Substring(1, 3);
     var hex_id : int = int.Parse(hex_str);
@@ -58,6 +70,52 @@ static function str_to_hex_x_y (hex_str : String) : hex_x_y
     retval.y = hex_id % 100 - 1;
     return retval;
 }
+
+static function hex_coord_above (hc : hex_coord) : hex_coord
+{ return hex_coord(hc.x, hc.y - 1); }
+
+static function hex_coord_below (hc : hex_coord) : hex_coord
+{ return hex_coord(hc.x, hc.y + 1); }
+
+static function hex_coord_above_left (hc : hex_coord) : hex_coord
+{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)); }
+
+static function hex_coord_below_left (hc : hex_coord) : hex_coord
+{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+
+static function hex_coord_above_right (hc : hex_coord) : hex_coord
+{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)); }
+
+static function hex_coord_below_right (hc : hex_coord) : hex_coord
+{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+
+static function get_hex (hc : hex_coord, m : map_t) : hex
+{
+    var retval : hex = null;
+    if (0 <= hc.x && hc.x < m.hexes.GetLength(0) &&
+        0 <= hc.y && hc.y < m.hexes.GetLength(1)) {
+        retval = m.hexes[hc.x, hc.y];
+    }
+    return retval;
+}
+
+static function hex_above (h : hex, m : map_t) : hex
+{ return get_hex(hex_coord_above(hex_coord(h.x, h.y)), m); }
+
+static function hex_below (h : hex, m : map_t) : hex
+{ return get_hex(hex_coord_below(hex_coord(h.x, h.y)), m); }
+
+static function hex_above_left (h : hex, m : map_t) : hex
+{ return get_hex(hex_coord_above_left(hex_coord(h.x, h.y)), m); }
+
+static function hex_above_right (h : hex, m : map_t) : hex
+{ return get_hex(hex_coord_above_right(hex_coord(h.x, h.y)), m); }
+
+static function hex_below_left (h : hex, m : map_t) : hex
+{ return get_hex(hex_coord_below_left(hex_coord(h.x, h.y)), m); }
+
+static function hex_below_right (h : hex, m : map_t) : hex
+{ return get_hex(hex_coord_below_right(hex_coord(h.x, h.y)), m); }
 
 
 private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
@@ -86,11 +144,11 @@ function str_to_color (str : String)
 
 function add_hex (m : map_t, hex_str : String, owner : String, province : int, feature : String)
 {
-    var hex_coord : hex_x_y = str_to_hex_x_y(hex_str);
-    m.hexes[hex_coord.x, hex_coord.y] = new hex();
-    var h = m.hexes[hex_coord.x, hex_coord.y];
-    h.x = hex_coord.x;
-    h.y = hex_coord.y;
+    var hc : hex_coord = str_to_hex_coord(hex_str);
+    m.hexes[hc.x, hc.y] = new hex();
+    var h = m.hexes[hc.x, hc.y];
+    h.x = hc.x;
+    h.y = hc.y;
     h.owner = owner;
     h.owner_id = id(owner);
     h.province = province;
@@ -122,6 +180,7 @@ function Awake ()
 
     var zones = json['zones'];
 
+    var province : int = 0;
     for (var zone : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          zones) {
         var i : int = 0;
@@ -140,8 +199,9 @@ function Awake ()
             for (i = 0; i < zone.Value['provinces'].Count; ++i) {
                 for (var hex : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      zone.Value['provinces'][i]) {
-                    add_hex(map_, hex.Key, zone.Key, i, hex.Value.ToString());
+                    add_hex(map_, hex.Key, zone.Key, province, hex.Value.ToString());
                 }
+                ++province;
             }
         }
     }
