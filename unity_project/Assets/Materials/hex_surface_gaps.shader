@@ -1,5 +1,5 @@
 ﻿// -*- javascript -*-
-Shader "Custom/hex_surface"
+Shader "Custom/hex_surface_gaps"
 {
     Properties {
         _border_thickness ("Border Thickness", float) = 0.1

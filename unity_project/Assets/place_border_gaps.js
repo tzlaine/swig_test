@@ -3,7 +3,7 @@
 import SimpleJSON;
 import System.IO;
 
-var hex_surface : procedural_hex;
+var hex_border_gaps : procedural_hex_gaps;
 var game_data_ : game_data;
 
 private var map_width_ : int = 0;
@@ -42,14 +42,14 @@ function adjacencies (h : hex, m : map_t) : int[]
 
 function place_tile (h : hex, m : map_t)
 {
-    var obj : procedural_hex = Instantiate(hex_surface);
+    var obj : procedural_hex_gaps = Instantiate(hex_border_gaps);
     var adjacencies_ : int[] = adjacencies(h, m);
     obj.init(h.owner_id, adjacencies_);
     obj.transform.position =
         Vector3(h.x * 1.5, (map_height_ - 1 - h.y) * 2 * sin_60, 0) - map_origin;
     if (h.x % 2 == 1)
         obj.transform.position.y -= sin_60;
-    obj.renderer.material.renderQueue = 10;
+    obj.renderer.material.renderQueue = 20;
 }
 
 function Start ()
@@ -77,24 +77,24 @@ private var hexes_combined = false;
 function combine_hexes ()
 {
     var mesh_filter : MeshFilter = GetComponent(MeshFilter);
-    var procedural_hexes : procedural_hex[] = FindObjectsOfType(procedural_hex);
+    var procedural_hex_gaps_ : procedural_hex_gaps[] = FindObjectsOfType(procedural_hex_gaps);
 
-    if (!procedural_hexes.Length)
+    if (!procedural_hex_gaps_.Length)
         return;
 
     var mesh = new Mesh();
     mesh_filter.mesh = mesh;
 
-    var combine : CombineInstance[] = new CombineInstance[procedural_hexes.Length];
-    for (var i = 0; i < procedural_hexes.Length; i++){
-        var hex_mesh_filter : MeshFilter = procedural_hexes[i].GetComponent(MeshFilter);
+    var combine : CombineInstance[] = new CombineInstance[procedural_hex_gaps_.Length];
+    for (var i = 0; i < procedural_hex_gaps_.Length; i++){
+        var hex_mesh_filter : MeshFilter = procedural_hex_gaps_[i].GetComponent(MeshFilter);
 	combine[i].mesh = hex_mesh_filter.mesh;
 	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
 	hex_mesh_filter.gameObject.active = false;
     }
     mesh.CombineMeshes(combine);
 
-    renderer.material.renderQueue = 10;
+    renderer.material.renderQueue = 20;
 
     hexes_combined = true;
 }
