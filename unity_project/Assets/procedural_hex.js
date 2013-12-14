@@ -39,19 +39,24 @@ function init (owner : int, adjacencies : int[])
     for (var i = 0; i < 6; ++i) {
         var theta1 : float = Mathf.Deg2Rad * 60 * i;
         var theta2 : float = Mathf.Deg2Rad * 60 * (i + 1);
+
         // Encode the edge index in z.
         vertices[i * 3 + 0] = new Vector3(Mathf.Cos(theta1), Mathf.Sin(theta1), i);
         vertices[i * 3 + 1] = new Vector3(Mathf.Cos(theta2), Mathf.Sin(theta2), i);
         vertices[i * 3 + 2] = new Vector3(0, 0, i);
+
         normals[i * 3 + 0] = -Vector3.forward;
         normals[i * 3 + 1] = -Vector3.forward;
         normals[i * 3 + 2] = -Vector3.forward;
+
         triangles[i * 3 + 0] = i * 3 + 1;
         triangles[i * 3 + 1] = i * 3 + 0;
         triangles[i * 3 + 2] = i * 3 + 2;
+
         uv[i * 3 + 0] = vertex_to_uv(vertices[i * 3 + 0], uv_origin, uv_unit);
         uv[i * 3 + 1] = vertex_to_uv(vertices[i * 3 + 1], uv_origin, uv_unit);
         uv[i * 3 + 2] = vertex_to_uv(vertices[i * 3 + 2], uv_origin, uv_unit);
+
         uv2[i * 3 + 0] = new Vector2(1, 0);
         uv2[i * 3 + 1] = new Vector2(1, 0);
         uv2[i * 3 + 2] = new Vector2(0, 0);
@@ -59,6 +64,7 @@ function init (owner : int, adjacencies : int[])
         neighbors_1[i * 3 + 0] = neighbors_1[17];
         neighbors_1[i * 3 + 1] = neighbors_1[17];
         neighbors_1[i * 3 + 2] = neighbors_1[17];
+
         neighbors_2[i * 3 + 0] = neighbors_2[17];
         neighbors_2[i * 3 + 1] = neighbors_2[17];
         neighbors_2[i * 3 + 2] = neighbors_2[17];
