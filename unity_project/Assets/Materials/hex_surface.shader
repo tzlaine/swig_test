@@ -23,6 +23,7 @@ Shader "Custom/hex_shader"
             float gradient : TEXCOORD4;
             float owner : TEXCOORD5;
             float thickness : TEXCOORD6;
+            float falloff : TEXCOORD7;
         };
 
         v2f vert (appdata_full v)
@@ -44,12 +45,16 @@ Shader "Custom/hex_shader"
             else if (edge_index == 5)
                 adjacency = v.tangent.z * 2;
   
-            if (adjacency < 0.5)
+            if (adjacency < 0.5) {
                 o.thickness = _border_thickness / 3.0;
-            else if (1.5 < adjacency)
-                o.thickness = _border_thickness * 1.5;
-            else
+                o.falloff = 0.5;
+            } else if (1.5 < adjacency) {
                 o.thickness = _border_thickness;
+                o.falloff = 0.25;
+            } else {
+                o.thickness = _border_thickness / 1.5;
+                o.falloff = 0.25;
+            }
 
             float4 vertex = float4(v.vertex.xy, 0, 1);
             o.position = mul(UNITY_MATRIX_MVP, vertex);
@@ -66,7 +71,7 @@ Shader "Custom/hex_shader"
             float4 primary_color = tex2D(_primary_colors, float2(i.owner, 0.5));
             float4 secondary_color = tex2D(_secondary_colors, float2(i.owner, 0.5));
             float weight = saturate(i.gradient - (1 - i.thickness)) / i.thickness;
-            weight = pow(weight, 0.75);
+            weight = pow(weight, i.falloff);
             return lerp(primary_color, secondary_color, weight);
         }
 
