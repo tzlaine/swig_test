@@ -39,7 +39,7 @@ function place_tile (h : hex, m : map_t)
     var total_gaps : int = 0;
     for (var i = 0; i < adjacencies_.Length; ++i) {
         var adj = adjacencies_[i];
-        if (adj == 0 || adj == 2) {
+        if (adj < 2) {
             var prev_adj = adjacencies_[(i + 5) % 6];
             var next_adj = adjacencies_[(i + 1) % 6];
             if (adj < prev_adj)
