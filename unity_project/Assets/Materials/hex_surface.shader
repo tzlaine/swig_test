@@ -30,21 +30,7 @@ Shader "Custom/hex_surface"
         {
             v2f o;
 
-            int edge_index = v.vertex.z;
-            float adjacency = 2.0;
-            if (edge_index == 0)
-                adjacency = v.color.g * 2;
-            else if (edge_index == 1)
-                adjacency = v.color.b * 2;
-            else if (edge_index == 2)
-                adjacency = v.color.a * 2;
-            else if (edge_index == 3)
-                adjacency = v.tangent.x * 2;
-            else if (edge_index == 4)
-                adjacency = v.tangent.y * 2;
-            else if (edge_index == 5)
-                adjacency = v.tangent.z * 2;
-  
+            float adjacency = v.vertex.z;
             if (adjacency < 0.5) {
                 o.thickness = _border_thickness / 3.0;
                 o.falloff = 0.5;
@@ -61,7 +47,7 @@ Shader "Custom/hex_surface"
             o.gradient = v.texcoord1.x; // Hex edge gradient.
 
             // Pass through encoded owner ID, scaled for sampling.
-            o.owner = v.color.r * 4.0;
+            o.owner = v.texcoord1.y * 4.0;
 
             return o;
         }
