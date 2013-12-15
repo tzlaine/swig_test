@@ -119,7 +119,7 @@ static function hex_below_right (h : hex, m : map_t) : hex
 
 
 private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
-private var map_ : map_t = new map_t();
+private var map_ : map_t = null;
 
 
 function map () : map_t
@@ -179,7 +179,8 @@ function Awake ()
     var map_width = json['width'].AsInt;
     var map_height = json['height'].AsInt;
 
-    map_.hexes = new hex[map_width, map_height];
+    var m : map_t = new map_t();
+    m.hexes = new hex[map_width, map_height];
 
     var zones = json['zones'];
 
@@ -196,16 +197,18 @@ function Awake ()
             for (i = 0; i < zone.Value['hexes'].Count; ++i) {
                 var hex_str = strip_quotes(zone.Value['hexes'][i]);
                 var feature = planets.ContainsKey(hex_str) ? strip_quotes(planets[hex_str]) : 'none';
-                add_hex(map_, hex_str, "NZ", -1, feature);
+                add_hex(m, hex_str, "NZ", -1, feature);
             }
         } else {
             for (i = 0; i < zone.Value['provinces'].Count; ++i) {
                 for (var hex : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      zone.Value['provinces'][i]) {
-                    add_hex(map_, hex.Key, zone.Key, province, strip_quotes(hex.Value.ToString()));
+                    add_hex(m, hex.Key, zone.Key, province, strip_quotes(hex.Value.ToString()));
                 }
                 ++province;
             }
         }
     }
+
+    map_ = m;
 }

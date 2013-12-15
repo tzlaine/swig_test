@@ -10,6 +10,16 @@ private var map_origin : Vector3 = Vector3(0, 0, 0);
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
 
+function hex_center (hc : hex_coord)
+{
+    var retval =
+        Vector3(hc.x * 1.5, (map_height_ - 1 - hc.y) * 2 * sin_60, 0) -
+        map_origin;
+    if (hc.x % 2 == 1)
+        retval.y -= sin_60;
+    return retval;
+ }
+
 function map_width ()
 { return map_origin.x * 2; }
 
@@ -42,16 +52,17 @@ function place_tile (h : hex, m : map_t)
     var obj : procedural_hex = Instantiate(hex_surface);
     var adjacencies_ : int[] = adjacencies(h, m);
     obj.init(h.owner_id, adjacencies_);
-    obj.transform.position =
-        Vector3(h.x * 1.5, (map_height_ - 1 - h.y) * 2 * sin_60, 0) - map_origin;
-    if (h.x % 2 == 1)
-        obj.transform.position.y -= sin_60;
+    obj.transform.position = hex_center(hex_coord(h.x, h.y));
     obj.renderer.material.renderQueue = 10;
 }
 
 function Start ()
 {
     var m : map_t = game_data_.map();
+    while (!m) {
+        yield WaitForSeconds(0.01);
+        m = game_data_.map();
+    }
 
     map_width_ = m.hexes.GetLength(0);
     map_height_ = m.hexes.GetLength(1);
