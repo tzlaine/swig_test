@@ -2,6 +2,7 @@
 
 var hex_border_gaps : procedural_hex_gaps;
 var game_data_ : game_data;
+var place_tiles_ : place_tiles;
 
 private var map_width_ : int = 0;
 private var map_height_ : int = 0;
@@ -10,37 +11,10 @@ private var map_origin : Vector3 = Vector3(0, 0, 0);
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
 
-function map_width ()
-{ return map_origin.x * 2; }
-
-function map_height ()
-{ return map_origin.y * 2; }
-
-function adjacency (h : hex, h2 : hex) : int
-{
-    if (!h2 || h.owner_id != h2.owner_id)
-        return 2;
-    if (h.province != h2.province)
-        return 1;
-    return 0;
-}
-
-function adjacencies (h : hex, m : map_t) : int[]
-{
-    var retval : int[] = new int[6];
-    retval[0] = adjacency(h, game_data.hex_above_right(h, m));
-    retval[1] = adjacency(h, game_data.hex_above(h, m));
-    retval[2] = adjacency(h, game_data.hex_above_left(h, m));
-    retval[3] = adjacency(h, game_data.hex_below_left(h, m));
-    retval[4] = adjacency(h, game_data.hex_below(h, m));
-    retval[5] = adjacency(h, game_data.hex_below_right(h, m));
-    return retval;
-}
-
 function place_tile (h : hex, m : map_t)
 {
     var obj : procedural_hex_gaps = Instantiate(hex_border_gaps);
-    var adjacencies_ : int[] = adjacencies(h, m);
+    var adjacencies_ : int[] = place_tiles_.adjacencies(h, m);
     obj.init(h.owner_id, adjacencies_);
     obj.transform.position =
         Vector3(h.x * 1.5, (map_height_ - 1 - h.y) * 2 * sin_60, 0) - map_origin;
@@ -69,33 +43,12 @@ function Start ()
 
 private var hexes_combined = false;
 
-function combine_hexes ()
-{
-    var mesh_filter : MeshFilter = GetComponent(MeshFilter);
-    var procedural_hex_gaps_ : procedural_hex_gaps[] = FindObjectsOfType(procedural_hex_gaps);
-
-    if (!procedural_hex_gaps_.Length)
-        return;
-
-    var mesh = new Mesh();
-    mesh_filter.mesh = mesh;
-
-    var combine : CombineInstance[] = new CombineInstance[procedural_hex_gaps_.Length];
-    for (var i = 0; i < procedural_hex_gaps_.Length; i++){
-        var hex_mesh_filter : MeshFilter = procedural_hex_gaps_[i].GetComponent(MeshFilter);
-	combine[i].mesh = hex_mesh_filter.mesh;
-	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
-	hex_mesh_filter.gameObject.active = false;
-    }
-    mesh.CombineMeshes(combine);
-
-    renderer.material.renderQueue = 20;
-
-    hexes_combined = true;
-}
-
 function Update ()
 {
-    if (!hexes_combined)
-        combine_hexes();
+    if (!hexes_combined &&
+        place_tiles_.combine_hexes(GetComponent(MeshFilter),
+                                   FindObjectsOfType(procedural_hex_gaps))) {
+        renderer.material.renderQueue = 20;
+        hexes_combined = true;
+    }
 }

@@ -69,33 +69,32 @@ function Start ()
 
 private var hexes_combined = false;
 
-function combine_hexes ()
+function combine_hexes (mesh_filter : MeshFilter, components : Component[]) : boolean
 {
-    var mesh_filter : MeshFilter = GetComponent(MeshFilter);
-    var procedural_hexes : procedural_hex[] = FindObjectsOfType(procedural_hex);
-
-    if (!procedural_hexes.Length)
-        return;
+    if (!components.Length)
+        return false;
 
     var mesh = new Mesh();
     mesh_filter.mesh = mesh;
 
-    var combine : CombineInstance[] = new CombineInstance[procedural_hexes.Length];
-    for (var i = 0; i < procedural_hexes.Length; i++){
-        var hex_mesh_filter : MeshFilter = procedural_hexes[i].GetComponent(MeshFilter);
+    var combine : CombineInstance[] = new CombineInstance[components.Length];
+    for (var i = 0; i < components.Length; i++){
+        var hex_mesh_filter : MeshFilter = components[i].GetComponent(MeshFilter);
 	combine[i].mesh = hex_mesh_filter.mesh;
 	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
 	hex_mesh_filter.gameObject.active = false;
     }
     mesh.CombineMeshes(combine);
 
-    renderer.material.renderQueue = 10;
-
-    hexes_combined = true;
+    return true;
 }
 
 function Update ()
 {
-    if (!hexes_combined)
-        combine_hexes();
+    if (!hexes_combined &&
+        combine_hexes(GetComponent(MeshFilter),
+                      FindObjectsOfType(procedural_hex))) {
+        renderer.material.renderQueue = 10;
+        hexes_combined = true;
+    }
 }
