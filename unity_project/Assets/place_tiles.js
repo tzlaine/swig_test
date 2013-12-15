@@ -1,8 +1,5 @@
 ﻿#pragma strict
 
-import SimpleJSON;
-import System.IO;
-
 var hex_surface : procedural_hex;
 var game_data_ : game_data;
 
@@ -56,13 +53,11 @@ function Start ()
 {
     var m : map_t = game_data_.map();
 
-    // Get map data.
-    var json = JSON.Parse(System.IO.File.ReadAllText('../map.json'));
+    map_width_ = m.hexes.GetLength(0);
+    map_height_ = m.hexes.GetLength(1);
 
-    map_width_ = json['width'].AsInt;
-    map_height_ = json['height'].AsInt;
-    map_origin = Vector3((m.hexes.GetLength(0) - 1) * 1.5 / 2,
-                         (m.hexes.GetLength(1) - 1) * 2 * sin_60 / 2,
+    map_origin = Vector3((map_width_ - 1) * 1.5 / 2,
+                         (map_height_ - 1) * 2 * sin_60 / 2,
                          0);
 
     for (var x = 0; x < m.hexes.GetLength(0); ++x) {
