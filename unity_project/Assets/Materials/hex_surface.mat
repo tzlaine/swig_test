@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: hex_surface
-  m_Shader: {fileID: 4800000, guid: 5b2a0eb0102244982a9ccf9accd1a4d3, type: 3}
+  m_Shader: {fileID: 4800000, guid: a9398f9c4b9b5484cb9f033bc7e43d98, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
