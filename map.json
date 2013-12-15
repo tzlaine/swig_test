@@ -179,12 +179,7 @@
                     "2807": "none",
                     "2808": "SB",
                     "2907": "SB",
-                    "2908": {
-                        "Earth": ["CAP", "MAJ", "MIN", "MIN"],
-                        "Vulcan": ["MAJ", "MIN"],
-                        "Rigel": ["MAJ", "MAJ", "MIN", "MIN", "MIN"],
-                        "Andorian": ["MAJ", "MAJ", "MIN", "MIN"]
-                    },
+                    "2908": "capitol",
                     "3007": "none",
                     "3008": "SB"
                 },
@@ -421,15 +416,9 @@
                     "4502": "none"
                 },
                 {
-                    "4402": {
-                        "Ghdar I": ["CAP", "MIN"]
-                    },
-                    "4403": {
-                        "Ghdar II": ["MAJ", "MIN"]
-                    },
-                    "4503": {
-                        "Ghdar III": ["MAJ", "MIN"]
-                    }
+                    "4402": "capitol",
+                    "4403": "capitol",
+                    "4503": "capitol"
                 },
                 {
                     "4404": "none",
@@ -554,11 +543,7 @@
                     "0517": "none",
                     "0518": "none",
                     "0519": "MIN",
-                    "0617": {
-                        "Hydrax": ["CAP", "MIN"],
-                        "Hydramax": ["MAJ", "MIN"],
-                        "Anthraxan": ["MAJ", "MIN"]
-                    }
+                    "0617": "capitol"
                 },
                 {
                     "0714": "BATS",
@@ -700,9 +685,7 @@
                     "5809": "none",
                     "5810": "MAJ",
                     "5909": "none",
-                    "5910": {
-                        // TODO: Capitol?
-                    },
+                    "5910": "capitol",
                     "5911": "none"
                 },
                 {
@@ -869,12 +852,7 @@
                 },
                 {
                     "1410": "none",
-                    "1411": {
-                        "Klinshai": ["CAP", "MAJ", "MIN", "MIN"],
-                        "Kangor": ["MAJ", "MIN", "MIN"],
-                        "Kadrak": ["MAJ", "MIN", "MIN"],
-                        "Klardon": ["MAJ", "MIN", "MIN"]
-                    },
+                    "1411": "capitol",
                     "1511": "none",
                     "1512": "none",
                     "1611": "MAJ"
@@ -1011,12 +989,7 @@
                 {
                     "1301": "none",
                     "1302": "none",
-                    "1401": {
-                        "Kzintai": ["CAP", "MIN"],
-                        "Keevarsh": ["MAJ", "MIN"],
-                        "Vielsalm": ["MAJ", "MIN", "MIN"],
-                        "Vronkett": ["MAJ"]
-                     }
+                    "1401": "capitol"
                 },
                 {
                     "1203": "none",
@@ -1132,12 +1105,7 @@
                 },
                 {
                     "0309": "none",
-                    "0408": {
-                        "Lyrantan": ["CAP", "MIN", "MIN"],
-                        "Volmark": ["MAJ", "MIN"],
-                        "Bolmark": ["MAJ"],
-                        "Frakmark": ["MAJ", "MIN", "MIN"]
-                    },
+                    "0408": "capitol",
                     "0409": "none",
                     "0509": "MAJ",
                     "0510": "none"
@@ -1352,14 +1320,8 @@
                     "4812": "SB"
                 },
                 {
-                    "4514": {
-                        "Remus": ["MAJ", "MIN", "MIN"],
-                        "Tiberius": ["MIN", "MIN"]
-                    },
-                    "4613": {
-                        "Romulus": ["CAP", "MIN"],
-                        "Vesuvius": ["MIN", "MIN", "MIN"]
-                    }
+                    "4514": "capitol",
+                    "4613": "capitol"
                 },
                 {
                     "4415": "none",
@@ -1468,9 +1430,7 @@
                     "2818": "BATS",
                     "2819": "SB",
                     "2918": "BATS",
-                    "2919": {
-                        // TODO: Capitol?
-                    },
+                    "2919": "capitol",
                     "3018": "BATS",
                     "3019": "SB",
                     "3119": "BATS"
