@@ -155,6 +155,9 @@ function add_hex (m : map_t, hex_str : String, owner : String, province : int, f
     h.feature = feature;
 }
 
+private static function strip_quotes (str : String) : String
+{ return str[0] == "'" || str[0] == '"' ? str.Substring(1, str.Length - 2) : str; }
+
 function Awake ()
 {
     var json : SimpleJSON.JSONNode;
@@ -188,18 +191,18 @@ function Awake ()
             var planets : Dictionary.<String, String> = new Dictionary.<String, String>();
             for (var hex : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                  zone.Value['planets']) {
-                planets[hex.Key] = hex.Value.ToString();
+                planets[strip_quotes(hex.Key)] = strip_quotes(hex.Value.ToString());
             }
             for (i = 0; i < zone.Value['hexes'].Count; ++i) {
-                var hex_str = zone.Value['hexes'][i];
-                var feature = planets.ContainsKey(hex_str) ? planets[hex_str] : 'none';
+                var hex_str = strip_quotes(zone.Value['hexes'][i]);
+                var feature = planets.ContainsKey(hex_str) ? strip_quotes(planets[hex_str]) : 'none';
                 add_hex(map_, hex_str, "NZ", -1, feature);
             }
         } else {
             for (i = 0; i < zone.Value['provinces'].Count; ++i) {
                 for (var hex : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      zone.Value['provinces'][i]) {
-                    add_hex(map_, hex.Key, zone.Key, province, hex.Value.ToString());
+                    add_hex(map_, hex.Key, zone.Key, province, strip_quotes(hex.Value.ToString()));
                 }
                 ++province;
             }
