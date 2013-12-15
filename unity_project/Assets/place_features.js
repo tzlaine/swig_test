@@ -15,9 +15,13 @@ function place_features (h : hex, m : map_t)
         obj.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
         var scale = h.feature == 'MIN' ? 0.2 : 0.3;
         obj.transform.localScale = Vector3(scale, scale, -scale);
-        obj.renderer.material.color =
-            game_data_.secondary_color(h.owner); // TODO: Change this to a shader param.
-        obj.renderer.material.renderQueue = 30;
+        var mesh : Mesh = obj.GetComponent(MeshFilter).mesh;
+        var uv2 : Vector2[] = new Vector2[mesh.vertexCount];
+        for (var i = 0; i < mesh.vertexCount; ++i) {
+            uv2[i] = Vector2(h.owner_id / 255.0, 1);
+        }
+        mesh.uv2 = uv2;
+        obj.renderer.sharedMaterial.renderQueue = 30;
     }
 }
 
