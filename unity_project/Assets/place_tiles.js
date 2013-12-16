@@ -93,7 +93,7 @@ function combine_hexes (mesh_filter : MeshFilter, components : Component[]) : bo
         var hex_mesh_filter : MeshFilter = components[i].GetComponent(MeshFilter);
 	combine[i].mesh = hex_mesh_filter.mesh;
 	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
-	hex_mesh_filter.gameObject.active = false;
+	hex_mesh_filter.gameObject.SetActive(false);
     }
     mesh.CombineMeshes(combine);
 
