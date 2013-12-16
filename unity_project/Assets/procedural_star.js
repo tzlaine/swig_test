@@ -6,48 +6,60 @@ function init (owner : int, points : int)
     var mesh = new Mesh();
     mesh_filter.mesh = mesh;
 
-    var vertices : Vector3[] = null;
-    var triangles : int[] = null;
-    var normals : Vector3[] = null;
-    var uv2 : Vector2[] = null;
-    var i = 0;
+    var num_vertices  = points * 2 + 1;
+    var last_vertex = num_vertices - 1;
+    var noncenter_vertices = num_vertices - 1;
+    var num_triangles  = points * 6;
+
+    var vertices : Vector3[] = new Vector3[num_vertices];
+    var triangles : int[] = new int[num_triangles];
+    var normals : Vector3[] = new Vector3[num_vertices];
+    var uv2 : Vector2[] = new Vector2[num_vertices]; // Contains (owner, -).
+
+    vertices[last_vertex] = Vector3(0, 0, 0);
+    normals[last_vertex] = -Vector3.forward;
+    uv2[last_vertex] = Vector2(owner / 255.0, 0);
+
+    var corner_offset = 0;
+    var point_offset = 0;
+    var inner_radius = 0.5;
 
     if (points == 5) {
-        // 116.0 / 300.0
+        corner_offset = -90;
+        point_offset = 360.0 / (points * 2) - 90;
+        inner_radius = 0.38667;
     } else if (points == 6) {
-        // 176.0 / 300.0
+        corner_offset = 0;
+        point_offset = 360.0 / (points * 2);
+        inner_radius = 0.58667;
     } else if (points == 8) {
-        vertices = new Vector3[17];
-        triangles = new int[48];
-        normals = new Vector3[17];
-        uv2 = new Vector2[17]; // Contains (owner, -).
+        corner_offset = 0;
+        point_offset = 360.0 / (points * 2);
+        inner_radius = 0.54667;
+    }
 
-        vertices[16] = Vector3(0, 0, 0);
-        normals[16] = -Vector3.forward;
-        uv2[16] = Vector2(owner / 255.0, 0);
+    var i = 0;
+    for (i = 0; i < points; ++i) {
+        var corner_theta = Mathf.Deg2Rad * (corner_offset + 360.0 / points * i);
+        var point_theta = Mathf.Deg2Rad * (point_offset + 360.0 / points * i);
+        vertices[i * 2 + 0] =
+            Vector3(Mathf.Cos(corner_theta), Mathf.Sin(corner_theta), 0) * inner_radius;
+        vertices[i * 2 + 1] =
+            Vector3(Mathf.Cos(point_theta), Mathf.Sin(point_theta), 0);
+        normals[i * 2 + 0] = -Vector3.forward;
+        normals[i * 2 + 1] = -Vector3.forward;
+        uv2[i * 2 + 0] = uv2[last_vertex];
+        uv2[i * 2 + 1] = uv2[last_vertex];
+    }
 
-        for (i = 0; i < 8; ++i) {
-            var corner_theta = Mathf.Deg2Rad * (360.0 / 8 * i);
-            var point_theta = Mathf.Deg2Rad * (360.0 / 16 + 360.0 / 8 * i);
-            vertices[i * 2 + 0] =
-                Vector3(Mathf.Cos(corner_theta), Mathf.Sin(corner_theta), 0) * 164.0 / 300.0;
-            vertices[i * 2 + 1] =
-                Vector3(Mathf.Cos(point_theta), Mathf.Sin(point_theta), 0);
-            normals[i * 2 + 0] = -Vector3.forward;
-            normals[i * 2 + 1] = -Vector3.forward;
-            uv2[i * 2 + 0] = uv2[16];
-            uv2[i * 2 + 1] = uv2[16];
-        }
+    for (i = 0; i < points; ++i) {
+        triangles[i * 6 + 0] = (i * 2 + 2) % noncenter_vertices;
+        triangles[i * 6 + 1] = i * 2 + 1;
+        triangles[i * 6 + 2] = i * 2 + 0;
 
-        for (i = 0; i < 8; ++i) {
-            triangles[i * 6 + 0] = (i * 2 + 2) % 16;
-            triangles[i * 6 + 1] = i * 2 + 1;
-            triangles[i * 6 + 2] = i * 2 + 0;
-
-            triangles[i * 6 + 3] = (i * 2 + 2) % 16;
-            triangles[i * 6 + 4] = i * 2 + 0;
-            triangles[i * 6 + 5] = 16;
-        }
+        triangles[i * 6 + 3] = (i * 2 + 2) % noncenter_vertices;
+        triangles[i * 6 + 4] = i * 2 + 0;
+        triangles[i * 6 + 5] = last_vertex;
     }
 
     mesh.vertices = vertices;

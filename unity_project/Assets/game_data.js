@@ -125,6 +125,9 @@ function map () : map_t
 function id (abbreviated_name : String)
 { return nations[abbreviated_name].id; }
 
+function capitol_star_points (abbreviated_name : String)
+{ return nations[abbreviated_name].capitol_star_points; }
+
 function add_hex (m : map_t, hex_str : String, owner : String, province : int, feature : String)
 {
     var hc : hex_coord = str_to_hex_coord(hex_str);

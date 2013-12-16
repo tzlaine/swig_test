@@ -27,7 +27,7 @@ function place_features (h : hex, m : map_t)
         planet.renderer.sharedMaterial.renderQueue = 30;
     } else if (h.feature == 'capitol') {
         var capitol : procedural_star = Instantiate(star);
-        capitol.init(h.owner_id, 8);
+        capitol.init(h.owner_id, game_data_.capitol_star_points(h.owner));
         capitol.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
         scale = 0.5;
         capitol.transform.localScale = Vector3(scale, scale, scale);
