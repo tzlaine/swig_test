@@ -2,6 +2,7 @@
 
 var circle : GameObject;
 var star : procedural_star;
+var starbase : place_starbase;
 var place_tiles_ : place_tiles;
 var game_data_ : game_data;
 
@@ -33,8 +34,9 @@ function place_features (h : hex, m : map_t)
         mesh.uv2 = uv2;
         planet.renderer.sharedMaterial.renderQueue = 30;
     } else if (h.feature == 'SB') {
-        var sb = new GameObject();
-        // TODO
+        var sb : place_starbase = Instantiate(starbase);
+        sb.init(h.owner_id);
+        sb.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
     } else if (h.feature == 'BATS') {
         var bats = new GameObject();
         // TODO

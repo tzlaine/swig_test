@@ -339,6 +339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circle: {fileID: 100000, guid: f7b1a5fa4e3f94df884f75c1be60334a, type: 2}
   star: {fileID: 11400000, guid: 65ffc4b8cb276455f8b3975f0f43ed3e, type: 2}
+  starbase: {fileID: 11400000, guid: 7871497274ac24c44a2209f5357ad4f4, type: 2}
   place_tiles_: {fileID: 541918417}
   game_data_: {fileID: 1305381365}
 --- !u!23 &1152743490
