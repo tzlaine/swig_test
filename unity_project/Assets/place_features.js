@@ -17,7 +17,7 @@ function place_features (h : hex, m : map_t)
         var capitol : procedural_star = Instantiate(star);
         capitol.init(h.owner_id, game_data_.capitol_star_points(h.owner));
         capitol.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
-        scale = 0.5;
+        scale = 0.6;
         capitol.transform.localScale = Vector3(scale, scale, scale);
         capitol.renderer.sharedMaterial.renderQueue = 30;
     } else if (h.feature == 'MIN' || h.feature == 'MAJ') {
