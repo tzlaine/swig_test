@@ -3,6 +3,7 @@
 var circle : GameObject;
 var star : procedural_star;
 var starbase : place_starbase;
+var battlestation : place_battlestation;
 var place_tiles_ : place_tiles;
 var game_data_ : game_data;
 
@@ -38,8 +39,9 @@ function place_features (h : hex, m : map_t)
         sb.init(h.owner_id);
         sb.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
     } else if (h.feature == 'BATS') {
-        var bats = new GameObject();
-        // TODO
+        var bats : place_battlestation = Instantiate(battlestation);
+        bats.init(h.owner_id);
+        bats.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
     }
 }
 
