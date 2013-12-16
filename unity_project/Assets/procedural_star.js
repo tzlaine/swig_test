@@ -12,7 +12,11 @@ function init (owner : int, points : int)
     var uv2 : Vector2[] = null;
     var i = 0;
 
-    if (points == 8) {
+    if (points == 5) {
+        // 116.0 / 300.0
+    } else if (points == 6) {
+        // 176.0 / 300.0
+    } else if (points == 8) {
         vertices = new Vector3[17];
         triangles = new int[48];
         normals = new Vector3[17];

@@ -20,11 +20,8 @@ private class nation_data
     var name : String;
     var short_name : String;
     var abbr : String;
-    var primary_color : Color;
-    var secondary_color : Color;
-    var dim_primary_color : Color;
-    var dim_secondary_color : Color;
     var capitol : Dictionary.<String, capitol_hex>;
+    var capitol_star_points : int;
 };
 
 private class hex
@@ -128,20 +125,6 @@ function map () : map_t
 function id (abbreviated_name : String)
 { return nations[abbreviated_name].id; }
 
-function primary_color (abbreviated_name : String)
-{ return nations[abbreviated_name].primary_color; }
-
-function secondary_color (abbreviated_name : String)
-{ return nations[abbreviated_name].primary_color; }
-
-function str_to_color (str : String)
-{
-    var r : int = int.Parse(str.Substring(0, 2), AllowHexSpecifier);
-    var g : int = int.Parse(str.Substring(2, 2), AllowHexSpecifier);
-    var b : int = int.Parse(str.Substring(4, 2), AllowHexSpecifier);
-    return Color(r / 255.0, g / 255.0, b / 255.0, 1);
-}
-
 function add_hex (m : map_t, hex_str : String, owner : String, province : int, feature : String)
 {
     var hc : hex_coord = str_to_hex_coord(hex_str);
@@ -169,8 +152,7 @@ function Awake ()
          json) {
         nations[nation.Key] = new nation_data();
         nations[nation.Key].id = latest_id++;
-        nations[nation.Key].primary_color = str_to_color(nation.Value['primary color']);
-        nations[nation.Key].secondary_color = str_to_color(nation.Value['secondary color']);
+        nations[nation.Key].capitol_star_points = nation.Value['capitol star points'].AsInt;
         // TODO
     }
 

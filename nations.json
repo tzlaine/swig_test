@@ -2,10 +2,6 @@
     "FED": {
         "name": "United Federation of Planets",
         "short name": "Federation",
-        "primary color": "398ee6",
-        "secondary color": "000000",
-        "dim primary color": "1c4773",
-        "dim secondary color": "000000",
         "capitol": {
             "2908": {
                 "Earth": ["CAP", "MAJ", "MIN", "MIN"],
@@ -13,15 +9,12 @@
                 "Rigel": ["MAJ", "MAJ", "MIN", "MIN", "MIN"],
                 "Andorian": ["MAJ", "MAJ", "MIN", "MIN"]
             }
-        }
+        },
+        "capitol star points": 5
     },
     "GOR": {
         "name": "Gorn",
         "short name": "Gorn",
-        "primary color": "ffffff",
-        "secondary color": "dd0000",
-        "dim primary color": "c0c0c0",
-        "dim secondary color": "6e0000",
         "capitol": {
             "4402": {
                 "Ghdar I": ["CAP", "MIN"]
@@ -32,43 +25,34 @@
             "4503": {
                 "Ghdar III": ["MAJ", "MIN"]
             }
-        }
+        },
+        "capitol star points": 5
     },
     "HYD": {
         "name": "Hydran",
         "short name": "Hydran",
-        "primary color": "3b895c",
-        "secondary color": "ffffff",
-        "dim primary color": "1d442e",
-        "dim secondary color": "7f7f7f",
         "capitol": {
             "0617": {
                 "Hydrax": ["CAP", "MIN"],
                 "Hydramax": ["MAJ", "MIN"],
                 "Anthraxan": ["MAJ", "MIN"]
             }
-        }
+        },
+        "capitol star points": 5
     },
     "ISC": {
         "name": "Interstellar Concordium",
         "short name": "ISC",
-        "primary color": "595959",
-        "secondary color": "000000",
-        "dim primary color": "2c2c2c",
-        "dim secondary color": "000000",
         "capitol": {
             "5910": {
                 // TODO: Capitol?
             }
-        }
+        },
+        "capitol star points": 6
     },
     "KLI": {
         "name": "Klingon Empire",
         "short name": "Klingon",
-        "primary color": "000000",
-        "secondary color": "ffffff",
-        "dim primary color": "000000",
-        "dim secondary color": "ffffff",
         "capitol": {
             "1411": {
                 "Klinshai": ["CAP", "MAJ", "MIN", "MIN"],
@@ -76,15 +60,12 @@
                 "Kadrak": ["MAJ", "MIN", "MIN"],
                 "Klardon": ["MAJ", "MIN", "MIN"]
             }
-        }
+        },
+        "capitol star points": 8
     },
     "KZI": {
         "name": "Kzinti",
         "short name": "Kzinti",
-        "primary color": "ffffff",
-        "secondary color": "000000",
-        "dim primary color": "c0c0c0",
-        "dim secondary color": "000000",
         "capitol": {
             "1401": {
                 "Kzintai": ["CAP", "MIN"],
@@ -92,24 +73,18 @@
                 "Vielsalm": ["MAJ", "MIN", "MIN"],
                 "Vronkett": ["MAJ"]
              }
-        }
+        },
+        "capitol star points": 5
     },
     "LDR": {
         "name": "Lyran Democratic Republic",
         "short name": "LDR",
-        "primary color": "595959",
-        "secondary color": "000000",
-        "dim primary color": "2c2c2c",
-        "dim secondary color": "000000",
-        "capitol": {}
+        "capitol": {},
+        "capitol star points": 6
     },
     "LYR": {
         "name": "Lyran",
         "short name": "Lyran",
-        "primary color": "f1f14c",
-        "secondary color": "3a8a2d",
-        "dim primary color": "787826",
-        "dim secondary color": "1d4516",
         "capitol": {
             "0408": {
                 "Lyrantan": ["CAP", "MIN", "MIN"],
@@ -117,33 +92,24 @@
                 "Bolmark": ["MAJ"],
                 "Frakmark": ["MAJ", "MIN", "MIN"]
             }
-        }
+        },
+        "capitol star points": 8
     },
     "NZ": {
         "name": "Neutral Zone",
         "short name": "Neutral Zone",
-        "primary color": "888888",
-        "secondary color": "000000",
-        "dim primary color": "444444",
-        "dim secondary color": "000000",
-        "capitol": {}
+        "capitol": {},
+        "capitol star points": 6
     },
     "ORI": {
         "name": "Orion",
         "short name": "Orion",
-        "primary color": "595959",
-        "secondary color": "000000",
-        "dim primary color": "2c2c2c",
-        "dim secondary color": "000000",
-        "capitol": {}
+        "capitol": {},
+        "capitol star points": 6
     },
     "ROM": {
         "name": "Romulan Star Empire",
         "short name": "Romulan",
-        "primary color": "dd0000",
-        "secondary color": "000000",
-        "dim primary color": "6e0000",
-        "dim secondary color": "000000",
         "capitol": {
             "4514": {
                 "Remus": ["MAJ", "MIN", "MIN"],
@@ -153,28 +119,23 @@
                 "Romulus": ["CAP", "MIN"],
                 "Vesuvius": ["MIN", "MIN", "MIN"]
             }
-        }
+        },
+        "capitol star points": 8
     },
     "THO": {
         "name": "Tholian Holdfast",
         "short name": "Tholian",
-        "primary color": "dd0000",
-        "secondary color": "ffffff",
-        "dim primary color": "6e0000",
-        "dim secondary color": "7f7f7f",
         "capitol": {
             "2919": {
                 // TODO: Capitol?
             }
-        }
+        },
+        "capitol star points": 6
     }
     "WYN": {
         "name": "Wyn Star Cluster",
         "short name": "Wyn",
-        "primary color": "595959",
-        "secondary color": "000000",
-        "dim primary color": "2c2c2c",
-        "dim secondary color": "000000",
-        "capitol": {}
+        "capitol": {},
+        "capitol star points": 6
     }
 }
