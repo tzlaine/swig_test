@@ -306,6 +306,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1152743488}
   - 114: {fileID: 1152743489}
+  - 33: {fileID: 1152743491}
+  - 23: {fileID: 1152743490}
   m_Layer: 0
   m_Name: features
   m_TagString: Untagged
@@ -339,6 +341,34 @@ MonoBehaviour:
   star: {fileID: 11400000, guid: 65ffc4b8cb276455f8b3975f0f43ed3e, type: 2}
   place_tiles_: {fileID: 541918417}
   game_data_: {fileID: 1305381365}
+--- !u!23 &1152743490
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1152743487}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: e974dfd5afed0484ebd00a9b3bef2dd6, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
+--- !u!33 &1152743491
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1152743487}
+  m_Mesh: {fileID: 0}
 --- !u!1 &1270366414
 GameObject:
   m_ObjectHideFlags: 0
