@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var circle : GameObject;
+var star : procedural_star;
 var place_tiles_ : place_tiles;
 var game_data_ : game_data;
 
@@ -10,18 +11,27 @@ function place_features (h : hex, m : map_t)
     if (h.feature == 'none')
         return;
 
+    var scale : float = 1.0;
+
     if (h.feature == 'MIN' || h.feature == 'MAJ') {
-        var obj : GameObject = Instantiate(circle);
-        obj.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
-        var scale = h.feature == 'MIN' ? 0.2 : 0.3;
-        obj.transform.localScale = Vector3(scale, scale, -scale);
-        var mesh : Mesh = obj.GetComponent(MeshFilter).mesh;
+        var planet : GameObject = Instantiate(circle);
+        planet.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
+        scale = h.feature == 'MIN' ? 0.2 : 0.3;
+        planet.transform.localScale = Vector3(scale, scale, -scale);
+        var mesh : Mesh = planet.GetComponent(MeshFilter).mesh;
         var uv2 : Vector2[] = new Vector2[mesh.vertexCount];
         for (var i = 0; i < mesh.vertexCount; ++i) {
             uv2[i] = Vector2(h.owner_id / 255.0, 1);
         }
         mesh.uv2 = uv2;
-        obj.renderer.sharedMaterial.renderQueue = 30;
+        planet.renderer.sharedMaterial.renderQueue = 30;
+    } else if (h.feature == 'capitol') {
+        var capitol : procedural_star = Instantiate(star);
+        capitol.init(h.owner_id, 8);
+        capitol.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
+        scale = 0.5;
+        capitol.transform.localScale = Vector3(scale, scale, scale);
+        capitol.renderer.sharedMaterial.renderQueue = 30;
     }
 }
 

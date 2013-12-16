@@ -307,7 +307,7 @@ GameObject:
   - 4: {fileID: 1152743488}
   - 114: {fileID: 1152743489}
   m_Layer: 0
-  m_Name: planets
+  m_Name: features
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,6 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circle: {fileID: 100000, guid: f7b1a5fa4e3f94df884f75c1be60334a, type: 2}
+  star: {fileID: 11400000, guid: 65ffc4b8cb276455f8b3975f0f43ed3e, type: 2}
   place_tiles_: {fileID: 541918417}
   game_data_: {fileID: 1305381365}
 --- !u!1 &1270366414
