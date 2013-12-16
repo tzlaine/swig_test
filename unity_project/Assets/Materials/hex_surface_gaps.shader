@@ -8,6 +8,7 @@ Shader "Custom/hex_surface_gaps"
 
     SubShader { Pass {
 
+        ZTest Always
         Blend SrcAlpha OneMinusSrcAlpha
 
         CGPROGRAM

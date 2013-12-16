@@ -5,7 +5,11 @@ Shader "Custom/solid_color_feature"
         _secondary_colors ("Secondary Colors", 2D) = "white" {}
     }
 
-    SubShader { Pass { CGPROGRAM
+    SubShader { Pass {
+
+        ZTest Always
+
+        CGPROGRAM
 
         #pragma vertex vert
         #pragma fragment frag
@@ -38,7 +42,9 @@ Shader "Custom/solid_color_feature"
             return secondary_color;
         }
 
-    ENDCG } }
+        ENDCG
+
+    } }
 
     FallBack "Diffuse"
 }
