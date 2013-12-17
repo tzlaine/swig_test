@@ -8,25 +8,10 @@ private var map_hex_height : int = 0;
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
 
-function hex_clicked (hc : hex_coord)
+function hex_under_cursor () : hex_coord
 {
-    print(hc.x + ',' + hc.y);
-}
+    var retval = hex_coord();
 
-function Start ()
-{
-    var m : map_t = game_data_.map();
-    while (!m) {
-        yield WaitForSeconds(0.01);
-        m = game_data_.map();
-    }
-
-    place_hexes_ = GetComponent(place_hexes);
-    map_hex_height = m.hexes.GetLength(1);
-}
-
-function OnMouseUpAsButton ()
-{
     var box : BoxCollider = GetComponent(BoxCollider);
     var hit : RaycastHit;
     if (box.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), hit, 1000.0)) {
@@ -58,6 +43,26 @@ function OnMouseUpAsButton ()
             }
         }
 
-        hex_clicked(hc);
+        retval = hc;
     }
+
+    return retval;
+}
+
+function Start ()
+{
+    var m : map_t = game_data_.map();
+    while (!m) {
+        yield WaitForSeconds(0.01);
+        m = game_data_.map();
+    }
+
+    place_hexes_ = GetComponent(place_hexes);
+    map_hex_height = m.hexes.GetLength(1);
+}
+
+function OnMouseUpAsButton ()
+{
+    var hc = hex_under_cursor();
+    print(hc.x + ',' + hc.y);
 }
