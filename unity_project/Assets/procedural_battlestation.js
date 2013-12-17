@@ -20,6 +20,7 @@ function make_section ()
     }
     mesh.vertices = vertices;
     retval.renderer.sharedMaterial.renderQueue = 30;
+    retval.SetActive(false);
     return retval;
 }
 
@@ -34,6 +35,7 @@ function make_connector ()
     }
     mesh.vertices = vertices;
     retval.renderer.sharedMaterial.renderQueue = 30;
+    retval.SetActive(false);
     return retval;
 }
 
