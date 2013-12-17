@@ -2,7 +2,7 @@
 Shader "Custom/solid_national_color"
 {
     Properties {
-        _secondary_colors ("Secondary Colors", 2D) = "white" {}
+        _colors ("Colors", 2D) = "white" {}
     }
 
     SubShader { Pass {
@@ -15,7 +15,7 @@ Shader "Custom/solid_national_color"
         #pragma fragment frag
         #include "UnityCG.cginc"
 
-        sampler2D _secondary_colors;
+        sampler2D _colors;
 
         struct v2f
         {
@@ -38,8 +38,7 @@ Shader "Custom/solid_national_color"
 
         float4 frag (v2f i) : COLOR
         {
-            float4 secondary_color = tex2D(_secondary_colors, float2(i.owner, 0.5));
-            return secondary_color;
+            return tex2D(_colors, float2(i.owner, 0.5));
         }
 
         ENDCG
