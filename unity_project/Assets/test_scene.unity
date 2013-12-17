@@ -86,7 +86,7 @@ GameObject:
   - 33: {fileID: 541918419}
   - 23: {fileID: 541918418}
   m_Layer: 0
-  m_Name: map_hexes
+  m_Name: hexes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -446,42 +446,16 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1418537809}
-  - 114: {fileID: 1418537808}
-  - 33: {fileID: 1418537811}
-  - 23: {fileID: 1418537810}
+  - 33: {fileID: 1418537810}
+  - 23: {fileID: 1418537808}
   m_Layer: 0
-  m_Name: map_border_gaps
+  m_Name: borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1418537808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418537807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c01f7e7a7b494188adba1ea332d0498, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hex_border_gaps: {fileID: 11400000, guid: cc68601301cb147009159c8d540ea868, type: 2}
-  game_data_: {fileID: 1305381365}
-  place_tiles_: {fileID: 541918417}
---- !u!4 &1418537809
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1418537807}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1270366415}
---- !u!23 &1418537810
+--- !u!23 &1418537808
 Renderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -493,7 +467,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: c41eff2efd5604afa8a3c8bf355e30a8, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -502,7 +476,18 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!33 &1418537811
+--- !u!4 &1418537809
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1418537807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1270366415}
+--- !u!33 &1418537810
 MeshFilter:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}

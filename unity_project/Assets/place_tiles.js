@@ -51,7 +51,7 @@ function place_tile (h : hex, m : map_t)
 {
     var obj : procedural_hex = Instantiate(hex_surface);
     var adjacencies_ : int[] = adjacencies(h, m);
-    obj.init(h.owner_id, adjacencies_);
+    obj.init(h.owner_id);
     obj.transform.position = hex_center(hex_coord(h.x, h.y));
     obj.renderer.material.renderQueue = 10;
 }
