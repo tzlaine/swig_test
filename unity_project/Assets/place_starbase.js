@@ -39,10 +39,16 @@ function init (owner : int)
         satellite = make_circle(satellite_scale);
 
     var obj : GameObject = null;
+    var mesh_filter : MeshFilter = null;
+    var combine : CombineInstance[] = new CombineInstance[7];
 
     obj = Instantiate(center);
     set_owner(obj.GetComponent(MeshFilter).mesh, owner);
     obj.transform.parent = transform;
+    mesh_filter = obj.GetComponent(MeshFilter);
+    combine[6].mesh = mesh_filter.mesh;
+    combine[6].transform = mesh_filter.transform.localToWorldMatrix;
+    obj.SetActive(false);
 
     for (var i = 0; i < 6; ++i) {
         obj = Instantiate(satellite);
@@ -52,5 +58,14 @@ function init (owner : int)
             Vector3(d * Mathf.Cos(theta), d * Mathf.Sin(theta), 0);
         set_owner(obj.GetComponent(MeshFilter).mesh, owner);
         obj.transform.parent = transform;
+        mesh_filter = obj.GetComponent(MeshFilter);
+        combine[i].mesh = mesh_filter.mesh;
+        combine[i].transform = mesh_filter.transform.localToWorldMatrix;
+        obj.SetActive(false);
     }
+
+    mesh_filter = GetComponent(MeshFilter);
+    var mesh = new Mesh();
+    mesh_filter.mesh = mesh;
+    mesh.CombineMeshes(combine);
 }

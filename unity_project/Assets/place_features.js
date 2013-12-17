@@ -62,20 +62,20 @@ function Start ()
 
 private var features_combined = false;
 
-function combine_features (mesh_filter : MeshFilter, stars : Component[]) : boolean
+function combine_features (mesh_filter : MeshFilter, features : Component[]) : boolean
 {
-    if (!stars.Length)
+    if (!features.Length)
         return false;
 
     var mesh = new Mesh();
     mesh_filter.mesh = mesh;
 
-    var combine : CombineInstance[] = new CombineInstance[stars.Length];
-    for (var i = 0; i < stars.Length; i++){
-        var hex_mesh_filter : MeshFilter = stars[i].GetComponent(MeshFilter);
-	combine[i].mesh = hex_mesh_filter.mesh;
-	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
-	hex_mesh_filter.gameObject.SetActive(false);
+    var combine : CombineInstance[] = new CombineInstance[features.Length];
+    for (var i = 0; i < features.Length; i++){
+        var mf : MeshFilter = features[i].GetComponent(MeshFilter);
+	combine[i].mesh = mf.mesh;
+	combine[i].transform = mf.transform.localToWorldMatrix;
+	mf.gameObject.SetActive(false);
     }
     mesh.CombineMeshes(combine);
 
@@ -84,9 +84,17 @@ function combine_features (mesh_filter : MeshFilter, stars : Component[]) : bool
 
 function Update ()
 {
-    if (!features_combined &&
-        combine_features(GetComponent(MeshFilter),
-                         FindObjectsOfType(procedural_star))) {
+    var features : Component[] = null;
+    if (!features_combined) {
+        var stars : Component[] = FindObjectsOfType(procedural_star);
+        var starbases : Component[] = FindObjectsOfType(place_starbase);
+        var battlestations : Component[] = FindObjectsOfType(place_battlestation);
+        features = new Component[stars.Length + starbases.Length + battlestations.Length];
+        System.Array.Copy(stars, 0, features, 0, stars.Length);
+        System.Array.Copy(starbases, 0, features, stars.Length, starbases.Length);
+        System.Array.Copy(battlestations, 0, features, stars.Length + starbases.Length, battlestations.Length);
+    }
+    if (features && features.Length && combine_features(GetComponent(MeshFilter), features)) {
         renderer.material.renderQueue = 30;
         features_combined = true;
     }

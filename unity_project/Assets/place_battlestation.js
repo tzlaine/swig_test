@@ -54,10 +54,16 @@ function init (owner : int)
         connector = make_connector();
 
     var obj : GameObject = null;
+    var mesh_filter : MeshFilter = null;
+    var combine : CombineInstance[] = new CombineInstance[7];
 
     obj = Instantiate(section);
     set_owner(obj.GetComponent(MeshFilter).mesh, owner);
     obj.transform.parent = transform;
+    mesh_filter = obj.GetComponent(MeshFilter);
+    combine[6].mesh = mesh_filter.mesh;
+    combine[6].transform = mesh_filter.transform.localToWorldMatrix;
+    obj.SetActive(false);
 
     for (var i = 0; i < 3; ++i) {
         var theta_deg = 90.0 + 120.0 * i;
@@ -69,6 +75,10 @@ function init (owner : int)
             Vector3(d * Mathf.Cos(theta), d * Mathf.Sin(theta), 0);
         set_owner(obj.GetComponent(MeshFilter).mesh, owner);
         obj.transform.parent = transform;
+        mesh_filter = obj.GetComponent(MeshFilter);
+        combine[i * 2 + 0].mesh = mesh_filter.mesh;
+        combine[i * 2 + 0].transform = mesh_filter.transform.localToWorldMatrix;
+        obj.SetActive(false);
 
         obj = Instantiate(connector);
         obj.transform.position =
@@ -76,5 +86,14 @@ function init (owner : int)
         obj.transform.Rotate(Vector3(0, 0, theta_deg - 90.0));
         set_owner(obj.GetComponent(MeshFilter).mesh, owner);
         obj.transform.parent = transform;
+        mesh_filter = obj.GetComponent(MeshFilter);
+        combine[i * 2 + 1].mesh = mesh_filter.mesh;
+        combine[i * 2 + 1].transform = mesh_filter.transform.localToWorldMatrix;
+        obj.SetActive(false);
     }
+
+    mesh_filter = GetComponent(MeshFilter);
+    var mesh = new Mesh();
+    mesh_filter.mesh = mesh;
+    mesh.CombineMeshes(combine);
 }
