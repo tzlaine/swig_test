@@ -171,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game_data_: {fileID: 1305381365}
   camera_controller_: {fileID: 899871638}
+  drag_sensitivity: .100000001
 --- !u!1 &574380929
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,8 +272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouse_sensitivity: 15
-  key_zoom_sensitivity: .5
-  mousewheel_zoom_sensitivity: 2
+  key_zoom_sensitivity: .100000001
+  mousewheel_zoom_sensitivity: 20
   move_speed: 20
   min_distance: 5
   max_distance: 150
