@@ -5,9 +5,9 @@ var square : GameObject;
 
 private static var section : GameObject = null;
 private static var connector : GameObject = null;
-private static var section_scale = 0.12;
-private static var connector_width = 0.08; // TODO
-private static var connector_length = 0.32; // TODO
+private static var section_scale = 0.12 * 1.1;
+private static var connector_width = 0.08 * 1.1;
+private static var connector_length = 0.32 * 1.1;
 
 function make_section ()
 {

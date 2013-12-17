@@ -5,8 +5,8 @@ var square : GameObject;
 
 private static var center : GameObject = null;
 private static var satellite : GameObject = null;
-private static var center_scale = 0.3;
-private static var satellite_scale = 0.12;
+private static var center_scale = 0.2 * 1.1;
+private static var satellite_scale = 0.12 * 1.1;
 
 function make_circle (scale : float)
 {
