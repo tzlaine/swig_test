@@ -1,17 +1,21 @@
 ﻿// -*- javascript -*-
-Shader "Custom/hex_surface"
+Shader "Custom/solid_national_color"
 {
     Properties {
-        _primary_colors ("Primary Colors", 2D) = "white" {}
+        _secondary_colors ("Secondary Colors", 2D) = "white" {}
     }
 
-    SubShader { Pass { CGPROGRAM
+    SubShader { Pass {
+
+        ZTest Always
+
+        CGPROGRAM
 
         #pragma vertex vert
         #pragma fragment frag
         #include "UnityCG.cginc"
 
-        sampler2D _primary_colors;
+        sampler2D _secondary_colors;
 
         struct v2f
         {
@@ -23,7 +27,8 @@ Shader "Custom/hex_surface"
         {
             v2f o;
 
-            o.position = mul(UNITY_MATRIX_MVP, v.vertex);
+            float4 vertex = float4(v.vertex.xy, 0, 1);
+            o.position = mul(UNITY_MATRIX_MVP, vertex);
 
             // Pass through encoded owner ID, scaled for sampling.
             o.owner = v.texcoord1.x * 4.0;
@@ -33,11 +38,13 @@ Shader "Custom/hex_surface"
 
         float4 frag (v2f i) : COLOR
         {
-            float4 primary_color = tex2D(_primary_colors, float2(i.owner, 0.5));
-            return primary_color;
+            float4 secondary_color = tex2D(_secondary_colors, float2(i.owner, 0.5));
+            return secondary_color;
         }
 
-    ENDCG } }
+        ENDCG
+
+    } }
 
     FallBack "Diffuse"
 }

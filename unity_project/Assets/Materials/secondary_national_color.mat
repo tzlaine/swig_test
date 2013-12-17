@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: hex_surface
-  m_Shader: {fileID: 4800000, guid: a9398f9c4b9b5484cb9f033bc7e43d98, type: 3}
+  m_Name: secondary_national_color
+  m_Shader: {fileID: 4800000, guid: 1d1efd1c0eb974bd2a54473117b917ce, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -15,9 +15,9 @@ Material:
     m_TexEnvs:
       data:
         first:
-          name: _primary_colors
+          name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: a44f2b698943c4b44a15fdf2d895d3a8, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -27,17 +27,9 @@ Material:
           m_Texture: {fileID: 2800000, guid: d89e553707c91954887bbb5e619b180b, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _border_thickness
-        second: .125
+    m_Floats: {}
     m_Colors:
       data:
         first:
-          name: _primary_color
+          name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _secondary_color
-        second: {r: 0, g: 0, b: 0, a: 1}
