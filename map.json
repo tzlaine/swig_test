@@ -361,7 +361,14 @@
                     "3811": "none",
                     "3812": "BATS"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "Federation Survey Area",
+                "features": ["SB"],
+                "adjacent hexes": [
+                    "2701", "2801", "2901", "3001", "3101"
+                ]
+            }
         },
         "GOR": {
             "provinces": [
@@ -501,7 +508,15 @@
                     "5202": "none",
                     "5203": "BATS"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "Gorn Trusteeship Zone",
+                "features": ["SB"],
+                "adjacent hexes": [
+                    "4101", "4201", "4301", "4401", "4501", "4601",
+                    "4701", "4801", "4901", "5001", "5101"
+                ]
+            }
         },
         "HYD": {
             "provinces": [
@@ -590,7 +605,14 @@
                     "1218": "none",
                     "1219": "BATS"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "Hydran Old Colonies",
+                "features": ["SB"],
+                "adjacent hexes": [
+                    "0117", "0118", "0119"
+                ]
+            }
         },
         "ISC": {
             "provinces": [
@@ -758,7 +780,15 @@
                     "6115": "none",
                     "6116": "none"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "ISC Distant Zone",
+                "features": ["SB", "SB"],
+                "adjacent hexes": [
+                    "6104", "6105", "6106", "6107", "6108", "6109",
+                    "6110", "6111", "6112", "6113", "6114", "6115"
+                ]
+            }
         },
         "KLI": {
             "provinces": [
@@ -1033,7 +1063,14 @@
                     "1804": "none",
                     "1805": "BATS"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "Kzinti Barony",
+                "features": ["SB"],
+                "adjacent hexes": [
+                    "1101", "1201", "1301", "1401", "1501", "1601", "1701"
+                ]
+            }
         },
         "LYR": {
             "provinces": [
@@ -1147,7 +1184,14 @@
                     "0809": "BATS",
                     "0810": "MAJ"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "Lyran Far Stars",
+                "features": ["SB"],
+                "adjacent hexes": [
+                    "0101", "0102", "0103", "0104", "0105", "1016", "0107", "0108", "0109"
+                ]
+            }
         },
         "LDR": {
             "provinces": [
@@ -1421,7 +1465,14 @@
                     "5818": "BATS",
                     "5819": "BATS"
                 }
-            ]
+            ],
+            "offmap area": {
+                "name": "Rom Off-map",
+                "features": [],
+                "adjacent hexes": [
+                    "6118", "6119"
+                ]
+            }
         },
         "THO": {
             "provinces": [
