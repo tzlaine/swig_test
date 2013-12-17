@@ -2,8 +2,8 @@
 
 var circle : GameObject;
 var star : procedural_star;
-var starbase : place_starbase;
-var battlestation : place_battlestation;
+var starbase : procedural_starbase;
+var battlestation : procedural_battlestation;
 var place_tiles_ : place_tiles;
 var game_data_ : game_data;
 
@@ -35,11 +35,11 @@ function place_features (h : hex, m : map_t)
         mesh.uv2 = uv2;
         planet.renderer.sharedMaterial.renderQueue = 30;
     } else if (h.feature == 'SB') {
-        var sb : place_starbase = Instantiate(starbase);
+        var sb : procedural_starbase = Instantiate(starbase);
         sb.init(h.owner_id);
         sb.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
     } else if (h.feature == 'BATS') {
-        var bats : place_battlestation = Instantiate(battlestation);
+        var bats : procedural_battlestation = Instantiate(battlestation);
         bats.init(h.owner_id);
         bats.transform.position = place_tiles_.hex_center(hex_coord(h.x, h.y));
     }
@@ -87,8 +87,8 @@ function Update ()
     var features : Component[] = null;
     if (!features_combined) {
         var stars : Component[] = FindObjectsOfType(procedural_star);
-        var starbases : Component[] = FindObjectsOfType(place_starbase);
-        var battlestations : Component[] = FindObjectsOfType(place_battlestation);
+        var starbases : Component[] = FindObjectsOfType(procedural_starbase);
+        var battlestations : Component[] = FindObjectsOfType(procedural_battlestation);
         features = new Component[stars.Length + starbases.Length + battlestations.Length];
         System.Array.Copy(stars, 0, features, 0, stars.Length);
         System.Array.Copy(starbases, 0, features, stars.Length, starbases.Length);
