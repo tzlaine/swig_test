@@ -5,7 +5,7 @@ var move_speed : float = 16.0;
 var min_distance : float = 5;
 var max_distance : float = 150;
 
-var map_geometry : place_tiles = null;
+var map_geometry : place_hexes = null;
 
 private var anchor = Vector3.zero;
 private var distance : float = 100.0;

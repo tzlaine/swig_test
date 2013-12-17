@@ -26,34 +26,12 @@ function map_width ()
 function map_height ()
 { return map_origin.y * 2; }
 
-function adjacency (h : hex, h2 : hex) : int
-{
-    if (!h2 || h.owner_id != h2.owner_id)
-        return 2;
-    if (h.province != h2.province)
-        return 1;
-    return 0;
-}
-
-function adjacencies (h : hex, m : map_t) : int[]
-{
-    var retval : int[] = new int[6];
-    retval[0] = adjacency(h, game_data.hex_above_right(h, m));
-    retval[1] = adjacency(h, game_data.hex_above(h, m));
-    retval[2] = adjacency(h, game_data.hex_above_left(h, m));
-    retval[3] = adjacency(h, game_data.hex_below_left(h, m));
-    retval[4] = adjacency(h, game_data.hex_below(h, m));
-    retval[5] = adjacency(h, game_data.hex_below_right(h, m));
-    return retval;
-}
-
 function place_tile (h : hex, m : map_t)
 {
-    var obj : procedural_hex = Instantiate(hex_surface);
-    var adjacencies_ : int[] = adjacencies(h, m);
-    obj.init(h.owner_id);
-    obj.transform.position = hex_center(hex_coord(h.x, h.y));
-    obj.renderer.material.renderQueue = 10;
+    var surface : procedural_hex = Instantiate(hex_surface);
+    surface.init(h.owner_id);
+    surface.transform.position = hex_center(hex_coord(h.x, h.y));
+    surface.renderer.material.renderQueue = 10;
 }
 
 function Start ()
