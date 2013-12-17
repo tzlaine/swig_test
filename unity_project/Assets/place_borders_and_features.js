@@ -115,13 +115,20 @@ function Update ()
 {
     var features : Component[] = null;
     if (!features_combined) {
+        var dest = 0;
+        var borders : Component[] = FindObjectsOfType(procedural_borders);
         var stars : Component[] = FindObjectsOfType(procedural_star);
         var starbases : Component[] = FindObjectsOfType(procedural_starbase);
         var battlestations : Component[] = FindObjectsOfType(procedural_battlestation);
-        features = new Component[stars.Length + starbases.Length + battlestations.Length];
-        System.Array.Copy(stars, 0, features, 0, stars.Length);
-        System.Array.Copy(starbases, 0, features, stars.Length, starbases.Length);
-        System.Array.Copy(battlestations, 0, features, stars.Length + starbases.Length, battlestations.Length);
+        features = new Component[borders.Length + stars.Length + starbases.Length + battlestations.Length];
+        System.Array.Copy(borders, 0, features, dest, borders.Length);
+        dest += borders.Length;
+        System.Array.Copy(stars, 0, features, dest, stars.Length);
+        dest += stars.Length;
+        System.Array.Copy(starbases, 0, features, dest, starbases.Length);
+        dest += starbases.Length;
+        System.Array.Copy(battlestations, 0, features, dest, battlestations.Length);
+        dest += battlestations.Length;
     }
     if (features && features.Length && combine_features(GetComponent(MeshFilter), features)) {
         renderer.material.renderQueue = 30;
