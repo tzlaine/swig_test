@@ -34,9 +34,20 @@ private class hex
     var feature : String; // TODO: Make this all contents?
 };
 
+class offmap_area_t
+{
+    var owner : String;
+    var owner_id : int;
+    var name : String;
+    var hexes : hex_coord[];
+    var position : int; // 0: right, 1: top, 2: left
+    var features : String[];
+};
+
 class map_t
 {
     var hexes : hex[,];
+    var offmap_areas : Dictionary.<String, offmap_area_t>;
 };
 
 class hex_coord
@@ -166,6 +177,7 @@ function Awake ()
 
     var m : map_t = new map_t();
     m.hexes = new hex[map_width, map_height];
+    m.offmap_areas = new Dictionary.<String, offmap_area_t>();
 
     var zones = json['zones'];
 
@@ -191,6 +203,35 @@ function Awake ()
                     add_hex(m, hex.Key, zone.Key, province, strip_quotes(hex.Value.ToString()));
                 }
                 ++province;
+            }
+
+            if (zone.Value['offmap area'] != null) {
+                var offmap_area = zone.Value['offmap area'];
+                var oa = new offmap_area_t();
+                oa.owner = zone.Key;
+                oa.owner_id = id(oa.owner);
+                oa.name = strip_quotes(offmap_area['name']);
+                if (offmap_area['features'].Count) {
+                    oa.features = new String[offmap_area['features'].Count];
+                    for (i = 0; i < offmap_area['features'].Count; ++i) {
+                        oa.features[i] = strip_quotes(offmap_area['features'][i]);
+                    }
+                }
+                oa.hexes = new hex_coord[offmap_area['adjacent hexes'].Count];
+                for (i = 0; i < offmap_area['adjacent hexes'].Count; ++i) {
+                    oa.hexes[i] =
+                        str_to_hex_coord(strip_quotes(offmap_area['adjacent hexes'][i]));
+                    if (0 < i) {
+                        var position = 0;
+                        if (oa.hexes[0].x == oa.hexes[i].x) {
+                            position = oa.hexes[0].x ? 0 : 2; // right : left
+                        } else {
+                            position = 1; // top
+                        }
+                        oa.position = position;
+                    }
+                }
+                m.offmap_areas[zone.Key] = oa;
             }
         }
     }
