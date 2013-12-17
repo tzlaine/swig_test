@@ -5,7 +5,7 @@ var game_data_ : game_data;
 
 private var map_width_ : int = 0;
 private var map_height_ : int = 0;
-private var map_origin : Vector3 = Vector3(0, 0, 0);
+private var map_origin_ : Vector3 = Vector3(0, 0, 0);
 
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
@@ -14,17 +14,20 @@ function hex_center (hc : hex_coord)
 {
     var retval =
         Vector3(hc.x * 1.5, (map_height_ - 1 - hc.y) * 2 * sin_60, 0) -
-        map_origin;
+        map_origin_;
     if (hc.x % 2 == 1)
         retval.y -= sin_60;
     return retval;
  }
 
 function map_width ()
-{ return map_origin.x * 2; }
+{ return map_origin_.x * 2; }
 
 function map_height ()
-{ return map_origin.y * 2; }
+{ return map_origin_.y * 2; }
+
+function map_origin ()
+{ return map_origin_; }
 
 function place_tile (h : hex, m : map_t)
 {
@@ -45,9 +48,9 @@ function Start ()
     map_width_ = m.hexes.GetLength(0);
     map_height_ = m.hexes.GetLength(1);
 
-    map_origin = Vector3((map_width_ - 1) * 1.5 / 2,
-                         (map_height_ - 1) * 2 * sin_60 / 2,
-                         0);
+    map_origin_ = Vector3((map_width_ - 1) * 1.5 / 2,
+                          (map_height_ - 1) * 2 * sin_60 / 2,
+                          0);
 
     for (var x = 0; x < m.hexes.GetLength(0); ++x) {
         for (var y = 0; y < m.hexes.GetLength(1); ++y) {
