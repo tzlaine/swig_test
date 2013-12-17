@@ -7,16 +7,35 @@ var max_distance : float = 150;
 
 var map_geometry : place_hexes = null;
 
-private var anchor = Vector3.zero;
+private var anchor_ = Vector3.zero;
 private var distance : float = 100.0;
 private var rotation_x : float = 0.0;
 private var rotation_y : float = 0.0;
 private var max_rot : float = 70.0;
 private var dirty = true;
 
+
+function anchor () : Vector3
+{ return anchor_; }
+
+function set_anchor (a : Vector3)
+{
+    anchor_ = clamp_anchor(a);
+    dirty = true;
+}
+
+function clamp_anchor (a : Vector3) : Vector3
+{
+    var width = map_geometry.map_width();
+    var height = map_geometry.map_height();
+    a.x = Mathf.Clamp(a.x, -width / 2, width / 2);
+    a.y = Mathf.Clamp(a.y, -height / 2, height / 2);
+    return a;
+}
+
 function position_camera ()
 {
-    transform.position = anchor;
+    transform.position = anchor_;
     transform.localRotation = Quaternion.AngleAxis(rotation_x, Vector3.forward);
     transform.localRotation *= Quaternion.AngleAxis(rotation_y, Vector3.left);
     transform.position += distance * transform.TransformDirection(-Vector3.forward);
@@ -46,11 +65,8 @@ function Update ()
         up_projected_on_map * Input.GetAxis('Vertical');
     if (move_direction.sqrMagnitude) {
         move_direction = move_speed * move_direction;
-        anchor += move_direction * Time.deltaTime;
-        var width = map_geometry.map_width();
-        var height = map_geometry.map_height();
-        anchor.x = Mathf.Clamp(anchor.x, -width / 2, width / 2);
-        anchor.y = Mathf.Clamp(anchor.y, -height / 2, height / 2);
+        anchor_ += move_direction * Time.deltaTime;
+        anchor_ = clamp_anchor(anchor_);
         dirty = true;
     }
 

@@ -1,9 +1,21 @@
 ﻿#pragma strict
 
 var game_data_ : game_data;
+var camera_controller_ : camera_controller;
+var drag_sensitivity : float = 0.1;
 
 private var place_hexes_ : place_hexes = null;
+private var map_box : BoxCollider = null;
+private var map_hex_width : int = 0;
 private var map_hex_height : int = 0;
+private var can_drag = true;
+private var have_drag_origin = false;
+private var min_drag_distance = 5.0;
+private var min_drag_time = 0.1;
+private var dragging = false;
+private var mouse_drag_origin = Vector2(0, 0);
+private var drag_start_time = 0.0;
+private var drag_start_anchor = Vector3(0, 0, 0);
 
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
@@ -12,9 +24,8 @@ function hex_under_cursor () : hex_coord
 {
     var retval = hex_coord();
 
-    var box : BoxCollider = GetComponent(BoxCollider);
     var hit : RaycastHit;
-    if (box.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), hit, 1000.0)) {
+    if (map_box.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), hit, 1000.0)) {
         var point = hit.point + place_hexes_.map_origin();
         point.x += 1.0;
         point.y += sin_60;
@@ -35,7 +46,6 @@ function hex_under_cursor () : hex_coord
                 Vector2(point.x - loose_column * 1.5, point.y - loose_row * 2 * sin_60) -
                 left_corner;
             var angle = Vector2.Angle(Vector2.right, left_corner_to_point);
-            print(angle);
             if (60.0 < angle) {
                 hc = 0 < left_corner_to_point.y ?
                     game_data.hex_coord_above_left(hc) :
@@ -44,6 +54,11 @@ function hex_under_cursor () : hex_coord
         }
 
         retval = hc;
+    }
+
+    if (retval.x < 0 || map_hex_width <= retval.x ||
+        retval.y < 0 || map_hex_height <= retval.y) {
+        retval = hex_coord();
     }
 
     return retval;
@@ -58,11 +73,64 @@ function Start ()
     }
 
     place_hexes_ = GetComponent(place_hexes);
+    map_box = GetComponent(BoxCollider);
+    map_hex_width = m.hexes.GetLength(0);
     map_hex_height = m.hexes.GetLength(1);
+}
+
+function Update ()
+{
+    if (dragging && !Input.GetMouseButton(0)) {
+        can_drag = true;
+        have_drag_origin = false;
+        dragging = false;
+    }
 }
 
 function OnMouseUpAsButton ()
 {
-    var hc = hex_under_cursor();
-    print(hc.x + ',' + hc.y);
+    if (can_drag && !dragging) {
+        var hc = hex_under_cursor();
+        print(hc.x + ',' + hc.y);
+    }
+}
+
+function OnMouseDrag ()
+{
+    if (can_drag && !dragging) {
+        if (have_drag_origin) {
+            if (!dragging) {
+                var distance = (Input.mousePosition - mouse_drag_origin).magnitude;
+                var delta_t = Time.time - drag_start_time;
+                if (min_drag_distance < distance && min_drag_time < drag_start_time)
+                    dragging = true;
+            }
+        } else {
+            var hc = hex_under_cursor();
+            if (hc.x == hex_coord().x && hc.y == hex_coord().y) {
+                can_drag = false;
+            } else {
+                have_drag_origin = true;
+                mouse_drag_origin = Input.mousePosition;
+                drag_start_anchor = camera_controller_.anchor();
+                drag_start_time = Time.time;
+            }
+        }
+    }
+
+    if (dragging) {
+        var world_up = Camera.main.transform.TransformDirection(Vector3.up);
+        var world_left = Camera.main.transform.TransformDirection(Vector3.left);
+
+        var up_projected_on_map = Vector3.Cross(world_left, Vector3.forward);
+        var left_projected_on_map = Vector3.Cross(-Vector3.forward, world_up);
+
+        var mouse_delta = mouse_drag_origin - Input.mousePosition;
+        var delta =
+            mouse_delta.x * left_projected_on_map +
+            mouse_delta.y * up_projected_on_map;
+        camera_controller_.set_anchor(camera_controller_.anchor() + drag_sensitivity * delta);
+
+        mouse_drag_origin = Input.mousePosition;
+    }
 }
