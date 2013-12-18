@@ -88,6 +88,7 @@ function add_offmap (owner : String,
     }
     mesh.vertices = vertices;
     set_owner(mesh, owner_id);
+    mesh.RecalculateBounds();
     obj.renderer.material.renderQueue = 5;
     obj.transform.position =
         (lower_left + upper_right) / 2.0 - place_hexes_.map_origin();
@@ -111,6 +112,7 @@ function add_offmap (owner : String,
     mesh.vertices = vertices;
     mesh.triangles = triangles;
     set_owner(mesh, owner_id);
+    mesh.RecalculateBounds();
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
@@ -124,6 +126,7 @@ function add_offmap (owner : String,
     vertices[3] = Vector3(lower_left.x, lower_left.y + border_thickness, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
+    mesh.RecalculateBounds();
     set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
@@ -138,6 +141,7 @@ function add_offmap (owner : String,
     vertices[3] = Vector3(lower_left.x, upper_right.y, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
+    mesh.RecalculateBounds();
     set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
@@ -152,6 +156,7 @@ function add_offmap (owner : String,
     vertices[3] = Vector3(upper_right.x - border_thickness, upper_right.y, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
+    mesh.RecalculateBounds();
     set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
