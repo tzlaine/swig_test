@@ -277,6 +277,7 @@ MonoBehaviour:
   move_speed: 20
   min_distance: 5
   max_distance: 150
+  place_offmap_areas_: {fileID: 1885104398}
   map_geometry: {fileID: 541918417}
 --- !u!92 &899871639
 Behaviour:

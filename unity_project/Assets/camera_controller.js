@@ -4,6 +4,7 @@ var mousewheel_zoom_sensitivity : float = 1.0;
 var move_speed : float = 16.0;
 var min_distance : float = 5;
 var max_distance : float = 150;
+var place_offmap_areas_ : place_offmap_areas;
 
 var map_geometry : place_hexes = null;
 
@@ -26,8 +27,8 @@ function set_anchor (a : Vector3)
 
 function clamp_anchor (a : Vector3) : Vector3
 {
-    var width = map_geometry.map_width();
-    var height = map_geometry.map_height();
+    var width = map_geometry.map_width() + 2 * place_offmap_areas_.area_thickness;
+    var height = map_geometry.map_height() + 2 * place_offmap_areas_.area_thickness;
     a.x = Mathf.Clamp(a.x, -width / 2, width / 2);
     a.y = Mathf.Clamp(a.y, -height / 2, height / 2);
     return a;
