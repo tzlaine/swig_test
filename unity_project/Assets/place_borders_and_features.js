@@ -30,42 +30,46 @@ function adjacencies (h : hex, m : map_t) : int[]
     return retval;
 }
 
-function place_features (h : hex, m : map_t)
+function make_feature (feature : String, owner : String, position : Vector3)
 {
-    if (h.feature == 'none')
+    if (feature == 'none')
         return;
 
     var scale : float = 1.0;
+    var owner_id = game_data_.id(owner);
 
-    if (h.feature == 'capitol') {
+    if (feature == 'capitol') {
         var capitol : procedural_star = Instantiate(star);
-        capitol.init(h.owner_id, game_data_.capitol_star_points(h.owner));
-        capitol.transform.position = place_hexes_.hex_center(hex_coord(h.x, h.y));
+        capitol.init(owner_id, game_data_.capitol_star_points(owner));
         scale = 0.6;
         capitol.transform.localScale = Vector3(scale, scale, scale);
         capitol.renderer.sharedMaterial.renderQueue = 30;
-    } else if (h.feature == 'MIN' || h.feature == 'MAJ') {
+        capitol.transform.position = position;
+    } else if (feature == 'MIN' || feature == 'MAJ') {
         var planet : GameObject = Instantiate(circle);
-        planet.transform.position = place_hexes_.hex_center(hex_coord(h.x, h.y));
-        scale = h.feature == 'MIN' ? 0.2 : 0.3;
-        planet.transform.localScale = Vector3(scale, scale, -scale);
+        scale = feature == 'MIN' ? 0.2 : 0.3;
         var mesh : Mesh = planet.GetComponent(MeshFilter).mesh;
         var uv2 : Vector2[] = new Vector2[mesh.vertexCount];
         for (var i = 0; i < mesh.vertexCount; ++i) {
-            uv2[i] = Vector2(h.owner_id / 255.0, 1);
+            uv2[i] = Vector2(owner_id / 255.0, 1);
         }
         mesh.uv2 = uv2;
-        planet.renderer.sharedMaterial.renderQueue = 30;
-    } else if (h.feature == 'SB') {
+        planet.renderer.material.renderQueue = 30;
+        planet.transform.localScale = Vector3(scale, scale, -scale);
+        planet.transform.position = position;
+    } else if (feature == 'SB') {
         var sb : procedural_starbase = Instantiate(starbase);
-        sb.init(h.owner_id);
-        sb.transform.position = place_hexes_.hex_center(hex_coord(h.x, h.y));
-    } else if (h.feature == 'BATS') {
+        sb.init(owner_id);
+        sb.transform.position = position;
+    } else if (feature == 'BATS') {
         var bats : procedural_battlestation = Instantiate(battlestation);
-        bats.init(h.owner_id);
-        bats.transform.position = place_hexes_.hex_center(hex_coord(h.x, h.y));
+        bats.init(owner_id);
+        bats.transform.position = position;
     }
 }
+
+function place_features (h : hex)
+{ make_feature(h.feature, h.owner, place_hexes_.hex_center(hex_coord(h.x, h.y))); }
 
 function Start ()
 {
@@ -84,7 +88,7 @@ function Start ()
             borders.transform.position = place_hexes_.hex_center(hex_coord(x, y));
             borders.renderer.material.renderQueue = 20;
 
-            place_features(h, m);
+            place_features(h);
         }
     }
 }
