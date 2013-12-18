@@ -1,10 +1,13 @@
 ﻿#pragma strict
 
-var square : GameObject;
+private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
+
+var offmap_square : GameObject;
+var border_square : GameObject;
 var game_data_ : game_data;
 var place_hexes_ : place_hexes;
-
-private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
+var area_thickness : float = 3.0 * sin_60;
+var border_thickness : float = 0.12;
 
 
 function set_owner (mesh : Mesh, owner : int)
@@ -23,8 +26,6 @@ function add_offmap (owner : int,
                      position : int,
                      m : map_t)
 {
-    var area_thickness = 3.0 * sin_60;
-
     var lower_left : Vector3;
     var upper_right : Vector3;
     var right_hex = m.hexes.GetLength(0) - 1;
@@ -32,7 +33,7 @@ function add_offmap (owner : int,
     if (position == 1) { // top
         lower_left = Vector3(
             first.x * 1.5 - 0.5,
-            (top_hex - first.y) * 2 * sin_60,
+            (top_hex - first.y - 1) * 2 * sin_60,
             0
         );
 
@@ -71,7 +72,8 @@ function add_offmap (owner : int,
     }
 
     var size = upper_right - lower_left;
-    var obj : GameObject = Instantiate(square);
+
+    var obj : GameObject = Instantiate(offmap_square);
     var mesh : Mesh = obj.GetComponent(MeshFilter).mesh;
     var vertices : Vector3[] = mesh.vertices;
     for (var i = 0; i < mesh.vertexCount; ++i) {
@@ -80,9 +82,73 @@ function add_offmap (owner : int,
     }
     mesh.vertices = vertices;
     set_owner(mesh, owner);
-    obj.renderer.material.renderQueue = 5;// TODO: sharedMaterial?
+    obj.renderer.material.renderQueue = 5;
     obj.transform.position =
         (lower_left + upper_right) / 2.0 - place_hexes_.map_origin();
+
+    var triangles : int[] = new int[6];
+    triangles[0] = 0;
+    triangles[1] = 1;
+    triangles[2] = 2;
+    triangles[3] = 2;
+    triangles[4] = 3;
+    triangles[5] = 0;
+
+    // top border
+    obj = Instantiate(border_square);
+    mesh = obj.GetComponent(MeshFilter).mesh;
+    vertices = mesh.vertices;
+    vertices[0] = upper_right;
+    vertices[1] = Vector3(upper_right.x, upper_right.y - border_thickness, 0);
+    vertices[2] = Vector3(lower_left.x, upper_right.y - border_thickness, 0);
+    vertices[3] = Vector3(lower_left.x, upper_right.y, 0);
+    mesh.vertices = vertices;
+    mesh.triangles = triangles;
+    set_owner(mesh, owner);
+    obj.renderer.material.renderQueue = 8;
+    obj.transform.position = -place_hexes_.map_origin();
+
+    // bottom border
+    obj = Instantiate(border_square);
+    mesh = obj.GetComponent(MeshFilter).mesh;
+    vertices = mesh.vertices;
+    vertices[0] = Vector3(upper_right.x, lower_left.y + border_thickness, 0);
+    vertices[1] = Vector3(upper_right.x, lower_left.y, 0);
+    vertices[2] = lower_left;
+    vertices[3] = Vector3(lower_left.x, lower_left.y + border_thickness, 0);
+    mesh.vertices = vertices;
+    mesh.triangles = triangles;
+    set_owner(mesh, owner);
+    obj.renderer.material.renderQueue = 8;
+    obj.transform.position = -place_hexes_.map_origin();
+
+    // left border
+    obj = Instantiate(border_square);
+    mesh = obj.GetComponent(MeshFilter).mesh;
+    vertices = mesh.vertices;
+    vertices[0] = Vector3(lower_left.x + border_thickness, upper_right.y, 0);
+    vertices[1] = Vector3(lower_left.x + border_thickness, lower_left.y, 0);
+    vertices[2] = lower_left;
+    vertices[3] = Vector3(lower_left.x, upper_right.y, 0);
+    mesh.vertices = vertices;
+    mesh.triangles = triangles;
+    set_owner(mesh, owner);
+    obj.renderer.material.renderQueue = 8;
+    obj.transform.position = -place_hexes_.map_origin();
+
+    // left border
+    obj = Instantiate(border_square);
+    mesh = obj.GetComponent(MeshFilter).mesh;
+    vertices = mesh.vertices;
+    vertices[0] = upper_right;
+    vertices[1] = Vector3(upper_right.x, lower_left.y, 0);
+    vertices[2] = Vector3(upper_right.x - border_thickness, lower_left.y, 0);
+    vertices[3] = Vector3(upper_right.x - border_thickness, upper_right.y, 0);
+    mesh.vertices = vertices;
+    mesh.triangles = triangles;
+    set_owner(mesh, owner);
+    obj.renderer.material.renderQueue = 8;
+    obj.transform.position = -place_hexes_.map_origin();
 }
 
 function Start ()

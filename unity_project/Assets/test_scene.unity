@@ -505,6 +505,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d680fe5b5e3f41c4c85ce1b96896105d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  square: {fileID: 100000, guid: 25aa5bd2275d4fc408b98608f50e1588, type: 2}
+  offmap_square: {fileID: 100000, guid: 25aa5bd2275d4fc408b98608f50e1588, type: 2}
+  border_square: {fileID: 100000, guid: 8f399dcee2b01cc48b0fb55c9df89608, type: 2}
   game_data_: {fileID: 1305381365}
   place_hexes_: {fileID: 541918417}
+  area_thickness: 2.59807634
+  border_thickness: .119999997
