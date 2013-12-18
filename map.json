@@ -363,7 +363,7 @@
                 }
             ],
             "offmap area": {
-                "name": "Federation Survey Area",
+                "name": "Federation\nSurvey Area",
                 "features": ["SB"],
                 "adjacent hexes": [
                     "2701", "2801", "2901", "3001", "3101"
@@ -607,7 +607,7 @@
                 }
             ],
             "offmap area": {
-                "name": "Hydran Old Colonies",
+                "name": "Old Cols.",
                 "features": ["SB"],
                 "adjacent hexes": [
                     "0117", "0118", "0119"
@@ -1467,7 +1467,7 @@
                 }
             ],
             "offmap area": {
-                "name": "Rom Off-map",
+                "name": "Rom\nOff-map",
                 "features": [],
                 "adjacent hexes": [
                     "6118", "6119"
