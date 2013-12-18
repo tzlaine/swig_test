@@ -8,6 +8,7 @@ var text : TextMesh;
 var game_data_ : game_data;
 var place_hexes_ : place_hexes;
 var feature_factory : place_borders_and_features;
+var map_interactions_ : map_interactions;
 var area_thickness : float = 3.0 * sin_60;
 var border_thickness : float = 0.12;
 var secondary_colors : Texture2D;
@@ -207,6 +208,12 @@ function add_offmap (owner : String,
         text_mesh.transform.position.y -= features_width / 4.0;
         text_mesh.transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
+
+    map_interactions_.add_offmap_area(
+        owner,
+        lower_left - place_hexes_.map_origin(),
+        upper_right - place_hexes_.map_origin()
+    );
 }
 
 function Start ()

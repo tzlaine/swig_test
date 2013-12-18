@@ -16,9 +16,35 @@ private var dragging = false;
 private var mouse_drag_origin = Vector2(0, 0);
 private var drag_start_time = 0.0;
 private var drag_start_anchor = Vector3(0, 0, 0);
+private var offmap_areas : Dictionary.<String, Rect> = new Dictionary.<String, Rect>();
 
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
+
+function add_offmap_area (owner : String, lower_left : Vector3, upper_right : Vector3)
+{
+    offmap_areas[owner] =
+        Rect(lower_left.x,
+             lower_left.y,
+             upper_right.x - lower_left.x,
+             upper_right.y - lower_left.y);
+}
+
+function offmap_area_under_cursor () : String
+{
+    var retval = '';
+    var hit : RaycastHit;
+    if (map_box.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), hit, 1000.0)) {
+        for (var offmap : System.Collections.Generic.KeyValuePair.<String, Rect> in
+             offmap_areas) {
+            if (offmap.Value.Contains(hit.point)) {
+                retval = offmap.Key;
+                break;
+            }
+        }
+    }
+    return retval;
+}
 
 function hex_under_cursor () : hex_coord
 {
@@ -91,7 +117,12 @@ function OnMouseUpAsButton ()
 {
     if (can_drag && !dragging) {
         var hc = hex_under_cursor();
-        print(hc.x + ',' + hc.y);
+        if (hc.x == hex_coord().x && hc.y == hex_coord().y) {
+            var offmap_owner = offmap_area_under_cursor();
+            print('offmap for owner ' + offmap_owner);
+        } else {
+            print('hex ' + hc.x + ',' + hc.y);
+        }
     }
 }
 
@@ -108,8 +139,11 @@ function OnMouseDrag ()
         } else {
             var hc = hex_under_cursor();
             if (hc.x == hex_coord().x && hc.y == hex_coord().y) {
-                can_drag = false;
-            } else {
+                var offmap_owner = offmap_area_under_cursor();
+                if (offmap_owner == '')
+                    can_drag = false;
+            }
+            if (can_drag) {
                 have_drag_origin = true;
                 mouse_drag_origin = Input.mousePosition;
                 drag_start_anchor = camera_controller_.anchor();
