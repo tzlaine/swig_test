@@ -507,6 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offmap_square: {fileID: 100000, guid: 25aa5bd2275d4fc408b98608f50e1588, type: 2}
   border_square: {fileID: 100000, guid: 8f399dcee2b01cc48b0fb55c9df89608, type: 2}
+  text: {fileID: 10200000, guid: 654b8e6b1663347fabe986d26c5571f8, type: 2}
   game_data_: {fileID: 1305381365}
   place_hexes_: {fileID: 541918417}
   feature_factory: {fileID: 1152743489}

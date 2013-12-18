@@ -4,6 +4,7 @@ private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
 var offmap_square : GameObject;
 var border_square : GameObject;
+var text : TextMesh;
 var game_data_ : game_data;
 var place_hexes_ : place_hexes;
 var feature_factory : place_borders_and_features;
@@ -26,6 +27,7 @@ function add_offmap (owner : String,
                      first : hex_coord,
                      second : hex_coord,
                      position : int,
+                     name : String,
                      features : String[],
                      m : map_t)
 {
@@ -153,26 +155,50 @@ function add_offmap (owner : String,
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
+    var features_width = 0.0;
+
     if (features) {
         for (i = 0; i < features.Length; ++i) {
             var start : Vector3;
             var offset : Vector3;
             if (position == 0) { // right
                 start = Vector3(upper_right.x - 1.0, lower_left.y + sin_60, 0);
-                offset = Vector3(0, 2 * sin_60 , 0);
+                offset = Vector3(0, 2 * sin_60, 0);
             } else if (position == 1) { // top
                 start = Vector3(upper_right.x - 1.0, upper_right.y - sin_60, 0);
                 offset = Vector3(1.5, 0, 0);
             } else { // left
                 start = Vector3(lower_left.x + 1.0, upper_right.y - sin_60, 0);
-                offset = Vector3(0, -2 * sin_60 , 0);
+                offset = Vector3(0, -2 * sin_60, 0);
             }
             feature_factory.make_feature(
                 features[i],
                 owner,
                 start + i * offset - place_hexes_.map_origin()
             );
+            features_width =
+                features.Length * Mathf.Abs(position == 1 ? offset.x : offset.y);
         }
+    }
+
+    var text_mesh : TextMesh = Instantiate(text);
+    text_mesh.text = name;
+    text_mesh.transform.position =
+        (lower_left + upper_right) / 2.0 - place_hexes_.map_origin();
+    if (position == 0) { // right
+        text_mesh.transform.position.x =
+            upper_right.x - area_thickness / 3.0 - place_hexes_.map_origin().x;
+        text_mesh.transform.position.y += features_width / 4.0;
+        text_mesh.transform.localRotation = Quaternion.Euler(0, 0, -90);
+    } else if (position == 1) { // top
+        text_mesh.transform.position.y =
+            upper_right.y - area_thickness / 3.0 - place_hexes_.map_origin().y;
+        text_mesh.transform.position.x -= features_width / 4.0;
+    } else { // left
+        text_mesh.transform.position.x =
+            lower_left.x + area_thickness / 3.0 - place_hexes_.map_origin().x;
+        text_mesh.transform.position.y -= features_width / 4.0;
+        text_mesh.transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 }
 
@@ -195,6 +221,7 @@ function Start ()
                        oa.Value.hexes[oa.Value.hexes.Length - 1] :
                        oa.Value.hexes[0],
                    oa.Value.position,
+                   oa.Value.name,
                    oa.Value.features,
                    m);
     }
