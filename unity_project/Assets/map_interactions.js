@@ -80,7 +80,7 @@ function Start ()
 
 function Update ()
 {
-    if (dragging && !Input.GetMouseButton(0)) {
+    if (!Input.GetMouseButton(0)) {
         can_drag = true;
         have_drag_origin = false;
         dragging = false;
