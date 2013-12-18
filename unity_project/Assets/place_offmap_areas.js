@@ -10,6 +10,7 @@ var place_hexes_ : place_hexes;
 var feature_factory : place_borders_and_features;
 var area_thickness : float = 3.0 * sin_60;
 var border_thickness : float = 0.12;
+var secondary_colors : Texture2D;
 
 
 function set_owner (mesh : Mesh, owner : int)
@@ -183,6 +184,7 @@ function add_offmap (owner : String,
 
     var text_mesh : TextMesh = Instantiate(text);
     text_mesh.text = name;
+    text_mesh.color = secondary_colors.GetPixel(owner_id * 4, 0);
     text_mesh.transform.position =
         (lower_left + upper_right) / 2.0 - place_hexes_.map_origin();
     if (position == 0) { // right

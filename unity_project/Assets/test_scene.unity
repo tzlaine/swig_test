@@ -513,3 +513,4 @@ MonoBehaviour:
   feature_factory: {fileID: 1152743489}
   area_thickness: 2.59807634
   border_thickness: .119999997
+  secondary_colors: {fileID: 2800000, guid: d89e553707c91954887bbb5e619b180b, type: 3}
