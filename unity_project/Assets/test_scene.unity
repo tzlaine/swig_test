@@ -509,5 +509,6 @@ MonoBehaviour:
   border_square: {fileID: 100000, guid: 8f399dcee2b01cc48b0fb55c9df89608, type: 2}
   game_data_: {fileID: 1305381365}
   place_hexes_: {fileID: 541918417}
+  feature_factory: {fileID: 1152743489}
   area_thickness: 2.59807634
   border_thickness: .119999997

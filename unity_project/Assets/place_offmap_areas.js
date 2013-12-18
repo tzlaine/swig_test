@@ -6,6 +6,7 @@ var offmap_square : GameObject;
 var border_square : GameObject;
 var game_data_ : game_data;
 var place_hexes_ : place_hexes;
+var feature_factory : place_borders_and_features;
 var area_thickness : float = 3.0 * sin_60;
 var border_thickness : float = 0.12;
 
@@ -20,10 +21,12 @@ function set_owner (mesh : Mesh, owner : int)
 }
 
 // first is left/bottom, second is right/top
-function add_offmap (owner : int,
+function add_offmap (owner : String,
+                     owner_id : int,
                      first : hex_coord,
                      second : hex_coord,
                      position : int,
+                     features : String[],
                      m : map_t)
 {
     var lower_left : Vector3;
@@ -81,7 +84,7 @@ function add_offmap (owner : int,
         vertices[i].y *= size.y;
     }
     mesh.vertices = vertices;
-    set_owner(mesh, owner);
+    set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 5;
     obj.transform.position =
         (lower_left + upper_right) / 2.0 - place_hexes_.map_origin();
@@ -104,7 +107,7 @@ function add_offmap (owner : int,
     vertices[3] = Vector3(lower_left.x, upper_right.y, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
-    set_owner(mesh, owner);
+    set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
@@ -118,7 +121,7 @@ function add_offmap (owner : int,
     vertices[3] = Vector3(lower_left.x, lower_left.y + border_thickness, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
-    set_owner(mesh, owner);
+    set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
@@ -132,7 +135,7 @@ function add_offmap (owner : int,
     vertices[3] = Vector3(lower_left.x, upper_right.y, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
-    set_owner(mesh, owner);
+    set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
@@ -146,9 +149,31 @@ function add_offmap (owner : int,
     vertices[3] = Vector3(upper_right.x - border_thickness, upper_right.y, 0);
     mesh.vertices = vertices;
     mesh.triangles = triangles;
-    set_owner(mesh, owner);
+    set_owner(mesh, owner_id);
     obj.renderer.material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
+
+    if (features) {
+        for (i = 0; i < features.Length; ++i) {
+            var start : Vector3;
+            var offset : Vector3;
+            if (position == 0) { // right
+                start = Vector3(upper_right.x - 1.0, lower_left.y + sin_60, 0);
+                offset = Vector3(0, 2 * sin_60 , 0);
+            } else if (position == 1) { // top
+                start = Vector3(upper_right.x - 1.0, upper_right.y - sin_60, 0);
+                offset = Vector3(1.5, 0, 0);
+            } else { // left
+                start = Vector3(lower_left.x + 1.0, upper_right.y - sin_60, 0);
+                offset = Vector3(0, -2 * sin_60 , 0);
+            }
+            feature_factory.make_feature(
+                features[i],
+                owner,
+                start + i * offset - place_hexes_.map_origin()
+            );
+        }
+    }
 }
 
 function Start ()
@@ -161,7 +186,8 @@ function Start ()
 
     for (var oa : System.Collections.Generic.KeyValuePair.<String, offmap_area_t> in
          m.offmap_areas) {
-        add_offmap(oa.Value.owner_id,
+        add_offmap(oa.Value.owner,
+                   oa.Value.owner_id,
                    oa.Value.position == 1 ?
                        oa.Value.hexes[0] :
                        oa.Value.hexes[oa.Value.hexes.Length - 1],
@@ -169,40 +195,7 @@ function Start ()
                        oa.Value.hexes[oa.Value.hexes.Length - 1] :
                        oa.Value.hexes[0],
                    oa.Value.position,
+                   oa.Value.features,
                    m);
     }
 }
-
-/*
-private var hexes_combined = false;
-
-function combine_hexes (mesh_filter : MeshFilter, components : Component[]) : boolean
-{
-    if (!components.Length)
-        return false;
-
-    var mesh = new Mesh();
-    mesh_filter.mesh = mesh;
-
-    var combine : CombineInstance[] = new CombineInstance[components.Length];
-    for (var i = 0; i < components.Length; i++){
-        var hex_mesh_filter : MeshFilter = components[i].GetComponent(MeshFilter);
-	combine[i].mesh = hex_mesh_filter.mesh;
-	combine[i].transform = hex_mesh_filter.transform.localToWorldMatrix;
-	hex_mesh_filter.gameObject.SetActive(false);
-    }
-    mesh.CombineMeshes(combine);
-
-    return true;
-}
-
-function Update ()
-{
-    if (!hexes_combined &&
-        combine_hexes(GetComponent(MeshFilter),
-                      FindObjectsOfType(procedural_hex))) {
-        renderer.material.renderQueue = 10;
-        hexes_combined = true;
-    }
-}
-*/
