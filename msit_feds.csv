@@ -1,0 +1,373 @@
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+BATTLESHIP,,,,,,,,,,
+BB,73,20(4)/10(2),AO,10,Y175 (318.31),BB(2),None,See 318.31: 36+8,7.2,Battleship; never built.
+BBV,93,,Future,10,,BB(2),,,,Battleship Carrier;never built.
+SDA,94A,,Future,10,,BB(2),,,,Conjectural Stellar Domination Ship
+SDS,94,,Future,10,,BB(2),,,,Conjectural Stellar Domination Ship
+DREADNOUGHTS,,,,,,,,,,
+DN,2,10/5,F&E,10,Y148,DN(2),See (440.4),Schedule: 12,3.6,Base Hull Type (DN); Early DN
+DNL,91,11F/6,AO,9,Y167,DNL(2),None,For DN: 16,4.2,Fast Dreadnought (525.1)
+CVA,13,10-12(15)/5-6(6),F&E,10,Y171,DN(2),"From DN‡: 6+30
+From DN+‡: 5+30
+From DNG/H: 4+30",Schedule: 18+30 For DN/DN+/DNG: 18+30,4.8,Heavy Carrier. Fighters are F14s (8) and A10s (7); see (302.352). Can never be converted to use A20s due to balcony.
+CVA (4CVA),—,24-30(15)/11-16(6) CVA+ECL+ 2DE(or DWA),F&E,10,Y171,Group,Individual Ships,Individual Ships,Ships,"Heavy Carrier Group.
+See (302.352) for special fighters."
+DN+,17,11/6,F&E,10,Y172,DN(2),From DN: 2,For DN: 14,4.2,Basic Hull (DN+). No early variants.
+DVL,95,11(8)F/6(4),FO,9,Y173,DNL(2),From DNL: 2+16,For DN: 18+16,4.2,Fast carrier variant of DNL. Max one in service at any time. Special (302.352) squadron (F14s). Must be escorted (medium carrier) except when on raids.
+CVN (4CVN),—,"24-30(15)/11-16(6) CVA+NAC
++DWA(orDE)+FFE",F&E,10,Y175,Group,Individual Ships,Individual Ships,Ships,"Heavy Carrier Group
+Fighters are F14s (8) and A10s (7); see (302.352)."
+DNG,61,12/6,F&E,10,Y175,DN(2),"From DN+: 2
+From DN: 4 (minor)",For DN: 16,4.8,Basic Hull (DNG). No early variants.
+DNH,90,14/7,AO,10,Y178,DN(2),"From DNG: 2
+From DN+: 4
+From DN: 6",For DN: 18,5.4,Heavy Variant of DN. No early variants.
+DLM,A10,"10-11F/6
++HDW Module",Future,9,Y180,DNL(2),From DNL: 3,For DN: 18,4.2,"Fast Dreadnought, uses HDW modules. Conjectural."
+DNW,123,13/7,SO,10,Y180,DNW(2),From NCL: NA From NCA: 10,For NCA or DN: 15,3.9,Conjectural war dreadnought
+SCS (4SCS),—,"25-30(24)/12-
+16(12) SCS+NAC+ DWE+FFE",CO,10,"Y181
+or See (502.73)",Group,Individual Ships,Individual Ships,Ships,"Space Control Ship Group Fighters (302.352) are three
+squadrons: F14 (8), F18 (6), A20 (10)."
+SCS,32,"11-12(24)/5-6(12)
+-correctly-
+11-12(10V14)/5-
+6(5V7)",F&E,10,"Y181
+or See (502.73)",DN(2),"From CVA: 3+18
+From DN‡: 9+48
+From DN+‡: 7+48
+From DNG/H: 5+48",For CVA: 21+48,4.8,"Space Control Ship Fighters (302.352) are three
+squadrons: F14 (8), F18 (6), A20 (10)."
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+HEAVY BATTLECRUISERS,,,,,,,,,,
+BC,33,10/5,F&E,10,Y177,BC(3),"From BCS/V: 2
+See (440.4)",For CA/DN: 10,3.0,Basic Hull (BCH)
+BCS,75,10(9H4)/5(4▲H2),AO,10,Y182,BC(3),"From BC: 4+8+18
+From BCV: 2+10",For CA/DN/SCS: 14+8+18,3.0,Battle Control Variant of BC. F14 half- squadron (4) and F111 squadron (9).
+BCV,74,10(8)/5(4),AO,10,Y182,BC(3),From BC: 2+16,For CA/DN/CVA: 12+16,3.0,"Medium carrier variant of BC.
+F14 squadron 8 factors (302.352)."
+BCJ,64,11S/5,CO,10,Y183,BC(3),From BC: 1,For CA/DN: 10,3.0,Shock Variant (Roll: 12 on 2D6; non- shock attack factor = 9)
+HEAVY CRUISERS,,,,,,,,,,
+CA,4,8/4,F&E,8,Y129,CA(3),See (440.4),Schedule: 8,2.4,Base Hull Type (CA)
+GSC,16,6-8◆/3-4,SO,8,Y140,CA(3),"From CA: 5
+From CVL: 1
+From COV: 1",For CA: 15,2.4,"Survey Ship, Scout; (4EW:2AF)(1EW:6AF)"
+CC,3,9/5,F&E,9,Y142,CA(3),From CA: 2,"Schedule: 9
+For CA (Y177): 9",2.7,Command Variant
+CS,131,8-7/4,SO,8,Y165,CS(3),From CA: 1,"For CA: 7
+(one/year)",2.1,Strike Cruiser
+CVL,16A,6-8◆(3)/3-4(1),F&E,8,Y166,CA(3),"From CA: 7+6
+From COV: 1+6","For CA: 14+6
+(replacement only)",2.4,"Medium Carrier, Single Ship Carrier, Scout; (4EW:2AF)(1EW:6AF)"
+CF,82,7-8F/4,AO,8,Y167,CA(3),"From CA: 3
+See (525.1)",For CA: 10,2.4,Fast Cruiser (525.1)
+CVS (3CVS),—,16-19(6)/7-10(3) CVS+DE(or DWA)+FFE,F&E,9,Y167,Group,Individual Ships,Individual Ships,Ships,Medium Carrier Group
+CVS,29,7-8(6)/3-4(3),F&E,9,Y167,CA(3),From CA: 2+12,For CA: 10+12,2.4,Medium Carrier
+COV,51,6-8◆G/3-4G,CO,8,Y169,CA(3),From CVL: 1 (Save Fighters) From CA: 6,"For CA: 13
+(replacment only)",2.4,Commando version of survey cruiser Scout (4EW:2AF)(1EW:6AF)
+CAD,87,8◆<4>/4,AO,8,Y172,CA(3),"From CA: 3
+See (525.321)","See (525.321).
+In Free Campaigns, For CA: 11",2.4,"Drone bombardment variant of CA; see (525.321) for special construction; EW
+=2; limit of 1 in service."
+CFS,A11,4-8F◆/2-4,SO,8,Y172,CA(3),From CF: 4 (minor) From CA: 6,For CA: 12,2.4,"Fast Scout, EW=4"
+CVB (3CVB),—,"16-19(8)/7-10(4) CVB+DE(or DWA)
++FFE",F&E,9,Y172(8) Y169(6),Group,Individual Ships,Individual Ships,Ships,"Medium Carrier Group
+See (302.252) for F15 fighters. 6 fighter factors until Y172"
+CVB,29A,7-8(8)/3-4(4),F&E,9,Y172(8) Y169(6),CA(3),"From CVS: (432.5)
+From CA: 2+8+16","See (432.5)
+For CA: 10+8+16",2.4,Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants.
+CVD,97,3-8(12)/1-4(6),FO,9,Y173,CA(3),"From CA: 3+24
+From CVS: 2+12",For CA: 10+24,2.4,"Carrier, oversized squadron."
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+CVF,96,7-8(6)F/3-4(3),FO,8,Y173,CA(3)[CF],"From CF: 2+12
+From CA: 4+12
+From CVS/CVB: 2",For CA: 12+12,2.4,Fast Carrier variant of CF. No more than one in service at any time.
+CAM,127,10✛/4,Future,8,Y175,CA(3),From CA: 5,For CA: 10,2.4,Conjectural Mauler
+CBD (3CBD),—,17-21(8)/7-11(4) CVB+NAC+DWA,CO,9,Y175,Group,Individual Ships,Individual Ships,Ships,Medium carrier group with different escorts; F-15 fighters (302.352)
+CAV,132,7-8(10V)/3-4(5V),FO,9,Y177,CA(3),"From CA: 3+20
+From CVS: 2+8",For CA: 10+20,2.4,"Medium carrier (version of CVS), A20 fighters."
+ACS,129,"3-8◆(10V6)
+/1-4(5V3)",FO,9,Y177,CA(3),"From CA: 5+32
+From CVS: 4+20
+From CVD: 3+8
+From CAV: 4+12",For CA: 13+32,2.4,"Area Control Ship, A20 fighters, Heavy/Medium Carrier, Scout. EW=2. Conjectural."
+CVH,100,7-8(9H)/3-4(4▲H),FO,9,Y177,CA(3),"From CA: 3+18
+From CVS: 2+6",For CA: 10+18,2.4,"Medium Carrier, version of CVS, F111 fighters."
+DCS,133,"2-9◆(9H6)
+/1-5(4▲H3)",FO,9,Y178,CA(3),"From CA: 4+12+18
+From CVS: 3+18
+From CVH: 2+12",For CC: 13+12+18,2.7,"Division Control Ship, Medium/Heavy Carrier, Scout, EW=2.
+[Note: Counters lack scout diamond.]"
+CX,201,12/6,AO,10,Y180,CA(3),"From CA: 6
+From CC: 5",For CA/CC: 12,3.6,X-Ship
+GVX,CL26 A7,"10-12(9H)◆/
+5-6(4H)◆",AO,9,Y182,CA(3),"From CVL: 6+12
+From CX: 3+18
+From CA: 9+18",For CA: 15+18,3.6,"X-ship, Medium Carrier; carried F111s on raids as single ship carrier. Limit of one in service at any given time. Scout (4EW:6AF) (1EW:10AF). Crippled EW=1."
+CB,,,Future,9,,,,,,Heavy Command Cruiser
+VDB,,,Future,8,,,,,,Unbuilt variant
+GSX,204,,Future,9,,,,,,"X-ship, Survey Cruiser"
+TUGS AND PODS,,,,,,,,,,
+TG,8,2-8/0-4,F&E,8,Y134,TG(3),From CA: 4,For CA: 6,1.5,Tug
+BP+,10,10-4/None,CO,2,Y145,Pod,None,(431.22): 8,1.0,Heavy Battle Pod; max 3 in service.
+REP POD,—,0/None,F&E,0,Y159,Tug Mission,—NA—,Replacement: 5,0.0,See (422.8)
+A-POD,53,0GG/None,CO,0,Y160,Pod,None,(521.711): 4,0.5,"Troop Pod, max 2 in service."
+SP,135,0◆/None,AO,1,Y165,Pod,None,(431.2): 5,0.5,"Scout pod; EW varies, see (317.51); see (317.53); max 3 in service."
+VP,57,0(6)/None,CO,1,Y166,Pod,None,(431.22): 2+12,0.5,Medium Carrier pod; max 3 in service.
+VAP+,22,0(12)/None,CO,1,Y172,Pod,None,(431.22): 4+24,1.0,"Heavy carrier pod (heavy pod), max 3 in service."
+LBP,58,6-0/None,CO,2,Y173,Pod,None,(431.22): 6,0.5,Light Battle Pod; max 2 in service.
+P-AVP,,0[20V]/None,FO,0,Y178,Pod,None,Cost = 2+20,0.0,Pod for spare A20s. Limit 2 in service.
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+VHP,136,0[18H]/None,AO,0,Y178(B),Pod,None,(431.22): 3+18,0.5,"Pod to carry spare F111s; use as FCR (526.623), cannot operate fighters; max two in service. (Cost is correct.)"
+HFP,136,0(9H)◆/None,AO,1,Y181,Pod,None,(527.28): 2+18,0.5,F111 carrier pod; (2EW:2AF) (1EW:BP/LBP/SP); limit 2.
+P-FCF,101,,,,,,,,,Error: The SFB designation is P-FCF but this counter is in AO as VHP.
+P-HVL,A8 CL26,2◆(9H)/None,,,,,,,,Pod able to operate six F111s. EW=2.
+NEW HEAVY CRUISERS,,,,,,,,,,
+NCA,77,8/4,CO,8,Y174,NCA(3),From NCL: 3,Schedule: 6,1.8,Base Hull Type (NCA).
+NCC,106,10-9/5,SO,9,Y175,NCA(3),"From NCL‡: 4
+From NCA: 2",For NCA: 8,2.4,Command Variant of NCA.
+NCF,108,7-8F/3-4,SO,8,Y175,NCA(3),"From NCL: 5
+From NCA: 2","For NCA: 8
+(525.12)",1.8,"Fast raider variant of NCA.
+NO discount for double conversion."
+NCV,107,8(6)/4(3),FO,8,Y175,NCA(3),"From NCA: 2+12
+From NVS: 3 From NVL: 4‡",For NCA: 8+12,1.8,Carrier variant of NCA.
+NDC,109,8[4]/4,SO,8,Y175,NCA(3),"From NCL‡: 5
+From NCD: 3
+From NCA: 2",For NCA: 8,1.8,Drone bombardment variant of NCA. Not a scout.
+NSR,110,6-8◆/3-4,SO,8,Y175,NCA(3),"From NCA: 5
+From NHS: 3 From NCL: 8‡ From NSC: 5‡",For NCA: 11,1.8,"Survey Ship, Scout, (2EW:2AF)(1EW:6AF)"
+NHS,114,3-8◆/1-4,SO,8,Y176,NCA(3),"From NCL: 7
+From NSC: 4
+From NCA: 4",For NCA: 10.,1.8,"Heavy Scout, variant of NCA. EW=4."
+NAE,115,6-8■/3-4■,FO,8,Y177,NCA(3),"From NCA: 1
+From NEC: 4
+From NAC: 3",For NCA: 7,1.8,Heavy escort variant of NCA
+NDS,111,3-8◆(9H6),FO,8,Y177,NCA(3),From CVP: 5+12,For NCA:,1.8,"Division Control Ship, Medium/Heavy"
+,,,,,,,From NCA: 5+12+18,,,
+,,,,,,,From NCV: 3+18,,,
+,,,,,,,"From NHV: 2+12
+From NVL: 5+18",,,
+,,/2-4(4▲H3),,,,,From NVS: 5+18,10+12+18,,"Carrier, Scout, EW=2."
+NHA,134,6-8◆(10V)/3-4(5V),SO,8,Y179,NCA(3),"From NCA: 5+20
+From NVA: 3",For NCA: 11+20,1.8,"Special carrier for A20s, operates in many ways as a PFT; Scout (2EW:2AF; 1EW:6AF). No early
+variants. See (527.0)."
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+NHV,113,6-8◆(9H)/3-4(4▲H),FO,8,Y179,NCA(3),"From NCA: 2+18
+From NVH: 3 From NCL: 4+18‡",For NCA: 11+18,1.8,"Special carrier for F111s, operates in many ways as a PFT; Scout (2EW:2AF; 1EW:6AF). No early
+variants. See (527)."
+NSRV,110A,6-8(1)◆/3-4(▲),SO,8,Y180,NCA(3),"From NCA: 5+2
+From NHS: 3+2
+From NCL: 8+2‡ From NSC: 5+2‡",For NCA: 11+2,1.8,"Survey Ship, Scout, (2EW:2AF)(1EW:6AF);
+Single-ship medium carrier"
+NSV,122,4-8(10V)◆/2-4(5V),SO,8,Y180,NCA(3),"From NCA: 5+20
+From CSV: 3
+From NCL‡: 7+20",For NCA: 11+20,1.8,"Heavy Scout Carrier, EW=3, heavy A20 fighters"
+NEW LIGHT CRUISERS,,,,,,,,,,
+NCL,18,7/4,F&E,6,Y169,NCL(3),See (440.4),Schedule: 5,1.25,Base Hull Type (NCL); war cruiser. §
+NCD,36,7<4>/4,F&E,6,Y171(B),NCL(3),From NCL: 2,For NCL: 7,1.25,Drone Bombardment Variant §
+NCT,79,4-7G/2-4G,CO,6,Y172,NCL(3),From NCL: 2,For NCL: 5,1.25,Commando varaint of NCL §
+CVP,98,3-7(9)/1-4(4▲),FO,6,Y173,NCL(3),"From NCL: 3+18
+From NVL: 2+6
+From NVS: 2+6",For NCL: 7+18,1.25,"Patrol Carrier, ovesized squadron."
+LTT,38,2-7/0-4,CO,6,Y173,NCL(3),From NCL: 3,For NCL: 5,1.25,Light Tactical Transport
+NVL (3NVL),—,12-19(6)/6-11(3) NVL+NEC+FFE,F&E,6,Y173,Group,Individual Ships,Individual Ships,Ships,Medium Carrier Group
+NEC,20,4-7■/2-4■,F&E,6,Y173,NCL(3),From NCL: 1,For NCL: 6,1.25,Heavy Escort §
+NVL,35,4-7(6)/2-4(3),F&E,6,Y173,NCL(3),From NCL: 2+12,For NCL: 7+12,1.25,Medium Carrier
+CLC,37,,NO?,7,Y175,NCL(3),From NCL: 2,For NCL:,,Commmand variant of NCL
+MCL,128,7✛/4,NO?,6,Y175,NCL(3),From NCL: 4,For NCL: 7,1.25,Conjectural Mauler
+NAC,59,5-7■/2-4■,F&E,6,Y175,NCL(3),From NCL/NEC: 1,For NCL: 6,1.25,Heavy Escort. No early variant (443.31). §
+NSC,19,3-7◆/1-4,F&E,6,Y175,NCL(3),From NCL/NCD: 3,For NCL: 8,1.25,Scout; EW = 3 §
+NVD (3NVD),—,16-20(6)/7-11(3) NVS+NAC+DWA,CO,6,Y175,Group,Individual Ships,Individual Ships,Ships,Medium Carrier Group with different escorts
+NVS (3NVS),—,15-19(6)/7-11(3) NVS+NAC+FFE,F&E,6,Y175,Group,Individual Ships,Individual Ships,Ships,Medium Carrier Group
+NVS,60,6-7(6)/3-4(3),F&E,6,Y175,NCL(3),"From NVL: 2
+From NCL: 2+12",For NCL: 7+12,1.25,Medium Carrier. No early variants.
+CSV,99,3-7◆(10V)/1-4(5V),FO,6,Y177,NCL(3),"From NCL: 5+20
+From NVL/S: 3+8
+From CVP: 3+2",For NCL: 9+20,1.25,"Scout (Medium) Carrier, EW=2, A20 heavy fighters."
+NVA,56,5-7(10V)◆/3-4(5V),FO,6,Y177,NCL(3),From NCL: 5+20,For NCL: 10+20,1.25,"Special carrier for A20s, operates in many ways as a PFT; Scout (2EW:2AF; 1EW:5AF). No early
+variants. See (532.0)."
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+NVH (3NVH),—,"15-20(9H)◆
+/7-11(4▲H) NVH+NAC+DWA",CO,6,Y177,Group,Individual Ships,Individual Ships,Ships,Carrier group with F111s. See NVH.
+NVH,56,5-7(9H)◆/3-4(4▲H),FO,6,Y177,NCL(3),From NCL: 5+18,For NCL: 10+18,1.25,"Special carrier for F111s, operates in many ways as a PFT; Scout (2EW:2AF; 1EW:5AF). No early
+variants. See (527.0)."
+NPF,56A,5-7P◆/3-4P,F&E,6,Y181(B),NCL(3),From NCL: 5,For NCL: 10,1.25,"PFT; Scout (2EW:2AF)(1EW:5AF). No
+early variants. Conjectural (502.65)."
+LIGHT CRUISERS,,,,,,,,,,
+CL,5,6/3,F&E,6,Y119,CL(3),See (440.4),For NCL: 6,1.5,Base Hull Type (CL) §
+LSC,A20,2-6◆/1-3,SO,6,130,CL(3),From CL: 4,For CL: 10,1.5,"Scout variant of CL, EW=4"
+CLX,A28,9/5,NO?,7,181,CL(3),From CL: 5,For DDX: 9,2.25,"X-ship, none actually built"
+CMC,31,4-6G/2-3G,CO,6,Y124,CL(3),From CL: 2,For NCL: 6,1.5,Commando version of light cruiser §
+CLS,39,3-6◆/1-3,SO,6,Y125,CL(3),From CL: 5,For CL: 11,1.5,"Survey Ship, Scout, EW=2"
+CLH,40,1-6M/0-3,SO,4,Y140,CL(3),From CL: 2,For DD (1/year): 6,1.5,Hospital variant of CL. Max 4 in service. See (451.12).
+CLV,89,4-6(6)/2-3(3),AO,7,Y167,CL(3),From CL: 2+12,For NCL: 8+12,1.5,Medium Carrier. See special rules (525.314).
+ECL,15,4-6■/2-4■,F&E,6,Y171,CL(3),From CL: 1,For CL: 7,1.5,Heavy Escort §
+CVE,39A,3-6(2)◆/1-3(1),SO,6,Y172,CL(3),"From CL: 5+4
+From CLS: 0+4",For CL: 12+4,1.5,"Survey Ship, Scout, EW=2; single ship escort carrier"
+CLD,88,6◆<4>/3,AO,6,Y173,CL(3),"From CL: 3
+See (525.322)","See (525.322).
+In Free Campaigns, For CL: 9.",1.5,"Drone bombardment variant of CL. Scout, EW =2. See (525.322) for special construction cost. Limit of 2 in service. §"
+HEAVY WAR DESTROYERS,,,,,,,,,,
+HDW,85,6-7(1)/3-4,AO,6,Y179,HDW(4),From DW: 2+1,For DW: 5+1,1.5,Modular (525.2) (§ in some modes)
+HDWE,85,6-7(1)■/3-4■,AO,6,Y179,HDW(4),See (525.2) in AO.,(525.2) in AO.,1.5,Escort mode of HDW §
+HDWH,85,6-7(10V)/3-4(5V),AO,6,Y179,HDW(4),See (525.23H) in AO.,(525.23H) in AO.,1.5,Carrier (A20) mode of HDW.
+HDWV,85,6-7(6)/3-4(3),AO,6,Y179,HDW(4),See (525.2) in AO.,(525.2) in AO.,1.5,Carrier mode of HDW.
+DESTROYERS,,,,,,,,,,
+DD,6,6/3,F&E,5,Y129,DD(4),From DD?: 1 (440.4),For NCL: 6,1.5,"Base Hull Type (DD, Destroyer) §"
+SC,7,2-6◆/0-3,F&E,5,Y129,DD(4),From DD: 4,For NCL: 10,1.5,Scout; EW = 4 §
+DDF,A19,5-6F/3,SO,5,Y167,DD(4),From DD: 3,For DD: 8 (525.12),1.5,Fast Destroyer (525.12).
+DE,14,5-6■/2-3■,F&E,5,Y167,DD(4),From DD: 1 (440.4),For DD: 7,1.5,Light Escort §
+DDX,202,10/5,AO,6,Y182,DD(4),None,For NCL: 10,2.5,X-Ship §
+SCX,205,6-10◆/3-5◆,AO,6,Y183,DD(4),From DDX: 3,For NCL: 13,2.5,"X-scout, (EW3:AF6; Crippled EW1) §"
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+WAR DESTROYERS,,,,,,,,,,
+DW,65,6/3,CO,5,Y175,DW(4),From DW?: 1,Schedule: 4,1.0,Basic Hull Type (DW) §
+DWA,68,5-6■/2-3■,CO,5,Y175,DW(4),From DW: 1,For DW: 5,1.0,Light Escort §
+DWS,66,3-6◆/1-3,CO,5,Y175,DW(4),From DW: 2,For DW: 6,1.0,Scout; EW = 2 §
+DWT,69,1-6/0-3,SO,5,Y176,DW(4),From DW: 1,For DW: 4,1.0,"Cannot Carry Pod, Carry 5 EPs"
+DWV,83,5-6(4)/2-3(2),AO,6,Y176,DW(4),From DW: 1+8,For DW: 5+8,1.0,Escort Carrier variant of DW
+FCA,102,2-6[10V]■/1-3,FO,5,Y177,DW(4),From DW: 1+10,For DW: 5+10,1.0,A20 Resupply Ship; Light escort §
+FCF,102,2-6[9H]■/1-3,AO,5,Y177,DW(4),From DW: 1+9,For DW: 5+9,1.0,F111 Resupply Ship; Light escort §
+CDW,81,2-6G/1-3,CO,5,Y177,DW(4),From DW: 2,For DW: 4,1.2,Commando version of DW §
+BATTLE FRIGATES,,,,,,,,,,
+FFB,50,6/3,AO,5,Y175,FFB(4),From FF: 2,"For DW 4:
+Free: (525.311)",0.75,Heavy Variant of FF (525.311); counts as a DW. §
+FBE,A17,4-6■/2-3■,SO,5,Y175,FFB(4),"From FFE: 2
+From FFB: 1",For FF or DW: 5 (525.311),0.75,Light Escort
+FBS,A16,3-6◆/1-3,SO,5,Y175,FFB(4),"From FFS: 3
+From FFB: 2",For FF or DW: 6 (525.311),0.75,"Scout, EW=2"
+FBV,A15,4-6(3)/2-3(1▲),SO,6,Y175,FFB(4),"From FFV: 2
+From FFB: 1+6",For FF or DW: 5+6 (525.311),0.75,Escort Carrier
+FRIGATES,,,,,,,,,,
+FF,25,5/3,F&E,3,Y126,FF(4),From FF?: 1,Schedule: 3,0.75,Base Hull Type (FF) §
+FLG,86,3-5◆G/None,PO,4,Y134,FF(4),From FF: 3,For FF: 5,0.0,"Police Flagship, Scout (EW=1), Commando Ship (one battalion)."
+FFT,47,1-5/0-3,EcoWar,3,Y140,FF(4),From FF: 1,For FF: 3,0.75,"Theater Transport, Carry 5 EPs"
+FFT,47,1-5U/0-3,SO,3,Y140,FF(4),From FF: 1,For FF: 3,0.75,"Theater Transport, Carry 5 EPs or pod."
+CFF,80,2-5G/1-3,CO,3,Y149,FF(4),From FF: 2,For FF: 3,0.75,Commando version of FF §
+FFE,41,4-5■/2-3■,F&E,3,Y167,FF(4),From FF: 1,For FF: 4,0.75,Light Escort §
+FFS,44,2-5◆/0-3,F&E,3,Y169,FF(4),From FF: 1,For FF: 4,0.75,Scout; EW=1 §
+FV (2FV),—,7-10(3)/3-6(1) FV+FFE,F&E,5,Y172,Group,Individual Ships,Individual Ships,Ships,Escort Carrier Group
+FV,49,3-5(3)/1-3(1),F&E,5,Y172,FF(4),From FF: 1+6,For FF: 4+6,0.75,Escort Carrier
+FCR,84,2-5[6]■/1-3,AO,3,Y172,FF(4),From FF: 1+6,For FF: 4+6,0.75,Carrier Resupply Ship; Light Escort §
+FFX,203,7/4,AO,4,Y183,FF(4),From FF: 4,For FF/DW: 7,1.75,X-Ship §
+POLICE SHIPS,,,,,,,,,,
+POL,12,4/None,CO,3,Y127,POL(4),From POV: 1,"Built: 2.5
+Called up: 2",0.0,Police Ship (531.0).
+POV,137,4(3)/None,PO,4,Y170,POL(4),From POL: 1+6,For FF: 4+6,0.0,Police Carrier
+PV,24,4(6)/None,PO,4,Y176,POL(4),From POL: 2+12,For FF: 5+12,0.0,Police Carrier (heavy type)
+F-111 SQUADRONS,,,,,,,,,,
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+CF1,,9H,AO,0,Y182,—NA—,See (527.26),See (527.26),0.0,F111 fighter wing
+SWAC SHUTTLES,,,,,,,,,,
+SWAC(E2),F3,0/None,FO,0,Y170,Shuttle,None,(518.12): 0 or 3,0.0,Electronic warfare shuttle; EW = 1
+SWAC(E3),F3A,0/None,AO,0,Y177,Shuttle,None,(317.31): 4,0.0,Electronic warfare shuttle (heavy); EW=2.
+MONITORS & PALLETS,,,,,,,,,,
+MON,R1.22,10-6/5-3,CO,6,Y140,MON(3),None,(451.12): 8,2.0,Monitor
+MPAL(V),R1.22 E,0(6)/None,CO,0,Y167,Monitor Pallet,None,2+6,0.5,Pallet for Monitor
+MPAL (F111),R1.22 E,9H0/None,PO,0,Y181(B),Monitor Pallet,None,(519.422): 5+18,0.75,F111 pallet for monitors.
+MPAL (SCS),R1.22 E,0(12)/None,CO,0,Y181(B),Monitor Pallet,None,5+12,1.25,Pallet for Monitor
+HEAVY AUXILIARIES (ORE CARRIER HULL),,,,,,,,,,
+Future,,,,,,,,,,
+LARGE AUXILIARIES (LARGE FREIGHTER HULL),,,,,,,,,,
+FTL,19,1-4GGGG/0-2GG,CO,0,Y120,LAux(3),None,(521.23): 6,1.0,Large Auxiliary Troop Ship
+FHL,62,0-4M/0-2,SO,0,Y120,LAux(3),None,One/Year: 4,1.0,Large Hospital Auxiliary; see (451.0)
+REPR,25,0-1/None,F&E,0,Y159,LAux(3),—NA—,Replacement: 5,0.0,See (422.0)
+LAS,R1.77,0-4◆/0-2,AO,0,Y160,LAux(3),None,(317.1): 6,1.0,Large Auxiliary Scout; (3EW)
+LAV,13B,1-4(12)/0-2(6),CO,6,Y165,LAux(3),None,(513.112): 4+12,1.0,Large Auxiliary Carrier
+LAH,R1.75,1-4◆(9H)/0-2(4▲H),AO,6,Y180 (527.24),LAux(3),None,(526.4): 6+18,1.0,Large Auxiliary F111 Carrier (526.45); Scout; EW=2
+LVH,Future,1-4(10V)/0-2(5V),Future,6,Y180 (527.24),LAux(3),From LAV: 2+8,(513.112): 4+10,1.0,Large Auxiliary A20 Carrier
+ASC,105,"1-4◆(9H6)/
+0-2(4▲H3)",AO,6,Y181 (502.73),LAux(3),None,(526.46): 8+6+18,1.0,Auxiliary Space Control Ship (526.46); F111 carrier; Scout; EW=2
+SMALL AUXILIARIES (SMALL FREIGHTER HULL),,,,,,,,,,
+FTS,18,0-2GG/0-1G,CO,0,Y120,SAux(4),None,(521.23): 3,0.5,Small Auxiliary Troop Ship
+SAS,R1.78,0-2◆/0-1,AO,0,Y140,SAux(4),None,(317.1): 4,0.5,Small Auxiliary Scout; (2EW)
+SAV,13A,0-2(6)/0-1(3),CO,3,Y167,SAux(4),None,(513.112): 2+6,0.5,Small Auxiliary Carrier
+SVV,Future,0-2(10V)/0-1(5V),Future,3,Y175,SAux(4),From SAV: 2+4,(513.112): 2+10,0.5,Small Auxiliary A20 Carrier
+SAH,R1.76,0-2(9H)◆/0-1(4▲H),AO,3,Y180 (527.24),SAux(4),None,(525.4): 4+18,0.5,Small Auxiliary (526.45) F111 Carrier (527.2); Scout EW = 1.
+MOBILE SUPPORT UNITS,,,,,,,,,,
+CONVOY,5,0-6/None,F&E,0,Y119,—NA—,—NA—,(431.2): 6,0.0,See (414.0); Cargo = 20EP
+Commercial Convoy,NA,0-10/None,CO,0,Y120,Group,None,"Original: 0
+Replacement: 5",0.0,See (443.0).
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+APT,8,0-1/None,SO,0,Y125,APT(4),None,Unlimited: 1,0.2,"Armed Priority Transport, Can carry DIP, ADM, MG, PT, 1EP."
+PTR,67,1-2/0-1,SO,3,Y130,FT(4),None,One/turn: 2,0.0,"Prime Transport.
+Can carry ADM, MG, PT, DIP, 1EP."
+SAF,33,0-6/0-3,CO,0,Y150,Group,"From FTL: 5
+From FTS: 8
+From 2xFTS: 6",See (520.1): 10,0.0,Special Attack Force
+FXP,11,0-4F/0-2,SO,0,Y150,FEDX(4),None,One/year: 5,0.0,"Federation Express fast courier, can carry 1 EP, ADM, MG, PT, DIP; speed
+8. See special rule (539.3)."
+ENG,NA,0-8/0-4,SO,0,Y166,—NA—,—NA—,Schedule: 20,0.0,Engineer Regiment see rule (541.0). Moves like a military convoy.
+MC,20,2-10(6)/None,AO,0,Y175,—NA—,None,(526.14): 12+6,0.0,Military convoy (526.1); Cargo = 15EP
+OPB,45,10◆/5,SO,6,Y175,OPB(3),None,One/turn: 15,0.0,"Operational Base, moves as military convoy. (2 EW:5 AF), (1 EW:10 AF)."
+LTF,Group,"6-27(6)[24]/
+3-13(3)[12]",AO,0,Y178,Group,None,See (526.2),6.0,Logistics Task Force (526.2)
+REPAIR DOCKS,,,,,,,,,,
+FRD,10,1-4/None,F&E,0,Y139,FRD(2),—NA—,(431.2): 10,0.0,See (421.0)
+FRD+,10,1-4(6)/None,AO,0,Y165,FRD(2),From FRD: 2+6,(431.2): 10+6,0.0,See (421.0) With fighter modules
+PRD,Future,0-2/None,PO,0,Y170,—NA—,—NA—,(425.11):  3 / 5 / 7,0.0,Planetary Repair Dock
+FRX,R1.81,1-6/None,AO,0,Y182,FRD(2),From FRD: 10,For FRD: 12,0.0,X-unit; repairs X-ships without penalty.
+BASES,,,,,,,,,,
+BS,R1.3,10(6)◆/5(3)◆,CO,8,Y120,BS(3),From MB: 5+6,—NA—,0.0,See (444.0).
+BATS,2,"12(9H6)◆/
+6P(4H▲3)◆",F&E,9,Y130,BATS(2),"From MB: 9+6
+From BS: 4 (444.31)",—NA—,0.0,"See (433.41), (441.0), and (510.3)"
+MB,24,8◆/4,F&E,6,Y139,MB(3),—NA—,(431.2): 10,0.0,See (510.2); EW=1
+SB,R1.1,"36(18H12)◆/
+18(9H6)◆",F&E,10,Y140,SB(1),From BATS: 30+6,—NA—,0.0,"Starbase. See (433.41), (441.0), and
+(510.3)"
+Ftr-Module,4,0(3)/0(1▲),AO,0,Y165,—NA—,None,(441.4): 1+3,0.0,Fighter module for base or FRD
+Ftr-Depot,NA,0[6]/0,FO,0,Y172,—NA—,None,(443.3): 6,0.0,See (443.0).
+STB,47,"12-24(6)◆
+/6-12(3)◆",SO,9,Y175,STB(2),From BATS: 12+ftrs From BS: 15+ftrs,Upgrade Only,0.0,Sector Base; see EW chart.
+"PWR
+module",17,0/0,AO,0,Y178,—NA—,None,Built: 2,0.0,Power module for base (441.5)
+BTX,202,"18(9H6)◆/
+9(4▲3)◆",AO,10,Y182,BATS (2),"From BATS: 18
+From MB: 27+6
+From BS: 22",—NA—,0.0,X-unit; see EW Chart; Feds have F111s not PFs.
+Designation,"SFB
+Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
+BSX,202B,16(6)◆/8(3)◆,Future,9,Y182,BS(3),"From BS: 12
+From MB: 8+6",—NA—,0.0,See (444.0).
+SBX,201,"54(18H12)◆/
+27(9H6)◆",AO,11,Y182,SB(1),"From SB: 24
+From BTX: 45+6",—NA—,0.0,StarbaseX-Unit; see EW Chart.
+STX,R1. A11,"18-36(6)◆
+/9-18(3)◆",SO,10,Y183,STB(2),"From STB: 10 EP +
+10 XTP + Ftrs/PFs.",Upgrade Only,0.0,X-Unit; Sector Base; see EW chart.
+STF,,,,,,,,,,Stellar Fortress
+PLANETARY UNITS,,,,,,,,,,
+PGB,14,3/None,AO,0,Y119,—NA—,—NA—,"Built: 3
+Self-Gen: 4
+Upgrade: 6",0.0,Planetary Ground Base (no fighters)
+C-BASE,NA,8/None,PO,0,Y166,—NA—,From Colony: 7,—NA—,0.0,"Colony Base, see rule (446.5)."
+COLONY,NA,0/None,PO,0,Y166,—NA—,—NA—,(446.13): 2+2+2,0.0,"Colony, see rule (446.0)"
+PDU,14,3(6)/None,F&E,0,Y167,—NA—,From PGB (441.3),"Built: 4+3
+Self-Gen: 5+3
+Upgrade: 7+3",0.0,See (508.1) and (431.2).
+Shipyard,Future,0/None,PO,0,Y170,—NA—,—NA—,(450.12): varies,0.0,"Secondary Shipyard, see rules."
+MARKERS AND SPECIAL UNITS,,,,,,,,,,
+Prime Team,G32,Prime Team,CO,0,Y120,—NA—,—NA—,(522.11): 5,0.0,Prime Team
+DIP,NA,DIP,SO,0,Y160,—NA—,NA,One/year: 10 (or more),0.0,"Diplomatic Team, see rule (540.0)."
+ADM ★,NA,ADM ★,AO,1,Y168,—NA—,—NA—,(316.32): 0,0.0,Admiral
+Marine,NA,★★,PO,1,"Y171
+(War)",—NA—,—NA—,(321.12): 5,0.0,"Marine Major General, See (321.0)."
+MEGA-A10,J16,(+2-0)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 5,0.0,Megafighter Packs
+MEGA-A20,J16,(+1-0V)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 3,0.0,Megafighter Packs
+MEGA-F111,J16,(+1-0H)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 3,0.0,Megafighter Packs
+MEGA-F14,J16,(+2-0)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 5,0.0,Megafighter Packs
+MEGA-F15,J16,(+2-0)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 5,0.0,Megafighter Packs
+MEGA-F16,J16,(+2-0)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 3,0.0,Megafighter Packs
+MEGA-F18,J16,(+2-0)/None,PO,0,Y179(A),—NA—,—NA—,(535.14): 5,0.0,Megafighter Packs
+"Z-SYMBOLS USED: ◆ = scout; § = can be in battle group, ‡ = two-step conversion, ■ = carrier escort, ★ = leader, ▲ = half factor of fighters.",,,,,,,,,,
