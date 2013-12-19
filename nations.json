@@ -127,7 +127,7 @@
         "short name": "Tholian",
         "capitol": {
             "2919": {
-                // TODO: Capitol?
+                "Tholia": ["CAP"]
             }
         },
         "capitol star points": 6
