@@ -34,6 +34,11 @@ def factors_set (factors, set_):
         escort = ',\n%s    "escort": "true"' % (indent)
         factors = factors.replace('■', '')
 
+    mauler = ''
+    if '✛' in factors:
+        mauler = ',\n%s    "mauler": "true"' % (indent)
+        factors = factors.replace('✛', '')
+
     fighters = ''
     match = cf_regex_1.match(factors)
     if match:
@@ -65,8 +70,8 @@ def factors_set (factors, set_):
         attack = match.group(1)
         defense = match.group(2)
 
-    return '%s"%s": {\n%s    "att": %s,\n%s    "def": %s%s%s%s%s%s\n%s},' % \
-    (indent, set_, indent, attack, indent, defense, scout, escort, fighters, drones, flotillas, indent)
+    return '%s"%s": {\n%s    "att": %s,\n%s    "def": %s%s%s%s%s%s%s\n%s},' % \
+    (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, drones, flotillas, indent)
 
 
 def basic_factors (uncrippled, crippled):
