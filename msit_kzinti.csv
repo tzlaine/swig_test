@@ -137,7 +137,7 @@ TG TUGS
 TGT	12	4-8/2-4	F&E	6	Y129	TGT(3)	From TGC: 2	For BC: 6	1.5	Tug, Base Hull Type
 TGC	53	8/4	F&E	8	Y164	TGT(3)	From TGT: 5	For BC: 8	2.0	Tug
 PODS										
-Cargo Pod			F&E		Y129	Tug Mission	—NA—	0	0.0	
+Cargo Pod		0/None	F&E		Y129	Tug Mission	—NA—	0	0.0	
 BP	15	2<2>/None	CO	2	Y134	Pod	None	(431.22): 6	0.5	Battle pod (has drone bombardment capability); limit 4.
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	—NA—	Replacement: 5	0.0	See (422.8)
 PFP (2PFP)	40	0P◆/None	CO	0	Y181	Pod	None	(431.22): 6	1.0	Pair of PFT pods, limit 2 pairs; scout, (2EW:2AF)(1EW:TugAF)
