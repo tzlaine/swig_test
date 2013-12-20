@@ -35,9 +35,9 @@ def factors_set (factors, set_):
         factors = factors.replace('■', '')
 
     mauler = ''
-    if '✛' in factors:
+    if '✛' in factors or '✚' in factors:
         mauler = ',\n%s    "mauler": "true"' % (indent)
-        factors = factors.replace('✛', '')
+        factors = factors.replace('✛', '').replace('✚', '')
 
     fighters = ''
     match = cf_regex_1.match(factors)
@@ -49,10 +49,10 @@ def factors_set (factors, set_):
             fighter_factors = fighter_factors.replace('▲', '')
         ftr_match = hvy_ftr_regex.match(fighter_factors)
         if ftr_match:
-            total += int(ftr_match.group(1)) + int(ftr_match.group(2))
+            total += float(ftr_match.group(1)) + float(ftr_match.group(2))
         else:
             fighter_factors.replace('H', '')
-            total += int(fighter_factors)
+            total += float(fighter_factors)
         fighters = ',\n%s    "fighters": %s' % (indent, total)
         factors = factors.replace('(' + match.group(2) + ')', '')
 
