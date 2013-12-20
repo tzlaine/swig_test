@@ -1,115 +1,115 @@
-Designation,"SFB
-Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
-DN DREADNOUGHT,,,,,,,,,,
-DN,,,NO?,,,,,,,Conjectural
-BCH HEAVY BATTLECRUISER,,,,,,,,,,
-BCH,17,10/5,CO,10,Y179,BCH(3),From BC: 2,Schedule: 10,2.5,Basic Hull Type (BCH); Lease = 2.5
-BCS,38,10(3)P/5(1)P,AO,10,Y180,BCH(3),"From BC: 7+6
+Designation	"SFB
+Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
+DN DREADNOUGHT										
+DN			NO?							Conjectural
+BCH HEAVY BATTLECRUISER										
+BCH	17	10/5	CO	10	Y179	BCH(3)	From BC: 2	Schedule: 10	2.5	Basic Hull Type (BCH); Lease = 2.5
+BCS	38	10(3)P/5(1)P	AO	10	Y180	BCH(3)	"From BC: 7+6
 From BCH: 6+6
-From BCV: 2",For BCH: 15+6,2.5,Battle Control Ship (525.54); Lease = 3.25+
-BCV,37,10(6)/5(3),AO,10,Y180,BCH(3),"From BC: 3+12
-From BCH: 2+12",For BCH: 12+12,2.5,Medium Carrier; Lease = 4
-BC BATTLECRUISER,,,,,,,,,,
-BC,27,9/5,AO,9,Y174,BC(3),From BC?: 2,Schedule: 9,2.25,Basic Hull Type (BC); Lease = 2.25
-CA HEAVY CRUISER,,,,,,,,,,
-CA,3,8/4,F&E,8,Y131,CA(3),See (440.4).,Schedule: 8,2.0,CA Basic Hull; Lease = 2
-CVD,41,3-8(12)/1-4(6),FO,8,Y175,CA(3),From CA: 3+24,For CA: 10+24,2.0,"Medium Carrier, Lease = 3, Oversized Squadron."
-CX,201,14/7,AO,9,Y183,CA(3),From CA: 8,For CA: 14,3.5,X-Ship; Lease = 3.5 §
-BRH HEAVY BATTLE RAIDER,,,,,,,,,,
-BRH,29,8/4,SO,8,Y175,BRH(3),From BR: 3,For BR: 6,1.5,Heavy Battle Raider (NCA)
-BHV,45,8(6)/4(3),FO,8,Y175,BRH(3),"From BR: 3+12
+From BCV: 2"	For BCH: 15+6	2.5	Battle Control Ship (525.54); Lease = 3.25+
+BCV	37	10(6)/5(3)	AO	10	Y180	BCH(3)	"From BC: 3+12
+From BCH: 2+12"	For BCH: 12+12	2.5	Medium Carrier; Lease = 4
+BC BATTLECRUISER										
+BC	27	9/5	AO	9	Y174	BC(3)	From BC?: 2	Schedule: 9	2.25	Basic Hull Type (BC); Lease = 2.25
+CA HEAVY CRUISER										
+CA	3	8/4	F&E	8	Y131	CA(3)	See (440.4).	Schedule: 8	2.0	CA Basic Hull; Lease = 2
+CVD	41	3-8(12)/1-4(6)	FO	8	Y175	CA(3)	From CA: 3+24	For CA: 10+24	2.0	Medium Carrier, Lease = 3, Oversized Squadron.
+CX	201	14/7	AO	9	Y183	CA(3)	From CA: 8	For CA: 14	3.5	X-Ship; Lease = 3.5 §
+BRH HEAVY BATTLE RAIDER										
+BRH	29	8/4	SO	8	Y175	BRH(3)	From BR: 3	For BR: 6	1.5	Heavy Battle Raider (NCA)
+BHV	45	8(6)/4(3)	FO	8	Y175	BRH(3)	"From BR: 3+12
 From BRH: 2+12
-From CVS: 1",For BR: 6+12,1.5,Carrier Variant of BRH (NCA).
-BHP,46,4-8◆P/2-4P,SO,8,Y180,BRH(3),"From BRH: 5
+From CVS: 1"	For BR: 6+12	1.5	Carrier Variant of BRH (NCA).
+BHP	46	4-8◆P/2-4P	SO	8	Y180	BRH(3)	"From BRH: 5
 From BRP: 3
-From BR: 6",For BR: 11,1.5,PFT variant of BRH (NCA). EW=2.
-BR BATTLE RAIDER,,,,,,,,,,
-BR,13,7/4,F&E,6,Y167,BR(3),See (440.4).,Schedule: 5,1.25,CW: Basic Hull; Lease = 1.75 §
-BRE,13R,5-7■/3-4■,FO,6,Y169,BR(3),From BR: 1,For BR: 6,1.25,Heavy Escort; Lease = 1.25 §
-CVS,16,6-7(6)/3-4(3),FO,6,Y170,BR(3),From BR: 2+12,For BR: 7+12,1.25,Medium Carrrier; Lease = 3
-CVS (3CVS),—,14-19(6)/7-11(3) CVS+BRE+DWE,FO,6,Y170,Group,Individual Ships,Individual Ships,Ships,Medium Carrier Group; Lease = 5
-CVP,42,3-7(9)/1-4(4▲),FO,6,Y175,BR(3),"From BR: 3+18
-From CVS: 2+6",For BR: 7+18,1.25,"Medium Carrier, Oversized Squadron, Lease =3."
-MBR,51,7✛/4,,6,Y175,BR(3),From BR: 4,For BR: 7,1.25,Conjectural Mauler
-BPF (BRP),19,4-7P◆/2-4P,CO,6,Y180,BR(3),"From BR: 5
-From CVS: 5",For BR: 10,1.25,"PF Tender, Scout, EW=2; Lease = 1.5"
-SAL SALVAGE CRUISER,,,,,,,,,,
-SAL,4,6-8/3-4,CO,6,Y149,SAL(3),From CVL: 2,Schedule: 8,2.0,Base Hull Type; Lease = 1.5
-CVL,6,6-8(4)/3-4(2),F&E,6,Y169,SAL(3),From SAL: 2+8,Schedule: 10+8,2.0,Medium Carrier; Lease = 1.5
-CVL (3CVL),—,13-18(4)/6-9(2) CVL+CRE+LRE,FO,6,Y169,Group,Individual Ships,Individual Ships,Ships,Medium Carrier Group; Lease = 4.25
-Designation,"SFB
-Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
-LVS,39,6-8(6)/3-4(3),AO,6,Y169,SAL(3),"From SAL: 3+12
-From CVL: 1+4",For SAL: 11+12,2.0,Medium Carrier (Improved); Lease = 3
-CSV,43,3-8◆(8H)/1-4(4H),FO,6,Y175,SAL(3),"From SAL: 3+16
-From CVL: 2+8",For SAL: 12+16,2.0,"Scout (Medium) Carrier, heavy fighters, EW=2; Lease =3."
-SGS,40,6-8(6)P◆/3-4(3)P,AO,6,Y180,SAL(3),"From LVS: 5
+From BR: 6"	For BR: 11	1.5	PFT variant of BRH (NCA). EW=2.
+BR BATTLE RAIDER										
+BR	13	7/4	F&E	6	Y167	BR(3)	See (440.4).	Schedule: 5	1.25	CW: Basic Hull; Lease = 1.75 §
+BRE	13R	5-7■/3-4■	FO	6	Y169	BR(3)	From BR: 1	For BR: 6	1.25	Heavy Escort; Lease = 1.25 §
+CVS	16	6-7(6)/3-4(3)	FO	6	Y170	BR(3)	From BR: 2+12	For BR: 7+12	1.25	Medium Carrrier; Lease = 3
+CVS (3CVS)	—	14-19(6)/7-11(3) CVS+BRE+DWE	FO	6	Y170	Group	Individual Ships	Individual Ships	Ships	Medium Carrier Group; Lease = 5
+CVP	42	3-7(9)/1-4(4▲)	FO	6	Y175	BR(3)	"From BR: 3+18
+From CVS: 2+6"	For BR: 7+18	1.25	Medium Carrier, Oversized Squadron, Lease =3.
+MBR	51	7✛/4		6	Y175	BR(3)	From BR: 4	For BR: 7	1.25	Conjectural Mauler
+BPF (BRP)	19	4-7P◆/2-4P	CO	6	Y180	BR(3)	"From BR: 5
+From CVS: 5"	For BR: 10	1.25	PF Tender, Scout, EW=2; Lease = 1.5
+SAL SALVAGE CRUISER										
+SAL	4	6-8/3-4	CO	6	Y149	SAL(3)	From CVL: 2	Schedule: 8	2.0	Base Hull Type; Lease = 1.5
+CVL	6	6-8(4)/3-4(2)	F&E	6	Y169	SAL(3)	From SAL: 2+8	Schedule: 10+8	2.0	Medium Carrier; Lease = 1.5
+CVL (3CVL)	—	13-18(4)/6-9(2) CVL+CRE+LRE	FO	6	Y169	Group	Individual Ships	Individual Ships	Ships	Medium Carrier Group; Lease = 4.25
+Designation	"SFB
+Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
+LVS	39	6-8(6)/3-4(3)	AO	6	Y169	SAL(3)	"From SAL: 3+12
+From CVL: 1+4"	For SAL: 11+12	2.0	Medium Carrier (Improved); Lease = 3
+CSV	43	3-8◆(8H)/1-4(4H)	FO	6	Y175	SAL(3)	"From SAL: 3+16
+From CVL: 2+8"	For SAL: 12+16	2.0	Scout (Medium) Carrier, heavy fighters, EW=2; Lease =3.
+SGS	40	6-8(6)P◆/3-4(3)P	AO	6	Y180	SAL(3)	"From LVS: 5
 From CVL: 6+4
-From SAL: 6+12",For SAL: 13+12,2.0,"Space Control Variant, Scout; Lease = 3+ (2EW:2AF)(1EW:6AF)"
-PFT,9,4-8P◆/2-4P,CO,6,Y180,SAL(3),From SAL or CVL: 5,For CVL: 13,2,PF Tender; Scout; Lease = 1+ (2EW:2AF)(1EW:4AF)
-SAX,203,10/5,AO,7,Y184,SAL(3),From SAL: 4,For SAL: 10,2.5,X-Ship; Lease = 2.5
-CR RAIDER CRUISER,,,,,,,,,,
-CR,2,6/3,F&E,6,Y126,CR(3),See (440.4).,Schedule: 6,1.5,CL: Basic Hull; Lease = 1.5 §
-CRE,2R,4-6■/2-3■,FO,6,Y169,CR(3),From CR: 1,For CR: 7,1.5,Heavy Escort; Lease = 1 §
-CRX,202,10/5,AO,7,Y182,CR(3),From CR: 6,For CR: 10,2.5,X-Ship; Lease = 2.25 §
-UNUSUAL ORION SHIPS,,,,,,,,,,
-DBR,14,6/3,CO,6,Y167,DBR(4),From 2LR: 2,Schedule: 6,1.5,Basic Hull; Lease = 1.5 §
-DCR,31,9/5,AO,8,Y172,DCR(3),From 2CR: 2,Schedule: 9,2.25,Basic Hull; Lease = 2.25
-HDW HEAVY WAR DESTROYER,,,,,,,,,,
-HDW,34,6-7(1)/3-4,AO,5,Y181,HDW(4),From DW: 2+1,For DW: 5+1,1.25,Modular Ship (525.2); Lease = 1.75 Battle Group § in some modes
-HDWV,34,6-7(6)/3-4(3),AO,6,Y181,HDW(4),See (525.2) in AO.,(525.2) in AO.,1.25,Carrier mode of HDW.
-DW WAR DESTROYER,,,,,,,,,,
-DW,18,5/3,F&E,5,Y173,DW(4),From DW?: 1,Schedule: 3.5,0.875,Basic Hull; Lease = 1.25 §
-DWE,18R,3-5■/1-3■,FO,5,Y173,DW(4),From DW: 1,For DW: 4.5,0.875,Light Escort; Lease = 0.75 §
-DWS,24,2-5◆/1-3,CO,5,Y174,DW(4),From DW: 2,For DW: 5.5,0.875,Scout; EW=2; Lease = 1.25 §
-DWV,32,5(4)/3(2),AO,5,Y176,DW(4),From DW: 1+8,Schedule: 4.5+8,0.875,Escort Carrier; Lease = 2.25
-LR LIGHT RAIDER,,,,,,,,,,
-LR,7,4/2,F&E,3,Y128,LR(4),See (440.4).,Schedule: 2.5,0.625,FF: Basic Hull; Lease = 1 §
-LRS,23,1-4◆/0-2,CO,3,Y149,LR(4),From LR: 2,For LR: 4.5,0.625,Scout; EW =1; Lease = 0.5 §
-LRE,7R,3-4■/1-2■,FO,3,Y169,LR(4),From LR: 1,For LR: 3.5,0.625,Light Escort; Lease = 0.75 §
-FCR,33,3-4[6]■/1-2,AO,3,Y172,LR(4),From LR: 1+6,For LR: 3.5+6,0.75,Carrier Resupply Ship; Lease = 1.75 §
-LX,205,7/4,AO,4,Y182,LR(4),From LR: 5,For LR: 8,2.0,X-Ship; Lease = 1.75
-SLV SLAVER UTILITY SHIP,,,,,,,,,,
-SLV,5,2-4/1-2,AO,3,Y128,SLV(4),From Variant: 1,Schedule: 3,0.75,Base Hull Type; Cargo = 5EP; Lease = 0.5 §
-VIK,8,1-4G/0-2,CO,3,Y128,SLV(4),From SLV: 2,For SLV: 3,0.75,Commando ship; Lease = 0.25 §
-SVL,44,1-4(6)/0-2(3),FO,3,Y171,SLV(4),From SLV: 2+12,For SLV: 5+12,0.75,"Medium Carrier, Lease = 2."
-POLICE UNITS,,,,,,,,,,
-Designation,"SFB
-Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
-POL (DD),47,4/None,PO,5,Y125,POL(4),—NA—,Schedule: 2.5,0.0,"Police Cutter (531.0), no cloak."
-FLG,A1,2-4◆G/None,PO,4,Y135,POL(4),From POL: 3,For POL: 4,0.0,"Police Flagship, Scout (EW=1), Commando (one battalion). No Cloak."
-PV (DV),48,4(3)/None,PO,5,Y168,POL(4),From POL: 1+6,For POL: 3.5+6,0.0,"Police Carrier, no cloak."
-PF FLOTILLAS,,,,,,,,,,
-,,,NO?,,,,,,,
-,,,NO?,,,,,,,
-MOBILE SUPPORT UNITS,,,,,,,,,,
-APT,8,0-1/None,SO,0,Y125,APT(4),None,Unlimited: 1,0.2,"Armed Priority Transport, Can carry DIP, ADM, MG, PT, 1EP. Use
+From SAL: 6+12"	For SAL: 13+12	2.0	Space Control Variant, Scout; Lease = 3+ (2EW:2AF)(1EW:6AF)
+PFT	9	4-8P◆/2-4P	CO	6	Y180	SAL(3)	From SAL or CVL: 5	For CVL: 13	2	PF Tender; Scout; Lease = 1+ (2EW:2AF)(1EW:4AF)
+SAX	203	10/5	AO	7	Y184	SAL(3)	From SAL: 4	For SAL: 10	2.5	X-Ship; Lease = 2.5
+CR RAIDER CRUISER										
+CR	2	6/3	F&E	6	Y126	CR(3)	See (440.4).	Schedule: 6	1.5	CL: Basic Hull; Lease = 1.5 §
+CRE	2R	4-6■/2-3■	FO	6	Y169	CR(3)	From CR: 1	For CR: 7	1.5	Heavy Escort; Lease = 1 §
+CRX	202	10/5	AO	7	Y182	CR(3)	From CR: 6	For CR: 10	2.5	X-Ship; Lease = 2.25 §
+UNUSUAL ORION SHIPS										
+DBR	14	6/3	CO	6	Y167	DBR(4)	From 2LR: 2	Schedule: 6	1.5	Basic Hull; Lease = 1.5 §
+DCR	31	9/5	AO	8	Y172	DCR(3)	From 2CR: 2	Schedule: 9	2.25	Basic Hull; Lease = 2.25
+HDW HEAVY WAR DESTROYER										
+HDW	34	6-7(1)/3-4	AO	5	Y181	HDW(4)	From DW: 2+1	For DW: 5+1	1.25	Modular Ship (525.2); Lease = 1.75 Battle Group § in some modes
+HDWV	34	6-7(6)/3-4(3)	AO	6	Y181	HDW(4)	See (525.2) in AO.	(525.2) in AO.	1.25	Carrier mode of HDW.
+DW WAR DESTROYER										
+DW	18	5/3	F&E	5	Y173	DW(4)	From DW?: 1	Schedule: 3.5	0.875	Basic Hull; Lease = 1.25 §
+DWE	18R	3-5■/1-3■	FO	5	Y173	DW(4)	From DW: 1	For DW: 4.5	0.875	Light Escort; Lease = 0.75 §
+DWS	24	2-5◆/1-3	CO	5	Y174	DW(4)	From DW: 2	For DW: 5.5	0.875	Scout; EW=2; Lease = 1.25 §
+DWV	32	5(4)/3(2)	AO	5	Y176	DW(4)	From DW: 1+8	Schedule: 4.5+8	0.875	Escort Carrier; Lease = 2.25
+LR LIGHT RAIDER										
+LR	7	4/2	F&E	3	Y128	LR(4)	See (440.4).	Schedule: 2.5	0.625	FF: Basic Hull; Lease = 1 §
+LRS	23	1-4◆/0-2	CO	3	Y149	LR(4)	From LR: 2	For LR: 4.5	0.625	Scout; EW =1; Lease = 0.5 §
+LRE	7R	3-4■/1-2■	FO	3	Y169	LR(4)	From LR: 1	For LR: 3.5	0.625	Light Escort; Lease = 0.75 §
+FCR	33	3-4[6]■/1-2	AO	3	Y172	LR(4)	From LR: 1+6	For LR: 3.5+6	0.75	Carrier Resupply Ship; Lease = 1.75 §
+LX	205	7/4	AO	4	Y182	LR(4)	From LR: 5	For LR: 8	2.0	X-Ship; Lease = 1.75
+SLV SLAVER UTILITY SHIP										
+SLV	5	2-4/1-2	AO	3	Y128	SLV(4)	From Variant: 1	Schedule: 3	0.75	Base Hull Type; Cargo = 5EP; Lease = 0.5 §
+VIK	8	1-4G/0-2	CO	3	Y128	SLV(4)	From SLV: 2	For SLV: 3	0.75	Commando ship; Lease = 0.25 §
+SVL	44	1-4(6)/0-2(3)	FO	3	Y171	SLV(4)	From SLV: 2+12	For SLV: 5+12	0.75	Medium Carrier, Lease = 2.
+POLICE UNITS										
+Designation	"SFB
+Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
+POL (DD)	47	4/None	PO	5	Y125	POL(4)	—NA—	Schedule: 2.5	0.0	Police Cutter (531.0), no cloak.
+FLG	A1	2-4◆G/None	PO	4	Y135	POL(4)	From POL: 3	For POL: 4	0.0	Police Flagship, Scout (EW=1), Commando (one battalion). No Cloak.
+PV (DV)	48	4(3)/None	PO	5	Y168	POL(4)	From POL: 1+6	For POL: 3.5+6	0.0	Police Carrier, no cloak.
+PF FLOTILLAS										
+			NO?							
+			NO?							
+MOBILE SUPPORT UNITS										
+APT	8	0-1/None	SO	0	Y125	APT(4)	None	Unlimited: 1	0.2	"Armed Priority Transport, Can carry DIP, ADM, MG, PT, 1EP. Use
 Generics."
-PTR,67,1-2/0-1,SO,3,Y130,FT(4),None,One/turn: 2,0.0,"Prime Transport.
+PTR	67	1-2/0-1	SO	3	Y130	FT(4)	None	One/turn: 2	0.0	"Prime Transport.
 Can carry ADM, MG, PT, DIP, 1EP."
-REPAIR DOCKS,,,,,,,,,,
-FRD,10,1-4/None,F&E,0,Y139,FRD(2),—NA—,(431.2): 10,0.0,See (421.0)
-FRD+,10,1-4(6)/None,AO,0,Y139,FRD(2),From FRD: 2+6,(431.2): 10+6,0.0,See (421.0) With fighter modules
-BASES,,,,,,,,,,
-BS,R1.3,10(6)◆/5(3)◆,CO,8,Y120,BS(3),From MB: 5+6,—NA—,0.0,See (444.0).
-BATS,R1.2,12P(6)◆/6P(3)◆,F&E,9,Y130,BATS(2),"From MB: 9+6
-From BS: 4 (444.31)",—NA—,0.0,"See (433.41), (441.0), and (510.3)"
-Ftr-Module,R1.4,0(3)/0(1▲),AO,0,Y165,—NA—,None,(441.4): 1+3,0.0,Fighter module for base or FRD
-Ftr-Depot,NA,0[6]/0,FO,0,Y172,—NA—,None,(443.3): 6,0.0,See (443.0).
-PLANETARY INSTALLATIONS,,,,,,,,,,
-PDU,14,3(6)/None,F&E,0,Y165,—NA—,From PGB (441.3),"Built: 4+3
+REPAIR DOCKS										
+FRD	10	1-4/None	F&E	0	Y139	FRD(2)	—NA—	(431.2): 10	0.0	See (421.0)
+FRD+	10	1-4(6)/None	AO	0	Y139	FRD(2)	From FRD: 2+6	(431.2): 10+6	0.0	See (421.0) With fighter modules
+BASES										
+BS	R1.3	10(6)◆/5(3)◆	CO	8	Y120	BS(3)	From MB: 5+6	—NA—	0.0	See (444.0).
+BATS	R1.2	12P(6)◆/6P(3)◆	F&E	9	Y130	BATS(2)	"From MB: 9+6
+From BS: 4 (444.31)"	—NA—	0.0	See (433.41), (441.0), and (510.3)
+Ftr-Module	R1.4	0(3)/0(1▲)	AO	0	Y165	—NA—	None	(441.4): 1+3	0.0	Fighter module for base or FRD
+Ftr-Depot	NA	0[6]/0	FO	0	Y172	—NA—	None	(443.3): 6	0.0	See (443.0).
+PLANETARY INSTALLATIONS										
+PDU	14	3(6)/None	F&E	0	Y165	—NA—	From PGB (441.3)	"Built: 4+3
 Self-Gen: 5+3
-Upgrade: 7+3",0.0,See (508.1) and (431.2).
-C-BASE,NA,8/None,PO,0,Y166,—NA—,From Colony: 7,—NA—,0.0,"Colony Base, see rule (446.5)."
-COLONY,NA,0/None,PO,0,Y166,—NA—,—NA—,(446.13): 2+2+2,0.0,"Colony, see rule (446.0)"
-PRD,Future,0-2/None,PO,0,Y170,—NA—,—NA—,(425.11):  3 / 5 / 7,0.0,Planetary Repair Dock
-Shipyard,Future,0/None,PO,0,Y170,—NA—,—NA—,(450.12): varies,0.0,"Secondary Shipyard, see rules."
-MARKERS AND SPECIAL UNITS,,,,,,,,,,
-Prime Team,G32,Prime Team,CO,0,Y120,—NA—,—NA—,(522.11): 5,0.0,Prime Team
-Marine,NA,★★,PO,1,"Y171
-(War)",—NA—,—NA—,(321.12): 5,0.0,"Marine Major General, See (321.0)."
-MEGA,J16,(+2-0)/None,PO,0,Y179(A),NA,—NA—,(535.13): 5,0.0,Megafighter Packs
-MEGA-H,J16,(+1-0H)/None,PO,0,Y179(B),NA,—NA—,(535.13): 3,0.0,Megafighter Packs for heavy fighters
-Designation,"SFB
-Ref #",Factors On Counter,Product,Cmnd (754.0),Date Avail,Base Hull; Size (755.0),"Conversion Cost, Source",Build Cost or Substitution,Salvage (439.0),"Notes and Special Cases; EW, Shock"
-"Z-SYMBOLS USED: ◆ = scout; § = can be in battle group, ‡ = two-step conversion, ■ = carrier escort, ★ = leader, ▲ = half factor of fighters.",,,,,,,,,,
+Upgrade: 7+3"	0.0	See (508.1) and (431.2).
+C-BASE	NA	8/None	PO	0	Y166	—NA—	From Colony: 7	—NA—	0.0	Colony Base, see rule (446.5).
+COLONY	NA	0/None	PO	0	Y166	—NA—	—NA—	(446.13): 2+2+2	0.0	Colony, see rule (446.0)
+PRD	Future	0-2/None	PO	0	Y170	—NA—	—NA—	(425.11):  3 / 5 / 7	0.0	Planetary Repair Dock
+Shipyard	Future	0/None	PO	0	Y170	—NA—	—NA—	(450.12): varies	0.0	Secondary Shipyard, see rules.
+MARKERS AND SPECIAL UNITS										
+Prime Team	G32	Prime Team	CO	0	Y120	—NA—	—NA—	(522.11): 5	0.0	Prime Team
+Marine	NA	★★	PO	1	"Y171
+(War)"	—NA—	—NA—	(321.12): 5	0.0	Marine Major General, See (321.0).
+MEGA	J16	(+2-0)/None	PO	0	Y179(A)	NA	—NA—	(535.13): 5	0.0	Megafighter Packs
+MEGA-H	J16	(+1-0H)/None	PO	0	Y179(B)	NA	—NA—	(535.13): 3	0.0	Megafighter Packs for heavy fighters
+Designation	"SFB
+Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
+Z-SYMBOLS USED: ◆ = scout; § = can be in battle group, ‡ = two-step conversion, ■ = carrier escort, ★ = leader, ▲ = half factor of fighters.										
