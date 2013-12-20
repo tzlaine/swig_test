@@ -55,10 +55,13 @@ def factors_set (factors, set_):
         if fighter_factors.count('▲') == 1:
             total = 0.5
             fighter_factors = fighter_factors.replace('▲', '')
+        # TODO: This doesn't seem to have done the trick for Fed heavies...
         hvy_ftr_match = hvy_ftr_regex.match(fighter_factors)
         if hvy_ftr_match:
             heavies = float(hvy_ftr_match.group(1))
-            heavy_fighter_bonus = ',\n%s    "heavy fighter bonus": %s' % (indent, heavies - 6.0)
+            nominal_fighters = set_ == 'crippled' and 3.0 or 6.0
+            heavy_fighter_bonus = \
+                ',\n%s    "heavy fighter bonus": %s' % (indent, heavies - nominal_fighters)
             total += 6.0 + float(hvy_ftr_match.group(2))
         else:
             fighter_factors.replace('H', '')
@@ -145,10 +148,10 @@ def print_conversions (field):
         if ignore in field:
             return
 
-    retval = indent + '"conversions": {'
+    retval = indent + '"conversions from": {'
     matches = conv_regex.findall(field)
     if len(matches) == 0:
-        print '%s    "TODO": "%s"' % (indent, field)
+        retval += '\n%s    "TODO": "%s"' % (indent, field)
     comma = ''
     for match in matches:
         if match[1] in predefined_costs:
@@ -163,8 +166,8 @@ def print_conversions (field):
         cost = int(cost[0])
         for convertee in converted_from:
             retval += \
-                '%s\n%s    {\n%s        "from": "%s",\n%s        "cost": "%s"%s\n%s    }' % \
-                (comma, indent, indent, convertee, indent, cost, fighter_cost, indent)
+                '%s\n%s    "%s": {\n%s        "cost": "%s"%s\n%s    }' % \
+                (comma, indent, convertee, indent, cost, fighter_cost, indent)
             comma = ','
     print retval + '\n' + indent + '},'
 
