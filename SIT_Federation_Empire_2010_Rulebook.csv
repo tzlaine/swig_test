@@ -1,0 +1,252 @@
+Desig- nation		Factors On Counter		Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock
+(702)  UNITED  FEDERATION  OF  PLANETS																	
+BATS		"12(12)◆/
+6(6)◆"		9		Y181		BATS(2)		From MB: 9+12				—NA—			Federation battle station after Y181. See (502.9), (433.41)
+BC		10/5		10		Y177		BC(3)		NA				For CA/DN: 10			Base Hull Type (BCH)
+																	Heavy Battle Pod; max 3 in
+BP+		10-4/None		2		Y145		Pod		None				(431.22): 8			service.
+CA		8/4		8		Y129		CA(3)		From CA?: 1				Schedule: 8			Base Hull Type (CA)
+														Schedule: 9			
+CC		9/5		9		Y142		CA(3)		From CA: 2				For CA (Y177): 9			Command Variant
+CL		6/3		6		Y119		CL(3)		From CL?: 1				For NCL: 6			Base Hull Type (CL)
+										From DN: 6+30				Schedule or for			
+CVA		"10-12(15)/
+5-6(7▲)"		10		Y171		DN(2)		"From DN+: 5+30
+From DNG: 4+30"				DN/DN+/DNG: 18+30			Heavy Carrier. Fighters see (302.352).
+						Y172(8)				From CVS: (432.5)				See (432.5)			Medium Carrier; 6 fighter
+CVB		7-8(8)/3-4(4)		9		Y169(6)		CA(3)		From CA: 2+8+16				For CA: 10+8+16			factors until Y172; (302.352).
+CVL		"6-8◆(3)/
+3-4(1▲)"		8		Y166		CA(3)		From CA: 7+6				For CA: 14+6			Medium Carrier, Single Ship Carrier, Scout
+CVS		7-8(6)/3-4(3)		9		Y167		CA(3)		From CA: 2+12				For CA: 10+12			Medium Carrier
+DD		6/3		5		Y129		DD(4)		From DD?: 1				For NCL: 6			Base Hull Type (DD)
+DE		5-6■/2-3■		5		Y167		DD(4)		From DD: 1				For DD: 7			Light Escort
+DN		10/5		10		Y148		DN(2)		NA				Schedule: 12			Base Hull Type (DN); Early DN
+DN+		11/6		10		Y172		DN(2)		From DN: 2				For DN: 14			Base Hull Type (DN+).
+										From DN+: 2							
+DNG		12/6		10		Y175		DN(2)		From DN: 4 (minor)				For DN: 16			Base Hull Type (DNG).
+ECL		4-6■/2-4■		6		Y171		CL(3)		From CL: 1				For CL: 7			Heavy Escort
+FF		5/3		3		Y126		FF(4)		From FF?: 1				Schedule: 3			Base Hull Type (FF)
+FFE		4-5■/2-3■		3		Y167		FF(4)		From FF: 1				For FF: 4			Light Escort
+FFS		2-5◆/0-3		3		Y169		FF(4)		From FF: 1				For FF: 4			Scout
+FV		"3-5(3)/
+1-3(1▲)"		5		Y172		FF(4)		From FF: 1+6				For FF: 4+6			Escort Carrier
+NAC		5-7■/2-4■		6		Y175		NCL(3)		From NCL/NEC: 1				For NCL: 6			Heavy Escort (433.31)
+NCD		7<4>/4		6		Y171F		NCL(3)		From NCL: 2				For NCL: 7			Drone Bombardment Variant
+NCL		7/4		6		Y169		NCL(3)		From NCL?: 1				Schedule: 5			Base Hull Type (CW)
+NEC		4-7■/2-4■		6		Y173		NCL(3)		From NCL: 1				For NCL: 6			Heavy Escort
+NPF		5-7P◆/3-4P		6		Y181F		NCL(3)		From NCL: 5				For NCL: 10			PFT; Scout. Conjectural (502.65).
+NSC		3-7◆/1-4		6		Y175		NCL(3)		From NCL/NCD: 3				For NCL: 8			Scout
+NVL		4-7(6)/2-4(3)		6		Y173		NCL(3)		From NCL: 2+12				For NCL: 7+12			Medium Carrier
+										From NVL: 2							
+NVS		6-7(6)/3-4(3)		6		Y175		NCL(3)		From NCL: 2+12				For NCL: 7+12			Medium Carrier.
+														Built: 4+6			Federation PDU after Y181.
+PDU														Self-Gen: 5+6			See (502.51), (502.91),
+(BTN)		3(12)/None		0		Y181		—NA—		—NA—				Upgrade: 7+6			(508.1), and (431.2).
+SB		"36(24)◆/
+18(12)◆"		10		Y181		SB(1)		From BATS: 30+12				Upgrade Only			Fed Starbase after Y181. See (433.41), (502.9).
+SC		2-6◆/0-3		5		Y129		DD(4)		From DD: 4				For NCL: 10			Scout
+										From CVA: 3+18							
+		11-12				Y181				From DN: 9+48							Space Control Ship. Fighters
+		(10V14)/				or See				From DN+: 7+48							(302.352) are three squadrons:
+SCS		5-6(5V7)		10		(502.73)		DN(2)		From DNG: 5+48				For CVA: 21+48			F14 (8), F18 (6), A20 (10).
+TG		2-8/0-4		8		Y134		TG(3)		From CA: 4				For CA: 6			Base Hull Type (Tug)
+																	Medium Carrier pod; max 3 in
+VP		0(6)/None		1		Y166		Pod		None				(431.22): 2+12			service.
+																	Heavy carrier pod (heavy pod),
+VAP+		0(12)/None		1		Y172		Pod		None				(431.22): 4+24			max 3 in service.
+SYMBOLS USED: ◆ = scout; ■ = carrier escort, ▲ = half factor of fighters.																	
+Desig- nation		Factors On Counter		Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock
+(703)   KLINGON   EMPIRE																	
+AD5		6-7■/3-4■		6		Y170		D5 (3)		From D5: 1				For D5: 6			Heavy Escort
+																	Base Hull (BB). See (436.0).
+B10		20(4)/10(2)		10		Y171		B10 (2)		—NA—				Special: 36+8			Single-Ship Carrier.
+BP		2/None		2		Y144		Pod		None				(431.22): 4			Battle Pod; Max 4 in service.
+C7		10/5		10		Y177		C7 (3)		—NA—				For D7 or C8: 10			Base Hull Type (BCH)
+C8		12/6		10		Y167		C8 (2)		—NA—				Schedule: 16			Base Hull Type (DN)
+		10-12(6P)/								From C8: 5+12							
+C8S		5-6(3P)		10		Y179F		C8 (2)		From C8V: 5				For C8: 21+12			Space Control Ship
+		10-12(12)/															
+C8V		5-6(6)		10		Y174		C8 (2)		From C8: 4+24				For C8: 18+24			Heavy Carrier
+CVT		"7-8(5)/
+3-4(2▲)"		9		Y167		TG (3)		Unconvert to TGA no cost (pods lost)				Add CV pods to tug			Medium Carrier
+D5		7/4		6		Y166		D5 (3)		—NA—				Schedule: 5			Base Hull Type (CW)
+D5P		5-7P◆/2-4P		6		Y179		D5 (3)		From D5: 5				For D5: 10			PFT, Scout
+D5S		3-7◆/1-4		6		Y168		D5 (3)		From D5: 3				For D5: 8			Scout
+D5V		6-7(6)/3-4(3)		6		Y170		D5 (3)		From D5: 2+12				For D5: 7+12			Medium Carrier
+														Schedule: 8			
+D6		7-8/4		8		Y121		D6 (3)		—NA—				Sub for D7: 8			Base Hull Type (CA)
+D6D		7-8<4>◆/4		8		Y134		D6 (3)		From D6/D7: 3				For D6/D7: 11			Drone Bombardment, Scout
+D6M		10✛/4		8		Y167		D6 (3)		From D6/D7: 5				For D6/D7: 10			Mauler
+D6P		4-8P◆/2-4P		8		Y179		D6 (3)		From D6/D7: 5				For D6/D7: 13			PFT, Scout
+D6V		"6-8(5)/
+3-4(2▲)"		8		Y166		D6 (3)		From D6/D7: 2+10				For D6/7: 10+10			Medium Carrier
+D7		8/4		8		Y134		D7 (3)		—NA—				Schedule: 8			Base Hull Type (CA)
+D7C		9/5		9		Y142		D7 (3)		From D7: 2				For D7(Y179+): 9			Command Variant
+D7V		7-8(6)/3-4(3)		8		Y171		D7 (3)		From D7: 2+12				For D7: 10+12			Medium Carrier
+E4		4/2		3		Y120		E4 (4)		From E4?: 1				Schedule: 2.5			Base Hull Type (FF)
+E4A		2-4■/1-2■		3		Y166		E4 (4)		From E4: 1				For E4: 3.5			Light Escort
+														Schedule: 3			
+F5		5/3		4		Y134		F5 (4)		From F5?: 1				For F5L: 3			Base Hull Type (DD)
+F5E		4-5■/2-3■		4		Y170		F5 (4)		From F5/F5L: 1				For F5/F5L: 4			Light Escort
+F5L		6/3		5		Y142		F5 (4)		From F5: 2				Schedule: 4			Command variant
+F5S		2-5◆/1-3		4		Y137		F5 (4)		From F5/F5L: 1				For F5/F5L: 4			Scout
+F5V		4-5(4)/2-3(2)		5		Y166		F5 (4)		From F5/F5L: 1+8				For F5/F5L: 4+8			Escort Carrier
+PFP (2PFP)		0P◆/None		0		Y179		Pod		None				(431.22): 6 (pair)			Pair of PFT Pods; Max 2 pairs in service; Scout
+TGA		8/4		8		Y140		TG (3)		From TGB: 5				For D6/D7: 8			Tug
+TGB		4-8/2-4		6		Y123		TG (3)		From TGA: 2				For D6/D7: 6			Tug
+VP (VP2)		0(2▲)/None		1		Y168		Pod		None				(431.22): 1+5			Standard Medium Carrier Pod; max 6
+VAP		0(6)/None		1		Y175		Pod		None				(431.22): 2+12			Heavy Carrier Pod; Max 2
+SYMBOLS USED: ◆ = scout; ■ = carrier escort, ▲ = half factor of fighters, ✛ = mauler.																	
+Desig- nation		Factors On Counter		Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock
+(704)  ROMULAN  STAR  EMPIRE																	
+BH		5/3		6		Y161		BH(4)		—NA—				For SK: 5			Base Hull Type (CL)
+BHE		5■/3■		6		Y164		BH(4)		From BH: 1				For SK: 6			Light Escort
+CNV		13(12)/7(6)		10		Y175		CON(2)		From CON: 4+24				For CON: 19+24			Heavy Carrier
+CON		13/7		10		Y170		CON(2)		—NA—				Schedule: 17			Base Hull Type (DN)
+FAL		10✛/3		8		Y163		FAL(3)		From WE/KE: 5				For WE/SP: 10			Base Hull Type (Mauler)
+FE		2-6U/1-3		3		Y164		WE(3)		From WE/KE: 1				None			Theater transport
+FH		9/5		8		Y170		FH(3)		From SP: 3				Schedule: 8			Base Hull Type (CA)
+K4		4/2		3		Y167		K4(4)		From E4: 1				See (431.6): 2.5			Base Hull Type (FF)
+K5		5/3		4		Y159		K5(4)		From F5: 2				See (431.6): 3			Base Hull Type (DD)
+K5L		6/3		5		Y161		K5(4)		"From K5: 2
+From F5L: 2"				See (431.6): 4			Command Variant
+K5S		2-5◆/0-3		4		Y163		K5(4)		From K5: 1				See (431.6): 4			Scout
+K7R		9/5		8		Y166		K7R(3)		From D7: 3				See (431.6): 9			Base Hull Type (CA)
+KC9		14/7		10		Y172		KC9(2)		From C8: 5				See (704.3): 18			Base Hull Type (DN)
+KE		9/5		9		Y168		WE(3)		From WE: 3				For FH: 9 (431.6)			Command Cruiser
+KR		8/4		8		Y159		KR(3)		From D6: 3				See (431.6): 8			Base Hull Type (CA)
+KRC		10/5		9		Y164		K7R(3)		"From K7R: 2
+From D7C: 3"				See (431.6): 10			Command Cruiser
+KRM		10✚/4		8		Y167		KR(3)		From KR or K7R: 5				See (431.6): 10			Mauler
+KRT		6-8T/2-4		6		Y162		KRT(3)		From TGB: 4				See (431.6): 8			Base Hull; Tug (Special Limits)
+NH		10/5		9		Y173		FH(3)		"From FH: 2
+From SP: 5"				Schedule: 10 For FH (Y180+)			Command Cruiser
+PHX		13P(6)/7P(3)		10		Y182F		CON(2)		"From CNV: 5
+From CON: 5+12"				"For CON: 22+12
+(502.7)"			Space Control Ship
+SE		2-6◆/0-3		8		Y165		WE(3)		From WE/KE: 2				For WE: 8			Scout
+SK		5/3		5		Y167		SK(4)		From SK?: 0				Schedule: 3.5			Base Hull Type (DW), Modular (433.43)
+SKB		4-5(4)/2-3(2)		6		Y167		SK(4)		From SK?: 1+8				For SK: 4.5+8			Escort Carrier
+SKE		5■/3■		5		Y167		SK(4)		From SK?: 1.5				For SK: 4.5			Light Escort
+SKF		3-5◆/1-3		5		Y167		SK(4)		From SK?: 2				For SK: 5.5			Scout
+SN		4/2		3		Y161		SN(4)		—NA—				Schedule: 2.5			Base Hull Type (FF)
+SNB		5/2		3		Y168		SN(4)		From SN: 1				For SN: 3			FF Leader; see (431.61).
+SP		7/4		6		Y167		SP(3)		From SP?: 0				Schedule: 5			Base Hull Type (CW), Modular (433.43)
+SPB		6-7(8)/3-4(4)		8		Y167		SP(3)		From SP?: 1+16				For SP: 6+16			Medium Carrier
+SPC		5-7◆/2-4		6		Y167		SP(3)		From SP?: 3				For SP: 8			Scout (Survey)
+SPE		5-7P◆/2-4P		6		Y182		SP(3)		From SP?: 5				For SP: 10			PF Tender, Scout
+SPF		7✛/4		6		Y167		SP(3)		From SP?: 4				For SP: 7			Mauler
+SPH		5-7T/2-4		6		Y167		SP(3)		From SP?: 0				For SP: 5			Tug (special limits)
+										"From SUP: 2+16
+From NH: 4+24"				For SUP or CON			
+		9-10(12)/								From FH: 5+24				or CNV or SCS:			
+SUB		4-5(6)		9		Y173		FH(3)		From SPB: 5+8				12+24			Heavy Carrier
+										From NH: 2+8				Schedule: 11+8 Sub NH/CON:			Medium Carrier (single ship)
+SUP		10(4)/5(2)		9		Y170		FH(3)		From FH: 3+8				11+8			Command Cruiser
+WE		6/3		8		Y161		WE(3)		—NA—				"Schedule: 6
+For SP: 6"			Base Hull Type (CA)
+WH		"2-5(2▲)/
+1-3(1)"		6		Y164		BH(4)		From BH: 1+5				For WE/SK: 6+5			Carrier (Special Type)
+Desig- nation		Factors On Counter	Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock	
+(708)	ORION   PIRATES																
+BR		7/4	6		Y167		BR(3)		—NA—				Schedule:		5	Base Hull (CW); Lease = 1.75	
+CA		8/4	8		Y131		CA(3)		—NA—				Schedule:		8	Base Hull (CA); Lease = 2	
+CR		6/3	6		Y126		CR(3)		—NA—				Schedule: 6			Basic Hull (CL); Lease = 1.5	
+CVL		6-8(4)/3-4(2)	6		Y169		SAL(3)		—NA—				Schedule: 10+8			Medium Carrier; Lease = 1.5	
+DW		5/3	5		Y173		DW(4)		—NA—				Schedule: 3.5			Base Hull (DW); Lease = 1.25	
+LR		4/2	3		Y128		LR(4)		—NA—				Schedule: 2.5			Base Hull (FF); Lease = 1	
+SYMBOLS USED: ◆ = scout; ■ = carrier escort, ▲ = half factor of fighters.																	
+SHIP INFORMATION TABLES                                                                FEDERATION & EMPIRE																	
+																	
+Desig- nation		Factors On Counter		Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock
+(707)  THOLIAN  DEFENSE  FORCES																	
+DN		10/5		10		Y167		DN(2)		From 3PC: 6				Schedule: 12			Base Hull Type (DN)
+BW		4(4)/2(2)		5		Y170		PC(4)		From PC: 1+8				For PC: 3.5+8			Escort Carrier
+CA		8/4		8		Y159		CA(3)		From 2xPC: 4				Schedule: 8			Base Hull Type (CA)
+CPC		4U/2		3		Y089		PC(4)		From PC: 1				For PC: 2.5			Theater Transport
+CVA		"4-8(12)/
+2-4(6)"		10		Y173		CA(3)		"From CA: 3+24
+From 2xBW: 5+8
+From 2xPC: 7+24"				For CA: 10+24			Medium Carrier
+DD		6/3		5		Y114		DD(4)		From PC: 3				Schedule: 4			Base Hull Type (DW)
+PC		4/2		3		Y082		PC(4)		None				Schedule: 2.5			Base Hull Type (FF)
+PCE		4■/2■		3		Y170		PC(4)		From PC: 1				For PC: 3.5			Light Escort
+PFT		4P◆/0-2P		3		Y180F		PC(4)		From PC or DD: 5				For PC: 7.5			PF Tender, Scout
+SC		1-4◆/0-2		3		Y124		PC(4)		From PC: 1				For PC: 3.5			Scout
+SYMBOLS USED: ◆ = scout; ■ = carrier escort, ▲ = half factor of fighters.																	
+Desig- nation		Factors On Counter		Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock
+701  GENERAL  UNITS																	
+BATS		"12(6)◆/
+6(3)◆"		9		Y130		BATS(2)		From MB: 9+6				—NA—			Battle station. See (433.41), (510.3).
+"BATS
+w/PF"		"12P(6)◆/
+6P(3)◆"		9		Varies		BATS(2)		From BATS: Cost of PFs				—NA—			Battle station used after PF introduction date. See Feds.
+CON- VOY		0-6/None		0		Y119		—NA—		—NA—				(431.2): 6			See (414.0); Cargo = 20EP
+FRD		1-4/None		0		Y139		FRD(2)		—NA—				(431.2): 10			See (421.0)
+MB		8◆/4		6		Y139		MB(3)		—NA—				(431.2): 10			Mobile Base. See (510.2)
+PDU (BTN)		3(6)/None		0		Y167		—NA—		—NA—				"Built: 4+3
+Self-Gen: 5+3
+Upgrade: 7+3"			"See (502.51), (508.1), and
+(431.2)."
+"PDU
+w/PFs"		3p(6)/None		0		Varies		—NA—		From PDU: Cost of PFs				"Built: 4+3
+Self-Gen: 5+3
+Upgrade: 7+3"			PDU used after PF introduction date. See Feds. Only 3 PFs, not 6.
+REP POD		0/None		0		Y159		Tug Mission		—NA—				Replacement: 5			See (422.8)
+SB		"36(12)◆/
+18(6)◆"		10		Y140		SB(1)		From BATS: 30+6				Upgrade Only			Starbase. See (433.41)
+SB w/PF		"36PP(12)◆/
+18P(6)◆"		10		Varies		SB(1)		From SB: Cost of PFs				—NA—			Starbase used after PF introduction date. See Feds.
+SYMBOLS USED: ◆ = scout; ■ = carrier escort, ▲ = half factor of fighters.																	
+Desig- nation		Factors On Counter		Cmnd (754.0)		Date Avail		Base Hull; Size (755.0)		Conversion Cost, Source				Build Cost or Substitution			Notes and Special Cases; EW, Shock
+(709)  HYDRAN  ROYAL  NAVY																	
+AH		3-4■/2■		3		Y169F		FF(4)		From FF: 1				For HN: 3.5			Light Escort
+BP		7-2(2)/None		2		Y157		Pallet		None				(431.22): 8+2			Battle Pallet, Max 2 in service.
+CR		5/2		4		Y157		FF(4)		From FF: 2				For FF: 3.5			Command Variant
+CU		4/2		3		Y157		FF(4)		From HN: 1				Schedule: 2.5			Base Hull Type (Hellbore FF)
+		3-8(10▲)/								From RN: 2+16.5							
+CV		1-4(5)		8		Y170F		CA(3)		From DG: 2+19.5				For CA: 10+21			Heavy True Carrier
+DE		"4-6(3)■/
+2-3(1▲)■"		4		Y169F		DD(4)		"From LN: 1+1
+From KN: 1+3"				For DD: 5+3			Heavy Escort
+DG		9-8(1▲)/4(1)		8		Y157		CA(3)		From RN: 3				Schedule: 8+1.5			Base Hull Type (Hellbore CA)
+HN		3-4/2		3		Y133		FF(4)		From CU: 1				Schedule: 2.5			Base Hull Type (Fusion FF)
+HR		5-7(3)/4(1▲)		6		Y167		CW(3)		From TR: 3+3				Schedule: 5+3			Base Hull Type (Fusion CW)
+ID		10-12(12)/															
+(CVA)		5-6(6)		10		Y173		DN(2)		From PAL: 4+18				For PAL: 18+24			Heavy True Carrier
+KN		6/3		4		Y157		DD(4)		From LN: 3				Schedule: 6			Base Hull Type (Hellbore DD)
+		10-9(1▲)/								From DG: 2							
+LB		5(1)		9		Y161		CA(3)		From LM: 3				For CC: 9+1.5			Command Variant
+										From RN: 2							
+LC		7-9(3)/5(1▲)		9		Y133		CA(3)		"From LB: 3+1
+From LM: 1"				For CC: 7+3			Command Variant
+LM		8-9(3)/5(1▲)		9		Y159		CA(3)		"From RN: 2
+From LB: 3+1.5"				For CC: 8+3			Command Variant
+LN		4-6(2)/3(1)		4		Y133		DD(4)		From KN: 3+2				Schedule: 4+2			Base Hull Type (Fusion DD)
+		11-12P(6)/								From ID: 5							Space Control Ship, True
+LP		5-6P(3)		10		Y180F		DN(2)		From PAL: 5+6				For PAL: 21+12			Carrier
+										From TR: 2+12							
+NCV		3-7(6)/1-4(3)		6		Y173		CW(3)		From HR/NEC: 2+9				For CW: 7+12			Medium True Carrier
+NEC		"5-7(3)■/
+3-4(1▲)■"		6		Y173		CW(3)		"From HR: 1
+From TR: 1+3"				For CW: 6+3			Heavy Escort
+NPF		3-7P◆/1-4P		6		Y180		CW(3)		From CW: 5				For CW: 10			PF Tender, Scout
+NSC		"2-7(3)◆/
+0-4(1▲)"		6		Y172		CW(3)		"From HR: 3
+From TR: 3+3"				For CW: 8+3			Scout
+OV		"11-10(3)/
+5(1▲)"		10		Y180		BCH(3)		—NA—				For CC/DN: 10+3			Base Hull Type (BCH)
+		11-12(6)/															
+PAL		6(3)		10		Y169		DN(2)		—NA—				Schedule: 16+6			Base Hull Type (DN)
+PFP		0P◆/None		0		Y180		Pallet		None				(431.22): 6			PF Tender Pallet; Scout; max two in service.
+PFT		3-7P◆/0-4P		6		Y180		PGS(3)		—NA—				For DD: 11			PF Tender, Scout
+RN		6-8(4▲)/4(2)		8		Y133		CA(3)		From DG: 3+3				Schedule: 6+4.5			Base Hull Type (Fusion CA)
+SC		2-4◆/0-2		3		Y133		FF(4)		From FF: 1				For FF: 3.5			Scout
+		3-8(1▲)/															
+TG		0-4(1)		8		Y139		CA(3)		From RN/DG: 4				For CA: 6+1.5			Tug
+TR		7/4		6		Y168		CW(3)		From HR: 3				Schedule: 5			Base Hull Type (Hellbore CW)
+										From LN: 2+14							
+										From KN: 2+16							
+UH		2-6(8)/1-3(4)		6		Y169F		DD(4)		From DE: 2+13				For DD: 8+16			Medium True Carrier
+																	Carrier Pallet for tug or LTT;
+VP		0(6)/None		1		Y164		Pallet		None				(431.22): 2+12			max 2 in service.
