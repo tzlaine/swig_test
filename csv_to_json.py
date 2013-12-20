@@ -5,6 +5,8 @@ import sys, re
 
 text_ = open(sys.argv[1]).read()
 
+lines = []
+
 indent = '            '
 
 def ship_group (name):
@@ -45,6 +47,7 @@ def factors_set (factors, set_):
         factors = factors.replace('T', '')
 
     fighters = ''
+    heavy_fighter_bonus = ''
     match = cf_regex_1.match(factors)
     if match:
         fighter_factors = match.group(2)
@@ -52,9 +55,11 @@ def factors_set (factors, set_):
         if fighter_factors.count('▲') == 1:
             total = 0.5
             fighter_factors = fighter_factors.replace('▲', '')
-        ftr_match = hvy_ftr_regex.match(fighter_factors)
-        if ftr_match:
-            total += float(ftr_match.group(1)) + float(ftr_match.group(2))
+        hvy_ftr_match = hvy_ftr_regex.match(fighter_factors)
+        if hvy_ftr_match:
+            heavies = float(hvy_ftr_match.group(1))
+            heavy_fighter_bonus = ',\n%s    "heavy fighter bonus": %s' % (indent, heavies - 6.0)
+            total += 6.0 + float(hvy_ftr_match.group(2))
         else:
             fighter_factors.replace('H', '')
             total += float(fighter_factors)
@@ -75,21 +80,105 @@ def factors_set (factors, set_):
         attack = match.group(1)
         defense = match.group(2)
 
-    return '%s"%s": {\n%s    "att": %s,\n%s    "def": %s%s%s%s%s%s%s\n%s},' % \
-    (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, drones, flotillas, indent)
+    return '%s"%s": {\n%s    "att": %s,\n%s    "def": %s%s%s%s%s%s%s%s\n%s},' % \
+    (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, heavy_fighter_bonus, drones, flotillas, indent)
 
 
-def basic_factors (uncrippled, crippled):
-    retval = factors_set(uncrippled, 'uncrippled')
-    if not 'None' in crippled:
-        retval += '\n' + factors_set(crippled, 'crippled')
+def stats (text):
+    parts = text.split('/')
+    retval = factors_set(parts[0], 'uncrippled')
+    if not 'None' in parts[1]:
+        retval += '\n' + factors_set(parts[1], 'crippled')
     return retval
 
-def combat_factors (text):
-    parts = text.split('/')
-    return basic_factors(parts[0], parts[1])
+avail_regex = re.compile(r'Y(\d+)([SF])?')
+
+def available (field):
+    match = avail_regex.match(field)
+    year = match.group(1)
+    season = 'spring'
+    if match.group(2):
+        season = match.group(2) == 'F' and 'fall' or 'spring'
+    retval = indent + '"available": {\n' + \
+             indent + '    "year": ' + str(int(year)) + ',\n' + \
+             indent + '    "season": "' + season + '"\n' + \
+             indent + '},'
+    return retval
+
+def print_pod_designation (field):
+    if 'Pod' in field or 'Tug Mission' in field:
+        print indent + '"pod": "true",'
+
+def all_conversion_sources (sources):
+    retval = []
+    slash_split = sources.split('/')
+    if 1 < len(slash_split):
+        if len(slash_split[-1]) == 1:
+            slash_split[-1] = slash_split[-2][0:-1] + slash_split[-1]
+    for part in slash_split:
+        if '?' in part:
+            pattern = '^' + part.replace('?', '.') + '$'
+            for line in lines:
+                if re.match(pattern, line[0]):
+                    retval.append(line[0])
+        else:
+            retval.append(part)
+    return retval
+
+no_conv_regex = re.compile(r'^(?:None|none|—NA—)$')
+conv_regex = re.compile(r'[Ff]rom ([^:]+): ((?:[(][\d.]+[)])|(?:[\d+]+))')
+
+def print_conversions (field):
+    predefined_costs = {
+        '(432.5)': '8' # CVB fighter surcharge
+    }
+
+    ignores = [
+        '440.4' # From outside Basic F&E
+    ]
+
+    match = no_conv_regex.match(field)
+    if match:
+        return
+
+    for ignore in ignores:
+        if ignore in field:
+            return
+
+    retval = indent + '"conversions": {'
+    matches = conv_regex.findall(field)
+    if len(matches) == 0:
+        print '%s    "TODO": "%s"' % (indent, field)
+    comma = ''
+    for match in matches:
+        if match[1] in predefined_costs:
+            match = (match[0], predefined_costs[match[1]])
+        converted_from = all_conversion_sources(match[0])
+        cost = match[1].split('+')
+        fighter_cost = ''
+        if len(cost) == 3:
+            cost = [int(cost[0]) + int(cost[1]), cost[2]]
+        if len(cost) == 2:
+            fighter_cost = ',\n%s        "fighter_cost": "%s"' % (indent, int(cost[1]))
+        cost = int(cost[0])
+        for convertee in converted_from:
+            retval += \
+                '%s\n%s    {\n%s        "from": "%s",\n%s        "cost": "%s"%s\n%s    }' % \
+                (comma, indent, indent, convertee, indent, cost, fighter_cost, indent)
+            comma = ','
+    print retval + '\n' + indent + '},'
 
 def process_line (fields):
+    outer_indent = '        '
+    print outer_indent + '"' + fields[0] + '": {'
+    print indent + '"cmd": ' + fields[4] + ','
+    print stats(fields[2])
+    print available(fields[5])
+    print_pod_designation(fields[6])
+    print_conversions(fields[7])
+    print outer_indent + '},'
+
+def save_line (fields):
     nonempty_fields = 0
     # strip quotes
     for i in range(0, len(fields)):
@@ -110,11 +199,7 @@ def process_line (fields):
     if ship_group(fields[0]):
         return
 
-    outer_indent = '        '
-    print outer_indent + '"' + fields[0] + '": {'
-    print indent + '"cmd": ' + fields[4] + ','
-    print combat_factors(fields[2])
-    print outer_indent + '},'
+    lines.append(fields)
 
 line = ''
 in_quote = False
@@ -125,7 +210,10 @@ for i in range(0, len(text_)):
     if not in_quote or char != '\n':
         if char == '\n':
             line = line.replace('‡', '')
-            process_line(line.split('\t'))
+            save_line(line.split('\t'))
             line = ''
         else:
             line += char
+
+for line in lines:
+    process_line(line)
