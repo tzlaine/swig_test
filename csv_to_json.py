@@ -39,6 +39,11 @@ def factors_set (factors, set_):
         mauler = ',\n%s    "mauler": "true"' % (indent)
         factors = factors.replace('✛', '').replace('✚', '')
 
+    tug = ''
+    if 'T' in factors:
+        mauler = ',\n%s    "tug": "true"' % (indent)
+        factors = factors.replace('T', '')
+
     fighters = ''
     match = cf_regex_1.match(factors)
     if match:
