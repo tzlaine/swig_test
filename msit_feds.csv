@@ -8,7 +8,7 @@ SDS	94		Future	10		BB(2)				Conjectural Stellar Domination Ship
 DREADNOUGHTS										
 DN	2	10/5	F&E	10	Y148	DN(2)	See (440.4)	Schedule: 12	3.6	Base Hull Type (DN); Early DN
 DNL	91	11F/6	AO	9	Y167	DNL(2)	None	For DN: 16	4.2	Fast Dreadnought (525.1)
-CVA	13	10-12(15)/5-6(6)	F&E	10	Y171	DN(2)	"From DN‡: 6+30
+CVA	13	10-12(15H)/5-6(7▲H)	F&E	10	Y171	DN(2)	"From DN‡: 6+30
 From DN+‡: 5+30
 From DNG/H: 4+30"	Schedule: 18+30 For DN/DN+/DNG: 18+30	4.8	Heavy Carrier. Fighters are F14s (8) and A10s (7); see (302.352). Can never be converted to use A20s due to balcony.
 CVA (4CVA)	—	24-30(15)/11-16(6) CVA+ECL+ 2DE(or DWA)	F&E	10	Y171	Group	Individual Ships	Individual Ships	Ships	"Heavy Carrier Group.
@@ -30,7 +30,7 @@ SCS (4SCS)	—	"25-30(24)/12-
 16(12) SCS+NAC+ DWE+FFE"	CO	10	"Y181
 or See (502.73)"	Group	Individual Ships	Individual Ships	Ships	"Space Control Ship Group Fighters (302.352) are three
 squadrons: F14 (8), F18 (6), A20 (10)."
-SCS	32	11-12(24)/5-6(12)	F&E	10	"Y181
+SCS	32	11-12(24H)/5-6(12H)	F&E	10	"Y181
 or See (502.73)"	DN(2)	"From CVA: 3+18
 From DN‡: 9+48
 From DN+‡: 7+48
@@ -72,7 +72,10 @@ CFS	A11	4-8F◆/2-4	SO	8	Y172	CA(3)	From CF: 4 (minor) From CA: 6	For CA: 12	2.4
 CVB (3CVB)	—	"16-19(8)/7-10(4) CVB+DE(or DWA)
 +FFE"	F&E	9	Y172(8) Y169(6)	Group	Individual Ships	Individual Ships	Ships	"Medium Carrier Group
 See (302.252) for F15 fighters. 6 fighter factors until Y172"
-CVB	29A	7-8(8)/3-4(4)	F&E	9	Y172(8) Y169(6)	CA(3)	"From CVS: (432.5)
+CVB	29A	7-8(6)/3-4(3)	F&E	9	Y169	CA(3)	"From CVS: (432.5)
+From CA: 2+8+16"	"See (432.5)
+For CA: 10+8+16"	2.4	Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants.
+CVB	29A	7-8(8H)/3-4(4H)	F&E	9	Y172	CA(3)	"From CVS: (432.5)
 From CA: 2+8+16"	"See (432.5)
 For CA: 10+8+16"	2.4	Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants.
 CVD	97	3-8(12)/1-4(6)	FO	9	Y173	CA(3)	"From CA: 3+24

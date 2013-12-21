@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, re
+import math, sys, re
 
 text_ = open(sys.argv[1]).read()
 
@@ -16,7 +16,7 @@ cf_regex_1 = re.compile(r'(.+)[(](.+)[)]')
 cf_regex_2 = re.compile(r'(.+)<(.+)>')
 cf_regex_3 = re.compile(r'(.+)-(.+)')
 
-hvy_ftr_regex = re.compile(r'(.+)H(.+)')
+hvy_ftr_regex = re.compile(r'(.+)H(.+)?')
 
 def factors_set (factors, set_):
     flotillas = factors.count('P')
@@ -52,20 +52,34 @@ def factors_set (factors, set_):
     if match:
         fighter_factors = match.group(2)
         total = 0
-        if fighter_factors.count('▲') == 1:
-            total = 0.5
-            fighter_factors = fighter_factors.replace('▲', '')
-        # TODO: This doesn't seem to have done the trick for Fed heavies...
         hvy_ftr_match = hvy_ftr_regex.match(fighter_factors)
         if hvy_ftr_match:
-            heavies = float(hvy_ftr_match.group(1))
-            nominal_fighters = set_ == 'crippled' and 3.0 or 6.0
+            heavies = 0
+            group_1 = hvy_ftr_match.group(1)
+            group_2 = hvy_ftr_match.group(2)
+            if group_1.count('▲') == 1:
+                heavies += 0.5
+                group_1 = group_1.replace('▲', '')
+            heavies += float(group_1)
+            nominal_fighter_squadron_size = set_ == 'crippled' and 3.0 or 6.0
+            nominal_fighter_squadrons = \
+              math.floor((heavies - 1.0) / nominal_fighter_squadron_size)
+            nominal_fighters = nominal_fighter_squadrons * nominal_fighter_squadron_size
             heavy_fighter_bonus = \
                 ',\n%s    "heavy fighter bonus": %s' % (indent, heavies - nominal_fighters)
-            total += 6.0 + float(hvy_ftr_match.group(2))
+            total += nominal_fighters
+            if group_2:
+                if group_2.count('▲') == 1:
+                    total += 0.5
+                group_2 = group_2.replace('▲', '')
+                total += float(group_2)
         else:
             fighter_factors.replace('H', '')
             total += float(fighter_factors)
+            if fighter_factors.count('▲') == 1:
+                total += 0.5
+                fighter_factors = fighter_factors.replace('▲', '')
+
         fighters = ',\n%s    "fighters": %s' % (indent, total)
         factors = factors.replace('(' + match.group(2) + ')', '')
 
