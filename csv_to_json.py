@@ -175,11 +175,11 @@ def print_conversions (field):
         if len(cost) == 3:
             cost = [int(cost[0]) + int(cost[1]), cost[2]]
         if len(cost) == 2:
-            fighter_cost = ',\n%s        "fighter_cost": "%s"' % (indent, int(cost[1]))
+            fighter_cost = ',\n%s        "fighter_cost": %s' % (indent, int(cost[1]))
         cost = int(cost[0])
         for convertee in converted_from:
             retval += \
-                '%s\n%s    "%s": {\n%s        "cost": "%s"%s\n%s    }' % \
+                '%s\n%s    "%s": {\n%s        "cost": %s%s\n%s    }' % \
                 (comma, indent, convertee, indent, cost, fighter_cost, indent)
             comma = ','
     print retval + '\n' + indent + '},'
