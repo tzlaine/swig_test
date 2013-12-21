@@ -184,6 +184,16 @@ def print_conversions (field):
             comma = ','
     print retval + '\n' + indent + '},'
 
+def print_salvage (field):
+    if field != '' and float(field) != 0.0:
+        print '%s"salvage": %d,' % (indent, float(field))
+
+def print_notes (field):
+    notes = 'none'
+    if field != '':
+        notes = field.strip()
+    print '%s"notes": "%s"' % (indent, notes)
+
 def process_line (fields):
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
@@ -192,6 +202,8 @@ def process_line (fields):
     print available(fields[5])
     print_pod_designation(fields[6])
     print_conversions(fields[7])
+    print_salvage(fields[9])
+    print_notes(fields[10])
     print outer_indent + '},'
 
 def save_line (fields):
