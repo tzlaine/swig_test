@@ -5,6 +5,8 @@ import math, sys, re
 
 text_ = open(sys.argv[1]).read()
 
+nation = sys.argv[2]
+
 lines = []
 
 indent = '            '
@@ -96,16 +98,16 @@ def factors_set (factors, set_, tug_):
         attack = match.group(1)
         defense = match.group(2)
 
-    return '%s"%s": {\n%s    "att": %s,\n%s    "def": %s%s%s%s%s%s%s%s\n%s},' % \
-    (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, heavy_fighter_bonus, drones, flotillas, indent)
+    return ('%s"%s": {\n%s    "att": %s,\n%s    "def": %s%s%s%s%s%s%s%s\n%s},' % \
+    (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, heavy_fighter_bonus, drones, flotillas, indent), fighters != '')
 
 
 def stats (text, tug):
     parts = text.split('/')
-    retval = factors_set(parts[0], 'uncrippled', tug)
+    (retval, fighters) = factors_set(parts[0], 'uncrippled', tug)
     if not 'None' in parts[1]:
-        retval += '\n' + factors_set(parts[1], 'crippled', False)
-    return retval
+        retval += '\n' + factors_set(parts[1], 'crippled', False)[0]
+    return (retval, fighters)
 
 avail_regex = re.compile(r'Y(\d+)([SF])?')
 
@@ -174,6 +176,7 @@ schedule_regex = re.compile(r'[Ss]chedule: ([\d+]+)')
 subst_regex = re.compile(r'[Ff]or (.+): ([\d+]+)')
 
 def print_construction (field):
+    #TODO: handle replacement-only units
     match = schedule_regex.match(field)
     matches = subst_regex.findall(field)
 
@@ -189,7 +192,7 @@ def print_construction (field):
         retval += subst_conv_costs(field, matches)
         print retval + '\n' + indent + '},'
 
-no_conv_regex = re.compile(r'^(?:None|none|—NA—)$')
+no_conv_regex = re.compile(r'^(?:None|none|—NA—|NA)$')
 conv_regex = re.compile(r'[Ff]rom ([^:]+): ((?:[(][\d.]+[)])|(?:[\d+]+))')
 
 def print_conversions (field):
@@ -217,28 +220,40 @@ def print_salvage (field):
         print '%s"salvage": %d,' % (indent, float(field))
 
 tug_regex = re.compile(r'[Tt]ug')
+carrier_regex = re.compile(r'[Tt]rue *[Cc]arrier')
+limit_regex = re.compile(r'[Mm]ax *(\d+) *[Ii]n *[Ss]ervice')
 
 def get_notes (field):
     notes = 'none'
     if field != '':
         notes = field.strip()
-    return (notes, tug_regex.match(notes))
+    match = limit_regex.search(notes)
+    limit = -1
+    if match:
+        limit = int(match.group(1))
+    return (notes, tug_regex.match(notes), carrier_regex.search(notes), limit)
 
 def print_notes (notes):
     print '%s"notes": "%s"' % (indent, notes)
 
 def process_line (fields):
-    (notes, tug) = get_notes(fields[10])
+    (notes, tug, carrier, limit) = get_notes(fields[10])
 
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
     print indent + '"cmd": ' + fields[4] + ','
-    print stats(fields[2], tug)
+    (stats_, fighters) = stats(fields[2], tug)
+    print stats_
     print available(fields[5])
     print_pod_designation(fields[6])
     print_construction(fields[8])
     print_conversions(fields[7])
     print_salvage(fields[9])
+    # TODO: Predicate this on movement as well.
+    if carrier or fighters and not nation == 'HYD':
+        print indent + '"carrier": "true",'
+    if -1 < limit:
+        print indent + '"max in service": ' + limit + ','
     print_notes(notes)
     print outer_indent + '},'
 

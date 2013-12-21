@@ -112,7 +112,7 @@ VDB			Future	8						Unbuilt variant
 GSX	204		Future	9						X-ship, Survey Cruiser
 TUGS AND PODS										
 TG	8	2-8/0-4	F&E	8	Y134	TG(3)	From CA: 4	For CA: 6	1.5	Tug
-BP+	10	10-4/None	CO	2	Y145	Pod	None	(431.22): 8	1.0	Heavy Battle Pod; max 3 in service.
+BP+	10	10-4/None	F&E	2	Y145	Pod	None	(431.22): 8	1.0	Heavy Battle Pod; max 3 in service.
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	—NA—	Replacement: 5	0.0	See (422.8)
 A-POD	53	0GG/None	CO	0	Y160	Pod	None	(521.711): 4	0.5	Troop Pod, max 2 in service.
 SP	135	0◆/None	AO	1	Y165	Pod	None	(431.2): 5	0.5	Scout pod; EW varies, see (317.51); see (317.53); max 3 in service.
