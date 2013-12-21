@@ -18,7 +18,7 @@ cf_regex_3 = re.compile(r'(.+)-(.+)')
 
 hvy_ftr_regex = re.compile(r'(.+)H(.+)?')
 
-def factors_set (factors, set_):
+def factors_set (factors, set_, tug_):
     flotillas = factors.count('P')
     if flotillas:
         flotillas = ',\n%s    "PFs": %d' % (indent, flotillas * 6)
@@ -42,7 +42,7 @@ def factors_set (factors, set_):
         factors = factors.replace('✛', '').replace('✚', '')
 
     tug = ''
-    if 'T' in factors:
+    if tug_ or 'T' in factors:
         mauler = ',\n%s    "tug": "true"' % (indent)
         factors = factors.replace('T', '')
 
@@ -100,11 +100,11 @@ def factors_set (factors, set_):
     (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, heavy_fighter_bonus, drones, flotillas, indent)
 
 
-def stats (text):
+def stats (text, tug):
     parts = text.split('/')
-    retval = factors_set(parts[0], 'uncrippled')
+    retval = factors_set(parts[0], 'uncrippled', tug)
     if not 'None' in parts[1]:
-        retval += '\n' + factors_set(parts[1], 'crippled')
+        retval += '\n' + factors_set(parts[1], 'crippled', False)
     return retval
 
 avail_regex = re.compile(r'Y(\d+)([SF])?')
@@ -188,22 +188,29 @@ def print_salvage (field):
     if field != '' and float(field) != 0.0:
         print '%s"salvage": %d,' % (indent, float(field))
 
-def print_notes (field):
+tug_regex = re.compile(r'[Tt]ug')
+
+def get_notes (field):
     notes = 'none'
     if field != '':
         notes = field.strip()
+    return (notes, tug_regex.match(notes))
+
+def print_notes (notes):
     print '%s"notes": "%s"' % (indent, notes)
 
 def process_line (fields):
+    (notes, tug) = get_notes(fields[10])
+
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
     print indent + '"cmd": ' + fields[4] + ','
-    print stats(fields[2])
+    print stats(fields[2], tug)
     print available(fields[5])
     print_pod_designation(fields[6])
     print_conversions(fields[7])
     print_salvage(fields[9])
-    print_notes(fields[10])
+    print_notes(notes)
     print outer_indent + '},'
 
 def save_line (fields):
