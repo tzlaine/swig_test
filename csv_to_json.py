@@ -74,11 +74,10 @@ def factors_set (factors, set_):
                 group_2 = group_2.replace('▲', '')
                 total += float(group_2)
         else:
-            fighter_factors.replace('H', '')
-            total += float(fighter_factors)
             if fighter_factors.count('▲') == 1:
                 total += 0.5
                 fighter_factors = fighter_factors.replace('▲', '')
+            total += float(fighter_factors)
 
         fighters = ',\n%s    "fighters": %s' % (indent, total)
         factors = factors.replace('(' + match.group(2) + ')', '')
