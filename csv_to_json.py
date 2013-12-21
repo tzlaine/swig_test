@@ -125,7 +125,7 @@ def print_pod_designation (field):
     if 'Pod' in field or 'Tug Mission' in field:
         print indent + '"pod": "true",'
 
-def all_conversion_sources (sources):
+def all_sources (sources):
     retval = []
     slash_split = sources.split('/')
     if 1 < len(slash_split):
@@ -141,14 +141,58 @@ def all_conversion_sources (sources):
             retval.append(part)
     return retval
 
+predefined_costs = {
+    '(432.5)': '8' # CVB fighter surcharge
+}
+
+def cost (cost_str, extra_indent):
+    cost_ = cost_str.split('+')
+    fighter_cost_ = ''
+    if len(cost_) == 3:
+        cost_ = [int(cost_[0]) + int(cost_[1]), cost_[2]]
+    if len(cost_) == 2:
+        fighter_cost_ = ',\n%s%s"fighter_cost": %s' % (indent, extra_indent, int(cost_[1]))
+    cost_ = int(cost_[0])
+    return (cost_, fighter_cost_)
+
+def subst_conv_costs (field, matches):
+    retval = ''
+    comma = ''
+    for match in matches:
+        if match[1] in predefined_costs:
+            match = (match[0], predefined_costs[match[1]])
+        sources = all_sources(match[0])
+        (cost_, fighter_cost_) = cost(match[1], '        ')
+        for source in sources:
+            retval += \
+                '%s\n%s    "%s": {\n%s        "cost": %s%s\n%s    }' % \
+                (comma, indent, source, indent, cost_, fighter_cost_, indent)
+            comma = ','
+    return retval
+
+schedule_regex = re.compile(r'[Ss]chedule: ([\d+]+)')
+subst_regex = re.compile(r'[Ff]or (.+): ([\d+]+)')
+
+def print_construction (field):
+    match = schedule_regex.match(field)
+    matches = subst_regex.findall(field)
+
+    if match:
+        constr = indent + '"construction": {'
+        (cost_, fighter_cost_) = cost(match.group(1), '    ')
+        constr += '\n%s    "cost": %s%s\n%s},' % \
+        (indent, cost_, fighter_cost_, indent)
+        print constr
+
+    if 0 < len(matches):
+        retval = indent + '"substitutions for": {'
+        retval += subst_conv_costs(field, matches)
+        print retval + '\n' + indent + '},'
+
 no_conv_regex = re.compile(r'^(?:None|none|—NA—)$')
 conv_regex = re.compile(r'[Ff]rom ([^:]+): ((?:[(][\d.]+[)])|(?:[\d+]+))')
 
 def print_conversions (field):
-    predefined_costs = {
-        '(432.5)': '8' # CVB fighter surcharge
-    }
-
     ignores = [
         '440.4' # From outside Basic F&E
     ]
@@ -165,23 +209,7 @@ def print_conversions (field):
     matches = conv_regex.findall(field)
     if len(matches) == 0:
         retval += '\n%s    "TODO": "%s"' % (indent, field)
-    comma = ''
-    for match in matches:
-        if match[1] in predefined_costs:
-            match = (match[0], predefined_costs[match[1]])
-        converted_from = all_conversion_sources(match[0])
-        cost = match[1].split('+')
-        fighter_cost = ''
-        if len(cost) == 3:
-            cost = [int(cost[0]) + int(cost[1]), cost[2]]
-        if len(cost) == 2:
-            fighter_cost = ',\n%s        "fighter_cost": %s' % (indent, int(cost[1]))
-        cost = int(cost[0])
-        for convertee in converted_from:
-            retval += \
-                '%s\n%s    "%s": {\n%s        "cost": %s%s\n%s    }' % \
-                (comma, indent, convertee, indent, cost, fighter_cost, indent)
-            comma = ','
+    retval += subst_conv_costs(field, matches)
     print retval + '\n' + indent + '},'
 
 def print_salvage (field):
@@ -208,6 +236,7 @@ def process_line (fields):
     print stats(fields[2], tug)
     print available(fields[5])
     print_pod_designation(fields[6])
+    print_construction(fields[8])
     print_conversions(fields[7])
     print_salvage(fields[9])
     print_notes(notes)
