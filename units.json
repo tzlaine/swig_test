@@ -1,4 +1,7584 @@
 {
     "FED": {
+        "DN": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 148,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 12
+            },
+            "move": 6,
+            "salvage": 3,
+            "notes": "Base Hull Type (DN); Early DN"
+        },
+        "CVA": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 12,
+                "fighters": 12.0,
+                "heavy fighter bonus": 3.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 6.0,
+                "heavy fighter bonus": 1.5
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 18,
+                "fighter_cost": 30
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 18,
+                    "fighter_cost": 30
+                },
+                "DN+": {
+                    "cost": 18,
+                    "fighter_cost": 30
+                },
+                "DNG": {
+                    "cost": 18,
+                    "fighter_cost": 30
+                }
+            },
+            "conversions from": {
+                "DN": {
+                    "cost": 6,
+                    "fighter_cost": 30
+                },
+                "DN+": {
+                    "cost": 5,
+                    "fighter_cost": 30
+                },
+                "DNG": {
+                    "cost": 4,
+                    "fighter_cost": 30
+                },
+                "DNH": {
+                    "cost": 4,
+                    "fighter_cost": 30
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Heavy Carrier. Fighters are F14s (8) and A10s (7); see (302.352). Can never be converted to use A20s due to balcony."
+        },
+        "DN+": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 11
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 14
+                }
+            },
+            "conversions from": {
+                "DN": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Basic Hull (DN+). No early variants."
+        },
+        "DNG": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 12,
+                "def": 12
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 16
+                }
+            },
+            "conversions from": {
+                "DN+": {
+                    "cost": 2
+                },
+                "DN": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Basic Hull (DNG). No early variants."
+        },
+        "SCS": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 12,
+                "fighters": 18.0,
+                "heavy fighter bonus": 6.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 9.0,
+                "heavy fighter bonus": 3.0
+            },
+            "available": {
+                "year": 181,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CVA": {
+                    "cost": 21,
+                    "fighter_cost": 48
+                }
+            },
+            "conversions from": {
+                "CVA": {
+                    "cost": 3,
+                    "fighter_cost": 18
+                },
+                "DN": {
+                    "cost": 9,
+                    "fighter_cost": 48
+                },
+                "DN+": {
+                    "cost": 7,
+                    "fighter_cost": 48
+                },
+                "DNG": {
+                    "cost": 5,
+                    "fighter_cost": 48
+                },
+                "DNH": {
+                    "cost": 5,
+                    "fighter_cost": 48
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship Fighters (302.352) are threesquadrons: F14 (8), F18 (6), A20 (10)."
+        },
+        "BC": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 177,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 10
+                },
+                "DN": {
+                    "cost": 10
+                }
+            },
+            "move": 6,
+            "salvage": 3,
+            "notes": "Basic Hull (BCH)"
+        },
+        "CA": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 129,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (CA)"
+        },
+        "CC": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 142,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 9
+            },
+            "substitutions for": {
+                "CA (Y177)": {
+                    "cost": 9
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
+        },
+        "CVL": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 6,
+                "def": 8,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 14,
+                    "fighter_cost": 6
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 7,
+                    "fighter_cost": 6
+                },
+                "COV": {
+                    "cost": 1,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier, Single Ship Carrier, Scout; (4EW:2AF)(1EW:6AF)"
+        },
+        "CVS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 7,
+                "def": 8,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier"
+        },
+        "CVB": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 7,
+                "def": 8,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 18,
+                    "fighter_cost": 16
+                }
+            },
+            "conversions from": {
+                "CVS": {
+                    "cost": 8
+                },
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 16
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants."
+        },
+        "CVB": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 7,
+                "def": 8,
+                "fighters": 6.0,
+                "heavy fighter bonus": 2.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0,
+                "heavy fighter bonus": 1.0
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 18,
+                    "fighter_cost": 16
+                }
+            },
+            "conversions from": {
+                "CVS": {
+                    "cost": 8
+                },
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 16
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants."
+        },
+        "TG": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 2,
+                "def": 8,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 4
+            },
+            "available": {
+                "year": 134,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Tug"
+        },
+        "BP+": {
+            "cmd": 2,
+            "uncrippled": {
+                "att": 10,
+                "def": 4
+            },
+            "available": {
+                "year": 145,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "max in service": 3,
+            "salvage": 1,
+            "notes": "Heavy Battle Pod; max 3 in service."
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "NCL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (NCL); war cruiser. §"
+        },
+        "NCD": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7,
+                "drones": 4
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 7
+                }
+            },
+            "conversions from": {
+                "NCL": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Drone Bombardment Variant §"
+        },
+        "NEC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 7,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "NCL": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "NVL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "NCL": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier"
+        },
+        "NAC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "NCL": {
+                    "cost": 1
+                },
+                "NEC": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort. No early variant (443.31). §"
+        },
+        "NSC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 3,
+                "def": 7,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "NCL": {
+                    "cost": 3
+                },
+                "NCD": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW = 3 §"
+        },
+        "NVS": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "NVL": {
+                    "cost": 2
+                },
+                "NCL": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier. No early variants."
+        },
+        "NPF": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 181,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "NCL": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PFT; Scout (2EW:2AF)(1EW:5AF). Noearly variants. Conjectural (502.65)."
+        },
+        "CL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 6
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (CL) §"
+        },
+        "ECL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 6,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CL": {
+                    "cost": 7
+                }
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "DD": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 129,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 6
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (DD, Destroyer) §"
+        },
+        "SC": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 2,
+                "def": 6,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 129,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "NCL": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW = 4 §"
+        },
+        "DE": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 5,
+                "def": 6,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DD": {
+                    "cost": 7
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Light Escort §"
+        },
+        "FF": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 126,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 3
+            },
+            "conversions from": {
+                "FFE": {
+                    "cost": 1
+                },
+                "FFS": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (FF) §"
+        },
+        "FFE": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 5,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "FFS": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout; EW=1 §"
+        },
+        "FV": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 3,
+                "def": 5,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 4,
+                    "fighter_cost": 6
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 0,
+            "notes": "Escort Carrier"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 181,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "GOR": {
+        "DN": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 14,
+                "def": 14
+            },
+            "crippled": {
+                "att": 7,
+                "def": 7
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 18
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Basic Hull Type (DN)"
+        },
+        "SCS": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 14,
+                "def": 14,
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 7,
+                "def": 7,
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 183,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 23,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "DN": {
+                    "cost": 5,
+                    "fighter_cost": 12
+                },
+                "CVA": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship"
+        },
+        "BCH": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 12,
+                "def": 12
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 12
+                },
+                "DN": {
+                    "cost": 12
+                }
+            },
+            "conversions from": {
+                "BC": {
+                    "cost": 3
+                },
+                "CC": {
+                    "cost": 3
+                },
+                "CCH": {
+                    "cost": 2
+                },
+                "CL": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 3,
+            "notes": "BCH. Basic Hull"
+        },
+        "BC": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 120,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 10
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "CA. Basic Hull"
+        },
+        "CC": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "BC": {
+                    "cost": 1
+                },
+                "CL": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
+        },
+        "CL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 120,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HD": {
+                    "cost": 8
+                },
+                "BC": {
+                    "cost": 8
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Basic Hull Type (CL) §"
+        },
+        "CLE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HD": {
+                    "cost": 9
+                },
+                "BC": {
+                    "cost": 9
+                }
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Heavy Escort §"
+        },
+        "CV": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CL": {
+                    "cost": 10,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier, no early variants"
+        },
+        "HD": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CW. Basic Hull §"
+        },
+        "HDE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HD": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "HD": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "HDP": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 182,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HD": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "HD": {
+                    "cost": 5
+                },
+                "HDS": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout, PFT; EW=2"
+        },
+        "HDS": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 3,
+                "def": 7,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HD": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "HD": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW=3 §"
+        },
+        "HV": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 174,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HD": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "HD": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier, no early variants"
+        },
+        "BD": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 4
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "DW. Basic Hull §"
+        },
+        "BDE": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BD": {
+                    "cost": 5
+                }
+            },
+            "conversions from": {
+                "BD": {
+                    "cost": 1
+                },
+                "DD or DE": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Light Escort §"
+        },
+        "BDS": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 2,
+                "def": 6,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BD": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "BD": {
+                    "cost": 2
+                },
+                "SC": {
+                    "cost": 3
+                },
+                "DD": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW = 2 §"
+        },
+        "DD": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BD": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Basic Hull Type (FF) §"
+        },
+        "DE": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 5,
+                "def": 5,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BD": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "PFT": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3,
+                "PFs": 6
+            },
+            "available": {
+                "year": 182,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BD": {
+                    "cost": 8
+                },
+                "DD": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout, PFT; EW=1"
+        },
+        "SC": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 124,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BD": {
+                    "cost": 4
+                },
+                "DD": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout; EW=1 §"
+        },
+        "TG": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 2,
+                "def": 8
+            },
+            "crippled": {
+                "att": 0,
+                "def": 4
+            },
+            "available": {
+                "year": 129,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "BC": {
+                    "cost": 4
+                },
+                "CL": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Basic Hull"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8), (442.7)."
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 7,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 3
+                }
+            },
+            "move": 0,
+            "notes": "Battlestation. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits: 2 FTM or one FTM +1 PFM."
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 28,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
+        },
+        "FTM(Fighter- Module)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 1.5
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Fighter module for base or FRD (441.411)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "HYD": {
+        "PAL": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 12,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 16,
+                "fighter_cost": 6
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Base Hull (DN)"
+        },
+        "ID (CVA)": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 12,
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PAL": {
+                    "cost": 18,
+                    "fighter_cost": 24
+                }
+            },
+            "conversions from": {
+                "PAL": {
+                    "cost": 4,
+                    "fighter_cost": 18
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Heavy True Carrier"
+        },
+        "LP": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 12,
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PAL": {
+                    "cost": 21,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "ID": {
+                    "cost": 5
+                },
+                "PAL": {
+                    "cost": 5,
+                    "fighter_cost": 6
+                },
+                "SD": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship, True Carrier"
+        },
+        "OV": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 10,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CC": {
+                    "cost": 10,
+                    "fighter_cost": 3
+                },
+                "DN": {
+                    "cost": 10,
+                    "fighter_cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull (BCH)"
+        },
+        "RN": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 6,
+                "def": 8,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 133,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 6,
+                "fighter_cost": 4
+            },
+            "conversions from": {
+                "DG": {
+                    "cost": 3,
+                    "fighter_cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull (Fusion CA)"
+        },
+        "TG": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 3,
+                "def": 8,
+                "tug": "true",
+                "fighters": 2.0
+            },
+            "crippled": {
+                "att": 0,
+                "def": 4,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 6,
+                    "fighter_cost": 2
+                }
+            },
+            "conversions from": {
+                "RN": {
+                    "cost": 4
+                },
+                "DG": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Tug"
+        },
+        "DG": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 9,
+                "def": 8,
+                "fighters": 2.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 157,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8,
+                "fighter_cost": 2
+            },
+            "conversions from": {
+                "RN": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull (Hellbore)"
+        },
+        "LM": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 8,
+                "def": 9,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CC": {
+                    "cost": 8,
+                    "fighter_cost": 3
+                }
+            },
+            "conversions from": {
+                "RN": {
+                    "cost": 2
+                },
+                "LB": {
+                    "cost": 3,
+                    "fighter_cost": 1
+                },
+                "LC": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command variant"
+        },
+        "LB": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 10,
+                "def": 9,
+                "fighters": 2.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 161,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CC": {
+                    "cost": 9,
+                    "fighter_cost": 2
+                }
+            },
+            "conversions from": {
+                "DG": {
+                    "cost": 2
+                },
+                "LC": {
+                    "cost": 3
+                },
+                "LM": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
+        },
+        "CV": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 3,
+                "def": 8,
+                "fighters": 11.0
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 22
+                }
+            },
+            "conversions from": {
+                "RN": {
+                    "cost": 2,
+                    "fighter_cost": 18
+                },
+                "DG": {
+                    "cost": 2,
+                    "fighter_cost": 20
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Heavy True Carrier; single oversized squadron. Treated as Medium Carrier (interdiction) from Y176 onward."
+        },
+        "PFT": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 3,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 0,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DD": {
+                    "cost": 11
+                }
+            },
+            "conversions from": {
+                "PGS": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PF Tender, Scout (EW=2)"
+        },
+        "HR": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5,
+                "fighter_cost": 3
+            },
+            "conversions from": {
+                "TR": {
+                    "cost": 3,
+                    "fighter_cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull (Fusion-CW) §"
+        },
+        "TR": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "conversions from": {
+                "HR": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull (Hellbore-CW) §"
+        },
+        "NSC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 2,
+                "def": 7,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 0,
+                "def": 4,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 8,
+                    "fighter_cost": 3
+                }
+            },
+            "conversions from": {
+                "HR": {
+                    "cost": 3
+                },
+                "TR": {
+                    "cost": 3,
+                    "fighter_cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW =3 §"
+        },
+        "NCV": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 3,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "TR": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                },
+                "HR": {
+                    "cost": 2,
+                    "fighter_cost": 9
+                },
+                "NEC": {
+                    "cost": 2,
+                    "fighter_cost": 9
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium True Carrier"
+        },
+        "NEC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "escort": "true",
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "escort": "true",
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 6,
+                    "fighter_cost": 3
+                }
+            },
+            "conversions from": {
+                "HR": {
+                    "cost": 1
+                },
+                "TR": {
+                    "cost": 1,
+                    "fighter_cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "NPF": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 3,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "CW": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PF Tender, Scout (EW=2)"
+        },
+        "LN": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 4,
+                "def": 6,
+                "fighters": 2.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 133,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 4,
+                "fighter_cost": 2
+            },
+            "conversions from": {
+                "KN": {
+                    "cost": 3,
+                    "fighter_cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull (Fusion Destroyer) §"
+        },
+        "KN": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 157,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 6
+            },
+            "conversions from": {
+                "LN": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull (Hellbore DD) §"
+        },
+        "UH": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 2,
+                "def": 6,
+                "fighters": 8.0
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3,
+                "fighters": 4.0
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DD": {
+                    "cost": 8,
+                    "fighter_cost": 16
+                }
+            },
+            "conversions from": {
+                "LN": {
+                    "cost": 2,
+                    "fighter_cost": 14
+                },
+                "KN": {
+                    "cost": 2,
+                    "fighter_cost": 16
+                },
+                "DE": {
+                    "cost": 2,
+                    "fighter_cost": 13
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium True Carrier; one oversized squadron."
+        },
+        "DE": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 4,
+                "def": 6,
+                "escort": "true",
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "escort": "true",
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DD": {
+                    "cost": 5,
+                    "fighter_cost": 3
+                }
+            },
+            "conversions from": {
+                "LN": {
+                    "cost": 1,
+                    "fighter_cost": 1
+                },
+                "KN": {
+                    "cost": 1,
+                    "fighter_cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "HN": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 3,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 133,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "conversions from": {
+                "CU": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull (Fusion-FF) §"
+        },
+        "SC": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 2,
+                "def": 4,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 2
+            },
+            "available": {
+                "year": 133,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout; EW=1 §"
+        },
+        "CR": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 157,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Command Variant §"
+        },
+        "CU": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 157,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "conversions from": {
+                "HN": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull (Hellbore-FF) §"
+        },
+        "AH": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 3,
+                "def": 4,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2,
+                "escort": "true"
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "HN": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 135,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 135,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 135,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "KLI": {
+        "B10": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 20,
+                "def": 20,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 10,
+                "def": 10,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "conversions from": {
+                "B10V": {
+                    "cost": 2
+                },
+                "B10S": {
+                    "cost": 2
+                },
+                "B10-": {
+                    "cost": 0,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 10,
+            "notes": "Base Hull (BB). See (436.0)."
+        },
+        "C8": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 12,
+                "def": 12
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 16
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Base Hull Type (DN)"
+        },
+        "C8V": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 12,
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 174,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "C8": {
+                    "cost": 18,
+                    "fighter_cost": 24
+                }
+            },
+            "conversions from": {
+                "C8": {
+                    "cost": 4,
+                    "fighter_cost": 24
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Heavy Carrier"
+        },
+        "C8S": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 12,
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 179,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "C8": {
+                    "cost": 21,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "C8": {
+                    "cost": 5,
+                    "fighter_cost": 12
+                },
+                "C8V": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship"
+        },
+        "C7": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 177,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D7 or C8": {
+                    "cost": 10
+                }
+            },
+            "move": 6,
+            "salvage": 3,
+            "notes": "Base Hull Type (BCH)"
+        },
+        "D7": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 134,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (CA)"
+        },
+        "D7C": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 142,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D7(Y179+)": {
+                    "cost": 9
+                }
+            },
+            "conversions from": {
+                "D7": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
+        },
+        "D7V (DVS)": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 7,
+                "def": 8,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D7": {
+                    "cost": 10,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "D7": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier"
+        },
+        "D6": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 7,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 121,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (CA)"
+        },
+        "D6D": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 7,
+                "def": 8,
+                "scout": "true",
+                "drones": 4
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 134,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D6": {
+                    "cost": 11
+                },
+                "D7": {
+                    "cost": 11
+                }
+            },
+            "conversions from": {
+                "D6": {
+                    "cost": 3
+                },
+                "D7": {
+                    "cost": 3
+                },
+                "D6S": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Drone Bombardment, Scout, EW = 2"
+        },
+        "D6V": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 6,
+                "def": 8,
+                "fighters": 5.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D6": {
+                    "cost": 10,
+                    "fighter_cost": 10
+                },
+                "D7": {
+                    "cost": 10,
+                    "fighter_cost": 10
+                }
+            },
+            "conversions from": {
+                "D6": {
+                    "cost": 2,
+                    "fighter_cost": 10
+                },
+                "D7": {
+                    "cost": 2,
+                    "fighter_cost": 10
+                },
+                "D6Y": {
+                    "cost": 1,
+                    "fighter_cost": 5
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier"
+        },
+        "D6M": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 10,
+                "def": 10,
+                "mauler": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D6": {
+                    "cost": 10
+                },
+                "D7": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "D6": {
+                    "cost": 5
+                },
+                "D7": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Mauler"
+        },
+        "D6P": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 4,
+                "def": 8,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 179,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D6": {
+                    "cost": 13
+                },
+                "D7": {
+                    "cost": 13
+                }
+            },
+            "conversions from": {
+                "D6": {
+                    "cost": 5
+                },
+                "D7": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "PFT, Scout, (2EW:2AF)(1EW:4AF)"
+        },
+        "TGB (T6)": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 8,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4
+            },
+            "available": {
+                "year": 123,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D6": {
+                    "cost": 6
+                },
+                "D7": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "TGA": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Tug"
+        },
+        "TGA (T7)": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D6": {
+                    "cost": 8
+                },
+                "D7": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "TGB": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Tug"
+        },
+        "CVT": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 7,
+                "def": 8,
+                "fighters": 5.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "Unconvert to TGA no cost (pods lost)"
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 3,
+            "notes": "Medium Carrier"
+        },
+        "CP": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 123,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "Cargo Pod (subsumed)"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "D5": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (CW) §"
+        },
+        "D5S": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 3,
+                "def": 7,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D5": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "D5": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW =3 §"
+        },
+        "AD5": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 7,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D5": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "D5": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "D5V": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D5": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "D5": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier"
+        },
+        "D5P": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 179,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "D5": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "D5": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PFT, Scout, (2EW:2AF)(1EW:5AF)"
+        },
+        "F5": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 134,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 3
+            },
+            "substitutions for": {
+                "F5L": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (DD) §"
+        },
+        "F5S": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3
+            },
+            "available": {
+                "year": 137,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "F5": {
+                    "cost": 4
+                },
+                "F5L": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "F5": {
+                    "cost": 1
+                },
+                "F5L": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout; EW = 1 §"
+        },
+        "F5L": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 142,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 4
+            },
+            "conversions from": {
+                "F5": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Command variant §"
+        },
+        "FV (F5V)": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 4,
+                "def": 5,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "F5": {
+                    "cost": 4,
+                    "fighter_cost": 8
+                },
+                "F5L": {
+                    "cost": 4,
+                    "fighter_cost": 8
+                }
+            },
+            "conversions from": {
+                "F5": {
+                    "cost": 1,
+                    "fighter_cost": 8
+                },
+                "F5L": {
+                    "cost": 1,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 0,
+            "notes": "Escort Carrier"
+        },
+        "F5E": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 4,
+                "def": 5,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "F5": {
+                    "cost": 4
+                },
+                "F5L": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "F5": {
+                    "cost": 1
+                },
+                "F5L": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "E4": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 120,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (FF) §"
+        },
+        "E4A": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 2,
+                "def": 4,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 2,
+                "escort": "true"
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "E4": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "E4": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "FRD+": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "conversions from": {
+                "FRD": {
+                    "cost": 2,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (421.0) With fighter modules"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "KZI": {
+        "DN": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 12,
+                "def": 12
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 16
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Base Hull Type (DN)"
+        },
+        "CVA": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 12,
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 18,
+                    "fighter_cost": 24
+                }
+            },
+            "conversions from": {
+                "DN": {
+                    "cost": 4,
+                    "fighter_cost": 24
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Heavy Carrier"
+        },
+        "CV (CVS)": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 10,
+                "def": 10,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 12,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "BCH": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                },
+                "CVL": {
+                    "cost": 4,
+                    "fighter_cost": 4
+                },
+                "BC": {
+                    "cost": 5,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier"
+        },
+        "BCH": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 10
+                },
+                "DN": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "CV": {
+                    "cost": 2
+                },
+                "BC": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (BCH)"
+        },
+        "BC": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 137,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "conversions from": {
+                "BCH": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (BC)"
+        },
+        "CC": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 146,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 9
+                }
+            },
+            "conversions from": {
+                "BC": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
+        },
+        "CVL": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 10,
+                    "fighter_cost": 8
+                }
+            },
+            "conversions from": {
+                "BC": {
+                    "cost": 2,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier"
+        },
+        "CM": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "conversions from": {
+                "CMV": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CW. Base Hull Type §"
+        },
+        "MEC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 7,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CM": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "CM": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "CMV": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 174,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CM": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CM": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier"
+        },
+        "MPF": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 2,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 0,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 181,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CM": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "CM": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PFT, Scout, EW=2."
+        },
+        "CL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 121,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 6
+            },
+            "substitutions for": {
+                "CM": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "CLE": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (CL) § Only one CL or DD per turn can be subbed for a CM."
+        },
+        "CVE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 6,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CL": {
+                    "cost": 8,
+                    "fighter_cost": 6
+                }
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 2,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Escort Carrier §"
+        },
+        "CLE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 6,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CL": {
+                    "cost": 7
+                }
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "TGT": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 8,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4
+            },
+            "available": {
+                "year": 129,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "TGC": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Tug, Base Hull Type"
+        },
+        "TGC": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "TGT": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Tug"
+        },
+        "Cargo Pod": {
+            "cmd": ,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 129,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "none"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "DD": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 6
+            },
+            "substitutions for": {
+                "CM": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (DD); heavy ad hoc escort. § Only one CL or DD per turn can be subbed for a CM."
+        },
+        "PFT": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 2,
+                "def": 6,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3,
+                "PFs": 6
+            },
+            "available": {
+                "year": 181,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CM": {
+                    "cost": 11
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PFT, Scout, EW=2."
+        },
+        "FF": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 121,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "conversions from": {
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (FF) §"
+        },
+        "SF": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 2,
+                "def": 4,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 2
+            },
+            "available": {
+                "year": 126,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout, EW=1 §"
+        },
+        "DF": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4,
+                "drones": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 133,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Drone Bombardment Variant §"
+        },
+        "EFF": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 2,
+                "def": 4,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 2,
+                "escort": "true"
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 163,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "LYR": {
+        "DN": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 12,
+                "def": 12
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 16
+            },
+            "conversions from": {
+                "CA or CC": {
+                    "cost": 6
+                },
+                "CA + DND": {
+                    "cost": 2
+                },
+                "CC + DND": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Base Hull Type (DN)"
+        },
+        "SCS": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 179,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 21,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "DN": {
+                    "cost": 5,
+                    "fighter_cost": 12
+                },
+                "CVA": {
+                    "cost": 5
+                },
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 12
+                },
+                "CV": {
+                    "cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship"
+        },
+        "BC": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 10
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 6
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (BC)"
+        },
+        "BCH": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 11
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "BC": {
+                    "cost": 11
+                },
+                "DN": {
+                    "cost": 11
+                }
+            },
+            "conversions from": {
+                "CL": {
+                    "cost": 6
+                },
+                "BC": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Heavy Variant"
+        },
+        "CA": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type (CA)"
+        },
+        "CC": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 9
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
+        },
+        "STT": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 10,
+                "def": 10,
+                "mauler": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Mauler variant of CA"
+        },
+        "CV": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Heavy Carrier (515.21)"
+        },
+        "TGC": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 124,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 4
+                },
+                "TGP": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull Type; Tug"
+        },
+        "TGP": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 8
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4
+            },
+            "available": {
+                "year": 124,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type; Tug"
+        },
+        "BP+": {
+            "cmd": 2,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 149,
+                "season": "spring"
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Battle Pallet, limit 2, tugs only"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "CL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 6
+                },
+                "CW": {
+                    "cost": 6
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (CL) §"
+        },
+        "CW": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (CW) §"
+        },
+        "CVL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 7,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CW": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                },
+                "DD": {
+                    "cost": 4,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier"
+        },
+        "CWE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4,
+                "escort": "true"
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "CW": {
+                    "cost": 1
+                },
+                "DDE": {
+                    "cost": 3
+                },
+                "DD": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Heavy Escort §"
+        },
+        "CWS": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 7,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "CW": {
+                    "cost": 3
+                },
+                "DD": {
+                    "cost": 5
+                },
+                "SC": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; (3EW:2AF)(1EW:4AF) §"
+        },
+        "PFW": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 1,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 178,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CW": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "CW": {
+                    "cost": 5
+                },
+                "DD": {
+                    "cost": 7
+                },
+                "PFT": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout, (2EW:1AF)(1EW:4AF), PFT"
+        },
+        "DW": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 4
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (DW) §"
+        },
+        "DWS": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 4,
+                "def": 6,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DW": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "DW": {
+                    "cost": 2
+                },
+                "FF": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout (2EW:2AF)(1EW:4AF) §"
+        },
+        "DWE": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DW": {
+                    "cost": 5
+                }
+            },
+            "conversions from": {
+                "DW": {
+                    "cost": 1
+                },
+                "FFE": {
+                    "cost": 3
+                },
+                "FF": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Light Escort §"
+        },
+        "DD": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DW": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull Type (DD) §"
+        },
+        "SC": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DD": {
+                    "cost": 7
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout, EW=2 §"
+        },
+        "PFT": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3,
+                "PFs": 6
+            },
+            "available": {
+                "year": 178,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "DD": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "DD": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout, EW=1, PF Tender"
+        },
+        "FF": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (FF) §"
+        },
+        "FFE": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2,
+                "escort": "true"
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FF": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "FF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "ORI": {
+        "CA": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 131,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "CA Basic Hull; Lease = 2"
+        },
+        "BR": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CW: Basic Hull; Lease = 1.75 §"
+        },
+        "CVL": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 8,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 169,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 10,
+                "fighter_cost": 8
+            },
+            "conversions from": {
+                "SAL": {
+                    "cost": 2,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier; Lease = 1.5"
+        },
+        "CR": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 126,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 6
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CL: Basic Hull; Lease = 1.5 §"
+        },
+        "DW": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 3
+            },
+            "conversions from": {
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Basic Hull; Lease = 1.25 §"
+        },
+        "LR": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 128,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "FF: Basic Hull; Lease = 1 §"
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0)"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "ROM": {
+        "CON": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 13,
+                "def": 13
+            },
+            "crippled": {
+                "att": 7,
+                "def": 7
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 17
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "DN: Base Hull"
+        },
+        "CNV": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 13,
+                "def": 13,
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 7,
+                "def": 7,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CON": {
+                    "cost": 19,
+                    "fighter_cost": 24
+                }
+            },
+            "conversions from": {
+                "CON": {
+                    "cost": 4,
+                    "fighter_cost": 24
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Heavy Carrier"
+        },
+        "PHX (SCS)": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 13,
+                "def": 13,
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 7,
+                "def": 7,
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 182,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CON": {
+                    "cost": 22,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CNV": {
+                    "cost": 5
+                },
+                "CON": {
+                    "cost": 5,
+                    "fighter_cost": 12
+                },
+                "ROC": {
+                    "cost": 2,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship"
+        },
+        "SUP": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 10,
+                "def": 10,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 11,
+                "fighter_cost": 8
+            },
+            "conversions from": {
+                "NH": {
+                    "cost": 2,
+                    "fighter_cost": 8
+                },
+                "FH": {
+                    "cost": 3,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier (single ship) Command Cruiser"
+        },
+        "NH": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 10
+            },
+            "conversions from": {
+                "FH": {
+                    "cost": 2
+                },
+                "SP": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Cruiser"
+        },
+        "SUB": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 9,
+                "def": 10,
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 4,
+                "def": 5,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SUP or CON or CNV or SCS": {
+                    "cost": 12,
+                    "fighter_cost": 24
+                }
+            },
+            "conversions from": {
+                "SUP": {
+                    "cost": 2,
+                    "fighter_cost": 16
+                },
+                "NH": {
+                    "cost": 4,
+                    "fighter_cost": 24
+                },
+                "FH": {
+                    "cost": 5,
+                    "fighter_cost": 24
+                },
+                "SPB": {
+                    "cost": 5,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Heavy Carrier"
+        },
+        "FH": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "conversions from": {
+                "SP": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Base Hull (CA)"
+        },
+        "SP": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 5
+            },
+            "conversions from": {
+                "SPB": {
+                    "cost": 0
+                },
+                "SPC": {
+                    "cost": 0
+                },
+                "SPF": {
+                    "cost": 0
+                },
+                "SPH": {
+                    "cost": 0
+                },
+                "SPE": {
+                    "cost": 0
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CW. Base Hull. Modular (433.43) §"
+        },
+        "SPB": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 6,
+                "def": 7,
+                "fighters": 8.0
+            },
+            "crippled": {
+                "att": 3,
+                "def": 4,
+                "fighters": 4.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SP": {
+                    "cost": 6,
+                    "fighter_cost": 16
+                }
+            },
+            "conversions from": {
+                "SPB": {
+                    "cost": 1,
+                    "fighter_cost": 16
+                },
+                "SPC": {
+                    "cost": 1,
+                    "fighter_cost": 16
+                },
+                "SPF": {
+                    "cost": 1,
+                    "fighter_cost": 16
+                },
+                "SPH": {
+                    "cost": 1,
+                    "fighter_cost": 16
+                },
+                "SPE": {
+                    "cost": 1,
+                    "fighter_cost": 16
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Medium Carrier"
+        },
+        "SPC": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SP": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "SPB": {
+                    "cost": 3
+                },
+                "SPC": {
+                    "cost": 3
+                },
+                "SPF": {
+                    "cost": 3
+                },
+                "SPH": {
+                    "cost": 3
+                },
+                "SPE": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout (Survey) (3EW:2AF)(1EW:5AF)§"
+        },
+        "SPF": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 7,
+                "def": 7,
+                "mauler": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SP": {
+                    "cost": 7
+                }
+            },
+            "conversions from": {
+                "SPB": {
+                    "cost": 4
+                },
+                "SPC": {
+                    "cost": 4
+                },
+                "SPF": {
+                    "cost": 4
+                },
+                "SPH": {
+                    "cost": 4
+                },
+                "SPE": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Mauler"
+        },
+        "SPH": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SP": {
+                    "cost": 5
+                }
+            },
+            "conversions from": {
+                "SPB": {
+                    "cost": 0
+                },
+                "SPC": {
+                    "cost": 0
+                },
+                "SPF": {
+                    "cost": 0
+                },
+                "SPH": {
+                    "cost": 0
+                },
+                "SPE": {
+                    "cost": 0
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Tug (special limits)"
+        },
+        "SPE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 7,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "PFs": 6
+            },
+            "available": {
+                "year": 182,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SP": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "SPB": {
+                    "cost": 5
+                },
+                "SPC": {
+                    "cost": 5
+                },
+                "SPF": {
+                    "cost": 5
+                },
+                "SPH": {
+                    "cost": 5
+                },
+                "SPE": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "PF Tender, Scout (3EW:2AF)(1EW:5AF)"
+        },
+        "SK": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 3
+            },
+            "conversions from": {
+                "SKB": {
+                    "cost": 0
+                },
+                "SKE": {
+                    "cost": 0
+                },
+                "SKF": {
+                    "cost": 0
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "DW: Base Hull, modular (433.43) §"
+        },
+        "SKB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 4,
+                "def": 5,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 3,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SK": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "SKB": {
+                    "cost": 1,
+                    "fighter_cost": 8
+                },
+                "SKE": {
+                    "cost": 1,
+                    "fighter_cost": 8
+                },
+                "SKF": {
+                    "cost": 1,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 0,
+            "notes": "Escort Carrier"
+        },
+        "SKE": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 5,
+                "def": 5,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SK": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "SKB": {
+                    "cost": 1
+                },
+                "SKE": {
+                    "cost": 1
+                },
+                "SKF": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "SKF": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 3,
+                "def": 5,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SK": {
+                    "cost": 5
+                }
+            },
+            "conversions from": {
+                "SKB": {
+                    "cost": 2
+                },
+                "SKE": {
+                    "cost": 2
+                },
+                "SKF": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout (2EW:2AF)(1EW:3AF) §"
+        },
+        "KC9": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 14,
+                "def": 14
+            },
+            "crippled": {
+                "att": 7,
+                "def": 7
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "conversions from": {
+                "C8": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "DN. Base Hull"
+        },
+        "KRC": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "conversions from": {
+                "K7R": {
+                    "cost": 2
+                },
+                "D7C": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Cruiser"
+        },
+        "K7R": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "conversions from": {
+                "D7": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "CA. Base Hull"
+        },
+        "KR": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "CA: Base Hull"
+        },
+        "KRM": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 10,
+                "def": 10,
+                "mauler": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "conversions from": {
+                "KR or K7R": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Mauler"
+        },
+        "KRT": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 6,
+                "def": 8,
+                "tug": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4
+            },
+            "available": {
+                "year": 162,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TGB": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Base Hull; Tug (Special Limits)"
+        },
+        "K5": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (DD) §"
+        },
+        "K5L": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 161,
+                "season": "spring"
+            },
+            "conversions from": {
+                "K5": {
+                    "cost": 2
+                },
+                "F5L": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Command Variant §"
+        },
+        "K5S": {
+            "cmd": 4,
+            "uncrippled": {
+                "att": 2,
+                "def": 5,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 163,
+                "season": "spring"
+            },
+            "conversions from": {
+                "K5": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout, EW=1 §"
+        },
+        "K4": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Base Hull Type (FF) §"
+        },
+        "WE": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 161,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 6
+            },
+            "substitutions for": {
+                "SP": {
+                    "cost": 6
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CA: Base Hull"
+        },
+        "SE": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 2,
+                "def": 6,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 3
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "WE": {
+                    "cost": 8
+                }
+            },
+            "conversions from": {
+                "WE": {
+                    "cost": 2
+                },
+                "KE": {
+                    "cost": 2
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Scout; EW =2"
+        },
+        "KE": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 9,
+                "def": 9
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "FH": {
+                    "cost": 9
+                }
+            },
+            "conversions from": {
+                "WE": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Cruiser"
+        },
+        "FAL": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 10,
+                "def": 10,
+                "mauler": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 163,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "WE": {
+                    "cost": 10
+                },
+                "SP": {
+                    "cost": 10
+                }
+            },
+            "conversions from": {
+                "WE": {
+                    "cost": 5
+                },
+                "KE": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Mauler; Base Hull"
+        },
+        "BH": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 161,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SK": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "CL. Base Hull §"
+        },
+        "BHE": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 5,
+                "def": 5,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3,
+                "escort": "true"
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SK": {
+                    "cost": 6
+                }
+            },
+            "conversions from": {
+                "BH": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "Light Escort §"
+        },
+        "WH": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 2.5,
+                "def": 5,
+                "fighters": 2.5
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "WE": {
+                    "cost": 6,
+                    "fighter_cost": 5
+                },
+                "SK": {
+                    "cost": 6,
+                    "fighter_cost": 5
+                }
+            },
+            "conversions from": {
+                "BH": {
+                    "cost": 1,
+                    "fighter_cost": 5
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 1,
+            "notes": "Carrier (Special Type)"
+        },
+        "SN": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 161,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "FF. Base Hull §"
+        },
+        "SNB": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 5,
+                "def": 5
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "SN": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "SN": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "FF Leader; see (431.61). §"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP. No cloak."
+        },
+        "FRD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 1,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 1,
+            "towable": {
+                "move cost": 2,
+                "strat move limit": 12
+            },
+            "notes": "See (421.0). No cloak."
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2). No cloak."
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        }
+    },
+    "THO": {
+        "DN": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 10,
+                "def": 10
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 12
+            },
+            "conversions from": {
+                "3PC": {
+                    "cost": 6
+                }
+            },
+            "move": 6,
+            "salvage": 3,
+            "notes": "Basic Hull (DN)"
+        },
+        "CA": {
+            "cmd": 8,
+            "uncrippled": {
+                "att": 8,
+                "def": 8
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 8
+            },
+            "conversions from": {
+                "2xPC": {
+                    "cost": 4
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Basic Hull (CA)"
+        },
+        "CVA": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 4,
+                "def": 8,
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 4,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 173,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CA": {
+                    "cost": 10,
+                    "fighter_cost": 24
+                }
+            },
+            "conversions from": {
+                "CA": {
+                    "cost": 3,
+                    "fighter_cost": 24
+                },
+                "2xBW": {
+                    "cost": 5,
+                    "fighter_cost": 8
+                },
+                "2xPC": {
+                    "cost": 7,
+                    "fighter_cost": 24
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 2,
+            "notes": "Medium Carrier, oversized squadron."
+        },
+        "DD": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 6,
+                "def": 6
+            },
+            "crippled": {
+                "att": 3,
+                "def": 3
+            },
+            "available": {
+                "year": 114,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 4
+            },
+            "conversions from": {
+                "PC": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 1,
+            "notes": "DW: Basic Hull §"
+        },
+        "PC": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 82,
+                "season": "spring"
+            },
+            "construction": {
+                "cost": 2
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "FF: Basic Hull §"
+        },
+        "SC": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 1,
+                "def": 4,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 0,
+                "def": 2
+            },
+            "available": {
+                "year": 124,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PC": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "PC": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Scout, EW=1 §"
+        },
+        "BW": {
+            "cmd": 5,
+            "uncrippled": {
+                "att": 4,
+                "def": 4,
+                "fighters": 4.0
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PC": {
+                    "cost": 4
+                }
+            },
+            "conversions from": {
+                "PC": {
+                    "cost": 1,
+                    "fighter_cost": 8
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 0,
+            "notes": "Escort Carrier"
+        },
+        "PCE": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4,
+                "escort": "true"
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2,
+                "escort": "true"
+            },
+            "available": {
+                "year": 170,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PC": {
+                    "cost": 3
+                }
+            },
+            "conversions from": {
+                "PC": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Light Escort §"
+        },
+        "PFT": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4,
+                "def": 4,
+                "scout": "true",
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 0,
+                "def": 2,
+                "PFs": 6
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PC": {
+                    "cost": 7
+                }
+            },
+            "conversions from": {
+                "PC or DD": {
+                    "cost": 5
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "PF Tender, Scout; EW=1"
+        },
+        "REPR": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 1
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (422.0)"
+        },
+        "CONVOY": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 6
+            },
+            "available": {
+                "year": 119,
+                "season": "spring"
+            },
+            "move": 2,
+            "notes": "See (414.0); Cargo = 20EP"
+        },
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                },
+                "BS": {
+                    "cost": 4
+                }
+            },
+            "move": 0,
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "REP POD": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 159,
+                "season": "spring"
+            },
+            "pod": "true",
+            "move": 6,
+            "notes": "See (422.8)"
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 165,
+                "season": "spring"
+            },
+            "conversions from": {
+                "TODO": "From PGB (441.3)"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (508.1) and (431.2)."
+        }
     }
 }
