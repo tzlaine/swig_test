@@ -121,7 +121,9 @@ function OnMouseUpAsButton ()
             var offmap_owner = offmap_area_under_cursor();
             print('offmap for owner ' + offmap_owner);
         } else {
-            print('hex ' + hc.x + ',' + hc.y);
+            var hc2 : hex_coord = hex_coord(hc.x + 1, hc.y + 1);
+            print('hex ' + (hc2.x < 10 ? '0' : '') + (hc2.x * 100 + hc2.y) +
+                  ' (' + hc.x + ',' + hc.y + ')');
         }
     }
 }
