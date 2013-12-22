@@ -222,9 +222,8 @@ BASES
 BS	R1.03	10(6)◆/5(3)◆	CO	8	Y120	BS(3)	From MB: 4+6 From MB (Alt): 6+6	Upgrade Only	0.00	Base Station. See (444.0). Alternative upgrade at undevastated planet without tug (444.22). Module Limits: 2 FTM or one FTM +1 PFM.
 BATS	R1.2	12P(6)◆/6P(3)◆	F&E	9	Y130	BATS(2)	From MB: 7+6 From BS: 3 (444.31)	Upgrade Only	0.00	"Battlestation. See EW Chart. See (433.41), (441.0), and (510.3). Module
 Limits: 2 FTM or one FTM +1 PFM."
-MB	24	8◆/4	F&E	6	Y139	MB(3)	—NA—	(431.2): 10	0.00	See (510.2); EW=1. Module Limits: 2 FTM or one FTM +1 PFM.
-Designation	"SFB
-Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
+MB (ND)	24	0/None	F&E	0	Y139	MB(3)	—NA—	(431.2): 10	0.0	Undeployed MB
+MB	24	8◆/4	F&E	6	Y139	MB(3)	—NA—	—NA—	0.0	See (510.2); EW=1
 SB	R1.01	"36(12)PP◆/
 18(6)P◆"	F&E	10	Y140	SB(1)	From BATS: 28+6 From STB: 20+6	Upgrade Only	0.00	"Starbase. See EW Chart. See (433.41), (441.0), and (510.3). Module
 Limits 4FTM+2PFM."
