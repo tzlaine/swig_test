@@ -435,7 +435,11 @@ TODO MB -> MB (ND)
                 "units": [
                     "CV", "CLE", "EFF", "CVE", "EFF", "CC", "3xBC", "CL",
                     "DF", "SF", "TGT", "FRD", "MB"
-                ]
+                ],
+                "strat move arrival": {
+                    "year": 169,
+                    "season": "spring"
+                }
             },
             "Marquis' Fleet": {
                 "hexes": [
@@ -483,28 +487,82 @@ TODO MB -> MB (ND)
         "production": [{
             "year": 168,
             "season": "fall",
-            "units": [ "BC, CL, DD, 2xFF" ]
+            "units": [ "BC", "CL", "DD", "2xFF" ]
         },
         {
             "year": 169,
             "season": "spring",
-            "units": [ "BC, 2xCM, 2xDD, 3xFF" ]
+            "units": [ "BC", "2xCM", "2xDD", "3xFF" ]
         },
         {
             "year": 169,
             "season": "fall",
-            "units": [ "CV, MEC, EFF, BC, CL, 2xCM, 5xFF" ]
+            "units": [ "CV", "MEC", "EFF", "BC", "CL", "2xCM", "5xFF" ]
         },
         {
             "year": 170,
             "season": "spring",
-            "units": [ "DN, BC, 4xCM, 6xFF" ]
+            "units": [ "DN", "BC", "4xCM", "6xFF" ]
+        }]
+        #TODO: Special production rules
+        #TODO: Production notes
+    },
+    "LYR": {
+        "starting force": {
+            "Red Claw Fleet": {
+                "hexes": [
+                    "0303",
+                    "0401", "0402", "0403", "0404",
+                    "0501", "0502", "0503", "0504",
+                    "0604", "0605", "0606",
+                    "0705", "0706"
+                ],
+                "units": [ "BC", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "5xFF", "SC", "TGC", "MB" ],
+                "reserve": "true"
+            },
+            "Home Fleet": {
+                "hexes": [ "0408", "0608", "0707" ],
+                "units": [ "DN", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "3xDW", "5xFF", "SC", "TGP", "FRD", "MB" ],
+                "reserve": "true",
+                "max units in": {
+                    "0707": 6
+                }
+            },
+            "Enemy’s Blood Fleet": {
+                "hexes": [
+                    "0111", "0112",
+                    "0211", "0212",
+                    "0312", "0313",
+                    "0411", "0412", "0413",
+                    "0512", "0513"
+                ],
+                "units": [ "BC", "CC", "3xCA", "3xCL", "4xDD", "4xFF", "SC", "TGC", "MB" ],
+                "reserve": "true"
+            },
+            "Far Stars Fleet": {
+                "hexes": [ "offmap" ],
+                "units": [ "CC", "4xCA", "5xCL", "4xDD", "4xFF", "CW", "DW", "SC", "TGP", "FRD" ],
+                "reserve": "true",
+                "strat move arrival": {
+                    "year": 169,
+                    "season": "spring"
+                }
+            }
+        },
+        "production": [{
+            "year": 168,
+            "season": "fall",
+            "units": [ "BC", "CA", "3xCW", "3xDW", "3xFF" ]
+        },
+        {
+            "year": 169,
+            "season": "spring",
+            "units": [ "DN", "CA", "3xCW", "3xDW", "3xFF" ]
         }]
         #TODO: Special production rules
         #TODO: Production notes
     }
 }
-
 
 template:
 
