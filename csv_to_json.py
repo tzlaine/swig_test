@@ -323,5 +323,7 @@ for i in range(0, len(text_)):
         else:
             line += char
 
+print '    "%s": {' % nation
 for line in lines:
     process_line(line)
+print '    },'
