@@ -246,7 +246,7 @@ def get_notes (field):
 def print_notes (notes):
     print '%s"notes": "%s"' % (indent, notes)
 
-def process_line (fields):
+def process_line (fields, last_line):
     (notes, tug, carrier, limit) = get_notes(fields[10])
 
     move = 6
@@ -292,7 +292,7 @@ def process_line (fields):
     if not spaceworthy:
         print indent + '"spaceworthy": false,'
     print_notes(notes)
-    print outer_indent + '},'
+    print outer_indent + '}' + (not last_line and ',' or '')
 
 def save_line (fields):
     nonempty_fields = 0
@@ -332,6 +332,6 @@ for i in range(0, len(text_)):
             line += char
 
 print '    "%s": {' % nation
-for line in lines:
-    process_line(line)
+for i in range(0, len(lines)):
+    process_line(lines[i], i == len(lines) - 1)
 print '    },'
