@@ -239,6 +239,26 @@ def print_notes (notes):
 def process_line (fields):
     (notes, tug, carrier, limit) = get_notes(fields[10])
 
+    move = 6
+    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB' or fields[0] == 'PDU':
+        move = 0
+    elif fields[0] == 'FRD':
+        move = 1
+
+    towable = False
+    tow_move_cost = 1
+    tow_strat_move_limit = -1
+    if fields[0] == 'MB' or fields[0] == 'PDU':
+        towable = True
+    elif fields[0] == 'FRD':
+        towable = True
+        tow_move_cost = 2
+        tow_strat_move_limit = 12
+
+    spaceworthy = True
+    if fields[0] == 'PDU':
+        spaceworthy = False
+
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
     print indent + '"cmd": ' + fields[4] + ','
@@ -248,12 +268,17 @@ def process_line (fields):
     print_pod_designation(fields[6])
     print_construction(fields[8])
     print_conversions(fields[7])
-    print_salvage(fields[9])
-    # TODO: Predicate this on movement as well.
-    if carrier or fighters and not nation == 'HYD':
+    print '%s"move": %d,' % (indent, move)
+    if move and (carrier or fighters and not nation == 'HYD'):
         print indent + '"carrier": "true",'
     if -1 < limit:
-        print indent + '"max in service": ' + limit + ','
+        print '%s"max in service": %d,' % (indent, limit)
+    if towable:
+        print '%s"towable": {\n%s    "move cost": %d,\n%s    "strat move limit": %d\n%s},' % \
+        (indent, indent, tow_move_cost, indent, tow_strat_move_limit, indent)
+    print_salvage(fields[9])
+    if not spaceworthy:
+        print indent + '"spaceworthy": false,'
     print_notes(notes)
     print outer_indent + '},'
 
