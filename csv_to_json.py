@@ -47,7 +47,15 @@ def factors_set (factors, set_, tug_):
 
     tug = ''
     if tug_ or 'T' in factors:
-        mauler = ',\n%s    "tug": "true"' % (indent)
+        all_missions = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J1', 'J2', 'K1', 'K2', 'M', 'O']
+        missions = '['
+        for i in range(0, len(all_missions)):
+            if True: # TODO: Limit tug missions allowed by unit.
+                missions += '"' + all_missions[i] + '"'
+                if i < len(all_missions) - 1:
+                    missions += ', '
+        missions += ']'
+        mauler = ',\n%s    "tug missions": %s' % (indent, missions)
         factors = factors.replace('T', '')
 
     fighters = ''
