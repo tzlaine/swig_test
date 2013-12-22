@@ -11,8 +11,10 @@ lines = []
 
 indent = '            '
 
+ship_group_regex = re.compile(r' [(]\d')
+
 def ship_group (name):
-    return name.find(' (') != -1
+    return ship_group_regex.search(name)
 
 cf_regex_1 = re.compile(r'(.+)[(](.+)[)]')
 cf_regex_2 = re.compile(r'(.+)<(.+)>')
@@ -240,7 +242,7 @@ def process_line (fields):
     (notes, tug, carrier, limit) = get_notes(fields[10])
 
     move = 6
-    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB' or fields[0] == 'PDU':
+    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB (ND)' or fields[0] == 'MB' or fields[0] == 'PDU':
         move = 0
     elif fields[0] == 'FRD':
         move = 1
@@ -248,7 +250,7 @@ def process_line (fields):
     towable = False
     tow_move_cost = 1
     tow_strat_move_limit = -1
-    if fields[0] == 'MB' or fields[0] == 'PDU':
+    if fields[0] == 'MB (ND)' or fields[0] == 'PDU':
         towable = True
     elif fields[0] == 'FRD':
         towable = True
@@ -256,7 +258,7 @@ def process_line (fields):
         tow_strat_move_limit = 12
 
     spaceworthy = True
-    if fields[0] == 'PDU':
+    if fields[0] == 'MB (ND)' or fields[0] == 'PDU':
         spaceworthy = False
 
     outer_indent = '        '
