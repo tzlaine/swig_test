@@ -419,8 +419,92 @@ TODO MB -> MB (ND)
         }]
         #TODO: Special production rules
         #TODO: Production notes
+    },
+    "GOR": {
+        "starting force": {
+            "Home Fleet": {
+                "hexes": [ "1401" ],
+                "units": [
+                    "DN", "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE",
+                    "EFF", "CC", "3xBC", "CL", "3xDD", "3xFF", "DF", "SF",
+                    "TGC", "FRD", "MB"
+                ]
+            },
+            "Baron's Fleet": {
+                "hexes": [ "1401" ],
+                "units": [
+                    "CV", "CLE", "EFF", "CVE", "EFF", "CC", "3xBC", "CL",
+                    "DF", "SF", "TGT", "FRD", "MB"
+                ]
+            },
+            "Marquis' Fleet": {
+                "hexes": [
+                    "1704",
+                    "1801", "1802", "1803",
+                    "1901", "1902",
+                    "2001"
+                ],
+                "units": [
+                    "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE", "EFF",
+                    "CC", "3xBC", "CL", "DF", "FF", "SF", "TGT"
+                ]
+            },
+            "Duke's Fleet": {
+                "hexes": [
+                    "1003", "1004",
+                    "1104", "1105",
+                    "1204", "1205",
+                    "1304", "1305",
+                    "1404", "1405",
+                    "1504", "1505",
+                    "1604", "1605",
+                    "1705",
+                    "1804", "1805"
+                ],
+                "units": [
+                    "DN", "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE",
+                    "EFF", "CC", "3xBC", "CL", "DF", "FF", "SF", "TGC"
+                ],
+                "reserve": "true"
+            },
+            "Count's Fleet": {
+                "hexes": [
+                    "0701", "0702", "0703",
+                    "0801", "0802", "0803",
+                    "0901", "0902", "0903", "0904"
+                ],
+                "units": [
+                    "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE", "EFF",
+                    "CC", "3xBC", "CL", "DF", "FF", "SF", "TGT"
+                ],
+                "reserve": "true"
+            }
+        },
+        "production": [{
+            "year": 168,
+            "season": "fall",
+            "units": [ "BC, CL, DD, 2xFF" ]
+        },
+        {
+            "year": 169,
+            "season": "spring",
+            "units": [ "BC, 2xCM, 2xDD, 3xFF" ]
+        },
+        {
+            "year": 169,
+            "season": "fall",
+            "units": [ "CV, MEC, EFF, BC, CL, 2xCM, 5xFF" ]
+        },
+        {
+            "year": 170,
+            "season": "spring",
+            "units": [ "DN, BC, 4xCM, 6xFF" ]
+        }]
+        #TODO: Special production rules
+        #TODO: Production notes
     }
 }
+
 
 template:
 
