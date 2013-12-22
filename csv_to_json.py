@@ -242,10 +242,12 @@ def process_line (fields):
     (notes, tug, carrier, limit) = get_notes(fields[10])
 
     move = 6
-    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB (ND)' or fields[0] == 'MB' or fields[0] == 'PDU':
+    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB (ND)' or fields[0] == 'MB' or fields[0] == 'PDU' or fields[0] == 'REPR':
         move = 0
     elif fields[0] == 'FRD':
         move = 1
+    elif fields[0] == 'CONVOY':
+        move = 2
 
     towable = False
     tow_move_cost = 1
