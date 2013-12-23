@@ -1,10 +1,9 @@
 {
-TODO MB -> MB (ND)
     "FED": {
         "starting force": {
             "First Fleet": {
                 "hexes": [ "2908" ],
-                "units": [ "DN", "CC", "3xCA", "3xCL", "3xDD", "SC", "6xFF", "3xTG", "FRD", "3xMB" ],
+                "units": [ "DN", "CC", "3xCA", "3xCL", "3xDD", "SC", "6xFF", "3xTG", "FRD", "3xMB (ND)" ],
                  "PWC": [{
                      "year": 171,
                      "season": "spring",
@@ -154,7 +153,7 @@ TODO MB -> MB (ND)
         "starting force": {
             "First Fleet": {
                 "hexes": [ "4402", "4403", "4503" ],
-                "units": [ "CC", "2xBC", "4xCL", "6xDD", "SC", "2xTG", "2xFRD", "2xMB" ],
+                "units": [ "CC", "2xBC", "4xCL", "6xDD", "SC", "2xTG", "2xFRD", "2xMB (ND)" ],
                 "reserve": "true",
                  "PWC": [{
                      "year": 173,
@@ -220,7 +219,7 @@ TODO MB -> MB (ND)
         "starting force": {
             "Home Fleet": {
                 "hexes": [ "0617" ],
-                "units": [ "LM", "3xRN", "3xLN", "SC", "TG", "CR", "2xHN", "2xFRD", "2xMB" ],
+                "units": [ "LM", "3xRN", "3xLN", "SC", "TG", "CR", "2xHN", "2xFRD", "2xMB (ND)" ],
                 "reserve": "true"
                  "PWC": [{
                      "year": 168,
@@ -316,7 +315,7 @@ TODO MB -> MB (ND)
                 ],
                 "units": [
                     "C8", "D7C", "3xD7", "3xD6", "D6M", "3xD5", "3xF5Q", "3xF5S", "F5V",
-                    "E4A", "6xE4", "TGA", "D6V", "2xE4A", "FRD", "2xMB"
+                    "E4A", "6xE4", "TGA", "D6V", "2xE4A", "FRD", "2xMB (ND)"
                 ],
                 "reserve": "true"
             },
@@ -377,7 +376,7 @@ TODO MB -> MB (ND)
                 "hexes": [ "1509" ],
                 "units": [
                     "C8", "D7C", "3xD7", "3xD6", "D6M", "3xF5Q", "F5S", "F5V",
-                    "E4A", "3xE4", "CVT", "2xE4A", "TGB", "FRD", "MB"
+                    "E4A", "3xE4", "CVT", "2xE4A", "TGB", "FRD", "MB (ND)"
                 ],
                 "reserve": "true"
             },
@@ -385,7 +384,7 @@ TODO MB -> MB (ND)
                 "hexes": [ "1716" ],
                 "units": [
                     "D7C", "3xD7", "3xD6", "D6D", "3xF5Q", "F5S", "F5V",
-                    "E4A", "3xE4", "D6V", "2xE4A", "TGB", "FRD", "MB"
+                    "E4A", "3xE4", "D6V", "2xE4A", "TGB", "FRD", "MB (ND)"
                 ],
                 "reserve": "true"
             },
@@ -427,14 +426,14 @@ TODO MB -> MB (ND)
                 "units": [
                     "DN", "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE",
                     "EFF", "CC", "3xBC", "CL", "3xDD", "3xFF", "DF", "SF",
-                    "TGC", "FRD", "MB"
+                    "TGC", "FRD", "MB (ND)"
                 ]
             },
             "Baron's Fleet": {
                 "hexes": [ "1401" ],
                 "units": [
                     "CV", "CLE", "EFF", "CVE", "EFF", "CC", "3xBC", "CL",
-                    "DF", "SF", "TGT", "FRD", "MB"
+                    "DF", "SF", "TGT", "FRD", "MB (ND)"
                 ],
                 "strat move arrival": {
                     "year": 169,
@@ -517,12 +516,12 @@ TODO MB -> MB (ND)
                     "0604", "0605", "0606",
                     "0705", "0706"
                 ],
-                "units": [ "BC", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "5xFF", "SC", "TGC", "MB" ],
+                "units": [ "BC", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "5xFF", "SC", "TGC", "MB (ND)" ],
                 "reserve": "true"
             },
             "Home Fleet": {
                 "hexes": [ "0408", "0608", "0707" ],
-                "units": [ "DN", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "3xDW", "5xFF", "SC", "TGP", "FRD", "MB" ],
+                "units": [ "DN", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "3xDW", "5xFF", "SC", "TGP", "FRD", "MB (ND)" ],
                 "reserve": "true",
                 "max units in": {
                     "0707": 6
@@ -536,7 +535,7 @@ TODO MB -> MB (ND)
                     "0411", "0412", "0413",
                     "0512", "0513"
                 ],
-                "units": [ "BC", "CC", "3xCA", "3xCL", "4xDD", "4xFF", "SC", "TGC", "MB" ],
+                "units": [ "BC", "CC", "3xCA", "3xCL", "4xDD", "4xFF", "SC", "TGC", "MB (ND)" ],
                 "reserve": "true"
             },
             "Far Stars Fleet": {
@@ -568,7 +567,7 @@ TODO MB -> MB (ND)
                 "hexes": [ "4514", "4613" ],
                 "units": [
                     "2xSP", "SK", "KE", "8xWE", "SE", "2xWH", "2xBHE", "FAL",
-                    "3xSN", "3xSNB, 2xFRD", "MB", "KRC", "2xKR", "KRM",
+                    "3xSN", "3xSNB, 2xFRD", "MB (ND)", "KRC", "2xKR", "KRM",
                     "2xKRT", "2xK5Q", "K5S"
                 ],
                 "reserve": "true",
@@ -594,7 +593,7 @@ TODO MB -> MB (ND)
                     "5010", "5011"
                 ],
                 "units": [
-                    "KE", "8xWE", "SE", "FAL", "3xSN", "3xSNB", "3xFE", "MB",
+                    "KE", "8xWE", "SE", "FAL", "3xSN", "3xSNB", "3xFE", "MB (ND)",
                     "KRC", "2xKR", "KRM", "K5Q", "K5S"
                 ],
                 "reserve": "true",
@@ -621,7 +620,7 @@ TODO MB -> MB (ND)
                 ],
                 "units": [
                     "KE", "8xWE", "SE", "FAL", "2xWH", "2xBHE", "3xSN",
-                    "3xSNB", "3xFE", "MB", "KRC", "2xKR", "3xK7R", "KRM",
+                    "3xSNB", "3xFE", "MB (ND)", "KRC", "2xKR", "3xK7R", "KRM",
                     "K5Q", "K5S"
                 ],
                 "reserve": "true",
@@ -707,7 +706,7 @@ TODO MB -> MB (ND)
             },
             "Home Fleet": {
                 "hexes": [ "2919" ],
-                "units": [ "CA, DD, 3xPC, 3xCPC, MB" ],
+                "units": [ "CA, DD, 3xPC, 3xCPC, MB (ND)" ],
                 "reserve": "true"
                 "PWC": [{
                     "year": 169,
