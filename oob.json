@@ -561,8 +561,108 @@ TODO MB -> MB (ND)
         }]
         #TODO: Special production rules
         #TODO: Production notes
+    },
+    "ROM": {
+        "starting force": {
+            "Home Fleet": {
+                "hexes": [ "4514", "4613" ],
+                "units": [
+                    "2xSP", "SK", "KE", "8xWE", "SE", "2xWH", "2xBHE", "FAL",
+                    "3xSN", "3xSNB, 2xFRD", "MB", "KRC", "2xKR", "KRM",
+                    "2xKRT", "2xK5Q", "K5S"
+                ],
+                "reserve": "true",
+                "PWC": [{
+                    "year": 173,
+                    "season": "spring",
+                    "units": [
+                        "KC9R", "CON", "SUP", "SPB", "2xSKE", "FH", "6xSP",
+                        "3xSPC", "3xSK", "SKF", "SKB", "SKE", "WE", "KE",
+                        "3xK4"
+                    ]
+                }]
+            },
+            "Fleet of the North": {
+                "hexes": [
+                    "4210", "4211", "4212", "4213", "4214",
+                    "4310", "4311", "4312", "4313", "4314", "4315",
+                    "4410", "4411", "4412", "4413", "4414",
+                    "4510", "4511", "4512", "4513",
+                    "4610", "4611", "4612",
+                    "4810", "4811", "4812",
+                    "4910", "4911",
+                    "5010", "5011"
+                ],
+                "units": [
+                    "KE", "8xWE", "SE", "FAL", "3xSN", "3xSNB", "3xFE", "MB",
+                    "KRC", "2xKR", "KRM", "K5Q", "K5S"
+                ],
+                "reserve": "true",
+                "PWC": [{
+                    "year": 173,
+                    "season": "spring",
+                    "units": [
+                        "CON", "SUP", "SPB", "2xSKE", "FH", "6xSP", "3xSK",
+                        "SKF", "SKB", "SKE", "WE", "KE", "3xK4"
+                    ]
+                }]
+            },
+            "Fleet of the West": {
+                "hexes": [
+                    "3317",
+                    "3416", "3417",
+                    "3516", "3517", "3518",
+                    "3615", "3616", "3617", "3618", "3619",
+                    "3715", "3716", "3717", "3718", "3719",
+                    "3814", "3815", "3816", "3817", "3818", "3819",
+                    "3914", "3915", "3916", "3917", "3918", "3919",
+                    "4010", "4011", "4012", "4013", "4014", "4016", "4018", "4019",
+                    "4110", "4111", "4112", "4113", "4114"
+                ],
+                "units": [
+                    "KE", "8xWE", "SE", "FAL", "2xWH", "2xBHE", "3xSN",
+                    "3xSNB", "3xFE", "MB", "KRC", "2xKR", "3xK7R", "KRM",
+                    "K5Q", "K5S"
+                ],
+                "reserve": "true",
+                "PWC": [{
+                    "year": 173,
+                    "season": "spring",
+                    "units": [
+                        "CON", "SUP", "SPB", "2xSKE", "FH", "5xSP", "3xSK",
+                        "SKF", "SKB", "SKE", "WE", "KE", "3xK4"
+                    ]
+                }]
+            },
+            "Patrol Detachment": {
+                "hexes": [ "3319" ],
+                "units": [ "SK", "6xWE", "4xBH", "3xSN", "3xSNB", "SE" ],
+                "PWC": [{
+                    "year": 173,
+                    "season": "spring",
+                    "units": [ "3xK4", "2xSP" ]
+                }]
+            }
+        },
+        "mothball reserve": {
+            "units": [ "4xWE", "4xBH", "8xSN" ],
+            "war release": [ "2x[any]" ]
+        },
+        "production": [{
+            "year": 173,
+            "season": "spring",
+            "units": [ "NH", "FH", "4xSP", "3xSK", "WE", "SN" ]
+        },
+        {
+            "year": 173,
+            "season": "fall",
+            "units": [ "CON", "FH", "4xSP", "3xSK", "WE", "SN" ]
+        }]
+        #TODO: Special production rules
+        #TODO: Production notes
     }
 }
+
 
 template:
 
