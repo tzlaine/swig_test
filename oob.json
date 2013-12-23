@@ -660,35 +660,83 @@ TODO MB -> MB (ND)
         }]
         #TODO: Special production rules
         #TODO: Production notes
-    }
-}
-
-
-template:
-
-    "GOR": {
+    },
+    "THO": {
         "starting force": {
-            "": {
-                "hexes": [],
-                "units": [
-                ],
+            "First Fleet": {
+                "hexes": [ "2719, 2818, 2819" ],
+                "units": [ "CA, DD, 3xPC, SC" ],
                 "PWC": [{
+                    "year": 168,
+                    "season": "fall",
+                    "units": [ "PC" ]
+                },
+                {
                     "year": 171,
                     "season": "spring",
-                    "units": [ "" ]
+                    "units": [ "DN, PC" ]
+                }]
+            },
+            "Second Fleet": {
+                "hexes": [ "2918" ],
+                "units": [ "CA, DD, 3xPC, SC" ],
+                "PWC": [{
+                    "year": 169,
+                    "season": "fall",
+                    "units": [ "PC" ]
+                },
+                {
+                    "year": 172,
+                    "season": "spring",
+                    "units": [ "BW, PCE, PC" ]
+                }]
+            },
+            "Third Fleet": {
+                "hexes": [ "3018, 3019, 3119" ],
+                "units": [ "CA, DD, 3xPC, SC" ],
+                "PWC": [{
+                    "year": 170,
+                    "season": "fall",
+                    "units": [ "PC" ]
+                },
+                {
+                    "year": 171,
+                    "season": "fall",
+                    "units": [ "PC" ]
+                }]
+            },
+            "Home Fleet": {
+                "hexes": [ "2919" ],
+                "units": [ "CA, DD, 3xPC, 3xCPC, MB" ],
+                "reserve": "true"
+                "PWC": [{
+                    "year": 169,
+                    "season": "spring",
+                    "units": [ "DN, PC" ]
+                },
+                {
+                    "year": 170,
+                    "season": "spring",
+                    "units": [ "BW, PCE, PC" ]
+                },
+                {
+                    "year": 172,
+                    "season": "fall",
+                    "units": [ "PC" ]
                 }]
             }
         },
-        "mothball reserve": {
-            "units": [ "" ],
-            "war release": [ "" ],
-            "limited war release": [ "" ]
-        },
         "production": [{
-            "year": 171,
+            "year": 168,
             "season": "fall",
-            "units": [ "" ]
+            "units": [ "DD, 2xPC" ]
+        },
+        {
+            "year": 169,
+            "season": "spring",
+            "units": [ "DN, PC" ]
         }]
         #TODO: Special production rules
         #TODO: Production notes
     }
+}
