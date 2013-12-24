@@ -116,8 +116,8 @@ BP+	10	10-4/None	F&E	2	Y145	Pod	None	(431.22): 8	1.0	Heavy Battle Pod; max 3 in 
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	—NA—	Replacement: 5	0.0	See (422.8)
 A-POD	53	0GG/None	CO	0	Y160	Pod	None	(521.711): 4	0.5	Troop Pod, max 2 in service.
 SP	135	0◆/None	AO	1	Y165	Pod	None	(431.2): 5	0.5	Scout pod; EW varies, see (317.51); see (317.53); max 3 in service.
-VP	57	0(6)/None	CO	1	Y166	Pod	None	(431.22): 2+12	0.5	Medium Carrier pod; max 3 in service.
-VAP+	22	0(12)/None	CO	1	Y172	Pod	None	(431.22): 4+24	1.0	Heavy carrier pod (heavy pod), max 3 in service.
+VP	57	0(6)/None	F&E	1	Y166	Pod	None	(431.22): 2+12	0.5	Medium Carrier pod; max 3 in service.
+VAP+	22	0(12)/None	F&E	1	Y172	Pod	None	(431.22): 4+24	1.0	Heavy carrier pod (heavy pod), max 3 in service.
 LBP	58	6-0/None	CO	2	Y173	Pod	None	(431.22): 6	0.5	Light Battle Pod; max 2 in service.
 P-AVP		0[20V]/None	FO	0	Y178	Pod	None	Cost = 2+20	0.0	Pod for spare A20s. Limit 2 in service.
 Designation	"SFB
@@ -198,7 +198,7 @@ NVH (3NVH)	—	"15-20(9H)◆
 /7-11(4▲H) NVH+NAC+DWA"	CO	6	Y177	Group	Individual Ships	Individual Ships	Ships	Carrier group with F111s. See NVH.
 NVH	56	5-7(9H)◆/3-4(4▲H)	FO	6	Y177	NCL(3)	From NCL: 5+18	For NCL: 10+18	1.25	"Special carrier for F111s, operates in many ways as a PFT; Scout (2EW:2AF; 1EW:5AF). No early
 variants. See (527.0)."
-NPF	56A	5-7P◆/3-4P	F&E	6	Y181(B)	NCL(3)	From NCL: 5	For NCL: 10	1.25	"PFT; Scout (2EW:2AF)(1EW:5AF). No
+NPF	56A	5-7P◆/3-4P	F&E (conjectural)	6	Y181(B)	NCL(3)	From NCL: 5	For NCL: 10	1.25	"PFT; Scout (2EW:2AF)(1EW:5AF). No
 early variants. Conjectural (502.65)."
 LIGHT CRUISERS										
 CL	5	6/3	F&E	6	Y119	CL(3)	See (440.4)	For NCL: 6	1.5	Base Hull Type (CL) §
