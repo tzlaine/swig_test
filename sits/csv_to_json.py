@@ -134,7 +134,7 @@ def available (field):
     return retval
 
 def print_pod_designation (field):
-    if 'Pod' in field or 'Tug Mission' in field:
+    if 'Pod' in field or 'Pallet' in field or 'Tug Mission' in field:
         print indent + '"pod": "true",'
         return True
     return False
@@ -233,7 +233,7 @@ def print_salvage (field):
 
 tug_regex = re.compile(r'[Tt]ug')
 carrier_regex = re.compile(r'[Tt]rue *[Cc]arrier')
-limit_regex = re.compile(r'[Mm]ax *(\d+) *[Ii]n *[Ss]ervice')
+limit_regex = re.compile(r'[Mm]ax *(\d+)')
 
 def get_notes (field):
     notes = 'none'
