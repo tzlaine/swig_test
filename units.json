@@ -1972,26 +1972,6 @@
             "carrier": "true",
             "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
-        "FTM(Fighter- Module)": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0,
-                "fighters": 3.0
-            },
-            "crippled": {
-                "att": 0,
-                "def": 0,
-                "fighters": 1.5
-            },
-            "available": {
-                "year": 165,
-                "season": "spring"
-            },
-            "move": 6,
-            "carrier": "true",
-            "notes": "Fighter module for base or FRD (441.411)."
-        },
         "PDU": {
             "cmd": 0,
             "uncrippled": {
