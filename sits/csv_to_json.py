@@ -136,6 +136,8 @@ def available (field):
 def print_pod_designation (field):
     if 'Pod' in field or 'Tug Mission' in field:
         print indent + '"pod": "true",'
+        return True
+    return False
 
 def all_sources (sources):
     retval = []
@@ -182,12 +184,12 @@ def subst_conv_costs (field, matches):
             comma = ','
     return retval
 
-schedule_regex = re.compile(r'[Ss]chedule: ([\d+]+)')
+cost_regex = re.compile(r'(?:[Ss]chedule|[Rr]eplacement|[(]431.22[)]): ([\d+]+)')
 subst_regex = re.compile(r'[Ff]or (.+): ([\d+]+)')
 
 def print_construction (field):
     #TODO: handle replacement-only units
-    match = schedule_regex.match(field)
+    match = cost_regex.match(field)
     matches = subst_regex.findall(field)
 
     if match:
@@ -249,8 +251,18 @@ def print_notes (notes):
 def process_line (fields, last_line):
     (notes, tug, carrier, limit) = get_notes(fields[10])
 
+    outer_indent = '        '
+    print outer_indent + '"' + fields[0] + '": {'
+    print indent + '"cmd": ' + fields[4] + ','
+    (stats_, fighters) = stats(fields[2], tug)
+    print stats_
+    print available(fields[5])
+    pod = print_pod_designation(fields[6])
+    print_construction(fields[8])
+    print_conversions(fields[7])
+
     move = 6
-    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB (ND)' or fields[0] == 'MB' or fields[0] == 'PDU' or fields[0] == 'REPR':
+    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB (ND)' or fields[0] == 'MB' or fields[0] == 'PDU' or fields[0] == 'REPR' or pod:
         move = 0
     elif fields[0] == 'FRD':
         move = 1
@@ -268,18 +280,9 @@ def process_line (fields, last_line):
         tow_strat_move_limit = 12
 
     spaceworthy = True
-    if fields[0] == 'MB (ND)' or fields[0] == 'PDU':
+    if fields[0] == 'MB (ND)' or fields[0] == 'PDU' or pod:
         spaceworthy = False
 
-    outer_indent = '        '
-    print outer_indent + '"' + fields[0] + '": {'
-    print indent + '"cmd": ' + fields[4] + ','
-    (stats_, fighters) = stats(fields[2], tug)
-    print stats_
-    print available(fields[5])
-    print_pod_designation(fields[6])
-    print_construction(fields[8])
-    print_conversions(fields[7])
     print '%s"move": %d,' % (indent, move)
     if move and (carrier or fighters and not nation == 'HYD'):
         print indent + '"carrier": "true",'
