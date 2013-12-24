@@ -284,7 +284,7 @@ OPB	45	10◆/5	SO	6	Y175	OPB(3)	None	One/turn: 15	0.0	Operational Base, moves as
 D5P+D6P"	CO	8	Y181	Group	Individual Ships	Individual Ships	Ships	Special Group; see (513.2); (2EW:9AF, 3EW:7AF, 4EW:4AF)
 REPAIR DOCKS										
 FRD	10	1-4/None	F&E	0	Y139	FRD(2)	—NA—	(431.2): 10	0.0	See (421.0)
-FRD+	10	1-4(6)/None	F&E	0	Y165	FRD(2)	From FRD: 2+6	(431.2): 10+6	0.0	See (421.0) With fighter modules
+FRD+	10	1-4(6)/None	F&E (WTF?)	0	Y165	FRD(2)	From FRD: 2+6	(431.2): 10+6	0.0	See (421.0) With fighter modules
 PRD	Future	0-2/None	PO	0	Y170	—NA—	—NA—	(425.11):  3 / 5 / 7	0.0	Planetary Repair Dock
 FRX	R1.81	1-6/None	AO	0	Y182	FRD(2)	From FRD: 10	For FRD: 12	0.0	X-unit; repairs X-ships without penalty.
 BASES										
