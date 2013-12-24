@@ -165,6 +165,14 @@ function Update ()
         prev_column();
     else if (Input.GetKeyUp('e'))
         next_column();
+
+    if (Input.GetKeyUp(KeyCode.Delete)) {
+        json[nation].Remove(unit);
+        unit_index = 0;
+        unit = units[unit_index].text;
+        populate_units();
+        save();
+    }
 }
 
 function OnGUI ()
@@ -175,6 +183,7 @@ function OnGUI ()
         nation_index = n_index;
         nation = nations[nation_index];
         unit_index = 0;
+        unit = units[unit_index].text;
         populate_units();
     }
 
