@@ -1764,6 +1764,48 @@
             "salvage": 1,
             "notes": "Basic Hull"
         },
+        "HBP+": {
+            "cmd": 2,
+            "uncrippled": {
+                "att": 10,
+                "def": 4
+            },
+            "available": {
+                "year": 149,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 8
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 1,
+            "spaceworthy": false,
+            "notes": "Heavy Battle Pod, limit 2."
+        },
+        "PFP": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "scout": "true",
+                "PFs": 6
+            },
+            "available": {
+                "year": 182,
+                "season": "fall"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 6
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "PF Tender Pod, limit 2; Scout; (2EW:2AF)(1EW:TugAF)"
+        },
         "REP POD": {
             "cmd": 0,
             "uncrippled": {
@@ -2814,6 +2856,28 @@
             "salvage": 0,
             "notes": "Light Escort §"
         },
+        "BP": {
+            "cmd": 2,
+            "uncrippled": {
+                "att": 7,
+                "def": 2,
+                "fighters": 2.0
+            },
+            "available": {
+                "year": 157,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 8,
+                "fighter_cost": 2
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "Battle Pallet, Max 2 in service."
+        },
         "REP POD": {
             "cmd": 0,
             "uncrippled": {
@@ -2831,6 +2895,50 @@
             "move": 0,
             "spaceworthy": false,
             "notes": "See (422.8)"
+        },
+        "VP": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 2,
+                "fighter_cost": 12
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "Carrier Pallet for tug or LTT; max 2 in service."
+        },
+        "PFP": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "scout": "true",
+                "PFs": 6
+            },
+            "available": {
+                "year": 180,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 6
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "PF Tender Pallet; Scout; (EW=2); max 2 in service."
         },
         "REPR": {
             "cmd": 0,
@@ -3167,7 +3275,7 @@
             "salvage": 2,
             "notes": "Command Variant"
         },
-        "D7V (DVS)": {
+        "D7V": {
             "cmd": 8,
             "uncrippled": {
                 "att": 7,
@@ -3377,7 +3485,7 @@
             "salvage": 2,
             "notes": "PFT, Scout, (2EW:2AF)(1EW:4AF)"
         },
-        "TGB (T6)": {
+        "TGB": {
             "cmd": 6,
             "uncrippled": {
                 "att": 4,
@@ -3409,7 +3517,7 @@
             "salvage": 1,
             "notes": "Tug"
         },
-        "TGA (T7)": {
+        "TGA": {
             "cmd": 8,
             "uncrippled": {
                 "att": 8,
@@ -3465,20 +3573,25 @@
             "salvage": 3,
             "notes": "Medium Carrier"
         },
-        "CP": {
-            "cmd": 0,
+        "BP": {
+            "cmd": 2,
             "uncrippled": {
-                "att": 0,
-                "def": 0
+                "att": 2,
+                "def": 2
             },
             "available": {
-                "year": 123,
+                "year": 144,
                 "season": "spring"
             },
             "pod": "true",
+            "construction": {
+                "cost": 4
+            },
             "move": 0,
+            "max in service": 4,
+            "salvage": 0,
             "spaceworthy": false,
-            "notes": "Cargo Pod (subsumed)"
+            "notes": "Battle Pod; Max 4 in service."
         },
         "REP POD": {
             "cmd": 0,
@@ -3515,6 +3628,50 @@
             "move": 0,
             "spaceworthy": false,
             "notes": "See (422.8)"
+        },
+        "VP(VP2)": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 2.5
+            },
+            "available": {
+                "year": 168,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 1,
+                "fighter_cost": 5
+            },
+            "move": 0,
+            "max in service": 6,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "Standard Medium Carrier Pod; max 6"
+        },
+        "VAP": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 2,
+                "fighter_cost": 12
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 1,
+            "spaceworthy": false,
+            "notes": "Heavy Carrier Pod; Max 2"
         },
         "D5": {
             "cmd": 6,
@@ -3747,7 +3904,7 @@
             "salvage": 1,
             "notes": "Command variant §"
         },
-        "FV (F5V)": {
+        "F5V": {
             "cmd": 5,
             "uncrippled": {
                 "att": 4,
@@ -3921,27 +4078,6 @@
             },
             "notes": "See (421.0)"
         },
-        "FRD+": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 1,
-                "def": 4,
-                "fighters": 6.0
-            },
-            "available": {
-                "year": 165,
-                "season": "spring"
-            },
-            "conversions from": {
-                "FRD": {
-                    "cost": 2,
-                    "fighter_cost": 6
-                }
-            },
-            "move": 6,
-            "carrier": "true",
-            "notes": "See (421.0) With fighter modules"
-        },
         "BATS": {
             "cmd": 9,
             "uncrippled": {
@@ -4084,6 +4220,44 @@
             "carrier": "true",
             "salvage": 4,
             "notes": "Heavy Carrier"
+        },
+        "SCS": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 11,
+                "def": 12,
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "crippled": {
+                "att": 5,
+                "def": 6,
+                "fighters": 3.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 181,
+                "season": "fall"
+            },
+            "substitutions for": {
+                "DN": {
+                    "cost": 21,
+                    "fighter_cost": 12
+                }
+            },
+            "conversions from": {
+                "CVA": {
+                    "cost": 5
+                },
+                "DN": {
+                    "cost": 5,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "salvage": 4,
+            "notes": "Space Control Ship"
         },
         "CV (CVS)": {
             "cmd": 9,
@@ -4519,20 +4693,26 @@
             "salvage": 2,
             "notes": "Tug"
         },
-        "Cargo Pod": {
-            "cmd": ,
+        "BP": {
+            "cmd": 2,
             "uncrippled": {
-                "att": 0,
-                "def": 0
+                "att": 2,
+                "def": 2,
+                "drones": 2
             },
             "available": {
-                "year": 129,
+                "year": 134,
                 "season": "spring"
             },
             "pod": "true",
+            "construction": {
+                "cost": 6
+            },
             "move": 0,
+            "max in service": 4,
+            "salvage": 0,
             "spaceworthy": false,
-            "notes": "none"
+            "notes": "Battle pod (has drone bombardment capability); limit 4."
         },
         "REP POD": {
             "cmd": 0,
@@ -4551,6 +4731,50 @@
             "move": 0,
             "spaceworthy": false,
             "notes": "See (422.8)"
+        },
+        "VAP": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 175,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 2,
+                "fighter_cost": 12
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "Heavy Carrier Pod, limit 2."
+        },
+        "VP": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 1,
+                "fighter_cost": 6
+            },
+            "move": 0,
+            "max in service": 6,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "Medium Carrier Pod, limit 6"
         },
         "DD": {
             "cmd": 4,
@@ -5172,11 +5396,14 @@
                 "year": 149,
                 "season": "spring"
             },
+            "pod": "true",
             "construction": {
                 "cost": 6
             },
-            "move": 6,
+            "move": 0,
+            "max in service": 2,
             "salvage": 1,
+            "spaceworthy": false,
             "notes": "Battle Pallet, limit 2, tugs only"
         },
         "REP POD": {
@@ -5196,6 +5423,50 @@
             "move": 0,
             "spaceworthy": false,
             "notes": "See (422.8)"
+        },
+        "VP+": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 171,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 2,
+                "fighter_cost": 12
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 1,
+            "spaceworthy": false,
+            "notes": "Medium Carrier Pallet, Max 2 in service, Tugs only"
+        },
+        "PFP+": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "scout": "true",
+                "PFs": 6
+            },
+            "available": {
+                "year": 178,
+                "season": "fall"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 6
+            },
+            "move": 0,
+            "max in service": 2,
+            "salvage": 1,
+            "spaceworthy": false,
+            "notes": "PFT Pallet (tug only), max 2 in service, Scout, (2EW:2AF)(1EW:TugAF)"
         },
         "CL": {
             "cmd": 6,
@@ -6020,7 +6291,7 @@
             "salvage": 4,
             "notes": "Heavy Carrier"
         },
-        "PHX (SCS)": {
+        "PHX": {
             "cmd": 10,
             "uncrippled": {
                 "att": 13,
@@ -6843,6 +7114,32 @@
             "salvage": 1,
             "notes": "CA: Base Hull"
         },
+        "FE": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 2,
+                "def": 6U
+            },
+            "crippled": {
+                "att": 1,
+                "def": 3
+            },
+            "available": {
+                "year": 164,
+                "season": "spring"
+            },
+            "conversions from": {
+                "WE": {
+                    "cost": 3
+                },
+                "KE": {
+                    "cost": 3
+                }
+            },
+            "move": 6,
+            "salvage": 4,
+            "notes": "Theater Transport"
+        },
         "SE": {
             "cmd": 8,
             "uncrippled": {
@@ -7372,6 +7669,34 @@
             "move": 6,
             "salvage": 0,
             "notes": "FF: Basic Hull §"
+        },
+        "CPC": {
+            "cmd": 3,
+            "uncrippled": {
+                "att": 4U,
+                "def": 4U
+            },
+            "crippled": {
+                "att": 2,
+                "def": 2
+            },
+            "available": {
+                "year": 89,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "PC": {
+                    "cost": 2
+                }
+            },
+            "conversions from": {
+                "PC": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 0,
+            "notes": "Theater transport"
         },
         "SC": {
             "cmd": 3,
