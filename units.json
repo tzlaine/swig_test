@@ -418,7 +418,7 @@
             "uncrippled": {
                 "att": 2,
                 "def": 8,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 0,
@@ -453,9 +453,13 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 8
+            },
+            "move": 0,
             "max in service": 3,
             "salvage": 1,
+            "spaceworthy": false,
             "notes": "Heavy Battle Pod; max 3 in service."
         },
         "REP POD": {
@@ -469,8 +473,56 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
+        },
+        "VP": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 166,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 2,
+                "fighter_cost": 12
+            },
+            "move": 0,
+            "max in service": 3,
+            "salvage": 0,
+            "spaceworthy": false,
+            "notes": "Medium Carrier pod; max 3 in service."
+        },
+        "VAP+": {
+            "cmd": 1,
+            "uncrippled": {
+                "att": 0,
+                "def": 0,
+                "fighters": 12.0
+            },
+            "available": {
+                "year": 172,
+                "season": "spring"
+            },
+            "pod": "true",
+            "construction": {
+                "cost": 4,
+                "fighter_cost": 24
+            },
+            "move": 0,
+            "max in service": 3,
+            "salvage": 1,
+            "spaceworthy": false,
+            "notes": "Heavy carrier pod (heavy pod), max 3 in service."
         },
         "NCL": {
             "cmd": 6,
@@ -685,37 +737,6 @@
             "carrier": "true",
             "salvage": 1,
             "notes": "Medium Carrier. No early variants."
-        },
-        "NPF": {
-            "cmd": 6,
-            "uncrippled": {
-                "att": 5,
-                "def": 7,
-                "scout": "true",
-                "PFs": 6
-            },
-            "crippled": {
-                "att": 3,
-                "def": 4,
-                "PFs": 6
-            },
-            "available": {
-                "year": 181,
-                "season": "spring"
-            },
-            "substitutions for": {
-                "NCL": {
-                    "cost": 10
-                }
-            },
-            "conversions from": {
-                "NCL": {
-                    "cost": 5
-                }
-            },
-            "move": 6,
-            "salvage": 1,
-            "notes": "PFT; Scout (2EW:2AF)(1EW:5AF). Noearly variants. Conjectural (502.65)."
         },
         "CL": {
             "cmd": 6,
@@ -977,6 +998,9 @@
             "available": {
                 "year": 159,
                 "season": "spring"
+            },
+            "construction": {
+                "cost": 5
             },
             "move": 0,
             "notes": "See (422.0)"
@@ -1751,7 +1775,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8), (442.7)."
         },
         "REPR": {
@@ -1763,6 +1791,9 @@
             "available": {
                 "year": 159,
                 "season": "spring"
+            },
+            "construction": {
+                "cost": 5
             },
             "move": 0,
             "notes": "See (422.0)"
@@ -2106,7 +2137,7 @@
             "uncrippled": {
                 "att": 3,
                 "def": 8,
-                "tug": "true",
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"],
                 "fighters": 2.0
             },
             "crippled": {
@@ -2794,7 +2825,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         },
         "REPR": {
@@ -2806,6 +2841,9 @@
             "available": {
                 "year": 159,
                 "season": "spring"
+            },
+            "construction": {
+                "cost": 5
             },
             "move": 0,
             "notes": "See (422.0)"
@@ -3344,7 +3382,7 @@
             "uncrippled": {
                 "att": 4,
                 "def": 8,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 2,
@@ -3376,7 +3414,7 @@
             "uncrippled": {
                 "att": 8,
                 "def": 8,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 4,
@@ -3438,7 +3476,8 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "move": 0,
+            "spaceworthy": false,
             "notes": "Cargo Pod (subsumed)"
         },
         "REP POD": {
@@ -3452,7 +3491,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         },
         "REP POD": {
@@ -3466,7 +3509,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         },
         "D5": {
@@ -3837,6 +3884,9 @@
             "available": {
                 "year": 159,
                 "season": "spring"
+            },
+            "construction": {
+                "cost": 5
             },
             "move": 0,
             "notes": "See (422.0)"
@@ -4416,7 +4466,7 @@
             "uncrippled": {
                 "att": 4,
                 "def": 8,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 2,
@@ -4445,7 +4495,7 @@
             "uncrippled": {
                 "att": 8,
                 "def": 8,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 4,
@@ -4480,7 +4530,8 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "move": 0,
+            "spaceworthy": false,
             "notes": "none"
         },
         "REP POD": {
@@ -4494,7 +4545,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         },
         "DD": {
@@ -4676,6 +4731,9 @@
             "available": {
                 "year": 159,
                 "season": "spring"
+            },
+            "construction": {
+                "cost": 5
             },
             "move": 0,
             "notes": "See (422.0)"
@@ -5114,6 +5172,9 @@
                 "year": 149,
                 "season": "spring"
             },
+            "construction": {
+                "cost": 6
+            },
             "move": 6,
             "salvage": 1,
             "notes": "Battle Pallet, limit 2, tugs only"
@@ -5129,7 +5190,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         },
         "CL": {
@@ -5574,6 +5639,9 @@
             "available": {
                 "year": 159,
                 "season": "spring"
+            },
+            "construction": {
+                "cost": 5
             },
             "move": 0,
             "notes": "See (422.0)"
@@ -6303,7 +6371,7 @@
             "uncrippled": {
                 "att": 5,
                 "def": 7,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 2,
@@ -6644,7 +6712,7 @@
             "uncrippled": {
                 "att": 6,
                 "def": 8,
-                "tug": "true"
+                "tug missions": ["A", "B", "C", "D", "E", "F", "G", "H", "J1", "J2", "K1", "K2", "M", "O"]
             },
             "crippled": {
                 "att": 2,
@@ -7019,6 +7087,9 @@
                 "year": 159,
                 "season": "spring"
             },
+            "construction": {
+                "cost": 5
+            },
             "move": 0,
             "notes": "See (422.0)"
         },
@@ -7153,7 +7224,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         }
     },
@@ -7430,6 +7505,9 @@
                 "year": 159,
                 "season": "spring"
             },
+            "construction": {
+                "cost": 5
+            },
             "move": 0,
             "notes": "See (422.0)"
         },
@@ -7555,7 +7633,11 @@
                 "season": "spring"
             },
             "pod": "true",
-            "move": 6,
+            "construction": {
+                "cost": 5
+            },
+            "move": 0,
+            "spaceworthy": false,
             "notes": "See (422.8)"
         },
         "PDU": {
