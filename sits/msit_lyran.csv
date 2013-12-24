@@ -69,11 +69,11 @@ SP+	101	0◆/0	AO	1	Y168	Pallet	None	(431.22): 5	1.0	Scout Pallet, EW=4; see (31
 KSP	98	0◆/None	AO	0	Y168	Pod	None	(431.22): 3	0.5	K-type, Scout Pod, EW=2 (0 if tug or LTT is crippled); max 2 in service; cannot be used by Klingons
 Designation	"SFB
 Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
-VP+	35	0(6)/None	CO	1	Y171	Pallet	None	(431.22): 2+12	1.0	Medium Carrier Pallet, Max 2 in service, Tugs only
+VP+	35	0(6)/None	F&E	1	Y171	Pallet	None	(431.22): 2+12	1.0	Medium Carrier Pallet, Max 2 in service, Tugs only
 KVH	37E	0(3)/None	CO	1	Y171	Pod	None	Built: 2+6	0.5	K-type Medium Carrier Pod, max 2.
 KVP	37G	0(6)/None	CO	1	Y177	Pod	None	(431.22): 2+12	0.5	K-Type Heavy Carrier Pod, Max 1 in service
 VHP	99	0[8H]/None	AO	0	Y178(B)	Pod	None	(530.225): 2+8	0.5	K-type Heavy Fighter transport pod; max one in service
-PFP+	19	0P◆/None	CO	1	Y178(B)	Pallet	None	(431.22): 6	1.0	PFT Pallet (tug only), max 2 in service, Scout, (2EW:2AF)(1EW:TugAF)
+PFP+	19	0P◆/None	F&E	1	Y178F	Pallet	None	(431.22): 6	1.0	PFT Pallet (tug only), max 2 in service, Scout, (2EW:2AF)(1EW:TugAF)
 KPTP	100	0[P]/None	AO	0	Y179	Pod	None	(526.62): 2+PFs	0.5	K-type spare PF Transport Pod, max 4 in service
 PTP+	102	0[PP]/None	AO	0	Y179	Pallet	None	(526.62): 2+PFs	1.0	PF Transport Pallet; max 1 in service.
 SCP+	54	0(6)P◆/0P	AO	1	Y179 (526.61)	Pallet	None	(431.22): 8+12	1.5	"Space Control Pallet; Double-weight; Scout; (2EW:2AF)(1EW:TugAF);
