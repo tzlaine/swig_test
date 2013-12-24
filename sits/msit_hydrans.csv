@@ -249,13 +249,13 @@ LPF	112		DO?	8		GR(3)	From GR:	For DD:		Local Defense PFT converted from Early Y
 PALLETS										
 FCP	22	0[27]/None	CO	0	Y138	Pallet	None	(431.22): 4(+5.4)	0.5	Fighter Conveyor Pallet (513.5); Max one in service.
 A-Pallet	25	0GG/None	CO	0	Y140	Pallet	None	(521.711): 4	0.5	Troop Pod for tug or LTT, limit 2.
-BP	24	7-2(2)/None	CO	2	Y157	Pallet	None	(431.22): 8+2	0.5	Battle Pallet, Max 2 in service.
+BP	24	7-2(2)/None	F&E	2	Y157	Pallet	None	(431.22): 8+2	0.5	Battle Pallet, Max 2 in service.
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	NA	Replacement: 5	0.0	See (422.8)
 FSP+	23	9-2+/None	CO	2	Y164	Pallet	None	(431.22): 10	1.0	Pallet with some Mauler capabilities; see (513.6); Max 1 in service.
-VP	27	0(6)/None	CO	1	Y164	Pallet	None	(431.22): 2+12	0.5	Carrier Pallet for tug or LTT; max 2 in service.
+VP	27	0(6)/None	F&E	1	Y164	Pallet	None	(431.22): 2+12	0.5	Carrier Pallet for tug or LTT; max 2 in service.
 SP	119	0◆/None	AO	1	Y165	Pallet	None	(431.22): 4	0.5	Scout Pallet, (4EW:TG)(3EW:LTT); (317.51)- (317.53); max 2 in service.
 VHP	120	0[16H]/None	AO	0	Y178	Pallet	None	(530.62): 2+16	0.5	Heavy fighter transport pallet; max 2 in service.
-PFP	28	0P◆/None	CO	0	Y180	Pallet	None	(431.22): 6	0.5	PF Tender Pallet; Scout; (EW=2); max two in service.
+PFP	28	0P◆/None	F&E	0	Y180	Pallet	None	(431.22): 6	0.5	PF Tender Pallet; Scout; (EW=2); max 2 in service.
 PTP	121	0[PP]/None	AO	0	Y180	Pallet	None	(526.62): 2+ PFs	0.5	PF Transport Pallet; cannot operate PFs; Max 2 in service.
 GUNBOAT FLOTILLAS										
 CPF	R1.R1	1-5 PFs	AO	0	Y180(B)	—NA—	None	(524.112): 5	0.0	Casual PF Flotilla.

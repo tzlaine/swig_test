@@ -159,11 +159,11 @@ PV	84	4(3)/None	PO	3	Y176	FF(4)	From FF: 1+6	For FF/DD: 4+6	0.00	Police Carrier
 FLG	59	2-5◆G/None	PO	4	Y138	DD(4)	From FF: 3	For FF/DD: 5	0.00	Police Flagship, Scout (EW=1), Commando Ship (one battalion).
 TUG AND PODS										
 TG	5	2-8/0-4	F&E	8	Y129	TG(3)	From BC/CL: 4	For BC: 6	1.5	Basic Hull
-HBP+	8	10-4/None	CO	2	Y149	Pod	None	(431.22): 8	1.0	Heavy Battle Pod, limit 2.
+HBP+	8	10-4/None	F&E	2	Y149	Pod	None	(431.22): 8	1.0	Heavy Battle Pod, limit 2.
 LBP	41	6-0/None	CO	2	Y172	Pod	None	(431.22): 6	0.5	Light Battle Pod, limit 2.
 Designation	"SFB
 Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
-PFP	34	0P◆/None	CO	0	Y182	Pod	None	(431.22): 6	0.5	PF Tender Pod, limit 2; Scout; (2EW:2AF)(1EW:TugAF)
+PFP	34	0P◆/None	F&E	0	Y182F	Pod	None	(431.22): 6	0.5	PF Tender Pod, limit 2; Scout; (2EW:2AF)(1EW:TugAF)
 PTP	99	0[PP]/None	AO	0	Y182	Pod	None	(526.62): 2+ PFs	0.5	PF Transport Pod, cannot operate PFs; limit 2.
 SP	97	0◆/None	AO	1	Y165	Pod	None	(431.22): 5	0.5	Scout pod; (4EW:Tug; 3EW:LTT; 2EW:TG+Pod+SP) (317.53); limit 2.
 T-POD	7	0G/None	CO	0	Y130	Pod	None	(521.712): 2	0.5	Troop Pod, limit 4.

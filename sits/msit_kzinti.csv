@@ -15,7 +15,7 @@ DNW	99	12/6	SO	10	Y177	DNW(2)	From CM: 11	For DN: 14	3.5	War Dreadnought, Conjec
 DNH	72	14/7	AO	10	Y179	DN(2)	From DN: 2	Schedule: 18	4.5	Heavy Variant
 SCS (4SCS)	—	"28-32P(6)/
 13-17P(3) SCS+MEC+2DWE"	CO	10	Y181(B)	Group	Individual Ships	Individual Ships	Ships	Space Control Group
-SCS	11	11-12P(6)/5-6P(3)	CO	10	Y181(B)	DN(2)	"From CVA: 5
+SCS	11	11-12P(6)/5-6P(3)	F&E	10	Y181F	DN(2)	"From CVA: 5
 From DN: 5+12"	For DN: 21+12	4.0	Space Control Ship
 BCH HEAVY BATTLECRUISER										
 CV (CVS)	6	10(6)/5(3)	F&E	9	Y166	BCH(3)	"From BCH: 2+12
@@ -137,19 +137,19 @@ TG TUGS
 TGT	12	4-8/2-4	F&E	6	Y129	TGT(3)	From TGC: 2	For BC: 6	1.5	Tug, Base Hull Type
 TGC	53	8/4	F&E	8	Y164	TGT(3)	From TGT: 5	For BC: 8	2.0	Tug
 PODS										
-Cargo Pod		0/None	F&E		Y129	Tug Mission	—NA—	0	0.0	
-BP	15	2<2>/None	CO	2	Y134	Pod	None	(431.22): 6	0.5	Battle pod (has drone bombardment capability); limit 4.
+Cargo Pod		0/None	F&E (subsumed)		Y129	Tug Mission	—NA—	0	0.0	
+BP	15	2<2>/None	F&E	2	Y134	Pod	None	(431.22): 6	0.5	Battle pod (has drone bombardment capability); limit 4.
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	—NA—	Replacement: 5	0.0	See (422.8)
-PFP (2PFP)	40	0P◆/None	CO	0	Y181	Pod	None	(431.22): 6	1.0	Pair of PFT pods, limit 2 pairs; scout, (2EW:2AF)(1EW:TugAF)
+PFP (2PFP)	40	0P◆/None	F&E	0	Y181	Pod	None	(431.22): 6	1.0	Pair of PFT pods, max 2 pairs; scout, (2EW:2AF)(1EW:TugAF)
 PTP	112	0[P]/None	AO	0	Y181	Pod	None	(526.62): 2+PFs	0.5	PF Transport Pod, cannot operate PFs; limit 4.
 Designation	"SFB
 Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
 SCP+	58	0(6)P◆/None	AO	1	Y181	Pod	None	(431.22): 8+12	1.5	Space Control Pod; Scout (2EW:2AF)(1EW:TugAF); triple weight pod, overloads tug; limit 1.
 SP	110	0◆/None	AO	1	Y168	Pod	None	(431.22): 3	0.5	Scout Pod, EW=2; see (317.53); limit 4
 T-POD	17	0G/None	CO	0	Y160	Pod	None	(521.712): 2	0.5	Troop Pod, Tug or LTT; limit 4.
-VAP	38	0(6)/None	CO	1	Y175	Pod	None	(431.22): 2+12	0.5	Heavy Carrier Pod, limit 2.
+VAP	38	0(6)/None	F&E	1	Y175	Pod	None	(431.22): 2+12	0.5	Heavy Carrier Pod, limit 2.
 VHP	111	0[8H]/None	AO	0	Y176	Pod	None	(530.225): 2+8	0.5	Heavy fighter FCR pod, limit 4
-VP	14	0(3)/None	CO	1	Y166	Pod	None	(431.22): 1+6	0.5	Medium Carrier Pod, limit 6
+VP	14	0(3)/None	F&E	1	Y166	Pod	None	(431.22): 1+6	0.5	Medium Carrier Pod, limit 6
 HDW HEAVY WAR DESTROYERS										
 HDW	69	6-7(1)/3-4	AO	5	Y181	HDW(4)	From DW: 2+1	For DW: 5+1	1.25	Modular (525.2) § in some modes.
 HDWE	69	6-7(1)■/3-4■	AO	5	Y181	HDW(4)	See (525.2) in AO.	(525.2) in AO.	1.25	Escort mode of HDW §
