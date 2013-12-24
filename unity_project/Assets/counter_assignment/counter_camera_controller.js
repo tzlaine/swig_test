@@ -45,7 +45,6 @@ function Start ()
 function Update ()
 {
     var zoom_input : float =
-        Input.GetAxis('Zoom') * key_zoom_sensitivity +
         Input.GetAxis('Mouse ScrollWheel') * mousewheel_zoom_sensitivity;
     if (zoom_input != 0) {
         distance = Mathf.Clamp(distance + zoom_input, min_distance, max_distance);

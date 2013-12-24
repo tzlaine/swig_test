@@ -9,22 +9,60 @@ var counter_sheet_column_ : counter_sheet_column;
 
 private var columns : counter_sheet_column[] = new counter_sheet_column[5];
 private var column_index : int = 0;
+private var json : SimpleJSON.JSONNode = null;
+private var nation : String = 'FED';
+private var unit : String = 'DN';
+private var nation_index : int = 0;
+private var unit_index : int = 0;
+private var nations : String[];
+private var units : GUIContent[];
+private var scroll_position = Vector2(0, 0);
 
-function assign (unit : String, texture : String, uv_ll : Vector2, uv_ur : Vector2)
+function save ()
+{ System.IO.File.WriteAllText('../unit_counters.json', json.ToString()); }
+
+function assign (texture : String, uv_min : Vector2, uv_max : Vector2)
 {
+    json[nation][unit]['texture'] = texture;
+    json[nation][unit]['uv_min']['u'].AsFloat = uv_min.x;
+    json[nation][unit]['uv_min']['v'].AsFloat = uv_min.y;
+    json[nation][unit]['uv_max']['u'].AsFloat = uv_max.x;
+    json[nation][unit]['uv_max']['v'].AsFloat = uv_max.y;
+    set_unit_texture(unit_index, json[nation][unit]);
+    save();
 }
 
-function populate (from : String, col : int)
+function set_unit_texture (i : int, unit_json : SimpleJSON.JSONNode)
+{
+    var main_tex : Texture2D =
+        AssetDatabase.LoadAssetAtPath(unit_json['texture'], Texture2D);
+    units[i].image = main_tex;
+}
+
+function populate_units ()
+{
+    var n : SimpleJSON.JSONNode = json[nation];
+    units = new GUIContent[n.Count];
+    var i = 0;
+    for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in n) {
+        units[i] = new GUIContent(u.Key);
+        if (u.Value['texture'])
+            set_unit_texture(i, u.Value);
+        ++i;
+    }
+}
+
+function populate (from : String, col : String)
 {
     var retval : counter_sheet_column = Instantiate(counter_sheet_column_);
     var files : String[] = [
-        from + '_0_' + col,
-        from + '_1_' + col,
-        from + '_2_' + col,
-        from + '_3_' + col,
-        from + '_4_' + col,
-        from + '_5_' + col,
-        from + '_6_' + col
+        from + '_0' + col,
+        from + '_1' + col,
+        from + '_2' + col,
+        from + '_3' + col,
+        from + '_4' + col,
+        from + '_5' + col,
+        from + '_6' + col
     ];
     retval.init(files);
     retval.gameObject.SetActive(false);
@@ -47,20 +85,94 @@ function prev_column ()
 
 function Start ()
 {
-    columns[0] = populate('alpha_front_cut', 0);
-    columns[1] = populate('alpha_front_cut', 1);
-    columns[2] = populate('bravo_front_cut', 0);
-    columns[3] = populate('bravo_front_cut', 1);
-    columns[4] = populate('bases_front_cut', 0);
+    columns[0] = populate('alpha_front_cut', '_0');
+    columns[1] = populate('alpha_front_cut', '_1');
+    columns[2] = populate('bravo_front_cut', '_0');
+    columns[3] = populate('bravo_front_cut', '_1');
+    columns[4] = populate('bases_front_cut', '');
 
     columns[column_index].gameObject.SetActive(true);
 
-    var json : SimpleJSON.JSONNode = JSON.Parse(System.IO.File.ReadAllText('../units.json'));
+    var units_json : SimpleJSON.JSONNode =
+        JSON.Parse(System.IO.File.ReadAllText('../units.json'));
 
-    
+    if (System.IO.File.Exists('../unit_counters.json'))
+        json = JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
+    else
+        json = new SimpleJSON.JSONClass();
+
+    var n_index = 0;
+    var u_index = 0;
+    var nations_ = new Array();
+    for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in units_json) {
+        nations_.Push(n.Key);
+        for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in n.Value) {
+            if (json[n.Key] == null ||
+                json[n.Key][u.Key] == null ||
+                json[n.Key][u.Key]['texture'] == null) {
+                json[n.Key][u.Key]['texture'] = '';
+                json[n.Key][u.Key]['uv_min']['u'].AsFloat = 0;
+                json[n.Key][u.Key]['uv_min']['v'].AsFloat = 0;
+                json[n.Key][u.Key]['uv_max']['u'].AsFloat = 1;
+                json[n.Key][u.Key]['uv_max']['v'].AsFloat = 1;
+                if (unit == null) {
+                    nation = n.Key;
+                    unit = u.Key;
+                    nation_index = n_index;
+                    unit_index = u_index;
+                }
+            }
+            ++u_index;
+        }
+        ++n_index;
+    }
+
+    var i = 0;
+
+    nations = new String[nations_.length];
+    for (i = 0; i < nations.Length; ++i) {
+        nations[i] = nations_[i];
+    }
+
+    populate_units();
 }
 
 function Update ()
 {
+    if (Input.GetKeyUp('q'))
+        prev_column();
+    else if (Input.GetKeyUp('e'))
+        next_column();
+}
+
+function OnGUI ()
+{
+    var n_index =
+        GUI.SelectionGrid(Rect(10, 10, 50, Screen.height - 20), nation_index, nations, 1);
+    if (n_index != nation_index) {
+        nation_index = n_index;
+        nation = nations[nation_index];
+        unit_index = 0;
+        populate_units();
+    }
+
+    var scroll_region_height = units.length * 80;
+
+    scroll_position = GUI.BeginScrollView(
+        Rect(70, 10, 200, Screen.height - 20),
+        scroll_position,
+        Rect(0, 0, 180, scroll_region_height)
+    );
+
+    var style = new GUIStyle(GUI.skin.GetStyle('Button'));
+    style.imagePosition = ImagePosition.ImageAbove;
+//    style.alignment = TextAnchor.LowerCenter;
+    var u_index =
+        GUI.SelectionGrid(Rect(10, 10, 150, scroll_region_height), unit_index, units, 1, style);
+    if (u_index != unit_index) {
+        unit_index = u_index;
+        unit = units[unit_index].text;
+    }
     
+    GUI.EndScrollView();
 }
