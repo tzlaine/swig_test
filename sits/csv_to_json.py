@@ -233,7 +233,7 @@ def print_salvage (field):
 
 tug_regex = re.compile(r'[Tt]ug')
 carrier_regex = re.compile(r'[Tt]rue *[Cc]arrier')
-limit_regex = re.compile(r'[Mm]ax *(\d+)')
+limit_regex = re.compile(r'(?:[Mm]ax|[Ll]imit) *(\d+)')
 
 def get_notes (field):
     notes = 'none'
