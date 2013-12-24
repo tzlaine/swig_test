@@ -32,11 +32,33 @@ function assign (texture : String, uv_min : Vector2, uv_max : Vector2)
     save();
 }
 
-function set_unit_texture (i : int, unit_json : SimpleJSON.JSONNode)
+function set_unit_texture (unit_index_ : int, unit_json : SimpleJSON.JSONNode)
 {
     var main_tex : Texture2D =
         AssetDatabase.LoadAssetAtPath(unit_json['texture'], Texture2D);
-    units[i].image = main_tex;
+    units[unit_index_].image = main_tex;
+
+/*
+    var main_tex_width = 1024;
+    var main_tex_height = 256;
+    var sub_tex_width = main_tex_width;
+    var sub_tex_x = Mathf.FloorToInt(unit_json['uv_min']['x'].AsFloat * main_tex_width);
+    var sub_tex_y = Mathf.FloorToInt(unit_json['uv_min']['y'].AsFloat * main_tex_height);
+
+    var main_tex_pixels : Color32[] = main_tex.GetPixels32(); // TODO: Why is this throwing?
+    var tex_pixels : Color32[] = new Color32[sub_tex_width * sub_tex_width];
+    var i = 0;
+    for (var j = 0; j < sub_tex_width; ++j) {
+        var base = j * main_tex_width;
+        for (var k = 0; k < sub_tex_width; ++k) {
+            tex_pixels[i++] = main_tex_pixels[base + k];
+        }
+    }
+    var tex = new Texture2D(sub_tex_width, sub_tex_width, main_tex.format, false);
+    tex.SetPixels32(tex_pixels);
+    tex.Apply();
+    //units[unit_index_].image = tex;
+/**/
 }
 
 function populate_units ()
@@ -159,16 +181,15 @@ function OnGUI ()
     var scroll_region_height = units.length * 80;
 
     scroll_position = GUI.BeginScrollView(
-        Rect(70, 10, 200, Screen.height - 20),
+        Rect(70, 10, 280, Screen.height - 20),
         scroll_position,
-        Rect(0, 0, 180, scroll_region_height)
+        Rect(0, 0, 260, scroll_region_height)
     );
 
     var style = new GUIStyle(GUI.skin.GetStyle('Button'));
     style.imagePosition = ImagePosition.ImageAbove;
-//    style.alignment = TextAnchor.LowerCenter;
     var u_index =
-        GUI.SelectionGrid(Rect(10, 10, 150, scroll_region_height), unit_index, units, 1, style);
+        GUI.SelectionGrid(Rect(10, 10, 240, scroll_region_height), unit_index, units, 1, style);
     if (u_index != unit_index) {
         unit_index = u_index;
         unit = units[unit_index].text;
