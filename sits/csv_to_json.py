@@ -7,6 +7,12 @@ text_ = open(sys.argv[1]).read()
 
 nation = sys.argv[2]
 
+generic_units = ''
+try:
+    generic_units = open('generic.units').read()
+except:
+    pass
+
 lines = []
 
 indent = '            '
@@ -251,6 +257,9 @@ def print_notes (notes):
 def process_line (fields, last_line):
     (notes, tug, carrier, limit) = get_notes(fields[10])
 
+    if fields[0] == 'REP POD':
+        return;
+
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
     print indent + '"cmd": ' + fields[4] + ','
@@ -334,7 +343,11 @@ for i in range(0, len(text_)):
         else:
             line += char
 
-print '    "%s": {' % nation
+if not 'GENERIC' in nation:
+    print '    "%s": {' % nation
+    if 0 < len(generic_units):
+        print generic_units
 for i in range(0, len(lines)):
     process_line(lines[i], i == len(lines) - 1)
-print '    },'
+if not 'GENERIC' in nation:
+    print '    },'
