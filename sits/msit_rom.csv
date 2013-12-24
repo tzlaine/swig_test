@@ -8,7 +8,7 @@ CON	6	13/7	F&E	10	Y170	CON(2)	See (440.4).	Schedule: 17	4.25	DN: Base Hull
 CNV	45	13(12)/7(6)	F&E	10	Y175	CON(2)	From CON: 4+24	For CON: 19+24	4.25	Heavy Carrier
 CNV (4CNV)	—	30(12)/17(6) CNV+SPM+2SKE	F&E	10	Y175	Group	From CON+ SP+ 2SK: 5+24	Individual Ships	Ships	Heavy Carrier Group
 CNH	92	15/8	AO	10	Y178	CON(2)	From CON: 2	For CON: 19	4.75	Heavy Variant
-PHX (SCS)	49	13P(6)/7P(3)	F&E	10	Y182(B)	CON(2)	"From CNV: 5
+PHX	49	13P(6)/7P(3)	F&E	10	Y182(B)	CON(2)	"From CNV: 5
 From CON: 5+12
 From ROC: 2+12"	"For CON: 22+12
 (502.7)"	4.25	Space Control Ship
@@ -190,7 +190,7 @@ PE	53	2-6◆/1-3	SO	8	166	WE(3)	"From WE: 5
 From SE: 3"	For WE: 11	1.5	Pioneer Eagle, Survey Ship, Scout, EW=2; Carry 2EP if not surveying.
 Designation	"SFB
 Ref #"	Factors On Counter	Product	Cmnd (754.0)	Date Avail	Base Hull; Size (755.0)	Conversion Cost, Source	Build Cost or Substitution	Salvage (439.0)	Notes and Special Cases; EW, Shock
-FE (3FE)	30	6-18T/3-9	F&E	3	Y164	WE(3)	From 3xWE/KE: 3	None	4.5	Tug (Special Limits) Unbreakable.
+FE	30	2-6U/1-3	F&E	3	Y164	WE(3)	From WE/KE: 3	None	4.5	Theater Transport
 CE	54	2-6G/1-3G	CO	3	Y165	WE(3)	From WE: 2	For WE: 6	1.5	Commando ship
 SE	12	2-6◆/0-3	F&E	8	Y165	WE(3)	From WE/KE: 2	For WE: 8	1.5	Scout; EW =2
 KE	39	9/5	F&E	9	Y168	WE(3)	From WE: 3	For FH: 9 (431.6)	2.25	Command Cruiser
