@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 53dbb1a1b9b42264695353506fbbbfad
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - counter_sheet_column_: {fileID: 11400000, guid: 70e7fda88c47c3e4ebb8905f789143d0,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
