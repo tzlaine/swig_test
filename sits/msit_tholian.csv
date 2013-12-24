@@ -74,7 +74,7 @@ DDX	203	8/4	AO	6	Y184	DD(4)	From DD: 4 From PC: 6‡	For DD: 8	2.0	X-Ship §
 SCX	206	4-8◆/2-4◆	AO	6	Y184	DD(4)	From DDX: 3 From PC: 7‡ From SC: 6‡	For DD: 11	2.0	X-Ship §; Convert from DD: 5; scout (3EW:4AF); Crippled: 1EW
 PATROL CORVETTES										
 PC	2	4/2	F&E	3	Y082	PC(4)	None	Schedule: 2.5	0.625	FF: Basic Hull §
-CPC (3CPC)	11	12T/6	F&E	3	Y089	PC(4)	From 3xPC: 3	For 3xPC: 7.5	1.875	Tug (Special Limits); unbreakable group
+CPC	11	4U/2	F&E	3	Y089	PC(4)	From PC: 1	For PC: 2.5	0.625	Theater transport
 CMC	26	4G/2	CO	3	Y109	PC(4)	From PC: 2	For PC: 2.5	0.625	Commando Ship §
 SC	12	1-4◆/0-2	F&E	3	Y124	PC(4)	From PC: 1	For PC: 3.5	0.625	Scout, EW=1 §
 FLG	Future	2-4◆G/None	PO	4	Y150	PC(4)	From PC: 3	For PC: 5	0.0	Police Flagship, Scout (EW=1), Commando Ship (one battalion).
