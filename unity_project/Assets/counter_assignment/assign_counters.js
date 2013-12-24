@@ -130,9 +130,7 @@ function Start ()
     for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in units_json) {
         nations_.Push(n.Key);
         for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in n.Value) {
-            if (json[n.Key] == null ||
-                json[n.Key][u.Key] == null ||
-                json[n.Key][u.Key]['texture'] == null) {
+            if (json[n.Key][u.Key]['texture'] == null) {
                 json[n.Key][u.Key]['texture'] = '';
                 json[n.Key][u.Key]['uv_min']['u'].AsFloat = 0;
                 json[n.Key][u.Key]['uv_min']['v'].AsFloat = 0;
