@@ -7,6 +7,11 @@ text_ = open(sys.argv[1]).read()
 
 nation = sys.argv[2]
 
+units_seen = {}
+
+if not 'GENERIC' in nation:
+    units_seen = { 'BATS': 1, 'PDU': 1, 'SB': 1}
+
 generic_units = ''
 try:
     generic_units = open('generic.units').read()
@@ -255,10 +260,17 @@ def print_notes (notes):
     print '%s"notes": "%s"' % (indent, notes)
 
 def process_line (fields, last_line):
-    (notes, tug, carrier, limit) = get_notes(fields[10])
-
     if fields[0] == 'REP POD':
         return;
+
+    # KLUDGE: Rename repeated units by appending v.N to each after the first.
+    if not fields[0] in units_seen:
+        units_seen[fields[0]] = 0
+    units_seen[fields[0]] = units_seen[fields[0]] + 1
+    if 1 < units_seen[fields[0]]:
+        fields[0] = fields[0] + 'v.' + str(units_seen[fields[0]])
+
+    (notes, tug, carrier, limit) = get_notes(fields[10])
 
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
