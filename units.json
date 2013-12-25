@@ -70,8 +70,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "DN": {
@@ -1118,8 +1117,7 @@
                     "cost": 4
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -1158,6 +1156,33 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 24.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "available": {
+                "year": 181,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 12
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See (433.41), (441.0), and(510.3)"
+        },
         "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
@@ -1172,8 +1197,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -1248,8 +1277,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "DN": {
@@ -2008,8 +2036,7 @@
                     "cost": 3
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Battlestation. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits: 2 FTM or one FTM +1 PFM."
         },
         "MB (ND)": {
@@ -2070,7 +2097,7 @@
             },
             "conversions from": {
                 "BATS": {
-                    "cost": 28,
+                    "cost": 30,
                     "fighter_cost": 6
                 },
                 "STB": {
@@ -2078,8 +2105,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
         "PDUv.2": {
@@ -2096,8 +2122,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -2172,8 +2202,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "PAL": {
@@ -3157,7 +3186,7 @@
                     "cost": 4
                 }
             },
-            "move": 6,
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -3196,6 +3225,39 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
+        },
         "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
@@ -3210,7 +3272,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -3285,8 +3352,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "B10": {
@@ -4279,9 +4345,41 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
         "MB (ND)": {
             "cmd": 0,
@@ -4333,8 +4431,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -4409,8 +4511,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "DN": {
@@ -5249,9 +5350,41 @@
                     "cost": 4
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
         "MB (ND)": {
             "cmd": 0,
@@ -5303,8 +5436,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -5379,8 +5516,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "DN": {
@@ -6244,9 +6380,41 @@
                     "cost": 4
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
         "MB (ND)": {
             "cmd": 0,
@@ -6298,8 +6466,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -6374,8 +6546,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "CA": {
@@ -6562,9 +6733,77 @@
                     "cost": 4
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "MB (ND)": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 0,
+                "def": 0
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "Undeployed MB"
+        },
+        "MB": {
+            "cmd": 6,
+            "uncrippled": {
+                "att": 8,
+                "def": 8,
+                "scout": "true"
+            },
+            "crippled": {
+                "att": 4,
+                "def": 4
+            },
+            "available": {
+                "year": 139,
+                "season": "spring"
+            },
+            "move": 0,
+            "notes": "See (510.2); EW=1"
+        },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
         "PDUv.2": {
             "cmd": 0,
@@ -6580,8 +6819,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     },
@@ -6656,8 +6899,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "CON": {
@@ -7872,9 +8114,41 @@
                     "cost": 4
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        "SBv.2": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0,
+                "PFs": 12
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0,
+                "PFs": 6
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                },
+                "STB": {
+                    "cost": 20,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
         "MB (ND)": {
             "cmd": 0,
@@ -7926,8 +8200,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2). No cloak."
         },
     },
@@ -8002,8 +8280,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "Starbase. See (433.41)"
         }
         "DN": {
@@ -8354,8 +8631,7 @@
                     "cost": 4
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -8420,8 +8696,7 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "PDUv.2": {
@@ -8438,8 +8713,12 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 6,
-            "carrier": "true",
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
             "notes": "See (508.1) and (431.2)."
         }
     }
