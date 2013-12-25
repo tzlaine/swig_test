@@ -283,25 +283,25 @@ def process_line (fields, last_line):
     print_conversions(fields[7])
 
     move = 6
-    if fields[0] == 'BATS' or fields[0] == 'BS' or fields[0] == 'MB (ND)' or fields[0] == 'MB' or fields[0] == 'PDU' or fields[0] == 'REPR' or pod:
+    if 'BATS' in fields[0] or 'SB' in fields[0] or 'MB (ND)' in fields[0] or 'MB' in fields[0] or 'PDU' in fields[0] or 'REPR' in fields[0] or pod:
         move = 0
-    elif fields[0] == 'FRD':
+    elif 'FRD' in fields[0]:
         move = 1
-    elif fields[0] == 'CONVOY':
+    elif 'CONVOY' in fields[0]:
         move = 2
 
     towable = False
     tow_move_cost = 1
     tow_strat_move_limit = -1
-    if fields[0] == 'MB (ND)' or fields[0] == 'PDU':
+    if 'MB (ND)' in fields[0] or 'PDU' in fields[0]:
         towable = True
-    elif fields[0] == 'FRD':
+    elif 'FRD' in fields[0]:
         towable = True
         tow_move_cost = 2
         tow_strat_move_limit = 12
 
     spaceworthy = True
-    if fields[0] == 'MB (ND)' or fields[0] == 'PDU' or pod:
+    if 'MB (ND)' in fields[0] or 'PDU' in fields[0] or pod:
         spaceworthy = False
 
     print '%s"move": %d,' % (indent, move)
