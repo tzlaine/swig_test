@@ -327,9 +327,10 @@ BATS	2	"12(9H6)◆/
 From BS: 4 (444.31)"	—NA—	0.0	See (433.41), (441.0), and (510.3)
 MB (ND)	24	0/None	F&E	0	Y139	MB(3)	—NA—	(431.2): 10	0.0	Undeployed MB
 MB	24	8◆/4	F&E	6	Y139	MB(3)	—NA—	—NA—	0.0	See (510.2); EW=1
-SB	R1.1	"36(18H12)◆/
-18(9H6)◆"	AO	10	Y140	SB(1)	From BATS: 30+6	—NA—	0.0	"Starbase. See (433.41), (441.0), and
+SB	R1.1	36(24)◆/18(12)◆	F&E	10	Y181	SB(1)	From BATS: 30+12	—NA—	0.0	"Starbase. See (433.41), (441.0), and
 (510.3)"
+SB	R1.1	"36(18H12)◆/
+18(9H6)◆"	AO	10	Y140	SB(1)	From BATS: 30+6	—NA—	0.0	Fed Starbase after Y181. See (433.41), (502.9).
 Ftr-Module	4	0(3)/0(1▲)	AO	0	Y165	—NA—	None	(441.4): 1+3	0.0	Fighter module for base or FRD
 Ftr-Depot	NA	0[6]/0	FO	0	Y172	—NA—	None	(443.3): 6	0.0	See (443.0).
 STB	47	"12-24(6)◆

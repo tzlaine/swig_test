@@ -314,6 +314,9 @@ BATS	2	12P(6)◆/6P(3)◆	F&E	9	Y135	BATS(2)	"From MB: 9+6
 From BS: 4 (444.31)"	—NA—	0.0	See (433.41), (441.0), and (510.3)
 MB (ND)	24	0/None	F&E	0	Y139	MB(3)	—NA—	(431.2): 10	0.0	Undeployed MB
 MB	24	8◆/4	F&E	6	Y139	MB(3)	—NA—	—NA—	0.0	See (510.2); EW=1
+SB	R1.01	"36(12)PP◆/
+18(6)P◆"	F&E	10	Y140	SB(1)	From BATS: 30+6 From STB: 20+6	Upgrade Only	0.00	"Starbase. See EW Chart. See (433.41), (441.0), and (510.3). Module
+Limits 4FTM+2PFM."
 Ftr-Depot	NA	0[6]/0	FO	0	Y172	—NA—	None	(443.3): 6	0.0	See (443.0).
 STB	R1.47	"12-24(6)◆
 /6-12(3)◆"	SO	9	Y175	STB(2)	From BATS: 12+ftrs From BS: 15+ftrs	Upgrade Only	0.0	Sector Base; see EW chart.
