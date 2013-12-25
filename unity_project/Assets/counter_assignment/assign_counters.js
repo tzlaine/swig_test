@@ -165,7 +165,7 @@ function Update ()
     else if (Input.GetKeyUp('e'))
         next_column();
 
-    if (Input.GetKeyUp(KeyCode.Delete)) {
+    if (Input.GetKeyUp(KeyCode.Delete) || Input.GetKeyUp(KeyCode.Backspace)) {
         json[nation].Remove(unit);
         unit_index = 0;
         unit = units[unit_index].text;
