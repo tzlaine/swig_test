@@ -1,5 +1,79 @@
 {
     "FED": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
+            "move": 0,
+            "towable": {
+                "move cost": 1,
+                "strat move limit": -1
+            },
+            "spaceworthy": false,
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
+        }
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -375,7 +449,7 @@
             "salvage": 2,
             "notes": "Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants."
         },
-        "CVB": {
+        "CVBv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 7,
@@ -461,24 +535,6 @@
             "salvage": 1,
             "spaceworthy": false,
             "notes": "Heavy Battle Pod; max 3 in service."
-        },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
         },
         "VP": {
             "cmd": 1,
@@ -1035,7 +1091,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -1062,7 +1118,8 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -1101,7 +1158,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -1115,16 +1172,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "GOR": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "GOR": {
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -1806,24 +1933,6 @@
             "spaceworthy": false,
             "notes": "PF Tender Pod, limit 2; Scout; (2EW:2AF)(1EW:TugAF)"
         },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8), (442.7)."
-        },
         "REPR": {
             "cmd": 0,
             "uncrippled": {
@@ -1870,7 +1979,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -1899,7 +2008,8 @@
                     "cost": 3
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "Battlestation. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits: 2 FTM or one FTM +1 PFM."
         },
         "MB (ND)": {
@@ -1938,7 +2048,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "SB": {
+        "SBv.2": {
             "cmd": 10,
             "uncrippled": {
                 "att": 36,
@@ -1972,7 +2082,7 @@
             "carrier": "true",
             "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -1986,16 +2096,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "HYD": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "HYD": {
         "PAL": {
             "cmd": 10,
             "uncrippled": {
@@ -2858,24 +3038,6 @@
             "spaceworthy": false,
             "notes": "Battle Pallet, Max 2 in service."
         },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
-        },
         "VP": {
             "cmd": 1,
             "uncrippled": {
@@ -2966,7 +3128,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -2995,7 +3157,7 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -3034,7 +3196,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -3048,16 +3210,85 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "KLI": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "KLI": {
         "B10": {
             "cmd": 10,
             "uncrippled": {
@@ -3573,42 +3804,6 @@
             "spaceworthy": false,
             "notes": "Battle Pod; Max 4 in service."
         },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
-        },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
-        },
         "VP(VP2)": {
             "cmd": 1,
             "uncrippled": {
@@ -4058,7 +4253,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -4084,7 +4279,8 @@
                     "fighter_cost": 6
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -4123,7 +4319,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -4137,16 +4333,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "KZI": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "KZI": {
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -4694,24 +4960,6 @@
             "spaceworthy": false,
             "notes": "Battle pod (has drone bombardment capability); limit 4."
         },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
-        },
         "VAP": {
             "cmd": 1,
             "uncrippled": {
@@ -4972,7 +5220,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -5001,7 +5249,8 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -5040,7 +5289,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -5054,16 +5303,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "LYR": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "LYR": {
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -5385,24 +5704,6 @@
             "salvage": 1,
             "spaceworthy": false,
             "notes": "Battle Pallet, limit 2, tugs only"
-        },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
         },
         "VP+": {
             "cmd": 1,
@@ -5914,7 +6215,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -5943,7 +6244,8 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -5982,7 +6284,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -5996,16 +6298,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "ORI": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "ORI": {
         "CA": {
             "cmd": 8,
             "uncrippled": {
@@ -6161,7 +6533,7 @@
             },
             "notes": "See (421.0)"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -6190,10 +6562,11 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -6207,16 +6580,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2)."
+        }
+    },
+    "ROM": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2)."
+            "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        "SB": {
+            "cmd": 10,
+            "uncrippled": {
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 140,
+                "season": "spring"
+            },
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "ROM": {
         "CON": {
             "cmd": 10,
             "uncrippled": {
@@ -7400,7 +7843,7 @@
             },
             "notes": "See (421.0). No cloak."
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -7429,7 +7872,8 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -7468,7 +7912,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -7482,34 +7926,86 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
+            "move": 6,
+            "carrier": "true",
+            "notes": "See (508.1) and (431.2). No cloak."
+        },
+    },
+    "THO": {
+        "BATS": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 12,
+                "def": 12,
+                "scout": "true",
+                "fighters": 6.0
+            },
+            "crippled": {
+                "att": 6,
+                "def": 6,
+                "scout": "true",
+                "fighters": 3.0
+            },
+            "available": {
+                "year": 130,
+                "season": "spring"
+            },
+            "conversions from": {
+                "MB": {
+                    "cost": 9,
+                    "fighter_cost": 6
+                }
+            },
+            "move": 0,
+            "notes": "Battle station. See (433.41), (510.3)."
+        },
+        "PDU": {
+            "cmd": 0,
+            "uncrippled": {
+                "att": 3,
+                "def": 3,
+                "fighters": 6.0
+            },
+            "available": {
+                "year": 167,
+                "season": "spring"
+            },
             "move": 0,
             "towable": {
                 "move cost": 1,
                 "strat move limit": -1
             },
             "spaceworthy": false,
-            "notes": "See (508.1) and (431.2). No cloak."
+            "notes": "See (502.51), (508.1), and(431.2)."
         },
-        "REP POD": {
-            "cmd": 0,
+        "SB": {
+            "cmd": 10,
             "uncrippled": {
-                "att": 0,
-                "def": 0
+                "att": 36,
+                "def": 36,
+                "scout": "true",
+                "fighters": 12.0
+            },
+            "crippled": {
+                "att": 18,
+                "def": 18,
+                "scout": "true",
+                "fighters": 6.0
             },
             "available": {
-                "year": 159,
+                "year": 140,
                 "season": "spring"
             },
-            "pod": "true",
-            "construction": {
-                "cost": 5
+            "conversions from": {
+                "BATS": {
+                    "cost": 30,
+                    "fighter_cost": 6
+                }
             },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
+            "move": 6,
+            "carrier": "true",
+            "notes": "Starbase. See (433.41)"
         }
-    },
-    "THO": {
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -7829,7 +8325,7 @@
             "move": 2,
             "notes": "See (414.0); Cargo = 20EP"
         },
-        "BATS": {
+        "BATSv.2": {
             "cmd": 9,
             "uncrippled": {
                 "att": 12,
@@ -7858,7 +8354,8 @@
                     "cost": 4
                 }
             },
-            "move": 0,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
         "MB (ND)": {
@@ -7897,7 +8394,7 @@
             "move": 0,
             "notes": "See (510.2); EW=1"
         },
-        "SB": {
+        "SBv.2": {
             "cmd": 10,
             "uncrippled": {
                 "att": 36,
@@ -7927,25 +8424,7 @@
             "carrier": "true",
             "notes": "See (433.41), (441.0), and (510.3)"
         },
-        "REP POD": {
-            "cmd": 0,
-            "uncrippled": {
-                "att": 0,
-                "def": 0
-            },
-            "available": {
-                "year": 159,
-                "season": "spring"
-            },
-            "pod": "true",
-            "construction": {
-                "cost": 5
-            },
-            "move": 0,
-            "spaceworthy": false,
-            "notes": "See (422.8)"
-        },
-        "PDU": {
+        "PDUv.2": {
             "cmd": 0,
             "uncrippled": {
                 "att": 3,
@@ -7959,12 +8438,8 @@
             "conversions from": {
                 "TODO": "From PGB (441.3)"
             },
-            "move": 0,
-            "towable": {
-                "move cost": 1,
-                "strat move limit": -1
-            },
-            "spaceworthy": false,
+            "move": 6,
+            "carrier": "true",
             "notes": "See (508.1) and (431.2)."
         }
     }
