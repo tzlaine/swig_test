@@ -7,7 +7,7 @@ import System.Collections.Generic;
 var counter_sheet_column_ : counter_sheet_column;
 
 
-private var columns : counter_sheet_column[] = new counter_sheet_column[6];
+private var columns : counter_sheet_column[] = new counter_sheet_column[7];
 private var column_index : int = 0;
 private var json : SimpleJSON.JSONNode = null;
 private var nation : String = 'FED';
@@ -113,6 +113,7 @@ function Start ()
     columns[3] = populate('bravo_front_cut', '_1');
     columns[4] = populate('bases_front_cut', '');
     columns[5] = populate('bases_back_cut', '');
+    columns[6] = populate('counters_front_cut', '');
 
     columns[column_index].gameObject.SetActive(true);
 
