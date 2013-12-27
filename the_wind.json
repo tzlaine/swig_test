@@ -1,0 +1,161 @@
+{
+    "start turn": {
+        "year": 168,
+        "season" "fall"
+    },
+    "set up order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
+    "nations": {
+        "FED": {
+            "at war with": [],
+            "future belligerents": [ "KLI", "LYR", "ROM" ],
+            "economy": "peace",
+            "exhaustion turns:" 0,
+            "accumulate exhaustion at peace": "false",
+            "release conditions": {
+                "Fourth Fleet": [
+                    "future belligerent",
+                    "occupies",
+                    {
+                        "fleet area": "Marquis' Fleet",
+                        "nation": "KZI"
+                    }
+                ]
+            },
+            "war entry conditions": {
+                "limited war": [
+                    "future belligerent",
+                    "occupies",
+                    {
+                        "fleet area": "Marquis' Fleet",
+                        "nation": "KZI"
+                    }
+                ]
+            }
+        },
+        "HYD": {
+            "at war with": [],
+            "future belligerents": [ "KLI", "LYR", "ROM" ],
+            "economy": "peace",
+            "exhaustion turns:" 0,
+            "accumulate exhaustion at peace": "true"
+            "release conditions": {
+                "Old Colonies Squadron": [
+                    "future belligerent",
+                    "occupies",
+                    { "hex": "0617" }
+                ],
+                "Old Colonies Squadron": [
+                    "future belligerent",
+                    "destroys",
+                    { "SB": [ "any" ] }
+                ]
+            }
+        },
+        "KLI": {
+            "at war with": [],
+            "future belligerents": [ "FED", "GOR", "HYD", "KZI" ],
+            "economy": "war",
+            "exhaustion turns:" 0,
+            "accumulate exhaustion at peace": "true",
+            "release conditions": {
+                "Home Fleet": [
+                    "HYD",
+                    "occupies",
+                    { "nation": [ "KLI", "LYR" ] }
+                ],
+                "Eastern Fleet": [
+                    "future belligerent",
+                    "occupies",
+                    {
+                        "fleet area": "Eastern Fleet",
+                        "nation": "KLI"
+                    }
+                ],
+                "Southern Reserve Fleet": [
+                    "HYD",
+                    "occupies",
+                    { "nation": [ "KLI", "LYR" ] }
+                ]
+            }
+        },
+        "KZI": {
+            "at war with": [ "LYR" ],
+            "future belligerents": [ "KLI", "LYR", "ROM" ],
+            "economy": "war",
+            "exhaustion turns:" 0,
+            "accumulate exhaustion at peace": "false",
+            "release conditions": {
+                "Marquis' Fleet": [
+                    "future belligerent",
+                    "occupies",
+                    { "nation": [ "KZI" ] }
+                }],
+                "Marquis' Reserve Fleet": [
+                    "future belligerent",
+                    "occupies",
+                    {
+                        "fleet area": "Marquis' Fleet",
+                        "nation": "KZI"
+                    }
+                ]
+            }
+        },
+        "LYR": {
+            "at war with": [ "KZI" ],
+            "future belligerents": [ "FED", "GOR", "HYD", "KZI" ],
+            "economy": "war",
+            "exhaustion turns:" 0,
+            "accumulate exhaustion at peace": "false"
+        }
+    },
+    "turns": {
+        "1": {
+            "KZI": {
+                "release fleets": [ "Count's Fleet", "Duke's Fleet", "Home Fleet" ]
+            },
+            "LYR": {
+                "release fleets": [ "Red Claw Fleet", "Home Fleet" ]
+            }
+        },
+        "2": {
+            "KLI": {
+                "declare war": [ "KZI" ],
+                "release fleets": [ "Northern Fleet", "Northern Reserve Fleet", "Tholian Border Squadron" ]
+            },
+            "KZI": {
+                "declare war": [ "KLI" ],
+                "release fleets": [ "Baron's Fleet" ]
+            },
+            "LYR": {
+                "release fleets": [ "Far Stars" ]
+            }
+        },
+        "3": {
+            "HYD": {
+                "declare war": [ "KLI", "LYR" ],
+                "release fleets": [ "Home Fleet", "Expeditionary Fleet", "First Fleet", "Second Fleet" ]
+            },
+            "KLI": {
+                "declare war": [ "HYD" ],
+                "release fleets": [ "Western Fleet" ]
+            },
+            "KZI": {
+                "release fleets": [ "Baron's Fleet" ]
+            },
+            "LYR": {
+                "declare war": [ "HYD" ],
+                "release fleets": [ "Enemy's Blood Fleet" ]
+            }
+        },
+        "4": {
+            "KLI": {
+                "release fleets": [ "Home Fleet", "Southern Reserve Fleet" ]
+            }
+        },
+        "5": {},
+        "6": {}
+    },
+    "victory conditions": {
+        # TODO
+    }
+}
