@@ -69,7 +69,7 @@ function make_feature (feature : String, owner : String, position : Vector3)
 }
 
 function place_features (h : hex)
-{ make_feature(h.feature, h.owner, place_hexes_.hex_center(hex_coord(h.x, h.y))); }
+{ make_feature(h.feature, h.owner, place_hexes_.hex_center(h.hc)); }
 
 function Start ()
 {

@@ -33,7 +33,7 @@ function place_tile (h : hex, m : map_t)
 {
     var surface : procedural_hex = Instantiate(hex_surface);
     surface.init(h.owner_id);
-    surface.transform.position = hex_center(hex_coord(h.x, h.y));
+    surface.transform.position = hex_center(h.hc);
     surface.renderer.material.renderQueue = 10;
 }
 

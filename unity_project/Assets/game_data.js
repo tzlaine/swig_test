@@ -8,8 +8,7 @@ import System.Globalization.NumberStyles;
 private class capitol_hex
 {
     var hex_id : String;
-    var hex_x : int;
-    var hex_y : int;
+    var hc : hex_coord;
     var name : String;
     var planets : List.<String>;
 };
@@ -26,8 +25,7 @@ private class nation_data
 
 private class hex
 {
-    var x : int;
-    var y : int;
+    var hc : hex_coord;
     var owner : String; // abbreviated
     var owner_id : int;
     var province : int;
@@ -108,22 +106,22 @@ static function get_hex (hc : hex_coord, m : map_t) : hex
 }
 
 static function hex_above (h : hex, m : map_t) : hex
-{ return get_hex(hex_coord_above(hex_coord(h.x, h.y)), m); }
+{ return get_hex(hex_coord_above(h.hc), m); }
 
 static function hex_below (h : hex, m : map_t) : hex
-{ return get_hex(hex_coord_below(hex_coord(h.x, h.y)), m); }
+{ return get_hex(hex_coord_below(h.hc), m); }
 
 static function hex_above_left (h : hex, m : map_t) : hex
-{ return get_hex(hex_coord_above_left(hex_coord(h.x, h.y)), m); }
+{ return get_hex(hex_coord_above_left(h.hc), m); }
 
 static function hex_above_right (h : hex, m : map_t) : hex
-{ return get_hex(hex_coord_above_right(hex_coord(h.x, h.y)), m); }
+{ return get_hex(hex_coord_above_right(h.hc), m); }
 
 static function hex_below_left (h : hex, m : map_t) : hex
-{ return get_hex(hex_coord_below_left(hex_coord(h.x, h.y)), m); }
+{ return get_hex(hex_coord_below_left(h.hc), m); }
 
 static function hex_below_right (h : hex, m : map_t) : hex
-{ return get_hex(hex_coord_below_right(hex_coord(h.x, h.y)), m); }
+{ return get_hex(hex_coord_below_right(h.hc), m); }
 
 
 private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
@@ -144,8 +142,7 @@ function add_hex (m : map_t, hex_str : String, owner : String, province : int, f
     var hc : hex_coord = str_to_hex_coord(hex_str);
     m.hexes[hc.x, hc.y] = new hex();
     var h = m.hexes[hc.x, hc.y];
-    h.x = hc.x;
-    h.y = hc.y;
+    h.hc = hc;
     h.owner = owner;
     h.owner_id = id(owner);
     h.province = province;
