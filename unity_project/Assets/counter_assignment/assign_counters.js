@@ -180,6 +180,37 @@ function Update ()
     }
 }
 
+class counter_params
+{
+    function counter_params () {}
+    function counter_params (rhs : counter_params)
+    {
+        texture_filename = rhs.texture_filename;
+        uv_min = rhs.uv_min;
+        uv_max = rhs.uv_max;
+    }
+    var texture_filename : String;
+    var uv_min : Vector2;
+    var uv_max : Vector2;
+};
+
+function crippled_counter (uncrippled_counter : counter_params) : counter_params
+{
+    var retval = new counter_params(uncrippled_counter);
+    retval.texture_filename = retval.texture_filename.Replace('front', 'back');
+    if (retval.texture_filename.Contains('.0.'))
+        retval.texture_filename = retval.texture_filename.Replace('.0.', '.1.');
+    else
+        retval.texture_filename = retval.texture_filename.Replace('.1.', '.0.');
+    if (retval.texture_filename.Contains('.2.'))
+        retval.texture_filename = retval.texture_filename.Replace('.2.', '.3.');
+    else
+        retval.texture_filename = retval.texture_filename.Replace('.3.', '.2.');
+    retval.uv_min.x = 1.0 - uncrippled_counter.uv_max.x;
+    retval.uv_max.x = 1.0 - uncrippled_counter.uv_min.x;
+    return retval;
+}
+
 function OnGUI ()
 {
     var n_index =
@@ -218,15 +249,24 @@ function OnGUI ()
     var group_width = 330;
     GUI.BeginGroup(Rect(360, 10, group_width, 30 + 25 + 150), new GUIStyle(GUI.skin.GetStyle('Button')));
     GUI.Label(Rect(10, 10, group_width - 20, 25), unit, new GUIStyle(GUI.skin.GetStyle('Button')));
-    var uv_min = Vector2(
+
+    var uncrippled_counter = new counter_params();
+    uncrippled_counter.texture_filename = json[nation][unit]['texture'];
+    uncrippled_counter.uv_min = Vector2(
         json[nation][unit]['uv_min']['u'].AsFloat,
         json[nation][unit]['uv_min']['v'].AsFloat
     );
+    uncrippled_counter.uv_max = Vector2(
+        json[nation][unit]['uv_max']['u'].AsFloat,
+        json[nation][unit]['uv_max']['v'].AsFloat
+    );
+
+    var uv_size = uncrippled_counter.uv_max - uncrippled_counter.uv_min;
     var uncrippled_uvs : Rect = new Rect(
-        uv_min.x,
-        uv_min.y,
-        json[nation][unit]['uv_max']['u'].AsFloat - uv_min.x,
-        json[nation][unit]['uv_max']['v'].AsFloat - uv_min.y
+        uncrippled_counter.uv_min.x,
+        uncrippled_counter.uv_min.y,
+        uv_size.x,
+        uv_size.y
     );
     GUI.DrawTextureWithTexCoords(
         Rect(10, 45, 150, 150),
@@ -235,29 +275,16 @@ function OnGUI ()
     );
 
     if (!crippled_texture && has_crippled_side) {
-        var uncrippled_texture_filename : String = json[nation][unit]['texture'];
-        print(uncrippled_texture_filename);
-        var crippled_texture_filename = uncrippled_texture_filename.Replace('front', 'back');
-        if (crippled_texture_filename.Contains('.0.'))
-            crippled_texture_filename = crippled_texture_filename.Replace('.0.', '.1.');
-        else
-            crippled_texture_filename = crippled_texture_filename.Replace('.1.', '.0.');
-        if (crippled_texture_filename.Contains('.2.'))
-            crippled_texture_filename = crippled_texture_filename.Replace('.2.', '.3.');
-        else
-            crippled_texture_filename = crippled_texture_filename.Replace('.3.', '.2.');
-        print(crippled_texture_filename);
+        var crippled_counter_ = crippled_counter(uncrippled_counter);
         crippled_texture = AssetDatabase.LoadAssetAtPath(
-            crippled_texture_filename,
+            crippled_counter_.texture_filename,
             Texture2D
         );
         if (!crippled_texture) {
-            print('load failed');
             has_crippled_side = false;
         } else {
-            print('load succeeded');
             crippled_texture_uvs = new Rect(uncrippled_uvs);
-            crippled_texture_uvs.x = 1.0 - (crippled_texture_uvs.x + crippled_texture_uvs.width);
+            crippled_texture_uvs.x = crippled_counter_.uv_min.x;
         }
     }
 
