@@ -17,6 +17,9 @@ private var unit_index : int = 0;
 private var nations : String[];
 private var units : GUIContent[];
 private var scroll_position = Vector2(0, 0);
+private var has_crippled_side = true;
+private var crippled_texture : Texture2D = null;
+private var crippled_texture_uvs : Rect = new Rect();
 
 function save ()
 { System.IO.File.WriteAllText('../unit_counters.json', json.ToString()); }
@@ -168,9 +171,11 @@ function Update ()
 
     if (Input.GetKeyUp(KeyCode.Delete) || Input.GetKeyUp(KeyCode.Backspace)) {
         json[nation].Remove(unit);
+        populate_units();
         unit_index = 0;
         unit = units[unit_index].text;
-        populate_units();
+        has_crippled_side = true;
+        crippled_texture = null;
         save();
     }
 }
@@ -182,9 +187,11 @@ function OnGUI ()
     if (n_index != nation_index) {
         nation_index = n_index;
         nation = nations[nation_index];
+        populate_units();
         unit_index = 0;
         unit = units[unit_index].text;
-        populate_units();
+        has_crippled_side = true;
+        crippled_texture = null;
     }
 
     var scroll_region_height = units.length * 80;
@@ -202,7 +209,65 @@ function OnGUI ()
     if (u_index != unit_index) {
         unit_index = u_index;
         unit = units[unit_index].text;
+        has_crippled_side = true;
+        crippled_texture = null;
     }
     
     GUI.EndScrollView();
+
+    var group_width = 330;
+    GUI.BeginGroup(Rect(360, 10, group_width, 30 + 25 + 150), new GUIStyle(GUI.skin.GetStyle('Button')));
+    GUI.Label(Rect(10, 10, group_width - 20, 25), unit, new GUIStyle(GUI.skin.GetStyle('Button')));
+    var uv_min = Vector2(
+        json[nation][unit]['uv_min']['u'].AsFloat,
+        json[nation][unit]['uv_min']['v'].AsFloat
+    );
+    var uncrippled_uvs : Rect = new Rect(
+        uv_min.x,
+        uv_min.y,
+        json[nation][unit]['uv_max']['u'].AsFloat - uv_min.x,
+        json[nation][unit]['uv_max']['v'].AsFloat - uv_min.y
+    );
+    GUI.DrawTextureWithTexCoords(
+        Rect(10, 45, 150, 150),
+        units[unit_index].image,
+        uncrippled_uvs
+    );
+
+    if (!crippled_texture && has_crippled_side) {
+        var uncrippled_texture_filename : String = json[nation][unit]['texture'];
+        print(uncrippled_texture_filename);
+        var crippled_texture_filename = uncrippled_texture_filename.Replace('front', 'back');
+        if (crippled_texture_filename.Contains('.0.'))
+            crippled_texture_filename = crippled_texture_filename.Replace('.0.', '.1.');
+        else
+            crippled_texture_filename = crippled_texture_filename.Replace('.1.', '.0.');
+        if (crippled_texture_filename.Contains('.2.'))
+            crippled_texture_filename = crippled_texture_filename.Replace('.2.', '.3.');
+        else
+            crippled_texture_filename = crippled_texture_filename.Replace('.3.', '.2.');
+        print(crippled_texture_filename);
+        crippled_texture = AssetDatabase.LoadAssetAtPath(
+            crippled_texture_filename,
+            Texture2D
+        );
+        if (!crippled_texture) {
+            print('load failed');
+            has_crippled_side = false;
+        } else {
+            print('load succeeded');
+            crippled_texture_uvs = new Rect(uncrippled_uvs);
+            crippled_texture_uvs.x = 1.0 - (crippled_texture_uvs.x + crippled_texture_uvs.width);
+        }
+    }
+
+    if (crippled_texture) {
+        GUI.DrawTextureWithTexCoords(
+            Rect(170, 45, 150, 150),
+            crippled_texture,
+            crippled_texture_uvs
+        );
+    }
+
+    GUI.EndGroup();
 }
