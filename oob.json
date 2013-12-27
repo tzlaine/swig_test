@@ -448,8 +448,19 @@
                     "2001"
                 ],
                 "units": [
-                    "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE", "EFF",
-                    "CC", "3xBC", "CL", "DF", "FF", "SF", "TGT"
+                    "CV", "CLE", "EFF", "CVL", "CLE", "EFF",
+                    "2xBC", "DF", "SF", "TGT"
+                ]
+            },
+            "Marquis' Reserve Fleet": {
+                "hexes": [
+                    "1704",
+                    "1801", "1802", "1803",
+                    "1901", "1902",
+                    "2001"
+                ],
+                "units": [
+                    "CC", "BC", "CL", "FF", "CVE", "EFF"
                 ]
             },
             "Duke's Fleet": {
