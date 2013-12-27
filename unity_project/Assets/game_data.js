@@ -4,27 +4,101 @@ import SimpleJSON;
 import System.IO;
 import System.Collections.Generic;
 import System.Globalization.NumberStyles;
+import System.Text.RegularExpressions;
+
+var scenario_name : String = '../the_wind.json';
 
 private class capitol_hex
 {
+    function capitol_hex ()
+    {
+        hc = new hex_coord();
+        planets = new List.<String>();
+    }
+
     var hex_id : String;
     var hc : hex_coord;
     var name : String;
     var planets : List.<String>;
 };
 
+private class units_t
+{
+    function units_t ()
+    {
+        units = new Dictionary.<String, int>();
+    }
+
+    var units : Dictionary.<String, int>;
+}
+
+private class starting_fleet
+{
+    function starting_fleet ()
+    {
+        units = new units_t();
+        reserve = false;
+        pwc = new Dictionary.<int, units_t>();
+    }
+
+    var area : hex_coord[];
+    var units : units_t;
+    var reserve : boolean;
+    var pwc : Dictionary.<int, units_t>; // key is turn id
+};
+
+private class mothball_reserve_t
+{
+    function mothball_reserve_t ()
+    {
+        units = new units_t();
+        war_release = new units_t();
+        limited_war_release = new units_t();
+    }
+
+    var units : units_t;
+    var war_release : units_t;
+    var limited_war_release : units_t;
+};
+
+private class production_turn_t
+{
+    function production_turn_t ()
+    {
+        units = new units_t();
+    }
+
+    var turn : int;
+    var units : units_t;
+}
+
 private class nation_data
 {
+    function nation_data ()
+    {
+        capitol = new Dictionary.<String, capitol_hex>();
+        starting_forces = new Dictionary.<String, starting_fleet>();
+        mothball_reserve = new mothball_reserve_t();
+    }
+
     var id : int;
     var name : String;
     var short_name : String;
     var abbr : String;
     var capitol : Dictionary.<String, capitol_hex>;
     var capitol_star_points : int;
+    var starting_forces : Dictionary.<String, starting_fleet>;
+    var mothball_reserve : mothball_reserve_t;
+    var production : production_turn_t[];
 };
 
 private class hex
 {
+    function hex ()
+    {
+        hc = new hex_coord();
+    }
+
     var hc : hex_coord;
     var owner : String; // abbreviated
     var owner_id : int;
@@ -38,7 +112,7 @@ class offmap_area_t
     var owner_id : int;
     var name : String;
     var hexes : hex_coord[];
-    var position : int; // 0: right, 1: top, 2: left
+    var position : int; // 0: right, 1: top, 2: left // TODO: Add support for 3: bottom?
     var features : String[];
 };
 
@@ -69,6 +143,8 @@ class hex_coord
 static function str_to_hex_coord (hex_str : String) : hex_coord
 {
     var retval = new hex_coord();
+    if (hex_str == 'offmap')
+        return retval;
     if (hex_str[0] == '0')
         hex_str = hex_str.Substring(1, 3);
     var hex_id : int = int.Parse(hex_str);
@@ -152,12 +228,8 @@ function add_hex (m : map_t, hex_str : String, owner : String, province : int, f
 private static function strip_quotes (str : String) : String
 { return str[0] == "'" || str[0] == '"' ? str.Substring(1, str.Length - 2) : str; }
 
-function Awake ()
+private function populate_nations (json : SimpleJSON.JSONNode)
 {
-    var json : SimpleJSON.JSONNode;
-
-    json = JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
-
     var latest_id : int = 0;
     for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
@@ -166,9 +238,84 @@ function Awake ()
         nations[nation.Key].capitol_star_points = nation.Value['capitol star points'].AsInt;
         // TODO
     }
+}
 
-    json = JSON.Parse(System.IO.File.ReadAllText('../map.json'));
+private static var unit_regex = '(?:(\\d+)x)?(.+)';
+private function parse_units (json : SimpleJSON.JSONNode) : units_t
+{
+    var retval = new units_t();
+    for (var i = 0; i < json.Count; ++i) {
+        var str = json[i];
+        for (var match : Match in Regex.Matches(str, unit_regex)) {
+            var number_str : String = match.Groups[1].Value;
+            var n = number_str == '' ? 1 : int.Parse(number_str);
+            if (!retval.units.ContainsKey(match.Groups[2].Value))
+                retval.units.Add(match.Groups[2].Value, 0);
+            retval.units[match.Groups[2].Value] += n;
+        }
+    }
+    return retval;
+}
 
+private function parse_turn (json : SimpleJSON.JSONNode) : int
+{
+    var retval : int = json['year'].AsInt * 10;
+    var season : String = json['season'];
+    retval += season == 'spring' ? 0 : 1;
+    return retval;
+}
+
+private function populate_oob (json : SimpleJSON.JSONNode)
+{
+    for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+         json) {
+        var forces = nations[nation.Key].starting_forces;
+        for (var fleet : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+             nation.Value['starting force']) {
+            var new_fleet = new starting_fleet();
+            new_fleet.area = new hex_coord[fleet.Value['hexes'].Count];
+            var i = 0;
+            for (i = 0; i < fleet.Value['hexes'].Count; ++i) {
+                new_fleet.area[i] = str_to_hex_coord(fleet.Value['hexes'][i]);
+            }
+            new_fleet.units = parse_units(fleet.Value['units']);
+            if (fleet.Value['reserve'] != null)
+                new_fleet.reserve = true;
+            for (i = 0; i < fleet.Value['PWC'].Count; ++i) {
+                var pwc = fleet.Value['PWC'][i];
+                var turn = parse_turn(pwc);
+                var units = parse_units(pwc['units']);
+                new_fleet.pwc.Add(turn, units);
+            }
+            forces.Add(fleet.Key, new_fleet);
+        }
+
+        nations[nation.Key].production =
+            new production_turn_t[nation.Value['production'].Count];
+        for (i = 0; i < nation.Value['production'].Count; ++i) {
+            var prod = nation.Value['production'][i];
+            nations[nation.Key].production[i] = new production_turn_t();            
+            nations[nation.Key].production[i].turn = parse_turn(prod);
+            nations[nation.Key].production[i].units = parse_units(prod['units']);
+        }
+
+        var mothball_reserve = nation.Value['mothball reserve'];
+        nations[nation.Key].mothball_reserve.units =
+            parse_units(mothball_reserve['units']);
+        nations[nation.Key].mothball_reserve.war_release =
+            parse_units(mothball_reserve['war release']);
+        nations[nation.Key].mothball_reserve.limited_war_release =
+            parse_units(mothball_reserve['limited war release']);
+    }
+}
+
+private function populate_scenario (json : SimpleJSON.JSONNode)
+{
+    // TODO
+}
+
+private function make_map (json : SimpleJSON.JSONNode) : map_t
+{
     var map_width = json['width'].AsInt;
     var map_height = json['height'].AsInt;
 
@@ -232,6 +379,25 @@ function Awake ()
             }
         }
     }
+
+    return m;
+}
+
+function Awake ()
+{
+    var json : SimpleJSON.JSONNode;
+
+    json = JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
+    populate_nations(json);
+
+    json = JSON.Parse(System.IO.File.ReadAllText('../map.json'));
+    var m : map_t = make_map(json);
+
+    json = JSON.Parse(System.IO.File.ReadAllText('../oob.json'));
+    populate_oob(json);
+
+//    json = JSON.Parse(System.IO.File.ReadAllText(scenario_name));
+//    populate_scenario(json);
 
     map_ = m;
 }
