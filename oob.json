@@ -63,8 +63,8 @@
                 "hexes": [
                     "3301", "3401", "3501", "3601",
                     "3302", "3402", "3502", "3602",
-                    "3303", "3403", "3503, "3603", "3703", "3803",
-                    "3304", "3404, "3504, "3604", "3704", "3804",
+                    "3303", "3403", "3503", "3603", "3703", "3803",
+                    "3304", "3404", "3504", "3604", "3704", "3804",
                     "3505", "3605", "3705", "3805",
                     "3506", "3606", "3706", "3806",
                     "3507", "3607", "3707", "3807",
@@ -145,9 +145,9 @@
             "year": 175,
             "season": "fall",
             "units": [ "DN", "2xCA", "12xNCL", "14xFF" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "GOR": {
         "starting force": {
@@ -211,16 +211,16 @@
             "year": 174,
             "season": "fall",
             "units": [ "BC", "3xHD", "4xBD" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "HYD": {
         "starting force": {
             "Home Fleet": {
                 "hexes": [ "0617" ],
                 "units": [ "LM", "3xRN", "3xLN", "SC", "TG", "CR", "2xHN", "2xFRD", "2xMB (ND)" ],
-                "reserve": "true"
+                "reserve": "true",
                  "PWC": [{
                      "year": 168,
                      "season": "fall",
@@ -299,9 +299,9 @@
             "year": 170,
             "season": "spring",
             "units": [ "PAL", "RN", "3xHR", "KN", "3xHN", "3xCU" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "KLI": {
         "starting force": {
@@ -368,7 +368,7 @@
                 ]
             },
             "Tholian Border Squadron": {
-                "hexes": [ "2318", "2517", 2518", "2519" ],
+                "hexes": [ "2318", "2517", "2518", "2519" ],
                 "units": [ "D7C", "3xD7", "3xD6", "F5Q", "F5S", "F5V", "E4A", "3xE4", "TGA" ],
                 "reserve": "true"
             },
@@ -415,9 +415,9 @@
             "year": 169,
             "season": "spring",
             "units": [ "C8", "2xD7", "9xD5", "2xF5Q", "3xE4" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "KZI": {
         "starting force": {
@@ -513,9 +513,9 @@
             "year": 170,
             "season": "spring",
             "units": [ "DN", "BC", "4xCM", "6xFF" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "LYR": {
         "starting force": {
@@ -568,9 +568,9 @@
             "year": 169,
             "season": "spring",
             "units": [ "DN", "CA", "3xCW", "3xDW", "3xFF" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "ROM": {
         "starting force": {
@@ -667,15 +667,15 @@
             "year": 173,
             "season": "fall",
             "units": [ "CON", "FH", "4xSP", "3xSK", "WE", "SN" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     },
     "THO": {
         "starting force": {
             "First Fleet": {
-                "hexes": [ "2719, 2818, 2819" ],
-                "units": [ "CA, DD, 3xPC, SC" ],
+                "hexes": [ "2719", "2818", "2819" ],
+                "units": [ "CA", "DD, "3xPC, "SC" ],
                 "PWC": [{
                     "year": 168,
                     "season": "fall",
@@ -684,12 +684,12 @@
                 {
                     "year": 171,
                     "season": "spring",
-                    "units": [ "DN, PC" ]
+                    "units": [ "DN", "PC" ]
                 }]
             },
             "Second Fleet": {
                 "hexes": [ "2918" ],
-                "units": [ "CA, DD, 3xPC, SC" ],
+                "units": [ "CA", "DD", "3xPC", "SC" ],
                 "PWC": [{
                     "year": 169,
                     "season": "fall",
@@ -698,12 +698,12 @@
                 {
                     "year": 172,
                     "season": "spring",
-                    "units": [ "BW, PCE, PC" ]
+                    "units": [ "BW", "PCE", "PC" ]
                 }]
             },
             "Third Fleet": {
-                "hexes": [ "3018, 3019, 3119" ],
-                "units": [ "CA, DD, 3xPC, SC" ],
+                "hexes": [ "3018", "3019", "3119" ],
+                "units": [ "CA", "DD", "3xPC", "SC" ],
                 "PWC": [{
                     "year": 170,
                     "season": "fall",
@@ -717,17 +717,17 @@
             },
             "Home Fleet": {
                 "hexes": [ "2919" ],
-                "units": [ "CA, DD, 3xPC, 3xCPC, MB (ND)" ],
-                "reserve": "true"
+                "units": [ "CA", "DD", "3xPC", "3xCPC", "MB (ND)" ],
+                "reserve": "true",
                 "PWC": [{
                     "year": 169,
                     "season": "spring",
-                    "units": [ "DN, PC" ]
+                    "units": [ "DN", "PC" ]
                 },
                 {
                     "year": 170,
                     "season": "spring",
-                    "units": [ "BW, PCE, PC" ]
+                    "units": [ "BW", "PCE", "PC" ]
                 },
                 {
                     "year": 172,
@@ -739,14 +739,14 @@
         "production": [{
             "year": 168,
             "season": "fall",
-            "units": [ "DD, 2xPC" ]
+            "units": [ "DD", "2xPC" ]
         },
         {
             "year": 169,
             "season": "spring",
-            "units": [ "DN, PC" ]
-        }]
-        #TODO: Special production rules
-        #TODO: Production notes
+            "units": [ "DN", "PC" ]
+        }],
+        "#TODO": "Special production rules"
+        "#TODO": "Production notes"
     }
 }
