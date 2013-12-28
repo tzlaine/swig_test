@@ -89,7 +89,7 @@
                     "future belligerent",
                     "occupies",
                     { "nation": [ "KZI" ] }
-                }],
+                ],
                 "Marquis' Reserve Fleet": [
                     "future belligerent",
                     "occupies",
@@ -156,6 +156,6 @@
         "6": {}
     },
     "victory conditions": {
-        # TODO
+        "#": "TODO"
     }
 }
