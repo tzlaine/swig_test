@@ -140,6 +140,141 @@ class hex_coord
     var y : int;
 };
 
+class victory_condition_t
+{
+    // TODO
+};
+
+class victory_conditions_t
+{
+    function victory_conditions_t ()
+    {
+        conditions = Dictionary.<String, victory_condition_t>();
+    }
+
+    var conditions : Dictionary.<String, victory_condition_t>;
+};
+
+class event_condition_t
+{
+    function event_condition_t (subject_ : String[])
+    {
+        subject = subject_;
+        listener = null;
+    }
+
+    function object_destroyed (object : GameObject)
+    {}
+    function fleet_moved (hc : hex_coord)
+    {}
+
+    var subject : String[];
+    var listener : conditional_event_t;
+};
+
+class occupy_area extends event_condition_t
+{
+    function occupy_area (subject_ : String[], hexes_ : hex_coord[])
+    {
+        super(subject_);
+        hexes = hexes_;
+    }
+
+    function fleet_moved (hc : hex_coord)
+    {
+        if (/* TODO */ false && listener) {
+            listener.trigger();
+        }
+    }
+
+    var hexes : hex_coord[];
+};
+
+class destroy_object extends event_condition_t
+{
+    function destroy_object (subject_ : String[], type_: String, hexes_ : hex_coord[])
+    {
+        super(subject_);
+        type = type_;
+        hexes = hexes_;
+    }
+
+    function object_destroyed (object : GameObject)
+    {
+        if (/* TODO */ false && listener) {
+            listener.trigger();
+        }
+    }
+
+    var type : String;
+    var hexes : hex_coord[];
+};
+
+class conditional_event_t
+{
+    function trigger ()
+    {}
+};
+
+class release_condition_t extends conditional_event_t
+{
+    function trigger ()
+    {
+        // TODO
+    }
+
+    var fleet : String;
+    var nation : String;
+    var condition : event_condition_t;
+};
+
+class war_entry_condition_t extends conditional_event_t
+{
+    function trigger ()
+    {
+        // TODO
+    }
+
+    var nation : String;
+    var limited_war : boolean;
+    var condition : event_condition_t;
+};
+
+class scenario_nation_t
+{
+    var at_war_with : String[];
+    var future_belligerents : String[];
+    var economy : String;
+    var exhaustion_turns : int;
+    var accumulate_exhaustion_at_peace : boolean;
+    var release_conditions : release_condition_t[];
+    var war_entry_conditions : war_entry_condition_t[];
+};
+
+class nation_scenario_turn_t
+{
+    var nation : String;
+    var declare_war_on : String[];
+    var release_fleets : String[];
+};
+
+class scenario_turn_t
+{
+    var nations : nation_scenario_turn_t[];
+};
+
+class scenario_t
+{
+    function scenario_t ()
+    {
+        nations = new Dictionary.<String, scenario_nation_t>();
+    }
+    var start_turn : int;
+    var setup_order : String[];
+    var nations : Dictionary.<String, scenario_nation_t>;
+    var turns : scenario_turn_t[];
+};
+
 static function str_to_hex_coord (hex_str : String) : hex_coord
 {
     var retval = new hex_coord();
@@ -212,6 +347,13 @@ function id (abbreviated_name : String)
 
 function capitol_star_points (abbreviated_name : String)
 { return nations[abbreviated_name].capitol_star_points; }
+
+
+private var scenario_ : scenario_t = null;
+
+function scenario () : scenario_t
+{ return scenario_; }
+
 
 function add_hex (m : map_t, hex_str : String, owner : String, province : int, feature : String)
 {
@@ -309,9 +451,153 @@ private function populate_oob (json : SimpleJSON.JSONNode)
     }
 }
 
-private function populate_scenario (json : SimpleJSON.JSONNode)
+private function parse_strings (json : SimpleJSON.JSONNode) : String[]
 {
-    // TODO
+    if (!json)
+        return null;
+    var retval = new String[json.Count];
+    for (var i = 0; i < json.Count; ++i) {
+        retval[i] = json[i];
+    }
+    return retval;
+}
+
+private function parse_condition (
+    json : SimpleJSON.JSONNode,
+    future_belligerents : String[],
+    m : map_t
+) : event_condition_t
+{
+    var retval : event_condition_t = null;
+
+    var subjects = future_belligerents;
+    var subject_str : String = json[0];
+    if (subject_str != 'future belligerents') {
+        subjects = new String[1];
+        subjects[0] = subject_str;
+    }
+
+    var hexes : hex_coord[] = null;
+
+    var verb : String = json[1];
+    if (verb == 'occupies') {
+        if (json[2]['fleet area'] != null) {
+            var fleet_name : String = json[2]['fleet area'];
+            var nation_name : String = json[2]['nation'];
+            hexes = nations[nation_name].starting_forces[fleet_name].area;
+        } else if (json[2]['hex'] != null) {
+            hexes = new hex_coord[1];
+            hexes[0] = str_to_hex_coord(json[2]['hex']);
+        } else if (json[2]['nation'] != null) {
+            var hexes_ = new Array();
+            var nation_name_ : String = json[2]['nation'];
+            for (var j = 0; j < m.hexes.GetLength(1); ++j) {
+                for (var i = 0; i < m.hexes.GetLength(0); ++i) {
+                    if (m.hexes[i, j].owner == nation_name_)
+                        hexes_.Push(m.hexes[i, j].hc);
+                }
+            }
+            hexes = new hex_coord[hexes_.length];
+            for (var k = 0; k < hexes_.length; ++i) {
+                hexes[i] = hexes_[i];
+            }
+        }
+        retval = new occupy_area(subjects, hexes);
+    } else if (verb == 'destroys') {
+        for (var destroyee : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+             json[2]) {
+            var hex_strings = parse_strings(destroyee.Value);
+            if (1 < hex_strings.Length || hex_strings[0] != 'any') {
+                hexes = new hex_coord[hex_strings.Length];
+                for (var l = 0; l < hexes.Length; ++l) {
+                    hexes[l] = str_to_hex_coord(hex_strings[l]);
+                }
+            }
+            retval = new destroy_object(subjects, destroyee.Key, hexes);
+        }
+    }
+    return retval;
+}
+
+private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
+{
+    var i = 0;
+
+    scenario_ = new scenario_t();
+
+    scenario_.start_turn = parse_turn(json['start turn']);
+    scenario_.setup_order = parse_strings(json['setup order']);
+
+    for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+         json['nations']) {
+        var scenario_nation = new scenario_nation_t();
+        scenario_nation.at_war_with = parse_strings(nation.Value['at war with']);
+        scenario_nation.future_belligerents = parse_strings(nation.Value['future belligerents']);
+        scenario_nation.economy = nation.Value['economy'].ToString();
+        scenario_nation.exhaustion_turns = nation.Value['exhaustion turns'].AsInt;
+        var accumulate_exhaustion : String = nation.Value['accumulate exhaustion at peace'];
+        scenario_nation.accumulate_exhaustion_at_peace = accumulate_exhaustion == 'true';
+
+        if (nation.Value['release conditions'].Count) {
+            i = 0;
+            scenario_nation.release_conditions =
+                new release_condition_t[nation.Value['release conditions'].Count];
+            for (var release_condition : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+                 nation.Value['release conditions']) {
+                var new_release_condition = new release_condition_t();
+                new_release_condition.fleet = release_condition.Key;
+                new_release_condition.nation = nation.Key;
+                new_release_condition.condition =
+                    parse_condition(release_condition.Value,
+                                    scenario_nation.future_belligerents,
+                                    m);
+                new_release_condition.condition.listener = new_release_condition;
+                scenario_nation.release_conditions[i++] = new_release_condition;
+            }
+        }
+
+        if (nation.Value['war entry conditions'].Count) {
+            i = 0;
+            scenario_nation.war_entry_conditions =
+                new war_entry_condition_t[nation.Value['war entry conditions'].Count];
+            for (var war_entry_condition : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+                 nation.Value['war entry conditions']) {
+                var new_war_entry_condition = new war_entry_condition_t();
+                new_war_entry_condition.nation = nation.Key;
+                new_war_entry_condition.limited_war = war_entry_condition.Key == 'limited war';
+                new_war_entry_condition.condition =
+                    parse_condition(war_entry_condition.Value,
+                                    scenario_nation.future_belligerents,
+                                    m);
+                new_war_entry_condition.condition.listener = new_war_entry_condition;
+                scenario_nation.war_entry_conditions[i++] = new_war_entry_condition;
+            }
+        }
+
+        scenario_.nations.Add(nation.Key, scenario_nation);
+    }
+
+    scenario_.turns = new scenario_turn_t[json['turns'].Count];
+    i = 0;
+    for (var turn : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+         json['turns']) {
+        var scenario_turn = new scenario_turn_t();
+        scenario_turn.nations = new nation_scenario_turn_t[turn.Value.Count];
+        var j = 0;
+        for (var nation_turn : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+             turn.Value) {
+            var scenario_nation_turn = new nation_scenario_turn_t();
+            scenario_nation_turn.nation = nation_turn.Key;
+            scenario_nation_turn.declare_war_on =
+                parse_strings(nation_turn.Value['declare war']);
+            scenario_nation_turn.release_fleets =
+                parse_strings(nation_turn.Value['release fleets']);
+            scenario_turn.nations[j++] = scenario_nation_turn;
+        }
+        scenario_.turns[i++] = scenario_turn;
+    }
+
+    // TODO: victory conditions
 }
 
 private function make_map (json : SimpleJSON.JSONNode) : map_t
@@ -396,8 +682,8 @@ function Awake ()
     json = JSON.Parse(System.IO.File.ReadAllText('../oob.json'));
     populate_oob(json);
 
-//    json = JSON.Parse(System.IO.File.ReadAllText(scenario_name));
-//    populate_scenario(json);
+    json = JSON.Parse(System.IO.File.ReadAllText(scenario_name));
+    populate_scenario(json, m);
 
     map_ = m;
 }
