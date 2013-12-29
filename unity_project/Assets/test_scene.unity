@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442787140}
   - 114: {fileID: 442787139}
+  - 114: {fileID: 442787141}
   m_Layer: 0
   m_Name: game_state
   m_TagString: Untagged
@@ -115,9 +116,19 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1262421267}
+  m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &442787141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 442787138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6ea87a50be64011b40d2db03d9b641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &541918415
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +496,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 442787140}
+  m_Father: {fileID: 0}
 --- !u!114 &1262421268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f638d0292315b43a28e589bbd1e5e36d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game_state_: {fileID: 442787141}
+  new_sp_game_setup_: {fileID: 2146900355}
 --- !u!1 &1270366414
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62f2ea9f7e154d74b0a2a34a192414f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenario_name: ../the_wind.json
+  scenario_name: ../scenarios/the_wind.json
 --- !u!4 &1305381366
 Transform:
   m_ObjectHideFlags: 0
@@ -653,3 +666,53 @@ MonoBehaviour:
   area_thickness: 2.59807634
   border_thickness: .119999997
   secondary_colors: {fileID: 2800000, guid: d89e553707c91954887bbb5e619b180b, type: 3}
+--- !u!1 &2146900353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2146900356}
+  - 114: {fileID: 2146900355}
+  - 114: {fileID: 2146900354}
+  m_Layer: 0
+  m_Name: new_sp_game_setup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2146900354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2146900353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e93a8c32da82647348bb73ffe71168c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2146900355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2146900353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1433d3797a8f4b60951622bc01338dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2146900356
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2146900353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}

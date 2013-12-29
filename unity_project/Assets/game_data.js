@@ -6,7 +6,7 @@ import System.Collections.Generic;
 import System.Globalization.NumberStyles;
 import System.Text.RegularExpressions;
 
-var scenario_name : String = '../the_wind.json';
+var scenario_name : String = '../scenarios/the_wind.json';
 
 private class capitol_hex
 {
