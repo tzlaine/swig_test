@@ -685,10 +685,10 @@ function Awake ()
     json = JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
     populate_nations(json);
 
-    json = JSON.Parse(System.IO.File.ReadAllText('../map.json'));
+    json = JSON.Parse(System.IO.File.ReadAllText('../default_map.json'));
     var m : map_t = make_map(json);
 
-    json = JSON.Parse(System.IO.File.ReadAllText('../oob.json'));
+    json = JSON.Parse(System.IO.File.ReadAllText('../default_oob.json'));
     populate_oob(json);
 
     json = JSON.Parse(System.IO.File.ReadAllText(scenario_name));
