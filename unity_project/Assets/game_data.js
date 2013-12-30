@@ -408,7 +408,7 @@ private function parse_units (json : SimpleJSON.JSONNode) : units_t
     return retval;
 }
 
-private function parse_turn (json : SimpleJSON.JSONNode) : int
+static function parse_turn (json : SimpleJSON.JSONNode) : int
 {
     var retval : int = json['year'].AsInt * 10;
     var season : String = json['season'];
