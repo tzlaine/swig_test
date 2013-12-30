@@ -9,7 +9,7 @@ var place_hexes_ : place_hexes;
 var game_data_ : game_data;
 
 
-function adjacency (h : hex, h2 : hex) : int
+function adjacency (h : hex_t, h2 : hex_t) : int
 {
     if (!h2 || h.owner_id != h2.owner_id)
         return 2;
@@ -18,7 +18,7 @@ function adjacency (h : hex, h2 : hex) : int
     return 0;
 }
 
-function adjacencies (h : hex, m : map_t) : int[]
+function adjacencies (h : hex_t, m : map_t) : int[]
 {
     var retval : int[] = new int[6];
     retval[0] = adjacency(h, game_data.hex_above_right(h, m));
@@ -68,7 +68,7 @@ function make_feature (feature : String, owner : String, position : Vector3)
     }
 }
 
-function place_features (h : hex)
+function place_features (h : hex_t)
 { make_feature(h.feature, h.owner, place_hexes_.hex_center(h.hc)); }
 
 function Start ()
@@ -79,13 +79,14 @@ function Start ()
         m = game_data_.map();
     }
 
-    for (var x = 0; x < m.hexes.GetLength(0); ++x) {
-        for (var y = 0; y < m.hexes.GetLength(1); ++y) {
-            var h = m.hexes[x, y];
+    for (var x = 0; x < m.width; ++x) {
+        for (var y = 0; y < m.height; ++y) {
+            var hc = hex_coord(x, y);
+            var h = m.hex(hc);
             var borders : procedural_borders = Instantiate(hex_borders);
             var adjacencies_ : int[] = adjacencies(h, m);
             borders.init(h.owner_id, adjacencies_);
-            borders.transform.position = place_hexes_.hex_center(hex_coord(x, y));
+            borders.transform.position = place_hexes_.hex_center(hc);
             borders.renderer.material.renderQueue = 20;
 
             place_features(h);

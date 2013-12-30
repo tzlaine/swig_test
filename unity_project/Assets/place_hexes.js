@@ -29,7 +29,7 @@ function map_height ()
 function map_origin ()
 { return map_origin_; }
 
-function place_tile (h : hex, m : map_t)
+function place_tile (h : hex_t, m : map_t)
 {
     var surface : procedural_hex = Instantiate(hex_surface);
     surface.init(h.owner_id);
@@ -45,16 +45,16 @@ function Start ()
         m = game_data_.map();
     }
 
-    map_width_ = m.hexes.GetLength(0);
-    map_height_ = m.hexes.GetLength(1);
+    map_width_ = m.width;
+    map_height_ = m.height;
 
     map_origin_ = Vector3((map_width_ - 1) * 1.5 / 2,
                           (map_height_ - 1) * 2 * sin_60 / 2,
                           0);
 
-    for (var x = 0; x < m.hexes.GetLength(0); ++x) {
-        for (var y = 0; y < m.hexes.GetLength(1); ++y) {
-            place_tile(m.hexes[x, y], m);
+    for (var x = 0; x < m.width; ++x) {
+        for (var y = 0; y < m.height; ++y) {
+            place_tile(m.hex(hex_coord(x, y)), m);
         }
     }
 }

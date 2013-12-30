@@ -7,8 +7,13 @@ import System.Globalization.NumberStyles;
 import System.Text.RegularExpressions;
 
 private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
+
+@SerializeThis
 private var map_ : map_t = null;
+
+@SerializeThis
 private var scenario_ : scenario_t = null;
+
 
 private class capitol_hex
 {
@@ -93,9 +98,9 @@ private class nation_data
     var production : production_turn_t[];
 };
 
-private class hex
+private class hex_t
 {
-    function hex ()
+    function hex_t ()
     {
         hc = new hex_coord();
     }
@@ -119,7 +124,15 @@ class offmap_area_t
 
 class map_t
 {
-    var hexes : hex[,];
+    function set_hex (hc : hex_coord, h : hex_t)
+    { hexes[hc.x + hc.y * width] = h; }
+
+    function hex (hc : hex_coord) : hex_t
+    { return hexes[hc.x + hc.y * width]; }
+
+    var width : int;
+    var height : int;
+    var hexes : hex_t[];
     var offmap_areas : Dictionary.<String, offmap_area_t>;
 };
 
@@ -308,32 +321,30 @@ static function hex_coord_above_right (hc : hex_coord) : hex_coord
 static function hex_coord_below_right (hc : hex_coord) : hex_coord
 { return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
 
-static function get_hex (hc : hex_coord, m : map_t) : hex
+static function get_hex (hc : hex_coord, m : map_t) : hex_t
 {
-    var retval : hex = null;
-    if (0 <= hc.x && hc.x < m.hexes.GetLength(0) &&
-        0 <= hc.y && hc.y < m.hexes.GetLength(1)) {
-        retval = m.hexes[hc.x, hc.y];
-    }
+    var retval : hex_t = null;
+    if (0 <= hc.x && hc.x < m.width && 0 <= hc.y && hc.y < m.height)
+        retval = m.hex(hc);
     return retval;
 }
 
-static function hex_above (h : hex, m : map_t) : hex
+static function hex_above (h : hex_t, m : map_t) : hex_t
 { return get_hex(hex_coord_above(h.hc), m); }
 
-static function hex_below (h : hex, m : map_t) : hex
+static function hex_below (h : hex_t, m : map_t) : hex_t
 { return get_hex(hex_coord_below(h.hc), m); }
 
-static function hex_above_left (h : hex, m : map_t) : hex
+static function hex_above_left (h : hex_t, m : map_t) : hex_t
 { return get_hex(hex_coord_above_left(h.hc), m); }
 
-static function hex_above_right (h : hex, m : map_t) : hex
+static function hex_above_right (h : hex_t, m : map_t) : hex_t
 { return get_hex(hex_coord_above_right(h.hc), m); }
 
-static function hex_below_left (h : hex, m : map_t) : hex
+static function hex_below_left (h : hex_t, m : map_t) : hex_t
 { return get_hex(hex_coord_below_left(h.hc), m); }
 
-static function hex_below_right (h : hex, m : map_t) : hex
+static function hex_below_right (h : hex_t, m : map_t) : hex_t
 { return get_hex(hex_coord_below_right(h.hc), m); }
 
 
@@ -360,13 +371,13 @@ function scenario () : scenario_t
 function add_hex (m : map_t, hex_str : String, owner : String, province : int, feature : String)
 {
     var hc : hex_coord = str_to_hex_coord(hex_str);
-    m.hexes[hc.x, hc.y] = new hex();
-    var h = m.hexes[hc.x, hc.y];
+    var h = new hex_t();
     h.hc = hc;
     h.owner = owner;
     h.owner_id = id(owner);
     h.province = province;
     h.feature = feature;
+    m.set_hex(hc, h);
 }
 
 private static function strip_quotes (str : String) : String
@@ -496,10 +507,11 @@ private function parse_condition (
         } else if (json[2]['nation'] != null) {
             var hexes_ = new Array();
             var nation_name_ : String = json[2]['nation'];
-            for (var j = 0; j < m.hexes.GetLength(1); ++j) {
-                for (var i = 0; i < m.hexes.GetLength(0); ++i) {
-                    if (m.hexes[i, j].owner == nation_name_)
-                        hexes_.Push(m.hexes[i, j].hc);
+            for (var j = 0; j < m.height; ++j) {
+                for (var i = 0; i < m.width; ++i) {
+                    var hc = hex_coord(i, j);
+                    if (m.hex(hc).owner == nation_name_)
+                        hexes_.Push(hc);
                 }
             }
             hexes = new hex_coord[hexes_.length];
@@ -610,11 +622,10 @@ private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
 
 private function make_map (json : SimpleJSON.JSONNode) : map_t
 {
-    var map_width = json['width'].AsInt;
-    var map_height = json['height'].AsInt;
-
     var m : map_t = new map_t();
-    m.hexes = new hex[map_width, map_height];
+    m.width = json['width'].AsInt;
+    m.height = json['height'].AsInt;
+    m.hexes = new hex_t[m.width * m.height];
     m.offmap_areas = new Dictionary.<String, offmap_area_t>();
 
     var zones = json['zones'];

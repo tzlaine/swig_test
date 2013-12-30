@@ -100,8 +100,8 @@ function Start ()
 
     place_hexes_ = GetComponent(place_hexes);
     map_box = GetComponent(BoxCollider);
-    map_hex_width = m.hexes.GetLength(0);
-    map_hex_height = m.hexes.GetLength(1);
+    map_hex_width = m.width;
+    map_hex_height = m.height;
 }
 
 function Update ()

@@ -304,6 +304,8 @@ MonoBehaviour:
   entries:
   - gameObject: {fileID: 442787138}
     Id: ad51f369-3292-4157-8606-d56448435a33
+  - gameObject: {fileID: 1305381364}
+    Id: a383bc52-4504-4b5f-83ba-8c81a8eec691
 --- !u!1 &899871636
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,6 +550,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1305381366}
+  - 114: {fileID: 1305381367}
   - 114: {fileID: 1305381365}
   m_Layer: 0
   m_Name: game_data
@@ -567,7 +570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a62f2ea9f7e154d74b0a2a34a192414f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenario_name: ../scenarios/the_wind.json
 --- !u!4 &1305381366
 Transform:
   m_ObjectHideFlags: 0
@@ -579,6 +581,22 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &1305381367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1305381364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDeserializing: 0
+  _id: a383bc52-4504-4b5f-83ba-8c81a8eec691
+  classId: 1f78aabe-b84f-48b6-a9ee-707a04ca9d6f
+  StoreAllComponents: 1
+  Components: []
 --- !u!1 &1443981301
 GameObject:
   m_ObjectHideFlags: 0

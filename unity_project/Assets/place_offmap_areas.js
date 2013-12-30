@@ -35,8 +35,8 @@ function add_offmap (owner : String,
 {
     var lower_left : Vector3;
     var upper_right : Vector3;
-    var right_hex = m.hexes.GetLength(0) - 1;
-    var top_hex = m.hexes.GetLength(1) - 1;
+    var right_hex = m.width - 1;
+    var top_hex = m.height - 1;
     if (position == 1) { // top
         lower_left = Vector3(
             first.x * 1.5 - 0.5,
