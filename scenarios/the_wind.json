@@ -1,7 +1,13 @@
 {
+    "name": "The Wind",
+    "description": "Even the greatest storm begins with a mere puff of wind.\n    —Confucius\n\nThis scenario depicts the first three years of the General War (Turns #1-#6). This was before the Federation became involved. The Klingons and Lyrans were attempting to eliminate the Hydrans and Kzintis as significant powers.",
     "start turn": {
         "year": 168,
         "season" "fall"
+    },
+    "teams": {
+        "Alliance": [ "KZI", "HYD", "FED" ],
+        "Coalition": [ "LYR", "KLI" ]
     },
     "set up order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
     "nations": {
