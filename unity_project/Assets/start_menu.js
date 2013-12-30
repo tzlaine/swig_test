@@ -4,6 +4,7 @@ import gui_utils;
 
 var game_state_ : game_state;
 var new_sp_game_setup_ : new_sp_game_setup;
+var load_menu_ : load_menu;
 
 
 function OnGUI ()
@@ -28,7 +29,8 @@ function OnGUI ()
         new_sp_game_setup_.setup();
         enabled = false;
     } else if (button_states[1]) {
-        print('TODO: load game');
+        load_menu_.enabled = true;
+        enabled = false;
     }
 
     GUILayout.EndVertical();
