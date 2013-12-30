@@ -676,6 +676,7 @@ GameObject:
   - 4: {fileID: 2146900356}
   - 114: {fileID: 2146900355}
   - 114: {fileID: 2146900354}
+  - 114: {fileID: 2146900357}
   m_Layer: 0
   m_Name: new_sp_game_setup
   m_TagString: Untagged
@@ -717,3 +718,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!114 &2146900357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2146900353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b4090af02914824b8ef0c3fd7f7780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
