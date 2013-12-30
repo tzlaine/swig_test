@@ -6,7 +6,9 @@ import System.Collections.Generic;
 import System.Globalization.NumberStyles;
 import System.Text.RegularExpressions;
 
-var scenario_name : String = '../scenarios/the_wind.json';
+private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
+private var map_ : map_t = null;
+private var scenario_ : scenario_t = null;
 
 private class capitol_hex
 {
@@ -269,6 +271,7 @@ class scenario_t
     {
         nations = new Dictionary.<String, scenario_nation_t>();
     }
+    var name : String;
     var start_turn : int;
     var setup_order : String[];
     var nations : Dictionary.<String, scenario_nation_t>;
@@ -335,10 +338,6 @@ static function hex_below_right (h : hex, m : map_t) : hex
 { return get_hex(hex_coord_below_right(h.hc), m); }
 
 
-private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
-private var map_ : map_t = null;
-
-
 function map () : map_t
 { return map_; }
 
@@ -354,8 +353,6 @@ function short_name (abbreviated_name : String) : String
 function capitol_star_points (abbreviated_name : String)
 { return nations[abbreviated_name].capitol_star_points; }
 
-
-private var scenario_ : scenario_t = null;
 
 function scenario () : scenario_t
 { return scenario_; }
@@ -408,7 +405,7 @@ private function parse_units (json : SimpleJSON.JSONNode) : units_t
     return retval;
 }
 
-static function parse_turn (json : SimpleJSON.JSONNode) : int
+private static function parse_turn (json : SimpleJSON.JSONNode) : int
 {
     var retval : int = json['year'].AsInt * 10;
     var season : String = json['season'];
@@ -533,6 +530,9 @@ private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
     var i = 0;
 
     scenario_ = new scenario_t();
+
+    var scenario_name : String = json['name'];
+    scenario_.name = scenario_name;
 
     scenario_.start_turn = parse_turn(json['start turn']);
     scenario_.setup_order = parse_strings(json['setup order']);

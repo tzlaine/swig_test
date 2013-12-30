@@ -7,9 +7,6 @@ import System.IO;
 @DoNotSerialize
 var game_data_ : game_data;
 
-@DoNotSerialize
-private var scenario : SimpleJSON.JSONNode;
-
 private var in_setup : boolean = true;
 private var turn : int;
 private var player_nations : String[];
@@ -24,7 +21,7 @@ private function turn_to_str (turn_ : int) : String
 
 private function save_description () : String
 {
-    var retval : String = scenario['name'];
+    var retval : String = game_data_.scenario().name;
     if (in_setup)
         retval += ' - Initial setup';
     else
@@ -56,19 +53,15 @@ function clear ()
     // TODO
 }
 
-function new_game (scenario_ : SimpleJSON.JSONNode, config : Dictionary.<String, boolean>)
+function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<String, boolean>)
 {
-    scenario = scenario_;
-
-    turn = game_data.parse_turn(scenario['start turn']);
-
     var played_nations = new Array();
     for (var conf : System.Collections.Generic.KeyValuePair.<String, boolean> in
          config) {
         // TODO: Restore this later; for now, we play hotseat-only. if (conf.Value)
             played_nations.Push(conf.Key);
     }
-    game_data_.load_data(scenario);
+    game_data_.load_data(scenario_json);
 
     game_guid = System.Guid.NewGuid().ToString();
 
@@ -81,6 +74,9 @@ function new_game (scenario_ : SimpleJSON.JSONNode, config : Dictionary.<String,
 
     if (!game_data_.map())
         yield WaitForSeconds(0.01);
+
+    var scenario = game_data_.scenario();
+    turn = scenario.start_turn;
 
     save();
 }
