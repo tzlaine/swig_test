@@ -680,19 +680,24 @@ private function make_map (json : SimpleJSON.JSONNode) : map_t
 
 function Awake ()
 {
+    var json : SimpleJSON.JSONNode =
+        JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
+    populate_nations(json);
+}
+
+function load_data (scenario : SimpleJSON.JSONNode)
+{
     var json : SimpleJSON.JSONNode;
 
-    json = JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
-    populate_nations(json);
-
-    json = JSON.Parse(System.IO.File.ReadAllText('../default_map.json'));
+    var map_filename : String = scenario['map'];
+    json = JSON.Parse(System.IO.File.ReadAllText(map_filename));
     var m : map_t = make_map(json);
 
-    json = JSON.Parse(System.IO.File.ReadAllText('../default_oob.json'));
+    var oob_filename : String = scenario['order of battle'];
+    json = JSON.Parse(System.IO.File.ReadAllText(oob_filename));
     populate_oob(json);
 
-    json = JSON.Parse(System.IO.File.ReadAllText(scenario_name));
-    populate_scenario(json, m);
+    populate_scenario(scenario, m);
 
     map_ = m;
 }
