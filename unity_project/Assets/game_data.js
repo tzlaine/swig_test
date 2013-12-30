@@ -342,8 +342,14 @@ private var map_ : map_t = null;
 function map () : map_t
 { return map_; }
 
-function id (abbreviated_name : String)
+function id (abbreviated_name : String) : int
 { return nations[abbreviated_name].id; }
+
+function full_name (abbreviated_name : String) : String
+{ return nations[abbreviated_name].name; }
+
+function short_name (abbreviated_name : String) : String
+{ return nations[abbreviated_name].short_name; }
 
 function capitol_star_points (abbreviated_name : String)
 { return nations[abbreviated_name].capitol_star_points; }
@@ -378,6 +384,9 @@ private function populate_nations (json : SimpleJSON.JSONNode)
         nations[nation.Key] = new nation_data();
         nations[nation.Key].id = latest_id++;
         nations[nation.Key].capitol_star_points = nation.Value['capitol star points'].AsInt;
+        nations[nation.Key].name = nation.Value['name'];
+        nations[nation.Key].short_name = nation.Value['short name'];
+        nations[nation.Key].abbr = nation.Key;
         // TODO
     }
 }
