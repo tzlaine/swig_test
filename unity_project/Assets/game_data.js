@@ -15,7 +15,7 @@ private var map_ : map_t = null;
 private var scenario_ : scenario_t = null;
 
 
-private class capitol_hex
+class capitol_hex
 {
     function capitol_hex ()
     {
@@ -28,7 +28,7 @@ private class capitol_hex
     var planets : List.<String>;
 };
 
-private class units_t
+class units_t
 {
     function units_t ()
     {
@@ -38,7 +38,7 @@ private class units_t
     var units : Dictionary.<String, int>;
 }
 
-private class starting_fleet
+class starting_fleet
 {
     function starting_fleet ()
     {
@@ -53,7 +53,7 @@ private class starting_fleet
     var pwc : Dictionary.<int, units_t>; // key is turn id
 };
 
-private class mothball_reserve_t
+class mothball_reserve_t
 {
     function mothball_reserve_t ()
     {
@@ -67,7 +67,7 @@ private class mothball_reserve_t
     var limited_war_release : units_t;
 };
 
-private class production_turn_t
+class production_turn_t
 {
     function production_turn_t ()
     {
@@ -78,7 +78,7 @@ private class production_turn_t
     var units : units_t;
 }
 
-private class nation_data
+class nation_data
 {
     function nation_data ()
     {
@@ -98,7 +98,7 @@ private class nation_data
     var production : production_turn_t[];
 };
 
-private class hex_t
+class hex_t
 {
     function hex_t ()
     {
