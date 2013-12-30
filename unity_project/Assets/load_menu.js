@@ -22,7 +22,8 @@ function find_saves ()
         var prefix = 36 + Application.persistentDataPath.Length + 1;
         game_filenames[i] = files[i].ToString();
         game_names[i] =
-            game_filenames[i].Substring(prefix, game_filenames[i].Length - prefix);
+            game_filenames[i].Substring(prefix, game_filenames[i].Length - prefix) +
+            '\n' + files[i].LastWriteTime.ToString();
     }
 }
 
@@ -45,7 +46,7 @@ function OnGUI ()
     GUILayout.Label('Select a game to load', title_style);
 
     GUILayout.BeginScrollView(Vector2(0, 0));
-    selection = GUILayout.SelectionGrid(selection, game_names, 1, GUILayout.MinWidth(200));
+    selection = GUILayout.SelectionGrid(selection, game_names, 1, GUILayout.MinWidth(300));
     GUILayout.EndScrollView();
 
     // TODO: Allow deletion of old saves.
