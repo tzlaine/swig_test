@@ -1,5 +1,9 @@
 ﻿#pragma strict
 
+var game_state_ : game_state;
+var new_sp_game_setup_ : new_sp_game_setup;
+
+
 function OnGUI ()
 {
     var buttons : String[] = [
@@ -26,10 +30,13 @@ function OnGUI ()
         y += button_height + margin;
     }
 
-    if (button_states[0]) { 
-        print('new game');
+
+    if (button_states[0]) {
+        game_state_.clear();
+        new_sp_game_setup_.setup();
+        enabled = false;
     } else if (button_states[1]) {
-        print('load game');
+        print('TODO: load game');
     }
 
     GUI.EndGroup();
