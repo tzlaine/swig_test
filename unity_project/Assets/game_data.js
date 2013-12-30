@@ -18,7 +18,6 @@ private class capitol_hex
         planets = new List.<String>();
     }
 
-    var hex_id : String;
     var hc : hex_coord;
     var name : String;
     var planets : List.<String>;
