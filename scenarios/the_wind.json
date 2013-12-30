@@ -9,6 +9,8 @@
         "Alliance": [ "KZI", "HYD", "FED" ],
         "Coalition": [ "LYR", "KLI" ]
     },
+    "map": "../default_map.json",
+    "order of battle": "../default_oob.json",
     "set up order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
     "nations": {
         "FED": {
