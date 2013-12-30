@@ -13,7 +13,7 @@
         "capitol star points": 5
     },
     "GOR": {
-        "name": "Gorn",
+        "name": "Gorn Confederation",
         "short name": "Gorn",
         "capitol": {
             "4402": {
@@ -29,7 +29,7 @@
         "capitol star points": 5
     },
     "HYD": {
-        "name": "Hydran",
+        "name": "Hydran Kingdom",
         "short name": "Hydran",
         "capitol": {
             "0617": {
@@ -64,7 +64,7 @@
         "capitol star points": 8
     },
     "KZI": {
-        "name": "Kzinti",
+        "name": "Kzinti Hegemony",
         "short name": "Kzinti",
         "capitol": {
             "1401": {
@@ -83,7 +83,7 @@
         "capitol star points": 6
     },
     "LYR": {
-        "name": "Lyran",
+        "name": "Lyran Empire",
         "short name": "Lyran",
         "capitol": {
             "0408": {
