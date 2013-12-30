@@ -19,8 +19,8 @@ function find_saves ()
     game_names = new String[files.Length];
 
     for (var i = 0; i < files.Length; ++i) {
-        var prefix = 36 + Application.persistentDataPath.Length + 1;
-        game_filenames[i] = files[i].ToString();
+        var prefix = 36;
+        game_filenames[i] = files[i].Name;
         game_names[i] =
             game_filenames[i].Substring(prefix, game_filenames[i].Length - prefix) +
             '\n' + files[i].LastWriteTime.ToString();
@@ -53,7 +53,7 @@ function OnGUI ()
 
     GUILayout.BeginHorizontal();
     if (GUILayout.Button('Load')) {
-        print('TODO: load ' + game_filenames[selection]);
+        JSONLevelSerializer.LoadSavedLevelFromFile(game_filenames[selection]);
         enabled = false;
     }
     if (GUILayout.Button('Cancel')) {
