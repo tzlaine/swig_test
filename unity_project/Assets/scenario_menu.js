@@ -47,10 +47,10 @@ function OnGUI ()
 
     var title_style = new GUIStyle(GUI.skin.label);
     title_style.alignment = TextAnchor.MiddleCenter;
-    GUILayout.Label('Select a scenario:');
+    GUILayout.Label('Select a scenario', title_style);
 
     GUILayout.BeginHorizontal();
-    selection = GUILayout.SelectionGrid(selection, scenario_names, 1, GUILayout.MinWidth(100));
+    selection = GUILayout.SelectionGrid(selection, scenario_names, 1, GUILayout.MinWidth(200));
     GUILayout.Label(scenario_descriptions[selection], GUILayout.MaxWidth(300));
     GUILayout.EndHorizontal();
 
