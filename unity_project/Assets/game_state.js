@@ -79,6 +79,9 @@ function new_game (scenario_ : SimpleJSON.JSONNode, config : Dictionary.<String,
 
     // TODO: Show note about initial setup.
 
+    if (!game_data_.map())
+        yield WaitForSeconds(0.01);
+
     save();
 }
 
