@@ -14,11 +14,6 @@ private var map_ : map_t = null;
 @SerializeThis
 private var scenario_ : scenario_t = null;
 
-function OnDeserialized ()
-{
-    print('yay');
-}
-
 
 class capitol_hex
 {
