@@ -10,16 +10,27 @@ private var game_names : String[];
 private var selection : int = 0;
 
 
+private static function file_info_cmp (a : FileInfo, b : FileInfo) : int
+{
+    if (a.LastWriteTime < b.LastWriteTime)
+        return 1;
+    if (b.LastWriteTime < a.LastWriteTime)
+        return -1;
+    return 0;
+}
+
 function find_saves ()
 {
     var info = new DirectoryInfo(Application.persistentDataPath);
-    var files = info.GetFiles();
+    var files : FileInfo[] = info.GetFiles();
+
+    System.Array.Sort(files, file_info_cmp);
 
     game_filenames = new String[files.Length];
     game_names = new String[files.Length];
 
     for (var i = 0; i < files.Length; ++i) {
-        var prefix = 36;
+        var prefix = 36; // length of guid
         game_filenames[i] = files[i].Name;
         game_names[i] =
             game_filenames[i].Substring(prefix, game_filenames[i].Length - prefix) +
