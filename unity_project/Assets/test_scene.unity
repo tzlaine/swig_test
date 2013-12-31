@@ -306,6 +306,8 @@ MonoBehaviour:
     Id: ad51f369-3292-4157-8606-d56448435a33
   - gameObject: {fileID: 1305381364}
     Id: a383bc52-4504-4b5f-83ba-8c81a8eec691
+  - gameObject: {fileID: 1262421266}
+    Id: b9b38fbd-24d7-4e9e-b09e-7c75b6278feb
 --- !u!1 &899871636
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +523,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1262421267}
   - 114: {fileID: 1262421268}
+  - 114: {fileID: 1262421269}
   m_Layer: 0
   m_Name: start_menu
   m_TagString: Untagged
@@ -553,6 +556,22 @@ MonoBehaviour:
   game_state_: {fileID: 442787141}
   new_sp_game_setup_: {fileID: 2146900355}
   load_menu_: {fileID: 979192244}
+--- !u!114 &1262421269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1262421266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDeserializing: 0
+  _id: b9b38fbd-24d7-4e9e-b09e-7c75b6278feb
+  classId: 4cd88a8e-be62-4c66-89e2-34358232d7b2
+  StoreAllComponents: 1
+  Components: []
 --- !u!1 &1270366414
 GameObject:
   m_ObjectHideFlags: 0
