@@ -14,6 +14,11 @@ private var map_ : map_t = null;
 @SerializeThis
 private var scenario_ : scenario_t = null;
 
+function OnDeserialized ()
+{
+    print('yay');
+}
+
 
 class capitol_hex
 {
@@ -171,6 +176,9 @@ class victory_conditions_t
 
 class event_condition_t
 {
+    function event_condition_t ()
+    {}
+
     function event_condition_t (subject_ : String[])
     {
         subject = subject_;
@@ -188,6 +196,9 @@ class event_condition_t
 
 class occupy_area extends event_condition_t
 {
+    function occupy_area ()
+    {}
+
     function occupy_area (subject_ : String[], hexes_ : hex_coord[])
     {
         super(subject_);
@@ -206,6 +217,9 @@ class occupy_area extends event_condition_t
 
 class destroy_object extends event_condition_t
 {
+    function destroy_object ()
+    {}
+
     function destroy_object (subject_ : String[], type_: String, hexes_ : hex_coord[])
     {
         super(subject_);
