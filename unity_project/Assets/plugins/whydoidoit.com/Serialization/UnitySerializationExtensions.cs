@@ -118,10 +118,10 @@ public class SerializeWaitForSeconds : SerializerExtensionBase<WaitForSeconds>
 	public override IEnumerable<object> Save (WaitForSeconds target)
 	{
 		var tp = target.GetType();
-		var p = tp.GetProperty("m_seconds", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+		var p = tp.GetProperty("m_Seconds", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 		if(p==null)
 		{
-			var f = tp.GetField("m_seconds", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			var f = tp.GetField("m_Seconds", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			return new object[] { f.GetValue(target) };
 		}
 		var seconds = p.GetGetMethod().Invoke(target, null);
