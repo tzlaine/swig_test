@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 import System.IO;
+import RadicalRoutineExtensions;
 
 @script SerializeAll
 
@@ -53,6 +54,21 @@ function clear ()
     // TODO
 }
 
+private function game_main ()
+{
+    var iteration = 0;
+    while (true) {
+        print(String.Format('{0}, {1}', Time.time, ++iteration));
+        yield WaitForSeconds(1);
+    }
+}
+
+function initial_setup () : RadicalRoutine
+{
+    var retval = new RadicalRoutine();
+    return retval;
+}
+
 function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<String, boolean>)
 {
     var played_nations = new Array();
@@ -77,6 +93,8 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 
     var scenario = game_data_.scenario();
     turn = scenario.start_turn;
+
+    RadicalRoutineExtensions.StartExtendedCoroutine(gameObject, game_main());
 
     save();
 }
