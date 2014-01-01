@@ -8,26 +8,33 @@ import RadicalRoutineExtensions;
 @DoNotSerialize
 var game_data_ : game_data;
 
-private var in_setup : boolean = true;
-private var turn : int;
-private var player_nations : String[];
-private var setting_up_nation : int = -1;
-private var game_guid : String;
+private var in_setup_ : boolean = true;
+private var turn_ : int;
+private var player_nations_ : String[];
+private var setting_up_nation_ : int = -1;
+private var game_guid_ : String;
+private static var instance_ : game_state;
 
-private function turn_to_str (turn_ : int) : String
+function turn ()
+{ return turn_; }
+
+private static function instance () : game_state
+{ return instance_; }
+
+private function turn_to_str (t : int) : String
 {
-    var retval : String = turn_ / 10 == 0 ? 'Spring' : 'Fall';
-    retval += ', Y' + Mathf.FloorToInt(turn_ / 10.0);
+    var retval : String = t / 10 == 0 ? 'Spring' : 'Fall';
+    retval += ', Y' + Mathf.FloorToInt(t / 10.0);
     return retval;
 }
 
 private function save_description () : String
 {
     var retval : String = game_data_.scenario().name;
-    if (in_setup)
+    if (in_setup_)
         retval += ' - Initial setup';
     else
-        retval += ' - ' + turn_to_str(turn);
+        retval += ' - ' + turn_to_str(turn_);
     return retval;
 }
 
@@ -38,12 +45,12 @@ private function save ()
     var matching_guid_saves = new Array();
     for (file in files) {
         var filename : String = file.ToString();
-        if (filename.StartsWith(game_guid))
+        if (filename.StartsWith(game_guid_))
             matching_guid_saves.Push(filename);
     }
 
-    var save_filename : String = game_guid;
-    JSONLevelSerializer.SerializeLevelToFile(game_guid + save_description());
+    var save_filename : String = game_guid_;
+    JSONLevelSerializer.SerializeLevelToFile(game_guid_ + save_description());
 
     for (match in matching_guid_saves) {
         File.Delete(match);
@@ -55,19 +62,26 @@ function clear ()
     // TODO
 }
 
-private function game_main ()
+private static function initial_setup ()
 {
+    // TODO: Show note about initial setup?
+
     var iteration = 0;
-    while (true) {
-        print(String.Format('{0}, {1}', Time.time, ++iteration));
+    while (iteration < 10) {
+        print(String.Format('setup {0}, {1} {2}', Time.time, ++iteration, instance().turn()));
         yield WaitForSeconds(1);
     }
 }
 
-function initial_setup () : RadicalRoutine
+private static function game_main ()
 {
-    var retval = new RadicalRoutine();
-    return retval;
+    yield RadicalRoutineExtensions.StartExtendedCoroutine(instance(), initial_setup());
+
+    var iteration = 0;
+    while (true) {
+        print(String.Format('main {0}, {1} {2}', Time.time, ++iteration, instance().turn()));
+        yield WaitForSeconds(1);
+    }
 }
 
 function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<String, boolean>)
@@ -80,25 +94,26 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
     }
     game_data_.load_data(scenario_json);
 
-    game_guid = System.Guid.NewGuid().ToString();
+    game_guid_ = System.Guid.NewGuid().ToString();
 
-    player_nations = new String[played_nations.length];
+    player_nations_ = new String[played_nations.length];
     for (var i = 0; i < played_nations.length; ++i) {
-        player_nations[i] = played_nations[i];
+        player_nations_[i] = played_nations[i];
     }
-
-    // TODO: Show note about initial setup.
 
     if (!game_data_.map())
         yield WaitForSeconds(0.01);
 
     var scenario = game_data_.scenario();
-    turn = scenario.start_turn;
+    turn_ = scenario.start_turn;
 
     RadicalRoutineExtensions.StartExtendedCoroutine(gameObject, game_main());
 
     save();
 }
+
+function Awake ()
+{ instance_ = this; }
 
 function Update ()
 {
