@@ -18,6 +18,7 @@ private function turn_to_str (turn_ : int) : String
 {
     var retval : String = turn_ / 10 == 0 ? 'Spring' : 'Fall';
     retval += ', Y' + Mathf.FloorToInt(turn_ / 10.0);
+    return retval;
 }
 
 private function save_description () : String
