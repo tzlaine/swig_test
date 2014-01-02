@@ -2,14 +2,16 @@
 
 var hex_surface : procedural_hex;
 var game_data_ : game_data;
-
 var highlight : GameObject;
+var secondary_colors : Texture2D;
 
 private var map_width_ : int = 0;
 private var map_height_ : int = 0;
 private var map_origin_ : Vector3 = Vector3(0, 0, 0);
 
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
+
+private var highlighting : GameObject[,];
 
 
 function hex_center (hc : hex_coord)
@@ -38,11 +40,14 @@ function place_tile (h : hex_t, m : map_t)
     surface.transform.position = hex_center(h.hc);
     surface.renderer.material.renderQueue = 10;
 
-    //if (h.hc.y == 7) {
-        var hilite = Instantiate(highlight);
-        hilite.transform.position = hex_center(h.hc);
-        hilite.renderer.material.renderQueue = 100;
-    //}
+    // TODO: Optimize via procedural assignment of owner ID in mesh uv2, as
+    // necessary.
+    var hilite = Instantiate(highlight);
+    hilite.transform.position = hex_center(h.hc);
+    hilite.renderer.material.renderQueue = 100;
+    hilite.renderer.material.color =
+        secondary_colors.GetPixel(h.owner_id * 4, 0);
+    highlighting[h.hc.x, h.hc.y] = hilite;
 }
 
 function Start ()
@@ -59,6 +64,8 @@ function Start ()
     map_origin_ = Vector3((map_width_ - 1) * 1.5 / 2,
                           (map_height_ - 1) * 2 * sin_60 / 2,
                           0);
+
+    highlighting = new GameObject[m.width, m.height];
 
     for (var x = 0; x < m.width; ++x) {
         for (var y = 0; y < m.height; ++y) {

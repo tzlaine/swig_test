@@ -2,7 +2,8 @@
 Shader "Custom/highlight_overlay"
 {
     Properties {
-        _color ("Color", Color) = (0.5, 0.5, 0.5, 0.5)
+        _Color ("Color", Color) = (1, 1, 1, 1)
+        _alpha ("Alpha", float) = 0.5
     }
 
     SubShader { Pass {
@@ -16,7 +17,8 @@ Shader "Custom/highlight_overlay"
         #pragma fragment frag
         #include "UnityCG.cginc"
 
-        float4 _color;
+        float4 _Color;
+        float _alpha;
 
         struct v2f
         {
@@ -33,7 +35,7 @@ Shader "Custom/highlight_overlay"
 
         float4 frag (v2f i) : COLOR
         {
-            return _color;
+            return float4(_Color.rgb, _alpha);
         }
 
         ENDCG
