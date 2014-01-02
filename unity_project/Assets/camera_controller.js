@@ -1,4 +1,8 @@
-﻿var mouse_sensitivity : float = 15.0;
+﻿#pragma strict
+
+@script SerializeAll
+
+var mouse_sensitivity : float = 15.0;
 var key_zoom_sensitivity : float = 1.0;
 var mousewheel_zoom_sensitivity : float = 1.0;
 var move_speed : float = 16.0;
@@ -6,7 +10,8 @@ var min_distance : float = 5;
 var max_distance : float = 150;
 var place_offmap_areas_ : place_offmap_areas;
 
-var map_geometry : place_hexes = null;
+@DoNotSerialize
+var map_geometry : place_hexes;
 
 private var anchor_ = Vector3.zero;
 private var distance : float = 100.0;
