@@ -709,6 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game_data_: {fileID: 1305381365}
+  place_hexes_: {fileID: 541918417}
 --- !u!114 &1345877846
 MonoBehaviour:
   m_ObjectHideFlags: 0

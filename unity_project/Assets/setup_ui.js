@@ -4,6 +4,8 @@
 
 @DoNotSerialize
 var game_data_ : game_data;
+@DoNotSerialize
+var place_hexes_ : place_hexes;
 
 private var nation_ : String;
 private var fleet_names : String[];
@@ -13,6 +15,8 @@ private var scroll_position : Vector2 = Vector2(0, 0);
 function set_up (n : String)
 {
     nation_ = n;
+
+    fleet_selection = 0;
 
     var starting_forces = game_data_.nation(nation_).starting_forces;
 
@@ -24,6 +28,8 @@ function set_up (n : String)
         fleet_names[i] = f.Key;
         ++i;
     }
+
+    place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
 
     enabled = true;
 }
@@ -54,6 +60,7 @@ function OnGUI ()
 
     // TODO
     if (GUILayout.Button('Done')) {
+        place_hexes_.clear_highlighting();
         enabled = false;
     }
 
@@ -71,7 +78,13 @@ function OnGUI ()
     );
 
     scroll_position = GUILayout.BeginScrollView(scroll_position);
-    fleet_selection = GUILayout.SelectionGrid(fleet_selection, fleet_names, fleet_names.Length);
+    var new_fleet_selection =
+        GUILayout.SelectionGrid(fleet_selection, fleet_names, fleet_names.Length);
+    if (new_fleet_selection != fleet_selection) {
+        fleet_selection = new_fleet_selection;
+        place_hexes_.clear_highlighting();
+        place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
+    }
     GUILayout.EndScrollView();
 
     GUILayout.EndArea();

@@ -12,6 +12,7 @@ private var map_origin_ : Vector3 = Vector3(0, 0, 0);
 private static var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
 
 private var highlighting : GameObject[,];
+private var pending_highlights : hex_coord[];
 
 
 function hex_center (hc : hex_coord)
@@ -52,8 +53,10 @@ function place_tile (h : hex_t, m : map_t)
 
 function clear_highlighting ()
 {
-    for (h in highlighting) {
-        h.SetActive(false);
+    if (highlighting) {
+        for (h in highlighting) {
+            h.SetActive(false);
+        }
     }
 }
 
@@ -62,13 +65,18 @@ function highlight_hexes (nation : String, fleet : String)
 
 function highlight_hexes (hexes : hex_coord[])
 {
-    for (hc in hexes) {
-        highlighting[hc.x, hc.y].SetActive(true);
+    if (highlighting) {
+        for (hc in hexes) {
+            if (hc.x != hex_coord().x || hc.y != hex_coord().y)
+                highlighting[hc.x, hc.y].SetActive(true);
+        }
+    } else {
+        pending_highlights = hexes;
     }
 }
 
 function highlighted (hc : hex_coord)
-{ return highlighting[hc.x, hc.y].activeSelf; }
+{ return highlighting && highlighting[hc.x, hc.y].activeSelf; }
 
 function Start ()
 {
@@ -94,6 +102,10 @@ function Start ()
     }
 
     clear_highlighting();
+    if (pending_highlights) {
+        highlight_hexes(pending_highlights);
+        pending_highlights = null;
+    }
 }
 
 private var hexes_combined = false;
