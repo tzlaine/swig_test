@@ -48,8 +48,27 @@ function place_tile (h : hex_t, m : map_t)
     hilite.renderer.material.color =
         secondary_colors.GetPixel(h.owner_id * 4, 0);
     highlighting[h.hc.x, h.hc.y] = hilite;
-    hilite.SetActive(false);
 }
+
+function clear_highlighting ()
+{
+    for (h in highlighting) {
+        h.SetActive(false);
+    }
+}
+
+function highlight_hexes (nation : String, fleet : String)
+{ highlight_hexes(game_data_.nation(nation).starting_forces[fleet].area); }
+
+function highlight_hexes (hexes : hex_coord[])
+{
+    for (hc in hexes) {
+        highlighting[hc.x, hc.y].SetActive(true);
+    }
+}
+
+function highlighted (hc : hex_coord)
+{ return highlighting[hc.x, hc.y].activeSelf; }
 
 function Start ()
 {
@@ -73,6 +92,8 @@ function Start ()
             place_tile(m.hex(hex_coord(x, y)), m);
         }
     }
+
+    clear_highlighting();
 }
 
 private var hexes_combined = false;
