@@ -3,6 +3,8 @@
 var hex_surface : procedural_hex;
 var game_data_ : game_data;
 
+var highlight : GameObject;
+
 private var map_width_ : int = 0;
 private var map_height_ : int = 0;
 private var map_origin_ : Vector3 = Vector3(0, 0, 0);
@@ -35,6 +37,12 @@ function place_tile (h : hex_t, m : map_t)
     surface.init(h.owner_id);
     surface.transform.position = hex_center(h.hc);
     surface.renderer.material.renderQueue = 10;
+
+    //if (h.hc.y == 7) {
+        var hilite = Instantiate(highlight);
+        hilite.transform.position = hex_center(h.hc);
+        hilite.renderer.material.renderQueue = 100;
+    //}
 }
 
 function Start ()

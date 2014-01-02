@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hex_surface: {fileID: 11400000, guid: e3b1e83f0b54422439264322b50dc79c, type: 2}
   game_data_: {fileID: 1305381365}
+  highlight: {fileID: 100000, guid: 198f7ba58235e427da169fd9ff9ba3d1, type: 2}
 --- !u!23 &541918418
 Renderer:
   m_ObjectHideFlags: 0
@@ -707,7 +708,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game_data_: {fileID: 1305381365}
-  nation: 
 --- !u!114 &1345877846
 MonoBehaviour:
   m_ObjectHideFlags: 0
