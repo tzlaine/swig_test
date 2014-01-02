@@ -68,8 +68,7 @@ private static function initial_setup ()
         // TODO: Hotseat only for now.
         //if (this_.player_nations_[nation]) {
         if (true) {
-            this_.setup_ui_.enabled = true;
-            this_.setup_ui_.nation = nation;
+            this_.setup_ui_.set_up(nation);
             while (this_.setup_ui_.enabled) {
                 yield WaitForSeconds(0.1);
             }

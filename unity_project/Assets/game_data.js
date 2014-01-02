@@ -6,7 +6,8 @@ import System.Collections.Generic;
 import System.Globalization.NumberStyles;
 import System.Text.RegularExpressions;
 
-private var nations : Dictionary.<String, nation_data> = new Dictionary.<String, nation_data>();
+@SerializeThis
+private var nations : Dictionary.<String, nation_t> = new Dictionary.<String, nation_t>();
 
 @SerializeThis
 private var map_ : map_t = null;
@@ -78,9 +79,9 @@ class production_turn_t
     var units : units_t;
 }
 
-class nation_data
+class nation_t
 {
-    function nation_data ()
+    function nation_t ()
     {
         capitol = new Dictionary.<String, capitol_hex>();
         starting_forces = new Dictionary.<String, starting_fleet>();
@@ -373,6 +374,9 @@ function capitol_star_points (abbreviated_name : String)
 { return nations[abbreviated_name].capitol_star_points; }
 
 
+function nation (abbreviated_name : String) : nation_t
+{ return nations[abbreviated_name]; }
+
 function scenario () : scenario_t
 { return scenario_; }
 
@@ -397,7 +401,7 @@ private function populate_nations (json : SimpleJSON.JSONNode)
     var latest_id : int = 0;
     for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
-        nations[nation.Key] = new nation_data();
+        nations[nation.Key] = new nation_t();
         nations[nation.Key].id = latest_id++;
         nations[nation.Key].capitol_star_points = nation.Value['capitol star points'].AsInt;
         nations[nation.Key].name = nation.Value['name'];
@@ -699,9 +703,11 @@ private function make_map (json : SimpleJSON.JSONNode) : map_t
 
 function Awake ()
 {
-    var json : SimpleJSON.JSONNode =
-        JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
-    populate_nations(json);
+    if (!JSONLevelSerializer.IsDeserializing) {
+        var json : SimpleJSON.JSONNode =
+            JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
+        populate_nations(json);
+    }
 }
 
 function load_data (scenario : SimpleJSON.JSONNode)
