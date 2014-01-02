@@ -111,6 +111,7 @@ class hex_t
     var owner_id : int;
     var province : int;
     var feature : String; // TODO: Make this all contents?
+    var highlight : boolean;
 };
 
 class offmap_area_t

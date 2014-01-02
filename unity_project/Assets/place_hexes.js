@@ -48,14 +48,20 @@ function place_tile (h : hex_t, m : map_t)
     hilite.renderer.material.renderQueue = 100;
     hilite.renderer.material.color =
         secondary_colors.GetPixel(h.owner_id * 4, 0);
+    hilite.SetActive(h.highlight);
     highlighting[h.hc.x, h.hc.y] = hilite;
 }
 
 function clear_highlighting ()
 {
-    if (highlighting) {
-        for (h in highlighting) {
-            h.SetActive(false);
+    var m : map_t = game_data_.map();
+    if (m && highlighting) {
+        for (var x = 0; x < m.width; ++x) {
+            for (var y = 0; y < m.height; ++y) {
+                var hex : hex_t = m.hex(hex_coord(x, y));
+                hex.highlight = false;
+                highlighting[x, y].SetActive(false);
+            }
         }
     }
 }
@@ -65,10 +71,14 @@ function highlight_hexes (nation : String, fleet : String)
 
 function highlight_hexes (hexes : hex_coord[])
 {
-    if (highlighting) {
+    var m : map_t = game_data_.map();
+    if (m && highlighting) {
         for (hc in hexes) {
-            if (hc.x != hex_coord().x || hc.y != hex_coord().y)
+            if (hc.x != hex_coord().x || hc.y != hex_coord().y) {
+                var hex : hex_t = m.hex(hc);
+                hex.highlight = true;
                 highlighting[hc.x, hc.y].SetActive(true);
+            }
         }
     } else {
         pending_highlights = hexes;
@@ -101,7 +111,6 @@ function Start ()
         }
     }
 
-    clear_highlighting();
     if (pending_highlights) {
         highlight_hexes(pending_highlights);
         pending_highlights = null;

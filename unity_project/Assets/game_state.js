@@ -77,10 +77,10 @@ private static function initial_setup ()
         //if (this_.player_nations_[nation]) {
         if (true) {
             this_.setup_ui_.set_up(nation);
-            this_.save_async();
             while (this_.setup_ui_.enabled) {
                 yield WaitForSeconds(0.1);
             }
+            this_.save_async();
         } else {
             // TODO: wait for other player to set up this nation.
         }
@@ -105,15 +105,13 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
     player_nations_ = config;
     game_guid_ = System.Guid.NewGuid().ToString();
 
-    if (!game_data_.map())
+    while (!game_data_.map())
         yield WaitForSeconds(0.01);
 
     var scenario = game_data_.scenario();
     turn_ = scenario.start_turn;
 
     RadicalRoutineExtensions.StartExtendedCoroutine(gameObject, game_main());
-
-    save();
 }
 
 function Awake ()
