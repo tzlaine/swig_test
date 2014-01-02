@@ -12,6 +12,9 @@ private var fleet_names : String[];
 private var fleet_selection : int = 0;
 private var scroll_position : Vector2 = Vector2(0, 0);
 
+@DoNotSerialize
+private var deserializing = false;
+
 function set_up (n : String)
 {
     nation_ = n;
@@ -36,12 +39,28 @@ function set_up (n : String)
 
 function Awake ()
 {
-    if (!JSONLevelSerializer.IsDeserializing)
+    deserializing = JSONLevelSerializer.IsDeserializing;
+    if (!deserializing)
         enabled = false;
 }
 
+function OnEnable ()
+{
+    if (!JSONLevelSerializer.IsDeserializing)
+        place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
+}
+
+// Not actually called by UnitySerializer, since we're using UnityScript.
+function OnDeserialize ()
+{ place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]); }
+
 function OnGUI ()
 {
+    if (deserializing && !JSONLevelSerializer.IsDeserializing) {
+        OnDeserialize();
+        deserializing = false;
+    }
+
     if (!game_data_.map())
         return;
 
