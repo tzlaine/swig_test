@@ -70,6 +70,8 @@ function clear ()
 
 private static function initial_setup ()
 {
+    // TODO: Remove fleets with offmap or single-hex deployment areas, and
+    // dump all their units in there.
     for (var nation in this_.game_data_.scenario().setup_order) {
         // TODO: Hotseat only for now.
         //if (this_.player_nations_[nation]) {
