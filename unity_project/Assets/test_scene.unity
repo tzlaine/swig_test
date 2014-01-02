@@ -176,6 +176,7 @@ MonoBehaviour:
   hex_surface: {fileID: 11400000, guid: e3b1e83f0b54422439264322b50dc79c, type: 2}
   game_data_: {fileID: 1305381365}
   highlight: {fileID: 100000, guid: 198f7ba58235e427da169fd9ff9ba3d1, type: 2}
+  secondary_colors: {fileID: 2800000, guid: d89e553707c91954887bbb5e619b180b, type: 3}
 --- !u!23 &541918418
 Renderer:
   m_ObjectHideFlags: 0
