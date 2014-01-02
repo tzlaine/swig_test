@@ -8,6 +8,7 @@ var start_menu_ : start_menu;
 private var game_filenames : String[];
 private var game_names : String[];
 private var selection : int = 0;
+private var scroll_position : Vector2 = Vector2(0, 0);
 
 
 private static function file_info_cmp (a : FileInfo, b : FileInfo) : int
@@ -56,7 +57,7 @@ function OnGUI ()
     title_style.alignment = TextAnchor.MiddleCenter;
     GUILayout.Label('Select a game to load', title_style);
 
-    GUILayout.BeginScrollView(Vector2(0, 0));
+    scroll_position = GUILayout.BeginScrollView(scroll_position);
     selection = GUILayout.SelectionGrid(selection, game_names, 1, GUILayout.MinWidth(300));
     GUILayout.EndScrollView();
 
