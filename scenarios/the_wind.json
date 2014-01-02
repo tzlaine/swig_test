@@ -12,7 +12,7 @@
     "team turn order": [ "Coalition", "Alliance" ],
     "map": "../default_map.json",
     "order of battle": "../default_oob.json",
-    "set up order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
+    "setup order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
     "nations": {
         "FED": {
             "at war with": [],

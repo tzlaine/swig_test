@@ -7,19 +7,19 @@ import RadicalRoutineExtensions;
 
 @DoNotSerialize
 var game_data_ : game_data;
+@DoNotSerialize
+var setup_ui_ : setup_ui;
 
 private var in_setup_ : boolean = true;
 private var turn_ : int;
-private var player_nations_ : String[];
-private var setting_up_nation_ : int = -1;
+private var player_nations_ : Dictionary.<String, boolean>;
 private var game_guid_ : String;
-private static var instance_ : game_state;
+
+@DoNotSerialize
+private static var this_ : game_state;
 
 function turn ()
 { return turn_; }
-
-private static function instance () : game_state
-{ return instance_; }
 
 private function turn_to_str (t : int) : String
 {
@@ -64,42 +64,38 @@ function clear ()
 
 private static function initial_setup ()
 {
-    // TODO: Show note about initial setup?
-
-    var iteration = 0;
-    while (iteration < 10) {
-        print(String.Format('setup {0}, {1} {2}', Time.time, ++iteration, instance().turn()));
-        yield WaitForSeconds(1);
+    for (var nation in this_.game_data_.scenario().setup_order) {
+        // TODO: Hotseat only for now.
+        //if (this_.player_nations_[nation]) {
+        if (true) {
+            this_.setup_ui_.enabled = true;
+            this_.setup_ui_.nation = nation;
+            while (this_.setup_ui_.enabled) {
+                yield WaitForSeconds(0.1);
+            }
+        } else {
+            // TODO: wait for other player to set up this nation.
+        }
     }
 }
 
 private static function game_main ()
 {
-    yield RadicalRoutineExtensions.StartExtendedCoroutine(instance(), initial_setup());
+    yield RadicalRoutineExtensions.StartExtendedCoroutine(this_, initial_setup());
 
     var iteration = 0;
     while (true) {
-        print(String.Format('main {0}, {1} {2}', Time.time, ++iteration, instance().turn()));
+        print(String.Format('main {0}, {1} {2}', Time.time, ++iteration, this_.turn()));
         yield WaitForSeconds(1);
     }
 }
 
 function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<String, boolean>)
 {
-    var played_nations = new Array();
-    for (var conf : System.Collections.Generic.KeyValuePair.<String, boolean> in
-         config) {
-        // TODO: Restore this later; for now, we play hotseat-only. if (conf.Value)
-            played_nations.Push(conf.Key);
-    }
     game_data_.load_data(scenario_json);
 
+    player_nations_ = config;
     game_guid_ = System.Guid.NewGuid().ToString();
-
-    player_nations_ = new String[played_nations.length];
-    for (var i = 0; i < played_nations.length; ++i) {
-        player_nations_[i] = played_nations[i];
-    }
 
     if (!game_data_.map())
         yield WaitForSeconds(0.01);
@@ -113,7 +109,7 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 }
 
 function Awake ()
-{ instance_ = this; }
+{ this_ = this; }
 
 function Update ()
 {

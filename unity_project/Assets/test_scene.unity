@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game_data_: {fileID: 1305381365}
+  setup_ui_: {fileID: 1345877845}
 --- !u!1 &541918415
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +311,8 @@ MonoBehaviour:
     Id: b9b38fbd-24d7-4e9e-b09e-7c75b6278feb
   - gameObject: {fileID: 899871636}
     Id: a5291e76-3141-4397-8691-fc9c5e0a541b
+  - gameObject: {fileID: 1345877844}
+    Id: 9e69c8f2-b148-44c8-b106-7b2a1b3bc137
 --- !u!1 &899871636
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +678,63 @@ MonoBehaviour:
   classId: 1f78aabe-b84f-48b6-a9ee-707a04ca9d6f
   StoreAllComponents: 1
   Components: []
+--- !u!1 &1345877844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1345877847}
+  - 114: {fileID: 1345877846}
+  - 114: {fileID: 1345877845}
+  m_Layer: 0
+  m_Name: setup_ui
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1345877845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1345877844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b811081544a4c3eb83bb58c672ec76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game_data_: {fileID: 1305381365}
+  nation: 
+--- !u!114 &1345877846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1345877844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDeserializing: 0
+  _id: 9e69c8f2-b148-44c8-b106-7b2a1b3bc137
+  classId: 947b8094-13a3-46ac-b9c9-f6a53a5088b6
+  StoreAllComponents: 1
+  Components: []
+--- !u!4 &1345877847
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1345877844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &1443981301
 GameObject:
   m_ObjectHideFlags: 0
