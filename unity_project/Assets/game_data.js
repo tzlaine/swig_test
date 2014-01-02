@@ -36,7 +36,7 @@ class units_t
         units = new Dictionary.<String, int>();
     }
 
-    var units : Dictionary.<String, int>;
+    var units : Dictionary.<String, int>; // unit name -> quantity
 }
 
 class starting_fleet
@@ -111,6 +111,7 @@ class hex_t
     var owner_id : int;
     var province : int;
     var feature : String; // TODO: Make this all contents?
+    var units : Dictionary.<String, units_t>; // owner -> units
     var highlight : boolean;
 };
 
