@@ -18,6 +18,12 @@ private var game_guid_ : String;
 @DoNotSerialize
 private static var this_ : game_state;
 
+@DoNotSerialize
+private var save_pending = false;
+
+function save_async ()
+{ save_pending = true; }
+
 function turn ()
 { return turn_; }
 
@@ -69,6 +75,7 @@ private static function initial_setup ()
         //if (this_.player_nations_[nation]) {
         if (true) {
             this_.setup_ui_.set_up(nation);
+            this_.save_async();
             while (this_.setup_ui_.enabled) {
                 yield WaitForSeconds(0.1);
             }
@@ -112,5 +119,8 @@ function Awake ()
 
 function Update ()
 {
-    // TODO
+    if (save_pending) {
+        save();
+        save_pending = false;
+    }
 }
