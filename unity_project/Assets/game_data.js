@@ -15,6 +15,10 @@ private var map_ : map_t = null;
 @SerializeThis
 private var scenario_ : scenario_t = null;
 
+@SerializeThis
+private var counters : Dictionary.<String, Dictionary.<String, counter_params> > =
+    new Dictionary.<String, Dictionary.<String, counter_params> >();
+
 
 class capitol_hex
 {
@@ -301,6 +305,37 @@ class scenario_t
     var nations : Dictionary.<String, scenario_nation_t>;
     var turns : scenario_turn_t[];
 };
+
+class counter_params
+{
+    function counter_params () {}
+    function counter_params (rhs : counter_params)
+    {
+        texture_filename = rhs.texture_filename;
+        uv_min = rhs.uv_min;
+        uv_max = rhs.uv_max;
+    }
+    var texture_filename : String;
+    var uv_min : Vector2;
+    var uv_max : Vector2;
+};
+
+static function crippled_counter (uncrippled_counter : counter_params) : counter_params
+{
+    var retval = new counter_params(uncrippled_counter);
+    retval.texture_filename = retval.texture_filename.Replace('front', 'back');
+    if (retval.texture_filename.Contains('.0.'))
+        retval.texture_filename = retval.texture_filename.Replace('.0.', '.1.');
+    else
+        retval.texture_filename = retval.texture_filename.Replace('.1.', '.0.');
+    if (retval.texture_filename.Contains('.2.'))
+        retval.texture_filename = retval.texture_filename.Replace('.2.', '.3.');
+    else
+        retval.texture_filename = retval.texture_filename.Replace('.3.', '.2.');
+    retval.uv_min.x = 1.0 - uncrippled_counter.uv_max.x;
+    retval.uv_max.x = 1.0 - uncrippled_counter.uv_min.x;
+    return retval;
+}
 
 static function str_to_hex_coord (hex_str : String) : hex_coord
 {
@@ -635,6 +670,29 @@ private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
     // TODO: victory conditions
 }
 
+private function populate_counters (json : SimpleJSON.JSONNode)
+{
+    for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+         json) {
+        var nation_counters = new Dictionary.<String, counter_params>();
+        for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+             n.Value) {
+            var counter = new counter_params();
+            counter.texture_filename = u.Value['texture'];
+            counter.uv_min = Vector2(
+                u.Value['uv_min']['x'].AsFloat,
+                u.Value['uv_min']['y'].AsFloat
+            );
+            counter.uv_max = Vector2(
+                u.Value['uv_max']['x'].AsFloat,
+                u.Value['uv_max']['y'].AsFloat
+            );
+            nation_counters.Add(u.Key, counter);
+        }
+        counters.Add(n.Key, nation_counters);
+    }
+}
+
 private function make_map (json : SimpleJSON.JSONNode) : map_t
 {
     var m : map_t = new map_t();
@@ -725,6 +783,9 @@ function load_data (scenario : SimpleJSON.JSONNode)
     populate_oob(json);
 
     populate_scenario(scenario, m);
+
+    json = JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
+    populate_counters(json);
 
     map_ = m;
 }
