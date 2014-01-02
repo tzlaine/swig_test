@@ -48,6 +48,7 @@ function place_tile (h : hex_t, m : map_t)
     hilite.renderer.material.color =
         secondary_colors.GetPixel(h.owner_id * 4, 0);
     highlighting[h.hc.x, h.hc.y] = hilite;
+    hilite.SetActive(false);
 }
 
 function Start ()
