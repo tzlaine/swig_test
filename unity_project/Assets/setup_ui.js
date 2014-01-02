@@ -5,6 +5,8 @@
 @DoNotSerialize
 var game_data_ : game_data;
 @DoNotSerialize
+var game_state_ : game_state;
+@DoNotSerialize
 var place_hexes_ : place_hexes;
 
 private var nation_ : String;
@@ -103,6 +105,7 @@ function OnGUI ()
         fleet_selection = new_fleet_selection;
         place_hexes_.clear_highlighting();
         place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
+        game_state_.save_async();
     }
     GUILayout.EndScrollView();
 
