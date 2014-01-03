@@ -10,6 +10,7 @@
                 "Andorian": ["MAJ", "MAJ", "MIN", "MIN", "SB"]
             }
         },
+        "free strategic moves": 15,
         "capital star points": 5,
         "offmap": {
             "provinces": 3,
@@ -32,6 +33,7 @@
                 "Ghdar III": ["MAJ", "MIN", "SB"]
             }
         },
+        "free strategic moves": 10,
         "capital star points": 5,
         "offmap": {
             "provinces": 3,
@@ -50,6 +52,7 @@
                 "Anthraxan": ["MAJ", "MIN"]
             }
         },
+        "free strategic moves": 10,
         "capital star points": 5,
         "offmap": {
             "provinces": 2,
@@ -67,6 +70,7 @@
                 // TODO: Capital?
             }
         },
+        "free strategic moves": 10,
         "capital star points": 6,
         "offmap": {
             "provinces": 8,
@@ -86,6 +90,7 @@
                 "Klardon": ["MAJ", "MIN", "MIN"]
             }
         },
+        "free strategic moves": 15,
         "capital star points": 8,
         "offmap": {
             "provinces": 0,
@@ -106,6 +111,7 @@
                 "Vronkett": ["MAJ"]
              }
         },
+        "free strategic moves": 10,
         "capital star points": 5,
         "offmap": {
             "provinces": 3,
@@ -118,6 +124,7 @@
         "name": "Lyran Democratic Republic",
         "short name": "LDR",
         "capital": {},
+        "free strategic moves": 0,
         "capital star points": 6
     },
     "LYR": {
@@ -131,6 +138,7 @@
                 "Frakmark": ["MAJ", "MIN", "MIN"]
             }
         },
+        "free strategic moves": 10,
         "capital star points": 8,
         "offmap": {
             "provinces": 4,
@@ -149,6 +157,7 @@
         "name": "Orion",
         "short name": "Orion",
         "capital": {},
+        "free strategic moves": 0,
         "capital star points": 6
     },
     "ROM": {
@@ -164,6 +173,7 @@
                 "Vesuvius": ["MIN", "MIN", "MIN"]
             }
         },
+        "free strategic moves": 10,
         "capital star points": 8,
         "offmap": {
             "provinces": 0,
@@ -181,12 +191,14 @@
                 "Tholia": ["CAP", "SB"]
             }
         },
+        "free strategic moves": 5,
         "capital star points": 6
     }
     "WYN": {
         "name": "Wyn Star Cluster",
         "short name": "Wyn",
         "capital": {},
+        "free strategic moves": 0,
         "capital star points": 6
     }
 }
