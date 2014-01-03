@@ -4,18 +4,22 @@ import SimpleJSON;
 import System.IO;
 import System.Collections.Generic;
 
-var counter_sheet_column_ : counter_sheet_column;
+var alpha_front : counter_sheet;
+var bravo_front : counter_sheet;
+var bases_front : counter_sheet;
+var bases_back : counter_sheet;
+var counters_front : counter_sheet;
 
-
-private var columns : counter_sheet_column[] = new counter_sheet_column[7];
-private var column_index : int = 0;
+private var sheets : counter_sheet[] = new counter_sheet[5];
+private var sheet_index : int = 0;
 private var json : SimpleJSON.JSONNode = null;
 private var nation : String = 'FED';
-private var unit : String = 'DN';
+private var unit : String = 'BATS';
 private var nation_index : int = 0;
 private var unit_index : int = 0;
 private var nations : String[];
-private var units : GUIContent[];
+private var units : String[];
+private var textures : Texture2D[];
 private var scroll_position = Vector2(0, 0);
 private var has_crippled_side = true;
 private var crippled_texture : Texture2D = null;
@@ -39,86 +43,46 @@ function set_unit_texture (unit_index_ : int, unit_json : SimpleJSON.JSONNode)
 {
     var main_tex : Texture2D =
         AssetDatabase.LoadAssetAtPath(unit_json['texture'], Texture2D);
-    units[unit_index_].image = main_tex;
-
-/*
-    var main_tex_width = 1024;
-    var main_tex_height = 256;
-    var sub_tex_width = main_tex_width;
-    var sub_tex_x = Mathf.FloorToInt(unit_json['uv_min']['x'].AsFloat * main_tex_width);
-    var sub_tex_y = Mathf.FloorToInt(unit_json['uv_min']['y'].AsFloat * main_tex_height);
-
-    var main_tex_pixels : Color32[] = main_tex.GetPixels32(); // TODO: Why is this throwing?
-    var tex_pixels : Color32[] = new Color32[sub_tex_width * sub_tex_width];
-    var i = 0;
-    for (var j = 0; j < sub_tex_width; ++j) {
-        var base = j * main_tex_width;
-        for (var k = 0; k < sub_tex_width; ++k) {
-            tex_pixels[i++] = main_tex_pixels[base + k];
-        }
-    }
-    var tex = new Texture2D(sub_tex_width, sub_tex_width, main_tex.format, false);
-    tex.SetPixels32(tex_pixels);
-    tex.Apply();
-    //units[unit_index_].image = tex;
-/**/
+    textures[unit_index_] = main_tex;
 }
 
 function populate_units ()
 {
     var n : SimpleJSON.JSONNode = json[nation];
-    units = new GUIContent[n.Count];
+    units = new String[n.Count];
+    textures = new Texture2D[n.Count];
     var i = 0;
     for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in n) {
-        units[i] = new GUIContent(u.Key);
+        units[i] = u.Key;
         if (u.Value['texture'])
             set_unit_texture(i, u.Value);
         ++i;
     }
 }
 
-function populate (from : String, col : String)
+function change_sheet (forward : boolean)
 {
-    var retval : counter_sheet_column = Instantiate(counter_sheet_column_);
-    var files : String[] = [
-        from + '_0' + col,
-        from + '_1' + col,
-        from + '_2' + col,
-        from + '_3' + col,
-        from + '_4' + col,
-        from + '_5' + col,
-        from + '_6' + col
-    ];
-    retval.init(files);
-    retval.gameObject.SetActive(false);
-    return retval;
+    sheets[sheet_index].gameObject.SetActive(false);
+    sheet_index += forward ? 1 : sheets.Length - 1;
+    sheet_index = sheet_index % sheets.Length;
+    sheets[sheet_index].gameObject.SetActive(true);
 }
 
-function change_column (forward : boolean)
-{
-    columns[column_index].gameObject.SetActive(false);
-    column_index += forward ? 1 : columns.Length - 1;
-    column_index = column_index % columns.Length;
-    columns[column_index].gameObject.SetActive(true);
-}
+function next_sheet ()
+{ change_sheet(true); }
 
-function next_column ()
-{ change_column(true); }
-
-function prev_column ()
-{ change_column(false); }
+function prev_sheet ()
+{ change_sheet(false); }
 
 function Start ()
 {
-    columns[0] = populate('alpha_front_cut', '_0');
-    columns[1] = populate('alpha_front_cut', '_1');
-    columns[2] = populate('bravo_front_cut', '_0');
-    columns[3] = populate('bravo_front_cut', '_1');
-    columns[4] = populate('bases_front_cut', '');
-    columns[5] = populate('bases_back_cut', '');
-    columns[6] = populate('counters_front_cut', '');
+    sheets[0] = alpha_front;
+    sheets[1] = bravo_front;
+    sheets[2] = bases_front;
+    sheets[3] = bases_back;
+    sheets[4] = counters_front;
 
-    columns[column_index].gameObject.SetActive(true);
+    sheets[sheet_index].gameObject.SetActive(true);
 
     var units_json : SimpleJSON.JSONNode =
         JSON.Parse(System.IO.File.ReadAllText('../units.json'));
@@ -165,15 +129,15 @@ function Start ()
 function Update ()
 {
     if (Input.GetKeyUp('q'))
-        prev_column();
+        prev_sheet();
     else if (Input.GetKeyUp('e'))
-        next_column();
+        next_sheet();
 
     if (Input.GetKeyUp(KeyCode.Delete) || Input.GetKeyUp(KeyCode.Backspace)) {
         json[nation].Remove(unit);
         populate_units();
         unit_index = 0;
-        unit = units[unit_index].text;
+        unit = units[unit_index];
         has_crippled_side = true;
         crippled_texture = null;
         save();
@@ -189,7 +153,7 @@ function OnGUI ()
         nation = nations[nation_index];
         populate_units();
         unit_index = 0;
-        unit = units[unit_index].text;
+        unit = units[unit_index];
         has_crippled_side = true;
         crippled_texture = null;
     }
@@ -197,18 +161,17 @@ function OnGUI ()
     var scroll_region_height = units.length * 80;
 
     scroll_position = GUI.BeginScrollView(
-        Rect(70, 10, 280, Screen.height - 20),
+        Rect(70, 10, 180, Screen.height - 20),
         scroll_position,
-        Rect(0, 0, 260, scroll_region_height)
+        Rect(0, 0, 160, scroll_region_height)
     );
 
     var style = new GUIStyle(GUI.skin.GetStyle('Button'));
-    style.imagePosition = ImagePosition.ImageAbove;
     var u_index =
-        GUI.SelectionGrid(Rect(10, 10, 240, scroll_region_height), unit_index, units, 1, style);
+        GUI.SelectionGrid(Rect(10, 10, 140, scroll_region_height), unit_index, units, 1, style);
     if (u_index != unit_index) {
         unit_index = u_index;
-        unit = units[unit_index].text;
+        unit = units[unit_index];
         has_crippled_side = true;
         crippled_texture = null;
     }
@@ -237,11 +200,13 @@ function OnGUI ()
         uv_size.x,
         uv_size.y
     );
-    GUI.DrawTextureWithTexCoords(
-        Rect(10, 45, 150, 150),
-        units[unit_index].image,
-        uncrippled_uvs
-    );
+    if (textures[unit_index]) {
+        GUI.DrawTextureWithTexCoords(
+            Rect(10, 45, 150, 150),
+            textures[unit_index],
+            uncrippled_uvs
+        );
+    }
 
     if (!crippled_texture && has_crippled_side) {
         var crippled_counter_ = game_data.crippled_side(uncrippled_counter);
@@ -252,8 +217,13 @@ function OnGUI ()
         if (!crippled_texture) {
             has_crippled_side = false;
         } else {
-            crippled_texture_uvs = new Rect(uncrippled_uvs);
-            crippled_texture_uvs.x = crippled_counter_.uv_min.x;
+            uv_size = crippled_counter_.uv_max - crippled_counter_.uv_min;
+            crippled_texture_uvs = new Rect(
+                crippled_counter_.uv_min.x,
+                crippled_counter_.uv_min.y,
+                uv_size.x,
+                uv_size.y
+            );
         }
     }
 

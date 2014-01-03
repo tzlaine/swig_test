@@ -337,18 +337,10 @@ static function crippled_side (uncrippled_side : counter_side_t) : counter_side_
     if (!retval.texture_filename || retval.texture_filename == '')
         return retval;
 
-    retval.texture_filename =
-        retval.texture_filename.Replace('front', 'back');
-    if (retval.texture_filename.Contains('.0.'))
-        retval.texture_filename = retval.texture_filename.Replace('.0.', '.1.');
-    else
-        retval.texture_filename = retval.texture_filename.Replace('.1.', '.0.');
-    if (retval.texture_filename.Contains('.2.'))
-        retval.texture_filename = retval.texture_filename.Replace('.2.', '.3.');
-    else
-        retval.texture_filename = retval.texture_filename.Replace('.3.', '.2.');
+    retval.texture_filename = retval.texture_filename.Replace('front', 'back');
     retval.uv_min.x = 1.0 - uncrippled_side.uv_max.x;
     retval.uv_max.x = 1.0 - uncrippled_side.uv_min.x;
+
     return retval;
 }
 
