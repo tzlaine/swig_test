@@ -1,6 +1,8 @@
 ﻿#pragma strict
 
+@DoNotSerialize
 var offmap_clicked_callback : System.Action.<String>;
+@DoNotSerialize
 var hex_clicked_callback : System.Action.<hex_coord>;
 
 function offmap_clicked (owner : String)
