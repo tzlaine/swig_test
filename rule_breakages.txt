@@ -1,4 +1,7 @@
 505.3 The number of survey ships is fixed.
 
+506.5 Gorm off-map ships are released deterministically (no die rolls) after
+the amount of time the die rolls are expected to take.
+
 515.24 Romulan Warhawk designated as a medium carrier.
 515.25 Gorn and Lyran carrier groups not treated differently.
