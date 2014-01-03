@@ -1,2 +1,4 @@
+505.3 The number of survey ships is fixed.
+
 515.24 Romulan Warhawk designated as a medium carrier.
 515.25 Gorn and Lyran carrier groups not treated differently.

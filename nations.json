@@ -10,7 +10,13 @@
                 "Andorian": ["MAJ", "MAJ", "MIN", "MIN", "SB"]
             }
         },
-        "capital star points": 5
+        "capital star points": 5,
+        "offmap": {
+            "provinces": 3,
+            "MIN": 0,
+            "MAJ": 0
+        },
+        "offmap survey ships": 7
     },
     "GOR": {
         "name": "Gorn Confederation",
@@ -26,7 +32,13 @@
                 "Ghdar III": ["MAJ", "MIN", "SB"]
             }
         },
-        "capital star points": 5
+        "capital star points": 5,
+        "offmap": {
+            "provinces": 3,
+            "MIN": 2,
+            "MAJ": 0
+        },
+        "offmap survey ships": 2
     },
     "HYD": {
         "name": "Hydran Kingdom",
@@ -38,7 +50,14 @@
                 "Anthraxan": ["MAJ", "MIN"]
             }
         },
-        "capital star points": 5
+        "capital star points": 5,
+        "offmap": {
+            "provinces": 2,
+            "MIN": 1,
+            "MAJ": 2
+        },
+        "offmap survey ships": 3,
+        "old offmap shipyard": "true"
     },
     "ISC": {
         "name": "Interstellar Concordium",
@@ -48,7 +67,13 @@
                 // TODO: Capital?
             }
         },
-        "capital star points": 6
+        "capital star points": 6,
+        "offmap": {
+            "provinces": 8,
+            "MIN": 2,
+            "MAJ": 1
+        },
+        "offmap survey ships": 8
     },
     "KLI": {
         "name": "Klingon Empire",
@@ -61,7 +86,14 @@
                 "Klardon": ["MAJ", "MIN", "MIN"]
             }
         },
-        "capital star points": 8
+        "capital star points": 8,
+        "offmap": {
+            "provinces": 0,
+            "MIN": 0,
+            "MAJ": 0
+        },
+        "offmap survey ships": 2,
+        "can build offmap capital": "false"
     },
     "KZI": {
         "name": "Kzinti Hegemony",
@@ -74,7 +106,13 @@
                 "Vronkett": ["MAJ"]
              }
         },
-        "capital star points": 5
+        "capital star points": 5,
+        "offmap": {
+            "provinces": 3,
+            "MIN": 2,
+            "MAJ": 1
+        },
+        "offmap survey ships": 3
     },
     "LDR": {
         "name": "Lyran Democratic Republic",
@@ -93,7 +131,13 @@
                 "Frakmark": ["MAJ", "MIN", "MIN"]
             }
         },
-        "capital star points": 8
+        "capital star points": 8,
+        "offmap": {
+            "provinces": 4,
+            "MIN": 2,
+            "MAJ": 2
+        },
+        "offmap survey ships": 3
     },
     "NZ": {
         "name": "Neutral Zone",
@@ -120,7 +164,14 @@
                 "Vesuvius": ["MIN", "MIN", "MIN"]
             }
         },
-        "capital star points": 8
+        "capital star points": 8,
+        "offmap": {
+            "provinces": 0,
+            "MIN": 0,
+            "MAJ": 0
+        },
+        "offmap survey ships": 0,
+        "can build offmap capital": "false"
     },
     "THO": {
         "name": "Tholian Holdfast",
