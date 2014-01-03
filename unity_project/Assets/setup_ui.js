@@ -57,11 +57,11 @@ function set_units ()
     unit_names_with_quantities = new String[fleet.Count];
     unit_names = new String[fleet.Count];
     var i = 0;
-    for (var unit_type : System.Collections.Generic.KeyValuePair.<String, int> in
+    for (var unit_type : System.Collections.Generic.KeyValuePair.<String, pair.<int, int> > in
          fleet) {
         unit_names[i] = unit_type.Key;
         unit_names_with_quantities[i] =
-            (1 < unit_type.Value ? unit_type.Value + 'x' : '') + unit_type.Key;
+            (1 < unit_type.Value.first ? unit_type.Value.first + 'x' : '') + unit_type.Key;
         ++i;
     }
 }
