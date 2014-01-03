@@ -52,6 +52,7 @@ class starting_fleet
     }
 
     var area : hex_coord[];
+    var area_unit_limits : int[]; // 0 indicates no limit
     var units : units_t;
     var reserve : boolean;
     var pwc : Dictionary.<int, units_t>; // key is turn id
@@ -489,9 +490,14 @@ private function populate_oob (json : SimpleJSON.JSONNode)
              nation.Value['starting force']) {
             var new_fleet = new starting_fleet();
             new_fleet.area = new hex_coord[fleet.Value['hexes'].Count];
+            new_fleet.area_unit_limits = new int[fleet.Value['hexes'].Count];
+            var max_units : SimpleJSON.JSONNode = fleet.Value['max units in'];
             var i = 0;
             for (i = 0; i < fleet.Value['hexes'].Count; ++i) {
-                new_fleet.area[i] = str_to_hex_coord(fleet.Value['hexes'][i]);
+                var hex_str : String = fleet.Value['hexes'][i];
+                new_fleet.area[i] = str_to_hex_coord(hex_str);
+                if (max_units != null && max_units[hex_str] != null)
+                    new_fleet.area_unit_limits[i] = max_units[hex_str].AsInt;
             }
             new_fleet.units = parse_units(fleet.Value['units']);
             if (fleet.Value['reserve'] != null)
