@@ -15,9 +15,8 @@ private var map_ : map_t = null;
 @SerializeThis
 private var scenario_ : scenario_t = null;
 
-@SerializeThis
-private var counters : Dictionary.<String, Dictionary.<String, counter_params> > =
-    new Dictionary.<String, Dictionary.<String, counter_params> >();
+private var counters : Dictionary.<String, Dictionary.<String, counter_t> > =
+    new Dictionary.<String, Dictionary.<String, counter_t> >();
 
 
 class capitol_hex
@@ -306,24 +305,40 @@ class scenario_t
     var turns : scenario_turn_t[];
 };
 
-class counter_params
+class counter_side_t
 {
-    function counter_params () {}
-    function counter_params (rhs : counter_params)
+    function counter_side_t () {}
+    function counter_side_t (rhs : counter_side_t)
     {
         texture_filename = rhs.texture_filename;
         uv_min = rhs.uv_min;
         uv_max = rhs.uv_max;
+        texture = rhs.texture;
     }
     var texture_filename : String;
     var uv_min : Vector2;
     var uv_max : Vector2;
+    var texture : Texture2D;
 };
 
-static function crippled_counter (uncrippled_counter : counter_params) : counter_params
+class counter_t
 {
-    var retval = new counter_params(uncrippled_counter);
-    retval.texture_filename = retval.texture_filename.Replace('front', 'back');
+    var uncrippled_side : counter_side_t;
+    var crippled_side : counter_side_t;
+};
+
+function counter (nation : String, unit : String)
+{ return counters[nation][unit]; }
+
+static function crippled_side (uncrippled_side : counter_side_t) : counter_side_t
+{
+    var retval = new counter_side_t(uncrippled_side);
+
+    if (!retval.texture_filename || retval.texture_filename == '')
+        return retval;
+
+    retval.texture_filename =
+        retval.texture_filename.Replace('front', 'back');
     if (retval.texture_filename.Contains('.0.'))
         retval.texture_filename = retval.texture_filename.Replace('.0.', '.1.');
     else
@@ -332,8 +347,8 @@ static function crippled_counter (uncrippled_counter : counter_params) : counter
         retval.texture_filename = retval.texture_filename.Replace('.2.', '.3.');
     else
         retval.texture_filename = retval.texture_filename.Replace('.3.', '.2.');
-    retval.uv_min.x = 1.0 - uncrippled_counter.uv_max.x;
-    retval.uv_max.x = 1.0 - uncrippled_counter.uv_min.x;
+    retval.uv_min.x = 1.0 - uncrippled_side.uv_max.x;
+    retval.uv_max.x = 1.0 - uncrippled_side.uv_min.x;
     return retval;
 }
 
@@ -674,19 +689,23 @@ private function populate_counters (json : SimpleJSON.JSONNode)
 {
     for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
-        var nation_counters = new Dictionary.<String, counter_params>();
+        var nation_counters = new Dictionary.<String, counter_t>();
         for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
              n.Value) {
-            var counter = new counter_params();
-            counter.texture_filename = u.Value['texture'];
-            counter.uv_min = Vector2(
-                u.Value['uv_min']['x'].AsFloat,
-                u.Value['uv_min']['y'].AsFloat
+            var counter_side = new counter_side_t();
+            counter_side.texture_filename = u.Value['texture'];
+            counter_side.uv_min = Vector2(
+                u.Value['uv_min']['u'].AsFloat,
+                u.Value['uv_min']['v'].AsFloat
             );
-            counter.uv_max = Vector2(
-                u.Value['uv_max']['x'].AsFloat,
-                u.Value['uv_max']['y'].AsFloat
+            counter_side.uv_max = Vector2(
+                u.Value['uv_max']['u'].AsFloat,
+                u.Value['uv_max']['v'].AsFloat
             );
+
+            var counter = new counter_t();
+            counter.uncrippled_side = counter_side;
+            counter.crippled_side = crippled_side(counter_side);
             nation_counters.Add(u.Key, counter);
         }
         counters.Add(n.Key, nation_counters);
@@ -768,6 +787,9 @@ function Awake ()
             JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
         populate_nations(json);
     }
+
+    json = JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
+    populate_counters(json);
 }
 
 function load_data (scenario : SimpleJSON.JSONNode)
@@ -783,9 +805,6 @@ function load_data (scenario : SimpleJSON.JSONNode)
     populate_oob(json);
 
     populate_scenario(scenario, m);
-
-    json = JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
-    populate_counters(json);
 
     map_ = m;
 }

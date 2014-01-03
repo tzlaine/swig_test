@@ -219,7 +219,7 @@ function OnGUI ()
     GUI.BeginGroup(Rect(360, 10, group_width, 30 + 25 + 150), new GUIStyle(GUI.skin.GetStyle('Button')));
     GUI.Label(Rect(10, 10, group_width - 20, 25), unit, new GUIStyle(GUI.skin.GetStyle('Button')));
 
-    var uncrippled_counter = new counter_params();
+    var uncrippled_counter = new counter_side_t();
     uncrippled_counter.texture_filename = json[nation][unit]['texture'];
     uncrippled_counter.uv_min = Vector2(
         json[nation][unit]['uv_min']['u'].AsFloat,
@@ -244,7 +244,7 @@ function OnGUI ()
     );
 
     if (!crippled_texture && has_crippled_side) {
-        var crippled_counter_ = game_data.crippled_counter(uncrippled_counter);
+        var crippled_counter_ = game_data.crippled_side(uncrippled_counter);
         crippled_texture = AssetDatabase.LoadAssetAtPath(
             crippled_counter_.texture_filename,
             Texture2D
