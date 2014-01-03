@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var game_data_ : game_data;
+var map_click_listener_ : map_click_listener;
 var camera_controller_ : camera_controller;
 var drag_sensitivity : float = 0.1;
 
@@ -119,11 +120,10 @@ function OnMouseUpAsButton ()
         var hc = hex_under_cursor();
         if (hc.x == hex_coord().x && hc.y == hex_coord().y) {
             var offmap_owner = offmap_area_under_cursor();
-            print('offmap for owner ' + offmap_owner);
+            if (offmap_owner != '')
+                map_click_listener_.offmap_clicked(offmap_owner);
         } else {
-            var hc2 : hex_coord = hex_coord(hc.x + 1, hc.y + 1);
-            print('hex ' + (hc2.x < 10 ? '0' : '') + (hc2.x * 100 + hc2.y) +
-                  ' (' + hc.x + ',' + hc.y + ')');
+            map_click_listener_.hex_clicked(hc);
         }
     }
 }

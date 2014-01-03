@@ -8,6 +8,8 @@ var game_data_ : game_data;
 var game_state_ : game_state;
 @DoNotSerialize
 var place_hexes_ : place_hexes;
+@DoNotSerialize
+var map_click_listener_ : map_click_listener;
 
 private var nation_ : String;
 private var fleet_names : String[];
@@ -70,10 +72,16 @@ function Awake ()
         enabled = false;
 }
 
+function hex_clicked ()
+{
+    // TODO: Place the current selection and save_async().
+}
+
 function OnEnable ()
 {
     if (!JSONLevelSerializer.IsDeserializing)
         place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
+    map_click_listener_.hex_clicked_callback = hex_clicked;
 }
 
 function OnGUI ()
