@@ -33,7 +33,7 @@ cf_regex_3 = re.compile(r'(.+)-(.+)')
 
 hvy_ftr_regex = re.compile(r'(.+)H(.+)?')
 
-def factors_set (factors, set_, tug_):
+def factors_set (factors, set_, tug_, escort_):
     flotillas = factors.count('P')
     if flotillas:
         flotillas = ',\n%s    "PFs": %d' % (indent, flotillas * 6)
@@ -48,7 +48,7 @@ def factors_set (factors, set_, tug_):
 
     escort = ''
     if '■' in factors:
-        escort = ',\n%s    "escort": "true"' % (indent)
+        escort = ',\n%s    "escort": "%s"' % (indent, escort_)
         factors = factors.replace('■', '')
 
     mauler = ''
@@ -123,11 +123,11 @@ def factors_set (factors, set_, tug_):
     (indent, set_, indent, attack, indent, defense, scout, escort, mauler, fighters, heavy_fighter_bonus, drones, flotillas, indent), fighters != '')
 
 
-def stats (text, tug):
+def stats (text, tug, escort):
     parts = text.split('/')
-    (retval, fighters) = factors_set(parts[0], 'uncrippled', tug)
+    (retval, fighters) = factors_set(parts[0], 'uncrippled', tug, escort)
     if not 'None' in parts[1]:
-        retval += '\n' + factors_set(parts[1], 'crippled', False)[0]
+        retval += '\n' + factors_set(parts[1], 'crippled', False, escort)[0]
     return (retval, fighters)
 
 avail_regex = re.compile(r'Y(\d+)([SF])?')
@@ -243,7 +243,13 @@ def print_salvage (field):
         print '%s"salvage": %d,' % (indent, float(field))
 
 tug_regex = re.compile(r'[Tt]ug')
-carrier_regex = re.compile(r'[Tt]rue *[Cc]arrier')
+hvy_carrier_regex = \
+    re.compile(r'(?:[Ss]pace *[Cc]ontrol *[Ss]hip)|[Hh]eavy *(?:[Tt]rue *)?[Cc]arrier')
+med_carrier_regex = re.compile(r'[Mm]edium *(?:[Tt]rue *)?[Cc]arrier')
+lt_carrier_regex = re.compile(r'(?:[Ll]ight|[Ee]scort) *(?:[Tt]rue *)?[Cc]arrier')
+single_ship_carrier_regex = re.compile(r'[Ss]ingle *-? *[Ss]hip *[Cc]arrier')
+hvy_escort_regex = re.compile(r'[Hh]eavy *[Ee]scort')
+lt_escort_regex = re.compile(r'[Ll]ight *[Ee]scort')
 limit_regex = re.compile(r'(?:[Mm]ax|[Ll]imit) *(\d+)')
 
 def get_notes (field):
@@ -254,7 +260,21 @@ def get_notes (field):
     limit = -1
     if match:
         limit = int(match.group(1))
-    return (notes, tug_regex.match(notes), carrier_regex.search(notes), limit)
+    carrier = 'false'
+    if hvy_carrier_regex.search(notes):
+        carrier = 'heavy'
+    elif med_carrier_regex.search(notes):
+        carrier = 'medium'
+    elif lt_carrier_regex.search(notes):
+        carrier = 'light'
+    elif single_ship_carrier_regex.search(notes):
+        carrier = 'single-ship'
+    escort = 'false'
+    if hvy_escort_regex.search(notes):
+        escort = 'heavy'
+    elif lt_escort_regex.search(notes):
+        escort = 'light'
+    return (notes, tug_regex.match(notes), carrier, escort, limit)
 
 def print_notes (notes):
     print '%s"notes": "%s"' % (indent, notes)
@@ -270,12 +290,12 @@ def process_line (fields, last_line):
     if 1 < units_seen[fields[0]]:
         fields[0] = fields[0] + 'v.' + str(units_seen[fields[0]])
 
-    (notes, tug, carrier, limit) = get_notes(fields[10])
+    (notes, tug, carrier, escort, limit) = get_notes(fields[10])
 
     outer_indent = '        '
     print outer_indent + '"' + fields[0] + '": {'
     print indent + '"cmd": ' + fields[4] + ','
-    (stats_, fighters) = stats(fields[2], tug)
+    (stats_, fighters) = stats(fields[2], tug, escort)
     print stats_
     print available(fields[5])
     pod = print_pod_designation(fields[6])
@@ -305,8 +325,8 @@ def process_line (fields, last_line):
         spaceworthy = False
 
     print '%s"move": %d,' % (indent, move)
-    if move and (carrier or fighters and not nation == 'HYD'):
-        print indent + '"carrier": "true",'
+    if move and carrier != 'false':
+        print indent + '"carrier": "%s",' % carrier
     if -1 < limit:
         print '%s"max in service": %d,' % (indent, limit)
     if towable:
