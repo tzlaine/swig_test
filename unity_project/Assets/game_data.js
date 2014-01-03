@@ -19,9 +19,9 @@ private var counters : Dictionary.<String, Dictionary.<String, counter_t> > =
     new Dictionary.<String, Dictionary.<String, counter_t> >();
 
 
-class capitol_hex
+class capital_hex
 {
-    function capitol_hex ()
+    function capital_hex ()
     {
         hc = new hex_coord();
         planets = new List.<String>();
@@ -86,7 +86,7 @@ class nation_t
 {
     function nation_t ()
     {
-        capitol = new Dictionary.<String, capitol_hex>();
+        capital = new Dictionary.<String, capital_hex>();
         starting_forces = new Dictionary.<String, starting_fleet>();
         mothball_reserve = new mothball_reserve_t();
     }
@@ -95,8 +95,8 @@ class nation_t
     var name : String;
     var short_name : String;
     var abbr : String;
-    var capitol : Dictionary.<String, capitol_hex>;
-    var capitol_star_points : int;
+    var capital : Dictionary.<String, capital_hex>;
+    var capital_star_points : int;
     var starting_forces : Dictionary.<String, starting_fleet>;
     var mothball_reserve : mothball_reserve_t;
     var production : production_turn_t[];
@@ -414,8 +414,8 @@ function full_name (abbreviated_name : String) : String
 function short_name (abbreviated_name : String) : String
 { return nations[abbreviated_name].short_name; }
 
-function capitol_star_points (abbreviated_name : String)
-{ return nations[abbreviated_name].capitol_star_points; }
+function capital_star_points (abbreviated_name : String)
+{ return nations[abbreviated_name].capital_star_points; }
 
 
 function nation (abbreviated_name : String) : nation_t
@@ -447,7 +447,7 @@ private function populate_nations (json : SimpleJSON.JSONNode)
          json) {
         nations[nation.Key] = new nation_t();
         nations[nation.Key].id = latest_id++;
-        nations[nation.Key].capitol_star_points = nation.Value['capitol star points'].AsInt;
+        nations[nation.Key].capital_star_points = nation.Value['capital star points'].AsInt;
         nations[nation.Key].name = nation.Value['name'];
         nations[nation.Key].short_name = nation.Value['short name'];
         nations[nation.Key].abbr = nation.Key;

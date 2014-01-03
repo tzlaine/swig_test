@@ -38,13 +38,13 @@ function make_feature (feature : String, owner : String, position : Vector3)
     var scale : float = 1.0;
     var owner_id = game_data_.id(owner);
 
-    if (feature == 'capitol') {
-        var capitol : procedural_star = Instantiate(star);
-        capitol.init(owner_id, game_data_.capitol_star_points(owner));
+    if (feature == 'capital') {
+        var capital : procedural_star = Instantiate(star);
+        capital.init(owner_id, game_data_.capital_star_points(owner));
         scale = 0.6;
-        capitol.transform.localScale = Vector3(scale, scale, scale);
-        capitol.renderer.sharedMaterial.renderQueue = 30;
-        capitol.transform.position = position;
+        capital.transform.localScale = Vector3(scale, scale, scale);
+        capital.renderer.sharedMaterial.renderQueue = 30;
+        capital.transform.position = position;
     } else if (feature == 'MIN' || feature == 'MAJ') {
         var planet : GameObject = Instantiate(circle);
         scale = feature == 'MIN' ? 0.2 : 0.3;

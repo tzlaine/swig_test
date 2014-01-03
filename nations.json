@@ -2,7 +2,7 @@
     "FED": {
         "name": "United Federation of Planets",
         "short name": "Federation",
-        "capitol": {
+        "capital": {
             "2908": {
                 "Earth": ["CAP", "MAJ", "MIN", "MIN"],
                 "Vulcan": ["MAJ", "MIN"],
@@ -10,12 +10,12 @@
                 "Andorian": ["MAJ", "MAJ", "MIN", "MIN"]
             }
         },
-        "capitol star points": 5
+        "capital star points": 5
     },
     "GOR": {
         "name": "Gorn Confederation",
         "short name": "Gorn",
-        "capitol": {
+        "capital": {
             "4402": {
                 "Ghdar I": ["CAP", "MIN"]
             },
@@ -26,34 +26,34 @@
                 "Ghdar III": ["MAJ", "MIN"]
             }
         },
-        "capitol star points": 5
+        "capital star points": 5
     },
     "HYD": {
         "name": "Hydran Kingdom",
         "short name": "Hydran",
-        "capitol": {
+        "capital": {
             "0617": {
                 "Hydrax": ["CAP", "MIN"],
                 "Hydramax": ["MAJ", "MIN"],
                 "Anthraxan": ["MAJ", "MIN"]
             }
         },
-        "capitol star points": 5
+        "capital star points": 5
     },
     "ISC": {
         "name": "Interstellar Concordium",
         "short name": "ISC",
-        "capitol": {
+        "capital": {
             "5910": {
-                // TODO: Capitol?
+                // TODO: Capital?
             }
         },
-        "capitol star points": 6
+        "capital star points": 6
     },
     "KLI": {
         "name": "Klingon Empire",
         "short name": "Klingon",
-        "capitol": {
+        "capital": {
             "1411": {
                 "Klinshai": ["CAP", "MAJ", "MIN", "MIN"],
                 "Kangor": ["MAJ", "MIN", "MIN"],
@@ -61,12 +61,12 @@
                 "Klardon": ["MAJ", "MIN", "MIN"]
             }
         },
-        "capitol star points": 8
+        "capital star points": 8
     },
     "KZI": {
         "name": "Kzinti Hegemony",
         "short name": "Kzinti",
-        "capitol": {
+        "capital": {
             "1401": {
                 "Kzintai": ["CAP", "MIN"],
                 "Keevarsh": ["MAJ", "MIN"],
@@ -74,18 +74,18 @@
                 "Vronkett": ["MAJ"]
              }
         },
-        "capitol star points": 5
+        "capital star points": 5
     },
     "LDR": {
         "name": "Lyran Democratic Republic",
         "short name": "LDR",
-        "capitol": {},
-        "capitol star points": 6
+        "capital": {},
+        "capital star points": 6
     },
     "LYR": {
         "name": "Lyran Empire",
         "short name": "Lyran",
-        "capitol": {
+        "capital": {
             "0408": {
                 "Lyrantan": ["CAP", "MIN", "MIN"],
                 "Volmark": ["MAJ", "MIN"],
@@ -93,24 +93,24 @@
                 "Frakmark": ["MAJ", "MIN", "MIN"]
             }
         },
-        "capitol star points": 8
+        "capital star points": 8
     },
     "NZ": {
         "name": "Neutral Zone",
         "short name": "Neutral Zone",
-        "capitol": {},
-        "capitol star points": 6
+        "capital": {},
+        "capital star points": 6
     },
     "ORI": {
         "name": "Orion",
         "short name": "Orion",
-        "capitol": {},
-        "capitol star points": 6
+        "capital": {},
+        "capital star points": 6
     },
     "ROM": {
         "name": "Romulan Star Empire",
         "short name": "Romulan",
-        "capitol": {
+        "capital": {
             "4514": {
                 "Remus": ["MAJ", "MIN", "MIN"],
                 "Tiberius": ["MIN", "MIN"]
@@ -120,22 +120,22 @@
                 "Vesuvius": ["MIN", "MIN", "MIN"]
             }
         },
-        "capitol star points": 8
+        "capital star points": 8
     },
     "THO": {
         "name": "Tholian Holdfast",
         "short name": "Tholian",
-        "capitol": {
+        "capital": {
             "2919": {
                 "Tholia": ["CAP"]
             }
         },
-        "capitol star points": 6
+        "capital star points": 6
     }
     "WYN": {
         "name": "Wyn Star Cluster",
         "short name": "Wyn",
-        "capitol": {},
-        "capitol star points": 6
+        "capital": {},
+        "capital star points": 6
     }
 }

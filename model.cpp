@@ -352,7 +352,7 @@ struct map
         sb,
         min,
         maj,
-        capitol
+        capital
     };
 
     struct hex
@@ -385,7 +385,7 @@ struct map
     unsigned int width;
     unsigned int height;
 
-    // TODO: Move this out into its own data file.  Contents of capitol hexes
+    // TODO: Move this out into its own data file.  Contents of capital hexes
     // should be placed there as well.
     std::vector<std::pair<unsigned int, std::string>> nations;
     std::unordered_map<unsigned int, std::vector<province>> provinces; // key is owner ID
