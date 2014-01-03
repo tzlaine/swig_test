@@ -149,7 +149,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Heavy Carrier. Fighters are F14s (8) and A10s (7); see (302.352). Can never be converted to use A20s due to balcony."
         },
@@ -259,7 +259,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship Fighters (302.352) are threesquadrons: F14 (8), F18 (6), A20 (10)."
         },
@@ -375,7 +375,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier, Single Ship Carrier, Scout; (4EW:2AF)(1EW:6AF)"
         },
@@ -408,7 +408,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier"
         },
@@ -444,7 +444,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants."
         },
@@ -482,7 +482,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier; 6 fighter factors until Y172; (302.352). No early variants."
         },
@@ -634,12 +634,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 7,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 2,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 173,
@@ -688,7 +688,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier"
         },
@@ -697,12 +697,12 @@
             "uncrippled": {
                 "att": 5,
                 "def": 7,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 2,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 175,
@@ -789,7 +789,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier. No early variants."
         },
@@ -821,12 +821,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 6,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 2,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 171,
@@ -903,12 +903,12 @@
             "uncrippled": {
                 "att": 5,
                 "def": 6,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 2,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 167,
@@ -957,12 +957,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 5,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 2,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 167,
@@ -1040,7 +1040,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "light",
             "salvage": 0,
             "notes": "Escort Carrier"
         },
@@ -1335,7 +1335,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship"
         },
@@ -1467,12 +1467,12 @@
             "uncrippled": {
                 "att": 8,
                 "def": 8,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 4,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 173,
@@ -1524,7 +1524,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier, no early variants"
         },
@@ -1554,12 +1554,12 @@
             "uncrippled": {
                 "att": 7,
                 "def": 7,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 4,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 173,
@@ -1671,7 +1671,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier, no early variants"
         },
@@ -1706,12 +1706,12 @@
             "uncrippled": {
                 "att": 6,
                 "def": 6,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 3,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 173,
@@ -1797,12 +1797,12 @@
             "uncrippled": {
                 "att": 5,
                 "def": 5,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 3,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 173,
@@ -2258,7 +2258,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Heavy True Carrier"
         },
@@ -2299,7 +2299,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship, True Carrier"
         },
@@ -2535,7 +2535,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 2,
             "notes": "Heavy True Carrier; single oversized squadron. Treated as Medium Carrier (interdiction) from Y176 onward."
         },
@@ -2699,7 +2699,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium True Carrier"
         },
@@ -2708,13 +2708,13 @@
             "uncrippled": {
                 "att": 5,
                 "def": 7,
-                "escort": "true",
+                "escort": "heavy",
                 "fighters": 3.0
             },
             "crippled": {
                 "att": 3,
                 "def": 4,
-                "escort": "true",
+                "escort": "heavy",
                 "fighters": 1.0
             },
             "available": {
@@ -2864,7 +2864,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium True Carrier; one oversized squadron."
         },
@@ -2873,13 +2873,13 @@
             "uncrippled": {
                 "att": 4,
                 "def": 6,
-                "escort": "true",
+                "escort": "heavy",
                 "fighters": 3.0
             },
             "crippled": {
                 "att": 2,
                 "def": 3,
-                "escort": "true",
+                "escort": "heavy",
                 "fighters": 1.0
             },
             "available": {
@@ -3020,12 +3020,12 @@
             "uncrippled": {
                 "att": 3,
                 "def": 4,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 2,
                 "def": 2,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 169,
@@ -3384,9 +3384,9 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "single-ship",
             "salvage": 10,
-            "notes": "Base Hull (BB). See (436.0)."
+            "notes": "Base Hull (BB). See (436.0).  Single-Ship Carrier."
         },
         "C8": {
             "cmd": 10,
@@ -3438,7 +3438,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Heavy Carrier"
         },
@@ -3476,7 +3476,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship"
         },
@@ -3581,7 +3581,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier"
         },
@@ -3686,7 +3686,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier"
         },
@@ -3846,7 +3846,7 @@
                 "TODO": "Unconvert to TGA no cost (pods lost)"
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 3,
             "notes": "Medium Carrier"
         },
@@ -3969,12 +3969,12 @@
             "uncrippled": {
                 "att": 6,
                 "def": 7,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 3,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 170,
@@ -4023,7 +4023,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier"
         },
@@ -4182,7 +4182,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "light",
             "salvage": 0,
             "notes": "Escort Carrier"
         },
@@ -4191,12 +4191,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 5,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 2,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 170,
@@ -4248,12 +4248,12 @@
             "uncrippled": {
                 "att": 2,
                 "def": 4,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 1,
                 "def": 2,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 166,
@@ -4564,7 +4564,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Heavy Carrier"
         },
@@ -4602,7 +4602,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship"
         },
@@ -4643,7 +4643,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier"
         },
@@ -4764,7 +4764,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier"
         },
@@ -4799,12 +4799,12 @@
             "uncrippled": {
                 "att": 6,
                 "def": 7,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 3,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 169,
@@ -4853,7 +4853,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier"
         },
@@ -4948,7 +4948,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "light",
             "salvage": 1,
             "notes": "Escort Carrier §"
         },
@@ -4957,12 +4957,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 6,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 2,
                 "def": 3,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 166,
@@ -5250,12 +5250,12 @@
             "uncrippled": {
                 "att": 2,
                 "def": 4,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 1,
                 "def": 2,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 167,
@@ -5592,7 +5592,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship"
         },
@@ -5758,7 +5758,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 2,
             "notes": "Heavy Carrier (515.21)"
         },
@@ -5970,7 +5970,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier"
         },
@@ -5979,12 +5979,12 @@
             "uncrippled": {
                 "att": 7,
                 "def": 7,
-                "escort": "true"
+                "escort": "heavy"
             },
             "crippled": {
                 "att": 4,
                 "def": 4,
-                "escort": "true"
+                "escort": "heavy"
             },
             "available": {
                 "year": 171,
@@ -6140,12 +6140,12 @@
             "uncrippled": {
                 "att": 6,
                 "def": 6,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 3,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 171,
@@ -6280,12 +6280,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 4,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 2,
                 "def": 2,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 171,
@@ -6618,7 +6618,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier; Lease = 1.5"
         },
@@ -6952,7 +6952,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Heavy Carrier"
         },
@@ -6994,7 +6994,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 4,
             "notes": "Space Control Ship"
         },
@@ -7029,7 +7029,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier (single ship) Command Cruiser"
         },
@@ -7103,7 +7103,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "heavy",
             "salvage": 2,
             "notes": "Heavy Carrier"
         },
@@ -7216,7 +7216,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
             "notes": "Medium Carrier"
         },
@@ -7454,7 +7454,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "light",
             "salvage": 0,
             "notes": "Escort Carrier"
         },
@@ -7463,12 +7463,12 @@
             "uncrippled": {
                 "att": 5,
                 "def": 5,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 3,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 167,
@@ -7928,12 +7928,12 @@
             "uncrippled": {
                 "att": 5,
                 "def": 5,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 3,
                 "def": 3,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 164,
@@ -7986,9 +7986,9 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 1,
-            "notes": "Carrier (Special Type)"
+            "notes": "Carrier (Special Type) Medium Carrier"
         },
         "SN": {
             "cmd": 3,
@@ -8372,7 +8372,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "medium",
             "salvage": 2,
             "notes": "Medium Carrier, oversized squadron."
         },
@@ -8508,7 +8508,7 @@
                 }
             },
             "move": 6,
-            "carrier": "true",
+            "carrier": "light",
             "salvage": 0,
             "notes": "Escort Carrier"
         },
@@ -8517,12 +8517,12 @@
             "uncrippled": {
                 "att": 4,
                 "def": 4,
-                "escort": "true"
+                "escort": "light"
             },
             "crippled": {
                 "att": 2,
                 "def": 2,
-                "escort": "true"
+                "escort": "light"
             },
             "available": {
                 "year": 170,
