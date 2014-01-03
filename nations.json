@@ -4,10 +4,10 @@
         "short name": "Federation",
         "capital": {
             "2908": {
-                "Earth": ["CAP", "MAJ", "MIN", "MIN"],
+                "Earth": ["CAP", "MAJ", "MIN", "MIN", "SB"],
                 "Vulcan": ["MAJ", "MIN"],
-                "Rigel": ["MAJ", "MAJ", "MIN", "MIN", "MIN"],
-                "Andorian": ["MAJ", "MAJ", "MIN", "MIN"]
+                "Rigel": ["MAJ", "MAJ", "MIN", "MIN", "MIN", "SB"],
+                "Andorian": ["MAJ", "MAJ", "MIN", "MIN", "SB"]
             }
         },
         "capital star points": 5
@@ -17,13 +17,13 @@
         "short name": "Gorn",
         "capital": {
             "4402": {
-                "Ghdar I": ["CAP", "MIN"]
+                "Ghdar I": ["CAP", "MIN", "SB"]
             },
             "4403": {
-                "Ghdar II": ["MAJ", "MIN"]
+                "Ghdar II": ["MAJ", "MIN", "SB"]
             },
             "4503": {
-                "Ghdar III": ["MAJ", "MIN"]
+                "Ghdar III": ["MAJ", "MIN", "SB"]
             }
         },
         "capital star points": 5
@@ -33,7 +33,7 @@
         "short name": "Hydran",
         "capital": {
             "0617": {
-                "Hydrax": ["CAP", "MIN"],
+                "Hydrax": ["CAP", "MIN", "SB"],
                 "Hydramax": ["MAJ", "MIN"],
                 "Anthraxan": ["MAJ", "MIN"]
             }
@@ -55,9 +55,9 @@
         "short name": "Klingon",
         "capital": {
             "1411": {
-                "Klinshai": ["CAP", "MAJ", "MIN", "MIN"],
-                "Kangor": ["MAJ", "MIN", "MIN"],
-                "Kadrak": ["MAJ", "MIN", "MIN"],
+                "Klinshai": ["CAP", "MAJ", "MIN", "MIN", "SB"],
+                "Kangor": ["MAJ", "MIN", "MIN", "SB"],
+                "Kadrak": ["MAJ", "MIN", "MIN", "SB"],
                 "Klardon": ["MAJ", "MIN", "MIN"]
             }
         },
@@ -68,7 +68,7 @@
         "short name": "Kzinti",
         "capital": {
             "1401": {
-                "Kzintai": ["CAP", "MIN"],
+                "Kzintai": ["CAP", "MIN", "SB"],
                 "Keevarsh": ["MAJ", "MIN"],
                 "Vielsalm": ["MAJ", "MIN", "MIN"],
                 "Vronkett": ["MAJ"]
@@ -87,7 +87,7 @@
         "short name": "Lyran",
         "capital": {
             "0408": {
-                "Lyrantan": ["CAP", "MIN", "MIN"],
+                "Lyrantan": ["CAP", "MIN", "MIN", "SB"],
                 "Volmark": ["MAJ", "MIN"],
                 "Bolmark": ["MAJ"],
                 "Frakmark": ["MAJ", "MIN", "MIN"]
@@ -112,11 +112,11 @@
         "short name": "Romulan",
         "capital": {
             "4514": {
-                "Remus": ["MAJ", "MIN", "MIN"],
+                "Remus": ["MAJ", "MIN", "MIN", "SB"],
                 "Tiberius": ["MIN", "MIN"]
             },
             "4613": {
-                "Romulus": ["CAP", "MIN"],
+                "Romulus": ["CAP", "MIN", "SB"],
                 "Vesuvius": ["MIN", "MIN", "MIN"]
             }
         },
@@ -127,7 +127,7 @@
         "short name": "Tholian",
         "capital": {
             "2919": {
-                "Tholia": ["CAP"]
+                "Tholia": ["CAP", "SB"]
             }
         },
         "capital star points": 6
