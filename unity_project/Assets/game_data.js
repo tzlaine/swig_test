@@ -114,6 +114,13 @@ class nation_t
     var production : production_turn_t[];
 };
 
+class hex_zone_t
+{
+    var name : String;
+    var system : boolean;
+    var features : String[]; // TODO
+};
+
 class hex_t
 {
     function hex_t ()
@@ -139,6 +146,7 @@ class hex_t
     var owner_id : int;
     var province : int;
     var feature : String; // TODO: Make this all contents?
+    var hex_zones : hex_zone_t[]; // TODO: Replace feature with this.
     var units : Dictionary.<String, units_t>; // owner -> units
     var highlight : boolean;
 };
