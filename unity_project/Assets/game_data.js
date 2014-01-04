@@ -109,6 +109,7 @@ class hex_t
     function hex_t ()
     {
         hc = new hex_coord();
+        units = new Dictionary.<String, units_t>();
     }
 
     var hc : hex_coord;

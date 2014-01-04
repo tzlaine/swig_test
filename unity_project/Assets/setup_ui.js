@@ -42,16 +42,13 @@ function set_up (n : String)
 
     place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
 
-    set_units();
+    set_units(false);
 
     enabled = true;
 }
 
-function set_units ()
+function set_units (keep_selection_and_scroll : boolean)
 {
-    unit_selection = 0;
-    unit_scroll_position = Vector2(0, 0);
-
     var fleet =
         game_data_.nation(nation_).starting_forces[fleet_names[fleet_selection]].units.units;
     unit_names_with_quantities = new String[fleet.Count];
@@ -64,6 +61,14 @@ function set_units ()
             (1 < unit_type.Value.first ? unit_type.Value.first + 'x' : '') + unit_type.Key;
         ++i;
     }
+
+    if (keep_selection_and_scroll) {
+        if (fleet.Count <= unit_selection)
+            unit_selection = Mathf.Max(0, fleet.Count - 1);
+    } else {
+        unit_selection = 0;
+        unit_scroll_position = Vector2(0, 0);
+    }
 }
 
 function Awake ()
@@ -72,9 +77,40 @@ function Awake ()
         enabled = false;
 }
 
-function hex_clicked ()
+function hex_clicked (hc : hex_coord)
 {
-    // TODO: Place the current selection and save_async().
+    if (fleet_selection < fleet_names.Length &&
+        unit_selection < unit_names.Length) {
+        var fleet =
+            game_data_.nation(nation_).starting_forces[fleet_names[fleet_selection]];
+        var in_fleet_area = false;
+        for (hc2 in fleet.area) {
+            if (hc2.x == hc.x && hc2.y == hc.y) {
+                in_fleet_area = true;
+                break;
+            }
+        }
+
+        if (!in_fleet_area)
+            return;
+
+        var unit = unit_names[unit_selection];
+
+        var hex = game_data_.map().hex(hc);
+        if (!hex.units.ContainsKey(nation_))
+            hex.units.Add(nation_, new units_t());
+        var units = hex.units[nation_].units;
+        if (!units.ContainsKey(unit))
+            units.Add(unit, 0);
+        units[unit] = units[unit] + 1;
+
+        units = fleet.units.units;
+        units[unit] = units[unit] - 1;
+        if (!units[unit])
+            units.Remove(unit);
+        set_units(true);
+        game_state_.save_async();
+    }
 }
 
 function OnEnable ()
@@ -90,7 +126,7 @@ function OnGUI ()
         return;
 
     if (!unit_names_with_quantities)
-        set_units();
+        set_units(false);
 
     var right_panel_width = 200;
     var bottom_panel_height = 50;
@@ -155,8 +191,8 @@ function OnGUI ()
     var new_fleet_selection =
         GUILayout.SelectionGrid(fleet_selection, fleet_names, fleet_names.Length);
     if (new_fleet_selection != fleet_selection) {
-        set_units();
         fleet_selection = new_fleet_selection;
+        set_units(false);
         place_hexes_.clear_highlighting();
         place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
         game_state_.save_async();
