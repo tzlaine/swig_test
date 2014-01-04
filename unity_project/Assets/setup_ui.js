@@ -95,19 +95,9 @@ function hex_clicked (hc : hex_coord)
             return;
 
         var unit = unit_names[unit_selection];
-
         var hex = game_data_.map().hex(hc);
-        if (!hex.units.ContainsKey(nation_))
-            hex.units.Add(nation_, new units_t());
-        var units = hex.units[nation_].units;
-        if (!units.ContainsKey(unit))
-            units.Add(unit, 0);
-        units[unit] = units[unit] + 1;
-
-        units = fleet.units.units;
-        units[unit] = units[unit] - 1;
-        if (!units[unit])
-            units.Remove(unit);
+        hex.insert(nation_, unit, false);
+        fleet.units.erase(unit, false);
         set_units(true);
         game_state_.save_async();
     }

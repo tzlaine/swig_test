@@ -40,6 +40,16 @@ class units_t
         units = new Dictionary.<String, pair.<int, int> >();
     }
 
+    function erase (unit : String, crippled : boolean)
+    {
+        if (crippled)
+            units[unit].second -= 1;
+        else
+            units[unit].first -= 1;
+        if (units[unit].first == 0 && units[unit].second == 0)
+            units.Remove(unit);
+    }
+
     var units : Dictionary.<String, pair.<int, int> >; // unit name -> uncrippled, crippled
 }
 
@@ -110,6 +120,18 @@ class hex_t
     {
         hc = new hex_coord();
         units = new Dictionary.<String, units_t>();
+    }
+
+    function insert (nation : String, unit : String, crippled : boolean)
+    {
+        if (!units.ContainsKey(nation))
+            units.Add(nation, new units_t());
+        if (!units[nation].units.ContainsKey(unit))
+            units[nation].units.Add(unit, new pair.<int, int>(0, 0));
+        if (crippled)
+            units[nation].units[unit].second += 1;
+        else
+            units[nation].units[unit].first += 1;
     }
 
     var hc : hex_coord;
