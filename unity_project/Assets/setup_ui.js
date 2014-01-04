@@ -10,6 +10,8 @@ var game_state_ : game_state;
 var place_hexes_ : place_hexes;
 @DoNotSerialize
 var map_click_listener_ : map_click_listener;
+@DoNotSerialize
+var counter_ : counter;
 
 private var nation_ : String;
 private var fleet_names : String[];
@@ -95,6 +97,12 @@ function hex_clicked (hc : hex_coord)
             return;
 
         var unit = unit_names[unit_selection];
+
+        var hex_center = place_hexes_.hex_center(hc);
+        var placed_counter : counter =
+            Instantiate(counter_, hex_center, Quaternion.identity);
+        placed_counter.init(nation_, unit, false);
+
         var hex = game_data_.map().hex(hc);
         hex.insert(nation_, unit, false);
         fleet.units.erase(unit, false);

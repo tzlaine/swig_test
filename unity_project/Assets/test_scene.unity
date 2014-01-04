@@ -725,6 +725,7 @@ MonoBehaviour:
   game_state_: {fileID: 442787141}
   place_hexes_: {fileID: 541918417}
   map_click_listener_: {fileID: 442787142}
+  counter_: {fileID: 11400000, guid: c3fe1f93eb858457f9c952a3c7fb970b, type: 2}
 --- !u!114 &1345877846
 MonoBehaviour:
   m_ObjectHideFlags: 0
