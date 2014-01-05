@@ -139,25 +139,27 @@ function OnGUI ()
 
     GUILayout.Label('Setting up ' + game_data_.short_name(nation_) + ' fleets');
 
-    var counter = game_data_.counter(nation_, unit_names[unit_selection]);
-    var counter_side = counter.uncrippled_side;
-    if (!counter_side.texture) {
-        counter_side.texture =
-            AssetDatabase.LoadAssetAtPath(counter_side.texture_filename, Texture2D);
-    }
-    if (counter_side.texture) {
-        var uv_size = counter_side.uv_max - counter_side.uv_min;
-        var uncrippled_uvs : Rect = new Rect(
-            counter_side.uv_min.x,
-            counter_side.uv_min.y,
-            uv_size.x,
-            uv_size.y
-        );
-        GUI.DrawTextureWithTexCoords(
-            Rect(25, 30, 150, 150),
-            counter_side.texture,
-            uncrippled_uvs
-        );
+    if (unit_names.Length) {
+        var counter = game_data_.counter(nation_, unit_names[unit_selection]);
+        var counter_side = counter.uncrippled_side;
+        if (!counter_side.texture) {
+            counter_side.texture =
+                AssetDatabase.LoadAssetAtPath(counter_side.texture_filename, Texture2D);
+        }
+        if (counter_side.texture) {
+            var uv_size = counter_side.uv_max - counter_side.uv_min;
+            var uncrippled_uvs : Rect = new Rect(
+                counter_side.uv_min.x,
+                counter_side.uv_min.y,
+                uv_size.x,
+                uv_size.y
+            );
+            GUI.DrawTextureWithTexCoords(
+                Rect(25, 30, 150, 150),
+                counter_side.texture,
+                uncrippled_uvs
+            );
+        }
     }
 
     GUILayout.Space(160);
