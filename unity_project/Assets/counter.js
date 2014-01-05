@@ -4,6 +4,8 @@
 
 @DoNotSerialize
 private var game_data_ : game_data;
+@DoNotSerialize
+private var box_collider_ : BoxCollider;
 
 @DoNotSerialize
 var width : float = 0.5;
@@ -25,6 +27,8 @@ private static var normals : Vector3[];
 function Awake ()
 {
     game_data_ = FindObjectOfType(game_data);
+    box_collider_ = GetComponent(BoxCollider);
+    box_collider_.enabled = false;
     if (JSONLevelSerializer.IsDeserializing)
         deserializing = true;
 }
