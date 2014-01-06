@@ -1,28 +1,18 @@
 ﻿#pragma strict
 
-@script SerializeAll
-
-@DoNotSerialize
-private var game_data_ : game_data;
-@DoNotSerialize
-private var box_collider_ : BoxCollider;
-
-@DoNotSerialize
 var width : float = 0.5;
-@DoNotSerialize
 var thickness : float = 0.1;
 
+private var game_data_ : game_data;
+private var box_collider_ : BoxCollider;
+private var mesh_built = false;
+
+@SerializeThis
 private var counter_ : counter_t = new counter_t();
 
-@DoNotSerialize
 private static var vertices : Vector3[];
-@DoNotSerialize
 private static var quads : int[];
-@DoNotSerialize
 private static var normals : Vector3[];
-
-@DoNotSerialize
-private var mesh_built = false;
 
 
 function Awake ()
