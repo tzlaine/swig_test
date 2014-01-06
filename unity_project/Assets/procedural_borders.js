@@ -83,3 +83,6 @@ function init (owner : int, adjacencies : int[])
     mesh.normals = normals;
     mesh.uv2 = uv2;
 }
+
+function Awake ()
+{ enabled = false; }

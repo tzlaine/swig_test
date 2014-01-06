@@ -240,3 +240,6 @@ function Start ()
                    m);
     }
 }
+
+function Awake ()
+{ enabled = false; }

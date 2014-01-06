@@ -820,6 +820,8 @@ function Awake ()
 
     json = JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
     populate_counters(json);
+
+    enabled = false;
 }
 
 function load_data (scenario : SimpleJSON.JSONNode)

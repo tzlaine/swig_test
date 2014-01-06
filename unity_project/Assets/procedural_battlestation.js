@@ -99,3 +99,6 @@ function init (owner : int)
     mesh_filter.mesh = mesh;
     mesh.CombineMeshes(combine);
 }
+
+function Awake ()
+{ enabled = false; }

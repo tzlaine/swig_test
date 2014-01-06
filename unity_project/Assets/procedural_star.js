@@ -67,3 +67,6 @@ function init (owner : int, points : int)
     mesh.normals = normals;
     mesh.uv2 = uv2;
 }
+
+function Awake ()
+{ enabled = false; }

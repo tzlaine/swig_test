@@ -63,3 +63,6 @@ function init (owner : int)
     mesh.uv = uv;
     mesh.uv2 = uv2;
 }
+
+function Awake ()
+{ enabled = false; }

@@ -139,4 +139,5 @@ function Update ()
         renderer.material.renderQueue = 30;
         features_combined = true;
     }
+    enabled = false;
 }

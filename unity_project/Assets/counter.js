@@ -49,10 +49,6 @@ function Update ()
 //function flip ()
 //{ /* TODO: Tween! */ }
 
-// TODO: Make shared mesh geometry (verts, normals, uvs) static in other
-// scripts.
-// TODO: Make sure other empty-Update() scripts are set to enabled=false.
-
 function init (nation : String, unit : String, crippled : boolean)
 {
     var c = game_data_.counter(nation, unit);

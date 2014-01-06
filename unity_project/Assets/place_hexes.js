@@ -147,4 +147,6 @@ function Update ()
         renderer.material.renderQueue = 10;
         hexes_combined = true;
     }
+
+    enabled = true;
 }
