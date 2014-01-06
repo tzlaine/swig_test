@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: .5
-  thickness: .100000001
+  thickness: .0500000007
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

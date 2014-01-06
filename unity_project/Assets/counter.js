@@ -171,8 +171,8 @@ private function build_mesh ()
     var i = 0;
 
     for (i = 0; i < uv.Length / 4; ++i) {
-        var uv_min = Vector2(0, 0);
-        var uv_max = Vector2(1, 1);
+        var uv_min = Vector2(0.91, 0.01);
+        var uv_max = Vector2(0.99, 0.24);
         if (i == 0) {
             uv_min = counter_.uncrippled_side.uv_min;
             uv_max = counter_.uncrippled_side.uv_max;
