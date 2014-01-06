@@ -15,34 +15,27 @@ var thickness : float = 0.1;
 private var counter_ : counter_t = new counter_t();
 
 @DoNotSerialize
-private var deserializing : boolean = false;
-
-@DoNotSerialize
 private static var vertices : Vector3[];
 @DoNotSerialize
 private static var quads : int[];
 @DoNotSerialize
 private static var normals : Vector3[];
 
+@DoNotSerialize
+private var mesh_built = false;
+
+
 function Awake ()
 {
     game_data_ = FindObjectOfType(game_data);
     box_collider_ = GetComponent(BoxCollider);
     box_collider_.enabled = false;
-    if (JSONLevelSerializer.IsDeserializing)
-        deserializing = true;
 }
 
 function Update ()
 {
-    if (deserializing && !JSONLevelSerializer.IsDeserializing) {
+    if (!mesh_built)
         build_mesh();
-        deserializing = false;
-        enabled = false;
-    }
-
-    if (!deserializing)
-        enabled = false;
 }
 
 // TODO
@@ -205,4 +198,6 @@ private function build_mesh ()
     mesh.uv2 = uv2;
 
     mesh.RecalculateBounds();
+
+    mesh_built = true;
 }
