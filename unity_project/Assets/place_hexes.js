@@ -85,6 +85,20 @@ function highlight_hexes (hexes : hex_coord[])
     }
 }
 
+function unhighlight_hexes (hexes : hex_coord[])
+{
+    var m : map_t = game_data_.map();
+    if (m && highlighting) {
+        for (hc in hexes) {
+            if (hc.x != hex_coord().x || hc.y != hex_coord().y) {
+                var hex : hex_t = m.hex(hc);
+                hex.highlight = false;
+                highlighting[hc.x, hc.y].SetActive(false);
+            }
+        }
+    }
+}
+
 function highlighted (hc : hex_coord)
 { return highlighting && highlighting[hc.x, hc.y].activeSelf; }
 

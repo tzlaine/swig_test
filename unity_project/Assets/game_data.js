@@ -40,6 +40,16 @@ class units_t
         units = new Dictionary.<String, pair.<int, int> >();
     }
 
+    function size () : int
+    {
+        var retval = 0;
+        for (u in units) {
+            retval += u.Value.first;
+            retval += u.Value.second;
+        }
+        return retval;
+    }
+
     function insert (unit : String, crippled : boolean)
     {
         if (!units.ContainsKey(unit))

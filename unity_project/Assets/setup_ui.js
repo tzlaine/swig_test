@@ -85,12 +85,21 @@ function hex_clicked (hc : hex_coord)
         unit_selection < unit_names.Length) {
         var fleet =
             game_data_.nation(nation_).starting_forces[fleet_names[fleet_selection]];
+        var hex : hex_t;
+        var limit = 10000;
         var in_fleet_area = false;
+        var i = 0;
         for (hc2 in fleet.area) {
             if (hc2.x == hc.x && hc2.y == hc.y) {
-                in_fleet_area = true;
-                break;
+                hex = game_data_.map().hex(hc);
+                if (hex.highlight) {
+                    if (fleet.area_unit_limits[i])
+                        limit = fleet.area_unit_limits[i];
+                    in_fleet_area = true;
+                    break;
+                }
             }
+            ++i;
         }
 
         if (!in_fleet_area)
@@ -103,11 +112,17 @@ function hex_clicked (hc : hex_coord)
             Instantiate(counter_, hex_center, Quaternion.identity);
         placed_counter.init(nation_, unit, false);
 
-        var hex = game_data_.map().hex(hc);
         hex.insert(nation_, unit, false);
         fleet.units.erase(unit, false);
         set_units(true);
         game_state_.save_async();
+
+        var units_in_hex = hex.units[nation_].size();
+        if (limit == units_in_hex) {
+            var hexes = new hex_coord[1];
+            hexes[0] = hc;
+            place_hexes_.unhighlight_hexes(hexes);
+        }
     }
 }
 
