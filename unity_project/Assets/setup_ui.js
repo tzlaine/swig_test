@@ -36,8 +36,7 @@ function set_up (n : String)
     fleet_names = new String[starting_forces.Count];
 
     var i = 0;
-    for (var f : System.Collections.Generic.KeyValuePair.<String, starting_fleet> in
-         starting_forces) {
+    for (f in starting_forces) {
         fleet_names[i] = f.Key;
         ++i;
     }
@@ -56,8 +55,7 @@ function set_units (keep_selection_and_scroll : boolean)
     unit_names_with_quantities = new String[fleet.Count];
     unit_names = new String[fleet.Count];
     var i = 0;
-    for (var unit_type : System.Collections.Generic.KeyValuePair.<String, pair.<int, int> > in
-         fleet) {
+    for (unit_type in fleet) {
         unit_names[i] = unit_type.Key;
         unit_names_with_quantities[i] =
             (1 < unit_type.Value.first ? unit_type.Value.first + 'x' : '') + unit_type.Key;
@@ -210,6 +208,20 @@ function OnGUI ()
         set_units(false);
         place_hexes_.clear_highlighting();
         place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
+
+        var starting_forces = game_data_.nation(nation_).starting_forces;
+        var fleet = starting_forces[fleet_names[fleet_selection]];
+        for (var i = 0; i < fleet.area.Length; ++i) {
+            var hex = game_data_.map().hex(fleet.area[i]);
+            if (fleet.area_unit_limits[i] &&
+                hex.units.ContainsKey(nation_) &&
+                fleet.area_unit_limits[i] <= hex.units[nation_].size()) {
+                var hexes = new hex_coord[1];
+                hexes[0] = fleet.area[i];
+                place_hexes_.unhighlight_hexes(hexes);
+            }
+        }
+
         game_state_.save_async();
     }
     GUILayout.EndScrollView();
