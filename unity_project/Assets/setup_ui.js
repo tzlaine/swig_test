@@ -90,7 +90,7 @@ function hex_clicked (hc : hex_coord)
         var in_fleet_area = false;
         var i = 0;
         for (hc2 in fleet.area) {
-            if (hc2.x == hc.x && hc2.y == hc.y) {
+            if (hc2 == hc) {
                 hex = game_data_.map().hex(hc);
                 if (hex.highlight) {
                     if (fleet.area_unit_limits[i])

@@ -125,7 +125,7 @@ function OnMouseUpAsButton ()
 {
     if (can_drag && !dragging) {
         var hc = hex_under_cursor();
-        if (hc.x == hex_coord().x && hc.y == hex_coord().y) {
+        if (hc == hex_coord()) {
             var offmap_owner = offmap_area_under_cursor();
             if (offmap_owner != '')
                 map_click_listener_.offmap_clicked(offmap_owner);
@@ -147,7 +147,7 @@ function OnMouseDrag ()
             }
         } else {
             var hc = hex_under_cursor();
-            if (hc.x == hex_coord().x && hc.y == hex_coord().y) {
+            if (hc == hex_coord()) {
                 var offmap_owner = offmap_area_under_cursor();
                 if (offmap_owner == '')
                     can_drag = false;

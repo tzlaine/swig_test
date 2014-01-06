@@ -204,6 +204,27 @@ class hex_coord
         y = y_;
     }
 
+    public function Equals (rhs_ : Object) : boolean
+    {
+        if (rhs_ == null)
+            return false;
+        var rhs : hex_coord = rhs_ as hex_coord;
+        if (rhs == null)
+            return false;
+
+        return
+            (x == null && rhs.x == null || x.Equals(rhs.x)) &&
+            (y == null && rhs.y == null || y.Equals(rhs.y));
+    }
+
+    public function GetHashCode () : int
+    {
+        var retval : int = x == null ? 0 : x.GetHashCode();
+        if (y != null)
+            retval ^= y.GetHashCode();
+        return retval;
+    }
+
     var x : int;
     var y : int;
 };
