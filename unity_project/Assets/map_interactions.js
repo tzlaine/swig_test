@@ -34,6 +34,10 @@ function add_offmap_area (owner : String, lower_left : Vector3, upper_right : Ve
 function offmap_area_under_cursor () : String
 {
     var retval = '';
+
+    if (map_hex_width == 0)
+        return retval;
+
     var hit : RaycastHit;
     if (map_box.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), hit, 1000.0)) {
         for (var offmap : System.Collections.Generic.KeyValuePair.<String, Rect> in
@@ -50,6 +54,9 @@ function offmap_area_under_cursor () : String
 function hex_under_cursor () : hex_coord
 {
     var retval = hex_coord();
+
+    if (map_hex_width == 0)
+        return retval;
 
     var hit : RaycastHit;
     if (map_box.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), hit, 1000.0)) {
