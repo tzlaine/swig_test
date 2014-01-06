@@ -1,22 +1,25 @@
 ﻿#pragma strict
 
+private static var vertices : Vector3[];
+private static var triangles : int[];
+private static var normals : Vector3[];
+private static var uv : Vector2[];
+
 function vertex_to_uv (v : Vector3, uv_origin : Vector3, uv_unit : Vector3) : Vector2
 {
     var delta : Vector3 = v - uv_origin;
     return Vector2(delta.x / uv_unit.x, delta.y / uv_unit.y);
 }
 
-function init (owner : int)
+private function build_common_geometry ()
 {
-    var mesh_filter : MeshFilter = GetComponent(MeshFilter);
-    var mesh = new Mesh();
-    mesh_filter.mesh = mesh;
+    if (vertices)
+        return;
 
-    var vertices : Vector3[] = new Vector3[7];
-    var triangles : int[] = new int[18];
-    var normals : Vector3[] = new Vector3[7];
-    var uv : Vector2[] = new Vector2[7];
-    var uv2 : Vector2[] = new Vector2[7]; // contains (owner, -)
+    vertices = new Vector3[7];
+    triangles = new int[18];
+    normals = new Vector3[7];
+    uv = new Vector2[7];
 
     var sin_60 : float = Mathf.Sin(Mathf.Deg2Rad * 60);
     var cos_60 : float = Mathf.Cos(Mathf.Deg2Rad * 60);
@@ -26,7 +29,6 @@ function init (owner : int)
     vertices[6] = Vector3(0, 0, 0);
     normals[6] = -Vector3.forward;
     uv[6] = vertex_to_uv(vertices[6], uv_origin, uv_unit);
-    uv2[6] = Vector2(owner / 255.0, 1);
 
     for (var i = 0; i < 6; ++i) {
         var theta : float = Mathf.Deg2Rad * 60 * i;
@@ -36,6 +38,22 @@ function init (owner : int)
         triangles[i * 3 + 1] = i;
         triangles[i * 3 + 2] = 6;
         uv[i] = vertex_to_uv(vertices[i], uv_origin, uv_unit);
+    }
+}
+
+function init (owner : int)
+{
+    var mesh_filter : MeshFilter = GetComponent(MeshFilter);
+    var mesh = new Mesh();
+    mesh_filter.mesh = mesh;
+
+    build_common_geometry();
+
+    var uv2 : Vector2[] = new Vector2[7]; // contains (owner, -)
+
+    uv2[6] = Vector2(owner / 255.0, 1);
+
+    for (var i = 0; i < 6; ++i) {
         uv2[i] = Vector2(owner / 255.0, 1);
     }
 
