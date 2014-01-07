@@ -314,7 +314,7 @@
                     "1610", "1611", "1612"
                 ],
                 "units": [
-                    "C8", "D7C", "3xD7", "3xD6", "D6M", "3xD5", "3xF5Q", "3xF5S", "F5V",
+                    "C8", "D7C", "3xD7", "3xD6", "D6M", "3xD5", "6xF5", "3xF5L", "3xF5S", "F5V",
                     "E4A", "6xE4", "TGA", "D6V", "2xE4A", "FRD", "2xMB (ND)"
                 ],
                 "reserve": "true"
@@ -332,7 +332,7 @@
                     "2517", "2518"
                 ],
                 "units": [
-                    "D7C", "3xD7", "3xD6", "D6D", "3xF5Q", "F5S", "F5V",
+                    "D7C", "3xD7", "3xD6", "D6D", "6xF5", "3xF5L", "F5S", "F5V",
                     "E4A", "3xE4", "CVT", "2xE4A", "TGB"
                 ]
             },
@@ -349,7 +349,7 @@
                     "1707", "1708"
                 ],
                 "units": [
-                    "D7C", "3xD7", "3xD6", "D6D", "3xF5Q", "F5S", "F5V",
+                    "D7C", "3xD7", "3xD6", "D6D", "6xF5", "3xF5L", "F5S", "F5V",
                     "E4A", "3xE4", "D6V", "2xE4A", "TGA"
                 ]
             },
@@ -363,19 +363,19 @@
                     "1515", "1516", "1517", "1518", "1519"
                 ],
                 "units": [
-                    "D7C", "3xD7", "3xD6", "D6M", "3xF5Q", "F5S", "F5V",
+                    "D7C", "3xD7", "3xD6", "D6M", "6xF5", "3xF5L", "F5S", "F5V",
                     "E4A", "3xE4", "CVT", "2xE4A", "TGA"
                 ]
             },
             "Tholian Border Squadron": {
                 "hexes": [ "2318", "2517", "2518", "2519" ],
-                "units": [ "D7C", "3xD7", "3xD6", "F5Q", "F5S", "F5V", "E4A", "3xE4", "TGA" ],
+                "units": [ "D7C", "3xD7", "3xD6", "2xF5", "F5L", "F5S", "F5V", "E4A", "3xE4", "TGA" ],
                 "reserve": "true"
             },
             "Northern Reserve": {
                 "hexes": [ "1509" ],
                 "units": [
-                    "C8", "D7C", "3xD7", "3xD6", "D6M", "3xF5Q", "F5S", "F5V",
+                    "C8", "D7C", "3xD7", "3xD6", "D6M", "6xF5", "3xF5L", "F5S", "F5V",
                     "E4A", "3xE4", "CVT", "2xE4A", "TGB", "FRD", "MB (ND)"
                 ],
                 "reserve": "true"
@@ -383,7 +383,7 @@
             "Southern Reserve": {
                 "hexes": [ "1716" ],
                 "units": [
-                    "D7C", "3xD7", "3xD6", "D6D", "3xF5Q", "F5S", "F5V",
+                    "D7C", "3xD7", "3xD6", "D6D", "6xF5", "3xF5L", "F5S", "F5V",
                     "E4A", "3xE4", "D6V", "2xE4A", "TGB", "FRD", "MB (ND)"
                 ],
                 "reserve": "true"
@@ -409,12 +409,12 @@
         "production": [{
             "year": 168,
             "season": "fall",
-            "units": [ "D7C", "D7", "D6", "9xD5", "2xF5Q", "3xE4" ]
+            "units": [ "D7C", "D7", "D6", "9xD5", "4xF5", "2xF5L", "3xE4" ]
         },
         {
             "year": 169,
             "season": "spring",
-            "units": [ "C8", "2xD7", "9xD5", "2xF5Q", "3xE4" ]
+            "units": [ "C8", "2xD7", "9xD5", "4xF5", "2xF5L", "3xE4" ]
         }],
         "#TODO": "Special production rules"
         "#TODO": "Production notes"
