@@ -70,7 +70,8 @@ function clear ()
 
 private static function initial_setup ()
 {
-    for (var nation in this_.game_data_.scenario().setup_order) {
+    var order = this_.game_data_.scenario().setup_order;
+    for (var nation in order) {
         // TODO: Hotseat only for now.
         //if (this_.player_nations_[nation]) {
         if (true) {
