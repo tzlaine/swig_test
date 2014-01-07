@@ -11,6 +11,9 @@ import pair;
 private var nations : Dictionary.<String, nation_t> = new Dictionary.<String, nation_t>();
 
 @SerializeThis
+private var nations_by_id : Dictionary.<int, String> = new Dictionary.<int, String>();
+
+@SerializeThis
 private var map_ : map_t = null;
 
 @SerializeThis
@@ -164,34 +167,55 @@ class hex_t
     var owner : String; // abbreviated
     var owner_id : int;
     var province : int;
-    var feature : String; // TODO: Make this all contents?
-    var hex_zones : hex_zone_t[]; // TODO: Replace feature with this.
+    var feature : String; // TODO: Replace this with zones below.
+    var zones : hex_zone_t[]; // TODO: Replace feature with this.
     var units : Dictionary.<String, units_t>; // owner -> units
     var highlight : boolean;
 };
 
 class offmap_area_t
 {
+    function offmap_area_t ()
+    {
+        hex = new hex_t();
+    }
+
     var owner : String;
     var owner_id : int;
     var name : String;
     var hexes : hex_coord[];
     var position : int; // 0: right, 1: top, 2: left // TODO: Add support for 3: bottom?
-    var features : String[];
+    var features : String[]; // TODO: Replace this with hex.zones.
+    var hex : hex_t; // the container for all units, etc.
 };
 
 class map_t
 {
+    function map_t () {}
+
+    function map_t (nations_by_id : Dictionary.<int, String>)
+    {
+        nations_by_id_ = nations_by_id;
+    }
+
     function set_hex (hc : hex_coord, h : hex_t)
     { hexes[hc.x + hc.y * width] = h; }
 
-    function hex (hc : hex_coord) : hex_t
-    { return hexes[hc.x + hc.y * width]; }
+    public function hex (hc : hex_coord) : hex_t
+    {
+        if (hc.x == hex_coord().x) {
+            var id = hc.y;
+            return offmap_areas[nations_by_id_[id]].hex;
+        }
+        return hexes[hc.x + hc.y * width];
+    }
 
     var width : int;
     var height : int;
     var hexes : hex_t[];
     var offmap_areas : Dictionary.<String, offmap_area_t>;
+
+    var nations_by_id_ : Dictionary.<int, String>;
 };
 
 class hex_coord
@@ -418,10 +442,15 @@ static function crippled_side (uncrippled_side : counter_side_t) : counter_side_
 }
 
 static function str_to_hex_coord (hex_str : String) : hex_coord
+{ return str_to_hex_coord(hex_str, hex_coord().y); }
+
+private static function str_to_hex_coord (hex_str : String, nation_id : int) : hex_coord
 {
     var retval = new hex_coord();
-    if (hex_str == 'offmap')
+    if (hex_str == 'offmap') {
+        retval.y = nation_id;
         return retval;
+    }
     if (hex_str[0] == '0')
         hex_str = hex_str.Substring(1, 3);
     var hex_id : int = int.Parse(hex_str);
@@ -518,13 +547,15 @@ private function populate_nations (json : SimpleJSON.JSONNode)
     var latest_id : int = 0;
     for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
-        nations[nation.Key] = new nation_t();
+        nations.Add(nation.Key, new nation_t());
         nations[nation.Key].id = latest_id++;
         nations[nation.Key].capital_star_points = nation.Value['capital star points'].AsInt;
         nations[nation.Key].name = nation.Value['name'];
         nations[nation.Key].short_name = nation.Value['short name'];
         nations[nation.Key].abbr = nation.Key;
         // TODO
+
+        nations_by_id.Add(nations[nation.Key].id, nations[nation.Key].abbr);
     }
 }
 
@@ -569,7 +600,7 @@ private function populate_oob (json : SimpleJSON.JSONNode)
             var i = 0;
             for (i = 0; i < fleet.Value['hexes'].Count; ++i) {
                 var hex_str : String = fleet.Value['hexes'][i];
-                new_fleet.area[i] = str_to_hex_coord(hex_str);
+                new_fleet.area[i] = str_to_hex_coord(hex_str, nations[nation.Key].id);
                 if (max_units != null && max_units[hex_str] != null)
                     new_fleet.area_unit_limits[i] = max_units[hex_str].AsInt;
             }
@@ -786,7 +817,7 @@ private function populate_counters (json : SimpleJSON.JSONNode)
 
 private function make_map (json : SimpleJSON.JSONNode) : map_t
 {
-    var m : map_t = new map_t();
+    var m : map_t = new map_t(nations_by_id);
     m.width = json['width'].AsInt;
     m.height = json['height'].AsInt;
     m.hexes = new hex_t[m.width * m.height];
