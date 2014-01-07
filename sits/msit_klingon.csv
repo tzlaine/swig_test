@@ -142,7 +142,7 @@ BP	14	2/None	F&E	2	Y144	Pod	None	(431.22): 4	0.5	Battle Pod; Max 4 in service.
 DP	68	2<2>◆/None	CO	0	Y149	Pod	None	(431.22): 6	0.5	Drone pod; scout, EW=1; Limit 2 in service.
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	—NA—	Replacement: 5	0.0	See (422.8)
 REP POD	—	0/None	F&E	0	Y159	Tug Mission	—NA—	Replacement: 5	0.0	See (422.8)
-VP(VP2)	15	0(2▲)/None	F&E	1	Y168	Pod	None	(431.22): 1+5	0.5	Standard Medium Carrier Pod; max 6
+VP	15	0(2▲)/None	F&E	1	Y168	Pod	None	(431.22): 1+5	0.5	Standard Medium Carrier Pod; max 6
 VP3	159	0(3)/None	CO	1	Y172	Pod	From VP: 1+1	(431.22): 1+6	0.5	Improved Medium Carrier Pod; max 6
 VAP	67	0(6)/None	F&E	1	Y175	Pod	None	(431.22): 2+12	1.0	Heavy Carrier Pod; Max 2
 VHP	160	0[8H]/None	AO	0	Y178	Pod	None	2+8	1.0	Heavy Fighter FCR pod; Max 2
