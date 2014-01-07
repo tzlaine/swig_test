@@ -212,6 +212,8 @@ function OnGUI ()
         var starting_forces = game_data_.nation(nation_).starting_forces;
         var fleet = starting_forces[fleet_names[fleet_selection]];
         for (var i = 0; i < fleet.area.Length; ++i) {
+            if (fleet.area[i] == hex_coord())
+                continue;
             var hex = game_data_.map().hex(fleet.area[i]);
             if (fleet.area_unit_limits[i] &&
                 hex.units.ContainsKey(nation_) &&
