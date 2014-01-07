@@ -53,19 +53,23 @@ class units_t
     function insert (unit : String, crippled : boolean)
     {
         if (!units.ContainsKey(unit))
-            units.Add(unit, new pair.<int, int>(0, 0));
+            units.Add(unit, pair.<int, int>(0, 0));
+        var p = units[unit];
         if (crippled)
-            units[unit].second += 1;
+            p.second += 1;
         else
-            units[unit].first += 1;
+            p.first += 1;
+        units[unit] = p;
     }
 
     function erase (unit : String, crippled : boolean)
     {
+        var p = units[unit];
         if (crippled)
-            units[unit].second -= 1;
+            p.second -= 1;
         else
-            units[unit].first -= 1;
+            p.first -= 1;
+        units[unit] = p;
         if (units[unit].first == 0 && units[unit].second == 0)
             units.Remove(unit);
     }
@@ -534,8 +538,10 @@ private function parse_units (json : SimpleJSON.JSONNode) : units_t
             var number_str : String = match.Groups[1].Value;
             var n = number_str == '' ? 1 : int.Parse(number_str);
             if (!retval.units.ContainsKey(match.Groups[2].Value))
-                retval.units.Add(match.Groups[2].Value, new pair.<int, int>(0, 0));
-            retval.units[match.Groups[2].Value].first += n;
+                retval.units.Add(match.Groups[2].Value, pair.<int, int>(0, 0));
+            var p = retval.units[match.Groups[2].Value];
+            p.first += n;
+            retval.units[match.Groups[2].Value] = p;
         }
     }
     return retval;
