@@ -13,8 +13,7 @@ var map_click_listener_ : map_click_listener;
 @DoNotSerialize
 var counter_ : counter;
 @DoNotSerialize
-private var pending_counters : Dictionary.<hex_coord, Array> =
-    new Dictionary.<hex_coord, Array>();
+private var pending_counters : Dictionary.<hex_coord, Array>;
 
 private var nation_ : String;
 private var fleet_names : String[];
@@ -33,6 +32,8 @@ function set_up (n : String)
 
     fleet_selection = 0;
     unit_selection = 0;
+
+    pending_counters = new Dictionary.<hex_coord, Array>();
 
     var starting_forces = game_data_.nation(nation_).starting_forces;
 
