@@ -113,8 +113,7 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 }
 
 function Awake ()
-{ this_ = this; 
-  Debug.Log(Application.persistentDataPath); }
+{ this_ = this; }
 
 function Update ()
 {

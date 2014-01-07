@@ -15,15 +15,18 @@ private var highlighting : GameObject[,];
 private var pending_highlights : hex_coord[];
 
 
+function ready ()
+{ return map_origin_ != Vector3(0, 0, 0); }
+
 function hex_center (hc : hex_coord)
 {
     var retval =
         Vector3(hc.x * 1.5, (map_height_ - 1 - hc.y) * 2 * sin_60, 0) -
         map_origin_;
-    if (hc.x % 2 == 1)
+    if ((hc.x + 1000) % 2 == 1)
         retval.y -= sin_60;
     return retval;
- }
+}
 
 function map_width ()
 { return map_origin_.x * 2; }
@@ -161,6 +164,4 @@ function Update ()
         renderer.material.renderQueue = 10;
         hexes_combined = true;
     }
-
-    enabled = true;
 }

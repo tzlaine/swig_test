@@ -12,6 +12,9 @@ var place_hexes_ : place_hexes;
 var map_click_listener_ : map_click_listener;
 @DoNotSerialize
 var counter_ : counter;
+@DoNotSerialize
+private var pending_counters : Dictionary.<hex_coord, Array> =
+    new Dictionary.<hex_coord, Array>();
 
 private var nation_ : String;
 private var fleet_names : String[];
@@ -33,13 +36,40 @@ function set_up (n : String)
 
     var starting_forces = game_data_.nation(nation_).starting_forces;
 
-    fleet_names = new String[starting_forces.Count];
-
-    var i = 0;
+    var names = new Array();
     for (f in starting_forces) {
-        fleet_names[i] = f.Key;
-        ++i;
+        if (f.Value.area.Length == 1) {
+            var hex = game_data_.map().hex(f.Value.area[0]);
+            var fleet = f.Value.units.units;
+            for (unit_type in fleet) {
+                var i = 0;
+                var placed_counter : counter;
+                for (i = 0; i < unit_type.Value.first; ++i) {
+                    hex.insert(nation_, unit_type.Key, false);
+                    placed_counter = Instantiate(counter_);
+                    placed_counter.init(nation_, unit_type.Key, false);
+                    placed_counter.gameObject.SetActive(false);
+                    if (!pending_counters.ContainsKey(hex.hc))
+                        pending_counters.Add(hex.hc, new Array());
+                    pending_counters[hex.hc].Push(placed_counter.gameObject);
+                }
+                for (i = 0; i < unit_type.Value.second; ++i) {
+                    hex.insert(nation_, unit_type.Key, true);
+                    placed_counter = Instantiate(counter_);
+                    placed_counter.init(nation_, unit_type.Key, true);
+                    placed_counter.gameObject.SetActive(false);
+                    if (!pending_counters.ContainsKey(hex.hc))
+                        pending_counters.Add(hex.hc, new Array());
+                    pending_counters[hex.hc].Push(placed_counter.gameObject);
+                }
+            }
+            f.Value.units.clear();
+        } else {
+            names.Push(f.Key);
+        }
     }
+
+    fleet_names = names.ToBuiltin(String);
 
     place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
 
@@ -135,6 +165,18 @@ function OnGUI ()
 {
     if (!game_data_.map())
         return;
+
+    if (pending_counters && place_hexes_.ready()) {
+        for (hc in pending_counters) {
+            var hex_center = place_hexes_.hex_center(hc.Key);
+            for (c in hc.Value) {
+                var go = c as GameObject;
+                go.transform.position = hex_center;
+                go.SetActive(true);
+            }
+        }
+        pending_counters = null;
+    }
 
     if (!unit_names_with_quantities)
         set_units(false);

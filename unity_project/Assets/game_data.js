@@ -40,8 +40,11 @@ class units_t
 {
     function units_t ()
     {
-        units = new Dictionary.<String, pair.<int, int> >();
+        clear();
     }
+
+    function clear ()
+    { units = new Dictionary.<String, pair.<int, int> >(); }
 
     function size () : int
     {
@@ -183,10 +186,13 @@ class offmap_area_t
     var owner : String;
     var owner_id : int;
     var name : String;
-    var hexes : hex_coord[];
+    var adjacent_hexes : hex_coord[];
     var position : int; // 0: right, 1: top, 2: left // TODO: Add support for 3: bottom?
     var features : String[]; // TODO: Replace this with hex.zones.
-    var hex : hex_t; // the container for all units, etc.
+
+    // The container for all units, etc.  The .hc member is the 'hex' within
+    // the offmap area into which to place counters.
+    var hex : hex_t;
 };
 
 class map_t
@@ -453,6 +459,10 @@ private static function str_to_hex_coord (hex_str : String, nation_id : int) : h
     }
     if (hex_str[0] == '0')
         hex_str = hex_str.Substring(1, 3);
+    if (hex_str[0] == '0')
+        hex_str = hex_str.Substring(1, 2);
+    if (hex_str[0] == '0')
+        hex_str = hex_str.Substring(1, 1);
     var hex_id : int = int.Parse(hex_str);
     retval.x = hex_id / 100 - 1;
     retval.y = hex_id % 100 - 1;
@@ -855,20 +865,21 @@ private function make_map (json : SimpleJSON.JSONNode) : map_t
                 oa.owner = zone.Key;
                 oa.owner_id = id(oa.owner);
                 oa.name = strip_quotes(offmap_area['name']);
+                oa.hex.hc = str_to_hex_coord(strip_quotes(offmap_area['counter hex']));
                 if (offmap_area['features'].Count) {
                     oa.features = new String[offmap_area['features'].Count];
                     for (i = 0; i < offmap_area['features'].Count; ++i) {
                         oa.features[i] = strip_quotes(offmap_area['features'][i]);
                     }
                 }
-                oa.hexes = new hex_coord[offmap_area['adjacent hexes'].Count];
+                oa.adjacent_hexes = new hex_coord[offmap_area['adjacent hexes'].Count];
                 for (i = 0; i < offmap_area['adjacent hexes'].Count; ++i) {
-                    oa.hexes[i] =
+                    oa.adjacent_hexes[i] =
                         str_to_hex_coord(strip_quotes(offmap_area['adjacent hexes'][i]));
                     if (0 < i) {
                         var position = 0;
-                        if (oa.hexes[0].x == oa.hexes[i].x) {
-                            position = oa.hexes[0].x ? 0 : 2; // right : left
+                        if (oa.adjacent_hexes[0].x == oa.adjacent_hexes[i].x) {
+                            position = oa.adjacent_hexes[0].x ? 0 : 2; // right : left
                         } else {
                             position = 1; // top
                         }

@@ -229,17 +229,14 @@ function Start ()
         add_offmap(oa.Value.owner,
                    oa.Value.owner_id,
                    oa.Value.position == 1 ?
-                       oa.Value.hexes[0] :
-                       oa.Value.hexes[oa.Value.hexes.Length - 1],
+                       oa.Value.adjacent_hexes[0] :
+                       oa.Value.adjacent_hexes[oa.Value.adjacent_hexes.Length - 1],
                    oa.Value.position == 1 ?
-                       oa.Value.hexes[oa.Value.hexes.Length - 1] :
-                       oa.Value.hexes[0],
+                       oa.Value.adjacent_hexes[oa.Value.adjacent_hexes.Length - 1] :
+                       oa.Value.adjacent_hexes[0],
                    oa.Value.position,
                    oa.Value.name,
                    oa.Value.features,
                    m);
     }
 }
-
-function Awake ()
-{ enabled = false; }
