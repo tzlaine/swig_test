@@ -365,6 +365,7 @@
             "offmap area": {
                 "name": "Federation\nSurvey Area",
                 "features": ["SB"],
+                "counter hex": "3000",
                 "adjacent hexes": [
                     "2701", "2801", "2901", "3001", "3101"
                 ]
@@ -512,6 +513,7 @@
             "offmap area": {
                 "name": "Gorn Trusteeship Zone",
                 "features": ["SB"],
+                "counter hex": "4400",
                 "adjacent hexes": [
                     "4101", "4201", "4301", "4401", "4501", "4601",
                     "4701", "4801", "4901", "5001", "5101"
@@ -609,6 +611,7 @@
             "offmap area": {
                 "name": "Old Cols.",
                 "features": ["SB"],
+                "counter hex": "0018",
                 "adjacent hexes": [
                     "0117", "0118", "0119"
                 ]
@@ -784,6 +787,7 @@
             "offmap area": {
                 "name": "ISC Distant Zone",
                 "features": ["SB", "SB"],
+                "counter hex": "6210",
                 "adjacent hexes": [
                     "6104", "6105", "6106", "6107", "6108", "6109",
                     "6110", "6111", "6112", "6113", "6114", "6115"
@@ -1067,6 +1071,7 @@
             "offmap area": {
                 "name": "Kzinti Barony",
                 "features": ["SB"],
+                "counter hex": "1400",
                 "adjacent hexes": [
                     "1101", "1201", "1301", "1401", "1501", "1601", "1701"
                 ]
@@ -1188,6 +1193,7 @@
             "offmap area": {
                 "name": "Lyran Far Stars",
                 "features": ["SB"],
+                "counter hex": "0002",
                 "adjacent hexes": [
                     "0101", "0102", "0103", "0104", "0105", "1016", "0107", "0108", "0109"
                 ]
@@ -1469,6 +1475,7 @@
             "offmap area": {
                 "name": "Rom\nOff-map",
                 "features": [],
+                "counter hex": "6218",
                 "adjacent hexes": [
                     "6118", "6119"
                 ]
