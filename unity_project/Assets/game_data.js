@@ -400,11 +400,15 @@ class scenario_t
     function scenario_t ()
     {
         nations = new Dictionary.<String, scenario_nation_t>();
+        teams = new Dictionary.<String, String[]>();
     }
+
     var name : String;
     var start_turn : int;
     var setup_order : String[];
     var nations : Dictionary.<String, scenario_nation_t>;
+    var teams : Dictionary.<String, String[]>;
+    var team_turn_order : String[];
     var turns : scenario_turn_t[];
 };
 
@@ -722,6 +726,13 @@ private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
 
     var scenario_name : String = json['name'];
     scenario_.name = scenario_name;
+
+    for (var team : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+         json['teams']) {
+        scenario_.teams.Add(team.Key, parse_strings(team.Value));
+    }
+
+    scenario_.team_turn_order = parse_strings(json['team turn order']);
 
     scenario_.start_turn = parse_turn(json['start turn']);
     scenario_.setup_order = parse_strings(json['setup order']);
