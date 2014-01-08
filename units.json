@@ -2229,7 +2229,7 @@
             "salvage": 4,
             "notes": "Base Hull (DN)"
         },
-        "ID (CVA)": {
+        "ID": {
             "cmd": 10,
             "uncrippled": {
                 "att": 10,
@@ -2362,6 +2362,44 @@
             "move": 6,
             "salvage": 2,
             "notes": "Base Hull (Fusion CA)"
+        },
+        "LC": {
+            "cmd": 9,
+            "uncrippled": {
+                "att": 7,
+                "def": 9,
+                "fighters": 3.0
+            },
+            "crippled": {
+                "att": 5,
+                "def": 5,
+                "fighters": 1.0
+            },
+            "available": {
+                "year": 133,
+                "season": "spring"
+            },
+            "substitutions for": {
+                "CC": {
+                    "cost": 7,
+                    "fighter_cost": 3
+                }
+            },
+            "conversions from": {
+                "RN": {
+                    "cost": 2
+                },
+                "LB": {
+                    "cost": 3,
+                    "fighter_cost": 1
+                },
+                "LM": {
+                    "cost": 1
+                }
+            },
+            "move": 6,
+            "salvage": 2,
+            "notes": "Command Variant"
         },
         "TG": {
             "cmd": 8,
@@ -3870,7 +3908,7 @@
             "spaceworthy": false,
             "notes": "Battle Pod; Max 4 in service."
         },
-        "VP(VP2)": {
+        "VP": {
             "cmd": 1,
             "uncrippled": {
                 "att": 0,
@@ -4606,7 +4644,7 @@
             "salvage": 4,
             "notes": "Space Control Ship"
         },
-        "CV (CVS)": {
+        "CV": {
             "cmd": 9,
             "uncrippled": {
                 "att": 10,
