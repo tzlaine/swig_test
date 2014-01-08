@@ -91,9 +91,11 @@ private static function economics (team : String)
     yield WaitForSeconds(0.001); // TODO
     /*  PHASE 1: ECONOMICS
 
-        1A: Base and PDU (or PGB‡) deployments/upgrades begun on a previous
-        Phasing Player Turn become operational. Both players conduct first
-        check to evaluate supply status for combat (410.22).
+        1A1: Base and PDU (or PGB‡) deployments/upgrades begun on a previous
+        Phasing Player Turn become operational. TODO
+
+        1A2: Both players conduct first check to evaluate supply status for
+        combat (410.22).
 
         1B: Phasing Player determines the total number of survey points
         generated (505.21).
