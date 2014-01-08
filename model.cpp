@@ -648,13 +648,18 @@ map read_map ()
     return retval;
 }
 
-#if 1
-int main ()
+void validate_map ()
 {
     graph::graph g;
     const map m = read_map();
     init_graph(g, m);
-    std::cerr << "hello, graph!\n";
+    std::cerr << "map looks good!\n";
+}
+
+#if 1
+int main ()
+{
+    validate_map();
     return 0;
 }
 #endif
