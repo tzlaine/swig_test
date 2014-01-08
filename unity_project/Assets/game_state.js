@@ -2,6 +2,7 @@
 
 import System.IO;
 import RadicalRoutineExtensions;
+import graph_algorithms;
 
 @script SerializeAll
 
@@ -631,7 +632,8 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 }
 
 function Awake ()
-{ this_ = this; }
+{ Debug.Log("test(3)=" + graph_algorithms.test(3)); // TODO
+    this_ = this; }
 
 function Update ()
 {

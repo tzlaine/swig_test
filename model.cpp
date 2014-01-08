@@ -28,6 +28,9 @@ namespace boost {
 }
 #endif
 
+#if defined(BUILD_LIBRARY) && defined(_MSC_VER)
+#define GRAPH_ALGO_API __declspec(dllexport)
+#endif
 
 namespace {
 
@@ -665,6 +668,16 @@ void validate_map ()
     const map m = read_map();
     init_graph(g, m);
     std::cerr << "map looks good!\n";
+}
+
+extern "C" {
+
+    GRAPH_ALGO_API
+    int test (int i)
+    {
+        return i + 42;
+    }
+
 }
 
 #ifndef BUILD_LIBRARY

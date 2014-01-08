@@ -11,3 +11,11 @@ add_library(
     MODULE
     model.cpp
 )
+
+set_target_properties(
+    graph_algorithms
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
+    LIBARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
+)
