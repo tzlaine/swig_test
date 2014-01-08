@@ -11,6 +11,7 @@
 
 #include <fstream>
 #include <unordered_map>
+#include <string>
 
 #if 1
 #include <iostream>
@@ -535,9 +536,13 @@ void init_graph (graph::graph& g, map m)
 
 hex_coord hex_string_to_hex_coord (std::string str)
 {
-    const unsigned int hex_id = boost::lexical_cast<unsigned int>(
-        str[0] == '0' ? str.substr(1, 3) : str
-    );
+    if (str[0] == '0')
+        str.substr(1, -1);
+    if (str[0] == '0')
+        str.substr(1, -1);
+    if (str[0] == '0')
+        str.substr(1, -1);
+    const unsigned int hex_id = boost::lexical_cast<unsigned int>(str);
     unsigned int hex_x = hex_id / 100 - 1;
     unsigned int hex_y = hex_id % 100 - 1;
     return hex_coord(hex_x, hex_y);
@@ -554,7 +559,7 @@ map::feature_ feature_string_to_feature (std::string str)
         retval = map::min;
     else if (str == "MAJ")
         retval = map::maj;
-    else if (str != "")
+    else if (str != "capital" && str != "none")
         throw std::runtime_error("Invalid hex feature \"" + str + "\" found in map.json");
     return retval;
 }
@@ -565,7 +570,7 @@ map read_map ()
 
     boost::property_tree::ptree pt;
     {
-        std::ifstream ifs("map.json");
+        std::ifstream ifs("default_map.json");
         boost::property_tree::json_parser::read_json(ifs, pt);
     }
 
@@ -576,17 +581,12 @@ map read_map ()
 
     boost::property_tree::ptree zones = pt.get_child("zones");
     for (auto zone : zones) {
-        if (zone.first == "Neutral Zone") {
-            std::map<unsigned int, std::string> owned_hexes;
-            boost::property_tree::ptree owned_hexes_ = zone.second.get_child("owned hexes");
-            for (auto owned_hex : owned_hexes_) {
-                owned_hexes[hex_id(hex_string_to_hex_coord(owned_hex.first))] = owned_hex.second.data(); // TODO: Convert this to an owner ID.
-            }
-
+        if (zone.first == "NZ") {
             std::map<unsigned int, map::feature_> planets;
             boost::property_tree::ptree planets_ = zone.second.get_child("planets");
             for (auto planet : planets_) {
-                planets[hex_id(hex_string_to_hex_coord(planet.first))] = feature_string_to_feature(planet.second.data());
+                planets[hex_id(hex_string_to_hex_coord(planet.first))] =
+                    feature_string_to_feature(planet.second.data());
             }
 
             boost::property_tree::ptree hexes = zone.second.get_child("hexes");
@@ -636,7 +636,7 @@ map read_map ()
         if (retval.hexes[i].coord == hex_coord()) {
             unsigned int hex_x = i % retval.width + 1;
             unsigned int hex_y = i / retval.width + 1;
-            std::string hex_str = std::to_string(hex_x * 100 + hex_y);
+            std::string hex_str = boost::lexical_cast<std::string>(hex_x * 100 + hex_y);
             if (hex_str.size() == 3u)
                 hex_str = '0' + hex_str;
             throw std::runtime_error("Hex " + hex_str + " not defined in map.json");
