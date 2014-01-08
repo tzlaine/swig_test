@@ -13,8 +13,19 @@
 #include <unordered_map>
 #include <string>
 
-#if 1
 #include <iostream>
+
+
+#ifdef BOOST_NO_EXCEPTIONS
+#include <boost/exception/diagnostic_information.hpp>
+
+namespace boost {
+    void throw_exception (std::exception const & e)
+    {
+        // TODO: Send up to Unity app?
+        std::cerr << boost::diagnostic_information(e);
+    }
+}
 #endif
 
 
@@ -56,7 +67,7 @@ namespace graph {
         void operator() (Vertex u, Graph& g)
         {
             if (static_cast<int>(u) == destination)
-                throw found_destination();
+                boost::throw_exception(found_destination());
         }
 
         const int destination;
@@ -95,7 +106,7 @@ namespace graph {
                 m_predecessors[static_cast<int>(v)] = m_source;
 
                 if (v == m_stop)
-                    throw found_destination();
+                    boost::throw_exception(found_destination());
 
                 if (m_level_complete) {
                     m_marker = v;
@@ -107,7 +118,7 @@ namespace graph {
             {
                 if (v == m_marker) {
                     if (!m_levels_remaining)
-                        throw reached_depth_limit();
+                        boost::throw_exception(reached_depth_limit());
                     m_levels_remaining--;
                     m_level_complete = true;
                 }
@@ -560,7 +571,7 @@ map::feature_ feature_string_to_feature (std::string str)
     else if (str == "MAJ")
         retval = map::maj;
     else if (str != "capital" && str != "none")
-        throw std::runtime_error("Invalid hex feature \"" + str + "\" found in map.json");
+        boost::throw_exception(std::runtime_error("Invalid hex feature \"" + str + "\" found in map.json"));
     return retval;
 }
 
@@ -597,7 +608,7 @@ map read_map ()
                 map::hex& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
                 if (map_hex.coord != hex_coord())
-                    throw std::runtime_error("Duplicate definition of hex " + hex.second.data());
+                    boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.second.data()));
 
                 map_hex.coord = hc;
                 map_hex.owner = 0;
@@ -618,7 +629,7 @@ map read_map ()
                     map::hex& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
                     if (map_hex.coord != hex_coord())
-                        throw std::runtime_error("Duplicate definition of hex " + hex.first);
+                        boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.first));
 
                     map_hex.coord = hc;
                     map_hex.owner = nation_id;
@@ -639,7 +650,7 @@ map read_map ()
             std::string hex_str = boost::lexical_cast<std::string>(hex_x * 100 + hex_y);
             if (hex_str.size() == 3u)
                 hex_str = '0' + hex_str;
-            throw std::runtime_error("Hex " + hex_str + " not defined in map.json");
+            boost::throw_exception(std::runtime_error("Hex " + hex_str + " not defined in map.json"));
         }
     }
 
@@ -656,7 +667,7 @@ void validate_map ()
     std::cerr << "map looks good!\n";
 }
 
-#if 1
+#ifndef BUILD_LIBRARY
 int main ()
 {
     validate_map();
