@@ -633,6 +633,19 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 
 function Awake ()
 { Debug.Log("test(3)=" + graph_algorithms.test(3)); // TODO
+  var floats = new float[3];
+  floats[0] = 1.0;
+  floats[1] = 2.0;
+  floats[2] = 3.0;
+  Debug.Log("test_2()=" + graph_algorithms.test_2(floats)); // TODO
+  var hexes = new ga_hex_t[3];
+  hexes[0].a = 1;
+  hexes[1].a = 2;
+  hexes[2].a = 3;
+  hexes[0].b = 1.5;
+  hexes[1].b = 2.5;
+  hexes[2].b = 3.5;
+  Debug.Log("test_3()=" + graph_algorithms.test_3(hexes)); // TODO
     this_ = this; }
 
 function Update ()

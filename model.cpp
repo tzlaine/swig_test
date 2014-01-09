@@ -13,6 +13,7 @@
 #include <map>
 #include <string>
 
+#include <numeric> // TODO
 #include <iostream>
 
 
@@ -671,12 +672,34 @@ void validate_map ()
     std::cerr << "map looks good!\n";
 }
 
+struct ga_hex_t
+{
+    int a;
+    float b;
+};
+
 extern "C" {
 
     GRAPH_ALGO_API
     int test (int i)
     {
         return i + 42;
+    }
+
+    GRAPH_ALGO_API
+    float test_2 (int n, float floats[])
+    {
+        return std::accumulate(floats, floats + n, 0.0f);
+    }
+
+    GRAPH_ALGO_API
+    float test_3 (int n, ga_hex_t* hexes)
+    {
+        float retval = 0;
+        for (int i = 0; i < n; ++i) {
+            retval += hexes[i].a + hexes[i].b;
+        }
+        return retval;
     }
 
 }
