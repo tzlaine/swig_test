@@ -2,6 +2,7 @@
 
 import System.IO;
 import RadicalRoutineExtensions;
+import System.Runtime.InteropServices;
 import graph_algorithms;
 
 @script SerializeAll
@@ -84,6 +85,35 @@ private static function initial_setup ()
         } else {
             // TODO: wait for other player to set up this nation.
         }
+    }
+}
+
+private static function determine_supply ()
+{
+    Debug.Log('determine_supply()');
+    var m = this_.game_data_.map();
+    var hexes = new supply_check_hex_t[m.width * m.height];
+    for (var j = 0; j < m.height; ++j) {
+        for (var i = 0; i < m.width; ++i) {
+            var h = new supply_check_hex_t();
+            // TODO: Fill in data!
+            hexes[i + j * m.width] = h;
+        }
+    }
+    var nation_teams = new int[this_.game_data_.nations_by_id.Count];
+    var capitols = new int[this_.game_data_.nations_by_id.Count];
+    // TODO: Fill in data!
+    var supply_ : System.IntPtr = graph_algorithms.determine_supply(
+        m.width, m.height,
+        hexes,
+        nation_teams.Length,
+        nation_teams,
+        capitols
+    );
+    var supply = new int[m.width * m.height];
+    Marshal.Copy(supply_, supply, 0, m.width * m.height);
+    for (i in supply) {
+        Debug.Log(i);
     }
 }
 
@@ -624,6 +654,8 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 
     while (!game_data_.map())
         yield WaitForSeconds(0.01);
+
+    determine_supply(); // TODO
 
     var scenario = game_data_.scenario();
     turn_ = scenario.start_turn;

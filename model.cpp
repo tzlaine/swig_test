@@ -678,6 +678,29 @@ struct ga_hex_t
     float b;
 };
 
+struct supply_data
+{
+    std::vector<int> supply;
+} g_supply_data;
+
+struct supply_check_hex_t
+{
+    int owner_id;
+    // The presence values for each team are encoded as:
+    // 1 << 0: ship
+    // 1 << 1: non-ship unit
+    // 1 << 2: base w/fighters/PFs
+    // 1 << 3: planet
+    // 1 << 4: SB
+    // 1 << 5: BATS
+    // 1 << 6: MB
+    // 1 << 7: convoy
+    // 1 << 8: supply tug
+    // Team N is in bits 1 << (N * 9 + 0) through 1 << (N * 9 + 8).
+    int presence;
+    int touches_owner_offmap;
+};
+
 extern "C" {
 
     GRAPH_ALGO_API
@@ -700,6 +723,23 @@ extern "C" {
             retval += hexes[i].a + hexes[i].b;
         }
         return retval;
+    }
+
+    // Returns an int for each hex, containing a grid ID in the first 16 bits
+    // (0 is no grid, 1 is main capitol grid, 2 is main offmap grid, anything
+    // else is a partial grid).  Bit 17 contains a flag indicating non-free
+    // supplies (meaning the hex is in a partial supply grid, and does not
+    // include a free-supply feature like a SB, BATS, or planet.
+    GRAPH_ALGO_API
+    int* determine_supply (int w, int h,
+                           supply_check_hex_t hexes[],
+                           int nations,
+                           int nation_team_membership[],
+                           int capitols[])
+    {
+        g_supply_data.supply.resize(w * h);
+        // TODO
+        return &g_supply_data.supply[0];
     }
 
 }

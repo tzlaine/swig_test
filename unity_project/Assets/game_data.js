@@ -11,7 +11,7 @@ import pair;
 private var nations : Dictionary.<String, nation_t> = new Dictionary.<String, nation_t>();
 
 @SerializeThis
-private var nations_by_id : Dictionary.<int, String> = new Dictionary.<int, String>();
+var nations_by_id : Dictionary.<int, String> = new Dictionary.<int, String>();
 
 @SerializeThis
 private var map_ : map_t = null;
