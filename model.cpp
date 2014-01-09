@@ -10,7 +10,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include <fstream>
-#include <unordered_map>
+#include <map>
 #include <string>
 
 #include <iostream>
@@ -18,7 +18,6 @@
 
 #ifdef BOOST_NO_EXCEPTIONS
 #include <boost/exception/diagnostic_information.hpp>
-
 namespace boost {
     void throw_exception (std::exception const & e)
     {
@@ -30,6 +29,8 @@ namespace boost {
 
 #if defined(BUILD_LIBRARY) && defined(_MSC_VER)
 #define GRAPH_ALGO_API __declspec(dllexport)
+#else
+#define GRAPH_ALGO_API
 #endif
 
 namespace {
@@ -62,7 +63,7 @@ namespace graph {
     {
         typedef boost::on_finish_vertex event_filter;
 
-        struct found_destination {};
+        struct found_destination : std::exception {};
 
         short_circuiting_visitor (int dest) : destination (dest) {}
 
@@ -80,8 +81,8 @@ namespace graph {
     class bfs_visitor
     {
     public:
-        class found_destination {}; 
-        class reached_depth_limit {};
+        struct found_destination : std::exception {}; 
+        struct reached_depth_limit : std::exception {};
 
     private:
         Vertex m_marker;
@@ -403,7 +404,7 @@ struct map
     // TODO: Move this out into its own data file.  Contents of capital hexes
     // should be placed there as well.
     std::vector<std::pair<unsigned int, std::string>> nations;
-    std::unordered_map<unsigned int, std::vector<province>> provinces; // key is owner ID
+    boost::unordered_map<unsigned int, std::vector<province>> provinces; // key is owner ID
     std::vector<hex> hexes;
 };
 
@@ -464,7 +465,7 @@ unsigned int hex_id (hex_coord hc)
 // Static container for hex ids within R=2 of a central hex.
 struct neighbors
 {
-    typedef std::array<hex_coord, 19> data_type;
+    typedef boost::array<hex_coord, 19> data_type;
     typedef data_type::const_iterator iterator;
 
     neighbors () : size (0) {}
@@ -596,7 +597,7 @@ map read_map ()
     boost::property_tree::ptree zones = pt.get_child("zones");
     for (auto zone : zones) {
         if (zone.first == "NZ") {
-            std::map<unsigned int, map::feature_> planets;
+            boost::unordered_map<unsigned int, map::feature_> planets;
             boost::property_tree::ptree planets_ = zone.second.get_child("planets");
             for (auto planet : planets_) {
                 planets[hex_id(hex_string_to_hex_coord(planet.first))] =
