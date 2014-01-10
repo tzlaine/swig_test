@@ -6,6 +6,8 @@ import System.Collections.Generic;
 import System.Globalization.NumberStyles;
 import System.Text.RegularExpressions;
 import pair;
+import unit_costs_t;
+import towable_stats_t;
 
 @SerializeThis
 private var nations : Dictionary.<String, nation_t> = new Dictionary.<String, nation_t>();
@@ -18,6 +20,10 @@ private var map_ : map_t = null;
 
 @SerializeThis
 private var scenario_ : scenario_t = null;
+
+@SerializeThis
+private var units : Dictionary.<String, Dictionary.<String, unit_t> > =
+    new Dictionary.<String, Dictionary.<String, unit_t> >();
 
 private var counters : Dictionary.<String, Dictionary.<String, counter_t> > =
     new Dictionary.<String, Dictionary.<String, counter_t> >();
@@ -34,6 +40,44 @@ class capital_hex
     var hc : hex_coord;
     var name : String;
     var planets : List.<String>;
+};
+
+class unit_stats_t
+{
+    var attack : int;
+    var defense : int;
+    var fighters : float;
+    var heavy_fighter_bonus : float;
+    var drones : int;
+    var pfs : int;
+    var scout : boolean;
+    var mauler : boolean;
+    var escort : int; // 0: non-escort, 1: light, 2: heavy
+    var tug_missions : String[];
+};
+
+class unit_t
+{
+    function unit_t ()
+    {
+        conversions_from = new Dictionary.<String, unit_costs_t>();
+        substitutions_for = new Dictionary.<String, unit_costs_t>();
+    }
+
+    var name : String;
+    var command : int;
+    var uncrippled : unit_stats_t;
+    var crippled : unit_stats_t;
+    var date_available : int;
+    var construction : unit_costs_t;
+    var conversions_from : Dictionary.<String, unit_costs_t>;
+    var substitutions_for : Dictionary.<String, unit_costs_t>;
+    var move : int;
+    var carrier : int; // 0: non-carrier, light: 1, medium: 2, heavy: 3, single-ship: 4
+    var spaceworthy : boolean;
+    var towable : towable_stats_t;
+    var salvage : float;
+    var max_in_service : int;
 };
 
 class units_t
@@ -829,6 +873,103 @@ private function populate_counters (json : SimpleJSON.JSONNode)
     }
 }
 
+private function populate_unit_stats (json : SimpleJSON.JSONNode)
+{
+    var retval : unit_stats_t = null;
+    if (json != null) {
+        retval = new unit_stats_t();
+        retval.attack = json['att'].AsInt;
+        retval.defense = json['def'].AsInt;
+        if (json['fighters'])
+            retval.fighters = json['fighters'].AsFloat;
+        if (json['heavy fighter bonus'])
+            retval.heavy_fighter_bonus = json['heavy fighter bonus'].AsFloat;
+        if (json['drones'])
+            retval.drones = json['drones'].AsInt;
+        if (json['PFs'])
+            retval.pfs = json['PFs'].AsInt;
+        if (json['scout'])
+            retval.scout = true;
+        if (json['mauler'])
+            retval.mauler = true;
+        if (json['escort']) {
+            var escort : String = json['escort'];
+            if (escort == 'light')
+                retval.escort = 1;
+            else if (escort == 'heavy')
+                retval.escort = 2;
+        }
+        retval.tug_missions = parse_strings(json['tug missions']);
+    }
+    return retval;
+}
+
+private function populate_unit_costs (json : SimpleJSON.JSONNode)
+{
+    var retval : unit_costs_t;
+    if (json != null) {
+        retval.cost = json['cost'].AsInt;
+        if (json['fighter cost'])
+            retval.fighter_cost = json['fighter cost'].AsInt;
+    }
+    return retval;
+}
+
+private function populate_units (json : SimpleJSON.JSONNode)
+{
+    for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+         json) {
+        var nation_units = new Dictionary.<String, unit_t>();
+        for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+             n.Value) {
+            var unit = new unit_t();
+            unit.name = u.Key;
+            unit.command = u.Value['cmd'].AsInt;
+            unit.uncrippled = populate_unit_stats(u.Value['uncrippled']);
+            unit.crippled = populate_unit_stats(u.Value['crippled']);
+            unit.date_available = parse_turn(u.Value['date available']);
+            unit.construction = populate_unit_costs(u.Value['construction']);
+            if (u.Value['conversions from'] != null) {
+                for (var conv : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+                     u.Value['conversions from']) {
+                    if (conv.Key != 'TODO')
+                        unit.conversions_from.Add(conv.Key, populate_unit_costs(conv.Value));
+                }
+            }
+            if (u.Value['substitutions for'] != null) {
+                for (var sub : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+                     u.Value['substitutions for']) {
+                    if (sub.Key != 'TODO')
+                        unit.substitutions_for.Add(sub.Key, populate_unit_costs(sub.Value));
+                }
+            }
+            unit.move = u.Value['move'].AsInt;
+            if (u.Value['carrier']) {
+                var carrier : String = u.Value['carrier'];
+                if (carrier == 'light')
+                    unit.carrier = 1;
+                else if (carrier == 'medium')
+                    unit.carrier = 2;
+                else if (carrier == 'heavy')
+                    unit.carrier = 3;
+                else if (carrier == 'single-ship')
+                    unit.carrier = 4;
+            }
+            if (u.Value['spaceworthy'])
+                unit.spaceworthy = false;
+            if (u.Value['towable']) {
+                unit.towable.move_cost = u.Value['towable']['move cost'].AsInt;
+                unit.towable.strategic_move_limit =
+                    u.Value['towable']['strat move limit'].AsInt;
+            }
+            unit.salvage = u.Value['salvage'].AsFloat;
+            unit.max_in_service = u.Value['max in service'].AsInt;
+            nation_units.Add(u.Key, unit);
+        }
+        units.Add(n.Key, nation_units);
+    }
+}
+
 private function make_map (json : SimpleJSON.JSONNode) : map_t
 {
     var m : map_t = new map_t(nations_by_id);
@@ -925,6 +1066,9 @@ function load_data (scenario : SimpleJSON.JSONNode)
     populate_oob(json);
 
     populate_scenario(scenario, m);
+
+    json = JSON.Parse(System.IO.File.ReadAllText('../units.json'));
+    populate_units(json);
 
     map_ = m;
 }
