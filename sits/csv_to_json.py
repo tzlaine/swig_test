@@ -334,7 +334,7 @@ def process_line (fields, last_line):
         (indent, indent, tow_move_cost, indent, tow_strat_move_limit, indent)
     print_salvage(fields[9])
     if not spaceworthy:
-        print indent + '"spaceworthy": false,'
+        print indent + '"spaceworthy": "false",'
     print_notes(notes)
     print outer_indent + '}' + (not last_line and ',' or '')
 

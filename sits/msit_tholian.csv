@@ -84,7 +84,7 @@ BW	7	4(4)/2(2)	F&E	5	Y170	PC(4)	From PC: 1+8	For PC: 4.5+8	0.625	Escort Carrier
 PCE	28	4■/2■	F&E	3	Y170	PC(4)	From PC: 1	For PC: 3.5	0.625	Light Escort §
 BW (2BW)	—	8(4)/4(2) BW+PCE	F&E	5	Y170	Group	From 2xPC: 2+8	Schedule: 7+8	Ships	Escort Carrier Group
 FCR	42	4[6]■/2	AO	3	Y171	PC(4)	From PC: 1+6	For PC: 3.5+6	0.625	Carrier Resupply Ship; Light Escort §; Theater Transport (539.72) and can carry 3EP.
-PFT	8	4P◆/0-2P	F&E	3	Y180(B)	PC(4)	From PC or DD: 5	For PC: 7.5	0.625	PF Tender, Scout; EW=1
+PFT	8	4P◆/0-2P	F&E	3	Y180(B)	PC(4)	From PC/DD: 5	For PC: 7.5	0.625	PF Tender, Scout; EW=1
 PCX	204	6/3	AO	4	Y183	PC(4)	From PC: 4	For PC: 6	1.5	X-Ship §
 POLICE CUTTERS										
 POL	52	2/None	PO	3	Y115	POL(4)	—NA—	For PC: 2	0.0	Police Cutter (531.0)

@@ -5,7 +5,7 @@ BB	47	20/10	REIN	10	Y175	BB(2)	From DN or CA: 28	(436.0): 36	9.0	Base Hull Type,
 BBV				10		BB(2)			9.0	Battleship carrier
 SDS				10		BB(2)			9.0	Stellar domination ship
 DN DREADNOUGHT										
-DN	2	12/6	F&E	10	Y168	DN(2)	From CA or CC: 6 From CA + DND: 2 From CC + DND: 2	Schedule: 16	4.0	Base Hull Type (DN)
+DN	2	12/6	F&E	10	Y168	DN(2)	From CA/CC: 6 From CA + DND: 2 From CC + DND: 2	Schedule: 16	4.0	Base Hull Type (DN)
 DNL	63	11F/6	AO	9	Y168	DNL(2)	From CA/CC: 6	For DN: 16	3.5	Fast Dreadnought (525.1)
 STL	65	12✛/6	AO	10	Y173	DN(2)	From CA: 10‡ From DN: 5 From STT: NA	For DN: 18	4.0	Mauler variant of DN (525.327); Maximum of one in service
 CVA	48	11-12(12)/6(6)	CO	10	Y175	DN(2)	"From CV: 8+12
