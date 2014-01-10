@@ -22,8 +22,8 @@ private var map_ : map_t = null;
 private var scenario_ : scenario_t = null;
 
 @SerializeThis
-private var units : Dictionary.<String, Dictionary.<String, unit_t> > =
-    new Dictionary.<String, Dictionary.<String, unit_t> >();
+private var unit_defs : Dictionary.<String, Dictionary.<String, unit_def_t> > =
+    new Dictionary.<String, Dictionary.<String, unit_def_t> >();
 
 private var counters : Dictionary.<String, Dictionary.<String, counter_t> > =
     new Dictionary.<String, Dictionary.<String, counter_t> >();
@@ -56,7 +56,7 @@ class unit_stats_t
     var tug_missions : String[];
 };
 
-class unit_t
+class unit_def_t
 {
     function unit_t ()
     {
@@ -919,54 +919,54 @@ private function populate_units (json : SimpleJSON.JSONNode)
 {
     for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
-        var nation_units = new Dictionary.<String, unit_t>();
+        var nation_unit_defs = new Dictionary.<String, unit_def_t>();
         for (var u : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
              n.Value) {
-            var unit = new unit_t();
-            unit.name = u.Key;
-            unit.command = u.Value['cmd'].AsInt;
-            unit.uncrippled = populate_unit_stats(u.Value['uncrippled']);
-            unit.crippled = populate_unit_stats(u.Value['crippled']);
-            unit.date_available = parse_turn(u.Value['date available']);
-            unit.construction = populate_unit_costs(u.Value['construction']);
+            var unit_def = new unit_def_t();
+            unit_def.name = u.Key;
+            unit_def.command = u.Value['cmd'].AsInt;
+            unit_def.uncrippled = populate_unit_stats(u.Value['uncrippled']);
+            unit_def.crippled = populate_unit_stats(u.Value['crippled']);
+            unit_def.date_available = parse_turn(u.Value['date available']);
+            unit_def.construction = populate_unit_costs(u.Value['construction']);
             if (u.Value['conversions from'] != null) {
                 for (var conv : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      u.Value['conversions from']) {
                     if (conv.Key != 'TODO')
-                        unit.conversions_from.Add(conv.Key, populate_unit_costs(conv.Value));
+                        unit_def.conversions_from.Add(conv.Key, populate_unit_costs(conv.Value));
                 }
             }
             if (u.Value['substitutions for'] != null) {
                 for (var sub : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      u.Value['substitutions for']) {
                     if (sub.Key != 'TODO')
-                        unit.substitutions_for.Add(sub.Key, populate_unit_costs(sub.Value));
+                        unit_def.substitutions_for.Add(sub.Key, populate_unit_costs(sub.Value));
                 }
             }
-            unit.move = u.Value['move'].AsInt;
+            unit_def.move = u.Value['move'].AsInt;
             if (u.Value['carrier']) {
                 var carrier : String = u.Value['carrier'];
                 if (carrier == 'light')
-                    unit.carrier = 1;
+                    unit_def.carrier = 1;
                 else if (carrier == 'medium')
-                    unit.carrier = 2;
+                    unit_def.carrier = 2;
                 else if (carrier == 'heavy')
-                    unit.carrier = 3;
+                    unit_def.carrier = 3;
                 else if (carrier == 'single-ship')
-                    unit.carrier = 4;
+                    unit_def.carrier = 4;
             }
             if (u.Value['spaceworthy'])
-                unit.spaceworthy = false;
+                unit_def.spaceworthy = false;
             if (u.Value['towable']) {
-                unit.towable.move_cost = u.Value['towable']['move cost'].AsInt;
-                unit.towable.strategic_move_limit =
+                unit_def.towable.move_cost = u.Value['towable']['move cost'].AsInt;
+                unit_def.towable.strategic_move_limit =
                     u.Value['towable']['strat move limit'].AsInt;
             }
-            unit.salvage = u.Value['salvage'].AsFloat;
-            unit.max_in_service = u.Value['max in service'].AsInt;
-            nation_units.Add(u.Key, unit);
+            unit_def.salvage = u.Value['salvage'].AsFloat;
+            unit_def.max_in_service = u.Value['max in service'].AsInt;
+            nation_unit_defs.Add(u.Key, unit_def);
         }
-        units.Add(n.Key, nation_units);
+        unit_defs.Add(n.Key, nation_unit_defs);
     }
 }
 
