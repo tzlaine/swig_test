@@ -246,18 +246,11 @@ class hex_coord
         if (rhs == null)
             return false;
 
-        return
-            (x == null && rhs.x == null || x.Equals(rhs.x)) &&
-            (y == null && rhs.y == null || y.Equals(rhs.y));
+        return x == rhs.x && y == rhs.y;
     }
 
     public function GetHashCode () : int
-    {
-        var retval : int = x == null ? 0 : x.GetHashCode();
-        if (y != null)
-            retval ^= y.GetHashCode();
-        return retval;
-    }
+    { return x * 100 + y; }
 
     var x : int;
     var y : int;

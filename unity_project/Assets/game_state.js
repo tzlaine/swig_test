@@ -91,30 +91,94 @@ private static function initial_setup ()
 private static function determine_supply ()
 {
     Debug.Log('determine_supply()');
+    var scenario = this_.game_data_.scenario();
+
+    var nation_teams = new int[this_.game_data_.nations_by_id.Count];
+    var capitals = new int[this_.game_data_.nations_by_id.Count];
+    var nation_offmap_areas = new int[this_.game_data_.nations_by_id.Count];
+    for (var k = 0; k < nation_teams.Length; ++k) {
+        nation_teams[k] = -1;
+        capitals[k] = -1;
+        nation_offmap_areas[k] = -1;
+    }
+
+    var team_id = 0;
+    for (team in scenario.teams) {
+        for (member in team.Value) {
+            var id = this_.game_data_.id(member);
+            nation_teams[id] = team_id;
+            for (cap in this_.game_data_.nation(member).capital) {
+                if (cap.Value.planets.Contains('CAP'))
+                    capitals[k] = cap.Value.hc.GetHashCode();
+            }
+        }
+        ++team_id;
+    }
+
     var m = this_.game_data_.map();
     var hexes = new supply_check_hex_t[m.width * m.height];
-    for (var j = 0; j < m.height; ++j) {
-        for (var i = 0; i < m.width; ++i) {
-            var h = new supply_check_hex_t();
-            // TODO: Fill in data!
-            hexes[i + j * m.width] = h;
+    var i = 0;
+    for (h in m.hexes) {
+        var sh = new supply_check_hex_t();
+        sh.owner_id = h.owner_id;
+        for (n in h.units) {
+            // TODO
+            var owner_team = nation_teams[this_.game_data_.id(n.Key)];
+            for (u in n.Value) {
+                if (true /* ship */) { // TODO: Handle tugs with supply mission.
+                    sh.presence |= (nation_teams[sh.owner_id] * 9 + 0);
+                    if (false /* supply tug */) // TODO: Handle tugs with supply mission.
+                        sh.presence |= (nation_teams[sh.owner_id] * 9 + 8);
+                } else {
+                    sh.presence |= (nation_teams[sh.owner_id] * 9 + 1);
+                    if (false /* convoy */) // TODO: Handle CONVOYs.
+                        sh.presence |= (nation_teams[sh.owner_id] * 9 + 7);
+                }
+            }
         }
+
+        // TODO: Account for ownership of these things.
+        // TODO: Use .zones instead.
+        if (h.feature == 'SB') {
+            sh.presence |= (nation_teams[sh.owner_id] * 9 + 4);
+            if (true /* has fighters or PFs */)
+                sh.presence |= (nation_teams[sh.owner_id] * 9 + 2);
+        } else if (h.feature == 'BATS') {
+            sh.presence |= (nation_teams[sh.owner_id] * 9 + 5);
+            if (true /* has fighters or PFs */)
+                sh.presence |= (nation_teams[sh.owner_id] * 9 + 2);
+        } else if (h.feature == 'MIN' || h.feature == 'MAJ' || h.feature == 'capitol') {
+            sh.presence |= (nation_teams[sh.owner_id] * 9 + 3);
+        }
+        hexes[i++] = sh;
     }
-    var nation_teams = new int[this_.game_data_.nations_by_id.Count];
-    var capitols = new int[this_.game_data_.nations_by_id.Count];
-    // TODO: Fill in data!
+
+    var offmap_id = 0;
+    for (offmap in m.offmap_areas) {
+        var id_ = this_.game_data_.id(offmap.Key);
+        for (hc in offmap.Value.adjacent_hexes) {
+            nation_offmap_areas[id_] = offmap_id;
+            hexes[hc.x + hc.y * m.width].borders_offmap = offmap_id;
+        }
+        ++offmap_id;
+    }
+
     var supply_ : System.IntPtr = graph_algorithms.determine_supply(
         m.width, m.height,
         hexes,
         nation_teams.Length,
         nation_teams,
-        capitols
+        capitals,
+        nation_offmap_areas
     );
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
+/**/
+    // TODO
     for (i in supply) {
         Debug.Log(i);
     }
+/**/
 }
 
 private static function economics (team : String)

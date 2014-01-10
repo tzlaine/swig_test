@@ -25,7 +25,7 @@ public struct supply_check_hex_t
     // 1 << 8: supply tug
     // Team N is in bits 1 << (N * 9 + 0) through 1 << (N * 9 + 8).
     public int presence;
-    public int touches_owner_offmap;
+    public int borders_offmap;
 };
 
 public class graph_algorithms
@@ -61,6 +61,7 @@ public class graph_algorithms
         [In] supply_check_hex_t[] hexes,
         int nations,
         [In] int[] nation_team_membership,
-        [In] int[] capitols
+        [In] int[] capitols,
+        [In] int[] nation_offmap_areas
     );
 };

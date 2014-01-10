@@ -698,7 +698,7 @@ struct supply_check_hex_t
     // 1 << 8: supply tug
     // Team N is in bits 1 << (N * 9 + 0) through 1 << (N * 9 + 8).
     int presence;
-    int touches_owner_offmap;
+    int borders_offmap;
 };
 
 extern "C" {
@@ -725,17 +725,21 @@ extern "C" {
         return retval;
     }
 
-    // Returns an int for each hex, containing a grid ID in the first 16 bits
+    // Returns an int for each hex, containing a grid ID in the first 8 bits
     // (0 is no grid, 1 is main capitol grid, 2 is main offmap grid, anything
-    // else is a partial grid).  Bit 17 contains a flag indicating non-free
-    // supplies (meaning the hex is in a partial supply grid, and does not
-    // include a free-supply feature like a SB, BATS, or planet.
+    // else is a partial grid).  Bits 8-23 contain the nations supplying this
+    // hex (a '1' in bit N indicates that the nation with ID N-8 is supplying
+    // it).  Bit 17 contains a flag indicating supplies must be paid for by
+    // the hex's owner to supply ships in this hex (meaning the hex is in a
+    // partial supply grid, and does not include a free-supply feature like a
+    // SB, BATS, or planet).
     GRAPH_ALGO_API
     int* determine_supply (int w, int h,
                            supply_check_hex_t hexes[],
                            int nations,
                            int nation_team_membership[],
-                           int capitols[])
+                           int capitols[],
+                           int nation_offmap_areas[])
     {
         g_supply_data.supply.resize(w * h);
         // TODO
