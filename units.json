@@ -21,7 +21,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -67,7 +67,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -114,38 +114,38 @@
             },
             "construction": {
                 "cost": 18,
-                "fighter_cost": 30
+                "fighter cost": 30
             },
             "substitutions for": {
                 "DN": {
                     "cost": 18,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 },
                 "DN+": {
                     "cost": 18,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 },
                 "DNG": {
                     "cost": 18,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 }
             },
             "conversions from": {
                 "DN": {
                     "cost": 6,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 },
                 "DN+": {
                     "cost": 5,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 },
                 "DNG": {
                     "cost": 4,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 },
                 "DNH": {
                     "cost": 4,
-                    "fighter_cost": 30
+                    "fighter cost": 30
                 }
             },
             "move": 6,
@@ -233,29 +233,29 @@
             "substitutions for": {
                 "CVA": {
                     "cost": 21,
-                    "fighter_cost": 48
+                    "fighter cost": 48
                 }
             },
             "conversions from": {
                 "CVA": {
                     "cost": 3,
-                    "fighter_cost": 18
+                    "fighter cost": 18
                 },
                 "DN": {
                     "cost": 9,
-                    "fighter_cost": 48
+                    "fighter cost": 48
                 },
                 "DN+": {
                     "cost": 7,
-                    "fighter_cost": 48
+                    "fighter cost": 48
                 },
                 "DNG": {
                     "cost": 5,
-                    "fighter_cost": 48
+                    "fighter cost": 48
                 },
                 "DNH": {
                     "cost": 5,
-                    "fighter_cost": 48
+                    "fighter cost": 48
                 }
             },
             "move": 6,
@@ -361,17 +361,17 @@
             "substitutions for": {
                 "CA": {
                     "cost": 14,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "conversions from": {
                 "CA": {
                     "cost": 7,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "COV": {
                     "cost": 1,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 6,
@@ -398,13 +398,13 @@
             "substitutions for": {
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "CA": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -431,7 +431,7 @@
             "substitutions for": {
                 "CA": {
                     "cost": 18,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "conversions from": {
@@ -440,7 +440,7 @@
                 },
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "move": 6,
@@ -469,7 +469,7 @@
             "substitutions for": {
                 "CA": {
                     "cost": 18,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "conversions from": {
@@ -478,7 +478,7 @@
                 },
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "move": 6,
@@ -549,7 +549,7 @@
             "pod": "true",
             "construction": {
                 "cost": 2,
-                "fighter_cost": 12
+                "fighter cost": 12
             },
             "move": 0,
             "max in service": 3,
@@ -571,7 +571,7 @@
             "pod": "true",
             "construction": {
                 "cost": 4,
-                "fighter_cost": 24
+                "fighter cost": 24
             },
             "move": 0,
             "max in service": 3,
@@ -678,13 +678,13 @@
             "substitutions for": {
                 "NCL": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "NCL": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -776,7 +776,7 @@
             "substitutions for": {
                 "NCL": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
@@ -785,7 +785,7 @@
                 },
                 "NCL": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -1030,13 +1030,13 @@
             "substitutions for": {
                 "FF": {
                     "cost": 4,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "conversions from": {
                 "FF": {
                     "cost": 1,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 6,
@@ -1111,7 +1111,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -1177,7 +1177,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 0,
@@ -1228,7 +1228,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -1274,7 +1274,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -1322,13 +1322,13 @@
             "substitutions for": {
                 "DN": {
                     "cost": 23,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "DN": {
                     "cost": 5,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "CVA": {
                     "cost": 5
@@ -1514,13 +1514,13 @@
             "substitutions for": {
                 "CL": {
                     "cost": 10,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "CL": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -1661,13 +1661,13 @@
             "substitutions for": {
                 "HD": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "HD": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -2033,7 +2033,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 7,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 3
@@ -2101,11 +2101,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -2156,7 +2156,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -2202,7 +2202,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -2226,7 +2226,7 @@
             },
             "construction": {
                 "cost": 16,
-                "fighter_cost": 6
+                "fighter cost": 6
             },
             "move": 6,
             "salvage": 4,
@@ -2251,13 +2251,13 @@
             "substitutions for": {
                 "PAL": {
                     "cost": 18,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "conversions from": {
                 "PAL": {
                     "cost": 4,
-                    "fighter_cost": 18
+                    "fighter cost": 18
                 }
             },
             "move": 6,
@@ -2286,7 +2286,7 @@
             "substitutions for": {
                 "PAL": {
                     "cost": 21,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
@@ -2295,7 +2295,7 @@
                 },
                 "PAL": {
                     "cost": 5,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "SD": {
                     "cost": 5
@@ -2325,11 +2325,11 @@
             "substitutions for": {
                 "CC": {
                     "cost": 10,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 },
                 "DN": {
                     "cost": 10,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "move": 6,
@@ -2354,12 +2354,12 @@
             },
             "construction": {
                 "cost": 6,
-                "fighter_cost": 4
+                "fighter cost": 4
             },
             "conversions from": {
                 "DG": {
                     "cost": 3,
-                    "fighter_cost": 2
+                    "fighter cost": 2
                 }
             },
             "move": 6,
@@ -2385,7 +2385,7 @@
             "substitutions for": {
                 "CC": {
                     "cost": 7,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "conversions from": {
@@ -2394,7 +2394,7 @@
                 },
                 "LB": {
                     "cost": 3,
-                    "fighter_cost": 1
+                    "fighter cost": 1
                 },
                 "LM": {
                     "cost": 1
@@ -2424,7 +2424,7 @@
             "substitutions for": {
                 "CA": {
                     "cost": 6,
-                    "fighter_cost": 2
+                    "fighter cost": 2
                 }
             },
             "conversions from": {
@@ -2457,7 +2457,7 @@
             },
             "construction": {
                 "cost": 8,
-                "fighter_cost": 2
+                "fighter cost": 2
             },
             "conversions from": {
                 "RN": {
@@ -2487,7 +2487,7 @@
             "substitutions for": {
                 "CC": {
                     "cost": 8,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "conversions from": {
@@ -2496,7 +2496,7 @@
                 },
                 "LB": {
                     "cost": 3,
-                    "fighter_cost": 1
+                    "fighter cost": 1
                 },
                 "LC": {
                     "cost": 1
@@ -2525,7 +2525,7 @@
             "substitutions for": {
                 "CC": {
                     "cost": 9,
-                    "fighter_cost": 2
+                    "fighter cost": 2
                 }
             },
             "conversions from": {
@@ -2562,17 +2562,17 @@
             "substitutions for": {
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 22
+                    "fighter cost": 22
                 }
             },
             "conversions from": {
                 "RN": {
                     "cost": 2,
-                    "fighter_cost": 18
+                    "fighter cost": 18
                 },
                 "DG": {
                     "cost": 2,
-                    "fighter_cost": 20
+                    "fighter cost": 20
                 }
             },
             "move": 6,
@@ -2629,12 +2629,12 @@
             },
             "construction": {
                 "cost": 5,
-                "fighter_cost": 3
+                "fighter cost": 3
             },
             "conversions from": {
                 "TR": {
                     "cost": 3,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "move": 6,
@@ -2687,7 +2687,7 @@
             "substitutions for": {
                 "CW": {
                     "cost": 8,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "conversions from": {
@@ -2696,7 +2696,7 @@
                 },
                 "TR": {
                     "cost": 3,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "move": 6,
@@ -2722,21 +2722,21 @@
             "substitutions for": {
                 "CW": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "TR": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "HR": {
                     "cost": 2,
-                    "fighter_cost": 9
+                    "fighter cost": 9
                 },
                 "NEC": {
                     "cost": 2,
-                    "fighter_cost": 9
+                    "fighter cost": 9
                 }
             },
             "move": 6,
@@ -2765,7 +2765,7 @@
             "substitutions for": {
                 "CW": {
                     "cost": 6,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "conversions from": {
@@ -2774,7 +2774,7 @@
                 },
                 "TR": {
                     "cost": 1,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "move": 6,
@@ -2830,12 +2830,12 @@
             },
             "construction": {
                 "cost": 4,
-                "fighter_cost": 2
+                "fighter cost": 2
             },
             "conversions from": {
                 "KN": {
                     "cost": 3,
-                    "fighter_cost": 2
+                    "fighter cost": 2
                 }
             },
             "move": 6,
@@ -2887,21 +2887,21 @@
             "substitutions for": {
                 "DD": {
                     "cost": 8,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "conversions from": {
                 "LN": {
                     "cost": 2,
-                    "fighter_cost": 14
+                    "fighter cost": 14
                 },
                 "KN": {
                     "cost": 2,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 },
                 "DE": {
                     "cost": 2,
-                    "fighter_cost": 13
+                    "fighter cost": 13
                 }
             },
             "move": 6,
@@ -2930,17 +2930,17 @@
             "substitutions for": {
                 "DD": {
                     "cost": 5,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "conversions from": {
                 "LN": {
                     "cost": 1,
-                    "fighter_cost": 1
+                    "fighter cost": 1
                 },
                 "KN": {
                     "cost": 1,
-                    "fighter_cost": 3
+                    "fighter cost": 3
                 }
             },
             "move": 6,
@@ -3100,7 +3100,7 @@
             "pod": "true",
             "construction": {
                 "cost": 8,
-                "fighter_cost": 2
+                "fighter cost": 2
             },
             "move": 0,
             "max in service": 2,
@@ -3122,7 +3122,7 @@
             "pod": "true",
             "construction": {
                 "cost": 2,
-                "fighter_cost": 12
+                "fighter cost": 12
             },
             "move": 0,
             "max in service": 2,
@@ -3221,7 +3221,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -3289,11 +3289,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -3344,7 +3344,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -3390,7 +3390,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -3421,7 +3421,7 @@
                 },
                 "B10-": {
                     "cost": 0,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -3469,13 +3469,13 @@
             "substitutions for": {
                 "C8": {
                     "cost": 18,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "conversions from": {
                 "C8": {
                     "cost": 4,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "move": 6,
@@ -3504,13 +3504,13 @@
             "substitutions for": {
                 "C8": {
                     "cost": 21,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "C8": {
                     "cost": 5,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "C8V": {
                     "cost": 5
@@ -3615,13 +3615,13 @@
             "substitutions for": {
                 "D7": {
                     "cost": 10,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "D7": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -3708,25 +3708,25 @@
             "substitutions for": {
                 "D6": {
                     "cost": 10,
-                    "fighter_cost": 10
+                    "fighter cost": 10
                 },
                 "D7": {
                     "cost": 10,
-                    "fighter_cost": 10
+                    "fighter cost": 10
                 }
             },
             "conversions from": {
                 "D6": {
                     "cost": 2,
-                    "fighter_cost": 10
+                    "fighter cost": 10
                 },
                 "D7": {
                     "cost": 2,
-                    "fighter_cost": 10
+                    "fighter cost": 10
                 },
                 "D6Y": {
                     "cost": 1,
-                    "fighter_cost": 5
+                    "fighter cost": 5
                 }
             },
             "move": 6,
@@ -3928,7 +3928,7 @@
             "pod": "true",
             "construction": {
                 "cost": 1,
-                "fighter_cost": 5
+                "fighter cost": 5
             },
             "move": 0,
             "max in service": 6,
@@ -3950,7 +3950,7 @@
             "pod": "true",
             "construction": {
                 "cost": 2,
-                "fighter_cost": 12
+                "fighter cost": 12
             },
             "move": 0,
             "max in service": 2,
@@ -4057,13 +4057,13 @@
             "substitutions for": {
                 "D5": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "D5": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -4208,21 +4208,21 @@
             "substitutions for": {
                 "F5": {
                     "cost": 4,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 },
                 "F5L": {
                     "cost": 4,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "conversions from": {
                 "F5": {
                     "cost": 1,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 },
                 "F5L": {
                     "cost": 1,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -4386,7 +4386,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -4415,11 +4415,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -4506,7 +4506,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -4552,7 +4552,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -4598,13 +4598,13 @@
             "substitutions for": {
                 "DN": {
                     "cost": 18,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "conversions from": {
                 "DN": {
                     "cost": 4,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "move": 6,
@@ -4633,7 +4633,7 @@
             "substitutions for": {
                 "DN": {
                     "cost": 21,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
@@ -4642,7 +4642,7 @@
                 },
                 "DN": {
                     "cost": 5,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -4669,21 +4669,21 @@
             "substitutions for": {
                 "BC": {
                     "cost": 12,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "BCH": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "CVL": {
                     "cost": 4,
-                    "fighter_cost": 4
+                    "fighter cost": 4
                 },
                 "BC": {
                     "cost": 5,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -4798,13 +4798,13 @@
             "substitutions for": {
                 "BC": {
                     "cost": 10,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "conversions from": {
                 "BC": {
                     "cost": 2,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -4887,13 +4887,13 @@
             "substitutions for": {
                 "CM": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "CM": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -4982,13 +4982,13 @@
             "substitutions for": {
                 "CL": {
                     "cost": 8,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "conversions from": {
                 "CL": {
                     "cost": 2,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 6,
@@ -5119,7 +5119,7 @@
             "pod": "true",
             "construction": {
                 "cost": 2,
-                "fighter_cost": 12
+                "fighter cost": 12
             },
             "move": 0,
             "max in service": 2,
@@ -5141,7 +5141,7 @@
             "pod": "true",
             "construction": {
                 "cost": 1,
-                "fighter_cost": 6
+                "fighter cost": 6
             },
             "move": 0,
             "max in service": 6,
@@ -5388,7 +5388,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -5420,11 +5420,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -5511,7 +5511,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -5557,7 +5557,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -5619,20 +5619,20 @@
             "substitutions for": {
                 "DN": {
                     "cost": 21,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "DN": {
                     "cost": 5,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "CVA": {
                     "cost": 5
                 },
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "CV": {
                     "cost": 12
@@ -5795,13 +5795,13 @@
             "substitutions for": {
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "CA": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -5902,7 +5902,7 @@
             "pod": "true",
             "construction": {
                 "cost": 2,
-                "fighter_cost": 12
+                "fighter cost": 12
             },
             "move": 0,
             "max in service": 2,
@@ -6003,17 +6003,17 @@
             "substitutions for": {
                 "CW": {
                     "cost": 7,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
                 "CW": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "DD": {
                     "cost": 4,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -6421,7 +6421,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -6453,11 +6453,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -6544,7 +6544,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -6590,7 +6590,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -6656,12 +6656,12 @@
             },
             "construction": {
                 "cost": 10,
-                "fighter_cost": 8
+                "fighter cost": 8
             },
             "conversions from": {
                 "SAL": {
                     "cost": 2,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -6774,7 +6774,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -6842,11 +6842,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -6897,7 +6897,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -6943,7 +6943,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -6989,13 +6989,13 @@
             "substitutions for": {
                 "CON": {
                     "cost": 19,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "conversions from": {
                 "CON": {
                     "cost": 4,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "move": 6,
@@ -7024,7 +7024,7 @@
             "substitutions for": {
                 "CON": {
                     "cost": 22,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "conversions from": {
@@ -7033,11 +7033,11 @@
                 },
                 "CON": {
                     "cost": 5,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 },
                 "ROC": {
                     "cost": 2,
-                    "fighter_cost": 12
+                    "fighter cost": 12
                 }
             },
             "move": 6,
@@ -7063,16 +7063,16 @@
             },
             "construction": {
                 "cost": 11,
-                "fighter_cost": 8
+                "fighter cost": 8
             },
             "conversions from": {
                 "NH": {
                     "cost": 2,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 },
                 "FH": {
                     "cost": 3,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -7128,25 +7128,25 @@
             "substitutions for": {
                 "SUP or CON or CNV or SCS": {
                     "cost": 12,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "conversions from": {
                 "SUP": {
                     "cost": 2,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 },
                 "NH": {
                     "cost": 4,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 },
                 "FH": {
                     "cost": 5,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 },
                 "SPB": {
                     "cost": 5,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -7237,29 +7237,29 @@
             "substitutions for": {
                 "SP": {
                     "cost": 6,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "conversions from": {
                 "SPB": {
                     "cost": 1,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 },
                 "SPC": {
                     "cost": 1,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 },
                 "SPF": {
                     "cost": 1,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 },
                 "SPH": {
                     "cost": 1,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 },
                 "SPE": {
                     "cost": 1,
-                    "fighter_cost": 16
+                    "fighter cost": 16
                 }
             },
             "move": 6,
@@ -7489,15 +7489,15 @@
             "conversions from": {
                 "SKB": {
                     "cost": 1,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 },
                 "SKE": {
                     "cost": 1,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 },
                 "SKF": {
                     "cost": 1,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -8019,17 +8019,17 @@
             "substitutions for": {
                 "WE": {
                     "cost": 6,
-                    "fighter_cost": 5
+                    "fighter cost": 5
                 },
                 "SK": {
                     "cost": 6,
-                    "fighter_cost": 5
+                    "fighter cost": 5
                 }
             },
             "conversions from": {
                 "BH": {
                     "cost": 1,
-                    "fighter_cost": 5
+                    "fighter cost": 5
                 }
             },
             "move": 6,
@@ -8155,7 +8155,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -8187,11 +8187,11 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "STB": {
                     "cost": 20,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -8278,7 +8278,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -8324,7 +8324,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,
@@ -8401,21 +8401,21 @@
             "substitutions for": {
                 "CA": {
                     "cost": 10,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "conversions from": {
                 "CA": {
                     "cost": 3,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 },
                 "2xBW": {
                     "cost": 5,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 },
                 "2xPC": {
                     "cost": 7,
-                    "fighter_cost": 24
+                    "fighter cost": 24
                 }
             },
             "move": 6,
@@ -8551,7 +8551,7 @@
             "conversions from": {
                 "PC": {
                     "cost": 1,
-                    "fighter_cost": 8
+                    "fighter cost": 8
                 }
             },
             "move": 6,
@@ -8675,7 +8675,7 @@
             "conversions from": {
                 "MB": {
                     "cost": 9,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 },
                 "BS": {
                     "cost": 4
@@ -8743,7 +8743,7 @@
             "conversions from": {
                 "BATS": {
                     "cost": 30,
-                    "fighter_cost": 6
+                    "fighter cost": 6
                 }
             },
             "move": 0,

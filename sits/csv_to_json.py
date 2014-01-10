@@ -176,7 +176,7 @@ def cost (cost_str, extra_indent):
     if len(cost_) == 3:
         cost_ = [int(cost_[0]) + int(cost_[1]), cost_[2]]
     if len(cost_) == 2:
-        fighter_cost_ = ',\n%s%s"fighter_cost": %s' % (indent, extra_indent, int(cost_[1]))
+        fighter_cost_ = ',\n%s%s"fighter cost": %s' % (indent, extra_indent, int(cost_[1]))
     cost_ = int(cost_[0])
     return (cost_, fighter_cost_)
 
