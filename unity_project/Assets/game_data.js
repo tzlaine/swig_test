@@ -873,7 +873,7 @@ private function populate_counters (json : SimpleJSON.JSONNode)
     }
 }
 
-private function populate_unit_stats (json : SimpleJSON.JSONNode)
+private function parse_unit_stats (json : SimpleJSON.JSONNode)
 {
     var retval : unit_stats_t = null;
     if (json != null) {
@@ -904,7 +904,7 @@ private function populate_unit_stats (json : SimpleJSON.JSONNode)
     return retval;
 }
 
-private function populate_unit_costs (json : SimpleJSON.JSONNode)
+private function parse_unit_costs (json : SimpleJSON.JSONNode)
 {
     var retval : unit_costs_t;
     if (json != null) {
@@ -925,17 +925,17 @@ private function populate_units (json : SimpleJSON.JSONNode)
             var unit_def = new unit_def_t();
             unit_def.name = u.Key;
             unit_def.command = u.Value['cmd'].AsInt;
-            unit_def.uncrippled = populate_unit_stats(u.Value['uncrippled']);
-            unit_def.crippled = populate_unit_stats(u.Value['crippled']);
+            unit_def.uncrippled = parse_unit_stats(u.Value['uncrippled']);
+            unit_def.crippled = parse_unit_stats(u.Value['crippled']);
             unit_def.date_available = parse_turn(u.Value['date available']);
-            unit_def.construction = populate_unit_costs(u.Value['construction']);
+            unit_def.construction = parse_unit_costs(u.Value['construction']);
             if (u.Value['conversions from'] != null) {
                 if (!unit_def.conversions_from)
                     unit_def.conversions_from = new Dictionary.<String, unit_costs_t>();
                 for (var conv : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      u.Value['conversions from']) {
                     if (conv.Key != 'TODO')
-                        unit_def.conversions_from.Add(conv.Key, populate_unit_costs(conv.Value));
+                        unit_def.conversions_from.Add(conv.Key, parse_unit_costs(conv.Value));
                 }
             }
             if (u.Value['substitutions for'] != null) {
@@ -944,7 +944,7 @@ private function populate_units (json : SimpleJSON.JSONNode)
                 for (var sub : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      u.Value['substitutions for']) {
                     if (sub.Key != 'TODO')
-                        unit_def.substitutions_for.Add(sub.Key, populate_unit_costs(sub.Value));
+                        unit_def.substitutions_for.Add(sub.Key, parse_unit_costs(sub.Value));
                 }
             }
             unit_def.move = u.Value['move'].AsInt;
