@@ -930,6 +930,8 @@ private function populate_units (json : SimpleJSON.JSONNode)
             unit_def.date_available = parse_turn(u.Value['date available']);
             unit_def.construction = populate_unit_costs(u.Value['construction']);
             if (u.Value['conversions from'] != null) {
+                if (!unit_def.conversions_from)
+                    unit_def.conversions_from = new Dictionary.<String, unit_costs_t>();
                 for (var conv : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      u.Value['conversions from']) {
                     if (conv.Key != 'TODO')
@@ -937,6 +939,8 @@ private function populate_units (json : SimpleJSON.JSONNode)
                 }
             }
             if (u.Value['substitutions for'] != null) {
+                if (!unit_def.substitutions_for)
+                    unit_def.substitutions_for = new Dictionary.<String, unit_costs_t>();
                 for (var sub : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
                      u.Value['substitutions for']) {
                     if (sub.Key != 'TODO')
