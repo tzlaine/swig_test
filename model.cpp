@@ -60,31 +60,59 @@ namespace boost {
 
 namespace graph {
 
-    struct short_circuiting_visitor : public boost::base_visitor<short_circuiting_visitor>
+    struct vertex_hex_id_t {typedef boost::vertex_property_tag kind;};
+
+    const int invalid_hex_id = -1000;
+
+    typedef boost::property<
+        vertex_hex_id_t,
+        int,
+        boost::property<boost::vertex_index_t, int>
+    > vertex_property_t;
+
+    typedef boost::property<
+        boost::edge_weight_t,
+        double
+    > edge_property_t;
+
+    typedef boost::adjacency_list<
+        boost::vecS,
+        boost::vecS,
+        boost::undirectedS,
+        vertex_property_t,
+        edge_property_t
+    > graph;
+
+    typedef boost::property_map<graph, vertex_hex_id_t>::const_type const_hex_id_property_map;
+    typedef boost::property_map<graph, vertex_hex_id_t>::type hex_id_property_map;
+
+    typedef boost::property_map<graph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap; // TODO
+    typedef boost::property_map<graph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
+
+    typedef boost::graph_traits<graph>::edge_descriptor edge_descriptor;
+
+    struct found_destination {}; 
+    struct reached_depth_limit {};
+
+    template <class Graph, class Visitor>
+    bool bfs (Graph g, Visitor v, int start_hex_id)
     {
-        typedef boost::on_finish_vertex event_filter;
-
-        struct found_destination : std::exception {};
-
-        short_circuiting_visitor (int dest) : destination (dest) {}
-
-        template <class Vertex, class Graph>
-        void operator() (Vertex u, Graph& g)
-        {
-            if (static_cast<int>(u) == destination)
-                boost::throw_exception(found_destination());
+        try {
+            boost::queue<int> buf;
+            std::vector<int> colors(boost::num_vertices(g));
+            boost::breadth_first_search(g, start_hex_id, buf, v, &colors[0]);
+        } catch (const reached_depth_limit&) {
+            // The algorithm didn't find hex2_id before reaching max_dist.
+            return false;
+        } catch (const found_destination&) {
+            // hex2_id was found and we exited early by throwing.
         }
-
-        const int destination;
-    };
+        return true;
+    }
 
     template <class Graph, class Edge, class Vertex>
     class bfs_visitor
     {
-    public:
-        struct found_destination : std::exception {}; 
-        struct reached_depth_limit : std::exception {};
-
     private:
         Vertex m_marker;
         Vertex m_stop;
@@ -94,7 +122,10 @@ namespace graph {
         bool m_level_complete;
 
     public:
-        bfs_visitor (const Vertex& start, const Vertex& stop, Vertex predecessors[], int max_depth) :
+        bfs_visitor (const Vertex& start,
+                     const Vertex& stop,
+                     Vertex* predecessors,
+                     int max_depth) :
             m_marker (start),
             m_stop (stop),
             m_source (start),
@@ -103,12 +134,12 @@ namespace graph {
             m_level_complete (false)
             {}
 
-        void initialize_vertex (const Vertex& v, const Graph& g)
-            {}
+        void initialize_vertex (const Vertex& v, const Graph& g) {}
 
         void discover_vertex (const Vertex& v, const Graph& g)
             {
-                m_predecessors[static_cast<int>(v)] = m_source;
+                if (m_predecessors)
+                    m_predecessors[static_cast<int>(v)] = m_source;
 
                 if (v == m_stop)
                     throw found_destination();
@@ -139,221 +170,48 @@ namespace graph {
         void finish_vertex (const Vertex& e, const Graph& g) {}
     };
 
-    struct vertex_hex_id_t {typedef boost::vertex_property_tag kind;};
-
-    const int invalid_hex_id = -1000;
-
-    template <class Graph, class Visitor>
-    bool bfs (Graph g, Visitor v, int start_hex_id)
+    template <class Graph, class Edge, class Vertex>
+    class supply_visitor
     {
-        try {
-            boost::queue<int> buf;
-            std::vector<int> colors(boost::num_vertices(g));
-            boost::breadth_first_search(g, start_hex_id, buf, v, &colors[0]);
-        } catch (const typename Visitor::reached_depth_limit&) {
-            // The algorithm didn't find hex2_id before reaching max_dist.
-            return false; // TODO
-        } catch (const typename Visitor::found_destination&) {
-            // hex2_id was found and we exited early by throwing.
-        }
-        return true;
-    }
+    private:
+        int m_nation;
+        int m_grid;
+        int* m_supply;
+        hex_id_property_map m_hex_id_property_map;
+        bfs_visitor<Graph, Edge, Vertex> m_bfs_visitor;
 
-#if 0
-    /** Returns the path between vertices \a system1_id and \a system2_id of
-      * \a graph that travels the shorest distance on starlanes, and the path
-      * length.  If system1_id is the same vertex as system2_id, the path has
-      * just that system in it, and the path lenth is 0.  If there is no path
-      * between the two vertices, then the list is empty and the path length
-      * is -1.0 */
-    template <class Graph>
-    std::pair<std::list<int>, double> ShortestPathImpl(const Graph& graph, int system1_id, int system2_id,
-                                                       double linear_distance, const boost::unordered_map<int, int>& id_to_graph_index)
-    {
-        typedef typename boost::property_map<Graph, vertex_system_id_t>::const_type     ConstSystemIDPropertyMap;
-        typedef typename boost::property_map<Graph, boost::vertex_index_t>::const_type  ConstIndexPropertyMap;
-        typedef typename boost::property_map<Graph, boost::edge_weight_t>::const_type   ConstEdgeWeightPropertyMap;
+    public:
+        supply_visitor (int nation,
+                        int grid,
+                        int supply[],
+                        hex_id_property_map hex_id_property_map_,
+                        bfs_visitor<Graph, Edge, Vertex> bfs_visitor_) :
+            m_nation (nation),
+            m_grid (grid),
+            m_supply (supply),
+            m_hex_id_property_map (hex_id_property_map_),
+            m_bfs_visitor (bfs_visitor_)
+            {}
 
-        std::pair<std::list<int>, double> retval(std::list<int>(), -1.0);
+        void initialize_vertex (const Vertex& v, const Graph& g) {}
 
-        ConstSystemIDPropertyMap sys_id_property_map = boost::get(vertex_system_id_t(), graph);
+        void discover_vertex (const Vertex& v, const Graph& g)
+            {
+                m_bfs_visitor.discover_vertex(v, g);
+            }
 
-        // convert system IDs to graph indices.  try/catch for invalid input system ids.
-        int system1_index, system2_index;
-        try {
-            system1_index = id_to_graph_index.at(system1_id);
-            system2_index = id_to_graph_index.at(system2_id);
-        } catch (...) {
-            return retval;
-        }
+        void examine_vertex (const Vertex& v, const Graph& g)
+            {
+                m_bfs_visitor.examine_vertex(v, g);
+            }
 
-        // early exit if systems are the same
-        if (system1_id == system2_id) {
-            retval.first.push_back(system2_id);
-            retval.second = 0.0;    // no jumps needed -> 0 distance
-            return retval;
-        }
-
-        /* initializing all vertices' predecessors to themselves prevents endless loops when back traversing the tree in the case where
-           one of the end systems is system 0, because systems that are not connected to the root system (system2) are not visited
-           by the search, and so their predecessors are left unchanged.  Default initialization of the vector may be 0 or undefined
-           which could lead to out of bounds errors, or endless loops if a system's default predecessor is 0 (debug mode), and 0's
-           predecessor is that system */
-        std::vector<int> predecessors(boost::num_vertices(graph));
-        std::vector<double> distances(boost::num_vertices(graph));
-        for (unsigned int i = 0; i < boost::num_vertices(graph); ++i) {
-            predecessors[i] = i;
-            distances[i] = -1.0;
-        }
-
-
-        ConstIndexPropertyMap index_map = boost::get(boost::vertex_index, graph);
-        ConstEdgeWeightPropertyMap edge_weight_map = boost::get(boost::edge_weight, graph);
-
-
-        // do the actual path finding using verbose boost magic...
-        try {
-            boost::dijkstra_shortest_paths(graph, system1_index, &predecessors[0], &distances[0], edge_weight_map, index_map, 
-                                           std::less<double>(), std::plus<double>(), std::numeric_limits<int>::max(), 0, 
-                                           boost::make_dijkstra_visitor(short_circuiting_visitor(system2_index)));
-        } catch (const short_circuiting_visitor::found_destination&) {
-            // catching this just means that the destination was found, and so the algorithm was exited early, via exception
-        }
-
-
-        int current_system = system2_index;
-        while (predecessors[current_system] != current_system) {
-            retval.first.push_front(sys_id_property_map[current_system]);
-            current_system = predecessors[current_system];
-        }
-        retval.second = distances[system2_index];
-
-        if (retval.first.empty()) {
-            // there is no path between the specified nodes
-            retval.second = -1.0;
-            return retval;
-        } else {
-            // add start system to path, as it wasn't added by traversing predecessors array
-            retval.first.push_front(sys_id_property_map[system1_index]);
-        }
-
-        return retval;
-    }
-
-    /** Returns the path between vertices \a system1_id and \a system2_id of
-      * \a graph that takes the fewest number of jumps (edge traversals), and
-      * the number of jumps this path takes.  If system1_id is the same vertex
-      * as system2_id, the path has just that system in it, and the path lenth
-      * is 0.  If there is no path between the two vertices, then the list is
-      * empty and the path length is -1 */
-    template <class Graph>
-    std::pair<std::list<int>, int> LeastJumpsPathImpl(const Graph& graph, int system1_id, int system2_id,
-                                                      const boost::unordered_map<int, int>& id_to_graph_index,
-                                                      int max_jumps = INT_MAX)
-    {
-        typedef typename boost::property_map<Graph, vertex_system_id_t>::const_type ConstSystemIDPropertyMap;
-
-        ConstSystemIDPropertyMap sys_id_property_map = boost::get(vertex_system_id_t(), graph);
-        std::pair<std::list<int>, int> retval;
-
-        int system1_index = id_to_graph_index.at(system1_id);
-        int system2_index = id_to_graph_index.at(system2_id);
-
-        // early exit if systems are the same
-        if (system1_id == system2_id) {
-            retval.first.push_back(system2_id);
-            retval.second = 0;  // no jumps needed
-            return retval;
-        }
-
-        /* initializing all vertices' predecessors to themselves prevents endless loops when back traversing the tree in the case where
-           one of the end systems is system 0, because systems that are not connected to the root system (system2) are not visited
-           by the search, and so their predecessors are left unchanged.  Default initialization of the vector may be 0 or undefined
-           which could lead to out of bounds errors, or endless loops if a system's default predecessor is 0, (debug mode) and 0's
-           predecessor is that system */
-        std::vector<int> predecessors(boost::num_vertices(graph));
-        for (unsigned int i = 0; i < boost::num_vertices(graph); ++i)
-            predecessors[i] = i;
-
-
-        // do the actual path finding using verbose boost magic...
-        typedef bfs_visitor<Graph, typename boost::graph_traits<Graph>::edge_descriptor, int> BFSVisitor;
-        try {
-            boost::queue<int> buf;
-            std::vector<int> colors(boost::num_vertices(graph));
-
-            BFSVisitor bfsVisitor(system1_index, system2_index, &predecessors[0], max_jumps);
-            boost::breadth_first_search(graph, system1_index, buf, bfsVisitor, &colors[0]);
-        } catch (const typename BFSVisitor::reached_depth_limit&) {
-            // catching this means the algorithm explored the neighborhood until max_jumps and didn't find anything
-            return std::make_pair(std::list<int>(), -1);
-        } catch (const typename BFSVisitor::found_destination&) {
-            // catching this just means that the destination was found, and so the algorithm was exited early, via exception
-        }
-
-
-        int current_system = system2_index;
-        while (predecessors[current_system] != current_system) {
-            retval.first.push_front(sys_id_property_map[current_system]);
-            current_system = predecessors[current_system];
-        }
-        retval.second = retval.first.size() - 1;    // number of jumps is number of systems in path minus one for the starting system
-
-        if (retval.first.empty()) {
-            // there is no path between the specified nodes
-            retval.second = -1;
-        } else {
-            // add start system to path, as it wasn't added by traversing predecessors array
-            retval.first.push_front(sys_id_property_map[system1_index]);
-        }
-
-        return retval;
-    }
-
-    template <class Graph>
-    std::multimap<double, int> ImmediateNeighborsImpl(const Graph& graph, int system_id,
-                                                      const boost::unordered_map<int, int>& id_to_graph_index)
-    {
-        typedef typename Graph::out_edge_iterator OutEdgeIterator;
-        typedef typename boost::property_map<Graph, vertex_system_id_t>::const_type ConstSystemIDPropertyMap;
-        typedef typename boost::property_map<Graph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap;
-
-        std::multimap<double, int> retval;
-        ConstEdgeWeightPropertyMap edge_weight_map = boost::get(boost::edge_weight, graph);
-        ConstSystemIDPropertyMap sys_id_property_map = boost::get(vertex_system_id_t(), graph);
-        std::pair<OutEdgeIterator, OutEdgeIterator> edges = boost::out_edges(id_to_graph_index.at(system_id), graph);
-        for (OutEdgeIterator it = edges.first; it != edges.second; ++it)
-        { retval.insert(std::make_pair(edge_weight_map[*it], sys_id_property_map[boost::target(*it, graph)])); }
-        return retval;
-    }
-#endif
-
-    typedef boost::property<
-        vertex_hex_id_t,
-        int,
-        boost::property<boost::vertex_index_t, int>
-    > vertex_property_t;
-
-    typedef boost::property<
-        boost::edge_weight_t,
-        double
-    > edge_property_t;
-
-    typedef boost::adjacency_list<
-        boost::vecS,
-        boost::vecS,
-        boost::undirectedS,
-        vertex_property_t,
-        edge_property_t
-    > graph;
-
-    typedef boost::property_map<graph, vertex_hex_id_t>::const_type const_hex_id_property_map;
-    typedef boost::property_map<graph, vertex_hex_id_t>::type hex_id_property_map;
-
-    typedef boost::property_map<graph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap; // TODO
-    typedef boost::property_map<graph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
-
-    typedef boost::graph_traits<graph>::edge_descriptor edge_descriptor;
+        void examine_edge (const Edge& e, const Graph& g) {}
+        void tree_edge (const Edge& e, const Graph& g) {}
+        void non_tree_edge (const Edge& e, const Graph& g) {}
+        void gray_target (const Edge& e, const Graph& g) {}
+        void black_target (const Edge& e, const Graph& g) {}
+        void finish_vertex (const Vertex& e, const Graph& g) {}
+    };
 
 }
 
@@ -747,6 +605,22 @@ struct supply_check_hex_t
 bool neutral (supply_check_hex_t h, unsigned int nz_id)
 { return h.owner_id == nz_id; }
 
+int next_supply_source (int nation,
+                        int point,
+                        int size,
+                        int supply[],
+                        supply_check_hex_t hexes[])
+{
+    for (; point < size; ++point) {
+        if (hexes[point].owner_id == nation) {
+            int presence = hexes[point].presence;
+            if (presence | ((1 << 3) | (1 << 4) | (1 << 5)) && supply[point])
+                break;
+        }
+    }
+    return point;
+}
+
 extern "C" {
 
     GRAPH_ALGO_API
@@ -772,7 +646,7 @@ extern "C" {
     }
 
     // Returns an int for each hex, containing a grid ID in the first 8 bits
-    // (0 is no grid, 1 is main capitol grid, 2 is main offmap grid, anything
+    // (0 is no grid, 1 is main capital grid, 2 is main offmap grid, anything
     // else is a partial grid).  Bits 8-23 contain the nations supplying this
     // hex (a '1' in bit N indicates that the nation with ID N-8 is supplying
     // it).  Bit 17 contains a flag indicating supplies must be paid for by
@@ -785,7 +659,7 @@ extern "C" {
                            int neutral_zone_id,
                            int nations,
                            int nation_team_membership[],
-                           int capitols[],
+                           int capitals[],
                            int nation_offmap_areas[])
     {
         g_supply_data.supply.resize(w * h);
@@ -824,20 +698,67 @@ extern "C" {
             }
         }
 
-        std::vector<int> predecessors(boost::num_vertices(g));
+        for (int i = 0; i < nations; ++i) {
+            if (capitals[i] == -1)
+                continue;
 
-        // TODO: for (each nation) {
-        for (unsigned int i = 0; i < boost::num_vertices(g); ++i) {
-            predecessors[i] = i;
+            typedef graph::bfs_visitor<
+                graph::graph,
+                boost::graph_traits<graph::graph>::edge_descriptor,
+                int
+            > bfs_visitor;
+            typedef graph::supply_visitor<
+                graph::graph,
+                boost::graph_traits<graph::graph>::edge_descriptor,
+                int
+            > supply_visitor;
+
+            bfs_visitor bfs_visitor_(0, graph::invalid_hex_id, 0, 6);
+
+            {
+                supply_visitor visitor(i,
+                                       1,
+                                       &g_supply_data.supply[0],
+                                       hex_id_property_map,
+                                       bfs_visitor_);
+                graph::bfs(g, visitor, 0);
+            }
+
+            if (offmap_area_ids[nation_offmap_areas[i]] != -1) {
+                supply_visitor visitor(i,
+                                       2,
+                                       &g_supply_data.supply[0],
+                                       hex_id_property_map,
+                                       bfs_visitor_);
+                graph::bfs(g, visitor, offmap_area_ids[nation_offmap_areas[i]]);
+            }
+
+            int source = next_supply_source(
+                i,
+                0,
+                w * h,
+                &g_supply_data.supply[0],
+                hexes
+            );
+            int grid = 3;
+            while (source < w * h) {
+                supply_visitor visitor(i,
+                                       grid++,
+                                       &g_supply_data.supply[0],
+                                       hex_id_property_map,
+                                       bfs_visitor_);
+                graph::bfs(g, visitor, source);
+
+                source = next_supply_source(
+                    i,
+                    0,
+                    w * h,
+                    &g_supply_data.supply[0],
+                    hexes
+                );
+            }
         }
-        typedef graph::bfs_visitor<
-            graph::graph,
-            boost::graph_traits<graph::graph>::edge_descriptor,
-            int
-        > bfs_visitor;
-        bfs_visitor visitor(0, graph::invalid_hex_id, &predecessors[0], 6);
-        graph::bfs(g, visitor, 0);
-        // TODO
+
         return &g_supply_data.supply[0];
     }
 
