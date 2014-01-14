@@ -111,7 +111,7 @@ namespace graph {
                 m_predecessors[static_cast<int>(v)] = m_source;
 
                 if (v == m_stop)
-                    boost::throw_exception(found_destination());
+                    throw found_destination();
 
                 if (m_level_complete) {
                     m_marker = v;
@@ -123,7 +123,7 @@ namespace graph {
             {
                 if (v == m_marker) {
                     if (!m_levels_remaining)
-                        boost::throw_exception(reached_depth_limit());
+                        throw reached_depth_limit();
                     m_levels_remaining--;
                     m_level_complete = true;
                 }
@@ -141,6 +141,23 @@ namespace graph {
 
     struct vertex_hex_id_t {typedef boost::vertex_property_tag kind;};
 
+    const int invalid_hex_id = -1000;
+
+    template <class Graph, class Visitor>
+    bool bfs (Graph g, Visitor v, int start_hex_id)
+    {
+        try {
+            boost::queue<int> buf;
+            std::vector<int> colors(boost::num_vertices(g));
+            boost::breadth_first_search(g, start_hex_id, buf, v, &colors[0]);
+        } catch (const typename Visitor::reached_depth_limit&) {
+            // The algorithm didn't find hex2_id before reaching max_dist.
+            return false; // TODO
+        } catch (const typename Visitor::found_destination&) {
+            // hex2_id was found and we exited early by throwing.
+        }
+        return true;
+    }
 
 #if 0
     /** Returns the path between vertices \a system1_id and \a system2_id of
@@ -458,6 +475,9 @@ hex_coord adjacent_hex_coord (hex_coord hc, hex_direction hd)
 bool on_map (hex_coord hc, map m)
 { return hc.x < m.width && hc.y < m.height; }
 
+bool on_map (hex_coord hc, unsigned int width, unsigned int height)
+{ return hc.x < width && hc.y < height; }
+
 
 unsigned int hex_id (hex_coord hc)
 { return hc.x * 100 + hc.y; }
@@ -512,34 +532,34 @@ neighbors adjacent_hex_coords (hex_coord hc, map m, unsigned int r = 1)
     return retval;
 }
 
-
-void init_graph (graph::graph& g, map m)
+void init_graph (graph::graph& g,
+                 graph::hex_id_property_map& hex_id_property_map,
+                 graph::EdgeWeightPropertyMap& edge_weight_map,
+                 unsigned int width,
+                 unsigned int height)
 {
-    graph::hex_id_property_map sys_id_property_map =
-        boost::get(graph::vertex_hex_id_t(), g);
-
-    graph::EdgeWeightPropertyMap edge_weight_map =
-        boost::get(boost::edge_weight, g);
+    hex_id_property_map = boost::get(graph::vertex_hex_id_t(), g);
+    edge_weight_map = boost::get(boost::edge_weight, g);
 
     {
         unsigned int i = 0;
-        for (unsigned int x = 0; x < m.width; ++x) {
-            for (unsigned int y = 0; y < m.height; ++y, ++i) {
+        for (unsigned int x = 0; x < width; ++x) {
+            for (unsigned int y = 0; y < height; ++y, ++i) {
                 unsigned int id = hex_id(hex_coord(x, y));
                 boost::add_vertex(g);
-                sys_id_property_map[i] = id;
+                hex_id_property_map[i] = id;
             }
         }
     }
 
     {
         unsigned int i = 0;
-        for (unsigned int x = 0; x < m.width; ++x) {
-            for (unsigned int y = 0; y < m.height; ++y, ++i) {
+        for (unsigned int x = 0; x < width; ++x) {
+            for (unsigned int y = 0; y < height; ++y, ++i) {
                 hex_coord coord(x, y);
                 for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
-                    if (on_map(adjacent_coord, m)) {
+                    if (on_map(adjacent_coord, width, height)) {
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
                             boost::add_edge(i, hex_id(adjacent_coord), g);
                         edge_weight_map[add_edge_result.first] = 1.0; // TODO
@@ -666,11 +686,16 @@ map read_map ()
 
 void validate_map ()
 {
-    graph::graph g;
     const map m = read_map();
-    init_graph(g, m);
+    graph::graph g;
+    graph::hex_id_property_map hex_id_property_map;
+    graph::EdgeWeightPropertyMap edge_weight_map;
+    init_graph(g, hex_id_property_map, edge_weight_map, m.width, m.height);
     std::cerr << "map looks good!\n";
 }
+
+int hex_coord_to_graph_id (hex_coord hc)
+{ return (hc.x + 1) * 100 + hc.y + 1; }
 
 struct ga_hex_t
 {
@@ -742,6 +767,21 @@ extern "C" {
                            int nation_offmap_areas[])
     {
         g_supply_data.supply.resize(w * h);
+        graph::graph g;
+        graph::hex_id_property_map hex_id_property_map;
+        graph::EdgeWeightPropertyMap edge_weight_map;
+        init_graph(g, hex_id_property_map, edge_weight_map, w, h);
+        std::vector<int> predecessors(boost::num_vertices(g));
+        for (unsigned int i = 0; i < boost::num_vertices(g); ++i) {
+            predecessors[i] = i;
+        }
+        typedef graph::bfs_visitor<
+            graph::graph,
+            typename boost::graph_traits<graph::graph>::edge_descriptor,
+            int
+        > bfs_visitor;
+        bfs_visitor visitor(0, graph::invalid_hex_id, &predecessors[0], 6);
+        graph::bfs(g, visitor, 0);
         // TODO
         return &g_supply_data.supply[0];
     }
