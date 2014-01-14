@@ -789,9 +789,11 @@ extern "C" {
                            int nation_offmap_areas[])
     {
         g_supply_data.supply.resize(w * h);
+
         graph::graph g;
         graph::hex_id_property_map hex_id_property_map;
         graph::EdgeWeightPropertyMap edge_weight_map;
+
         init_graph(
             g,
             hex_id_property_map,
@@ -805,7 +807,26 @@ extern "C" {
             },
             [=] (unsigned int id1, unsigned int id2) {return 1.0;}
         );
+
+        std::vector<int> offmap_area_ids(nations, -1);
+        for (int i = 0; i < nations; ++i) {
+            if (nation_offmap_areas[i] != -1) {
+                offmap_area_ids[nation_offmap_areas[i]] = boost::num_vertices(g);
+                boost::add_vertex(g);
+            }
+        }
+
+        for (int i = 0; i < w * h; ++i) {
+            if (hexes[i].borders_offmap != -1 && !neutral(hexes[i], neutral_zone_id)) {
+                std::pair<graph::edge_descriptor, bool> add_edge_result =
+                    boost::add_edge(i, hexes[i].borders_offmap, g);
+                edge_weight_map[add_edge_result.first] = 1.0;
+            }
+        }
+
         std::vector<int> predecessors(boost::num_vertices(g));
+
+        // TODO: for (each nation) {
         for (unsigned int i = 0; i < boost::num_vertices(g); ++i) {
             predecessors[i] = i;
         }
