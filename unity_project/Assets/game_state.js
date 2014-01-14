@@ -90,7 +90,7 @@ private static function initial_setup ()
 
 private static function determine_supply ()
 {
-    Debug.Log('determine_supply()');
+//    Debug.Log('determine_supply()');
     var scenario = this_.game_data_.scenario();
 
     var nation_teams = new int[this_.game_data_.nations_by_id.Count];
@@ -166,6 +166,7 @@ private static function determine_supply ()
     var supply_ : System.IntPtr = graph_algorithms.determine_supply(
         m.width, m.height,
         hexes,
+        this_.game_data_.nation('NZ').id,
         nation_teams.Length,
         nation_teams,
         capitals,
@@ -173,7 +174,8 @@ private static function determine_supply ()
     );
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
-/**/
+    Debug.Log('did supply determination step');
+/*
     // TODO
     for (i in supply) {
         Debug.Log(i);

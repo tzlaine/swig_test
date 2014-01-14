@@ -59,6 +59,7 @@ public class graph_algorithms
     public static extern IntPtr determine_supply (
         int w, int h,
         [In] supply_check_hex_t[] hexes,
+        int neutral_zone_id,
         int nations,
         [In] int[] nation_team_membership,
         [In] int[] capitols,

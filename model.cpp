@@ -479,6 +479,10 @@ bool on_map (hex_coord hc, unsigned int width, unsigned int height)
 { return hc.x < width && hc.y < height; }
 
 
+unsigned int hex_index (hex_coord hc, unsigned int width)
+{ return hc.x + hc.y * width; }
+
+
 unsigned int hex_id (hex_coord hc)
 { return hc.x * 100 + hc.y; }
 
@@ -532,11 +536,14 @@ neighbors adjacent_hex_coords (hex_coord hc, map m, unsigned int r = 1)
     return retval;
 }
 
+template <typename EdgeFn, typename WeightFn>
 void init_graph (graph::graph& g,
                  graph::hex_id_property_map& hex_id_property_map,
                  graph::EdgeWeightPropertyMap& edge_weight_map,
                  unsigned int width,
-                 unsigned int height)
+                 unsigned int height,
+                 EdgeFn make_edge,
+                 WeightFn weight)
 {
     hex_id_property_map = boost::get(graph::vertex_hex_id_t(), g);
     edge_weight_map = boost::get(boost::edge_weight, g);
@@ -560,9 +567,12 @@ void init_graph (graph::graph& g,
                 for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, width, height)) {
+                        unsigned int index = hex_index(adjacent_coord, width);
+                        if (!make_edge(i, index))
+                            continue;
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
-                            boost::add_edge(i, hex_id(adjacent_coord), g);
-                        edge_weight_map[add_edge_result.first] = 1.0; // TODO
+                            boost::add_edge(i, index, g);
+                        edge_weight_map[add_edge_result.first] = weight(i, index);
                     }
                 }
             }
@@ -690,7 +700,15 @@ void validate_map ()
     graph::graph g;
     graph::hex_id_property_map hex_id_property_map;
     graph::EdgeWeightPropertyMap edge_weight_map;
-    init_graph(g, hex_id_property_map, edge_weight_map, m.width, m.height);
+    init_graph(
+        g,
+        hex_id_property_map,
+        edge_weight_map,
+        m.width,
+        m.height,
+        [] (unsigned int id1, unsigned int id2) {return true;},
+        [] (unsigned int id1, unsigned int id2) {return 1.0;}
+    );
     std::cerr << "map looks good!\n";
 }
 
@@ -725,6 +743,9 @@ struct supply_check_hex_t
     int presence;
     int borders_offmap;
 };
+
+bool neutral (supply_check_hex_t h, unsigned int nz_id)
+{ return h.owner_id == nz_id; }
 
 extern "C" {
 
@@ -761,6 +782,7 @@ extern "C" {
     GRAPH_ALGO_API
     int* determine_supply (int w, int h,
                            supply_check_hex_t hexes[],
+                           int neutral_zone_id,
                            int nations,
                            int nation_team_membership[],
                            int capitols[],
@@ -770,14 +792,26 @@ extern "C" {
         graph::graph g;
         graph::hex_id_property_map hex_id_property_map;
         graph::EdgeWeightPropertyMap edge_weight_map;
-        init_graph(g, hex_id_property_map, edge_weight_map, w, h);
+        init_graph(
+            g,
+            hex_id_property_map,
+            edge_weight_map,
+            w,
+            h,
+            [=] (unsigned int id1, unsigned int id2) {
+                return
+                    !neutral(hexes[id1], neutral_zone_id) &&
+                    !neutral(hexes[id2], neutral_zone_id);
+            },
+            [=] (unsigned int id1, unsigned int id2) {return 1.0;}
+        );
         std::vector<int> predecessors(boost::num_vertices(g));
         for (unsigned int i = 0; i < boost::num_vertices(g); ++i) {
             predecessors[i] = i;
         }
         typedef graph::bfs_visitor<
             graph::graph,
-            typename boost::graph_traits<graph::graph>::edge_descriptor,
+            boost::graph_traits<graph::graph>::edge_descriptor,
             int
         > bfs_visitor;
         bfs_visitor visitor(0, graph::invalid_hex_id, &predecessors[0], 6);
