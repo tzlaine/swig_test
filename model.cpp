@@ -12,8 +12,8 @@
 #include <fstream>
 #include <map>
 #include <string>
-
-#include <numeric> // TODO
+#include <queue>
+#include <limits>
 #include <iostream>
 
 
@@ -110,108 +110,93 @@ namespace graph {
         return true;
     }
 
-    template <class Graph, class Edge, class Vertex>
-    class bfs_visitor
-    {
-    private:
-        Vertex m_marker;
-        Vertex m_stop;
-        Vertex m_source;
-        Vertex* m_predecessors;
-        int m_levels_remaining;
-        bool m_level_complete;
-
-    public:
-        bfs_visitor (const Vertex& start,
-                     const Vertex& stop,
-                     Vertex* predecessors,
-                     int max_depth) :
-            m_marker (start),
-            m_stop (stop),
-            m_source (start),
-            m_predecessors (predecessors),
-            m_levels_remaining (max_depth),
-            m_level_complete (false)
-            {}
-
-        void initialize_vertex (const Vertex& v, const Graph& g) {}
-
-        void discover_vertex (const Vertex& v, const Graph& g)
-            {
-                if (m_predecessors)
-                    m_predecessors[static_cast<int>(v)] = m_source;
-
-                if (v == m_stop)
-                    throw found_destination();
-
-                if (m_level_complete) {
-                    m_marker = v;
-                    m_level_complete = false;
-                }
-            }
-
-        void examine_vertex (const Vertex& v, const Graph& g)
-            {
-                if (v == m_marker) {
-                    if (!m_levels_remaining)
-                        throw reached_depth_limit();
-                    m_levels_remaining--;
-                    m_level_complete = true;
-                }
-
-                m_source = v; // avoid re-calculating source from edge
-            }
-
-        void examine_edge (const Edge& e, const Graph& g) {}
-        void tree_edge (const Edge& e, const Graph& g) {}
-        void non_tree_edge (const Edge& e, const Graph& g) {}
-        void gray_target (const Edge& e, const Graph& g) {}
-        void black_target (const Edge& e, const Graph& g) {}
-        void finish_vertex (const Vertex& e, const Graph& g) {}
+    enum vertex_color {
+        white,
+        gray,
+        black
     };
 
-    template <class Graph, class Edge, class Vertex>
-    class supply_visitor
+    // bfs_init (G, s)
+    //   for each vertex u in V[G]      initialize vertex u 
+    //     color[u] := WHITE 
+    //     d[u] := infinity 
+    //     p[u] := u 
+    //   end for
+
+    template <typename D>
+    void bfs_init (std::size_t n,
+                   std::vector<vertex_color>& color,
+                   std::vector<D>& d,
+                   std::vector<int>& p)
     {
-    private:
-        int m_nation;
-        int m_grid;
-        int* m_supply;
-        hex_id_property_map m_hex_id_property_map;
-        bfs_visitor<Graph, Edge, Vertex> m_bfs_visitor;
+        color = std::vector<vertex_color>(n, white);
+        d = std::vector<D>(n, std::numeric_limits<D>::max());
+        p.resize(n);
+        std::generate(p.begin(), p.end(), [] () {
+            static int i = -1;
+            return ++i;
+        });
+    }
 
-    public:
-        supply_visitor (int nation,
-                        int grid,
-                        int supply[],
-                        hex_id_property_map hex_id_property_map_,
-                        bfs_visitor<Graph, Edge, Vertex> bfs_visitor_) :
-            m_nation (nation),
-            m_grid (grid),
-            m_supply (supply),
-            m_hex_id_property_map (hex_id_property_map_),
-            m_bfs_visitor (bfs_visitor_)
-            {}
+    // bfs_ (G, s)
+    //   color[s] := GRAY 
+    //   d[s] := 0 
+    //   ENQUEUE(Q, s)                  discover vertex s
+    //   while (Q != Ø) 
+    //     u := DEQUEUE(Q)              examine vertex u
+    //     for each vertex v in Adj[u]  examine edge (u,v)
+    //       if (color[v] = WHITE)      (u,v) is a tree edge
+    //         color[v] := GRAY 
+    //         d[v] := d[u] + 1  
+    //         p[v] := u  
+    //         ENQUEUE(Q, v)            discover vertex v
+    //       else                       (u,v) is a non-tree edge
+    //         if (color[v] = GRAY) 
+    //           ...                    (u,v) has a gray target
+    //         else 
+    //           ...                    (u,v) has a black target
+    //     end for
+    //     color[u] := BLACK            finish vertex u
+    //   end while
+    //   return (d, p)
 
-        void initialize_vertex (const Vertex& v, const Graph& g) {}
-
-        void discover_vertex (const Vertex& v, const Graph& g)
-            {
-                m_bfs_visitor.discover_vertex(v, g);
+    // precondition: bfs_init(color, d, p)
+    template <typename Graph, typename D, typename Visitor>
+    void bfs_ (Graph& g,
+               std::vector<vertex_color>& color,
+               std::vector<D>& d,
+               std::vector<int>& p,
+               int start_vertex,
+               Visitor visitor
+    ) {
+        color[start_vertex] = gray;
+        d[start_vertex] = 0;
+        std::queue<int> queue;
+        queue.push(start_vertex);
+        while (!queue.empty()) {
+            int u = queue.front();
+            queue.pop();
+            if (!visitor.examine(u, g))
+                return;
+            typedef typename Graph::adjacency_iterator iterator;
+            std::pair<iterator, iterator> adj = adjacent_vertices(u, g);
+            for (iterator it = adj.first; it != adj.second; ++it) {
+                int v = *it;
+                if (color[v] == white) {
+                    color[v] = gray;
+                    std::pair<D, bool> dist = visitor.distance(d[u], u, v);
+                    if (!dist.second)
+                        return;
+                    d[v] = dist.first;
+                    p[v] = u;
+                    queue.push(v);
+                } else if (color[v] == gray) {
+                    // TODO: Revisit, a la Djikstra/A*?
+                }
             }
-
-        void examine_vertex (const Vertex& v, const Graph& g)
-            {
-                m_bfs_visitor.examine_vertex(v, g);
-            }
-
-        void examine_edge (const Edge& e, const Graph& g) {}
-        void tree_edge (const Edge& e, const Graph& g) {}
-        void non_tree_edge (const Edge& e, const Graph& g) {}
-        void gray_target (const Edge& e, const Graph& g) {}
-        void black_target (const Edge& e, const Graph& g) {}
-        void finish_vertex (const Vertex& e, const Graph& g) {}
-    };
+            color[u] = black;
+        }
+    }
 
 }
 
@@ -605,20 +590,95 @@ struct supply_check_hex_t
 bool neutral (supply_check_hex_t h, unsigned int nz_id)
 { return h.owner_id == nz_id; }
 
-int next_supply_source (int nation,
-                        int point,
+bool supply_source (supply_check_hex_t h)
+{ return h.presence | ((1 << 3) | (1 << 4) | (1 << 5)); }
+
+class supply_visitor
+{
+private:
+    int m_nation;
+    int m_grid;
+    int m_width;
+    int m_height;
+    supply_check_hex_t* m_hexes;
+    int* m_supply;
+    std::vector<int>& m_vertex_id_to_hex_id;
+    boost::unordered_map<int, int>& m_hex_id_to_vertex_id;
+    bool& m_visited_offmap;
+
+public:
+    supply_visitor (int nation,
+                    int grid,
+                    int width,
+                    int height,
+                    supply_check_hex_t hexes[],
+                    int supply[],
+                    std::vector<int>& vertex_id_to_hex_id,
+                    boost::unordered_map<int, int>& hex_id_to_vertex_id,
+                    bool& visited_offmap) :
+        m_nation (nation),
+        m_grid (grid),
+        m_width (width),
+        m_height (height),
+        m_hexes (hexes),
+        m_supply (supply),
+        m_vertex_id_to_hex_id (vertex_id_to_hex_id),
+        m_hex_id_to_vertex_id (hex_id_to_vertex_id),
+        m_visited_offmap (visited_offmap)
+        {}
+
+    bool examine (int v, graph::graph& g)
+        {
+            int hex_id_ = m_vertex_id_to_hex_id[v];
+            if (hex_id_ < 0) { // offmap area
+                // TODO
+            } else {
+                hex_coord coord(hex_id_ / 100, hex_id_ % 100);
+                for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
+                    hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
+                    if (on_map(adjacent_coord, m_width, m_height)) {
+                        // TODO Check supply blockage situation.
+                        unsigned int hex_id_ = hex_id(adjacent_coord);
+                        int n = boost::num_vertices(g);
+                        m_vertex_id_to_hex_id[n] = hex_id_;
+                        m_hex_id_to_vertex_id[hex_id_] = n;
+                        boost::add_vertex(g);
+                        std::pair<graph::edge_descriptor, bool> add_edge_result =
+                            boost::add_edge(v, n, g);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+    std::pair<float, bool> distance (float d, int u, int v)
+        {
+            const float epsilon = 1.0e-3;
+            std::pair<float, bool> retval(d + 1.0f, true);
+            int hex_id = m_vertex_id_to_hex_id[v];
+            if (hex_id < -1 && true /* TODO: offmap has a base/planet */) {
+                retval.first = 0;
+            } else {
+                hex_coord hc(hex_id / 100, hex_id % 100);
+                if (supply_source(m_hexes[hex_index(hc, m_width)]))
+                    retval.first = 0;
+            }
+            retval.second = retval.first < 6.0 + epsilon;
+            return retval;
+        }
+};
+
+int next_supply_source (int source,
                         int size,
                         int supply[],
                         supply_check_hex_t hexes[])
 {
-    for (; point < size; ++point) {
-        if (hexes[point].owner_id == nation) {
-            int presence = hexes[point].presence;
-            if (presence | ((1 << 3) | (1 << 4) | (1 << 5)) && supply[point])
-                break;
-        }
+    for (; source < size; ++source) {
+        if (supply_source(hexes[source]) && !supply[source])
+            break;
     }
-    return point;
+    return source;
 }
 
 extern "C" {
@@ -632,7 +692,7 @@ extern "C" {
     GRAPH_ALGO_API
     float test_2 (int n, float floats[])
     {
-        return std::accumulate(floats, floats + n, 0.0f);
+        return 6;
     }
 
     GRAPH_ALGO_API
@@ -665,98 +725,106 @@ extern "C" {
         g_supply_data.supply.resize(w * h);
 
         graph::graph g;
-        graph::hex_id_property_map hex_id_property_map;
-        graph::EdgeWeightPropertyMap edge_weight_map;
 
-        init_graph(
-            g,
-            hex_id_property_map,
-            edge_weight_map,
-            w,
-            h,
-            [=] (unsigned int id1, unsigned int id2) {
-                return
-                    !neutral(hexes[id1], neutral_zone_id) &&
-                    !neutral(hexes[id2], neutral_zone_id);
-            },
-            [=] (unsigned int id1, unsigned int id2) {return 1.0;}
-        );
-
-        std::vector<int> offmap_area_ids(nations, -1);
+        std::size_t n = w * h;
         for (int i = 0; i < nations; ++i) {
-            if (nation_offmap_areas[i] != -1) {
-                offmap_area_ids[nation_offmap_areas[i]] = boost::num_vertices(g);
-                boost::add_vertex(g);
-            }
+            if (nation_offmap_areas[i] != -1)
+                ++n;
         }
 
-        for (int i = 0; i < w * h; ++i) {
-            if (hexes[i].borders_offmap != -1 && !neutral(hexes[i], neutral_zone_id)) {
-                std::pair<graph::edge_descriptor, bool> add_edge_result =
-                    boost::add_edge(i, hexes[i].borders_offmap, g);
-                edge_weight_map[add_edge_result.first] = 1.0;
-            }
-        }
+        std::vector<graph::vertex_color> colors;
+        std::vector<float> distances;
+        std::vector<int> predecessors;
 
-        for (int i = 0; i < nations; ++i) {
-            if (capitals[i] == -1)
+        graph::bfs_init(n, colors, distances, predecessors);
+
+//        std::vector<int> offmap_area_ids(nations, -1);
+//        for (int i = 0; i < nations; ++i) {
+//            if (nation_offmap_areas[i] != -1) {
+//                offmap_area_ids[nation_offmap_areas[i]] = boost::num_vertices(g);
+//                boost::add_vertex(g);
+//            }
+//        }
+//
+//        for (int i = 0; i < w * h; ++i) {
+//            if (hexes[i].borders_offmap != -1 && !neutral(hexes[i], neutral_zone_id)) {
+//                std::pair<graph::edge_descriptor, bool> add_edge_result =
+//                    boost::add_edge(i, hexes[i].borders_offmap, g);
+//                edge_weight_map[add_edge_result.first] = 1.0;
+//            }
+//        }
+
+        std::vector<int> vertex_id_to_hex_id(n, -1);
+        boost::unordered_map<int, int> hex_id_to_vertex_id;
+
+        auto find_grid = [&] (
+            int nation,
+            int grid,
+            int hex_id,
+            bool& visited_offmap
+        ) {
+            int n = boost::num_vertices(g);
+            vertex_id_to_hex_id[n] = hex_id;
+            hex_id_to_vertex_id[hex_id] = n;
+            boost::add_vertex(g);
+
+            supply_visitor visitor(nation,
+                                   grid,
+                                   w,
+                                   h,
+                                   hexes,
+                                   &g_supply_data.supply[0],
+                                   vertex_id_to_hex_id,
+                                   hex_id_to_vertex_id,
+                                   visited_offmap);
+            graph::bfs_(g, colors, distances, predecessors, n + 1, visitor);
+        };
+
+        for (int nation = 0; nation < nations; ++nation) {
+            if (capitals[nation] == -1)
                 continue;
 
-            typedef graph::bfs_visitor<
-                graph::graph,
-                boost::graph_traits<graph::graph>::edge_descriptor,
-                int
-            > bfs_visitor;
-            typedef graph::supply_visitor<
-                graph::graph,
-                boost::graph_traits<graph::graph>::edge_descriptor,
-                int
-            > supply_visitor;
+            bool visited_offmap = false;
+            find_grid(
+                nation,
+                1,
+                capitals[nation],
+                visited_offmap
+            );
 
-            bfs_visitor bfs_visitor_(0, graph::invalid_hex_id, 0, 6);
-
-            {
-                supply_visitor visitor(i,
-                                       1,
-                                       &g_supply_data.supply[0],
-                                       hex_id_property_map,
-                                       bfs_visitor_);
-                graph::bfs(g, visitor, 0);
+            if (!visited_offmap) {
+                find_grid(
+                    nation,
+                    1,
+                    -nation,
+                    visited_offmap
+                );
             }
+        }
 
-            if (offmap_area_ids[nation_offmap_areas[i]] != -1) {
-                supply_visitor visitor(i,
-                                       2,
-                                       &g_supply_data.supply[0],
-                                       hex_id_property_map,
-                                       bfs_visitor_);
-                graph::bfs(g, visitor, offmap_area_ids[nation_offmap_areas[i]]);
-            }
 
-            int source = next_supply_source(
-                i,
-                0,
+        int source = next_supply_source(
+            0,
+            w * h,
+            &g_supply_data.supply[0],
+            hexes
+        );
+        std::vector<int> grid_ids(nations, 3);
+        while (source < w * h) {
+            bool dont_care = false;
+            find_grid(
+                hexes[source].owner_id,
+                ++grid_ids[hexes[source].owner_id],
+                source,
+                dont_care
+            );
+
+            source = next_supply_source(
+                source + 1,
                 w * h,
                 &g_supply_data.supply[0],
                 hexes
             );
-            int grid = 3;
-            while (source < w * h) {
-                supply_visitor visitor(i,
-                                       grid++,
-                                       &g_supply_data.supply[0],
-                                       hex_id_property_map,
-                                       bfs_visitor_);
-                graph::bfs(g, visitor, source);
-
-                source = next_supply_source(
-                    i,
-                    0,
-                    w * h,
-                    &g_supply_data.supply[0],
-                    hexes
-                );
-            }
         }
 
         return &g_supply_data.supply[0];
