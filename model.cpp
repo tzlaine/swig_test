@@ -593,6 +593,18 @@ bool neutral (supply_check_hex_t h, unsigned int nz_id)
 bool supply_source (supply_check_hex_t h)
 { return h.presence | ((1 << 3) | (1 << 4) | (1 << 5)); }
 
+int add_vertex (graph::graph& g,
+                int v,
+                std::vector<int>& vertex_id_to_hex_id,
+                boost::unordered_map<int, int>& hex_id_to_vertex_id)
+{
+    int n = boost::num_vertices(g);
+    vertex_id_to_hex_id[n] = v;
+    hex_id_to_vertex_id[v] = n;
+    boost::add_vertex(g);
+    return n;
+}
+
 class supply_visitor
 {
 private:
@@ -601,6 +613,7 @@ private:
     int m_width;
     int m_height;
     supply_check_hex_t* m_hexes;
+    int* m_nation_offmap_areas;
     int* m_supply;
     std::vector<int>& m_vertex_id_to_hex_id;
     boost::unordered_map<int, int>& m_hex_id_to_vertex_id;
@@ -612,6 +625,7 @@ public:
                     int width,
                     int height,
                     supply_check_hex_t hexes[],
+                    int nation_offmap_areas[],
                     int supply[],
                     std::vector<int>& vertex_id_to_hex_id,
                     boost::unordered_map<int, int>& hex_id_to_vertex_id,
@@ -620,6 +634,7 @@ public:
         m_grid (grid),
         m_width (width),
         m_height (height),
+        m_nation_offmap_areas (nation_offmap_areas),
         m_hexes (hexes),
         m_supply (supply),
         m_vertex_id_to_hex_id (vertex_id_to_hex_id),
@@ -631,7 +646,17 @@ public:
         {
             int hex_id_ = m_vertex_id_to_hex_id[v];
             if (hex_id_ < 0) { // offmap area
-                // TODO
+                int area = m_nation_offmap_areas[-hex_id_];
+                for (int y = 0; y < m_height; ++y) {
+                    for (int x = 0; x < m_width; ++x) {
+                        int hex_index_ = x + y * m_width;
+                        if (m_vertex_id_to_hex_id[hex_index_] == -1 &&
+                            m_hexes[hex_index_].borders_offmap == area) {
+                            int n = add_vertex(g, x * 100 + y, m_vertex_id_to_hex_id, m_hex_id_to_vertex_id);
+                            boost::add_edge(v, n, g);
+                        }
+                    }
+                }
             } else {
                 hex_coord coord(hex_id_ / 100, hex_id_ % 100);
                 for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
@@ -639,12 +664,13 @@ public:
                     if (on_map(adjacent_coord, m_width, m_height)) {
                         // TODO Check supply blockage situation.
                         unsigned int hex_id_ = hex_id(adjacent_coord);
-                        int n = boost::num_vertices(g);
-                        m_vertex_id_to_hex_id[n] = hex_id_;
-                        m_hex_id_to_vertex_id[hex_id_] = n;
-                        boost::add_vertex(g);
-                        std::pair<graph::edge_descriptor, bool> add_edge_result =
-                            boost::add_edge(v, n, g);
+                        int n = add_vertex(g, hex_id_, m_vertex_id_to_hex_id, m_hex_id_to_vertex_id);
+                        boost::add_edge(v, n, g);
+                    }
+                    if (m_hexes[hex_index(coord, m_width)].borders_offmap ==
+                        m_nation_offmap_areas[m_nation]) {
+                        int n = add_vertex(g, -m_nation, m_vertex_id_to_hex_id, m_hex_id_to_vertex_id);
+                        boost::add_edge(v, n, g);
                     }
                 }
             }
@@ -738,22 +764,6 @@ extern "C" {
 
         graph::bfs_init(n, colors, distances, predecessors);
 
-//        std::vector<int> offmap_area_ids(nations, -1);
-//        for (int i = 0; i < nations; ++i) {
-//            if (nation_offmap_areas[i] != -1) {
-//                offmap_area_ids[nation_offmap_areas[i]] = boost::num_vertices(g);
-//                boost::add_vertex(g);
-//            }
-//        }
-//
-//        for (int i = 0; i < w * h; ++i) {
-//            if (hexes[i].borders_offmap != -1 && !neutral(hexes[i], neutral_zone_id)) {
-//                std::pair<graph::edge_descriptor, bool> add_edge_result =
-//                    boost::add_edge(i, hexes[i].borders_offmap, g);
-//                edge_weight_map[add_edge_result.first] = 1.0;
-//            }
-//        }
-
         std::vector<int> vertex_id_to_hex_id(n, -1);
         boost::unordered_map<int, int> hex_id_to_vertex_id;
 
@@ -763,16 +773,14 @@ extern "C" {
             int hex_id,
             bool& visited_offmap
         ) {
-            int n = boost::num_vertices(g);
-            vertex_id_to_hex_id[n] = hex_id;
-            hex_id_to_vertex_id[hex_id] = n;
-            boost::add_vertex(g);
+            int n = add_vertex(g, hex_id, vertex_id_to_hex_id, hex_id_to_vertex_id);
 
             supply_visitor visitor(nation,
                                    grid,
                                    w,
                                    h,
                                    hexes,
+                                   nation_offmap_areas,
                                    &g_supply_data.supply[0],
                                    vertex_id_to_hex_id,
                                    hex_id_to_vertex_id,
