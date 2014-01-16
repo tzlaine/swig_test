@@ -130,7 +130,7 @@ namespace graph {
                    std::vector<int>& p)
     {
         color = std::vector<vertex_color>(n, white);
-        d = std::vector<D>(n, std::numeric_limits<D>::max());
+        d = std::vector<D>(n, (std::numeric_limits<D>::max)());
         p.resize(n);
         std::generate(p.begin(), p.end(), [] () {
             static int i = -1;
@@ -354,7 +354,7 @@ neighbors adjacent_hex_coords (hex_coord hc, map m, unsigned int r = 1)
     assert(r == 1 || r == 2);
     neighbors retval;
     if (on_map(hc, m)) {
-        retval.hexes[retval.size++] = hc;        
+        retval.hexes[retval.size++] = hc;
         for (hex_direction d = above_right;
              d < hex_directions;
              d = hex_direction(d + 1)) {
@@ -590,8 +590,31 @@ struct supply_check_hex_t
 bool neutral (supply_check_hex_t h, unsigned int nz_id)
 { return h.owner_id == nz_id; }
 
-bool supply_source (supply_check_hex_t h)
-{ return h.presence | ((1 << 3) | (1 << 4) | (1 << 5)); }
+bool supply_point (supply_check_hex_t h, int nation, int team)
+{
+    int flags =
+        (1 << (team * 9 + 3)) |
+        (1 << (team * 9 + 4)) |
+        (1 << (team * 9 + 5)) |
+        (1 << (team * 9 + 6)) |
+        (1 << (team * 9 + 7)) |
+        (1 << (team * 9 + 8));
+    return h.owner_id == nation && h.presence & flags;
+}
+
+bool supply_source (supply_check_hex_t h, int nation, int team)
+{
+    int team_flags[] = {
+        (1 << (0 * 9 + 3)) |
+        (1 << (0 * 9 + 4)) |
+        (1 << (0 * 9 + 5)),
+        (1 << (1 * 9 + 3)) |
+        (1 << (1 * 9 + 4)) |
+        (1 << (1 * 9 + 5))
+    };
+    int flags = team == -1 ? team_flags[team] : team_flags[0] | team_flags[1];
+    return (h.owner_id == nation || h.owner_id == -1) && h.presence & flags;
+}
 
 int add_vertex (graph::graph& g,
                 int v,
@@ -605,14 +628,61 @@ int add_vertex (graph::graph& g,
     return n;
 }
 
+bool supply_blocked (
+    hex_coord hc,
+    int team,
+    const supply_check_hex_t* hexes,
+    int width,
+    int height,
+    int neutral_zone_id
+) {
+    bool retval = true;
+    int hex_index_ = hex_index(hc, width);
+    supply_check_hex_t hex = hexes[hex_index_];
+    const int friendly_ships = 1 << (team * 9 + 0);
+    const int friendly_units = friendly_ships | (1 << (team * 9 + 1));
+    const int friendly_base = 1 << (team * 9 + 2);
+    const int other_team = 1 - team;
+    const int enemy_ships = 1 << (other_team * 9 + 0);
+    const int enemy_units = enemy_ships | (1 << (other_team * 9 + 1));
+    const int enemy_base = 1 << (other_team * 9 + 2);
+    if (hex.owner_id == neutral_zone_id) {
+    } else if (hex.presence & friendly_units) {
+        retval = false;
+    } else if (hex.presence & enemy_units) {
+        retval = true;
+    } else if (hex.presence & friendly_base) {
+        retval = false;
+    } else {
+        bool adjacent_enemy_ships = false;
+        bool adjacent_friendly_units = false;
+        for (hex_direction d = above_right;
+             d < hex_directions;
+             d = hex_direction(d + 1)) {
+            hex_coord adjacent_coord = adjacent_hex_coord(hc, d);
+            if (on_map(adjacent_coord, width, height)) {
+                supply_check_hex_t hex = hexes[hex_index(adjacent_coord, width)];
+                if (hex.presence & (enemy_ships | enemy_base))
+                    adjacent_enemy_ships = true;
+                if (hex.presence & friendly_units)
+                    adjacent_friendly_units = true;
+            }
+        }
+        retval = adjacent_enemy_ships && !adjacent_friendly_units;
+    }
+    return retval;
+}
+
 class supply_visitor
 {
 private:
     int m_nation;
+    int m_team;
     int m_grid;
     int m_width;
     int m_height;
     supply_check_hex_t* m_hexes;
+    int m_neutral_zone_id;
     int* m_nation_offmap_areas;
     int* m_supply;
     std::vector<int>& m_vertex_id_to_hex_id;
@@ -621,21 +691,25 @@ private:
 
 public:
     supply_visitor (int nation,
+                    int team,
                     int grid,
                     int width,
                     int height,
                     supply_check_hex_t hexes[],
+                    int neutral_zone_id,
                     int nation_offmap_areas[],
                     int supply[],
                     std::vector<int>& vertex_id_to_hex_id,
                     boost::unordered_map<int, int>& hex_id_to_vertex_id,
                     bool& visited_offmap) :
         m_nation (nation),
+        m_team (team),
         m_grid (grid),
         m_width (width),
         m_height (height),
         m_nation_offmap_areas (nation_offmap_areas),
         m_hexes (hexes),
+        m_neutral_zone_id (neutral_zone_id),
         m_supply (supply),
         m_vertex_id_to_hex_id (vertex_id_to_hex_id),
         m_hex_id_to_vertex_id (hex_id_to_vertex_id),
@@ -645,6 +719,19 @@ public:
     bool examine (int v, graph::graph& g)
         {
             int hex_id_ = m_vertex_id_to_hex_id[v];
+
+            {
+                int hex_index_ = hex_id_ / 100 + hex_id_ % 100 * m_width;
+                supply_check_hex_t hex = m_hexes[hex_index_];
+                int& supply = m_supply[hex_index_];
+                if (hex.owner_id == m_nation) {
+                    supply = m_grid;
+                    if (2 < m_grid && !supply_source(hex, m_nation, m_team))
+                        supply |= 1 << 24;
+                }
+                supply |= 1 << (m_nation + 8);
+            }
+
             if (hex_id_ < 0) { // offmap area
                 int area = m_nation_offmap_areas[-hex_id_];
                 for (int y = 0; y < m_height; ++y) {
@@ -652,7 +739,12 @@ public:
                         int hex_index_ = x + y * m_width;
                         if (m_vertex_id_to_hex_id[hex_index_] == -1 &&
                             m_hexes[hex_index_].borders_offmap == area) {
-                            int n = add_vertex(g, x * 100 + y, m_vertex_id_to_hex_id, m_hex_id_to_vertex_id);
+                            int n = add_vertex(
+                                g,
+                                x * 100 + y,
+                                m_vertex_id_to_hex_id,
+                                m_hex_id_to_vertex_id
+                            );
                             boost::add_edge(v, n, g);
                         }
                     }
@@ -662,16 +754,33 @@ public:
                 for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
-                        // TODO Check supply blockage situation.
+                        if (supply_blocked(adjacent_coord,
+                                           m_team,
+                                           m_hexes,
+                                           m_width,
+                                           m_height,
+                                           m_neutral_zone_id)) {
+                            continue;
+                        }
                         unsigned int hex_id_ = hex_id(adjacent_coord);
-                        int n = add_vertex(g, hex_id_, m_vertex_id_to_hex_id, m_hex_id_to_vertex_id);
+                        int n = add_vertex(
+                            g,
+                            hex_id_,
+                            m_vertex_id_to_hex_id,
+                            m_hex_id_to_vertex_id
+                        );
                         boost::add_edge(v, n, g);
                     }
-                    if (m_hexes[hex_index(coord, m_width)].borders_offmap ==
-                        m_nation_offmap_areas[m_nation]) {
-                        int n = add_vertex(g, -m_nation, m_vertex_id_to_hex_id, m_hex_id_to_vertex_id);
-                        boost::add_edge(v, n, g);
-                    }
+                }
+                if (m_hexes[hex_index(coord, m_width)].borders_offmap ==
+                    m_nation_offmap_areas[m_nation]) {
+                    int n = add_vertex(
+                        g,
+                        -m_nation,
+                        m_vertex_id_to_hex_id,
+                        m_hex_id_to_vertex_id
+                    );
+                    boost::add_edge(v, n, g);
                 }
             }
 
@@ -687,7 +796,7 @@ public:
                 retval.first = 0;
             } else {
                 hex_coord hc(hex_id / 100, hex_id % 100);
-                if (supply_source(m_hexes[hex_index(hc, m_width)]))
+                if (supply_source(m_hexes[hex_index(hc, m_width)], m_nation, m_team))
                     retval.first = 0;
             }
             retval.second = retval.first < 6.0 + epsilon;
@@ -698,10 +807,12 @@ public:
 int next_supply_source (int source,
                         int size,
                         int supply[],
-                        supply_check_hex_t hexes[])
+                        supply_check_hex_t hexes[],
+                        int nation = -1,
+                        int team = -1)
 {
     for (; source < size; ++source) {
-        if (supply_source(hexes[source]) && !supply[source])
+        if (supply_source(hexes[source], nation, team) && !supply[source])
             break;
     }
     return source;
@@ -735,7 +846,7 @@ extern "C" {
     // (0 is no grid, 1 is main capital grid, 2 is main offmap grid, anything
     // else is a partial grid).  Bits 8-23 contain the nations supplying this
     // hex (a '1' in bit N indicates that the nation with ID N-8 is supplying
-    // it).  Bit 17 contains a flag indicating supplies must be paid for by
+    // it).  Bit 24 contains a flag indicating supplies must be paid for by
     // the hex's owner to supply ships in this hex (meaning the hex is in a
     // partial supply grid, and does not include a free-supply feature like a
     // SB, BATS, or planet).
@@ -776,10 +887,12 @@ extern "C" {
             int n = add_vertex(g, hex_id, vertex_id_to_hex_id, hex_id_to_vertex_id);
 
             supply_visitor visitor(nation,
+                                   nation_team_membership[nation],
                                    grid,
                                    w,
                                    h,
                                    hexes,
+                                   neutral_zone_id,
                                    nation_offmap_areas,
                                    &g_supply_data.supply[0],
                                    vertex_id_to_hex_id,
@@ -809,7 +922,6 @@ extern "C" {
                 );
             }
         }
-
 
         int source = next_supply_source(
             0,
