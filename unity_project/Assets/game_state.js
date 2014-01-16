@@ -152,14 +152,19 @@ private static function determine_supply ()
         hexes[i++] = sh;
     }
 
-    var offmap_id = 0;
+    var offmap_border_hexes =
+        new int[this_.game_data_.nations_by_id.Count * graph_algorithms.max_offmap_border_hexes];
+    for (i = 0; i < offmap_border_hexes.Length; ++i) {
+        offmap_border_hexes[i] = -1;
+    }
+
     for (offmap in m.offmap_areas) {
         var id_ = this_.game_data_.id(offmap.Key);
+        var index = id_ * graph_algorithms.max_offmap_border_hexes;
         for (hc in offmap.Value.adjacent_hexes) {
-            nation_offmap_areas[id_] = offmap_id;
-            hexes[hc.x + hc.y * m.width].borders_offmap = offmap_id;
+            offmap_border_hexes[index] = hc.GetHashCode();
+            ++index;
         }
-        ++offmap_id;
     }
 
     var supply_ : System.IntPtr = graph_algorithms.determine_supply(
@@ -169,7 +174,8 @@ private static function determine_supply ()
         nation_teams.Length,
         nation_teams,
         capitals,
-        nation_offmap_areas
+        graph_algorithms.max_offmap_border_hexes,
+        offmap_border_hexes
     );
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);

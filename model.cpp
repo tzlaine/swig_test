@@ -205,7 +205,6 @@ namespace graph {
 
 }
 
-
 struct hex_coord
 {
     hex_coord () : x (1000), y (1000) {}
@@ -589,8 +588,6 @@ struct supply_check_hex_t
     int MB;
     int convoy;
     int supply_tug;
-
-    int borders_offmap;
 };
 
 bool neutral (supply_check_hex_t h, unsigned int nz_id)
@@ -704,7 +701,8 @@ private:
     int m_height;
     supply_check_hex_t* m_hexes;
     int m_neutral_zone_id;
-    int* m_nation_offmap_areas;
+    int m_max_offmap_border_hexes;
+    int* m_offmap_border_hexes;
     int* m_supply;
     std::vector<int>& m_vertex_id_to_hex_id;
     boost::unordered_map<int, int>& m_hex_id_to_vertex_id;
@@ -719,7 +717,8 @@ public:
                     int height,
                     supply_check_hex_t hexes[],
                     int neutral_zone_id,
-                    int nation_offmap_areas[],
+                    int max_offmap_border_hexes,
+                    int offmap_border_hexes[],
                     int supply[],
                     std::vector<int>& vertex_id_to_hex_id,
                     boost::unordered_map<int, int>& hex_id_to_vertex_id,
@@ -730,7 +729,8 @@ public:
         m_grid (grid),
         m_width (width),
         m_height (height),
-        m_nation_offmap_areas (nation_offmap_areas),
+        m_max_offmap_border_hexes (max_offmap_border_hexes),
+        m_offmap_border_hexes (offmap_border_hexes),
         m_hexes (hexes),
         m_neutral_zone_id (neutral_zone_id),
         m_supply (supply),
@@ -755,26 +755,41 @@ public:
                 supply |= 1 << (m_nation + 8);
             }
 
+            const int* const offmap_border_hexes_base =
+                m_offmap_border_hexes + m_nation * m_max_offmap_border_hexes;
+            const int* const offmap_border_hexes_end =
+                offmap_border_hexes_base + m_max_offmap_border_hexes;
+
             if (hex_id_ < 0) { // offmap area
-                int area = m_nation_offmap_areas[-hex_id_];
-                for (int y = 0; y < m_height; ++y) {
-                    for (int x = 0; x < m_width; ++x) {
-                        int hex_index_ = x + y * m_width;
-                        if (m_vertex_id_to_hex_id[hex_index_] == -1 &&
-                            m_hexes[hex_index_].borders_offmap == area) {
-                            int n = add_vertex(
-                                g,
-                                x * 100 + y,
-                                m_vertex_id_to_hex_id,
-                                m_hex_id_to_vertex_id
-                            );
-                            boost::add_edge(v, n, g);
-                        }
-                    }
+                for (const int* index = offmap_border_hexes_base;
+                     index < offmap_border_hexes_end;
+                     ++index) {
+                    int hex_id = *index;
+                    int hex_index_ =
+                        hex_id / 100 + hex_id % 100 * m_width;
+                    if (m_vertex_id_to_hex_id[hex_index_] != -1 ||
+                        supply_blocked(hex_coord(hex_id / 100, hex_id % 100),
+                                       m_nation,
+                                       m_nations,
+                                       m_nation_team_membership,
+                                       m_hexes,
+                                       m_width,
+                                       m_height,
+                                       m_neutral_zone_id))
+                        continue;
+                    int n = add_vertex(
+                        g,
+                        hex_id,
+                        m_vertex_id_to_hex_id,
+                        m_hex_id_to_vertex_id
+                    );
+                    boost::add_edge(v, n, g);
                 }
             } else {
                 hex_coord coord(hex_id_ / 100, hex_id_ % 100);
-                for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
+                for (hex_direction d = above_right;
+                     d < hex_directions;
+                     d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
                         if (supply_blocked(adjacent_coord,
@@ -797,8 +812,9 @@ public:
                         boost::add_edge(v, n, g);
                     }
                 }
-                if (m_hexes[hex_index(coord, m_width)].borders_offmap ==
-                    m_nation_offmap_areas[m_nation]) {
+                const int* offmap_hex =
+                    std::find(offmap_border_hexes_base, offmap_border_hexes_end, hex_id_);
+                if (offmap_hex != offmap_border_hexes_end) {
                     int n = add_vertex(
                         g,
                         -m_nation,
@@ -880,7 +896,8 @@ extern "C" {
                            int nations,
                            int nation_team_membership[],
                            int capitals[],
-                           int nation_offmap_areas[])
+                           int max_offmap_border_hexes,
+                           int offmap_border_hexes[])
     {
         g_supply_data.supply.resize(w * h);
 
@@ -888,7 +905,7 @@ extern "C" {
 
         std::size_t n = w * h;
         for (int i = 0; i < nations; ++i) {
-            if (nation_offmap_areas[i] != -1)
+            if (offmap_border_hexes[i * max_offmap_border_hexes] != -1)
                 ++n;
         }
 
@@ -917,7 +934,8 @@ extern "C" {
                                    h,
                                    hexes,
                                    neutral_zone_id,
-                                   nation_offmap_areas,
+                                   max_offmap_border_hexes,
+                                   offmap_border_hexes,
                                    &g_supply_data.supply[0],
                                    vertex_id_to_hex_id,
                                    hex_id_to_vertex_id,
@@ -928,16 +946,46 @@ extern "C" {
 #if LOG
         {
             std::ofstream ofs("model_log.txt");
-            ofs << w << " " << h << "\n"
-                << "hexes[]\n"
-                << neutral_zone_id << "\n"
-                << nations << "\n";
-            for (int n = 0; n < nations; ++n) {
-                ofs << "    team=" << nation_team_membership[n]
-                    << " cap=" << capitals[n]
-                    << " offmap=" << nation_offmap_areas[n]
-                    << "\n";
+            boost::property_tree::ptree pt;
+
+            pt.put("w", w);
+            pt.put("h", h);
+
+            for (int i = 0; i < w * h; ++i) {
+                const std::string hex = "hexes." + boost::lexical_cast<std::string>(i);
+                pt.put(hex + ".owner_id", hexes[i].owner_id);
+                pt.put(hex + ".ship", hexes[i].ship);
+                pt.put(hex + ".nonship_unit", hexes[i].nonship_unit);
+                pt.put(hex + ".base_with_fighters", hexes[i].base_with_fighters);
+                pt.put(hex + ".planet", hexes[i].planet);
+                pt.put(hex + ".SB", hexes[i].SB);
+                pt.put(hex + ".BATS", hexes[i].BATS);
+                pt.put(hex + ".MB", hexes[i].MB);
+                pt.put(hex + ".convoy", hexes[i].convoy);
+                pt.put(hex + ".supply_tug", hexes[i].supply_tug);
             }
+
+            pt.put("neutral_zone_id", neutral_zone_id);
+            pt.put("nations", nations);
+
+            for (int i = 0; i < nations; ++i) {
+                pt.put("nation_team_membership." + boost::lexical_cast<std::string>(i),
+                       nation_team_membership[i]);
+            }
+
+            for (int i = 0; i < nations; ++i) {
+                pt.put("capitals." + boost::lexical_cast<std::string>(i),
+                       capitals[i]);
+            }
+
+            pt.put("max_offmap_border_hexes", max_offmap_border_hexes);
+
+            for (int i = 0; i < nations * max_offmap_border_hexes; ++i) {
+                pt.put("offmap_border_hexes." + boost::lexical_cast<std::string>(i),
+                       offmap_border_hexes[i]);
+            }
+
+            boost::property_tree::json_parser::write_json(ofs, pt);
         }
 #endif
 
@@ -953,6 +1001,7 @@ extern "C" {
                 visited_offmap
             );
 
+#if 0
             if (!visited_offmap) {
                 find_grid(
                     nation,
@@ -961,6 +1010,7 @@ extern "C" {
                     visited_offmap
                 );
             }
+#endif
         }
 
 #if 0
@@ -994,10 +1044,77 @@ extern "C" {
 
 }
 
+void test_determine_supply ()
+{
+    std::ifstream ifs("model_log.txt");
+    boost::property_tree::ptree pt;
+ 
+    boost::property_tree::json_parser::read_json(ifs, pt);
+ 
+    const int w = pt.get<int>("w");
+    const int h = pt.get<int>("h");
+ 
+    std::vector<supply_check_hex_t> hexes(w * h);
+    for (int i = 0; i < w * h; ++i) {
+        const std::string hex = "hexes." + boost::lexical_cast<std::string>(i);
+        hexes[i].owner_id = pt.get<int>(hex + ".owner_id");
+        hexes[i].ship = pt.get<int>(hex + ".ship");
+        hexes[i].nonship_unit = pt.get<int>(hex + ".nonship_unit");
+        hexes[i].base_with_fighters = pt.get<int>(hex + ".base_with_fighters");
+        hexes[i].planet = pt.get<int>(hex + ".planet");
+        hexes[i].SB = pt.get<int>(hex + ".SB");
+        hexes[i].BATS = pt.get<int>(hex + ".BATS");
+        hexes[i].MB = pt.get<int>(hex + ".MB");
+        hexes[i].convoy = pt.get<int>(hex + ".convoy");
+        hexes[i].supply_tug = pt.get<int>(hex + ".supply_tug");
+    }
+ 
+    const int neutral_zone_id = pt.get<int>("neutral_zone_id");
+    const int nations = pt.get<int>("nations");
+ 
+    std::vector<int> nation_team_membership(nations);
+    for (int i = 0; i < nations; ++i) {
+        nation_team_membership[i] =
+            pt.get<int>("nation_team_membership." + boost::lexical_cast<std::string>(i));
+    }
+ 
+    std::vector<int> capitals(nations);
+    for (int i = 0; i < nations; ++i) {
+        capitals[i] = pt.get<int>("capitals." + boost::lexical_cast<std::string>(i));
+    }
+ 
+    const int max_offmap_border_hexes = pt.get<int>("max_offmap_border_hexes");
+ 
+    std::vector<int> offmap_border_hexes(nations);
+    for (int i = 0; i < nations * max_offmap_border_hexes; ++i) {
+        offmap_border_hexes[i] =
+            pt.get<int>("offmap_border_hexes." + boost::lexical_cast<std::string>(i));
+    }
+
+    determine_supply(
+        w,
+        h,
+        &hexes[0],
+        neutral_zone_id,
+        nations,
+        &nation_team_membership[0],
+        &capitals[0],
+        max_offmap_border_hexes,
+        &offmap_border_hexes[0]
+    );
+}
+
 #ifndef BUILD_LIBRARY
 int main ()
 {
+#if 1
+    test_determine_supply();
+#endif
+
+#if 0
     validate_map();
+#endif
+
     return 0;
 }
 #endif

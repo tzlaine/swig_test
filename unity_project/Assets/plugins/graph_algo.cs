@@ -25,8 +25,6 @@ public struct supply_check_hex_t
     public int MB;
     public int convoy;
     public int supply_tug;
-
-    public int borders_offmap;
 };
 
 public class graph_algorithms
@@ -56,6 +54,8 @@ public class graph_algorithms
         [In] ga_hex_t[] hexes
     );
 
+    public const int max_offmap_border_hexes = 13;
+
     [DllImport("graph_algorithms")]
     public static extern IntPtr determine_supply (
         int w, int h,
@@ -64,6 +64,7 @@ public class graph_algorithms
         int nations,
         [In] int[] nation_team_membership,
         [In] int[] capitols,
-        [In] int[] nation_offmap_areas
+        int max_offmap_border_hexes,
+        [In] int[] offmap_border_hexes
     );
 };
