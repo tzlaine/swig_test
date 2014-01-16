@@ -13,18 +13,19 @@ public struct ga_hex_t
 public struct supply_check_hex_t
 {
     public int owner_id;
-    // The presence values for each team are encoded as:
-    // 1 << 0: ship
-    // 1 << 1: non-ship unit
-    // 1 << 2: base w/fighters/PFs
-    // 1 << 3: planet
-    // 1 << 4: SB
-    // 1 << 5: BATS
-    // 1 << 6: MB
-    // 1 << 7: convoy
-    // 1 << 8: supply tug
-    // Team N is in bits 1 << (N * 9 + 0) through 1 << (N * 9 + 8).
-    public int presence;
+
+    // These values are all encoded such that nation N has an X present if
+    // (X & (1 << N)).
+    public int ship;
+    public int nonship_unit;
+    public int base_with_fighters;
+    public int planet;
+    public int SB;
+    public int BATS;
+    public int MB;
+    public int convoy;
+    public int supply_tug;
+
     public int borders_offmap;
 };
 

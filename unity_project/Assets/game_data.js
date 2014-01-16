@@ -29,17 +29,17 @@ private var counters : Dictionary.<String, Dictionary.<String, counter_t> > =
     new Dictionary.<String, Dictionary.<String, counter_t> >();
 
 
-class capital_hex
+class capital_hex_t
 {
-    function capital_hex ()
+    function capital_hex_t ()
     {
         hc = new hex_coord();
-        planets = new List.<String>();
+        features = new List.<String>();
     }
 
     var hc : hex_coord;
     var name : String;
-    var planets : List.<String>;
+    var features : List.<String>;
 };
 
 class unit_stats_t
@@ -172,7 +172,7 @@ class nation_t
 {
     function nation_t ()
     {
-        capital = new Dictionary.<String, capital_hex>();
+        capital = new Dictionary.<String, capital_hex_t>();
         starting_forces = new Dictionary.<String, starting_fleet>();
         mothball_reserve = new mothball_reserve_t();
     }
@@ -181,7 +181,7 @@ class nation_t
     var name : String;
     var short_name : String;
     var abbr : String;
-    var capital : Dictionary.<String, capital_hex>;
+    var capital : Dictionary.<String, capital_hex_t>;
     var capital_star_points : int;
     var starting_forces : Dictionary.<String, starting_fleet>;
     var mothball_reserve : mothball_reserve_t;
@@ -604,7 +604,21 @@ private function populate_nations (json : SimpleJSON.JSONNode)
         nations[nation.Key].name = nation.Value['name'];
         nations[nation.Key].short_name = nation.Value['short name'];
         nations[nation.Key].abbr = nation.Key;
-        // TODO
+
+        for (var capital : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+             nation.Value['capital']) {
+            nations[nation.Key].capital.Add(capital.Key, new capital_hex_t());
+            var hex = nations[nation.Key].capital[capital.Key];
+            for (var system : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
+                 capital.Value) {
+                hex.hc = str_to_hex_coord(capital.Key);
+                hex.name = system.Key;
+                var features = parse_strings(system.Value);
+                for (feature in features) {
+                    hex.features.Add(feature);
+                }
+            }
+        }
 
         nations_by_id.Add(nations[nation.Key].id, nations[nation.Key].abbr);
     }

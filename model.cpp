@@ -16,6 +16,11 @@
 #include <limits>
 #include <iostream>
 
+#define LOG 1
+#if LOG
+#include <fstream>
+#endif
+
 
 #ifdef BOOST_NO_EXCEPTIONS
 #include <boost/exception/diagnostic_information.hpp>
@@ -572,48 +577,43 @@ struct supply_data
 struct supply_check_hex_t
 {
     int owner_id;
-    // The presence values for each team are encoded as:
-    // 1 << 0: ship
-    // 1 << 1: non-ship unit
-    // 1 << 2: base w/fighters/PFs
-    // 1 << 3: planet
-    // 1 << 4: SB
-    // 1 << 5: BATS
-    // 1 << 6: MB
-    // 1 << 7: convoy
-    // 1 << 8: supply tug
-    // Team N is in bits 1 << (N * 9 + 0) through 1 << (N * 9 + 8).
-    int presence;
+
+    // These values are all encoded such that nation N has an X present if
+    // (X & (1 << N)).
+    int ship;
+    int nonship_unit;
+    int base_with_fighters;
+    int planet;
+    int SB;
+    int BATS;
+    int MB;
+    int convoy;
+    int supply_tug;
+
     int borders_offmap;
 };
 
 bool neutral (supply_check_hex_t h, unsigned int nz_id)
 { return h.owner_id == nz_id; }
 
-bool supply_point (supply_check_hex_t h, int nation, int team)
+bool supply_point (supply_check_hex_t h, int nation)
 {
-    int flags =
-        (1 << (team * 9 + 3)) |
-        (1 << (team * 9 + 4)) |
-        (1 << (team * 9 + 5)) |
-        (1 << (team * 9 + 6)) |
-        (1 << (team * 9 + 7)) |
-        (1 << (team * 9 + 8));
-    return h.owner_id == nation && h.presence & flags;
+    const int flag = 1 << nation;
+    return
+        h.planet & flag ||
+        h.SB & flag ||
+        h.BATS & flag ||
+        h.MB & flag ||
+        h.convoy & flag ||
+        h.supply_tug & flag;
 }
 
-bool supply_source (supply_check_hex_t h, int nation, int team)
+bool supply_source (supply_check_hex_t h, int nation)
 {
-    int team_flags[] = {
-        (1 << (0 * 9 + 3)) |
-        (1 << (0 * 9 + 4)) |
-        (1 << (0 * 9 + 5)),
-        (1 << (1 * 9 + 3)) |
-        (1 << (1 * 9 + 4)) |
-        (1 << (1 * 9 + 5))
-    };
-    int flags = team == -1 ? team_flags[team] : team_flags[0] | team_flags[1];
-    return (h.owner_id == nation || h.owner_id == -1) && h.presence & flags;
+    const int flag = 1 << nation;
+    return nation == -1 ?
+        h.planet || h.SB || h.BATS :
+        h.planet & flag || h.SB & flag || h.BATS & flag;
 }
 
 int add_vertex (graph::graph& g,
@@ -630,7 +630,9 @@ int add_vertex (graph::graph& g,
 
 bool supply_blocked (
     hex_coord hc,
-    int team,
+    int nation,
+    int nations,
+    const int* nation_team_membership,
     const supply_check_hex_t* hexes,
     int width,
     int height,
@@ -639,19 +641,36 @@ bool supply_blocked (
     bool retval = true;
     int hex_index_ = hex_index(hc, width);
     supply_check_hex_t hex = hexes[hex_index_];
-    const int friendly_ships = 1 << (team * 9 + 0);
-    const int friendly_units = friendly_ships | (1 << (team * 9 + 1));
-    const int friendly_base = 1 << (team * 9 + 2);
-    const int other_team = 1 - team;
-    const int enemy_ships = 1 << (other_team * 9 + 0);
-    const int enemy_units = enemy_ships | (1 << (other_team * 9 + 1));
-    const int enemy_base = 1 << (other_team * 9 + 2);
+
+    bool friendly_ships = false;
+    bool friendly_units = false;
+    bool friendly_base = false;
+    bool enemy_ships = false;
+    bool enemy_units = false;
+    bool enemy_base = false;
+
+    const int team = nation_team_membership[nation];
+
+    for (int n = 0; n < nations; ++n) {
+        const int flag = 1 << n;
+        if (nation_team_membership[n] == team) {
+            friendly_ships |= bool(hex.ship & flag);
+            friendly_units |= friendly_ships || hex.nonship_unit & flag;
+            friendly_base |= bool(hex.base_with_fighters & flag);
+        } else {
+            enemy_ships |= bool(hex.ship & flag);
+            enemy_units |= friendly_ships || hex.nonship_unit & flag;
+            enemy_base |= bool(hex.base_with_fighters & flag);
+        }
+    }
+
     if (hex.owner_id == neutral_zone_id) {
-    } else if (hex.presence & friendly_units) {
-        retval = false;
-    } else if (hex.presence & enemy_units) {
         retval = true;
-    } else if (hex.presence & friendly_base) {
+    } else if (friendly_units) {
+        retval = false;
+    } else if (enemy_units) {
+        retval = true;
+    } else if (friendly_base) {
         retval = false;
     } else {
         bool adjacent_enemy_ships = false;
@@ -662,14 +681,15 @@ bool supply_blocked (
             hex_coord adjacent_coord = adjacent_hex_coord(hc, d);
             if (on_map(adjacent_coord, width, height)) {
                 supply_check_hex_t hex = hexes[hex_index(adjacent_coord, width)];
-                if (hex.presence & (enemy_ships | enemy_base))
+                if (enemy_ships || enemy_base)
                     adjacent_enemy_ships = true;
-                if (hex.presence & friendly_units)
+                if (friendly_units)
                     adjacent_friendly_units = true;
             }
         }
         retval = adjacent_enemy_ships && !adjacent_friendly_units;
     }
+
     return retval;
 }
 
@@ -677,7 +697,8 @@ class supply_visitor
 {
 private:
     int m_nation;
-    int m_team;
+    int m_nations;
+    int* m_nation_team_membership;
     int m_grid;
     int m_width;
     int m_height;
@@ -691,7 +712,8 @@ private:
 
 public:
     supply_visitor (int nation,
-                    int team,
+                    int nations,
+                    int nation_team_membership[],
                     int grid,
                     int width,
                     int height,
@@ -703,7 +725,8 @@ public:
                     boost::unordered_map<int, int>& hex_id_to_vertex_id,
                     bool& visited_offmap) :
         m_nation (nation),
-        m_team (team),
+        m_nations (nations),
+        m_nation_team_membership (nation_team_membership),
         m_grid (grid),
         m_width (width),
         m_height (height),
@@ -726,7 +749,7 @@ public:
                 int& supply = m_supply[hex_index_];
                 if (hex.owner_id == m_nation) {
                     supply = m_grid;
-                    if (2 < m_grid && !supply_source(hex, m_nation, m_team))
+                    if (2 < m_grid && !supply_source(hex, m_nation))
                         supply |= 1 << 24;
                 }
                 supply |= 1 << (m_nation + 8);
@@ -755,7 +778,9 @@ public:
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
                         if (supply_blocked(adjacent_coord,
-                                           m_team,
+                                           m_nation,
+                                           m_nations,
+                                           m_nation_team_membership,
                                            m_hexes,
                                            m_width,
                                            m_height,
@@ -796,7 +821,7 @@ public:
                 retval.first = 0;
             } else {
                 hex_coord hc(hex_id / 100, hex_id % 100);
-                if (supply_source(m_hexes[hex_index(hc, m_width)], m_nation, m_team))
+                if (supply_source(m_hexes[hex_index(hc, m_width)], m_nation))
                     retval.first = 0;
             }
             retval.second = retval.first < 6.0 + epsilon;
@@ -807,12 +832,10 @@ public:
 int next_supply_source (int source,
                         int size,
                         int supply[],
-                        supply_check_hex_t hexes[],
-                        int nation = -1,
-                        int team = -1)
+                        supply_check_hex_t hexes[])
 {
     for (; source < size; ++source) {
-        if (supply_source(hexes[source], nation, team) && !supply[source])
+        if (supply_source(hexes[source], -1) && !supply[source])
             break;
     }
     return source;
@@ -887,7 +910,8 @@ extern "C" {
             int n = add_vertex(g, hex_id, vertex_id_to_hex_id, hex_id_to_vertex_id);
 
             supply_visitor visitor(nation,
-                                   nation_team_membership[nation],
+                                   nations,
+                                   nation_team_membership,
                                    grid,
                                    w,
                                    h,
@@ -900,6 +924,22 @@ extern "C" {
                                    visited_offmap);
             graph::bfs_(g, colors, distances, predecessors, n + 1, visitor);
         };
+
+#if LOG
+        {
+            std::ofstream ofs("model_log.txt");
+            ofs << w << " " << h << "\n"
+                << "hexes[]\n"
+                << neutral_zone_id << "\n"
+                << nations << "\n";
+            for (int n = 0; n < nations; ++n) {
+                ofs << "    team=" << nation_team_membership[n]
+                    << " cap=" << capitals[n]
+                    << " offmap=" << nation_offmap_areas[n]
+                    << "\n";
+            }
+        }
+#endif
 
         for (int nation = 0; nation < nations; ++nation) {
             if (capitals[nation] == -1)
@@ -916,20 +956,21 @@ extern "C" {
             if (!visited_offmap) {
                 find_grid(
                     nation,
-                    1,
+                    2,
                     -nation,
                     visited_offmap
                 );
             }
         }
 
+#if 0
         int source = next_supply_source(
             0,
             w * h,
             &g_supply_data.supply[0],
             hexes
         );
-        std::vector<int> grid_ids(nations, 3);
+        std::vector<int> grid_ids(nations, 2);
         while (source < w * h) {
             bool dont_care = false;
             find_grid(
@@ -946,6 +987,7 @@ extern "C" {
                 hexes
             );
         }
+#endif
 
         return &g_supply_data.supply[0];
     }

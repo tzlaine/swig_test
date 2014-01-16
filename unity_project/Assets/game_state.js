@@ -108,8 +108,8 @@ private static function determine_supply ()
             var id = this_.game_data_.id(member);
             nation_teams[id] = team_id;
             for (cap in this_.game_data_.nation(member).capital) {
-                if (cap.Value.planets.Contains('CAP'))
-                    capitals[k] = cap.Value.hc.GetHashCode();
+                if (cap.Value.features.Contains('CAP'))
+                    capitals[id] = cap.Value.hc.GetHashCode();
             }
         }
         ++team_id;
@@ -122,17 +122,16 @@ private static function determine_supply ()
         var sh = new supply_check_hex_t();
         sh.owner_id = h.owner_id;
         for (n in h.units) {
-            // TODO
             var owner_team = nation_teams[this_.game_data_.id(n.Key)];
             for (u in n.Value) {
                 if (true /* ship */) { // TODO: Handle tugs with supply mission.
-                    sh.presence |= (nation_teams[sh.owner_id] * 9 + 0);
+                    sh.ship |= 1 << sh.owner_id;
                     if (false /* supply tug */) // TODO: Handle tugs with supply mission.
-                        sh.presence |= (nation_teams[sh.owner_id] * 9 + 8);
+                        sh.supply_tug |= 1 << sh.owner_id;
                 } else {
-                    sh.presence |= (nation_teams[sh.owner_id] * 9 + 1);
+                    sh.nonship_unit |= 1 << sh.owner_id;
                     if (false /* convoy */) // TODO: Handle CONVOYs.
-                        sh.presence |= (nation_teams[sh.owner_id] * 9 + 7);
+                        sh.convoy |= 1 << sh.owner_id;
                 }
             }
         }
@@ -140,15 +139,15 @@ private static function determine_supply ()
         // TODO: Account for ownership of these things.
         // TODO: Use .zones instead.
         if (h.feature == 'SB') {
-            sh.presence |= (nation_teams[sh.owner_id] * 9 + 4);
+            sh.SB |= 1 << sh.owner_id;
             if (true /* has fighters or PFs */)
-                sh.presence |= (nation_teams[sh.owner_id] * 9 + 2);
+                sh.base_with_fighters |= 1 << sh.owner_id;
         } else if (h.feature == 'BATS') {
-            sh.presence |= (nation_teams[sh.owner_id] * 9 + 5);
+            sh.BATS |= 1 << sh.owner_id;
             if (true /* has fighters or PFs */)
-                sh.presence |= (nation_teams[sh.owner_id] * 9 + 2);
+                sh.base_with_fighters |= 1 << sh.owner_id;
         } else if (h.feature == 'MIN' || h.feature == 'MAJ' || h.feature == 'capitol') {
-            sh.presence |= (nation_teams[sh.owner_id] * 9 + 3);
+            sh.planet |= 1 << sh.owner_id;
         }
         hexes[i++] = sh;
     }
@@ -175,7 +174,7 @@ private static function determine_supply ()
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
     Debug.Log('did supply determination step');
-/*
+/**/
     // TODO
     for (i in supply) {
         Debug.Log(i);
