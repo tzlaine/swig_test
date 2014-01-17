@@ -1085,7 +1085,7 @@ void test_determine_supply ()
  
     const int max_offmap_border_hexes = pt.get<int>("max_offmap_border_hexes");
  
-    std::vector<int> offmap_border_hexes(nations);
+    std::vector<int> offmap_border_hexes(nations * max_offmap_border_hexes);
     for (int i = 0; i < nations * max_offmap_border_hexes; ++i) {
         offmap_border_hexes[i] =
             pt.get<int>("offmap_border_hexes." + boost::lexical_cast<std::string>(i));
