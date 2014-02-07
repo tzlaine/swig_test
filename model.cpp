@@ -620,7 +620,7 @@ bool supply_source (supply_check_hex_t h, int nation)
 
 int add_vertex (graph::graph& g,
                 int v,
-                std::vector<int>& vertex_id_to_hex_id,
+                boost::unordered_map<int, int>& vertex_id_to_hex_id,
                 boost::unordered_map<int, int>& hex_id_to_vertex_id)
 {
     int n = boost::num_vertices(g);
@@ -712,7 +712,7 @@ private:
     int m_max_offmap_border_hexes;
     int* m_offmap_border_hexes;
     int* m_supply;
-    std::vector<int>& m_vertex_id_to_hex_id;
+    boost::unordered_map<int, int>& m_vertex_id_to_hex_id;
     boost::unordered_map<int, int>& m_hex_id_to_vertex_id;
     bool& m_visited_offmap;
 
@@ -728,7 +728,7 @@ public:
                     int max_offmap_border_hexes,
                     int offmap_border_hexes[],
                     int supply[],
-                    std::vector<int>& vertex_id_to_hex_id,
+                    boost::unordered_map<int, int>& vertex_id_to_hex_id,
                     boost::unordered_map<int, int>& hex_id_to_vertex_id,
                     bool& visited_offmap) :
         m_nation (nation),
@@ -751,7 +751,7 @@ public:
         {
             int hex_id_ = m_vertex_id_to_hex_id[v];
 
-            {
+            if (0 <= hex_id_) { // off-map is always < 0
                 int hex_index_ = hex_id_ / 100 + hex_id_ % 100 * m_width;
                 supply_check_hex_t hex = m_hexes[hex_index_];
                 int& supply = m_supply[hex_index_];
@@ -769,7 +769,6 @@ public:
                 offmap_border_hexes_base + m_max_offmap_border_hexes;
 
             if (hex_id_ < 0) { // offmap area
-#if 1
                 for (const int* index = offmap_border_hexes_base;
                      index < offmap_border_hexes_end;
                      ++index) {
@@ -792,7 +791,6 @@ public:
                     );
                     boost::add_edge(v, n, g);
                 }
-#endif
             } else {
                 hex_coord coord(hex_id_ / 100, hex_id_ % 100);
                 std::cerr << "  on-map hex " << coord << ":\n";
@@ -826,21 +824,20 @@ public:
                         boost::add_edge(v, n, g);
                     }
                 }
-#if 0
+
                 const int* offmap_hex =
                     std::find(offmap_border_hexes_base, offmap_border_hexes_end, hex_id_);
                 if (offmap_hex != offmap_border_hexes_end) {
-                    if (m_hex_id_to_vertex_id.count(hex_id_)) {
+                    if (!m_hex_id_to_vertex_id.count(-m_nation - 1)) {
                         int n = add_vertex(
                             g,
-                            -m_nation,
+                            -m_nation - 1,
                             m_vertex_id_to_hex_id,
                             m_hex_id_to_vertex_id
                         );
                         boost::add_edge(v, n, g);
                     }
                 }
-#endif
             }
 
             return true;
@@ -851,7 +848,7 @@ public:
             const float epsilon = 1.0e-3;
             std::pair<float, bool> retval(d + 1.0f, true);
             int hex_id = m_vertex_id_to_hex_id[v];
-            if (hex_id < -1 && true /* TODO: offmap has a base/planet */) {
+            if (hex_id < 0 && true /* TODO: offmap has a base/planet */) {
                 retval.first = 0;
             } else {
                 hex_coord hc(hex_id / 100, hex_id % 100);
@@ -933,7 +930,7 @@ extern "C" {
 
         graph::bfs_init(n, colors, distances, predecessors);
 
-        std::vector<int> vertex_id_to_hex_id(n, -1);
+        boost::unordered_map<int, int> vertex_id_to_hex_id;
         boost::unordered_map<int, int> hex_id_to_vertex_id;
 
         auto find_grid = [&] (
@@ -1011,7 +1008,13 @@ extern "C" {
             if (capitals[nation] == -1)
                 continue;
 
-            bool visited_offmap = false;
+#if LOG
+            std::cerr << "****************************************\n"
+                      << "* Nation " << nation << ":\n"
+                      << "****************************************\n\n";
+#endif
+
+            bool visited_offmap = false; // TODO: Remove.
             find_grid(
                 nation,
                 1,
@@ -1019,19 +1022,17 @@ extern "C" {
                 visited_offmap
             );
 
-#if 0
-            if (!visited_offmap) {
+            if (!hex_id_to_vertex_id.count(-nation - 1)) {
                 find_grid(
                     nation,
                     2,
-                    -nation,
+                    -nation - 1,
                     visited_offmap
                 );
             }
-#endif
         }
 
-#if 0
+#if 0 // TODO
         int source = next_supply_source(
             0,
             w * h,
