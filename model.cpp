@@ -224,6 +224,11 @@ bool operator== (hex_coord lhs, hex_coord rhs)
 bool operator!= (hex_coord lhs, hex_coord rhs)
 { return !(lhs == rhs); }
 
+#if LOG
+std::ostream& operator<< (std::ostream& os, hex_coord hc)
+{ return os << '(' << hc.x << ',' << hc.y << ')'; }
+#endif
+
 
 struct map
 {
@@ -621,6 +626,9 @@ int add_vertex (graph::graph& g,
     int n = boost::num_vertices(g);
     vertex_id_to_hex_id[n] = v;
     hex_id_to_vertex_id[v] = n;
+    std::cerr << "vertex_id_to_hex_id[" << n << "]=" << vertex_id_to_hex_id[n]
+              << " hex_id_to_vertex_id[" << v << "]=" << hex_id_to_vertex_id[v]
+              << '\n';
     boost::add_vertex(g);
     return n;
 }
@@ -761,13 +769,12 @@ public:
                 offmap_border_hexes_base + m_max_offmap_border_hexes;
 
             if (hex_id_ < 0) { // offmap area
+#if 1
                 for (const int* index = offmap_border_hexes_base;
                      index < offmap_border_hexes_end;
                      ++index) {
                     int hex_id = *index;
-                    int hex_index_ =
-                        hex_id / 100 + hex_id % 100 * m_width;
-                    if (m_vertex_id_to_hex_id[hex_index_] != -1 ||
+                    if (m_hex_id_to_vertex_id.count(hex_id) ||
                         supply_blocked(hex_coord(hex_id / 100, hex_id % 100),
                                        m_nation,
                                        m_nations,
@@ -785,14 +792,20 @@ public:
                     );
                     boost::add_edge(v, n, g);
                 }
+#endif
             } else {
                 hex_coord coord(hex_id_ / 100, hex_id_ % 100);
+                std::cerr << "  on-map hex " << coord << ":\n";
                 for (hex_direction d = above_right;
                      d < hex_directions;
                      d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
-                        if (supply_blocked(adjacent_coord,
+                        unsigned int hex_id_ = hex_id(adjacent_coord);
+                        std::cerr << "    adjacent hex " << adjacent_coord
+                                  << " (hex_id_=" << hex_id_ << "):\n";
+                        if (m_hex_id_to_vertex_id.count(hex_id_) ||
+                            supply_blocked(adjacent_coord,
                                            m_nation,
                                            m_nations,
                                            m_nation_team_membership,
@@ -800,9 +813,10 @@ public:
                                            m_width,
                                            m_height,
                                            m_neutral_zone_id)) {
+                            std::cerr << "      skipping.\n";
                             continue;
                         }
-                        unsigned int hex_id_ = hex_id(adjacent_coord);
+                        std::cerr << "      adding " << hex_id_ << ".\n";
                         int n = add_vertex(
                             g,
                             hex_id_,
@@ -812,17 +826,21 @@ public:
                         boost::add_edge(v, n, g);
                     }
                 }
+#if 0
                 const int* offmap_hex =
                     std::find(offmap_border_hexes_base, offmap_border_hexes_end, hex_id_);
                 if (offmap_hex != offmap_border_hexes_end) {
-                    int n = add_vertex(
-                        g,
-                        -m_nation,
-                        m_vertex_id_to_hex_id,
-                        m_hex_id_to_vertex_id
-                    );
-                    boost::add_edge(v, n, g);
+                    if (m_hex_id_to_vertex_id.count(hex_id_)) {
+                        int n = add_vertex(
+                            g,
+                            -m_nation,
+                            m_vertex_id_to_hex_id,
+                            m_hex_id_to_vertex_id
+                        );
+                        boost::add_edge(v, n, g);
+                    }
                 }
+#endif
             }
 
             return true;
@@ -940,7 +958,7 @@ extern "C" {
                                    vertex_id_to_hex_id,
                                    hex_id_to_vertex_id,
                                    visited_offmap);
-            graph::bfs_(g, colors, distances, predecessors, n + 1, visitor);
+            graph::bfs_(g, colors, distances, predecessors, n, visitor);
         };
 
 #if LOG
