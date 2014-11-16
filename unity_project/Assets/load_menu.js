@@ -3,7 +3,7 @@
 import System.IO;
 import gui_utils;
 
-var start_menu_ : start_menu;
+var start_menu_ : GameObject;
 
 private var game_filenames : String[];
 private var game_names : String[];
@@ -69,7 +69,7 @@ function OnGUI ()
         enabled = false;
     }
     if (GUILayout.Button('Cancel')) {
-        start_menu_.enabled = true;
+        start_menu_.SetActive(true);
         enabled = false;
     }
     GUILayout.EndHorizontal();
