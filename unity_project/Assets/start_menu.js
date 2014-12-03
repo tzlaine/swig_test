@@ -2,7 +2,7 @@
 
 var game_state_ : game_state;
 var new_sp_game_setup_ : new_sp_game_setup;
-var load_menu_ : load_menu;
+var load_menu : GameObject;
 
 
 function new_game ()
@@ -14,6 +14,6 @@ function new_game ()
 
 function load_game ()
 {
-    load_menu_.enabled = true;
     gameObject.SetActive(false);
+    load_menu.SetActive(true);
 }

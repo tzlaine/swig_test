@@ -1,14 +1,14 @@
 ﻿#pragma strict
 
 import System.IO;
-import gui_utils;
 
 var start_menu_ : GameObject;
+var list : listbox;
+var list_element : GameObject;
 
 private var game_filenames : String[];
 private var game_names : String[];
-private var selection : int = 0;
-private var scroll_position : Vector2 = Vector2(0, 0);
+private var list_elements : RectTransform[];
 
 
 private static function file_info_cmp (a : FileInfo, b : FileInfo) : int
@@ -40,11 +40,23 @@ function find_saves ()
 }
 
 function OnEnable ()
-{ find_saves(); }
+{
+    find_saves();
 
-function Awake ()
-{ enabled = false; }
+    list_elements = new RectTransform[game_filenames.Length];
 
+    for (var i = 0; i < game_filenames.Length; ++i) {
+        var instance : GameObject = Instantiate(list_element);
+        var rt : RectTransform = instance.GetComponent(RectTransform);
+        var text : UI.Text = instance.GetComponent(UI.Text);
+        text.text = game_names[i];
+        list_elements[i] = rt;
+    }
+
+    list.set_data(list_elements);
+}
+
+/*
 function OnGUI ()
 {
     gui_utils.centered_menu_header();
@@ -80,3 +92,4 @@ function OnGUI ()
 
     gui_utils.centered_menu_footer();
 }
+*/
