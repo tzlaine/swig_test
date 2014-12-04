@@ -73,9 +73,8 @@ function OnEnable ()
 
 function load ()
 {
-    Debug.Log('load ' + GetComponent(toggle_group).value());
-    // TODO JSONLevelSerializer.LoadSavedLevelFromFile(game_filenames[selection]);
-    // TODO gameObject.SetActive(false);
+    JSONLevelSerializer.LoadSavedLevelFromFile(GetComponent(toggle_group).value());
+    gameObject.SetActive(false);
 }
 
 function cancel ()
