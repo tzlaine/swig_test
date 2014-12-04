@@ -28,16 +28,8 @@ function find_saves ()
 
     System.Array.Sort(files, file_info_cmp);
 
-    game_filenames = new String[files.Length + 3];
-    game_names = new String[files.Length + 3];
-
-    game_filenames[game_names.Length - 3] = 'foo.save';
-    game_filenames[game_names.Length - 2] = 'bar.save';
-    game_filenames[game_names.Length - 1] = 'baz.save';
-
-    game_names[game_names.Length - 3] = 'foo';
-    game_names[game_names.Length - 2] = 'bar';
-    game_names[game_names.Length - 1] = 'baz';
+    game_filenames = new String[files.Length];
+    game_names = new String[files.Length];
 
     for (var i = 0; i < files.Length; ++i) {
         var prefix = 36; // length of guid
