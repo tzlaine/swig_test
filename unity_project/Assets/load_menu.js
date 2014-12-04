@@ -8,7 +8,7 @@ var list_element : GameObject;
 
 private var game_filenames : String[];
 private var game_names : String[];
-private var list_elements : RectTransform[];
+private var list_elements : GameObject[];
 
 
 private static function file_info_cmp (a : FileInfo, b : FileInfo) : int
@@ -51,17 +51,13 @@ function OnEnable ()
 {
     find_saves();
 
-    list_elements = new RectTransform[game_filenames.Length];
-
-Debug.Log('game_filenames.Length=' + game_filenames.Length);
+    list_elements = new GameObject[game_filenames.Length];
 
     for (var i = 0; i < game_filenames.Length; ++i) {
         var instance : GameObject = Instantiate(list_element);
-        var rt : RectTransform = instance.GetComponent(RectTransform);
         var text : UI.Text = instance.GetComponent(UI.Text);
         text.text = game_names[i];
-        list_elements[i] = rt;
-Debug.Log('i=' + i);
+        list_elements[i] = instance;
     }
 
     list.set_data(list_elements, 30);
