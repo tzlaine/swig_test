@@ -4,28 +4,27 @@ var panel_rt : RectTransform;
 var scrollbar : UI.Scrollbar;
 
 
-private function reset ()
+function set_data (rts : RectTransform[], row_height : int)
 {
     scrollbar.value = 0;
     panel_rt.DetachChildren();
     panel_rt.anchorMin.y = 0;
     panel_rt.anchorMax.y = 0;
-}
 
-function Start ()
-{ reset(); }
-
-function set_data (objects : RectTransform[])
-{
-    reset();
-
-    scrollbar.numberOfSteps = objects.Length;
+    scrollbar.numberOfSteps = rts.Length;
 
     var h : float = 0;
-    for (object in objects) {
-        object.SetParent(panel_rt);
-        h += object.rect.height;
+Debug.Log('panel_rt=' + panel_rt);
+    for (var i = 0; i < rts.Length; ++i) {
+Debug.Log('object=' + rts[i] + ' parent=' + rts[i].parent);
+        rts[i].SetParent(panel_rt);
+        rts[i].localScale = Vector3.one;
+Debug.Log('  object=' + rts[i] + ' parent=' + rts[i].parent);
+        h += row_height;
     }
 
     panel_rt.anchorMax.y = h;
+
+Debug.Log('h=' + h);
+Debug.Log('panel_rt.rect=' + panel_rt.rect);
 }

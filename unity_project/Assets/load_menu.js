@@ -27,8 +27,16 @@ function find_saves ()
 
     System.Array.Sort(files, file_info_cmp);
 
-    game_filenames = new String[files.Length];
-    game_names = new String[files.Length];
+    game_filenames = new String[files.Length + 3];
+    game_names = new String[files.Length + 3];
+
+    game_filenames[game_names.Length - 3] = 'foo.save';
+    game_filenames[game_names.Length - 2] = 'bar.save';
+    game_filenames[game_names.Length - 1] = 'baz.save';
+
+    game_names[game_names.Length - 3] = 'foo';
+    game_names[game_names.Length - 2] = 'bar';
+    game_names[game_names.Length - 1] = 'baz';
 
     for (var i = 0; i < files.Length; ++i) {
         var prefix = 36; // length of guid
@@ -45,51 +53,28 @@ function OnEnable ()
 
     list_elements = new RectTransform[game_filenames.Length];
 
+Debug.Log('game_filenames.Length=' + game_filenames.Length);
+
     for (var i = 0; i < game_filenames.Length; ++i) {
         var instance : GameObject = Instantiate(list_element);
         var rt : RectTransform = instance.GetComponent(RectTransform);
         var text : UI.Text = instance.GetComponent(UI.Text);
         text.text = game_names[i];
         list_elements[i] = rt;
+Debug.Log('i=' + i);
     }
 
-    list.set_data(list_elements);
+    list.set_data(list_elements, 30);
 }
 
-/*
-function OnGUI ()
+function load ()
 {
-    gui_utils.centered_menu_header();
-
-    GUILayout.BeginHorizontal(new GUIStyle(GUI.skin.box));
-
-    GUILayout.BeginVertical();
-
-    var title_style = new GUIStyle(GUI.skin.label);
-    title_style.alignment = TextAnchor.MiddleCenter;
-    GUILayout.Label('Select a game to load', title_style);
-
-    scroll_position = GUILayout.BeginScrollView(scroll_position);
-    selection = GUILayout.SelectionGrid(selection, game_names, 1, GUILayout.MinWidth(300));
-    GUILayout.EndScrollView();
-
-    // TODO: Allow deletion of old saves.
-
-    GUILayout.BeginHorizontal();
-    if (GUILayout.Button('Load')) {
-        JSONLevelSerializer.LoadSavedLevelFromFile(game_filenames[selection]);
-        enabled = false;
-    }
-    if (GUILayout.Button('Cancel')) {
-        start_menu_.SetActive(true);
-        enabled = false;
-    }
-    GUILayout.EndHorizontal();
-
-    GUILayout.EndVertical();
-
-    GUILayout.EndHorizontal();
-
-    gui_utils.centered_menu_footer();
+    // TODO JSONLevelSerializer.LoadSavedLevelFromFile(game_filenames[selection]);
+    // TODO gameObject.SetActive(false);
 }
-*/
+
+function cancel ()
+{
+    gameObject.SetActive(false);
+    start_menu_.SetActive(true);
+}
