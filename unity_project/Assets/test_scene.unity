@@ -2227,6 +2227,7 @@ MonoBehaviour:
   start_menu_: {fileID: 138485010}
   list: {fileID: 1203294855}
   list_element: {fileID: 100006, guid: edf736d7df5a547b391c5573bd9b42c8, type: 2}
+  load_button: {fileID: 1351248816}
 --- !u!114 &1893912395
 MonoBehaviour:
   m_ObjectHideFlags: 0

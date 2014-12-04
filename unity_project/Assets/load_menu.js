@@ -5,6 +5,7 @@ import System.IO;
 var start_menu_ : GameObject;
 var list : listbox;
 var list_element : GameObject;
+var load_button : UI.Button;
 
 private var game_filenames : String[];
 private var game_names : String[];
@@ -47,8 +48,14 @@ function find_saves ()
     }
 }
 
+private function selection_changed (value : String)
+{ load_button.interactable = !String.IsNullOrEmpty(value); }
+
 function OnEnable ()
 {
+    load_button.interactable = false;
+    GetComponent(toggle_group).notify = selection_changed;
+
     find_saves();
 
     list_elements = new GameObject[game_filenames.Length];
@@ -74,6 +81,7 @@ function OnEnable ()
 
 function load ()
 {
+    Debug.Log('load ' + GetComponent(toggle_group).value());
     // TODO JSONLevelSerializer.LoadSavedLevelFromFile(game_filenames[selection]);
     // TODO gameObject.SetActive(false);
 }
