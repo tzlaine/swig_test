@@ -1261,7 +1261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 213318123}
-  element_prefab: {fileID: 100000, guid: dbb3181d4c9824424aa4c908f4fb1c7a, type: 2}
 --- !u!1 &1270366414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,6 +2187,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1893912393}
   - 114: {fileID: 1893912394}
+  - 114: {fileID: 1893912395}
   m_Layer: 0
   m_Name: load_menu
   m_TagString: Untagged
@@ -2226,7 +2226,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start_menu_: {fileID: 138485010}
   list: {fileID: 1203294855}
-  list_element: {fileID: 100000, guid: dbb3181d4c9824424aa4c908f4fb1c7a, type: 2}
+  list_element: {fileID: 100006, guid: edf736d7df5a547b391c5573bd9b42c8, type: 2}
+--- !u!114 &1893912395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1893912392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17320c9da9ece4684a25601f5a2c2c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &2043876992
 GameObject:
   m_ObjectHideFlags: 0

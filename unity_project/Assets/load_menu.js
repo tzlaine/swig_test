@@ -55,9 +55,18 @@ function OnEnable ()
 
     for (var i = 0; i < game_filenames.Length; ++i) {
         var instance : GameObject = Instantiate(list_element);
-        var text : UI.Text = instance.GetComponent(UI.Text);
-        text.text = game_names[i];
         list_elements[i] = instance;
+
+        var text : UI.Text = instance.GetComponentInChildren(UI.Text);
+        text.text = game_names[i];
+
+        var selectable_item_ : selectable_item =
+            instance.GetComponent(selectable_item);
+        selectable_item_.value = game_filenames[i];
+        selectable_item_.toggle_group_ = GetComponent(toggle_group);
+
+        var toggle : UI.Toggle = instance.GetComponentInChildren(UI.Toggle);
+        toggle.group = GetComponent(UI.ToggleGroup);
     }
 
     list.set_data(list_elements, 30);
