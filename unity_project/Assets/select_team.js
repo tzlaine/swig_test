@@ -1,8 +1,14 @@
 ﻿#pragma strict
 
 var game_data_ : game_data;
-var start_menu_ : start_menu;
 var game_state_ : game_state;
+var start_menu : GameObject;
+var new_game_menus : GameObject;
+var team_button : GameObject;
+var teams_panel : RectTransform;
+var current_team_description : UI.Text;
+var team_button_size : float;
+var spacing : float;
 
 private var scenario : JSONNode;
 private var teams : Dictionary.<String, List.<String> > =
@@ -10,8 +16,23 @@ private var teams : Dictionary.<String, List.<String> > =
 private var selection_names : String[];
 private var selection_descriptions : String[];
 private var selection_configs : Dictionary.<String, boolean>[];
-//private var selection : int = 0;
 
+
+private function selection_changed (value : String)
+{ current_team_description.text = selection_descriptions[parseInt(value)]; }
+
+function next ()
+{
+    var group : toggle_group = GetComponent(toggle_group);
+    var selection : int = parseInt(group.value());
+    game_state_.new_game(scenario, selection_configs[selection]);
+}
+
+function cancel ()
+{
+    new_game_menus.SetActive(false);
+    start_menu.SetActive(true);
+}
 
 private function team_members (team : String)
 {
@@ -39,6 +60,13 @@ private function all_false_config ()
 
 function set_scenario (scenario_ : JSONNode)
 {
+    teams_panel.DetachChildren();
+
+    var group : toggle_group = GetComponent(toggle_group);
+    group.notify = selection_changed;
+
+    teams.Clear();
+
     scenario = scenario_;
     var selection = 0;
 
@@ -106,6 +134,33 @@ function set_scenario (scenario_ : JSONNode)
             selection_configs[selection][team__.Value[l]] = true;
         }
     }
+
+    for (var j = 0; j < selection_names.Length; ++j) {
+        var instance : GameObject = Instantiate(team_button);
+        var text : UI.Text = instance.GetComponentInChildren(UI.Text);
+        text.text = selection_names[j];
+
+        var selectable_item_ : selectable_item =
+            instance.GetComponent(selectable_item);
+        selectable_item_.value = j.ToString();
+        selectable_item_.toggle_group_ = group;
+
+        var toggle : UI.Toggle = instance.GetComponentInChildren(UI.Toggle);
+        toggle.group = GetComponent(UI.ToggleGroup);
+
+        instance.transform.SetParent(teams_panel);
+        instance.transform.localScale = Vector3.one;
+
+        if (j == selection) {
+            toggle.isOn = true;
+            current_team_description.text = selection_descriptions[j];
+        }
+    }
+
+    teams_panel.sizeDelta = Vector2(
+        teams_panel.sizeDelta.x,
+        team_button_size * selection_names.Length + spacing * (selection_names.Length - 1)
+    );
 }
 
 #if UNITY_WEBPLAYER

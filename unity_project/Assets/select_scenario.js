@@ -2,7 +2,7 @@
 
 var new_game_menus : GameObject;
 var start_menu : GameObject;
-var setup_game_ui : setup_game;
+var select_team_ui : select_team;
 var scenario_button : GameObject;
 var scenarios_panel : RectTransform;
 var current_scenario_description : UI.Text;
@@ -21,10 +21,10 @@ function next ()
 {
     var group : toggle_group = GetComponent(toggle_group);
     var selection : int = parseInt(group.value());
-    setup_game_ui.set_scenario(scenarios[selection]);
+    select_team_ui.set_scenario(scenarios[selection]);
 
     gameObject.SetActive(false);
-    setup_game_ui.gameObject.SetActive(true);
+    select_team_ui.gameObject.SetActive(true);
 }
 
 function cancel ()

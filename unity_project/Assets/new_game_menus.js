@@ -1,11 +1,11 @@
 #pragma strict
 
-var select_scenario_ui : select_scenario;
-var setup_game_ui : setup_game;
+var select_scenario : GameObject;
+var select_team : GameObject;
 
 
-function OnEnabled ()
+function reset ()
 {
-    select_scenario_ui.gameObject.SetActive(true);
-    setup_game_ui.gameObject.SetActive(false);
+    select_scenario.SetActive(true);
+    select_team.SetActive(false);
 }
