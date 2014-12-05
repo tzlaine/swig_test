@@ -726,7 +726,7 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
     while (!game_data_.map())
         yield WaitForSeconds(0.01);
 
-    determine_supply(); // TODO
+//    determine_supply(); // TODO
 
     var scenario = game_data_.scenario();
     turn_ = scenario.start_turn;

@@ -26,6 +26,7 @@ function next ()
     var group : toggle_group = GetComponent(toggle_group);
     var selection : int = parseInt(group.value());
     game_state_.new_game(scenario, selection_configs[selection]);
+    new_game_menus.SetActive(false);
 }
 
 function cancel ()
