@@ -2860,7 +2860,7 @@ GameObject:
   - 114: {fileID: 1260797845}
   - 114: {fileID: 1260797847}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: bottom_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4350,7 +4350,7 @@ GameObject:
   - 114: {fileID: 1806908147}
   - 114: {fileID: 1806908149}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: side_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5271,7 +5271,7 @@ GameObject:
   - 222: {fileID: 2067697984}
   - 114: {fileID: 2067697983}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: top_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
