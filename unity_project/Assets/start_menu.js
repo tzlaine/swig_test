@@ -1,5 +1,7 @@
 ﻿#pragma strict
 
+@script DoNotSerializePublic
+
 var game_state_ : game_state;
 var new_game_menus_ui : new_game_menus;
 var load_menu : GameObject;
