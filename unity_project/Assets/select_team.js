@@ -4,6 +4,7 @@ var game_data_ : game_data;
 var game_state_ : game_state;
 var start_menu : GameObject;
 var new_game_menus : GameObject;
+var place_fleets : GameObject;
 var team_button : GameObject;
 var teams_panel : RectTransform;
 var current_team_description : UI.Text;
@@ -26,7 +27,8 @@ function next ()
     var group : toggle_group = GetComponent(toggle_group);
     var selection : int = parseInt(group.value());
     game_state_.new_game(scenario, selection_configs[selection]);
-    new_game_menus.SetActive(false);
+    gameObject.SetActive(false);
+    place_fleets.SetActive(true);
 }
 
 function cancel ()

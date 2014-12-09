@@ -10,7 +10,7 @@ import System.Runtime.InteropServices;
 @DoNotSerialize
 var game_data_ : game_data;
 @DoNotSerialize
-var setup_ui_ : setup_ui;
+var place_fleets_ui : place_fleets;
 
 private var in_setup_ : boolean = true;
 private var turn_ : int;
@@ -77,8 +77,8 @@ private static function initial_setup ()
         // TODO: Hotseat only for now.
         //if (this_.player_nations_[nation]) {
         if (true) {
-            this_.setup_ui_.set_up(nation);
-            while (this_.setup_ui_.enabled) {
+            this_.place_fleets_ui.set_up(nation);
+            while (!this_.place_fleets_ui.done) {
                 yield WaitForSeconds(0.1);
             }
             this_.save_async();

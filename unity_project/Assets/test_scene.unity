@@ -201,7 +201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 53672399}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1768217523}
+        m_MethodName: done_clicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &53672399
@@ -774,7 +786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game_data_: {fileID: 1305381365}
-  setup_ui_: {fileID: 1345877845}
+  place_fleets_ui: {fileID: 1768217523}
 --- !u!114 &442787142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2289,6 +2301,7 @@ MonoBehaviour:
   game_state_: {fileID: 442787141}
   start_menu: {fileID: 138485010}
   new_game_menus: {fileID: 510679214}
+  place_fleets: {fileID: 1768217521}
   team_button: {fileID: 100006, guid: 4352b1060eb004752959170883d96627, type: 2}
   teams_panel: {fileID: 1991888071}
   current_team_description: {fileID: 382366589}
@@ -2388,6 +2401,10 @@ Prefab:
     - target: {fileID: 11400000, guid: 2d80aad740fc14b4dbd62d151e70776a, type: 2}
       propertyPath: horizontal
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22400010, guid: 2d80aad740fc14b4dbd62d151e70776a, type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d80aad740fc14b4dbd62d151e70776a, type: 2}
@@ -2987,7 +3004,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: -20}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: .5, y: 1}
 --- !u!114 &1270901008
 MonoBehaviour:
@@ -3110,7 +3127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1345877845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4100,12 +4117,15 @@ MonoBehaviour:
   place_hexes_: {fileID: 541918417}
   map_click_listener_: {fileID: 442787142}
   counter_: {fileID: 11400000, guid: c3fe1f93eb858457f9c952a3c7fb970b, type: 2}
+  button_prefab: {fileID: 100006, guid: 4352b1060eb004752959170883d96627, type: 2}
   title: {fileID: 892661119}
   counter_image: {fileID: 248524728}
-  ships_list: {fileID: 566653340}
+  units_list: {fileID: 566653340}
   fleets_list: {fileID: 1972807292}
-  ships_group: {fileID: 1806908149}
+  units_group: {fileID: 1806908149}
   fleets_group: {fileID: 1260797847}
+  done_button: {fileID: 53672398}
+  done: 0
 --- !u!1 &1774681484
 GameObject:
   m_ObjectHideFlags: 0

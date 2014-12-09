@@ -12,8 +12,9 @@ class toggle_group extends UI.ToggleGroup
 
     function set_value (v : String)
     {
-        if (notify && value_ != v)
-            notify(v);
+        var n : boolean = notify != null && value_ != v;
         value_ = v;
+        if (n)
+            notify(value_);
     }
 }

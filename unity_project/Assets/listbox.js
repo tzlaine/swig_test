@@ -4,7 +4,7 @@ var panel : RectTransform;
 var horizontal : boolean;
 
 
-function set_data (gos : GameObject[], row_height : int)
+function set_data (gos : GameObject[], row_size : int)
 {
 //    scrollbar.value = 0;
     panel.DetachChildren();
@@ -13,10 +13,10 @@ function set_data (gos : GameObject[], row_height : int)
 
     if (horizontal) {
         panel.offsetMin.x = 0;
-        panel.offsetMax.x = row_height * gos.Length;
+        panel.offsetMax.x = row_size * gos.Length;
     } else {
         panel.offsetMin.y = 0;
-        panel.offsetMax.y = row_height * gos.Length;
+        panel.offsetMax.y = row_size * gos.Length;
     }
 
     for (var i = 0; i < gos.Length; ++i) {
