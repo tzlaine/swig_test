@@ -90,7 +90,8 @@ private static function initial_setup ()
 
 private static function determine_supply ()
 {
-//    Debug.Log('determine_supply()');
+    Debug.Log('determine_supply()');
+
     var scenario = this_.game_data_.scenario();
 
     var nation_teams = new int[this_.game_data_.nations_by_id.Count];
@@ -167,6 +168,37 @@ private static function determine_supply ()
         }
     }
 
+var debug_str =
+        'about to call determine_supply(\n' +
+        '  m.width=' + m.width + ', m.height=' + m.height + ',\n' +
+        '  hexes=' + hexes.ToString() + ',\n' +
+        '  this_.game_data_.nation(\'NZ\').id=' + this_.game_data_.nation('NZ').id + ',\n' +
+        '  nation_teams.Length=' + nation_teams.Length + ',\n' +
+        '  nation_teams=[\n';
+
+for (nt in nation_teams)
+    debug_str += '    ' + nt + ',\n';
+
+debug_str += '  ],\n' +
+        '  capitals=[\n';
+
+for (cap in capitals)
+    debug_str += '    ' + cap + ',\n';
+
+debug_str +=
+        '  ],\n' +
+        '  graph_algorithms.max_offmap_border_hexes=' + graph_algorithms.max_offmap_border_hexes + ',\n' +
+        '  offmap_border_hexes=[\n';
+
+for (obh in offmap_border_hexes)
+    debug_str += '    ' + obh + ',\n';
+
+debug_str +=
+        '  ],\n' +
+        ');';
+
+Debug.Log(debug_str);
+
     var supply_ : System.IntPtr = graph_algorithms.determine_supply(
         m.width, m.height,
         hexes,
@@ -177,10 +209,11 @@ private static function determine_supply ()
         graph_algorithms.max_offmap_border_hexes,
         offmap_border_hexes
     );
+/*
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
     Debug.Log('did supply determination step');
-/**/
+
     // TODO
     for (i in supply) {
         Debug.Log(i);
@@ -726,7 +759,7 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
     while (!game_data_.map())
         yield WaitForSeconds(0.01);
 
-//    determine_supply(); // TODO
+    determine_supply(); // TODO Remove; for testing only.
 
     var scenario = game_data_.scenario();
     turn_ = scenario.start_turn;
