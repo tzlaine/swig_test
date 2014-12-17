@@ -29,7 +29,6 @@ public struct supply_check_hex_t
 
 public class graph_algorithms
 {
-/*
     [DllImport("graph_algorithms")]
     public static extern int test (int i);
 
@@ -54,13 +53,11 @@ public class graph_algorithms
         int n,
         [In] ga_hex_t[] hexes
     );
-*/
 
     public const int max_offmap_border_hexes = 13;
 
-//    [DllImport("graph_algorithms")]
-//    public static extern IntPtr determine_supply (
-    public static IntPtr determine_supply (
+    [DllImport("graph_algorithms")]
+    public static extern IntPtr determine_supply (
         int w, int h,
         [In] supply_check_hex_t[] hexes,
         int neutral_zone_id,
@@ -69,5 +66,6 @@ public class graph_algorithms
         [In] int[] capitols,
         int max_offmap_border_hexes,
         [In] int[] offmap_border_hexes
-    ) { return new System.IntPtr(); }
+    );
+
 };

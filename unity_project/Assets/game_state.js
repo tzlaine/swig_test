@@ -3,7 +3,7 @@
 import System.IO;
 import RadicalRoutineExtensions;
 import System.Runtime.InteropServices;
-//import graph_algorithms;
+import graph_algorithms;
 
 @script SerializeAll
 
@@ -209,6 +209,10 @@ Debug.Log(debug_str);
         graph_algorithms.max_offmap_border_hexes,
         offmap_border_hexes
     );
+
+Debug.Log('graph_algorithms.determine_supply=' + graph_algorithms.determine_supply);
+Debug.Log('called determine_supply()');
+
 /*
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
