@@ -168,6 +168,7 @@ private static function determine_supply ()
         }
     }
 
+if (0) {
 var debug_str =
         'about to call determine_supply(\n' +
         '  m.width=' + m.width + ', m.height=' + m.height + ',\n' +
@@ -198,6 +199,7 @@ debug_str +=
         ');';
 
 Debug.Log(debug_str);
+}
 
     var supply_ : System.IntPtr = graph_algorithms.determine_supply(
         m.width, m.height,
@@ -210,14 +212,16 @@ Debug.Log(debug_str);
         offmap_border_hexes
     );
 
+if (0) {
 Debug.Log('graph_algorithms.determine_supply=' + graph_algorithms.determine_supply);
 Debug.Log('called determine_supply()');
+}
 
-/*
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
     Debug.Log('did supply determination step');
 
+/*
     // TODO
     for (i in supply) {
         Debug.Log(i);
