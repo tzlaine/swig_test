@@ -1083,7 +1083,6 @@ extern "C" {
             }
         }
 
-#if 1 // TODO
         int source = next_supply_source(
             0,
             w * h,
@@ -1123,7 +1122,6 @@ extern "C" {
                 hexes
             );
         }
-#endif
 
         return &g_supply_data.supply[0];
     }
