@@ -69,8 +69,6 @@ namespace graph {
 
     struct vertex_hex_id_t {typedef boost::vertex_property_tag kind;};
 
-    const int invalid_hex_id = -1000;
-
     typedef boost::property<
         vertex_hex_id_t,
         int,
