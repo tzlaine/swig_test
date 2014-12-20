@@ -228,7 +228,12 @@ bool operator!= (hex_coord lhs, hex_coord rhs)
 
 #if LOG
 std::ostream& operator<< (std::ostream& os, hex_coord hc)
-{ return os << '(' << (hc.x + 1) << ',' << (hc.y + 1) << ')'; }
+{
+    return os << (hc.x + 1 < 10 ? "0" : "") << (hc.x + 1) << (hc.y + 1 < 10 ? "0" : "") << (hc.y + 1);
+}
+
+//std::ostream& operator<< (std::ostream& os, hex_coord hc)
+//{ return os << '(' << (hc.x + 1) << ',' << (hc.y + 1) << ')'; }
 #endif
 
 
@@ -628,7 +633,12 @@ int add_vertex (graph::graph& g,
     vertex_id_to_hex_id[n] = v;
     hex_id_to_vertex_id[v] = n;
 #if LOG
-    std::cerr << "add_vertex(" << (v + 101) << ") as vertex " << n << '\n';
+    std::cerr << "add_vertex(";
+    if (v < 0)
+        std::cerr << v;
+    else
+        std::cerr << hex_coord(v / 100, v % 100);
+    std::cerr << ") as vertex " << n << '\n';
 #endif
     boost::add_vertex(g);
     return n;
