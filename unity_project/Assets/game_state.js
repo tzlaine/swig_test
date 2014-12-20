@@ -168,39 +168,6 @@ private static function determine_supply ()
         }
     }
 
-if (0) {
-var debug_str =
-        'about to call determine_supply(\n' +
-        '  m.width=' + m.width + ', m.height=' + m.height + ',\n' +
-        '  hexes=' + hexes.ToString() + ',\n' +
-        '  this_.game_data_.nation(\'NZ\').id=' + this_.game_data_.nation('NZ').id + ',\n' +
-        '  nation_teams.Length=' + nation_teams.Length + ',\n' +
-        '  nation_teams=[\n';
-
-for (nt in nation_teams)
-    debug_str += '    ' + nt + ',\n';
-
-debug_str += '  ],\n' +
-        '  capitals=[\n';
-
-for (cap in capitals)
-    debug_str += '    ' + cap + ',\n';
-
-debug_str +=
-        '  ],\n' +
-        '  graph_algorithms.max_offmap_border_hexes=' + graph_algorithms.max_offmap_border_hexes + ',\n' +
-        '  offmap_border_hexes=[\n';
-
-for (obh in offmap_border_hexes)
-    debug_str += '    ' + obh + ',\n';
-
-debug_str +=
-        '  ],\n' +
-        ');';
-
-Debug.Log(debug_str);
-}
-
     var supply_ : System.IntPtr = graph_algorithms.determine_supply(
         m.width, m.height,
         hexes,
@@ -212,21 +179,9 @@ Debug.Log(debug_str);
         offmap_border_hexes
     );
 
-if (0) {
-Debug.Log('graph_algorithms.determine_supply=' + graph_algorithms.determine_supply);
-Debug.Log('called determine_supply()');
-}
-
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
     Debug.Log('did supply determination step');
-
-/*
-    // TODO
-    for (i in supply) {
-        Debug.Log(i);
-    }
-/**/
 }
 
 private static function economics (team : String)
