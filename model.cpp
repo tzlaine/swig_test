@@ -642,6 +642,32 @@ int add_vertex (graph::graph& g,
     return n;
 }
 
+void find_blocking_contents (
+    const supply_check_hex_t & hex,
+    int team,
+    int nations,
+    const int* nation_team_membership,
+    bool & friendly_ships,
+    bool & friendly_units,
+    bool & friendly_base,
+    bool & enemy_ships,
+    bool & enemy_units,
+    bool & enemy_base
+) {
+    for (int n = 0; n < nations; ++n) {
+        const int flag = 1 << n;
+        if (nation_team_membership[n] == team) {
+            friendly_ships |= bool(hex.ship & flag);
+            friendly_units |= friendly_ships || hex.nonship_unit & flag;
+            friendly_base |= bool(hex.base_with_fighters & flag);
+        } else {
+            enemy_ships |= bool(hex.ship & flag);
+            enemy_units |= friendly_ships || hex.nonship_unit & flag;
+            enemy_base |= bool(hex.base_with_fighters & flag);
+        }
+    }
+}
+
 bool supply_blocked (
     hex_coord hc,
     int nation,
@@ -665,18 +691,18 @@ bool supply_blocked (
 
     const int team = nation_team_membership[nation];
 
-    for (int n = 0; n < nations; ++n) {
-        const int flag = 1 << n;
-        if (nation_team_membership[n] == team) {
-            friendly_ships |= bool(hex.ship & flag);
-            friendly_units |= friendly_ships || hex.nonship_unit & flag;
-            friendly_base |= bool(hex.base_with_fighters & flag);
-        } else {
-            enemy_ships |= bool(hex.ship & flag);
-            enemy_units |= friendly_ships || hex.nonship_unit & flag;
-            enemy_base |= bool(hex.base_with_fighters & flag);
-        }
-    }
+    find_blocking_contents(
+        hex,
+        team,
+        nations,
+        nation_team_membership,
+        friendly_ships,
+        friendly_units,
+        friendly_base,
+        enemy_ships,
+        enemy_units,
+        enemy_base
+    );
 
     if (hex.owner_id == neutral_zone_id) {
         retval = true;
@@ -695,6 +721,24 @@ bool supply_blocked (
             hex_coord adjacent_coord = adjacent_hex_coord(hc, d);
             if (on_map(adjacent_coord, width, height)) {
                 supply_check_hex_t hex = hexes[hex_index(adjacent_coord, width)];
+                bool friendly_ships = false;
+                bool friendly_units = false;
+                bool friendly_base = false;
+                bool enemy_ships = false;
+                bool enemy_units = false;
+                bool enemy_base = false;
+                find_blocking_contents(
+                    hex,
+                    team,
+                    nations,
+                    nation_team_membership,
+                    friendly_ships,
+                    friendly_units,
+                    friendly_base,
+                    enemy_ships,
+                    enemy_units,
+                    enemy_base
+                );
                 if (enemy_ships || enemy_base)
                     adjacent_enemy_ships = true;
                 if (friendly_units)
