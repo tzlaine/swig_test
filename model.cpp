@@ -1007,7 +1007,8 @@ extern "C" {
                 continue;
 
 #if LOG
-            std::cerr << "****************************************\n"
+            std::cerr << "\n"
+                      << "****************************************\n"
                       << "* Nation " << nation << ":\n"
                       << "****************************************\n\n";
 #endif
@@ -1030,7 +1031,7 @@ extern "C" {
             }
         }
 
-#if 0 // TODO
+#if 1 // TODO
         int source = next_supply_source(
             0,
             w * h,
@@ -1043,8 +1044,18 @@ extern "C" {
                   << "next_supply_source()=" << source << "\n";
 #endif
 
-        int iter_limit = 5;
-        while (--iter_limit && /*TODO*/ source < w * h) {
+        std::vector<int> grid_ids(nations, 2);
+        while (source < w * h) {
+#if LOG
+            std::cerr << "\n"
+                      << "****************************************\n"
+                      << "* Nation " << hexes[source].owner_id << " (possible supplemental grid):\n"
+                      << "****************************************\n\n";
+#endif
+
+            // TODO: This seems to be producing some weird grids.  They're all
+            // single-hex and do not appear to be in a valid range in the
+            // y-dimension.
             bool dont_care = false;
             find_grid(
                 hexes[source].owner_id,
