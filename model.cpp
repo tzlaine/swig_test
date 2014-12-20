@@ -64,7 +64,6 @@ namespace boost {
 
 }
 
-boost::unordered_map<int, int> * g_vertex_id_to_hex_id = 0;
 
 namespace graph {
 
@@ -184,37 +183,25 @@ namespace graph {
         while (!queue.empty()) {
             int u = queue.front();
             queue.pop();
-std::cerr << "dequeue and examine " << ((*g_vertex_id_to_hex_id)[u] + 101) << "\n";
            if (!visitor.examine(u, g))
                continue;
             typedef typename Graph::adjacency_iterator iterator;
             std::pair<iterator, iterator> adj = adjacent_vertices(u, g);
             for (iterator it = adj.first; it != adj.second; ++it) {
                 int v = *it;
-std::cerr << "    looking at adjacent vertex v=" << ((*g_vertex_id_to_hex_id)[v] + 101) << "\n";
                 if (color[v] == white) {
-std::cerr << "    v is white\n";
                     color[v] = gray;
-std::cerr << "    v -> gray\n";
                     std::pair<D, bool> dist = visitor.distance(d[u], u, v);
-std::cerr << "    d[u]=" << d[u] << " dist=" << dist.first << "," << dist.second << "\n";
                     if (!dist.second)
-{std::cerr << "    continue\n";
                         continue;
-}
                     d[v] = dist.first;
-std::cerr << "    d[v]=" << d[v] << "\n";
                     p[v] = u;
-std::cerr << "    p[v]=" << p[v] << "\n";
                     queue.push(v);
-std::cerr << "    push(v=" << ((*g_vertex_id_to_hex_id)[v] + 101) << ")\n";
                 } else if (color[v] == gray) {
-std::cerr << "    v is gray\n";
                     // TODO: Revisit, a la Djikstra/A*?
                 }
             }
             color[u] = black;
-std::cerr << "    " << u << " -> gray\n";
         }
     }
 
@@ -576,7 +563,6 @@ void validate_map ()
         [] (unsigned int id1, unsigned int id2) {return true;},
         [] (unsigned int id1, unsigned int id2) {return 1.0;}
     );
-    std::cerr << "map looks good!\n";
 }
 
 int hex_coord_to_graph_id (hex_coord hc)
@@ -641,7 +627,9 @@ int add_vertex (graph::graph& g,
     int n = boost::num_vertices(g);
     vertex_id_to_hex_id[n] = v;
     hex_id_to_vertex_id[v] = n;
+#if LOG
     std::cerr << "add_vertex(" << (v + 101) << ") as vertex " << n << '\n';
+#endif
     boost::add_vertex(g);
     return n;
 }
@@ -808,14 +796,12 @@ public:
                 }
             } else {
                 hex_coord coord(hex_id_ / 100, hex_id_ % 100);
-                std::cerr << "  on-map hex " << coord << ":\n";
                 for (hex_direction d = above_right;
                      d < hex_directions;
                      d = hex_direction(d + 1)) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
                         unsigned int hex_id_ = hex_id(adjacent_coord);
-                        std::cerr << "    adjacent hex " << adjacent_coord << ":";
                         if (m_hex_id_to_vertex_id.count(hex_id_) ||
                             supply_blocked(adjacent_coord,
                                            m_nation,
@@ -825,10 +811,8 @@ public:
                                            m_width,
                                            m_height,
                                            m_neutral_zone_id)) {
-                            std::cerr << " skipping.\n";
                             continue;
                         }
-                        std::cerr << " adding.\n";
                         int n = add_vertex(
                             g,
                             hex_id_,
@@ -946,8 +930,6 @@ extern "C" {
 
         boost::unordered_map<int, int> vertex_id_to_hex_id;
         boost::unordered_map<int, int> hex_id_to_vertex_id;
-
-        g_vertex_id_to_hex_id = &vertex_id_to_hex_id;
 
         auto find_grid = [&] (
             int nation,
