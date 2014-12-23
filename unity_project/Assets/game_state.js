@@ -181,6 +181,51 @@ private static function determine_supply ()
 
     var supply = new int[m.width * m.height];
     Marshal.Copy(supply_, supply, 0, m.width * m.height);
+
+    var color : Vector4 = Vector4(1, 0.5, 0.5, 1); // = TODO
+    var supplied_hexes_by_owner_tmp : Dictionary.<int, Array> = new Dictionary.<int, Array>();
+    var hexes_by_grid_tmp : Dictionary.<int, Array> = new Dictionary.<int, Array>();
+    var grids_by_owner_tmp : Dictionary.<int, Array> = new Dictionary.<int, Array>();
+    for (i = 0; i < supply.Length; ++i) {
+        var hc : hex_coord = hex_coord(i % m.width, i / m.width);
+        var s : int = supply[i];
+
+        for (var owner_id_bit : int = 8; owner_id_bit < 24; ++owner_id_bit) {
+            var owner_id : int = owner_id_bit - 8;
+            if (s & (1 << owner_id_bit)) {
+                if (!supplied_hexes_by_owner_tmp.ContainsKey(owner_id))
+                    supplied_hexes_by_owner_tmp[owner_id] = Array();
+                supplied_hexes_by_owner_tmp[owner_id].Push(hc);
+            }
+        }
+
+        var grid : int = s & 0xff;
+        if (!hexes_by_grid_tmp.ContainsKey(grid))
+            hexes_by_grid_tmp[grid] = new Array();
+        hexes_by_grid_tmp[grid].Push(hc);
+
+        var hex : hex_t = this_.game_data_.map().hex(hc);
+        owner_id = hex.owner_id;
+        if (!grids_by_owner_tmp.ContainsKey(owner_id))
+            grids_by_owner_tmp[owner_id] = new Array();
+        grids_by_owner_tmp[owner_id].Push(grid);
+
+        // TODO: Record bit 24's value somewhere.
+    }
+
+    var supplied_hexes_by_owner : Dictionary.<int, hex_coord[]> = new Dictionary.<int, hex_coord[]>();
+    var hexes_by_grid : Dictionary.<int, hex_coord[]> = new Dictionary.<int, hex_coord[]>();
+    var grids_by_owner : Dictionary.<int, int[]> = new Dictionary.<int, int[]>();
+    for (var kv : KeyValuePair.<int, Array> in supplied_hexes_by_owner_tmp) {
+        supplied_hexes_by_owner[kv.Key] = kv.Value.ToBuiltin(hex_coord);
+    }
+    for (var kv : KeyValuePair.<int, Array> in hexes_by_grid_tmp) {
+        hexes_by_grid[kv.Key] = kv.Value.ToBuiltin(hex_coord);
+    }
+    for (var kv : KeyValuePair.<int, Array> in grids_by_owner_tmp) {
+        grids_by_owner[kv.Key] = kv.Value.ToBuiltin(int);
+    }
+
     Debug.Log('did supply determination step');
 }
 
