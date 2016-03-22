@@ -1,15 +1,25 @@
 ########################################
 # Plugin
 ########################################
+set(
+    model_plugin_path
+    ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
+)
+
 if (APPLE)
     # TODO: Make a universal (32- & 64-bit) bundle.
 
     set(
-        model_plugin_path
-        ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
+        CMAKE_OSX_ARCHITECTURES
+        i386
+        x86_64
     )
 
-    # TODO: Add install step.
+    add_library(
+        model-plugin
+        MODULE
+        model.cpp
+    )
 else ()
     add_definitions(-DBUILD_LIBRARY)
 
@@ -27,8 +37,8 @@ else ()
 
     set(
         model_plugin_path
-        ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins/${arch_dir}
+        ${model_plugin_path}/${arch_dir}
     )
-
-    install(TARGETS model-plugin DESTINATION ${model_plugin_path})
 endif ()
+
+install(TARGETS model-plugin DESTINATION ${model_plugin_path})
