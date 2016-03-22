@@ -42,14 +42,14 @@ function place_tile (h : hex_t, m : map_t)
     var surface : procedural_hex = Instantiate(hex_surface);
     surface.init(h.owner_id);
     surface.transform.position = hex_center(h.hc);
-    surface.renderer.material.renderQueue = 10;
+    surface.GetComponent.<Renderer>().material.renderQueue = 10;
 
     // TODO: Optimize via procedural assignment of owner ID in mesh uv2, as
     // necessary.
     var hilite = Instantiate(highlight);
     hilite.transform.position = hex_center(h.hc);
-    hilite.renderer.material.renderQueue = 100;
-    hilite.renderer.material.color =
+    hilite.GetComponent.<Renderer>().material.renderQueue = 100;
+    hilite.GetComponent.<Renderer>().material.color =
         secondary_colors.GetPixel(h.owner_id * 4, 0);
     hilite.SetActive(h.highlight);
     highlighting[h.hc.x, h.hc.y] = hilite;
@@ -161,7 +161,7 @@ function Update ()
     if (!hexes_combined &&
         combine_hexes(GetComponent(MeshFilter),
                       FindObjectsOfType(procedural_hex))) {
-        renderer.material.renderQueue = 10;
+        GetComponent.<Renderer>().material.renderQueue = 10;
         hexes_combined = true;
     }
 }

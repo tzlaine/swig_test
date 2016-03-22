@@ -19,7 +19,7 @@ function make_section ()
         vertices[i].y *= section_scale;
     }
     mesh.vertices = vertices;
-    retval.renderer.sharedMaterial.renderQueue = 30;
+    retval.GetComponent.<Renderer>().sharedMaterial.renderQueue = 30;
     retval.SetActive(false);
     return retval;
 }
@@ -34,7 +34,7 @@ function make_connector ()
         vertices[i].y *= connector_length;
     }
     mesh.vertices = vertices;
-    retval.renderer.sharedMaterial.renderQueue = 30;
+    retval.GetComponent.<Renderer>().sharedMaterial.renderQueue = 30;
     retval.SetActive(false);
     return retval;
 }

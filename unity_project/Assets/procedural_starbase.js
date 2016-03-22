@@ -18,7 +18,7 @@ function make_circle (scale : float)
         vertices[i].y *= scale;
     }
     mesh.vertices = vertices;
-    retval.renderer.sharedMaterial.renderQueue = 30;
+    retval.GetComponent.<Renderer>().sharedMaterial.renderQueue = 30;
     retval.SetActive(false);
     return retval;
 }

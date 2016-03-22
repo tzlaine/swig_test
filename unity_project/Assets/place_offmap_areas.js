@@ -90,7 +90,7 @@ function add_offmap (owner : String,
     mesh.vertices = vertices;
     set_owner(mesh, owner_id);
     mesh.RecalculateBounds();
-    obj.renderer.material.renderQueue = 5;
+    obj.GetComponent.<Renderer>().material.renderQueue = 5;
     obj.transform.position =
         (lower_left + upper_right) / 2.0 - place_hexes_.map_origin();
 
@@ -114,7 +114,7 @@ function add_offmap (owner : String,
     mesh.triangles = triangles;
     set_owner(mesh, owner_id);
     mesh.RecalculateBounds();
-    obj.renderer.material.renderQueue = 8;
+    obj.GetComponent.<Renderer>().material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
     // bottom border
@@ -129,7 +129,7 @@ function add_offmap (owner : String,
     mesh.triangles = triangles;
     mesh.RecalculateBounds();
     set_owner(mesh, owner_id);
-    obj.renderer.material.renderQueue = 8;
+    obj.GetComponent.<Renderer>().material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
     // left border
@@ -144,7 +144,7 @@ function add_offmap (owner : String,
     mesh.triangles = triangles;
     mesh.RecalculateBounds();
     set_owner(mesh, owner_id);
-    obj.renderer.material.renderQueue = 8;
+    obj.GetComponent.<Renderer>().material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
     // left border
@@ -159,7 +159,7 @@ function add_offmap (owner : String,
     mesh.triangles = triangles;
     mesh.RecalculateBounds();
     set_owner(mesh, owner_id);
-    obj.renderer.material.renderQueue = 8;
+    obj.GetComponent.<Renderer>().material.renderQueue = 8;
     obj.transform.position = -place_hexes_.map_origin();
 
     var features_width = 0.0;

@@ -43,7 +43,7 @@ function make_feature (feature : String, owner : String, position : Vector3)
         capital.init(owner_id, game_data_.capital_star_points(owner));
         scale = 0.6;
         capital.transform.localScale = Vector3(scale, scale, scale);
-        capital.renderer.sharedMaterial.renderQueue = 30;
+        capital.GetComponent.<Renderer>().sharedMaterial.renderQueue = 30;
         capital.transform.position = position;
     } else if (feature == 'MIN' || feature == 'MAJ') {
         var planet : GameObject = Instantiate(circle);
@@ -54,7 +54,7 @@ function make_feature (feature : String, owner : String, position : Vector3)
             uv2[i] = Vector2(owner_id / 255.0, 1);
         }
         mesh.uv2 = uv2;
-        planet.renderer.material.renderQueue = 30;
+        planet.GetComponent.<Renderer>().material.renderQueue = 30;
         planet.transform.localScale = Vector3(scale, scale, -scale);
         planet.transform.position = position;
     } else if (feature == 'SB') {
@@ -87,7 +87,7 @@ function Start ()
             var adjacencies_ : int[] = adjacencies(h, m);
             borders.init(h.owner_id, adjacencies_);
             borders.transform.position = place_hexes_.hex_center(hc);
-            borders.renderer.material.renderQueue = 20;
+            borders.GetComponent.<Renderer>().material.renderQueue = 20;
 
             place_features(h);
         }
@@ -136,7 +136,7 @@ function Update ()
         dest += battlestations.Length;
     }
     if (features && features.Length && combine_features(GetComponent(MeshFilter), features)) {
-        renderer.material.renderQueue = 30;
+        GetComponent.<Renderer>().material.renderQueue = 30;
         features_combined = true;
     }
     enabled = false;
