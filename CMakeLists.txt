@@ -10,22 +10,42 @@ if (NOT WIN32)
     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -std=c++11)
 endif ()
 
+
 ########################################
 # Plugin
 ########################################
-add_library(
-    model-plugin
-    SHARED
-    model.cpp
-)
+if (APPLE)
+    # TODO: Make a universal (32- & 64-bit) bundle.
 
-#set_target_properties(
-#    model-plugin
-#    PROPERTIES
-#    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
-#    LIBARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
-#    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
-#)
+    set(
+        model_plugin_path
+        ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
+    )
+
+    # TODO: Add install step.
+else ()
+    add_definitions(-DBUILD_LIBRARY)
+
+    add_library(
+        model-plugin
+        SHARED
+        model.cpp
+    )
+
+    if (CMAKE_SIZEOF_VOID_P EQUAL 4)
+        set(arch_dir x86)
+    else ()
+        set(arch_dir x86_64)
+    endif ()
+
+    set(
+        model_plugin_path
+        ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins/${arch_dir}
+    )
+
+    install(TARGETS model-plugin DESTINATION ${model_plugin_path})
+endif ()
+
 
 ########################################
 # Tests
@@ -33,14 +53,6 @@ add_library(
 add_executable(
     model-tests
     model.cpp
-)
-
-set_target_properties(
-    model-tests
-    PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
-    LIBARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
-    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}
 )
 
 target_link_libraries(
