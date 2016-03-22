@@ -12,6 +12,21 @@ endif ()
 
 
 ########################################
+# Tests
+########################################
+add_executable(
+    model-tests
+    model.cpp
+)
+
+target_link_libraries(
+    model-tests
+    gtest
+    gtest_main
+)
+
+
+########################################
 # Plugin
 ########################################
 if (APPLE)
@@ -45,18 +60,3 @@ else ()
 
     install(TARGETS model-plugin DESTINATION ${model_plugin_path})
 endif ()
-
-
-########################################
-# Tests
-########################################
-add_executable(
-    model-tests
-    model.cpp
-)
-
-target_link_libraries(
-    model-tests
-    gtest
-    gtest_main
-)
