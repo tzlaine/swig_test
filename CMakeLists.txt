@@ -1,6 +1,3 @@
-cmake_minimum_required(VERSION 2.8)
-cmake_policy(VERSION 2.8.9)
-
 add_subdirectory(googletest-1.7.0)
 
 set(boost_dir ${CMAKE_HOME_DIRECTORY}/"boost_1_60")
