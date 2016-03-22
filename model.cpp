@@ -1,3 +1,5 @@
+#include "model.hpp"
+
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/breadth_first_search.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
@@ -32,12 +34,6 @@ namespace boost {
         std::cerr << boost::diagnostic_information(e);
     }
 }
-#endif
-
-#if defined(BUILD_LIBRARY) && defined(_MSC_VER)
-#define GRAPH_ALGO_API __declspec(dllexport)
-#else
-#define GRAPH_ALGO_API
 #endif
 
 namespace {
@@ -571,33 +567,10 @@ void validate_map ()
 int hex_coord_to_graph_id (hex_coord hc)
 { return (hc.x + 1) * 100 + hc.y + 1; }
 
-struct ga_hex_t
-{
-    int a;
-    float b;
-};
-
 struct supply_data
 {
     std::vector<int> supply;
 } g_supply_data;
-
-struct supply_check_hex_t
-{
-    int owner_id;
-
-    // These values are all encoded such that nation N has an X present if
-    // (X & (1 << N)).
-    int ship;
-    int nonship_unit;
-    int base_with_fighters;
-    int planet;
-    int SB;
-    int BATS;
-    int MB;
-    int convoy;
-    int supply_tug;
-};
 
 bool neutral (supply_check_hex_t h, unsigned int nz_id)
 { return h.owner_id == nz_id; }
@@ -1187,18 +1160,3 @@ void test_determine_supply ()
         &offmap_border_hexes[0]
     );
 }
-
-#ifndef BUILD_LIBRARY
-int main ()
-{
-#if 1
-    test_determine_supply();
-#endif
-
-#if 0
-    validate_map();
-#endif
-
-    return 0;
-}
-#endif
