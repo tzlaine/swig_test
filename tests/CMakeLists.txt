@@ -1,9 +1,12 @@
 ########################################
 # Tests
 ########################################
+include_directories(../googletest-1.7.0/include)
+
 add_executable(
     model-tests
     ../src/model.cpp
+    model_tests.cpp
 )
 
 target_link_libraries(
