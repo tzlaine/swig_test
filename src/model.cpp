@@ -34,6 +34,7 @@ namespace boost {
     {
         // TODO: Send up to Unity app?
         std::cerr << boost::diagnostic_information(e);
+        std::abort();
     }
 }
 #endif
@@ -526,9 +527,73 @@ boost::property_tree::ptree read_json (const char* str)
     return pt;
 }
 
-nations_t read_nations (boost::property_tree::ptree pt)
+#if 0
+struct capital_hex_zone_t
+{
+    std::string name;
+    std::vector<feature_t> features;
+};
+
+struct capital_hex_t
+{
+    hex_coord_t coord;
+    std::vector<capital_hex_zone_t> zones;
+};
+
+struct capital_t
+{
+    std::vector<capital_hex_t> hexes;
+};
+#endif
+
+boost::optional<nation_t> read_nation (const boost::property_tree::ptree& pt, int nation_id)
+{
+    nation_t retval;
+
+    retval.short_name = pt.get_child("short_name").data();
+
+    const boost::property_tree::ptree& capital = pt.get_child("capital");
+    // TODO
+
+    retval.free_strat_moves = pt.get<int>("free_strat_moves");
+    retval.capital_star_points = pt.get<int>("capital_star_points");
+
+    const boost::property_tree::ptree& offmap = pt.get_child("offmap");
+    const auto provinces = pt.get<int>("provinces");
+    const auto mins = pt.get<int>("mins");
+    const auto majs = pt.get<int>("majs");
+    retval.offmap = offmap_t{provinces, mins, majs};
+
+    retval.offmap_survey_ships = pt.get<int>("offmap_survey_ships");
+
+    // Exists in saved data, but not in source data.
+    const auto nation_id_from_pt = pt.get_optional<int>("nation_id");
+    if (nation_id_from_pt)
+        retval.nation_id = *nation_id_from_pt;
+    else
+        retval.nation_id = nation_id;
+
+    return retval;
+}
+
+boost::optional<nations_t> read_nations (const boost::property_tree::ptree& pt)
 {
     nations_t retval;
+
+    int nation_id = 0;
+    for (const auto& nation_ : pt) {
+        const auto nation = read_nation(nation_.second, ++nation_id);
+        if (!nation || retval.count(nation_.first))
+            return boost::optional<nations_t>{};
+        retval[nation_.first] = std::move(*nation);
+    }
+
+    return retval;
+}
+
+boost::property_tree::ptree write_nation (const nation_t& nation)
+{
+    boost::property_tree::ptree retval;
     // TODO
     return retval;
 }
@@ -536,11 +601,13 @@ nations_t read_nations (boost::property_tree::ptree pt)
 boost::property_tree::ptree write_nations (const nations_t& nations)
 {
     boost::property_tree::ptree retval;
-    // TODO
+    for (const auto& nation : nations) {
+        retval.put_child(nation.first, write_nation(nation.second));
+    }
     return retval;
 }
 
-map_t read_map (boost::property_tree::ptree pt, const nations_t& nations)
+boost::optional<map_t> read_map (const boost::property_tree::ptree& pt, const nations_t& nations)
 {
     map_t retval;
 
@@ -549,18 +616,18 @@ map_t read_map (boost::property_tree::ptree pt, const nations_t& nations)
 
     retval.hexes.resize(retval.width * retval.height);
 
-    boost::property_tree::ptree zones = pt.get_child("zones");
-    for (auto zone : zones) {
+    const boost::property_tree::ptree& zones = pt.get_child("zones");
+    for (const auto& zone : zones) {
         if (zone.first == "NZ") {
             boost::unordered_map<unsigned int, feature_t> planets;
-            boost::property_tree::ptree planets_ = zone.second.get_child("planets");
-            for (auto planet : planets_) {
+            const boost::property_tree::ptree& planets_ = zone.second.get_child("planets");
+            for (const auto& planet : planets_) {
                 planets[hex_id(hex_string_to_hex_coord(planet.first))] =
                     feature_string_to_feature(planet.second.data());
             }
 
-            boost::property_tree::ptree hexes = zone.second.get_child("hexes");
-            for (auto hex : hexes) {
+            const boost::property_tree::ptree& hexes = zone.second.get_child("hexes");
+            for (const auto& hex : hexes) {
                 hex_coord_t hc = hex_string_to_hex_coord(hex.second.data());
 
                 assert(hc.x + hc.y * retval.width < retval.hexes.size());
@@ -582,10 +649,10 @@ map_t read_map (boost::property_tree::ptree pt, const nations_t& nations)
             }
             const int nation_id = nations_it->second.nation_id;
 
-            boost::property_tree::ptree provinces = zone.second.get_child("provinces");
-            for (auto province : provinces) {
+            const boost::property_tree::ptree& provinces = zone.second.get_child("provinces");
+            for (const auto& province : provinces) {
                 province_t map_province;
-                for (auto hex : province.second) {
+                for (const auto& hex : province.second) {
                     hex_coord_t hc = hex_string_to_hex_coord(hex.first);
                     map_province.hexes.push_back(hex_id(hc));
 
@@ -998,8 +1065,19 @@ extern "C" {
         if (g_model_state.initialized)
             boost::throw_exception(std::runtime_error("Attempted to duplicate-initialize model"));
 
-        g_model_state.nations = read_nations(read_json(nations_str));
-        g_model_state.m = read_map(read_json(map_str), g_model_state.nations);
+        {
+            const auto nations = read_nations(read_json(nations_str));
+            if (!nations)
+                boost::throw_exception(std::runtime_error("Unable to read nations JSON data"));
+            g_model_state.nations = *nations;
+        }
+
+        {
+            const auto m = read_map(read_json(map_str), g_model_state.nations);
+            if (!m)
+                boost::throw_exception(std::runtime_error("Unable to read map JSON data"));
+            g_model_state.m = *m;
+        }
 
         init_graph(
             g_model_state.g,
@@ -1026,7 +1104,7 @@ extern "C" {
         if (!g_model_state.initialized)
             boost::throw_exception(std::runtime_error("Attempted to save an uninitialized model"));
 
-        std::ofstream ofs("model_log.txt");
+        std::ofstream ofs(filename);
         if (!ofs)
             return 0;
 
@@ -1034,6 +1112,8 @@ extern "C" {
         pt.put_child("nations", write_nations(g_model_state.nations));
         pt.put_child("map", write_map(g_model_state.m));
         boost::property_tree::json_parser::write_json(ofs, pt);
+
+        return 1;
     }
 
     MODEL_API
@@ -1053,8 +1133,19 @@ extern "C" {
         const boost::property_tree::ptree& nations_pt = pt.get_child("nations");
         const boost::property_tree::ptree& map_pt = pt.get_child("map");
 
-        g_model_state.nations = read_nations(nations_pt);
-        g_model_state.m = read_map(map_pt, g_model_state.nations);
+        {
+            const auto nations = read_nations(nations_pt);
+            if (!nations)
+                boost::throw_exception(std::runtime_error("Unable to read saved nations data"));
+            g_model_state.nations = *nations;
+        }
+
+        {
+            const auto m = read_map(map_pt, g_model_state.nations);
+            if (!m)
+                boost::throw_exception(std::runtime_error("Unable to read saved map data"));
+            g_model_state.m = *m;
+        }
 
         init_graph(
             g_model_state.g,
@@ -1067,6 +1158,8 @@ extern "C" {
         );
 
         g_model_state.initialized = true;
+
+        return 1;
     }
 
     // Returns an int for each hex, containing a grid ID in the first 8 bits
