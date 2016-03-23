@@ -40,6 +40,18 @@ extern "C" {
     MODEL_API
     float test_3 (int n, ga_hex_t* hexes);
 
+    MODEL_API
+    void init_model (const char* nations_str, const char* map_str, const char* oob_str);
+
+    MODEL_API
+    void reset_model ();
+
+    MODEL_API
+    int save_model (const char* filename);
+
+    MODEL_API
+    int load_model (const char* filename);
+
     // Returns an int for each hex, containing a grid ID in the first 8 bits
     // (0 is no grid, 1 is main capital grid, 2 is main offmap grid, anything
     // else is a partial grid).  Bits 8-23 contain the nations supplying this

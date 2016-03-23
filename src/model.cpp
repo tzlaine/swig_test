@@ -519,19 +519,30 @@ feature_t feature_string_to_feature (std::string str)
     return retval;
 }
 
-nations_t read_nations (const std::string& nations_str)
+boost::property_tree::ptree read_json (const char* str)
+{
+    boost::property_tree::ptree pt;
+    boost::property_tree::json_parser::read_json(str, pt);
+    return pt;
+}
+
+nations_t read_nations (boost::property_tree::ptree pt)
 {
     nations_t retval;
     // TODO
     return retval;
 }
 
-map_t read_map (const std::string& map_str, const nations_t& nations)
+boost::property_tree::ptree write_nations (const nations_t& nations)
+{
+    boost::property_tree::ptree retval;
+    // TODO
+    return retval;
+}
+
+map_t read_map (boost::property_tree::ptree pt, const nations_t& nations)
 {
     map_t retval;
-
-    boost::property_tree::ptree pt;
-    boost::property_tree::json_parser::read_json(map_str, pt);
 
     retval.width = pt.get<unsigned int>("width");
     retval.height = pt.get<unsigned int>("height");
@@ -612,22 +623,11 @@ map_t read_map (const std::string& map_str, const nations_t& nations)
     return retval;
 }
 
-void validate_map (const std::string& nations_str, const std::string& map_str)
+boost::property_tree::ptree write_map (const map_t& m)
 {
-    const nations_t nations = read_nations(nations_str);
-    const map_t m = read_map(map_str, nations);
-    graph::graph g;
-    graph::hex_id_property_map hex_id_property_map;
-    graph::EdgeWeightPropertyMap edge_weight_map;
-    init_graph(
-        g,
-        hex_id_property_map,
-        edge_weight_map,
-        m.width,
-        m.height,
-        [] (unsigned int id1, unsigned int id2) {return true;},
-        [] (unsigned int id1, unsigned int id2) {return 1.0;}
-    );
+    boost::property_tree::ptree retval;
+    // TODO
+    return retval;
 }
 
 int hex_coord_to_graph_id (hex_coord_t hc)
@@ -957,6 +957,17 @@ int next_supply_source (int source,
     return source;
 }
 
+struct model_state_t
+{
+    bool initialized;
+    nations_t nations;
+    map_t m;
+    graph::graph g;
+    graph::hex_id_property_map hex_id_property_map;
+    graph::EdgeWeightPropertyMap edge_weight_map;
+};
+model_state_t g_model_state = {false};
+
 extern "C" {
 
     MODEL_API
@@ -979,6 +990,83 @@ extern "C" {
             retval += hexes[i].a + hexes[i].b;
         }
         return retval;
+    }
+
+    MODEL_API
+    void init_model (const char* nations_str, const char* map_str, const char* oob_str)
+    {
+        if (g_model_state.initialized)
+            boost::throw_exception(std::runtime_error("Attempted to duplicate-initialize model"));
+
+        g_model_state.nations = read_nations(read_json(nations_str));
+        g_model_state.m = read_map(read_json(map_str), g_model_state.nations);
+
+        init_graph(
+            g_model_state.g,
+            g_model_state.hex_id_property_map,
+            g_model_state.edge_weight_map,
+            g_model_state.m.width,
+            g_model_state.m.height,
+            [] (unsigned int id1, unsigned int id2) {return true;},
+            [] (unsigned int id1, unsigned int id2) {return 1.0;}
+        );
+
+        g_model_state.initialized = true;
+    }
+
+    MODEL_API
+    void reset_model ()
+    {
+        g_model_state = model_state_t{false};
+    }
+
+    MODEL_API
+    int save_model (const char* filename)
+    {
+        if (!g_model_state.initialized)
+            boost::throw_exception(std::runtime_error("Attempted to save an uninitialized model"));
+
+        std::ofstream ofs("model_log.txt");
+        if (!ofs)
+            return 0;
+
+        boost::property_tree::ptree pt;
+        pt.put_child("nations", write_nations(g_model_state.nations));
+        pt.put_child("map", write_map(g_model_state.m));
+        boost::property_tree::json_parser::write_json(ofs, pt);
+    }
+
+    MODEL_API
+    int load_model (const char* filename)
+    {
+        if (g_model_state.initialized)
+            boost::throw_exception(std::runtime_error("Attempted to load over an initialized model"));
+
+        std::ifstream ifs(filename);
+        if (!ifs)
+            return 0;
+
+        std::string file_contents;
+        std::getline(ifs, file_contents, '\0');
+
+        boost::property_tree::ptree pt = read_json(file_contents.c_str());
+        const boost::property_tree::ptree& nations_pt = pt.get_child("nations");
+        const boost::property_tree::ptree& map_pt = pt.get_child("map");
+
+        g_model_state.nations = read_nations(nations_pt);
+        g_model_state.m = read_map(map_pt, g_model_state.nations);
+
+        init_graph(
+            g_model_state.g,
+            g_model_state.hex_id_property_map,
+            g_model_state.edge_weight_map,
+            g_model_state.m.width,
+            g_model_state.m.height,
+            [] (unsigned int id1, unsigned int id2) {return true;},
+            [] (unsigned int id1, unsigned int id2) {return 1.0;}
+        );
+
+        g_model_state.initialized = true;
     }
 
     // Returns an int for each hex, containing a grid ID in the first 8 bits
@@ -1163,6 +1251,7 @@ extern "C" {
 
 }
 
+#if 0
 void test_determine_supply ()
 {
     std::ifstream ifs("model_log.txt");
@@ -1222,3 +1311,4 @@ void test_determine_supply ()
         &offmap_border_hexes[0]
     );
 }
+#endif
