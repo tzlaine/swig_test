@@ -116,14 +116,17 @@ install:
     - if [ -n "$GCC_VERSION" ]; then export CXX="g++-${GCC_VERSION}" CC="gcc-${GCC_VERSION}"; fi
     - if [ -n "$CLANG_VERSION" ]; then export CXX="clang++-${CLANG_VERSION}" CC="clang-${CLANG_VERSION}"; fi
     - if [[ "$CLANG_VERSION" == "3.4" ]]; then export CXX="/usr/local/clang-3.4/bin/clang++" CC="/usr/local/clang-3.4/bin/clang"; fi
+
     # Setup deps directory
     - export DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
     - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
     - mkdir usr
     - export PATH=${DEPS_DIR}/usr/bin:${PATH}
+
     # Install cmake
     - CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.1-Linux-x86_64.tar.gz"
     - if [[ "$LIBCXX" == "on" ]]; then travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C usr; fi
+
     # Show compiler info
     - $CXX --version
     - which $CXX
@@ -131,6 +134,7 @@ install:
     - which $CC
     - which cmake
     - cmake --version
+
     # Install libc++
     - |
       if [[ "$LIBCXX" == "on" ]]; then
@@ -153,8 +157,10 @@ install:
         export CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -I${DEPS_DIR}/usr/include/c++/v1"
         export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/usr/lib"
       fi
+
     # Show files that have been installed
     - ls -lR ${DEPS_DIR}/usr
+
     # Add warnings
     - export CXXFLAGS="${CXXFLAGS} -Wall"
 
@@ -165,11 +171,10 @@ script:
     - cd $CHECKOUT_PATH
     - if [ ! -d build ]; then mkdir build; fi
     - cd build
-    - if [[ "$CXX11" == "on" ]]; then export CXXFLAGS="${CXXFLAGS} -std=c++11"; fi
     - if [[ "$ASAN" == "on" ]]; then export CXXFLAGS="${CXXFLAGS} -fsanitize=address,undefined,integer -fno-omit-frame-pointer -fno-sanitize=unsigned-integer-overflow"; fi
     - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX_PATH ..
     - make -j2 VERBOSE=1
-    - CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=2 make -j2 check VERBOSE=1
+    - make check VERBOSE=1
     - make install
     - cd ..
     - rm -rf build/
