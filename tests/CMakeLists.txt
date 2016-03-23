@@ -1,6 +1,10 @@
 ########################################
 # Tests
 ########################################
+include(CTest)
+
+add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR})
+
 include_directories(../googletest-1.7.0/include)
 
 add_executable(
@@ -22,3 +26,5 @@ set_target_properties(
     LIBARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
+add_test(model_tests ${CMAKE_BINARY_DIR}/model-tests)
