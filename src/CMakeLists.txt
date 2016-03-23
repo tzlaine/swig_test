@@ -11,6 +11,8 @@ add_definitions(-DBOOST_NO_EXCEPTIONS)
 if (APPLE)
     # TODO: Make a universal (32- & 64-bit) bundle.
 
+    add_definitions(-Wall)
+
     set(
         CMAKE_OSX_ARCHITECTURES
         i386
@@ -23,7 +25,7 @@ if (APPLE)
         model.cpp
     )
 else ()
-    add_definitions(-DBUILD_LIBRARY)
+    add_definitions(-DBUILD_LIBRARY -Wall)
 
     add_library(
         model-plugin

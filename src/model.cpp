@@ -368,17 +368,19 @@ hex_coord_t hex_below_right (hex_coord_t hc)
 
 hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 {
-#define CASE(x) case hex_direction_t::x: return hex_##x(hc)
     switch (hd) {
+#define CASE(x) case hex_direction_t::x: return hex_##x(hc)
     CASE(above_right);
     CASE(above);
     CASE(above_left);
     CASE(below_left);
     CASE(below);
     CASE(below_right);
-    };
 #undef CASE
-    return hex_coord_t::invalid;
+    default:
+    case hex_direction_t::hex_directions:
+        return hex_coord_t::invalid;
+    };
 }
 
 
@@ -559,9 +561,9 @@ boost::optional<nation_t> read_nation (const boost::property_tree::ptree& pt, in
     retval.capital_star_points = pt.get<int>("capital_star_points");
 
     const boost::property_tree::ptree& offmap = pt.get_child("offmap");
-    const auto provinces = pt.get<int>("provinces");
-    const auto mins = pt.get<int>("mins");
-    const auto majs = pt.get<int>("majs");
+    const auto provinces = offmap.get<int>("provinces");
+    const auto mins = offmap.get<int>("mins");
+    const auto majs = offmap.get<int>("majs");
     retval.offmap = offmap_t{provinces, mins, majs};
 
     retval.offmap_survey_ships = pt.get<int>("offmap_survey_ships");
@@ -894,10 +896,10 @@ public:
         m_grid (grid),
         m_width (width),
         m_height (height),
-        m_max_offmap_border_hexes (max_offmap_border_hexes),
-        m_offmap_border_hexes (offmap_border_hexes),
         m_hexes (hexes),
         m_neutral_zone_id (neutral_zone_id),
+        m_max_offmap_border_hexes (max_offmap_border_hexes),
+        m_offmap_border_hexes (offmap_border_hexes),
         m_supply (supply),
         m_vertex_id_to_hex_id (vertex_id_to_hex_id),
         m_hex_id_to_vertex_id (hex_id_to_vertex_id),
@@ -1026,6 +1028,8 @@ int next_supply_source (int source,
 
 struct model_state_t
 {
+    model_state_t () : initialized (false) {}
+
     bool initialized;
     nations_t nations;
     map_t m;
@@ -1033,7 +1037,7 @@ struct model_state_t
     graph::hex_id_property_map hex_id_property_map;
     graph::EdgeWeightPropertyMap edge_weight_map;
 };
-model_state_t g_model_state = {false};
+model_state_t g_model_state;
 
 extern "C" {
 
@@ -1095,7 +1099,7 @@ extern "C" {
     MODEL_API
     void reset_model ()
     {
-        g_model_state = model_state_t{false};
+        g_model_state = model_state_t();
     }
 
     MODEL_API
