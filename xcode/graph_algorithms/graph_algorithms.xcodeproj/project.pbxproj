@@ -18,7 +18,7 @@
 		87478D46187E6478002BF1D2 /* graph_algorithms-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "graph_algorithms-Info.plist"; sourceTree = "<group>"; };
 		87478D48187E6478002BF1D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		87478D4A187E6478002BF1D2 /* graph_algorithms-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "graph_algorithms-Prefix.pch"; sourceTree = "<group>"; };
-		87478D50187E6596002BF1D2 /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = model.cpp; path = ../../model.cpp; sourceTree = "<group>"; };
+		87478D50187E6596002BF1D2 /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = model.cpp; path = ../../src/model.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +191,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				SYMROOT = ../../unity_project/Assets/plugins;
-				USER_HEADER_SEARCH_PATHS = /Users/tzlaine/boost_1_53_0;
+				USER_HEADER_SEARCH_PATHS = "../../boost_1_60_0 ../../include";
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -223,7 +223,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				SYMROOT = ../../unity_project/Assets/plugins;
-				USER_HEADER_SEARCH_PATHS = /Users/tzlaine/boost_1_53_0;
+				USER_HEADER_SEARCH_PATHS = "../../boost_1_60_0 ../../include";
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
