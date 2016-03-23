@@ -6,6 +6,8 @@ set(
     ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
 )
 
+add_definitions(-DBOOST_NO_EXCEPTIONS)
+
 if (APPLE)
     # TODO: Make a universal (32- & 64-bit) bundle.
 

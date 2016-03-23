@@ -1,5 +1,7 @@
 #include <model.hpp>
 
+#include <boost/container/flat_map.hpp>
+
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/breadth_first_search.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
@@ -231,40 +233,77 @@ std::ostream& operator<< (std::ostream& os, hex_coord hc)
 #endif
 
 
-struct map
+enum class feature_t {
+    none,
+    bats,
+    sb,
+    min,
+    maj,
+    capital
+};
+
+struct capital_hex_zone_t
 {
-    enum feature_ {
-        none,
-        bats,
-        sb,
-        min,
-        maj,
-        capital
-    };
+    std::string name;
+    std::vector<feature_t> features;
+};
 
-    struct hex
-    {
-        hex () :
-            coord (),
-            owner (0),
-            feature (none),
-            num_neutral_zone_borders (0),
-            neutral_zone_bordering ()
-            {}
+struct capital_hex_t
+{
+    hex_coord coord;
+    std::vector<capital_hex_zone_t> zones;
+};
 
-        hex_coord coord;
-        unsigned int owner;
-        feature_ feature;
-        unsigned int num_neutral_zone_borders;
-        unsigned int neutral_zone_bordering[3];
-    };
+struct capital_t
+{
+    std::vector<capital_hex_t> hexes;
+};
 
-    struct province
-    {
-        std::vector<unsigned int> hexes;
-    };
+struct offmap_t
+{
+    int provinces;
+    int mins;
+    int majs;
+};
 
-    map () :
+struct nation_t
+{
+    std::string short_name;
+    capital_t capital;
+    int free_strat_moves;
+    int capital_star_points;
+    offmap_t offmap;
+    int offmap_survey_ships;
+    int nation_id;
+};
+
+typedef boost::container::flat_map<std::string, nation_t> nations_t;
+
+struct hex_t
+{
+    hex_t () :
+        coord (),
+        owner (0),
+        feature (feature_t::none),
+        num_neutral_zone_borders (0),
+        neutral_zone_bordering ()
+        {}
+
+    hex_coord coord;
+    unsigned int owner;
+    feature_t feature;
+    unsigned int num_neutral_zone_borders;
+    unsigned int neutral_zone_bordering[3];
+};
+
+struct province_t
+{
+    std::vector<unsigned int> hexes;
+};
+
+struct map_t
+{
+    map_t () :
         width (0),
         height (0)
         {}
@@ -272,15 +311,12 @@ struct map
     unsigned int width;
     unsigned int height;
 
-    // TODO: Move this out into its own data file.  Contents of capital hexes
-    // should be placed there as well.
-    std::vector<std::pair<unsigned int, std::string>> nations;
-    boost::unordered_map<unsigned int, std::vector<province>> provinces; // key is owner ID
-    std::vector<hex> hexes;
+    boost::unordered_map<unsigned int, std::vector<province_t>> provinces; // key is owner ID
+    std::vector<hex_t> hexes;
 };
 
 
-enum hex_direction {
+enum class hex_direction_t {
     above_right,
     above,
     above_left,
@@ -288,6 +324,25 @@ enum hex_direction {
     below,
     below_right,
     hex_directions
+};
+
+hex_direction_t& operator++(hex_direction_t& d)
+{
+    assert(d != hex_direction_t::hex_directions);
+    const int n = static_cast<int>(hex_direction_t::hex_directions);
+    int d_int = static_cast<int>(d);
+    d_int = (d_int + 1) % n;
+    d = hex_direction_t(d_int);
+    return d;
+}
+
+static const hex_direction_t all_hex_directions[] = {
+    hex_direction_t::above_right,
+    hex_direction_t::above,
+    hex_direction_t::above_left,
+    hex_direction_t::below_left,
+    hex_direction_t::below,
+    hex_direction_t::below_right
 };
 
 
@@ -310,22 +365,23 @@ hex_coord hex_below_right (hex_coord hc)
 { return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
 
 
-hex_coord adjacent_hex_coord (hex_coord hc, hex_direction hd)
+hex_coord adjacent_hex_coord (hex_coord hc, hex_direction_t hd)
 {
-    typedef hex_coord (*fn) (hex_coord hc);
-    fn fns[6] = {
-        hex_above_right,
-        hex_above,
-        hex_above_left,
-        hex_below_left,
-        hex_below,
-        hex_below_right
+#define CASE(x) case hex_direction_t::x: return hex_##x(hc)
+    switch (hd) {
+    CASE(above_right);
+    CASE(above);
+    CASE(above_left);
+    CASE(below_left);
+    CASE(below);
+    CASE(below_right);
     };
-    return fns[hd](hc);
+#undef CASE
+    return hex_coord::invalid;
 }
 
 
-bool on_map (hex_coord hc, map m)
+bool on_map (hex_coord hc, map_t m)
 { return hc.x < m.width && hc.y < m.height; }
 
 bool on_map (hex_coord hc, unsigned int width, unsigned int height)
@@ -359,15 +415,13 @@ neighbors::iterator end (neighbors n)
 { return n.hexes.begin() + n.size; }
 
 
-neighbors adjacent_hex_coords (hex_coord hc, map m, unsigned int r = 1)
+neighbors adjacent_hex_coords (hex_coord hc, map_t m, unsigned int r = 1)
 {
     assert(r == 1 || r == 2);
     neighbors retval;
     if (on_map(hc, m)) {
         retval.hexes[retval.size++] = hc;
-        for (hex_direction d = above_right;
-             d < hex_directions;
-             d = hex_direction(d + 1)) {
+        for (hex_direction_t d : all_hex_directions) {
             hex_coord r1 = adjacent_hex_coord(hc, d);
             if (on_map(r1, m)) {
                 retval.hexes[retval.size++] = r1;
@@ -379,7 +433,9 @@ neighbors adjacent_hex_coords (hex_coord hc, map m, unsigned int r = 1)
                 }
 
                 {
-                    hex_coord r2 = adjacent_hex_coord(r1, hex_direction(d + 1));
+                    auto d2 = d;
+                    ++d2;
+                    hex_coord r2 = adjacent_hex_coord(r1, d2);
                     if (on_map(r2, m))
                         retval.hexes[retval.size++] = r2;
                 }
@@ -417,7 +473,7 @@ void init_graph (graph::graph& g,
         for (unsigned int x = 0; x < width; ++x) {
             for (unsigned int y = 0; y < height; ++y, ++i) {
                 hex_coord coord(x, y);
-                for (hex_direction d = above; d < below; d = hex_direction(d + 1)) {
+                for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, width, height)) {
                         unsigned int index = hex_index(adjacent_coord, width);
@@ -447,31 +503,35 @@ hex_coord hex_string_to_hex_coord (std::string str)
     return hex_coord(hex_x, hex_y);
 }
 
-map::feature_ feature_string_to_feature (std::string str)
+feature_t feature_string_to_feature (std::string str)
 {
-    map::feature_ retval = map::none;
+    feature_t retval = feature_t::none;
     if (str == "BATS")
-        retval = map::bats;
+        retval = feature_t::bats;
     else if (str == "SB")
-        retval = map::sb;
+        retval = feature_t::sb;
     else if (str == "MIN")
-        retval = map::min;
+        retval = feature_t::min;
     else if (str == "MAJ")
-        retval = map::maj;
+        retval = feature_t::maj;
     else if (str != "capital" && str != "none")
         boost::throw_exception(std::runtime_error("Invalid hex feature \"" + str + "\" found in map.json"));
     return retval;
 }
 
-map read_map ()
+nations_t read_nations (const std::string& nations_str)
 {
-    map retval;
+    nations_t retval;
+    // TODO
+    return retval;
+}
+
+map_t read_map (const std::string& map_str, const nations_t& nations)
+{
+    map_t retval;
 
     boost::property_tree::ptree pt;
-    {
-        std::ifstream ifs("default_map.json");
-        boost::property_tree::json_parser::read_json(ifs, pt);
-    }
+    boost::property_tree::json_parser::read_json(map_str, pt);
 
     retval.width = pt.get<unsigned int>("width");
     retval.height = pt.get<unsigned int>("height");
@@ -481,7 +541,7 @@ map read_map ()
     boost::property_tree::ptree zones = pt.get_child("zones");
     for (auto zone : zones) {
         if (zone.first == "NZ") {
-            boost::unordered_map<unsigned int, map::feature_> planets;
+            boost::unordered_map<unsigned int, feature_t> planets;
             boost::property_tree::ptree planets_ = zone.second.get_child("planets");
             for (auto planet : planets_) {
                 planets[hex_id(hex_string_to_hex_coord(planet.first))] =
@@ -493,7 +553,7 @@ map read_map ()
                 hex_coord hc = hex_string_to_hex_coord(hex.second.data());
 
                 assert(hc.x + hc.y * retval.width < retval.hexes.size());
-                map::hex& map_hex = retval.hexes[hc.x + hc.y * retval.width];
+                hex_t& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
                 if (map_hex.coord != hex_coord())
                     boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.second.data()));
@@ -503,18 +563,23 @@ map read_map ()
                 map_hex.feature = planets[hex_id(hc)];
             }
         } else {
-            unsigned int nation_id = retval.nations.size() + 1; // 0 reserved for neutral zone
-            retval.nations.push_back(std::make_pair(nation_id, zone.first));
+            auto nations_it = nations.find(zone.first);
+            if (nations_it == nations.end()) {
+                boost::throw_exception(
+                    std::runtime_error("Unknown owner nation '" + zone.first + "' encountered in map data")
+                );
+            }
+            const int nation_id = nations_it->second.nation_id;
 
             boost::property_tree::ptree provinces = zone.second.get_child("provinces");
             for (auto province : provinces) {
-                map::province map_province;
+                province_t map_province;
                 for (auto hex : province.second) {
                     hex_coord hc = hex_string_to_hex_coord(hex.first);
                     map_province.hexes.push_back(hex_id(hc));
 
                     assert(hc.x + hc.y * retval.width < retval.hexes.size());
-                    map::hex& map_hex = retval.hexes[hc.x + hc.y * retval.width];
+                    hex_t& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
                     if (map_hex.coord != hex_coord())
                         boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.first));
@@ -542,14 +607,15 @@ map read_map ()
         }
     }
 
-    // TODO: Fill in map::hex::*neutral_zone_border* values.
+    // TODO: Fill in hex_t::*neutral_zone_border* values.
 
     return retval;
 }
 
-void validate_map ()
+void validate_map (const std::string& nations_str, const std::string& map_str)
 {
-    const map m = read_map();
+    const nations_t nations = read_nations(nations_str);
+    const map_t m = read_map(map_str, nations);
     graph::graph g;
     graph::hex_id_property_map hex_id_property_map;
     graph::EdgeWeightPropertyMap edge_weight_map;
@@ -688,9 +754,7 @@ bool supply_blocked (
     } else {
         bool adjacent_enemy_ships = false;
         bool adjacent_friendly_units = false;
-        for (hex_direction d = above_right;
-             d < hex_directions;
-             d = hex_direction(d + 1)) {
+        for (hex_direction_t d : all_hex_directions) {
             hex_coord adjacent_coord = adjacent_hex_coord(hc, d);
             if (on_map(adjacent_coord, width, height)) {
                 supply_check_hex_t hex = hexes[hex_index(adjacent_coord, width)];
@@ -821,9 +885,7 @@ public:
                 }
             } else {
                 hex_coord coord(hex_id_ / 100, hex_id_ % 100);
-                for (hex_direction d = above_right;
-                     d < hex_directions;
-                     d = hex_direction(d + 1)) {
+                for (hex_direction_t d : all_hex_directions) {
                     hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
                         unsigned int hex_id_ = hex_id(adjacent_coord);
