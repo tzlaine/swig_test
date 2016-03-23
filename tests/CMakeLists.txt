@@ -27,4 +27,6 @@ set_target_properties(
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
+add_dependencies(model-tests data_header_target)
+
 add_test(model_tests ${CMAKE_BINARY_DIR}/model-tests)
