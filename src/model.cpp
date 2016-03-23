@@ -203,32 +203,32 @@ namespace graph {
 
 }
 
-struct hex_coord
+struct hex_coord_t
 {
-    hex_coord () : x (1000), y (1000) {}
-    hex_coord (unsigned int x, unsigned int y) : x (x), y (y) {}
+    hex_coord_t () : x (1000), y (1000) {}
+    hex_coord_t (unsigned int x, unsigned int y) : x (x), y (y) {}
 
     unsigned int x;
     unsigned int y;
 
-    static hex_coord invalid;
+    static hex_coord_t invalid;
 };
 
-hex_coord hex_coord::invalid;
+hex_coord_t hex_coord_t::invalid;
 
-bool operator== (hex_coord lhs, hex_coord rhs)
+bool operator== (hex_coord_t lhs, hex_coord_t rhs)
 { return lhs.x == rhs.x && lhs.y == rhs.y; }
 
-bool operator!= (hex_coord lhs, hex_coord rhs)
+bool operator!= (hex_coord_t lhs, hex_coord_t rhs)
 { return !(lhs == rhs); }
 
 #if LOG
-std::ostream& operator<< (std::ostream& os, hex_coord hc)
+std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 {
     return os << (hc.x + 1 < 10 ? "0" : "") << (hc.x + 1) << (hc.y + 1 < 10 ? "0" : "") << (hc.y + 1);
 }
 
-//std::ostream& operator<< (std::ostream& os, hex_coord hc)
+//std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 //{ return os << '(' << (hc.x + 1) << ',' << (hc.y + 1) << ')'; }
 #endif
 
@@ -250,7 +250,7 @@ struct capital_hex_zone_t
 
 struct capital_hex_t
 {
-    hex_coord coord;
+    hex_coord_t coord;
     std::vector<capital_hex_zone_t> zones;
 };
 
@@ -289,7 +289,7 @@ struct hex_t
         neutral_zone_bordering ()
         {}
 
-    hex_coord coord;
+    hex_coord_t coord;
     unsigned int owner;
     feature_t feature;
     unsigned int num_neutral_zone_borders;
@@ -346,26 +346,26 @@ static const hex_direction_t all_hex_directions[] = {
 };
 
 
-hex_coord hex_above (hex_coord hc)
-{ return hex_coord(hc.x, hc.y - 1); }
+hex_coord_t hex_above (hex_coord_t hc)
+{ return hex_coord_t(hc.x, hc.y - 1); }
 
-hex_coord hex_below (hex_coord hc)
-{ return hex_coord(hc.x, hc.y + 1); }
+hex_coord_t hex_below (hex_coord_t hc)
+{ return hex_coord_t(hc.x, hc.y + 1); }
 
-hex_coord hex_above_left (hex_coord hc)
-{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)); }
+hex_coord_t hex_above_left (hex_coord_t hc)
+{ return hex_coord_t(hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)); }
 
-hex_coord hex_below_left (hex_coord hc)
-{ return hex_coord(hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+hex_coord_t hex_below_left (hex_coord_t hc)
+{ return hex_coord_t(hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)); }
 
-hex_coord hex_above_right (hex_coord hc)
-{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)); }
+hex_coord_t hex_above_right (hex_coord_t hc)
+{ return hex_coord_t(hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)); }
 
-hex_coord hex_below_right (hex_coord hc)
-{ return hex_coord(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+hex_coord_t hex_below_right (hex_coord_t hc)
+{ return hex_coord_t(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
 
 
-hex_coord adjacent_hex_coord (hex_coord hc, hex_direction_t hd)
+hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 {
 #define CASE(x) case hex_direction_t::x: return hex_##x(hc)
     switch (hd) {
@@ -377,57 +377,57 @@ hex_coord adjacent_hex_coord (hex_coord hc, hex_direction_t hd)
     CASE(below_right);
     };
 #undef CASE
-    return hex_coord::invalid;
+    return hex_coord_t::invalid;
 }
 
 
-bool on_map (hex_coord hc, map_t m)
+bool on_map (hex_coord_t hc, map_t m)
 { return hc.x < m.width && hc.y < m.height; }
 
-bool on_map (hex_coord hc, unsigned int width, unsigned int height)
+bool on_map (hex_coord_t hc, unsigned int width, unsigned int height)
 { return hc.x < width && hc.y < height; }
 
 
-unsigned int hex_index (hex_coord hc, unsigned int width)
+unsigned int hex_index (hex_coord_t hc, unsigned int width)
 { return hc.x + hc.y * width; }
 
 
-unsigned int hex_id (hex_coord hc)
+unsigned int hex_id (hex_coord_t hc)
 { return hc.x * 100 + hc.y; }
 
 
 // Static container for hex ids within R=2 of a central hex.
-struct neighbors
+struct neighbors_t
 {
-    typedef boost::array<hex_coord, 19> data_type;
+    typedef boost::array<hex_coord_t, 19> data_type;
     typedef data_type::const_iterator iterator;
 
-    neighbors () : size (0) {}
+    neighbors_t () : size (0) {}
 
     std::size_t size;
     data_type hexes;
 };
 
-neighbors::iterator begin (neighbors n)
+neighbors_t::iterator begin (neighbors_t n)
 { return n.hexes.begin(); }
 
-neighbors::iterator end (neighbors n)
+neighbors_t::iterator end (neighbors_t n)
 { return n.hexes.begin() + n.size; }
 
 
-neighbors adjacent_hex_coords (hex_coord hc, map_t m, unsigned int r = 1)
+neighbors_t adjacent_hex_coords (hex_coord_t hc, map_t m, unsigned int r = 1)
 {
     assert(r == 1 || r == 2);
-    neighbors retval;
+    neighbors_t retval;
     if (on_map(hc, m)) {
         retval.hexes[retval.size++] = hc;
         for (hex_direction_t d : all_hex_directions) {
-            hex_coord r1 = adjacent_hex_coord(hc, d);
+            hex_coord_t r1 = adjacent_hex_coord(hc, d);
             if (on_map(r1, m)) {
                 retval.hexes[retval.size++] = r1;
 
                 {
-                    hex_coord r2 = adjacent_hex_coord(r1, d);
+                    hex_coord_t r2 = adjacent_hex_coord(r1, d);
                     if (on_map(r2, m))
                         retval.hexes[retval.size++] = r2;
                 }
@@ -435,7 +435,7 @@ neighbors adjacent_hex_coords (hex_coord hc, map_t m, unsigned int r = 1)
                 {
                     auto d2 = d;
                     ++d2;
-                    hex_coord r2 = adjacent_hex_coord(r1, d2);
+                    hex_coord_t r2 = adjacent_hex_coord(r1, d2);
                     if (on_map(r2, m))
                         retval.hexes[retval.size++] = r2;
                 }
@@ -461,7 +461,7 @@ void init_graph (graph::graph& g,
         unsigned int i = 0;
         for (unsigned int x = 0; x < width; ++x) {
             for (unsigned int y = 0; y < height; ++y, ++i) {
-                unsigned int id = hex_id(hex_coord(x, y));
+                unsigned int id = hex_id(hex_coord_t(x, y));
                 boost::add_vertex(g);
                 hex_id_property_map[i] = id;
             }
@@ -472,9 +472,9 @@ void init_graph (graph::graph& g,
         unsigned int i = 0;
         for (unsigned int x = 0; x < width; ++x) {
             for (unsigned int y = 0; y < height; ++y, ++i) {
-                hex_coord coord(x, y);
+                hex_coord_t coord(x, y);
                 for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
-                    hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
+                    hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, width, height)) {
                         unsigned int index = hex_index(adjacent_coord, width);
                         if (!make_edge(i, index))
@@ -489,7 +489,7 @@ void init_graph (graph::graph& g,
     }
 }
 
-hex_coord hex_string_to_hex_coord (std::string str)
+hex_coord_t hex_string_to_hex_coord (std::string str)
 {
     if (str[0] == '0')
         str.substr(1, -1);
@@ -500,7 +500,7 @@ hex_coord hex_string_to_hex_coord (std::string str)
     const unsigned int hex_id = boost::lexical_cast<unsigned int>(str);
     unsigned int hex_x = hex_id / 100 - 1;
     unsigned int hex_y = hex_id % 100 - 1;
-    return hex_coord(hex_x, hex_y);
+    return hex_coord_t(hex_x, hex_y);
 }
 
 feature_t feature_string_to_feature (std::string str)
@@ -550,12 +550,12 @@ map_t read_map (const std::string& map_str, const nations_t& nations)
 
             boost::property_tree::ptree hexes = zone.second.get_child("hexes");
             for (auto hex : hexes) {
-                hex_coord hc = hex_string_to_hex_coord(hex.second.data());
+                hex_coord_t hc = hex_string_to_hex_coord(hex.second.data());
 
                 assert(hc.x + hc.y * retval.width < retval.hexes.size());
                 hex_t& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
-                if (map_hex.coord != hex_coord())
+                if (map_hex.coord != hex_coord_t())
                     boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.second.data()));
 
                 map_hex.coord = hc;
@@ -575,13 +575,13 @@ map_t read_map (const std::string& map_str, const nations_t& nations)
             for (auto province : provinces) {
                 province_t map_province;
                 for (auto hex : province.second) {
-                    hex_coord hc = hex_string_to_hex_coord(hex.first);
+                    hex_coord_t hc = hex_string_to_hex_coord(hex.first);
                     map_province.hexes.push_back(hex_id(hc));
 
                     assert(hc.x + hc.y * retval.width < retval.hexes.size());
                     hex_t& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
-                    if (map_hex.coord != hex_coord())
+                    if (map_hex.coord != hex_coord_t())
                         boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.first));
 
                     map_hex.coord = hc;
@@ -597,7 +597,7 @@ map_t read_map (const std::string& map_str, const nations_t& nations)
     }
 
     for (std::size_t i = 0; i < retval.hexes.size(); ++i) {
-        if (retval.hexes[i].coord == hex_coord()) {
+        if (retval.hexes[i].coord == hex_coord_t()) {
             unsigned int hex_x = i % retval.width + 1;
             unsigned int hex_y = i / retval.width + 1;
             std::string hex_str = boost::lexical_cast<std::string>(hex_x * 100 + hex_y);
@@ -630,7 +630,7 @@ void validate_map (const std::string& nations_str, const std::string& map_str)
     );
 }
 
-int hex_coord_to_graph_id (hex_coord hc)
+int hex_coord_to_graph_id (hex_coord_t hc)
 { return (hc.x + 1) * 100 + hc.y + 1; }
 
 struct supply_data
@@ -674,7 +674,7 @@ int add_vertex (graph::graph& g,
     if (v < 0)
         std::cerr << v;
     else
-        std::cerr << hex_coord(v / 100, v % 100);
+        std::cerr << hex_coord_t(v / 100, v % 100);
     std::cerr << ") as vertex " << n << '\n';
 #endif
     boost::add_vertex(g);
@@ -708,7 +708,7 @@ void find_blocking_contents (
 }
 
 bool supply_blocked (
-    hex_coord hc,
+    hex_coord_t hc,
     int nation,
     int nations,
     const int* nation_team_membership,
@@ -755,7 +755,7 @@ bool supply_blocked (
         bool adjacent_enemy_ships = false;
         bool adjacent_friendly_units = false;
         for (hex_direction_t d : all_hex_directions) {
-            hex_coord adjacent_coord = adjacent_hex_coord(hc, d);
+            hex_coord_t adjacent_coord = adjacent_hex_coord(hc, d);
             if (on_map(adjacent_coord, width, height)) {
                 supply_check_hex_t hex = hexes[hex_index(adjacent_coord, width)];
                 bool friendly_ships = false;
@@ -866,7 +866,7 @@ public:
                     if (hex_id < 0)
                         continue;
                     if (m_hex_id_to_vertex_id.count(hex_id) ||
-                        supply_blocked(hex_coord(hex_id / 100, hex_id % 100),
+                        supply_blocked(hex_coord_t(hex_id / 100, hex_id % 100),
                                        m_nation,
                                        m_nations,
                                        m_nation_team_membership,
@@ -884,9 +884,9 @@ public:
                     boost::add_edge(v, n, g);
                 }
             } else {
-                hex_coord coord(hex_id_ / 100, hex_id_ % 100);
+                hex_coord_t coord(hex_id_ / 100, hex_id_ % 100);
                 for (hex_direction_t d : all_hex_directions) {
-                    hex_coord adjacent_coord = adjacent_hex_coord(coord, d);
+                    hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
                         unsigned int hex_id_ = hex_id(adjacent_coord);
                         if (m_hex_id_to_vertex_id.count(hex_id_) ||
@@ -936,7 +936,7 @@ public:
             if (hex_id < 0 && true /* TODO: offmap has a base/planet */) {
                 retval.first = 0;
             } else {
-                hex_coord hc(hex_id / 100, hex_id % 100);
+                hex_coord_t hc(hex_id / 100, hex_id % 100);
                 if (supply_source(m_hexes[hex_index(hc, m_width)], m_nation))
                     retval.first = 0;
             }
