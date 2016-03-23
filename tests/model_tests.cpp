@@ -1,4 +1,5 @@
 #include <model.hpp>
+#include <data.hpp>
 #include <gtest/gtest.h>
 
 
