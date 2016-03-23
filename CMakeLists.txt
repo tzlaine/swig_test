@@ -1,4 +1,4 @@
-add_subdirectory(googletest-1.7.0)
+add_subdirectory(googletest)
 
 set(boost_dir ${CMAKE_HOME_DIRECTORY}/boost_1_60_0)
 include_directories(${boost_dir})

@@ -5,7 +5,7 @@ include(CTest)
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR})
 
-include_directories(../googletest-1.7.0/include)
+include_directories(../googletest/include)
 
 add_executable(
     model-tests
