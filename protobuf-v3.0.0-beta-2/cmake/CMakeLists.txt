@@ -9,7 +9,7 @@ cmake_policy(SET CMP0022 NEW)
 
 # Options
 option(protobuf_VERBOSE "Enable for verbose output" OFF)
-option(protobuf_BUILD_TESTS "Build tests" ON)
+option(protobuf_BUILD_TESTS "Build tests" OFF)
 if (BUILD_SHARED_LIBS)
   set(protobuf_BUILD_SHARED_LIBS_DEFAULT ON)
 else (BUILD_SHARED_LIBS)
