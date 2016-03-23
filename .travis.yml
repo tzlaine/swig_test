@@ -45,6 +45,17 @@ matrix:
           addons: *clang37
 
         # Gcc
+        - env: GCC_VERSION=5 BUILD_TYPE=Debug ASAN=off LIBCXX=off
+          os: linux
+          compiler: gcc-5
+          addons: &gcc5
+            apt:
+              packages:
+                - g++-5
+                - valgrind
+              sources:
+                - ubuntu-toolchain-r-test
+
         - env: GCC_VERSION=4.9 BUILD_TYPE=Debug ASAN=off LIBCXX=off
           os: linux
           compiler: gcc-4.9
@@ -66,7 +77,6 @@ matrix:
                 - valgrind
               sources:
                 - ubuntu-toolchain-r-test
-
 
         - env: GCC_VERSION=4.7 BUILD_TYPE=Debug ASAN=off LIBCXX=off
           os: linux
