@@ -959,19 +959,19 @@ int next_supply_source (int source,
 
 extern "C" {
 
-    GRAPH_ALGO_API
+    MODEL_API
     int test (int i)
     {
         return i + 42;
     }
 
-    GRAPH_ALGO_API
+    MODEL_API
     float test_2 (int n, float floats[])
     {
         return 6;
     }
 
-    GRAPH_ALGO_API
+    MODEL_API
     float test_3 (int n, ga_hex_t* hexes)
     {
         float retval = 0;
@@ -989,7 +989,7 @@ extern "C" {
     // the hex's owner to supply ships in this hex (meaning the hex is in a
     // partial supply grid, and does not include a free-supply feature like a
     // SB, BATS, or planet).
-    GRAPH_ALGO_API
+    MODEL_API
     int* determine_supply (int w, int h,
                            supply_check_hex_t hexes[],
                            int neutral_zone_id,

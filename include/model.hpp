@@ -1,9 +1,9 @@
 #pragma once
 
 #if defined(BUILD_LIBRARY) && defined(_MSC_VER)
-#define GRAPH_ALGO_API __declspec(dllexport)
+#define MODEL_API __declspec(dllexport)
 #else
-#define GRAPH_ALGO_API
+#define MODEL_API
 #endif
 
 extern "C" {
@@ -31,13 +31,13 @@ extern "C" {
         float b;
     };
 
-    GRAPH_ALGO_API
+    MODEL_API
     int test (int i);
 
-    GRAPH_ALGO_API
+    MODEL_API
     float test_2 (int n, float floats[]);
 
-    GRAPH_ALGO_API
+    MODEL_API
     float test_3 (int n, ga_hex_t* hexes);
 
     // Returns an int for each hex, containing a grid ID in the first 8 bits
@@ -48,7 +48,7 @@ extern "C" {
     // the hex's owner to supply ships in this hex (meaning the hex is in a
     // partial supply grid, and does not include a free-supply feature like a
     // SB, BATS, or planet).
-    GRAPH_ALGO_API
+    MODEL_API
     int* determine_supply (
         int w, int h,
         supply_check_hex_t hexes[],
