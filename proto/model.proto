@@ -3,12 +3,6 @@ syntax = "proto3";
 package message;
 
 
-message hex_coord_t
-{
-    uint32 x = 1;
-    uint32 y = 2;
-}
-
 enum feature_t {
     none = 0;
     bats = 1;
@@ -16,6 +10,12 @@ enum feature_t {
     min = 3;
     maj = 4;
     capital = 5;
+}
+
+message hex_coord_t
+{
+    uint32 x = 1;
+    uint32 y = 2;
 }
 
 message capital_hex_zone_t
