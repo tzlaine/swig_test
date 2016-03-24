@@ -707,7 +707,7 @@ struct supply_data
     std::vector<int> supply;
 } g_supply_data;
 
-bool neutral (supply_check_hex_t h, unsigned int nz_id)
+bool neutral (supply_check_hex_t h, int nz_id)
 { return h.owner_id == nz_id; }
 
 bool supply_point (supply_check_hex_t h, int nation)
