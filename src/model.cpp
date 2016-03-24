@@ -4,16 +4,18 @@
 
 #include <boost/container/flat_map.hpp>
 
+#include <boost/exception/diagnostic_information.hpp>
+
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/breadth_first_search.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/filtered_graph.hpp>
 #include <boost/graph/johnson_all_pairs_shortest.hpp>
 
+#include <boost/lexical_cast.hpp>
+
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
-#include <boost/lexical_cast.hpp>
 
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -32,17 +34,12 @@
 #endif
 
 
-#ifdef BOOST_NO_EXCEPTIONS
-#include <boost/exception/diagnostic_information.hpp>
-namespace boost {
-    void throw_exception (std::exception const & e)
-    {
-        // TODO: Send up to Unity app?
-        std::cerr << boost::diagnostic_information(e);
-        std::abort();
+#define CATCH_AND_RETURN(value)                         \
+    catch (std::exception const & e) {                  \
+        /* TODO: Send up to Unity app? */               \
+        std::cerr << boost::diagnostic_information(e);  \
+        return value;                                   \
     }
-}
-#endif
 
 namespace pb = google::protobuf;
 
@@ -1058,29 +1055,31 @@ model_state_t g_model_state;
 extern "C" {
 
     MODEL_API
-    int test (int i)
+    int test (int i) try
     {
         return i + 42;
-    }
+    } CATCH_AND_RETURN(0);
 
     MODEL_API
-    float test_2 (int n, float floats[])
+    float test_2 (int n, float floats[]) try
     {
         return 6;
-    }
+
+    } CATCH_AND_RETURN(0.0f);
 
     MODEL_API
-    float test_3 (int n, ga_hex_t* hexes)
+    float test_3 (int n, ga_hex_t* hexes) try
     {
         float retval = 0;
         for (int i = 0; i < n; ++i) {
             retval += hexes[i].a + hexes[i].b;
         }
         return retval;
-    }
+
+    } CATCH_AND_RETURN(0.0f);
 
     MODEL_API
-    void init_model (const char* nations_str, const char* map_str, const char* oob_str)
+    void init_model (const char* nations_str, const char* map_str, const char* oob_str) try
     {
         if (g_model_state.initialized)
             boost::throw_exception(std::runtime_error("Attempted to duplicate-initialize model"));
@@ -1112,16 +1111,18 @@ extern "C" {
         );
 
         g_model_state.initialized = true;
-    }
+
+    } CATCH_AND_RETURN(/*void*/);
 
     MODEL_API
-    void reset_model ()
+    void reset_model () try
     {
         g_model_state = model_state_t();
-    }
+
+    } CATCH_AND_RETURN(/*void*/);
 
     MODEL_API
-    int save_model (const char* filename)
+    int save_model (const char* filename) try
     {
         if (!g_model_state.initialized)
             boost::throw_exception(std::runtime_error("Attempted to save an uninitialized model"));
@@ -1137,10 +1138,11 @@ extern "C" {
 
         pb::io::OstreamOutputStream os(&ofs);
         return static_cast<int>(pb::TextFormat::Print(model, &os));
-    }
+
+    } CATCH_AND_RETURN(0);
 
     MODEL_API
-    int load_model (const char* filename)
+    int load_model (const char* filename) try
     {
         if (g_model_state.initialized)
             boost::throw_exception(std::runtime_error("Attempted to load over an initialized model"));
@@ -1179,7 +1181,8 @@ extern "C" {
         g_model_state.initialized = true;
 
         return 1;
-    }
+
+    } CATCH_AND_RETURN(0);
 
     // Returns an int for each hex, containing a grid ID in the first 8 bits
     // (0 is no grid, 1 is main capital grid, 2 is main offmap grid, anything
@@ -1197,7 +1200,7 @@ extern "C" {
                            int nation_team_membership[],
                            int capitals[],
                            int max_offmap_border_hexes,
-                           int offmap_border_hexes[])
+                           int offmap_border_hexes[]) try
     {
         g_supply_data.supply.resize(w * h);
 
@@ -1359,7 +1362,8 @@ extern "C" {
         }
 
         return &g_supply_data.supply[0];
-    }
+
+    } CATCH_AND_RETURN(nullptr);
 
 }
 

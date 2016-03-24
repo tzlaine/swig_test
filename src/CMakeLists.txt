@@ -6,8 +6,6 @@ set(
     ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
 )
 
-add_definitions(-DBOOST_NO_EXCEPTIONS)
-
 generate_protobuf(model model_message_target)
 
 if (APPLE)
