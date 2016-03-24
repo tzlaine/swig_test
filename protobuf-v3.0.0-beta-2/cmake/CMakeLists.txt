@@ -148,4 +148,4 @@ if (protobuf_BUILD_TESTS)
   include(tests.cmake)
 endif (protobuf_BUILD_TESTS)
 
-include(install.cmake)
+#include(install.cmake)
