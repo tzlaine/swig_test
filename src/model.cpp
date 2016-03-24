@@ -1,5 +1,7 @@
 #include <model.hpp>
 
+#include <model.pb.h>
+
 #include <boost/container/flat_map.hpp>
 
 #include <boost/graph/adjacency_list.hpp>
@@ -12,6 +14,9 @@
 #include <boost/property_tree/json_parser.hpp>
 
 #include <boost/lexical_cast.hpp>
+
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/io/zero_copy_stream_impl.h>
 
 #include <fstream>
 #include <iostream>
@@ -38,6 +43,8 @@ namespace boost {
     }
 }
 #endif
+
+namespace pb = google::protobuf;
 
 namespace {
 
@@ -223,6 +230,52 @@ bool operator== (hex_coord_t lhs, hex_coord_t rhs)
 bool operator!= (hex_coord_t lhs, hex_coord_t rhs)
 { return !(lhs == rhs); }
 
+#define CHECK_FIELD(msg, T, name)                                       \
+    if (msg.name() == std::decay<decltype(msg.name())>::type())         \
+        boost::throw_exception(std::runtime_error(#T " missing " #name))
+#define GET_FIELD(msg, retval, T, name) retval.name = msg.name()
+#define GET_AND_CHECK_FIELD(msg, retval, T, name)                       \
+    CHECK_FIELD(msg, T, name);                                          \
+    retval.name = msg.name()
+
+#define CHECK_REPEATED(msg, T, name)                                    \
+    if (!msg.name##_size())                                             \
+        boost::throw_exception(std::runtime_error(#T " missing " #name))
+#define GET_AND_CHECK_REPEATED_XFORM(msg, retval, T, name, ProtobufT, ModelT) \
+    CHECK_REPEATED(msg, T, name);                                       \
+    retval.name.resize(msg.name##_size());                              \
+    std::transform(                                                     \
+        msg.name().cbegin(), msg.name().cend(),                         \
+        retval.name.begin(),                                            \
+        [](ProtobufT x) { return static_cast<ModelT>(x); }              \
+    )
+
+#define SET_FIELD(value, retval, T, name) retval.set_##name(value.name)
+
+#define SET_REPEATED_XFORM(value, retval, T, name, ProtobufT, ModelT)   \
+    retval.mutable_name()->resize(value.name.size(), ProtobufT());      \
+    std::transform(                                                     \
+        value.name.begin(), value.name.end(),                           \
+        retval.mutable_name()->begin(),                                 \
+        [](ModelT x) { return static_cast<ProtobufT>(x); }              \
+    )
+
+hex_coord_t FromProtobuf (const message::hex_coord_t& msg)
+{
+    hex_coord_t retval;
+    GET_AND_CHECK_FIELD(msg, retval, hex_coord_t, x);
+    GET_AND_CHECK_FIELD(msg, retval, hex_coord_t, y);
+    return retval;
+}
+
+message::hex_coord_t ToProtobuf (const hex_coord_t& value)
+{
+    message::hex_coord_t retval;
+    SET_FIELD(value, retval, hex_coord_t, x);
+    SET_FIELD(value, retval, hex_coord_t, y);
+    return retval;
+}
+
 #if LOG
 std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 {
@@ -249,11 +302,43 @@ struct capital_hex_zone_t
     std::vector<feature_t> features;
 };
 
+capital_hex_zone_t FromProtobuf (const message::capital_hex_zone_t& msg)
+{
+    capital_hex_zone_t retval;
+    GET_AND_CHECK_FIELD(msg, retval, capital_hex_zone_t, name);
+    GET_AND_CHECK_REPEATED_XFORM(msg, retval, capital_hex_zone_t, features, int, feature_t);
+    return retval;
+}
+
+message::capital_hex_zone_t ToProtobuf (const capital_hex_zone_t& value)
+{
+    message::capital_hex_zone_t retval;
+    SET_FIELD(value, retval, capital_hex_zone_t, name);
+    SET_REPEATED_XFORM(value, retval, capital_hex_zone_t, features, int, feature_t);
+    return retval;
+}
+
 struct capital_hex_t
 {
     hex_coord_t coord;
     std::vector<capital_hex_zone_t> zones;
 };
+
+capital_hex_t FromProtobuf (const message::capital_hex_t& msg)
+{
+    capital_hex_t retval;
+    retval.coord = FromProtobuf(msg.coord());
+//    GET_AND_CHECK_REPEATED_XFORM(msg, retval, capital_hex_t, features, int, feature_t);
+    return retval;
+}
+
+message::capital_hex_t ToProtobuf (const capital_hex_t& value)
+{
+    message::capital_hex_t retval;
+    *retval.mutable_coord() = ToProtobuf(value.coord);
+//    SET_REPEATED_XFORM(value, retval, capital_hex_t, features, int, feature_t);
+    return retval;
+}
 
 struct capital_t
 {
@@ -522,97 +607,27 @@ feature_t feature_string_to_feature (std::string str)
     return retval;
 }
 
-boost::property_tree::ptree read_json (const char* str)
-{
-    boost::property_tree::ptree pt;
-    boost::property_tree::json_parser::read_json(str, pt);
-    return pt;
-}
-
-#if 0
-struct capital_hex_zone_t
-{
-    std::string name;
-    std::vector<feature_t> features;
-};
-
-struct capital_hex_t
-{
-    hex_coord_t coord;
-    std::vector<capital_hex_zone_t> zones;
-};
-
-struct capital_t
-{
-    std::vector<capital_hex_t> hexes;
-};
-#endif
-
-boost::optional<nation_t> read_nation (const boost::property_tree::ptree& pt, int nation_id)
-{
-    nation_t retval;
-
-    retval.short_name = pt.get_child("short_name").data();
-
-    const boost::property_tree::ptree& capital = pt.get_child("capital");
-    // TODO
-
-    retval.free_strat_moves = pt.get<int>("free_strat_moves");
-    retval.capital_star_points = pt.get<int>("capital_star_points");
-
-    const boost::property_tree::ptree& offmap = pt.get_child("offmap");
-    const auto provinces = offmap.get<int>("provinces");
-    const auto mins = offmap.get<int>("mins");
-    const auto majs = offmap.get<int>("majs");
-    retval.offmap = offmap_t{provinces, mins, majs};
-
-    retval.offmap_survey_ships = pt.get<int>("offmap_survey_ships");
-
-    // Exists in saved data, but not in source data.
-    const auto nation_id_from_pt = pt.get_optional<int>("nation_id");
-    if (nation_id_from_pt)
-        retval.nation_id = *nation_id_from_pt;
-    else
-        retval.nation_id = nation_id;
-
-    return retval;
-}
-
-boost::optional<nations_t> read_nations (const boost::property_tree::ptree& pt)
+nations_t FromProtobuf (const message::nations_t& nations_msg)
 {
     nations_t retval;
 
-    int nation_id = 0;
-    for (const auto& nation_ : pt) {
-        const auto nation = read_nation(nation_.second, ++nation_id);
-        if (!nation || retval.count(nation_.first))
-            return boost::optional<nations_t>{};
-        retval[nation_.first] = std::move(*nation);
-    }
+    // TODO
 
     return retval;
 }
 
-boost::property_tree::ptree write_nation (const nation_t& nation)
+message::nations_t ToProtobuf (const nations_t& nations)
 {
-    boost::property_tree::ptree retval;
+    message::nations_t retval;
     // TODO
     return retval;
 }
 
-boost::property_tree::ptree write_nations (const nations_t& nations)
-{
-    boost::property_tree::ptree retval;
-    for (const auto& nation : nations) {
-        retval.put_child(nation.first, write_nation(nation.second));
-    }
-    return retval;
-}
-
-boost::optional<map_t> read_map (const boost::property_tree::ptree& pt, const nations_t& nations)
+map_t FromProtobuf (const message::map_t& map_msg, const nations_t& nations)
 {
     map_t retval;
 
+#if 0
     retval.width = pt.get<unsigned int>("width");
     retval.height = pt.get<unsigned int>("height");
 
@@ -688,13 +703,14 @@ boost::optional<map_t> read_map (const boost::property_tree::ptree& pt, const na
     }
 
     // TODO: Fill in hex_t::*neutral_zone_border* values.
+#endif
 
     return retval;
 }
 
-boost::property_tree::ptree write_map (const map_t& m)
+message::map_t ToProtobuf (const map_t& m)
 {
-    boost::property_tree::ptree retval;
+    message::map_t retval;
     // TODO
     return retval;
 }
@@ -1070,17 +1086,19 @@ extern "C" {
             boost::throw_exception(std::runtime_error("Attempted to duplicate-initialize model"));
 
         {
-            const auto nations = read_nations(read_json(nations_str));
-            if (!nations)
-                boost::throw_exception(std::runtime_error("Unable to read nations JSON data"));
-            g_model_state.nations = *nations;
+            message::nations_t nations_msg;
+            pb::io::ArrayInputStream is(nations_str, strlen(nations_str));
+            if (!pb::TextFormat::Parse(&is, &nations_msg))
+                boost::throw_exception(std::runtime_error("Missing saved nations data"));
+            g_model_state.nations = FromProtobuf(nations_msg);
         }
 
         {
-            const auto m = read_map(read_json(map_str), g_model_state.nations);
-            if (!m)
-                boost::throw_exception(std::runtime_error("Unable to read map JSON data"));
-            g_model_state.m = *m;
+            message::map_t map_msg;
+            pb::io::ArrayInputStream is(map_str, strlen(map_str));
+            if (!pb::TextFormat::Parse(&is, &map_msg))
+                boost::throw_exception(std::runtime_error("Missing saved map data"));
+            g_model_state.m = FromProtobuf(map_msg, g_model_state.nations);
         }
 
         init_graph(
@@ -1112,12 +1130,13 @@ extern "C" {
         if (!ofs)
             return 0;
 
-        boost::property_tree::ptree pt;
-        pt.put_child("nations", write_nations(g_model_state.nations));
-        pt.put_child("map", write_map(g_model_state.m));
-        boost::property_tree::json_parser::write_json(ofs, pt);
+        message::model_t model;
 
-        return 1;
+        *model.mutable_nations() = ToProtobuf(g_model_state.nations);
+        *model.mutable_map() = ToProtobuf(g_model_state.m);
+
+        pb::io::OstreamOutputStream os(&ofs);
+        return static_cast<int>(pb::TextFormat::Print(model, &os));
     }
 
     MODEL_API
@@ -1130,25 +1149,21 @@ extern "C" {
         if (!ifs)
             return 0;
 
-        std::string file_contents;
-        std::getline(ifs, file_contents, '\0');
-
-        boost::property_tree::ptree pt = read_json(file_contents.c_str());
-        const boost::property_tree::ptree& nations_pt = pt.get_child("nations");
-        const boost::property_tree::ptree& map_pt = pt.get_child("map");
+        message::model_t model;
+        pb::io::IstreamInputStream is(&ifs);
+        if (!pb::TextFormat::Parse(&is, &model))
+            return 0;
 
         {
-            const auto nations = read_nations(nations_pt);
-            if (!nations)
-                boost::throw_exception(std::runtime_error("Unable to read saved nations data"));
-            g_model_state.nations = *nations;
+            if (!model.has_nations())
+                boost::throw_exception(std::runtime_error("Missing saved nations data"));
+            g_model_state.nations = FromProtobuf(model.nations());
         }
 
         {
-            const auto m = read_map(map_pt, g_model_state.nations);
-            if (!m)
-                boost::throw_exception(std::runtime_error("Unable to read saved map data"));
-            g_model_state.m = *m;
+            if (!model.has_map())
+                boost::throw_exception(std::runtime_error("Missing saved map data"));
+            g_model_state.m = FromProtobuf(model.map(), g_model_state.nations);
         }
 
         init_graph(

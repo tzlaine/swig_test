@@ -83,3 +83,9 @@ message map_t
     map<uint32, province_list_t> provinces = 3;
     repeated hex_t hexes = 4;
 }
+
+message model_t
+{
+    nations_t nations = 1;
+    map_t map = 2;
+}
