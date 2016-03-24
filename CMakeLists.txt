@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.0)
+
 if (APPLE)
     set(CMAKE_OSX_ARCHITECTURES i386 x86_64)
 endif ()
