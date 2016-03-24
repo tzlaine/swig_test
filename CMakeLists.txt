@@ -5,6 +5,10 @@ if (APPLE)
 endif ()
 
 add_subdirectory(googletest)
+
+if (UNIX AND NOT APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif ()
 add_subdirectory(protobuf-v3.0.0-beta-2/cmake)
 
 set(boost_dir ${CMAKE_HOME_DIRECTORY}/boost_1_60_0)
