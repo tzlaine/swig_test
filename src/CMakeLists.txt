@@ -15,6 +15,7 @@ if (APPLE)
         model_plugin
         MODULE
         model.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/model_data.cpp
         ${CMAKE_BINARY_DIR}/model.pb.cc
     )
 
@@ -38,6 +39,7 @@ else ()
         model_plugin
         SHARED
         model.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/model_data.cpp
         ${CMAKE_BINARY_DIR}/model.pb.cc
     )
 
@@ -61,3 +63,6 @@ target_link_libraries(
 )
 
 add_dependencies(model_plugin model_message_target)
+if (PYTHON_EXECUTABLE)
+    add_dependencies(model_plugin model_data_target)
+endif ()

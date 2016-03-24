@@ -13,27 +13,31 @@ include_directories(
 )
 
 add_executable(
-    model-tests
-    ../src/model.cpp
+    model_tests
+    ${CMAKE_HOME_DIRECTORY}/src/model.cpp
+    ${CMAKE_HOME_DIRECTORY}/src/model_data.cpp
     ${CMAKE_BINARY_DIR}/model.pb.cc
     model_tests.cpp
 )
 
 target_link_libraries(
-    model-tests
+    model_tests
     libprotobuf
     gtest
     gtest_main
 )
 
 set_target_properties(
-    model-tests
+    model_tests
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     LIBARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-add_dependencies(model-tests data_header_target model_test_message_target)
+add_dependencies(model_tests data_header_target model_test_message_target)
+if (PYTHON_EXECUTABLE)
+    add_dependencies(model_tests model_data_target)
+endif ()
 
-add_test(model_tests ${CMAKE_BINARY_DIR}/model-tests)
+add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests)

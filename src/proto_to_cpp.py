@@ -120,7 +120,7 @@ message::{0} ToProtobuf (const {0}& value);
 args.cpp_file.write('''
 // WARNING: Generated code.
 
-#include <{}>
+#include "{}"
 
 '''.format(os.path.basename(args.hpp_file.name)))
 

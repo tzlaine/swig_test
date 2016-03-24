@@ -33,7 +33,7 @@ add_custom_command(
         ${CMAKE_HOME_DIRECTORY}/default_oob.json
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/data.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
-    COMMENT "Create data header."
+    COMMENT "Create JSON data header."
     VERBATIM
 )
 add_custom_target(data_header_target DEPENDS data.hpp)
@@ -67,6 +67,37 @@ macro(generate_protobuf file_root target)
             GENERATED true
     )
 endmacro()
+
+find_package(PythonInterp)
+if (PYTHON_EXECUTABLE)
+    add_custom_command(
+        OUTPUT
+            ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+            ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+        COMMAND
+            ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/proto_to_cpp.py
+                --in-file ${CMAKE_SOURCE_DIR}/proto/model.proto
+                --hpp-file ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+                --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+        DEPENDS
+            ${CMAKE_SOURCE_DIR}/src/proto_to_cpp.py
+            ${CMAKE_SOURCE_DIR}/proto/model.proto
+        COMMENT "Create model data header."
+        VERBATIM
+    )
+    add_custom_target(
+        model_data_target
+        DEPENDS
+            ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+            ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+    )
+    set_source_files_properties(
+        ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+        ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+        PROPERTIES
+            GENERATED true
+    )
+endif ()
 
 include_directories(
     include

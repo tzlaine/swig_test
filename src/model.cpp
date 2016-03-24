@@ -1,6 +1,5 @@
 #include <model.hpp>
-
-#include <model.pb.h>
+#include "model_data.hpp"
 
 #include <boost/container/flat_map.hpp>
 
@@ -208,70 +207,13 @@ namespace graph {
 
 }
 
-struct hex_coord_t
-{
-    hex_coord_t () : x (1000), y (1000) {}
-    hex_coord_t (unsigned int x, unsigned int y) : x (x), y (y) {}
-
-    unsigned int x;
-    unsigned int y;
-
-    static hex_coord_t invalid;
-};
-
-hex_coord_t hex_coord_t::invalid;
+hex_coord_t invalid_hex_coord{1000, 1000};
 
 bool operator== (hex_coord_t lhs, hex_coord_t rhs)
 { return lhs.x == rhs.x && lhs.y == rhs.y; }
 
 bool operator!= (hex_coord_t lhs, hex_coord_t rhs)
 { return !(lhs == rhs); }
-
-#define CHECK_FIELD(msg, T, name)                                       \
-    if (msg.name() == std::decay<decltype(msg.name())>::type())         \
-        boost::throw_exception(std::runtime_error(#T " missing " #name))
-#define GET_FIELD(msg, retval, T, name) retval.name = msg.name()
-#define GET_AND_CHECK_FIELD(msg, retval, T, name)                       \
-    CHECK_FIELD(msg, T, name);                                          \
-    retval.name = msg.name()
-
-#define CHECK_REPEATED(msg, T, name)                                    \
-    if (!msg.name##_size())                                             \
-        boost::throw_exception(std::runtime_error(#T " missing " #name))
-#define GET_AND_CHECK_REPEATED_XFORM(msg, retval, T, name, ProtobufT, ModelT) \
-    CHECK_REPEATED(msg, T, name);                                       \
-    retval.name.resize(msg.name##_size());                              \
-    std::transform(                                                     \
-        msg.name().cbegin(), msg.name().cend(),                         \
-        retval.name.begin(),                                            \
-        [](ProtobufT x) { return static_cast<ModelT>(x); }              \
-    )
-
-#define SET_FIELD(value, retval, T, name) retval.set_##name(value.name)
-
-#define SET_REPEATED_XFORM(value, retval, T, name, ProtobufT, ModelT)   \
-    retval.mutable_name()->resize(value.name.size(), ProtobufT());      \
-    std::transform(                                                     \
-        value.name.begin(), value.name.end(),                           \
-        retval.mutable_name()->begin(),                                 \
-        [](ModelT x) { return static_cast<ProtobufT>(x); }              \
-    )
-
-hex_coord_t FromProtobuf (const message::hex_coord_t& msg)
-{
-    hex_coord_t retval;
-    GET_AND_CHECK_FIELD(msg, retval, hex_coord_t, x);
-    GET_AND_CHECK_FIELD(msg, retval, hex_coord_t, y);
-    return retval;
-}
-
-message::hex_coord_t ToProtobuf (const hex_coord_t& value)
-{
-    message::hex_coord_t retval;
-    SET_FIELD(value, retval, hex_coord_t, x);
-    SET_FIELD(value, retval, hex_coord_t, y);
-    return retval;
-}
 
 #if LOG
 std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
@@ -282,122 +224,6 @@ std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 //std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 //{ return os << '(' << (hc.x + 1) << ',' << (hc.y + 1) << ')'; }
 #endif
-
-
-enum class feature_t {
-    none,
-    bats,
-    sb,
-    min,
-    maj,
-    capital
-};
-
-struct capital_hex_zone_t
-{
-    std::string name;
-    std::vector<feature_t> features;
-};
-
-capital_hex_zone_t FromProtobuf (const message::capital_hex_zone_t& msg)
-{
-    capital_hex_zone_t retval;
-    GET_AND_CHECK_FIELD(msg, retval, capital_hex_zone_t, name);
-    GET_AND_CHECK_REPEATED_XFORM(msg, retval, capital_hex_zone_t, features, int, feature_t);
-    return retval;
-}
-
-message::capital_hex_zone_t ToProtobuf (const capital_hex_zone_t& value)
-{
-    message::capital_hex_zone_t retval;
-    SET_FIELD(value, retval, capital_hex_zone_t, name);
-    SET_REPEATED_XFORM(value, retval, capital_hex_zone_t, features, int, feature_t);
-    return retval;
-}
-
-struct capital_hex_t
-{
-    hex_coord_t coord;
-    std::vector<capital_hex_zone_t> zones;
-};
-
-capital_hex_t FromProtobuf (const message::capital_hex_t& msg)
-{
-    capital_hex_t retval;
-    retval.coord = FromProtobuf(msg.coord());
-//    GET_AND_CHECK_REPEATED_XFORM(msg, retval, capital_hex_t, features, int, feature_t);
-    return retval;
-}
-
-message::capital_hex_t ToProtobuf (const capital_hex_t& value)
-{
-    message::capital_hex_t retval;
-    *retval.mutable_coord() = ToProtobuf(value.coord);
-//    SET_REPEATED_XFORM(value, retval, capital_hex_t, features, int, feature_t);
-    return retval;
-}
-
-struct capital_t
-{
-    std::vector<capital_hex_t> hexes;
-};
-
-struct offmap_t
-{
-    int provinces;
-    int mins;
-    int majs;
-};
-
-struct nation_t
-{
-    std::string short_name;
-    capital_t capital;
-    int free_strat_moves;
-    int capital_star_points;
-    offmap_t offmap;
-    int offmap_survey_ships;
-    int nation_id;
-};
-
-typedef boost::container::flat_map<std::string, nation_t> nations_t;
-
-struct hex_t
-{
-    hex_t () :
-        coord (),
-        owner (0),
-        feature (feature_t::none),
-        num_neutral_zone_borders (0),
-        neutral_zone_bordering ()
-        {}
-
-    hex_coord_t coord;
-    unsigned int owner;
-    feature_t feature;
-    unsigned int num_neutral_zone_borders;
-    unsigned int neutral_zone_bordering[3];
-};
-
-struct province_t
-{
-    std::vector<unsigned int> hexes;
-};
-
-struct map_t
-{
-    map_t () :
-        width (0),
-        height (0)
-        {}
-
-    unsigned int width;
-    unsigned int height;
-
-    boost::unordered_map<unsigned int, std::vector<province_t>> provinces; // key is owner ID
-    std::vector<hex_t> hexes;
-};
-
 
 enum class hex_direction_t {
     above_right,
@@ -430,22 +256,22 @@ static const hex_direction_t all_hex_directions[] = {
 
 
 hex_coord_t hex_above (hex_coord_t hc)
-{ return hex_coord_t(hc.x, hc.y - 1); }
+{ return hex_coord_t{hc.x, hc.y - 1}; }
 
 hex_coord_t hex_below (hex_coord_t hc)
-{ return hex_coord_t(hc.x, hc.y + 1); }
+{ return hex_coord_t{hc.x, hc.y + 1}; }
 
 hex_coord_t hex_above_left (hex_coord_t hc)
-{ return hex_coord_t(hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)); }
+{ return hex_coord_t{hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)}; }
 
 hex_coord_t hex_below_left (hex_coord_t hc)
-{ return hex_coord_t(hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+{ return hex_coord_t{hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)}; }
 
 hex_coord_t hex_above_right (hex_coord_t hc)
-{ return hex_coord_t(hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)); }
+{ return hex_coord_t{hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)}; }
 
 hex_coord_t hex_below_right (hex_coord_t hc)
-{ return hex_coord_t(hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)); }
+{ return hex_coord_t{hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)}; }
 
 
 hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
@@ -461,7 +287,7 @@ hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 #undef CASE
     default:
     case hex_direction_t::hex_directions:
-        return hex_coord_t::invalid;
+        return invalid_hex_coord;
     };
 }
 
@@ -469,15 +295,15 @@ hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 bool on_map (hex_coord_t hc, map_t m)
 { return hc.x < m.width && hc.y < m.height; }
 
-bool on_map (hex_coord_t hc, unsigned int width, unsigned int height)
+bool on_map (hex_coord_t hc, int width, int height)
 { return hc.x < width && hc.y < height; }
 
 
-unsigned int hex_index (hex_coord_t hc, unsigned int width)
+int hex_index (hex_coord_t hc, int width)
 { return hc.x + hc.y * width; }
 
 
-unsigned int hex_id (hex_coord_t hc)
+int hex_id (hex_coord_t hc)
 { return hc.x * 100 + hc.y; }
 
 
@@ -500,7 +326,7 @@ neighbors_t::iterator end (neighbors_t n)
 { return n.hexes.begin() + n.size; }
 
 
-neighbors_t adjacent_hex_coords (hex_coord_t hc, map_t m, unsigned int r = 1)
+neighbors_t adjacent_hex_coords (hex_coord_t hc, map_t m, int r = 1)
 {
     assert(r == 1 || r == 2);
     neighbors_t retval;
@@ -534,8 +360,8 @@ template <typename EdgeFn, typename WeightFn>
 void init_graph (graph::graph& g,
                  graph::hex_id_property_map& hex_id_property_map,
                  graph::EdgeWeightPropertyMap& edge_weight_map,
-                 unsigned int width,
-                 unsigned int height,
+                 int width,
+                 int height,
                  EdgeFn make_edge,
                  WeightFn weight)
 {
@@ -543,10 +369,10 @@ void init_graph (graph::graph& g,
     edge_weight_map = boost::get(boost::edge_weight, g);
 
     {
-        unsigned int i = 0;
-        for (unsigned int x = 0; x < width; ++x) {
-            for (unsigned int y = 0; y < height; ++y, ++i) {
-                unsigned int id = hex_id(hex_coord_t(x, y));
+        int i = 0;
+        for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; ++y, ++i) {
+                int id = hex_id(hex_coord_t{x, y});
                 boost::add_vertex(g);
                 hex_id_property_map[i] = id;
             }
@@ -554,14 +380,14 @@ void init_graph (graph::graph& g,
     }
 
     {
-        unsigned int i = 0;
-        for (unsigned int x = 0; x < width; ++x) {
-            for (unsigned int y = 0; y < height; ++y, ++i) {
-                hex_coord_t coord(x, y);
+        int i = 0;
+        for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; ++y, ++i) {
+                hex_coord_t coord{x, y};
                 for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
                     hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, width, height)) {
-                        unsigned int index = hex_index(adjacent_coord, width);
+                        int index = hex_index(adjacent_coord, width);
                         if (!make_edge(i, index))
                             continue;
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
@@ -582,10 +408,10 @@ hex_coord_t hex_string_to_hex_coord (std::string str)
         str.substr(1, -1);
     if (str[0] == '0')
         str.substr(1, -1);
-    const unsigned int hex_id = boost::lexical_cast<unsigned int>(str);
-    unsigned int hex_x = hex_id / 100 - 1;
-    unsigned int hex_y = hex_id % 100 - 1;
-    return hex_coord_t(hex_x, hex_y);
+    const int hex_id = boost::lexical_cast<int>(str);
+    int hex_x = hex_id / 100 - 1;
+    int hex_y = hex_id % 100 - 1;
+    return hex_coord_t{hex_x, hex_y};
 }
 
 feature_t feature_string_to_feature (std::string str)
@@ -604,36 +430,22 @@ feature_t feature_string_to_feature (std::string str)
     return retval;
 }
 
-nations_t FromProtobuf (const message::nations_t& nations_msg)
-{
-    nations_t retval;
 
-    // TODO
-
-    return retval;
-}
-
-message::nations_t ToProtobuf (const nations_t& nations)
-{
-    message::nations_t retval;
-    // TODO
-    return retval;
-}
-
+#if 0 // Resurect as a validation function.
 map_t FromProtobuf (const message::map_t& map_msg, const nations_t& nations)
 {
     map_t retval;
 
 #if 0
-    retval.width = pt.get<unsigned int>("width");
-    retval.height = pt.get<unsigned int>("height");
+    retval.width = pt.get<int>("width");
+    retval.height = pt.get<int>("height");
 
     retval.hexes.resize(retval.width * retval.height);
 
     const boost::property_tree::ptree& zones = pt.get_child("zones");
     for (const auto& zone : zones) {
         if (zone.first == "NZ") {
-            boost::unordered_map<unsigned int, feature_t> planets;
+            boost::unordered_map<int, feature_t> planets;
             const boost::property_tree::ptree& planets_ = zone.second.get_child("planets");
             for (const auto& planet : planets_) {
                 planets[hex_id(hex_string_to_hex_coord(planet.first))] =
@@ -647,7 +459,7 @@ map_t FromProtobuf (const message::map_t& map_msg, const nations_t& nations)
                 assert(hc.x + hc.y * retval.width < retval.hexes.size());
                 hex_t& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
-                if (map_hex.coord != hex_coord_t())
+                if (map_hex.coord != invalid_hex_coord)
                     boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.second.data()));
 
                 map_hex.coord = hc;
@@ -673,7 +485,7 @@ map_t FromProtobuf (const message::map_t& map_msg, const nations_t& nations)
                     assert(hc.x + hc.y * retval.width < retval.hexes.size());
                     hex_t& map_hex = retval.hexes[hc.x + hc.y * retval.width];
 
-                    if (map_hex.coord != hex_coord_t())
+                    if (map_hex.coord != invalid_hex_coord)
                         boost::throw_exception(std::runtime_error("Duplicate definition of hex " + hex.first));
 
                     map_hex.coord = hc;
@@ -689,9 +501,9 @@ map_t FromProtobuf (const message::map_t& map_msg, const nations_t& nations)
     }
 
     for (std::size_t i = 0; i < retval.hexes.size(); ++i) {
-        if (retval.hexes[i].coord == hex_coord_t()) {
-            unsigned int hex_x = i % retval.width + 1;
-            unsigned int hex_y = i / retval.width + 1;
+        if (retval.hexes[i].coord == invalid_hex_coord) {
+            int hex_x = i % retval.width + 1;
+            int hex_y = i / retval.width + 1;
             std::string hex_str = boost::lexical_cast<std::string>(hex_x * 100 + hex_y);
             if (hex_str.size() == 3u)
                 hex_str = '0' + hex_str;
@@ -704,13 +516,7 @@ map_t FromProtobuf (const message::map_t& map_msg, const nations_t& nations)
 
     return retval;
 }
-
-message::map_t ToProtobuf (const map_t& m)
-{
-    message::map_t retval;
-    // TODO
-    return retval;
-}
+#endif
 
 int hex_coord_to_graph_id (hex_coord_t hc)
 { return (hc.x + 1) * 100 + hc.y + 1; }
@@ -756,7 +562,7 @@ int add_vertex (graph::graph& g,
     if (v < 0)
         std::cerr << v;
     else
-        std::cerr << hex_coord_t(v / 100, v % 100);
+        std::cerr << hex_coord_t{v / 100, v % 100};
     std::cerr << ") as vertex " << n << '\n';
 #endif
     boost::add_vertex(g);
@@ -948,7 +754,7 @@ public:
                     if (hex_id < 0)
                         continue;
                     if (m_hex_id_to_vertex_id.count(hex_id) ||
-                        supply_blocked(hex_coord_t(hex_id / 100, hex_id % 100),
+                        supply_blocked(hex_coord_t{hex_id / 100, hex_id % 100},
                                        m_nation,
                                        m_nations,
                                        m_nation_team_membership,
@@ -966,11 +772,11 @@ public:
                     boost::add_edge(v, n, g);
                 }
             } else {
-                hex_coord_t coord(hex_id_ / 100, hex_id_ % 100);
+                hex_coord_t coord{hex_id_ / 100, hex_id_ % 100};
                 for (hex_direction_t d : all_hex_directions) {
                     hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, m_width, m_height)) {
-                        unsigned int hex_id_ = hex_id(adjacent_coord);
+                        int hex_id_ = hex_id(adjacent_coord);
                         if (m_hex_id_to_vertex_id.count(hex_id_) ||
                             supply_blocked(adjacent_coord,
                                            m_nation,
@@ -1018,7 +824,7 @@ public:
             if (hex_id < 0 && true /* TODO: offmap has a base/planet */) {
                 retval.first = 0;
             } else {
-                hex_coord_t hc(hex_id / 100, hex_id % 100);
+                hex_coord_t hc{hex_id / 100, hex_id % 100};
                 if (supply_source(m_hexes[hex_index(hc, m_width)], m_nation))
                     retval.first = 0;
             }
@@ -1090,6 +896,7 @@ extern "C" {
             if (!pb::TextFormat::Parse(&is, &nations_msg))
                 boost::throw_exception(std::runtime_error("Missing saved nations data"));
             g_model_state.nations = FromProtobuf(nations_msg);
+            // TODO: Validate and fill in nation_ids.
         }
 
         {
@@ -1097,8 +904,11 @@ extern "C" {
             pb::io::ArrayInputStream is(map_str, strlen(map_str));
             if (!pb::TextFormat::Parse(&is, &map_msg))
                 boost::throw_exception(std::runtime_error("Missing saved map data"));
-            g_model_state.m = FromProtobuf(map_msg, g_model_state.nations);
+            g_model_state.m = FromProtobuf(map_msg);
+            // TODO: Validate and fill in nation_ids.
         }
+
+        // TODO: OOB.
 
         init_graph(
             g_model_state.g,
@@ -1106,8 +916,8 @@ extern "C" {
             g_model_state.edge_weight_map,
             g_model_state.m.width,
             g_model_state.m.height,
-            [] (unsigned int id1, unsigned int id2) {return true;},
-            [] (unsigned int id1, unsigned int id2) {return 1.0;}
+            [] (int id1, int id2) {return true;},
+            [] (int id1, int id2) {return 1.0;}
         );
 
         g_model_state.initialized = true;
@@ -1165,7 +975,7 @@ extern "C" {
         {
             if (!model.has_map())
                 boost::throw_exception(std::runtime_error("Missing saved map data"));
-            g_model_state.m = FromProtobuf(model.map(), g_model_state.nations);
+            g_model_state.m = FromProtobuf(model.map());
         }
 
         init_graph(
@@ -1174,8 +984,8 @@ extern "C" {
             g_model_state.edge_weight_map,
             g_model_state.m.width,
             g_model_state.m.height,
-            [] (unsigned int id1, unsigned int id2) {return true;},
-            [] (unsigned int id1, unsigned int id2) {return 1.0;}
+            [] (int id1, int id2) {return true;},
+            [] (int id1, int id2) {return 1.0;}
         );
 
         g_model_state.initialized = true;
