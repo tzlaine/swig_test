@@ -4,11 +4,11 @@ script: cmake
 matrix:
     include:
         # OSX
-        - env: BUILD_TYPE=Debug ASAN=off LIBCXX=off
+        - env: BUILD_TYPE=Debug ASAN=off LIBCXX=off OSX=true
           os: osx
           compiler: clang
 
-        - env: BUILD_TYPE=Release ASAN=off LIBCXX=off
+        - env: BUILD_TYPE=Release ASAN=off LIBCXX=off OSX=true
           os: osx
           compiler: clang
 
@@ -103,7 +103,7 @@ install:
 
     # Install cmake
     - CMAKE_URL="http://www.cmake.org/files/v3.3/cmake-3.3.1-Linux-x86_64.tar.gz"
-    - if [[ "$LIBCXX" == "on" ]]; then travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C usr; fi
+    - if [[ "$OSX" != "true" ]]; then travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C usr; fi
 
     # Show compiler info
     - $CXX --version
