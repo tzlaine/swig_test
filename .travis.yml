@@ -13,7 +13,8 @@ matrix:
           compiler: clang
 
         # Clang
-        - env: CLANG_VERSION=3.5 BUILD_TYPE=Debug ASAN=on LIBCXX=off
+        # Turned off ASAN, due to an error found in Protobuf v3 beta 2
+        - env: CLANG_VERSION=3.5 BUILD_TYPE=Debug ASAN=off LIBCXX=off
           os: linux
           compiler: clang-3.5
           addons: &clang35
