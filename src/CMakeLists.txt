@@ -8,21 +8,18 @@ set(
 
 add_definitions(-DBOOST_NO_EXCEPTIONS)
 
+generate_protobuf(model model_message_target)
+
 if (APPLE)
     # TODO: Make a universal (32- & 64-bit) bundle.
 
     add_definitions(-Wall)
 
-    set(
-        CMAKE_OSX_ARCHITECTURES
-        i386
-        x86_64
-    )
-
     add_library(
         model-plugin
         MODULE
         model.cpp
+        ${CMAKE_BINARY_DIR}/model.pb.cc
     )
 else ()
     add_definitions(-DBUILD_LIBRARY -Wall)
@@ -31,6 +28,7 @@ else ()
         model-plugin
         SHARED
         model.cpp
+        ${CMAKE_BINARY_DIR}/model.pb.cc
     )
 
     if (CMAKE_SIZEOF_VOID_P EQUAL 4)
@@ -44,5 +42,12 @@ else ()
         ${model_plugin_path}/${arch_dir}
     )
 endif ()
+
+target_link_libraries(
+    model-plugin
+    libprotobuf
+)
+
+add_dependencies(model-plugin model_message_target)
 
 install(TARGETS model-plugin DESTINATION ${model_plugin_path})
