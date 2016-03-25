@@ -1,1506 +1,1533 @@
-{
-    "width": 61,
-    "height": 19,
+width: 61,
+height: 19,
+ 
+nz_planets: 2214
+nz_planets: 3415
+nz_planets: 3912
+nz_planets: 4309
+nz_planets: 5109
+nz_planets: 5403
 
-    "zones": {
-        "FED": {
-            "provinces": [
-                {
-                    "2003": "none",
-                    "2103": "BATS",
-                    "2104": "none",
-                    "2202": "none",
-                    "2203": "none",
-                    "2303": "none"
-                },
-                {
-                    "2004": "BATS",
-                    "2005": "none",
-                    "2006": "BATS",
-                    "2105": "none",
-                    "2106": "MIN",
-                    "2107": "none"
-                },
-                {
-                    "2007": "none",
-                    "2008": "BATS",
-                    "2009": "none",
-                    "2108": "none",
-                    "2109": "none",
-                    "2110": "none"
-                },
-                {
-                    "2010": "BATS",
-                    "2011": "none",
-                    "2012": "BATS",
-                    "2111": "none",
-                    "2112": "none",
-                    "2113": "none"
-                },
-                {
-                    "2201": "BATS",
-                    "2301": "none",
-                    "2302": "none"
-                },
-                {
-                    "2204": "SB",
-                    "2205": "none",
-                    "2206": "none",
-                    "2305": "none",
-                    "2306": "MAJ",
-                    "2307": "none"
-                },
-                {
-                    "2207": "none",
-                    "2208": "none",
-                    "2209": "none",
-                    "2308": "BATS",
-                    "2309": "none",
-                    "2310": "none"
-                },
-                {
-                    "2210": "none",
-                    "2211": "SB",
-                    "2311": "none",
-                    "2312": "none",
-                    "2411": "none",
-                    "2412": "none"
-                },
-                {
-                    "2212": "none",
-                    "2213": "BATS",
-                    "2313": "none",
-                    "2314": "none",
-                    "2413": "none",
-                    "2414": "BATS"
-                },
-                {
-                    "2401": "none",
-                    "2402": "none",
-                    "2501": "none",
-                    "2502": "none",
-                    "2503": "none"
-                },
-                {
-                    "2304": "none",
-                    "2403": "MIN",
-                    "2404": "none",
-                    "2504": "none",
-                    "2505": "MIN"
-                },
-                {
-                    "2405": "none",
-                    "2406": "none",
-                    "2407": "none",
-                    "2506": "none",
-                    "2507": "none",
-                    "2508": "none"
-                },
-                {
-                    "2408": "none",
-                    "2409": "none",
-                    "2410": "none",
-                    "2509": "MIN",
-                    "2510": "none",
-                    "2511": "none"
-                },
-                {
-                    "2601": "none",
-                    "2602": "none",
-                    "2701": "none",
-                    "2702": "none",
-                    "2703": "none"
-                },
-                {
-                    "2603": "BATS",
-                    "2604": "none",
-                    "2605": "none",
-                    "2704": "none",
-                    "2705": "MIN",
-                    "2706": "none"
-                },
-                {
-                    "2606": "BATS",
-                    "2607": "none",
-                    "2608": "none",
-                    "2707": "none",
-                    "2708": "MAJ",
-                    "2709": "none"
-                },
-                {
-                    "2609": "BATS",
-                    "2610": "MIN",
-                    "2611": "none",
-                    "2710": "none",
-                    "2711": "none",
-                    "2712": "none"
-                },
-                {
-                    "2512": "none",
-                    "2513": "none",
-                    "2612": "BATS",
-                    "2613": "none",
-                    "2713": "none",
-                    "2714": "none"
-                },
-                {
-                    "2514": "none",
-                    "2515": "none",
-                    "2614": "none",
-                    "2615": "BATS",
-                    "2715": "MIN",
-                    "2716": "none"
-                },
-                {
-                    "2801": "none",
-                    "2802": "none",
-                    "2901": "SB",
-                    "2902": "none",
-                    "3001": "none",
-                    "3002": "none"
-                },
-                {
-                    "2803": "none",
-                    "2804": "none",
-                    "2903": "none",
-                    "2904": "none",
-                    "3003": "none",
-                    "3004": "none"
-                },
-                {
-                    "2805": "none",
-                    "2806": "none",
-                    "2905": "BATS",
-                    "2906": "none",
-                    "3005": "MIN",
-                    "3006": "none"
-                },
-                {
-                    "2807": "none",
-                    "2808": "SB",
-                    "2907": "SB",
-                    "2908": "capital",
-                    "3007": "none",
-                    "3008": "SB"
-                },
-                {
-                    "2809": "none",
-                    "2810": "none",
-                    "2909": "none",
-                    "2910": "none",
-                    "3009": "none",
-                    "3010": "none"
-                },
-                {
-                    "2811": "MIN",
-                    "2812": "MAJ",
-                    "2911": "BATS",
-                    "2912": "none",
-                    "2913": "none",
-                    "3011": "none",
-                    "3012": "none"
-                },
-                {
-                    "2813": "none",
-                    "2814": "none",
-                    "2914": "none",
-                    "2915": "SB",
-                    "3013": "none",
-                    "3014": "none"
-                },
-                {
-                    "2815": "none",
-                    "2816": "BATS",
-                    "2916": "none",
-                    "3015": "none",
-                    "3016": "BATS"
-                },
-                {
-                    "3101": "none",
-                    "3102": "none",
-                    "3103": "none",
-                    "3201": "none",
-                    "3202": "none"
-                },
-                {
-                    "3104": "none",
-                    "3105": "none",
-                    "3106": "none",
-                    "3203": "BATS",
-                    "3204": "none",
-                    "3205": "none"
-                },
-                {
-                    "3107": "none",
-                    "3108": "none",
-                    "3109": "none",
-                    "3206": "BATS",
-                    "3207": "none",
-                    "3208": "none"
-                },
-                {
-                    "3110": "none",
-                    "3111": "none",
-                    "3112": "none",
-                    "3209": "BATS",
-                    "3210": "MIN",
-                    "3211": "none"
-                },
-                {
-                    "3113": "none",
-                    "3114": "none",
-                    "3212": "BATS",
-                    "3213": "none",
-                    "3312": "none",
-                    "3313": "none"
-                },
-                {
-                    "3115": "none",
-                    "3116": "none",
-                    "3214": "none",
-                    "3215": "BATS",
-                    "3314": "none",
-                    "3315": "none"
-                },
-                {
-                    "3301": "none",
-                    "3302": "none",
-                    "3303": "none",
-                    "3401": "none",
-                    "3402": "none"
-                },
-                {
-                    "3304": "none",
-                    "3305": "none",
-                    "3403": "none",
-                    "3404": "none",
-                    "3504": "none"
-                },
-                {
-                    "3306": "MAJ",
-                    "3307": "none",
-                    "3308": "none",
-                    "3405": "none",
-                    "3406": "none",
-                    "3407": "none"
-                },
-                {
-                    "3309": "none",
-                    "3310": "none",
-                    "3311": "none",
-                    "3408": "none",
-                    "3409": "none",
-                    "3410": "none"
-                },
-                {
-                    "3501": "none",
-                    "3502": "none",
-                    "3601": "BATS"
-                },
-                {
-                    "3505": "none",
-                    "3506": "none",
-                    "3507": "none",
-                    "3604": "SB",
-                    "3605": "none",
-                    "3606": "none"
-                },
-                {
-                    "3508": "BATS",
-                    "3509": "MAJ",
-                    "3510": "none",
-                    "3607": "none",
-                    "3608": "none",
-                    "3609": "none"
-                },
-                {
-                    "3411": "none",
-                    "3412": "none",
-                    "3511": "none",
-                    "3512": "none",
-                    "3610": "none",
-                    "3611": "SB"
-                },
-                {
-                    "3413": "none",
-                    "3414": "BATS",
-                    "3513": "none",
-                    "3514": "none",
-                    "3612": "MIN",
-                    "3613": "BATS"
-                },
-                {
-                    "3503": "none",
-                    "3602": "none",
-                    "3603": "none",
-                    "3703": "BATS",
-                    "3704": "none",
-                    "3803": "none"
-                },
-                {
-                    "3705": "none",
-                    "3706": "MIN",
-                    "3707": "none",
-                    "3804": "BATS",
-                    "3805": "none",
-                    "3806": "BATS"
-                },
-                {
-                    "3708": "none",
-                    "3709": "none",
-                    "3710": "none",
-                    "3807": "none",
-                    "3808": "BATS",
-                    "3809": "none"
-                },
-                {
-                    "3711": "MIN",
-                    "3712": "none",
-                    "3713": "none",
-                    "3810": "BATS",
-                    "3811": "none",
-                    "3812": "BATS"
-                }
-            ],
-            "offmap area": {
-                "name": "Federation\nSurvey Area",
-                "features": ["SB"],
-                "counter hex": "3000",
-                "adjacent hexes": [
-                    "2701", "2801", "2901", "3001", "3101"
-                ]
-            }
-        },
-        "GOR": {
-            "provinces": [
-                {
-                    "3801": "BATS",
-                    "3901": "none",
-                    "3902": "none"
-                },
-                {
-                    "4001": "MIN",
-                    "4002": "BATS",
-                    "4003": "none",
-                    "4101": "none",
-                    "4102": "none",
-                    "4103": "none"
-                },
-                {
-                    "4004": "BATS",
-                    "4005": "none",
-                    "4006": "BATS",
-                    "4104": "none",
-                    "4105": "none",
-                    "4106": "none"
-                },
-                {
-                    "4007": "none",
-                    "4008": "BATS",
-                    "4107": "none",
-                    "4108": "none",
-                    "4207": "none",
-                    "4208": "BATS"
-                },
-                {
-                    "4201": "none",
-                    "4202": "none",
-                    "4203": "BATS",
-                    "4301": "none",
-                    "4302": "none",
-                    "4303": "none"
-                },
-                {
-                    "4204": "none",
-                    "4205": "none",
-                    "4206": "SB",
-                    "4304": "none",
-                    "4305": "none",
-                    "4306": "none"
-                },
-                {
-                    "4401": "none",
-                    "4501": "none",
-                    "4502": "none"
-                },
-                {
-                    "4402": "capital",
-                    "4403": "capital",
-                    "4503": "capital"
-                },
-                {
-                    "4404": "none",
-                    "4405": "none",
-                    "4406": "none",
-                    "4504": "none",
-                    "4505": "none",
-                    "4506": "BATS"
-                },
-                {
-                    "4307": "none",
-                    "4308": "none",
-                    "4407": "none",
-                    "4408": "BATS",
-                    "4507": "none",
-                    "4508": "none"
-                },
-                {
-                    "4601": "none",
-                    "4602": "none",
-                    "4701": "none",
-                    "4702": "MIN",
-                    "4801": "none",
-                    "4802": "none"
-                },
-                {
-                    "4603": "none",
-                    "4604": "none",
-                    "4703": "none",
-                    "4704": "none",
-                    "4803": "none",
-                    "4804": "none"
-                },
-                {
-                    "4605": "none",
-                    "4606": "none",
-                    "4705": "MIN",
-                    "4706": "none",
-                    "4805": "none",
-                    "4806": "SB"
-                },
-                {
-                    "4607": "none",
-                    "4608": "BATS",
-                    "4707": "none",
-                    "4708": "none",
-                    "4807": "none",
-                    "4808": "BATS"
-                },
-                {
-                    "4901": "none",
-                    "4902": "none",
-                    "4903": "MIN",
-                    "4904": "BATS",
-                    "5001": "none",
-                    "5002": "none",
-                    "5003": "none"
-                },
-                {
-                    "4905": "none",
-                    "5004": "MIN",
-                    "5005": "none",
-                    "5104": "none",
-                    "5105": "BATS",
-                    "5204": "none"
-                },
-                {
-                    "4906": "none",
-                    "4907": "none",
-                    "4908": "none",
-                    "5006": "BATS",
-                    "5007": "none",
-                    "5008": "BATS"
-                },
-                {
-                    "5101": "none",
-                    "5102": "none",
-                    "5103": "none",
-                    "5201": "BATS",
-                    "5202": "none",
-                    "5203": "BATS"
-                }
-            ],
-            "offmap area": {
-                "name": "Gorn Trusteeship Zone",
-                "features": ["SB"],
-                "counter hex": "4400",
-                "adjacent hexes": [
-                    "4101", "4201", "4301", "4401", "4501", "4601",
-                    "4701", "4801", "4901", "5001", "5101"
-                ]
-            }
-        },
-        "HYD": {
-            "provinces": [
-                {
-                    "0114": "BATS",
-                    "0115": "none",
-                    "0116": "none",
-                    "0214": "none",
-                    "0215": "SB",
-                    "0315": "BATS"
-                },
-                {
-                    "0117": "none",
-                    "0216": "none",
-                    "0217": "none",
-                    "0316": "none",
-                    "0317": "none",
-                    "0416": "MIN"
-                },
-                {
-                    "0118": "none",
-                    "0119": "none",
-                    "0218": "none",
-                    "0219": "none",
-                    "0318": "BATS",
-                    "0319": "none"
-                },
-                {
-                    "0415": "none",
-                    "0515": "BATS",
-                    "0516": "none",
-                    "0614": "none",
-                    "0615": "none"
-                },
-                {
-                    "0417": "none",
-                    "0418": "none",
-                    "0419": "none",
-                    "0517": "none",
-                    "0518": "none",
-                    "0519": "MIN",
-                    "0617": "capital"
-                },
-                {
-                    "0714": "BATS",
-                    "0715": "none",
-                    "0814": "none",
-                    "0815": "none",
-                    "0915": "BATS",
-                    "0916": "none"
-                },
-                {
-                    "0616": "none",
-                    "0716": "SB",
-                    "0717": "none",
-                    "0816": "none",
-                    "0817": "none"
-                },
-                {
-                    "0618": "none",
-                    "0619": "none",
-                    "0718": "MAJ",
-                    "0719": "none",
-                    "0818": "none",
-                    "0819": "none"
-                },
-                {
-                    "0917": "none",
-                    "0918": "none",
-                    "0919": "none",
-                    "1017": "SB",
-                    "1018": "none",
-                    "1019": "none"
-                },
-                {
-                    "1015": "none",
-                    "1016": "none",
-                    "1116": "BATS",
-                    "1117": "none",
-                    "1216": "none"
-                },
-                {
-                    "1118": "none",
-                    "1119": "none",
-                    "1217": "BATS",
-                    "1218": "none",
-                    "1219": "BATS"
-                }
-            ],
-            "offmap area": {
-                "name": "Old Cols.",
-                "features": ["SB"],
-                "counter hex": "0018",
-                "adjacent hexes": [
-                    "0117", "0118", "0119"
-                ]
-            }
-        },
-        "ISC": {
-            "provinces": [
-                {
-                    "5206": "BATS",
-                    "5207": "none",
-                    "5208": "BATS",
-                    "5306": "none",
-                    "5307": "none",
-                    "5308": "none"
-                },
-                {
-                    "5209": "none",
-                    "5210": "none",
-                    "5309": "none",
-                    "5310": "none",
-                    "5311": "none"
-                },
-                {
-                    "5211": "BATS",
-                    "5212": "none",
-                    "5213": "BATS",
-                    "5312": "none",
-                    "5313": "none",
-                    "5314": "none"
-                },
-                {
-                    "5405": "BATS",
-                    "5406": "none",
-                    "5505": "none",
-                    "5506": "none",
-                    "5604": "BATS",
-                    "5605": "none"
-                },
-                {
-                    "5407": "none",
-                    "5408": "none",
-                    "5507": "MIN",
-                    "5508": "SB",
-                    "5606": "none",
-                    "5607": "none"
-                },
-                {
-                    "5409": "none",
-                    "5410": "none",
-                    "5509": "none",
-                    "5510": "MIN",
-                    "5511": "none"
-                },
-                {
-                    "5411": "none",
-                    "5412": "none",
-                    "5512": "SB",
-                    "5513": "none",
-                    "5612": "none",
-                    "5613": "none"
-                },
-                {
-                    "5413": "none",
-                    "5414": "BATS",
-                    "5514": "none",
-                    "5515": "none",
-                    "5614": "none",
-                    "5615": "BATS"
-                },
-                {
-                    "5704": "none",
-                    "5705": "none",
-                    "5803": "BATS",
-                    "5804": "none",
-                    "5903": "none",
-                    "5904": "none"
-                },
-                {
-                    "5706": "none",
-                    "5707": "none",
-                    "5805": "none",
-                    "5806": "none",
-                    "5905": "none",
-                    "5906": "SB"
-                },
-                {
-                    "5608": "none",
-                    "5609": "none",
-                    "5708": "none",
-                    "5709": "none",
-                    "5807": "none",
-                    "5808": "BATS"
-                },
-                {
-                    "5710": "BATS",
-                    "5809": "none",
-                    "5810": "MAJ",
-                    "5909": "none",
-                    "5910": "capital",
-                    "5911": "none"
-                },
-                {
-                    "5610": "none",
-                    "5611": "none",
-                    "5711": "none",
-                    "5712": "none",
-                    "5811": "BATS",
-                    "5812": "none"
-                },
-                {
-                    "5713": "none",
-                    "5714": "none",
-                    "5813": "none",
-                    "5814": "none",
-                    "5914": "SB",
-                    "5915": "none"
-                },
-                {
-                    "5715": "none",
-                    "5716": "none",
-                    "5815": "none",
-                    "5816": "BATS",
-                    "5916": "none",
-                    "5917": "none"
-                },
+nz_hexes: 113, nz_hexes: 213, nz_hexes: 314, nz_hexes: 414, nz_hexes: 514, nz_hexes: 613, nz_hexes: 713, nz_hexes: 813,
+nz_hexes: 914, nz_hexes: 1014, nz_hexes: 1115, nz_hexes: 1215, nz_hexes: 1316, nz_hexes: 1317, nz_hexes: 1318, nz_hexes: 1319,
+nz_hexes: 601, nz_hexes: 602, nz_hexes: 603, nz_hexes: 704, nz_hexes: 805, nz_hexes: 806, nz_hexes: 807, nz_hexes: 808, nz_hexes: 909, nz_hexes: 910, nz_hexes: 911, nz_hexes: 912, nz_hexes: 913,
+nz_hexes: 905, nz_hexes: 1005, nz_hexes: 1106, nz_hexes: 1206, nz_hexes: 1306, nz_hexes: 1406, nz_hexes: 1506, nz_hexes: 1606, nz_hexes: 1706, nz_hexes: 1806,
+nz_hexes: 2101, nz_hexes: 2102, nz_hexes: 2002, nz_hexes: 1903, nz_hexes: 1904, nz_hexes: 1905, nz_hexes: 1906, nz_hexes: 1907, nz_hexes: 1908, nz_hexes: 1909, nz_hexes: 1910, nz_hexes: 1911, nz_hexes: 1912, nz_hexes: 1913,
+nz_hexes: 2013, nz_hexes: 2114, nz_hexes: 2214, nz_hexes: 2315, nz_hexes: 2415, nz_hexes: 2516, nz_hexes: 2616, nz_hexes: 2717, nz_hexes: 2817, nz_hexes: 2917, nz_hexes: 2718, nz_hexes: 2617, nz_hexes: 2618, nz_hexes: 2619,
+nz_hexes: 3017, nz_hexes: 3117, nz_hexes: 3118, nz_hexes: 3216, nz_hexes: 3217, nz_hexes: 3218, nz_hexes: 3219, nz_hexes: 3316, nz_hexes: 3415, nz_hexes: 3515, nz_hexes: 3614, nz_hexes: 3714, nz_hexes: 3813,
+nz_hexes: 3701, nz_hexes: 3702, nz_hexes: 3802, nz_hexes: 3903, nz_hexes: 3904, nz_hexes: 3905, nz_hexes: 3906, nz_hexes: 3907, nz_hexes: 3908, nz_hexes: 3909, nz_hexes: 3910, nz_hexes: 3911, nz_hexes: 3912, nz_hexes: 3913,
+nz_hexes: 4009, nz_hexes: 4109, nz_hexes: 4209, nz_hexes: 4309, nz_hexes: 4409, nz_hexes: 4509, nz_hexes: 4609, nz_hexes: 4709, nz_hexes: 4809, nz_hexes: 4909, nz_hexes: 5009,
+nz_hexes: 5106, nz_hexes: 5107, nz_hexes: 5108, nz_hexes: 5109, nz_hexes: 5110, nz_hexes: 5111, nz_hexes: 5112, nz_hexes: 5113, nz_hexes: 5114, nz_hexes: 5214, nz_hexes: 5315, nz_hexes: 5415, nz_hexes: 5516, nz_hexes: 5616, nz_hexes: 5717, nz_hexes: 5817,
+nz_hexes: 5918, nz_hexes: 5919, nz_hexes: 6017, nz_hexes: 6018, nz_hexes: 6019, nz_hexes: 6117, nz_hexes: 6118, nz_hexes: 6119,
+nz_hexes: 5205, nz_hexes: 5305, nz_hexes: 5304, nz_hexes: 5303, nz_hexes: 5302, nz_hexes: 5301, nz_hexes: 5404, nz_hexes: 5403, nz_hexes: 5402, nz_hexes: 5401, nz_hexes: 5504, nz_hexes: 5503, nz_hexes: 5502, nz_hexes: 5501,
+nz_hexes: 5603, nz_hexes: 5602, nz_hexes: 5601, nz_hexes: 5703, nz_hexes: 5702, nz_hexes: 5701, nz_hexes: 5802, nz_hexes: 5801, nz_hexes: 5902, nz_hexes: 5901, nz_hexes: 6002, nz_hexes: 6001, nz_hexes: 6103, nz_hexes: 6102, nz_hexes: 6101
 
-                {
-                    "6003": "BATS",
-                    "6004": "none",
-                    "6104": "none",
-                    "6105": "none"
-                },
-                {
-                    "6005": "none",
-                    "6006": "none",
-                    "6106": "none",
-                    "6107": "none"
-                },
-                {
-                    "5907": "none",
-                    "5908": "MAJ",
-                    "6007": "none",
-                    "6008": "BATS",
-                    "6108": "none",
-                    "6109": "none"
-                },
-                {
-                    "6009": "none",
-                    "6010": "none",
-                    "6110": "BATS"
-                },
-                {
-                    "5912": "none",
-                    "5913": "none",
-                    "6011": "BATS",
-                    "6012": "none",
-                    "6111": "MIN",
-                    "6112": "none"
-                },
-                {
-                    "6013": "none",
-                    "6014": "none",
-                    "6113": "none",
-                    "6114": "none"
-                },
-                {
-                    "6015": "none",
-                    "6016": "BATS",
-                    "6115": "none",
-                    "6116": "none"
-                }
-            ],
-            "offmap area": {
-                "name": "ISC Distant Zone",
-                "features": ["SB", "SB"],
-                "counter hex": "6210",
-                "adjacent hexes": [
-                    "6104", "6105", "6106", "6107", "6108", "6109",
-                    "6110", "6111", "6112", "6113", "6114", "6115"
-                ]
-            }
+starting_national_holdings: {
+    key: "FED",
+    value: {
+        provinces: {
+            hexes: { hex: 2003 },
+            hexes: { hex: 2103, feature: bats },
+            hexes: { hex: 2104 },
+            hexes: { hex: 2202 },
+            hexes: { hex: 2203 },
+            hexes: { hex: 2303 }
         },
-        "KLI": {
-            "provinces": [
-                {
-                    "0906": "BATS",
-                    "0907": "none",
-                    "0908": "BATS",
-                    "1006": "none",
-                    "1007": "none"
-                },
-                {
-                    "1008": "none",
-                    "1009": "BATS",
-                    "1010": "MIN",
-                    "1109": "none",
-                    "1110": "none"
-                },
-                {
-                    "1011": "BATS",
-                    "1012": "none",
-                    "1111": "none",
-                    "1112": "MAJ",
-                    "1211": "none"
-                },
-                {
-                    "1013": "BATS",
-                    "1113": "none",
-                    "1114": "none",
-                    "1213": "none",
-                    "1214": "BATS"
-                },
-                {
-                    "1107": "BATS",
-                    "1108": "none",
-                    "1207": "none",
-                    "1208": "none",
-                    "1307": "BATS",
-                    "1308": "none"
-                },
-                {
-                    "1209": "BATS",
-                    "1210": "MIN",
-                    "1309": "none",
-                    "1310": "none",
-                    "1311": "none"
-                },
-                {
-                    "1212": "none",
-                    "1312": "MIN",
-                    "1313": "none",
-                    "1412": "none",
-                    "1413": "none"
-                },
-                {
-                    "1314": "none",
-                    "1315": "none",
-                    "1414": "none",
-                    "1415": "BATS",
-                    "1515": "none"
-                },
-                {
-                    "1416": "none",
-                    "1417": "BATS",
-                    "1516": "none",
-                    "1517": "none",
-                    "1616": "none",
-                    "1617": "none"
-                },
-                {
-                    "1418": "none",
-                    "1419": "BATS",
-                    "1518": "none",
-                    "1519": "none",
-                    "1618": "BATS",
-                    "1619": "none"
-                },
-                {
-                    "1407": "MIN",
-                    "1507": "BATS",
-                    "1508": "none",
-                    "1607": "none",
-                    "1608": "none"
-                },
-                {
-                    "1408": "none",
-                    "1409": "none",
-                    "1509": "SB",
-                    "1510": "none",
-                    "1609": "none",
-                    "1610": "none"
-                },
-                {
-                    "1410": "none",
-                    "1411": "capital",
-                    "1511": "none",
-                    "1512": "none",
-                    "1611": "MAJ"
-                },
-                {
-                    "1513": "none",
-                    "1514": "MIN",
-                    "1612": "none",
-                    "1613": "none",
-                    "1614": "none"
-                },
-                {
-                    "1707": "BATS",
-                    "1708": "none",
-                    "1709": "none",
-                    "1807": "BATS",
-                    "1808": "none"
-                },
-                {
-                    "1710": "none",
-                    "1711": "none",
-                    "1809": "BATS",
-                    "1810": "none",
-                    "1811": "BATS"
-                },
-                {
-                    "1712": "none",
-                    "1713": "none",
-                    "1714": "MAJ",
-                    "1812": "none",
-                    "1813": "BATS"
-                },
-                {
-                    "1615": "none",
-                    "1715": "none",
-                    "1716": "SB",
-                    "1717": "none",
-                    "1815": "none",
-                    "1816": "none"
-                },
-                {
-                    "1718": "none",
-                    "1719": "none",
-                    "1817": "none",
-                    "1818": "none",
-                    "1819": "none"
-                },
-                {
-                    "1814": "none",
-                    "1914": "none",
-                    "1915": "none",
-                    "2014": "BATS",
-                    "2015": "none"
-                },
-                {
-                    "1916": "MIN",
-                    "1917": "none",
-                    "1918": "BATS",
-                    "2016": "none",
-                    "2017": "none"
-                },
-                {
-                    "1919": "none",
-                    "2018": "none",
-                    "2019": "none",
-                    "2119": "none",
-                    "2219": "none"
-                },
-                {
-                    "2115": "none",
-                    "2116": "none",
-                    "2215": "BATS",
-                    "2216": "MIN",
-                    "2316": "none"
-                },
-                {
-                    "2117": "none",
-                    "2118": "none",
-                    "2217": "none",
-                    "2218": "BATS",
-                    "2318": "SB"
-                },
-                {
-                    "2317": "none",
-                    "2416": "BATS",
-                    "2417": "none",
-                    "2517": "BATS",
-                    "2518": "MAJ"
-                },
-                {
-                    "2319": "none",
-                    "2418": "none",
-                    "2419": "none",
-                    "2519": "BATS"
-                }
-            ]
+        provinces: {
+            hexes: { hex: 2004, feature: bats },
+            hexes: { hex: 2005 },
+            hexes: { hex: 2006, feature: bats },
+            hexes: { hex: 2105 },
+            hexes: { hex: 2106, feature: min },
+            hexes: { hex: 2107 }
         },
-        "KZI": {
-            "provinces": [
-                {
-                    "0701": "BATS",
-                    "0702": "none",
-                    "0703": "BATS",
-                    "0801": "none",
-                    "0802": "none"
-                },
-                {
-                    "0901": "none",
-                    "0902": "SB",
-                    "1001": "MIN",
-                    "1002": "none"
-                },
-                {
-                    "0803": "BATS",
-                    "0903": "none",
-                    "0904": "none",
-                    "1003": "none",
-                    "1004": "BATS"
-                },
-                {
-                    "1101": "none",
-                    "1102": "none",
-                    "1103": "none",
-                    "1201": "none",
-                    "1202": "MIN"
-                },
-                {
-                    "1104": "none",
-                    "1105": "MIN",
-                    "1204": "none",
-                    "1205": "BATS",
-                    "1305": "none"
-                },
-                {
-                    "1301": "none",
-                    "1302": "none",
-                    "1401": "capital"
-                },
-                {
-                    "1203": "none",
-                    "1303": "none",
-                    "1304": "SB",
-                    "1402": "none",
-                    "1403": "none"
-                },
-                {
-                    "1501": "none",
-                    "1502": "MAJ",
-                    "1601": "none",
-                    "1701": "none"
-                },
-                {
-                    "1503": "none",
-                    "1602": "none",
-                    "1603": "none",
-                    "1702": "none",
-                    "1703": "none"
-                },
-                {
-                    "1404": "none",
-                    "1405": "BATS",
-                    "1504": "MIN",
-                    "1505": "none",
-                    "1604": "none",
-                    "1605": "BATS"
-                },
-                {
-                    "1801": "none",
-                    "1802": "MIN",
-                    "1901": "none",
-                    "1902": "BATS",
-                    "2001": "none"
-                },
-                {
-                    "1704": "SB",
-                    "1705": "none",
-                    "1803": "BATS",
-                    "1804": "none",
-                    "1805": "BATS"
-                }
-            ],
-            "offmap area": {
-                "name": "Kzinti Barony",
-                "features": ["SB"],
-                "counter hex": "1400",
-                "adjacent hexes": [
-                    "1101", "1201", "1301", "1401", "1501", "1601", "1701"
-                ]
-            }
+        provinces: {
+            hexes: { hex: 2007 },
+            hexes: { hex: 2008, feature: bats },
+            hexes: { hex: 2009 },
+            hexes: { hex: 2108 },
+            hexes: { hex: 2109 },
+            hexes: { hex: 2110 }
         },
-        "LYR": {
-            "provinces": [
-                {
-                    "0101": "none",
-                    "0102": "none",
-                    "0201": "none",
-                    "0202": "none",
-                    "0302": "none"
-                },
-                {
-                    "0103": "none",
-                    "0104": "BATS",
-                    "0203": "none",
-                    "0204": "none",
-                    "0304": "none"
-                },
-                {
-                    "0105": "none",
-                    "0106": "none",
-                    "0205": "MIN"
-                },
-                {
-                    "0107": "none",
-                    "0108": "none",
-                    "0207": "none",
-                    "0208": "none",
-                    "0308": "none"
-                },
-                {
-                    "0109": "BATS",
-                    "0110": "none",
-                    "0209": "none",
-                    "0210": "none"
-                },
-                {
-                    "0111": "none",
-                    "0112": "none",
-                    "0211": "none",
-                    "0212": "BATS"
-                },
-                {
-                    "0301": "none",
-                    "0401": "none",
-                    "0501": "none",
-                    "0502": "BATS"
-                },
-                {
-                    "0303": "none",
-                    "0402": "none",
-                    "0403": "none",
-                    "0503": "none",
-                    "0504": "BATS"
-                },
-                {
-                    "0305": "none",
-                    "0404": "SB",
-                    "0405": "none",
-                    "0505": "none",
-                    "0506": "none"
-                },
-                {
-                    "0206": "none",
-                    "0306": "none",
-                    "0307": "MAJ",
-                    "0406": "none",
-                    "0407": "none",
-                    "0507": "none"
-                },
-                {
-                    "0309": "none",
-                    "0408": "capital",
-                    "0409": "none",
-                    "0509": "MAJ",
-                    "0510": "none"
-                },
-                {
-                    "0310": "none",
-                    "0311": "none",
-                    "0410": "none",
-                    "0411": "SB",
-                    "0511": "none"
-                },
-                {
-                    "0312": "none",
-                    "0313": "none",
-                    "0412": "none",
-                    "0413": "BATS",
-                    "0512": "none",
-                    "0513": "none"
-                },
-                {
-                    "0604": "none",
-                    "0605": "none",
-                    "0606": "none",
-                    "0705": "BATS",
-                    "0706": "none"
-                },
-                {
-                    "0508": "none",
-                    "0607": "MIN",
-                    "0608": "SB",
-                    "0707": "BATS",
-                    "0708": "none"
-                },
-                {
-                    "0609": "none",
-                    "0610": "none",
-                    "0709": "MIN",
-                    "0710": "none",
-                    "0809": "BATS",
-                    "0810": "MAJ"
-                }
-            ],
-            "offmap area": {
-                "name": "Lyran Far Stars",
-                "features": ["SB"],
-                "counter hex": "0002",
-                "adjacent hexes": [
-                    "0101", "0102", "0103", "0104", "0105", "0106", "0107", "0108", "0109"
-                ]
-            }
+        provinces: {
+            hexes: { hex: 2010, feature: bats },
+            hexes: { hex: 2011 },
+            hexes: { hex: 2012, feature: bats },
+            hexes: { hex: 2111 },
+            hexes: { hex: 2112 },
+            hexes: { hex: 2113 }
         },
-        "LDR": {
-            "provinces": [
-                {
-                    "0611": "none",
-                    "0612": "BATS",
-                    "0711": "MIN",
-                    "0712": "none",
-                    "0811": "none",
-                    "0812": "BATS"
-                }
-            ]
+        provinces: {
+            hexes: { hex: 2201, feature: bats },
+            hexes: { hex: 2301 },
+            hexes: { hex: 2302 }
         },
-        "NZ": {
-            "planets": {
-                "2214": "MIN",
-                "3415": "MIN",
-                "3912": "MIN",
-                "4309": "MIN",
-                "5109": "MIN",
-                "5403": "MIN"
-            },
-            "hexes": [
-                "0113", "0213", "0314", "0414", "0514", "0613", "0713", "0813",
-                "0914", "1014", "1115", "1215", "1316", "1317", "1318", "1319",
-                "0601", "0602", "0603", "0704", "0805", "0806", "0807", "0808", "0909", "0910", "0911", "0912", "0913",
-                "0905", "1005", "1106", "1206", "1306", "1406", "1506", "1606", "1706", "1806",
-                "2101", "2102", "2002", "1903", "1904", "1905", "1906", "1907", "1908", "1909", "1910", "1911", "1912", "1913",
-                "2013", "2114", "2214", "2315", "2415", "2516", "2616", "2717", "2817", "2917", "2718", "2617", "2618", "2619",
-                "3017", "3117", "3118", "3216", "3217", "3218", "3219", "3316", "3415", "3515", "3614", "3714", "3813",
-                "3701", "3702", "3802", "3903", "3904", "3905", "3906", "3907", "3908", "3909", "3910", "3911", "3912", "3913",
-                "4009", "4109", "4209", "4309", "4409", "4509", "4609", "4709", "4809", "4909", "5009",
-                "5106", "5107", "5108", "5109", "5110", "5111", "5112", "5113", "5114", "5214", "5315", "5415", "5516", "5616", "5717", "5817",
-                "5918", "5919", "6017", "6018", "6019", "6117", "6118", "6119",
-                "5205", "5305", "5304", "5303", "5302", "5301", "5404", "5403", "5402", "5401", "5504", "5503", "5502", "5501",
-                "5603", "5602", "5601", "5703", "5702", "5701", "5802", "5801", "5902", "5901", "6002", "6001", "6103", "6102", "6101"
-            ]
+        provinces: {
+            hexes: { hex: 2204, feature: sb },
+            hexes: { hex: 2205 },
+            hexes: { hex: 2206 },
+            hexes: { hex: 2305 },
+            hexes: { hex: 2306, feature: maj },
+            hexes: { hex: 2307 }
         },
-        "ROM": {
-            "provinces": [
-                {
-                    "3317": "BATS",
-                    "3416": "none",
-                    "3417": "none",
-                    "3516": "BATS",
-                    "3517": "none",
-                    "3616": "none"
-                },
-                {
-                    "3318": "none",
-                    "3319": "BATS",
-                    "3418": "none",
-                    "3419": "none",
-                    "3519": "none"
-                },
-                {
-                    "3518": "SB",
-                    "3617": "none",
-                    "3618": "none",
-                    "3619": "none",
-                    "3718": "none",
-                    "3719": "none"
-                },
-                {
-                    "3615": "none",
-                    "3715": "BATS",
-                    "3716": "none",
-                    "3814": "none",
-                    "3815": "none",
-                    "3915": "none"
-                },
-                {
-                    "3717": "none",
-                    "3816": "none",
-                    "3817": "BATS",
-                    "3916": "none",
-                    "3917": "none",
-                    "4016": "none"
-                },
-                {
-                    "3818": "none",
-                    "3819": "none",
-                    "3918": "none",
-                    "3919": "none",
-                    "4018": "none",
-                    "4019": "none"
-                },
-                {
-                    "4010": "BATS",
-                    "4011": "none",
-                    "4110": "BATS",
-                    "4111": "none",
-                    "4112": "MIN"
-                },
-                {
-                    "3914": "BATS",
-                    "4012": "BATS",
-                    "4013": "none",
-                    "4014": "none",
-                    "4113": "none",
-                    "4114": "none"
-                },
-                {
-                    "4015": "SB",
-                    "4115": "none",
-                    "4116": "none",
-                    "4215": "none",
-                    "4216": "none",
-                    "4316": "none"
-                },
-                {
-                    "4017": "none",
-                    "4117": "none",
-                    "4118": "none",
-                    "4119": "none",
-                    "4217": "none",
-                    "4218": "none"
-                },
-                {
-                    "4210": "none",
-                    "4211": "none",
-                    "4310": "BATS",
-                    "4311": "none",
-                    "4410": "none"
-                },
-                {
-                    "4212": "none",
-                    "4213": "none",
-                    "4312": "none",
-                    "4313": "MIN",
-                    "4411": "SB",
-                    "4412": "none"
-                },
-                {
-                    "4214": "BATS",
-                    "4314": "none",
-                    "4315": "none",
-                    "4413": "none",
-                    "4414": "none"
-                },
-                {
-                    "4317": "none",
-                    "4318": "BATS",
-                    "4416": "none",
-                    "4417": "none",
-                    "4517": "none"
-                },
-                {
-                    "4219": "none",
-                    "4319": "none",
-                    "4418": "none",
-                    "4419": "none",
-                    "4518": "none",
-                    "4519": "none"
-                },
-                {
-                    "4510": "BATS",
-                    "4511": "none",
-                    "4610": "none",
-                    "4611": "BATS",
-                    "4710": "BATS",
-                    "4711": "none"
-                },
-                {
-                    "4512": "none",
-                    "4513": "none",
-                    "4612": "none",
-                    "4712": "none",
-                    "4713": "none",
-                    "4812": "SB"
-                },
-                {
-                    "4514": "capital",
-                    "4613": "capital"
-                },
-                {
-                    "4415": "none",
-                    "4515": "none",
-                    "4516": "none",
-                    "4614": "none",
-                    "4615": "none"
-                },
-                {
-                    "4616": "none",
-                    "4617": "none",
-                    "4716": "MAJ",
-                    "4717": "none",
-                    "4718": "BATS"
-                },
-                {
-                    "4618": "none",
-                    "4619": "none",
-                    "4719": "none",
-                    "4818": "none",
-                    "4819": "none"
-                },
-                {
-                    "4810": "none",
-                    "4811": "none",
-                    "4910": "BATS",
-                    "4911": "none",
-                    "5010": "BATS",
-                    "5011": "none"
-                },
-                {
-                    "4912": "none",
-                    "4913": "none",
-                    "4914": "none",
-                    "5012": "BATS",
-                    "5013": "none",
-                    "5014": "BATS"
-                },
-                {
-                    "4714": "none",
-                    "4715": "none",
-                    "4813": "none",
-                    "4814": "none",
-                    "4815": "none",
-                    "4915": "none"
-                },
-                {
-                    "4816": "none",
-                    "4817": "none",
-                    "4916": "BATS",
-                    "4917": "none",
-                    "5016": "none"
-                },
-                {
-                    "4918": "none",
-                    "4919": "none",
-                    "5017": "none",
-                    "5018": "none",
-                    "5019": "none"
-                },
-                {
-                    "5015": "none",
-                    "5115": "none",
-                    "5116": "none",
-                    "5215": "BATS",
-                    "5216": "none",
-                    "5316": "none"
-                },
-                {
-                    "5117": "MIN",
-                    "5118": "none",
-                    "5119": "none",
-                    "5217": "none",
-                    "5218": "none",
-                    "5219": "none"
-                },
-                {
-                    "5317": "none",
-                    "5416": "BATS",
-                    "5417": "none",
-                    "5517": "none",
-                    "5518": "none",
-                    "5617": "BATS"
-                },
-                {
-                    "5318": "SB",
-                    "5319": "none",
-                    "5418": "none",
-                    "5419": "none",
-                    "5519": "none"
-                },
-                {
-                    "5618": "none",
-                    "5619": "MIN",
-                    "5718": "none",
-                    "5719": "none",
-                    "5818": "BATS",
-                    "5819": "BATS"
-                }
-            ],
-            "offmap area": {
-                "name": "Rom\nOff-map",
-                "features": [],
-                "counter hex": "6218",
-                "adjacent hexes": [
-                    "6118", "6119"
-                ]
-            }
+        provinces: {
+            hexes: { hex: 2207 },
+            hexes: { hex: 2208 },
+            hexes: { hex: 2209 },
+            hexes: { hex: 2308, feature: bats },
+            hexes: { hex: 2309 },
+            hexes: { hex: 2310 }
         },
-        "THO": {
-            "provinces": [
-                {
-                    "2719": "BATS",
-                    "2818": "BATS",
-                    "2819": "SB",
-                    "2918": "BATS",
-                    "2919": "capital",
-                    "3018": "BATS",
-                    "3019": "SB",
-                    "3119": "BATS"
-                }
-            ]
+        provinces: {
+            hexes: { hex: 2210 },
+            hexes: { hex: 2211, feature: sb },
+            hexes: { hex: 2311 },
+            hexes: { hex: 2312 },
+            hexes: { hex: 2411 },
+            hexes: { hex: 2412 }
         },
-        "WYN": {
-            "provinces": [
-                {
-                    "0804": "none"
-                }
-            ]
+        provinces: {
+            hexes: { hex: 2212 },
+            hexes: { hex: 2213, feature: bats },
+            hexes: { hex: 2313 },
+            hexes: { hex: 2314 },
+            hexes: { hex: 2413 },
+            hexes: { hex: 2414, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 2401 },
+            hexes: { hex: 2402 },
+            hexes: { hex: 2501 },
+            hexes: { hex: 2502 },
+            hexes: { hex: 2503 }
+        },
+        provinces: {
+            hexes: { hex: 2304 },
+            hexes: { hex: 2403, feature: min },
+            hexes: { hex: 2404 },
+            hexes: { hex: 2504 },
+            hexes: { hex: 2505, feature: min }
+        },
+        provinces: {
+            hexes: { hex: 2405 },
+            hexes: { hex: 2406 },
+            hexes: { hex: 2407 },
+            hexes: { hex: 2506 },
+            hexes: { hex: 2507 },
+            hexes: { hex: 2508 }
+        },
+        provinces: {
+            hexes: { hex: 2408 },
+            hexes: { hex: 2409 },
+            hexes: { hex: 2410 },
+            hexes: { hex: 2509, feature: min },
+            hexes: { hex: 2510 },
+            hexes: { hex: 2511 }
+        },
+        provinces: {
+            hexes: { hex: 2601 },
+            hexes: { hex: 2602 },
+            hexes: { hex: 2701 },
+            hexes: { hex: 2702 },
+            hexes: { hex: 2703 }
+        },
+        provinces: {
+            hexes: { hex: 2603, feature: bats },
+            hexes: { hex: 2604 },
+            hexes: { hex: 2605 },
+            hexes: { hex: 2704 },
+            hexes: { hex: 2705, feature: min },
+            hexes: { hex: 2706 }
+        },
+        provinces: {
+            hexes: { hex: 2606, feature: bats },
+            hexes: { hex: 2607 },
+            hexes: { hex: 2608 },
+            hexes: { hex: 2707 },
+            hexes: { hex: 2708, feature: maj },
+            hexes: { hex: 2709 }
+        },
+        provinces: {
+            hexes: { hex: 2609, feature: bats },
+            hexes: { hex: 2610, feature: min },
+            hexes: { hex: 2611 },
+            hexes: { hex: 2710 },
+            hexes: { hex: 2711 },
+            hexes: { hex: 2712 }
+        },
+        provinces: {
+            hexes: { hex: 2512 },
+            hexes: { hex: 2513 },
+            hexes: { hex: 2612, feature: bats },
+            hexes: { hex: 2613 },
+            hexes: { hex: 2713 },
+            hexes: { hex: 2714 }
+        },
+        provinces: {
+            hexes: { hex: 2514 },
+            hexes: { hex: 2515 },
+            hexes: { hex: 2614 },
+            hexes: { hex: 2615, feature: bats },
+            hexes: { hex: 2715, feature: min },
+            hexes: { hex: 2716 }
+        },
+        provinces: {
+            hexes: { hex: 2801 },
+            hexes: { hex: 2802 },
+            hexes: { hex: 2901, feature: sb },
+            hexes: { hex: 2902 },
+            hexes: { hex: 3001 },
+            hexes: { hex: 3002 }
+        },
+        provinces: {
+            hexes: { hex: 2803 },
+            hexes: { hex: 2804 },
+            hexes: { hex: 2903 },
+            hexes: { hex: 2904 },
+            hexes: { hex: 3003 },
+            hexes: { hex: 3004 }
+        },
+        provinces: {
+            hexes: { hex: 2805 },
+            hexes: { hex: 2806 },
+            hexes: { hex: 2905, feature: bats },
+            hexes: { hex: 2906 },
+            hexes: { hex: 3005, feature: min },
+            hexes: { hex: 3006 }
+        },
+        provinces: {
+            hexes: { hex: 2807 },
+            hexes: { hex: 2808, feature: sb },
+            hexes: { hex: 2907, feature: sb },
+            hexes: { hex: 2908, feature: capital },
+            hexes: { hex: 3007 },
+            hexes: { hex: 3008, feature: sb }
+        },
+        provinces: {
+            hexes: { hex: 2809 },
+            hexes: { hex: 2810 },
+            hexes: { hex: 2909 },
+            hexes: { hex: 2910 },
+            hexes: { hex: 3009 },
+            hexes: { hex: 3010 }
+        },
+        provinces: {
+            hexes: { hex: 2811, feature: min },
+            hexes: { hex: 2812, feature: maj },
+            hexes: { hex: 2911, feature: bats },
+            hexes: { hex: 2912 },
+            hexes: { hex: 2913 },
+            hexes: { hex: 3011 },
+            hexes: { hex: 3012 }
+        },
+        provinces: {
+            hexes: { hex: 2813 },
+            hexes: { hex: 2814 },
+            hexes: { hex: 2914 },
+            hexes: { hex: 2915, feature: sb },
+            hexes: { hex: 3013 },
+            hexes: { hex: 3014 }
+        },
+        provinces: {
+            hexes: { hex: 2815 },
+            hexes: { hex: 2816, feature: bats },
+            hexes: { hex: 2916 },
+            hexes: { hex: 3015 },
+            hexes: { hex: 3016, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 3101 },
+            hexes: { hex: 3102 },
+            hexes: { hex: 3103 },
+            hexes: { hex: 3201 },
+            hexes: { hex: 3202 }
+        },
+        provinces: {
+            hexes: { hex: 3104 },
+            hexes: { hex: 3105 },
+            hexes: { hex: 3106 },
+            hexes: { hex: 3203, feature: bats },
+            hexes: { hex: 3204 },
+            hexes: { hex: 3205 }
+        },
+        provinces: {
+            hexes: { hex: 3107 },
+            hexes: { hex: 3108 },
+            hexes: { hex: 3109 },
+            hexes: { hex: 3206, feature: bats },
+            hexes: { hex: 3207 },
+            hexes: { hex: 3208 }
+        },
+        provinces: {
+            hexes: { hex: 3110 },
+            hexes: { hex: 3111 },
+            hexes: { hex: 3112 },
+            hexes: { hex: 3209, feature: bats },
+            hexes: { hex: 3210, feature: min },
+            hexes: { hex: 3211 }
+        },
+        provinces: {
+            hexes: { hex: 3113 },
+            hexes: { hex: 3114 },
+            hexes: { hex: 3212, feature: bats },
+            hexes: { hex: 3213 },
+            hexes: { hex: 3312 },
+            hexes: { hex: 3313 }
+        },
+        provinces: {
+            hexes: { hex: 3115 },
+            hexes: { hex: 3116 },
+            hexes: { hex: 3214 },
+            hexes: { hex: 3215, feature: bats },
+            hexes: { hex: 3314 },
+            hexes: { hex: 3315 }
+        },
+        provinces: {
+            hexes: { hex: 3301 },
+            hexes: { hex: 3302 },
+            hexes: { hex: 3303 },
+            hexes: { hex: 3401 },
+            hexes: { hex: 3402 }
+        },
+        provinces: {
+            hexes: { hex: 3304 },
+            hexes: { hex: 3305 },
+            hexes: { hex: 3403 },
+            hexes: { hex: 3404 },
+            hexes: { hex: 3504 }
+        },
+        provinces: {
+            hexes: { hex: 3306, feature: maj },
+            hexes: { hex: 3307 },
+            hexes: { hex: 3308 },
+            hexes: { hex: 3405 },
+            hexes: { hex: 3406 },
+            hexes: { hex: 3407 }
+        },
+        provinces: {
+            hexes: { hex: 3309 },
+            hexes: { hex: 3310 },
+            hexes: { hex: 3311 },
+            hexes: { hex: 3408 },
+            hexes: { hex: 3409 },
+            hexes: { hex: 3410 }
+        },
+        provinces: {
+            hexes: { hex: 3501 },
+            hexes: { hex: 3502 },
+            hexes: { hex: 3601, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 3505 },
+            hexes: { hex: 3506 },
+            hexes: { hex: 3507 },
+            hexes: { hex: 3604, feature: sb },
+            hexes: { hex: 3605 },
+            hexes: { hex: 3606 }
+        },
+        provinces: {
+            hexes: { hex: 3508, feature: bats },
+            hexes: { hex: 3509, feature: maj },
+            hexes: { hex: 3510 },
+            hexes: { hex: 3607 },
+            hexes: { hex: 3608 },
+            hexes: { hex: 3609 }
+        },
+        provinces: {
+            hexes: { hex: 3411 },
+            hexes: { hex: 3412 },
+            hexes: { hex: 3511 },
+            hexes: { hex: 3512 },
+            hexes: { hex: 3610 },
+            hexes: { hex: 3611, feature: sb }
+        },
+        provinces: {
+            hexes: { hex: 3413 },
+            hexes: { hex: 3414, feature: bats },
+            hexes: { hex: 3513 },
+            hexes: { hex: 3514 },
+            hexes: { hex: 3612, feature: min },
+            hexes: { hex: 3613, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 3503 },
+            hexes: { hex: 3602 },
+            hexes: { hex: 3603 },
+            hexes: { hex: 3703, feature: bats },
+            hexes: { hex: 3704 },
+            hexes: { hex: 3803 }
+        },
+        provinces: {
+            hexes: { hex: 3705 },
+            hexes: { hex: 3706, feature: min },
+            hexes: { hex: 3707 },
+            hexes: { hex: 3804, feature: bats },
+            hexes: { hex: 3805 },
+            hexes: { hex: 3806, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 3708 },
+            hexes: { hex: 3709 },
+            hexes: { hex: 3710 },
+            hexes: { hex: 3807 },
+            hexes: { hex: 3808, feature: bats },
+            hexes: { hex: 3809 }
+        },
+        provinces: {
+            hexes: { hex: 3711, feature: min },
+            hexes: { hex: 3712 },
+            hexes: { hex: 3713 },
+            hexes: { hex: 3810, feature: bats },
+            hexes: { hex: 3811 },
+            hexes: { hex: 3812, feature: bats }
+        },
+        offmap_area: {
+            name: "Federation\nSurvey Area",
+            features: sb,
+            counter_hex: 3000,
+            adjacent_hexes: 2701,
+            adjacent_hexes: 2801,
+            adjacent_hexes: 2901,
+            adjacent_hexes: 3001,
+            adjacent_hexes: 3101
+        }
+    }
+},
+starting_national_holdings: {
+    key: "GOR",
+    value: {
+        provinces: {
+            hexes: { hex: 3801, feature: bats },
+            hexes: { hex: 3901 },
+            hexes: { hex: 3902 }
+        },
+        provinces: {
+            hexes: { hex: 4001, feature: min },
+            hexes: { hex: 4002, feature: bats },
+            hexes: { hex: 4003 },
+            hexes: { hex: 4101 },
+            hexes: { hex: 4102 },
+            hexes: { hex: 4103 }
+        },
+        provinces: {
+            hexes: { hex: 4004, feature: bats },
+            hexes: { hex: 4005 },
+            hexes: { hex: 4006, feature: bats },
+            hexes: { hex: 4104 },
+            hexes: { hex: 4105 },
+            hexes: { hex: 4106 }
+        },
+        provinces: {
+            hexes: { hex: 4007 },
+            hexes: { hex: 4008, feature: bats },
+            hexes: { hex: 4107 },
+            hexes: { hex: 4108 },
+            hexes: { hex: 4207 },
+            hexes: { hex: 4208, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 4201 },
+            hexes: { hex: 4202 },
+            hexes: { hex: 4203, feature: bats },
+            hexes: { hex: 4301 },
+            hexes: { hex: 4302 },
+            hexes: { hex: 4303 }
+        },
+        provinces: {
+            hexes: { hex: 4204 },
+            hexes: { hex: 4205 },
+            hexes: { hex: 4206, feature: sb },
+            hexes: { hex: 4304 },
+            hexes: { hex: 4305 },
+            hexes: { hex: 4306 }
+        },
+        provinces: {
+            hexes: { hex: 4401 },
+            hexes: { hex: 4501 },
+            hexes: { hex: 4502 }
+        },
+        provinces: {
+            hexes: { hex: 4402, feature: capital },
+            hexes: { hex: 4403, feature: capital },
+            hexes: { hex: 4503, feature: capital }
+        },
+        provinces: {
+            hexes: { hex: 4404 },
+            hexes: { hex: 4405 },
+            hexes: { hex: 4406 },
+            hexes: { hex: 4504 },
+            hexes: { hex: 4505 },
+            hexes: { hex: 4506, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 4307 },
+            hexes: { hex: 4308 },
+            hexes: { hex: 4407 },
+            hexes: { hex: 4408, feature: bats },
+            hexes: { hex: 4507 },
+            hexes: { hex: 4508 }
+        },
+        provinces: {
+            hexes: { hex: 4601 },
+            hexes: { hex: 4602 },
+            hexes: { hex: 4701 },
+            hexes: { hex: 4702, feature: min },
+            hexes: { hex: 4801 },
+            hexes: { hex: 4802 }
+        },
+        provinces: {
+            hexes: { hex: 4603 },
+            hexes: { hex: 4604 },
+            hexes: { hex: 4703 },
+            hexes: { hex: 4704 },
+            hexes: { hex: 4803 },
+            hexes: { hex: 4804 }
+        },
+        provinces: {
+            hexes: { hex: 4605 },
+            hexes: { hex: 4606 },
+            hexes: { hex: 4705, feature: min },
+            hexes: { hex: 4706 },
+            hexes: { hex: 4805 },
+            hexes: { hex: 4806, feature: sb }
+        },
+        provinces: {
+            hexes: { hex: 4607 },
+            hexes: { hex: 4608, feature: bats },
+            hexes: { hex: 4707 },
+            hexes: { hex: 4708 },
+            hexes: { hex: 4807 },
+            hexes: { hex: 4808, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 4901 },
+            hexes: { hex: 4902 },
+            hexes: { hex: 4903, feature: min },
+            hexes: { hex: 4904, feature: bats },
+            hexes: { hex: 5001 },
+            hexes: { hex: 5002 },
+            hexes: { hex: 5003 }
+        },
+        provinces: {
+            hexes: { hex: 4905 },
+            hexes: { hex: 5004, feature: min },
+            hexes: { hex: 5005 },
+            hexes: { hex: 5104 },
+            hexes: { hex: 5105, feature: bats },
+            hexes: { hex: 5204 }
+        },
+        provinces: {
+            hexes: { hex: 4906 },
+            hexes: { hex: 4907 },
+            hexes: { hex: 4908 },
+            hexes: { hex: 5006, feature: bats },
+            hexes: { hex: 5007 },
+            hexes: { hex: 5008, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 5101 },
+            hexes: { hex: 5102 },
+            hexes: { hex: 5103 },
+            hexes: { hex: 5201, feature: bats },
+            hexes: { hex: 5202 },
+            hexes: { hex: 5203, feature: bats }
+        },
+        offmap_area: {
+            name: "Gorn Trusteeship Zone",
+            features: sb,
+            counter_hex: 4400,
+            adjacent_hexes: 4101,
+            adjacent_hexes: 4201,
+            adjacent_hexes: 4301,
+            adjacent_hexes: 4401,
+            adjacent_hexes: 4501,
+            adjacent_hexes: 4601,
+            adjacent_hexes: 4701,
+            adjacent_hexes: 4801,
+            adjacent_hexes: 4901,
+            adjacent_hexes: 5001,
+            adjacent_hexes: 5101
+        }
+    }
+},
+starting_national_holdings: {
+    key: "HYD",
+    value: {
+        provinces: {
+            hexes: { hex: 114, feature: bats },
+            hexes: { hex: 115 },
+            hexes: { hex: 116 },
+            hexes: { hex: 214 },
+            hexes: { hex: 215, feature: sb },
+            hexes: { hex: 315, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 117 },
+            hexes: { hex: 216 },
+            hexes: { hex: 217 },
+            hexes: { hex: 316 },
+            hexes: { hex: 317 },
+            hexes: { hex: 416, feature: min }
+        },
+        provinces: {
+            hexes: { hex: 118 },
+            hexes: { hex: 119 },
+            hexes: { hex: 218 },
+            hexes: { hex: 219 },
+            hexes: { hex: 318, feature: bats },
+            hexes: { hex: 319 }
+        },
+        provinces: {
+            hexes: { hex: 415 },
+            hexes: { hex: 515, feature: bats },
+            hexes: { hex: 516 },
+            hexes: { hex: 614 },
+            hexes: { hex: 615 }
+        },
+        provinces: {
+            hexes: { hex: 417 },
+            hexes: { hex: 418 },
+            hexes: { hex: 419 },
+            hexes: { hex: 517 },
+            hexes: { hex: 518 },
+            hexes: { hex: 519, feature: min },
+            hexes: { hex: 617, feature: capital }
+        },
+        provinces: {
+            hexes: { hex: 714, feature: bats },
+            hexes: { hex: 715 },
+            hexes: { hex: 814 },
+            hexes: { hex: 815 },
+            hexes: { hex: 915, feature: bats },
+            hexes: { hex: 916 }
+        },
+        provinces: {
+            hexes: { hex: 616 },
+            hexes: { hex: 716, feature: sb },
+            hexes: { hex: 717 },
+            hexes: { hex: 816 },
+            hexes: { hex: 817 }
+        },
+        provinces: {
+            hexes: { hex: 618 },
+            hexes: { hex: 619 },
+            hexes: { hex: 718, feature: maj },
+            hexes: { hex: 719 },
+            hexes: { hex: 818 },
+            hexes: { hex: 819 }
+        },
+        provinces: {
+            hexes: { hex: 917 },
+            hexes: { hex: 918 },
+            hexes: { hex: 919 },
+            hexes: { hex: 1017, feature: sb },
+            hexes: { hex: 1018 },
+            hexes: { hex: 1019 }
+        },
+        provinces: {
+            hexes: { hex: 1015 },
+            hexes: { hex: 1016 },
+            hexes: { hex: 1116, feature: bats },
+            hexes: { hex: 1117 },
+            hexes: { hex: 1216 }
+        },
+        provinces: {
+            hexes: { hex: 1118 },
+            hexes: { hex: 1119 },
+            hexes: { hex: 1217, feature: bats },
+            hexes: { hex: 1218 },
+            hexes: { hex: 1219, feature: bats }
+        },
+        offmap_area: {
+            name: "Old Cols.",
+            features: sb,
+            counter_hex: 18,
+            adjacent_hexes: 117,
+            adjacent_hexes: 118,
+            adjacent_hexes: 119
+        }
+    }
+},
+starting_national_holdings: {
+    key: "ISC",
+    value: {
+        provinces: {
+            hexes: { hex: 5206, feature: bats },
+            hexes: { hex: 5207 },
+            hexes: { hex: 5208, feature: bats },
+            hexes: { hex: 5306 },
+            hexes: { hex: 5307 },
+            hexes: { hex: 5308 }
+        },
+        provinces: {
+            hexes: { hex: 5209 },
+            hexes: { hex: 5210 },
+            hexes: { hex: 5309 },
+            hexes: { hex: 5310 },
+            hexes: { hex: 5311 }
+        },
+        provinces: {
+            hexes: { hex: 5211, feature: bats },
+            hexes: { hex: 5212 },
+            hexes: { hex: 5213, feature: bats },
+            hexes: { hex: 5312 },
+            hexes: { hex: 5313 },
+            hexes: { hex: 5314 }
+        },
+        provinces: {
+            hexes: { hex: 5405, feature: bats },
+            hexes: { hex: 5406 },
+            hexes: { hex: 5505 },
+            hexes: { hex: 5506 },
+            hexes: { hex: 5604, feature: bats },
+            hexes: { hex: 5605 }
+        },
+        provinces: {
+            hexes: { hex: 5407 },
+            hexes: { hex: 5408 },
+            hexes: { hex: 5507, feature: min },
+            hexes: { hex: 5508, feature: sb },
+            hexes: { hex: 5606 },
+            hexes: { hex: 5607 }
+        },
+        provinces: {
+            hexes: { hex: 5409 },
+            hexes: { hex: 5410 },
+            hexes: { hex: 5509 },
+            hexes: { hex: 5510, feature: min },
+            hexes: { hex: 5511 }
+        },
+        provinces: {
+            hexes: { hex: 5411 },
+            hexes: { hex: 5412 },
+            hexes: { hex: 5512, feature: sb },
+            hexes: { hex: 5513 },
+            hexes: { hex: 5612 },
+            hexes: { hex: 5613 }
+        },
+        provinces: {
+            hexes: { hex: 5413 },
+            hexes: { hex: 5414, feature: bats },
+            hexes: { hex: 5514 },
+            hexes: { hex: 5515 },
+            hexes: { hex: 5614 },
+            hexes: { hex: 5615, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 5704 },
+            hexes: { hex: 5705 },
+            hexes: { hex: 5803, feature: bats },
+            hexes: { hex: 5804 },
+            hexes: { hex: 5903 },
+            hexes: { hex: 5904 }
+        },
+        provinces: {
+            hexes: { hex: 5706 },
+            hexes: { hex: 5707 },
+            hexes: { hex: 5805 },
+            hexes: { hex: 5806 },
+            hexes: { hex: 5905 },
+            hexes: { hex: 5906, feature: sb }
+        },
+        provinces: {
+            hexes: { hex: 5608 },
+            hexes: { hex: 5609 },
+            hexes: { hex: 5708 },
+            hexes: { hex: 5709 },
+            hexes: { hex: 5807 },
+            hexes: { hex: 5808, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 5710, feature: bats },
+            hexes: { hex: 5809 },
+            hexes: { hex: 5810, feature: maj },
+            hexes: { hex: 5909 },
+            hexes: { hex: 5910, feature: capital },
+            hexes: { hex: 5911 }
+        },
+        provinces: {
+            hexes: { hex: 5610 },
+            hexes: { hex: 5611 },
+            hexes: { hex: 5711 },
+            hexes: { hex: 5712 },
+            hexes: { hex: 5811, feature: bats },
+            hexes: { hex: 5812 }
+        },
+        provinces: {
+            hexes: { hex: 5713 },
+            hexes: { hex: 5714 },
+            hexes: { hex: 5813 },
+            hexes: { hex: 5814 },
+            hexes: { hex: 5914, feature: sb },
+            hexes: { hex: 5915 }
+        },
+        provinces: {
+            hexes: { hex: 5715 },
+            hexes: { hex: 5716 },
+            hexes: { hex: 5815 },
+            hexes: { hex: 5816, feature: bats },
+            hexes: { hex: 5916 },
+            hexes: { hex: 5917 }
+        },
+        provinces: {
+            hexes: { hex: 6003, feature: bats },
+            hexes: { hex: 6004 },
+            hexes: { hex: 6104 },
+            hexes: { hex: 6105 }
+        },
+        provinces: {
+            hexes: { hex: 6005 },
+            hexes: { hex: 6006 },
+            hexes: { hex: 6106 },
+            hexes: { hex: 6107 }
+        },
+        provinces: {
+            hexes: { hex: 5907 },
+            hexes: { hex: 5908, feature: maj },
+            hexes: { hex: 6007 },
+            hexes: { hex: 6008, feature: bats },
+            hexes: { hex: 6108 },
+            hexes: { hex: 6109 }
+        },
+        provinces: {
+            hexes: { hex: 6009 },
+            hexes: { hex: 6010 },
+            hexes: { hex: 6110, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 5912 },
+            hexes: { hex: 5913 },
+            hexes: { hex: 6011, feature: bats },
+            hexes: { hex: 6012 },
+            hexes: { hex: 6111, feature: min },
+            hexes: { hex: 6112 }
+        },
+        provinces: {
+            hexes: { hex: 6013 },
+            hexes: { hex: 6014 },
+            hexes: { hex: 6113 },
+            hexes: { hex: 6114 }
+        },
+        provinces: {
+            hexes: { hex: 6015 },
+            hexes: { hex: 6016, feature: bats },
+            hexes: { hex: 6115 },
+            hexes: { hex: 6116 }
+        },
+        offmap_area: {
+            name: "ISC Distant Zone",
+            features: sb,
+            features: sb,
+            counter_hex: 6210,
+            adjacent_hexes: 6104,
+            adjacent_hexes: 6105,
+            adjacent_hexes: 6106,
+            adjacent_hexes: 6107,
+            adjacent_hexes: 6108,
+            adjacent_hexes: 6109,
+            adjacent_hexes: 6111,
+            adjacent_hexes: 6112,
+            adjacent_hexes: 6113,
+            adjacent_hexes: 6114,
+            adjacent_hexes: 6115
+        }
+    }
+},
+starting_national_holdings: {
+    key: "KLI",
+    value: {
+        provinces: {
+            hexes: { hex: 906, feature: bats },
+            hexes: { hex: 907 },
+            hexes: { hex: 908, feature: bats },
+            hexes: { hex: 1006 },
+            hexes: { hex: 1007 }
+        },
+        provinces: {
+            hexes: { hex: 1008 },
+            hexes: { hex: 1009, feature: bats },
+            hexes: { hex: 1010, feature: min },
+            hexes: { hex: 1109 },
+            hexes: { hex: 1110 }
+        },
+        provinces: {
+            hexes: { hex: 1011, feature: bats },
+            hexes: { hex: 1012 },
+            hexes: { hex: 1111 },
+            hexes: { hex: 1112, feature: maj },
+            hexes: { hex: 1211 }
+        },
+        provinces: {
+            hexes: { hex: 1013, feature: bats },
+            hexes: { hex: 1113 },
+            hexes: { hex: 1114 },
+            hexes: { hex: 1213 },
+            hexes: { hex: 1214, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 1107, feature: bats },
+            hexes: { hex: 1108 },
+            hexes: { hex: 1207 },
+            hexes: { hex: 1208 },
+            hexes: { hex: 1307, feature: bats },
+            hexes: { hex: 1308 }
+        },
+        provinces: {
+            hexes: { hex: 1209, feature: bats },
+            hexes: { hex: 1210, feature: min },
+            hexes: { hex: 1309 },
+            hexes: { hex: 1310 },
+            hexes: { hex: 1311 }
+        },
+        provinces: {
+            hexes: { hex: 1212 },
+            hexes: { hex: 1312, feature: min },
+            hexes: { hex: 1313 },
+            hexes: { hex: 1412 },
+            hexes: { hex: 1413 }
+        },
+        provinces: {
+            hexes: { hex: 1314 },
+            hexes: { hex: 1315 },
+            hexes: { hex: 1414 },
+            hexes: { hex: 1415, feature: bats },
+            hexes: { hex: 1515 }
+        },
+        provinces: {
+            hexes: { hex: 1416 },
+            hexes: { hex: 1417, feature: bats },
+            hexes: { hex: 1516 },
+            hexes: { hex: 1517 },
+            hexes: { hex: 1616 },
+            hexes: { hex: 1617 }
+        },
+        provinces: {
+            hexes: { hex: 1418 },
+            hexes: { hex: 1419, feature: bats },
+            hexes: { hex: 1518 },
+            hexes: { hex: 1519 },
+            hexes: { hex: 1618, feature: bats },
+            hexes: { hex: 1619 }
+        },
+        provinces: {
+            hexes: { hex: 1407, feature: min },
+            hexes: { hex: 1507, feature: bats },
+            hexes: { hex: 1508 },
+            hexes: { hex: 1607 },
+            hexes: { hex: 1608 }
+        },
+        provinces: {
+            hexes: { hex: 1408 },
+            hexes: { hex: 1409 },
+            hexes: { hex: 1509, feature: sb },
+            hexes: { hex: 1510 },
+            hexes: { hex: 1609 },
+            hexes: { hex: 1610 }
+        },
+        provinces: {
+            hexes: { hex: 1410 },
+            hexes: { hex: 1411, feature: capital },
+            hexes: { hex: 1511 },
+            hexes: { hex: 1512 },
+            hexes: { hex: 1611, feature: maj }
+        },
+        provinces: {
+            hexes: { hex: 1513 },
+            hexes: { hex: 1514, feature: min },
+            hexes: { hex: 1612 },
+            hexes: { hex: 1613 },
+            hexes: { hex: 1614 }
+        },
+        provinces: {
+            hexes: { hex: 1707, feature: bats },
+            hexes: { hex: 1708 },
+            hexes: { hex: 1709 },
+            hexes: { hex: 1807, feature: bats },
+            hexes: { hex: 1808 }
+        },
+        provinces: {
+            hexes: { hex: 1710 },
+            hexes: { hex: 1711 },
+            hexes: { hex: 1809, feature: bats },
+            hexes: { hex: 1810 },
+            hexes: { hex: 1811, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 1712 },
+            hexes: { hex: 1713 },
+            hexes: { hex: 1714, feature: maj },
+            hexes: { hex: 1812 },
+            hexes: { hex: 1813, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 1615 },
+            hexes: { hex: 1715 },
+            hexes: { hex: 1716, feature: sb },
+            hexes: { hex: 1717 },
+            hexes: { hex: 1815 },
+            hexes: { hex: 1816 }
+        },
+        provinces: {
+            hexes: { hex: 1718 },
+            hexes: { hex: 1719 },
+            hexes: { hex: 1817 },
+            hexes: { hex: 1818 },
+            hexes: { hex: 1819 }
+        },
+        provinces: {
+            hexes: { hex: 1814 },
+            hexes: { hex: 1914 },
+            hexes: { hex: 1915 },
+            hexes: { hex: 2014, feature: bats },
+            hexes: { hex: 2015 }
+        },
+        provinces: {
+            hexes: { hex: 1916, feature: min },
+            hexes: { hex: 1917 },
+            hexes: { hex: 1918, feature: bats },
+            hexes: { hex: 2016 },
+            hexes: { hex: 2017 }
+        },
+        provinces: {
+            hexes: { hex: 1919 },
+            hexes: { hex: 2018 },
+            hexes: { hex: 2019 },
+            hexes: { hex: 2119 },
+            hexes: { hex: 2219 }
+        },
+        provinces: {
+            hexes: { hex: 2115 },
+            hexes: { hex: 2116 },
+            hexes: { hex: 2215, feature: bats },
+            hexes: { hex: 2216, feature: min },
+            hexes: { hex: 2316 }
+        },
+        provinces: {
+            hexes: { hex: 2117 },
+            hexes: { hex: 2118 },
+            hexes: { hex: 2217 },
+            hexes: { hex: 2218, feature: bats },
+            hexes: { hex: 2318, feature: sb }
+        },
+        provinces: {
+            hexes: { hex: 2317 },
+            hexes: { hex: 2416, feature: bats },
+            hexes: { hex: 2417 },
+            hexes: { hex: 2517, feature: bats },
+            hexes: { hex: 2518, feature: maj }
+        },
+        provinces: {
+            hexes: { hex: 2319 },
+            hexes: { hex: 2418 },
+            hexes: { hex: 2419 },
+            hexes: { hex: 2519, feature: bats }
+        }
+    }
+},
+starting_national_holdings: {
+    key: "KZI",
+    value: {
+        provinces: {
+            hexes: { hex: 701, feature: bats },
+            hexes: { hex: 702 },
+            hexes: { hex: 703, feature: bats },
+            hexes: { hex: 801 },
+            hexes: { hex: 802 }
+        },
+        provinces: {
+            hexes: { hex: 901 },
+            hexes: { hex: 902, feature: sb },
+            hexes: { hex: 1001, feature: min },
+            hexes: { hex: 1002 }
+        },
+        provinces: {
+            hexes: { hex: 803, feature: bats },
+            hexes: { hex: 903 },
+            hexes: { hex: 904 },
+            hexes: { hex: 1003 },
+            hexes: { hex: 1004, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 1101 },
+            hexes: { hex: 1102 },
+            hexes: { hex: 1103 },
+            hexes: { hex: 1201 },
+            hexes: { hex: 1202, feature: min }
+        },
+        provinces: {
+            hexes: { hex: 1104 },
+            hexes: { hex: 1105, feature: min },
+            hexes: { hex: 1204 },
+            hexes: { hex: 1205, feature: bats },
+            hexes: { hex: 1305 }
+        },
+        provinces: {
+            hexes: { hex: 1301 },
+            hexes: { hex: 1302 },
+            hexes: { hex: 1401, feature: capital }
+        },
+        provinces: {
+            hexes: { hex: 1203 },
+            hexes: { hex: 1303 },
+            hexes: { hex: 1304, feature: sb },
+            hexes: { hex: 1402 },
+            hexes: { hex: 1403 }
+        },
+        provinces: {
+            hexes: { hex: 1501 },
+            hexes: { hex: 1502, feature: maj },
+            hexes: { hex: 1601 },
+            hexes: { hex: 1701 }
+        },
+        provinces: {
+            hexes: { hex: 1503 },
+            hexes: { hex: 1602 },
+            hexes: { hex: 1603 },
+            hexes: { hex: 1702 },
+            hexes: { hex: 1703 }
+        },
+        provinces: {
+            hexes: { hex: 1404 },
+            hexes: { hex: 1405, feature: bats },
+            hexes: { hex: 1504, feature: min },
+            hexes: { hex: 1505 },
+            hexes: { hex: 1604 },
+            hexes: { hex: 1605, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 1801 },
+            hexes: { hex: 1802, feature: min },
+            hexes: { hex: 1901 },
+            hexes: { hex: 1902, feature: bats },
+            hexes: { hex: 2001 }
+        },
+        provinces: {
+            hexes: { hex: 1704, feature: sb },
+            hexes: { hex: 1705 },
+            hexes: { hex: 1803, feature: bats },
+            hexes: { hex: 1804 },
+            hexes: { hex: 1805, feature: bats }
+        },
+        offmap_area: {
+            name: "Kzinti Barony",
+            features: sb,
+            counter_hex: 1400,
+            adjacent_hexes: 1101,
+            adjacent_hexes: 1201,
+            adjacent_hexes: 1301,
+            adjacent_hexes: 1401,
+            adjacent_hexes: 1501,
+            adjacent_hexes: 1601,
+            adjacent_hexes: 1701
+        }
+    }
+},
+starting_national_holdings: {
+    key: "LYR",
+    value: {
+        provinces: {
+            hexes: { hex: 101 },
+            hexes: { hex: 102 },
+            hexes: { hex: 201 },
+            hexes: { hex: 202 },
+            hexes: { hex: 302 }
+        },
+        provinces: {
+            hexes: { hex: 103 },
+            hexes: { hex: 104, feature: bats },
+            hexes: { hex: 203 },
+            hexes: { hex: 204 },
+            hexes: { hex: 304 }
+        },
+        provinces: {
+            hexes: { hex: 105 },
+            hexes: { hex: 106 },
+            hexes: { hex: 205, feature: min }
+        },
+        provinces: {
+            hexes: { hex: 107 },
+            hexes: { hex: 108 },
+            hexes: { hex: 207 },
+            hexes: { hex: 208 },
+            hexes: { hex: 308 }
+        },
+        provinces: {
+            hexes: { hex: 109, feature: bats },
+            hexes: { hex: 110 },
+            hexes: { hex: 209 },
+            hexes: { hex: 210 }
+        },
+        provinces: {
+            hexes: { hex: 111 },
+            hexes: { hex: 112 },
+            hexes: { hex: 211 },
+            hexes: { hex: 212, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 301 },
+            hexes: { hex: 401 },
+            hexes: { hex: 501 },
+            hexes: { hex: 502, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 303 },
+            hexes: { hex: 402 },
+            hexes: { hex: 403 },
+            hexes: { hex: 503 },
+            hexes: { hex: 504, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 305 },
+            hexes: { hex: 404, feature: sb },
+            hexes: { hex: 405 },
+            hexes: { hex: 505 },
+            hexes: { hex: 506 }
+        },
+        provinces: {
+            hexes: { hex: 206 },
+            hexes: { hex: 306 },
+            hexes: { hex: 307, feature: maj },
+            hexes: { hex: 406 },
+            hexes: { hex: 407 },
+            hexes: { hex: 507 }
+        },
+        provinces: {
+            hexes: { hex: 309 },
+            hexes: { hex: 408, feature: capital },
+            hexes: { hex: 409 },
+            hexes: { hex: 509, feature: maj },
+            hexes: { hex: 510 }
+        },
+        provinces: {
+            hexes: { hex: 310 },
+            hexes: { hex: 311 },
+            hexes: { hex: 410 },
+            hexes: { hex: 411, feature: sb },
+            hexes: { hex: 511 }
+        },
+        provinces: {
+            hexes: { hex: 312 },
+            hexes: { hex: 313 },
+            hexes: { hex: 412 },
+            hexes: { hex: 413, feature: bats },
+            hexes: { hex: 512 },
+            hexes: { hex: 513 }
+        },
+        provinces: {
+            hexes: { hex: 604 },
+            hexes: { hex: 605 },
+            hexes: { hex: 606 },
+            hexes: { hex: 705, feature: bats },
+            hexes: { hex: 706 }
+        },
+        provinces: {
+            hexes: { hex: 508 },
+            hexes: { hex: 607, feature: min },
+            hexes: { hex: 608, feature: sb },
+            hexes: { hex: 707, feature: bats },
+            hexes: { hex: 708 }
+        },
+        provinces: {
+            hexes: { hex: 609 },
+            hexes: { hex: 610 },
+            hexes: { hex: 709, feature: min },
+            hexes: { hex: 710 },
+            hexes: { hex: 809, feature: bats },
+            hexes: { hex: 810, feature: maj }
+        },
+        offmap_area: {
+            name: "Lyran Far Stars",
+            features: sb,
+            counter_hex: 2,
+            adjacent_hexes: 101,
+            adjacent_hexes: 102,
+            adjacent_hexes: 103,
+            adjacent_hexes: 104,
+            adjacent_hexes: 105,
+            adjacent_hexes: 106,
+            adjacent_hexes: 107,
+            adjacent_hexes: 108,
+            adjacent_hexes: 109
+        }
+    }
+},
+starting_national_holdings: {
+    key: "LDR",
+    value: {
+        provinces: {
+            hexes: { hex: 611 },
+            hexes: { hex: 612, feature: bats },
+            hexes: { hex: 711, feature: min },
+            hexes: { hex: 712 },
+            hexes: { hex: 811 },
+            hexes: { hex: 812, feature: bats }
+        }
+    }
+},
+starting_national_holdings: {
+    key: "ROM",
+    value: {
+        provinces: {
+            hexes: { hex: 3317, feature: bats },
+            hexes: { hex: 3416 },
+            hexes: { hex: 3417 },
+            hexes: { hex: 3516, feature: bats },
+            hexes: { hex: 3517 },
+            hexes: { hex: 3616 }
+        },
+        provinces: {
+            hexes: { hex: 3318 },
+            hexes: { hex: 3319, feature: bats },
+            hexes: { hex: 3418 },
+            hexes: { hex: 3419 },
+            hexes: { hex: 3519 }
+        },
+        provinces: {
+            hexes: { hex: 3518, feature: sb },
+            hexes: { hex: 3617 },
+            hexes: { hex: 3618 },
+            hexes: { hex: 3619 },
+            hexes: { hex: 3718 },
+            hexes: { hex: 3719 }
+        },
+        provinces: {
+            hexes: { hex: 3615 },
+            hexes: { hex: 3715, feature: bats },
+            hexes: { hex: 3716 },
+            hexes: { hex: 3814 },
+            hexes: { hex: 3815 },
+            hexes: { hex: 3915 }
+        },
+        provinces: {
+            hexes: { hex: 3717 },
+            hexes: { hex: 3816 },
+            hexes: { hex: 3817, feature: bats },
+            hexes: { hex: 3916 },
+            hexes: { hex: 3917 },
+            hexes: { hex: 4016 }
+        },
+        provinces: {
+            hexes: { hex: 3818 },
+            hexes: { hex: 3819 },
+            hexes: { hex: 3918 },
+            hexes: { hex: 3919 },
+            hexes: { hex: 4018 },
+            hexes: { hex: 4019 }
+        },
+        provinces: {
+            hexes: { hex: 4010, feature: bats },
+            hexes: { hex: 4011 },
+            hexes: { hex: 4110, feature: bats },
+            hexes: { hex: 4111 },
+            hexes: { hex: 4112, feature: min }
+        },
+        provinces: {
+            hexes: { hex: 3914, feature: bats },
+            hexes: { hex: 4012, feature: bats },
+            hexes: { hex: 4013 },
+            hexes: { hex: 4014 },
+            hexes: { hex: 4113 },
+            hexes: { hex: 4114 }
+        },
+        provinces: {
+            hexes: { hex: 4015, feature: sb },
+            hexes: { hex: 4115 },
+            hexes: { hex: 4116 },
+            hexes: { hex: 4215 },
+            hexes: { hex: 4216 },
+            hexes: { hex: 4316 }
+        },
+        provinces: {
+            hexes: { hex: 4017 },
+            hexes: { hex: 4117 },
+            hexes: { hex: 4118 },
+            hexes: { hex: 4119 },
+            hexes: { hex: 4217 },
+            hexes: { hex: 4218 }
+        },
+        provinces: {
+            hexes: { hex: 4210 },
+            hexes: { hex: 4211 },
+            hexes: { hex: 4310, feature: bats },
+            hexes: { hex: 4311 },
+            hexes: { hex: 4410 }
+        },
+        provinces: {
+            hexes: { hex: 4212 },
+            hexes: { hex: 4213 },
+            hexes: { hex: 4312 },
+            hexes: { hex: 4313, feature: min },
+            hexes: { hex: 4411, feature: sb },
+            hexes: { hex: 4412 }
+        },
+        provinces: {
+            hexes: { hex: 4214, feature: bats },
+            hexes: { hex: 4314 },
+            hexes: { hex: 4315 },
+            hexes: { hex: 4413 },
+            hexes: { hex: 4414 }
+        },
+        provinces: {
+            hexes: { hex: 4317 },
+            hexes: { hex: 4318, feature: bats },
+            hexes: { hex: 4416 },
+            hexes: { hex: 4417 },
+            hexes: { hex: 4517 }
+        },
+        provinces: {
+            hexes: { hex: 4219 },
+            hexes: { hex: 4319 },
+            hexes: { hex: 4418 },
+            hexes: { hex: 4419 },
+            hexes: { hex: 4518 },
+            hexes: { hex: 4519 }
+        },
+        provinces: {
+            hexes: { hex: 4510, feature: bats },
+            hexes: { hex: 4511 },
+            hexes: { hex: 4610 },
+            hexes: { hex: 4611, feature: bats },
+            hexes: { hex: 4710, feature: bats },
+            hexes: { hex: 4711 }
+        },
+        provinces: {
+            hexes: { hex: 4512 },
+            hexes: { hex: 4513 },
+            hexes: { hex: 4612 },
+            hexes: { hex: 4712 },
+            hexes: { hex: 4713 },
+            hexes: { hex: 4812, feature: sb }
+        },
+        provinces: {
+            hexes: { hex: 4514, feature: capital },
+            hexes: { hex: 4613, feature: capital }
+        },
+        provinces: {
+            hexes: { hex: 4415 },
+            hexes: { hex: 4515 },
+            hexes: { hex: 4516 },
+            hexes: { hex: 4614 },
+            hexes: { hex: 4615 }
+        },
+        provinces: {
+            hexes: { hex: 4616 },
+            hexes: { hex: 4617 },
+            hexes: { hex: 4716, feature: maj },
+            hexes: { hex: 4717 },
+            hexes: { hex: 4718, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 4618 },
+            hexes: { hex: 4619 },
+            hexes: { hex: 4719 },
+            hexes: { hex: 4818 },
+            hexes: { hex: 4819 }
+        },
+        provinces: {
+            hexes: { hex: 4810 },
+            hexes: { hex: 4811 },
+            hexes: { hex: 4910, feature: bats },
+            hexes: { hex: 4911 },
+            hexes: { hex: 5010, feature: bats },
+            hexes: { hex: 5011 }
+        },
+        provinces: {
+            hexes: { hex: 4912 },
+            hexes: { hex: 4913 },
+            hexes: { hex: 4914 },
+            hexes: { hex: 5012, feature: bats },
+            hexes: { hex: 5013 },
+            hexes: { hex: 5014, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 4714 },
+            hexes: { hex: 4715 },
+            hexes: { hex: 4813 },
+            hexes: { hex: 4814 },
+            hexes: { hex: 4815 },
+            hexes: { hex: 4915 }
+        },
+        provinces: {
+            hexes: { hex: 4816 },
+            hexes: { hex: 4817 },
+            hexes: { hex: 4916, feature: bats },
+            hexes: { hex: 4917 },
+            hexes: { hex: 5016 }
+        },
+        provinces: {
+            hexes: { hex: 4918 },
+            hexes: { hex: 4919 },
+            hexes: { hex: 5017 },
+            hexes: { hex: 5018 },
+            hexes: { hex: 5019 }
+        },
+        provinces: {
+            hexes: { hex: 5015 },
+            hexes: { hex: 5115 },
+            hexes: { hex: 5116 },
+            hexes: { hex: 5215, feature: bats },
+            hexes: { hex: 5216 },
+            hexes: { hex: 5316 }
+        },
+        provinces: {
+            hexes: { hex: 5117, feature: min },
+            hexes: { hex: 5118 },
+            hexes: { hex: 5119 },
+            hexes: { hex: 5217 },
+            hexes: { hex: 5218 },
+            hexes: { hex: 5219 }
+        },
+        provinces: {
+            hexes: { hex: 5317 },
+            hexes: { hex: 5416, feature: bats },
+            hexes: { hex: 5417 },
+            hexes: { hex: 5517 },
+            hexes: { hex: 5518 },
+            hexes: { hex: 5617, feature: bats }
+        },
+        provinces: {
+            hexes: { hex: 5318, feature: sb },
+            hexes: { hex: 5319 },
+            hexes: { hex: 5418 },
+            hexes: { hex: 5419 },
+            hexes: { hex: 5519 }
+        },
+        provinces: {
+            hexes: { hex: 5618 },
+            hexes: { hex: 5619, feature: min },
+            hexes: { hex: 5718 },
+            hexes: { hex: 5719 },
+            hexes: { hex: 5818, feature: bats },
+            hexes: { hex: 5819, feature: bats }
+        },
+        offmap_area: {
+            name: "Rom\nOff-map",
+            counter_hex: 6218,
+            adjacent_hexes: 6118
+            adjacent_hexes: 6119
+        }
+    }
+},
+starting_national_holdings: {
+    key: "THO",
+    value: {
+        provinces: {
+            hexes: { hex: 2719, feature: bats },
+            hexes: { hex: 2818, feature: bats },
+            hexes: { hex: 2819, feature: sb },
+            hexes: { hex: 2918, feature: bats },
+            hexes: { hex: 2919, feature: capital },
+            hexes: { hex: 3018, feature: bats },
+            hexes: { hex: 3019, feature: sb },
+            hexes: { hex: 3119, feature: bats }
+        }
+    }
+},
+starting_national_holdings: {
+    key: "WYN",
+    value: {
+        provinces: {
+            hexes: { hex: 804 }
         }
     }
 }

@@ -900,7 +900,7 @@ extern "C" {
             // TODO: Validate and fill in nation_ids.
         }
 
-        if (0) { // TODO
+        {
             message::map_t map_msg;
             pb::io::ArrayInputStream is(map_str, strlen(map_str));
             if (!pb::TextFormat::Parse(&is, &map_msg))

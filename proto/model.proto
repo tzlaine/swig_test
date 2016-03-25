@@ -40,7 +40,7 @@ message capital_t
     repeated capital_hex_t hexes = 1;
 }
 
-message offmap_t
+message offmap_possesions_t
 {
     int32 provinces = 1;
     int32 mins = 2;
@@ -54,7 +54,7 @@ message nation_t
     capital_t capital = 3;
     int32 free_strategic_moves = 4;
     int32 capital_star_points = 5;
-    offmap_t offmap = 6;
+    offmap_possesions_t offmap_possesions = 6;
     int32 offmap_survey_ships = 7;
     int32 nation_id = 8;
     int32 cannot_build_offmap_capital = 9;
@@ -74,22 +74,40 @@ message hex_t
     repeated int32 neutral_zone_bordering = 4;
 }
 
-message province_t
+message province_hex_t
 {
-    repeated int32 hexes = 1;
+    int32 hex = 1;
+    feature_t feature = 2;
 }
 
-message province_list_t
+message province_t
+{
+    repeated province_hex_t hexes = 1;
+}
+
+// How the offmap region (if any) is connected to the map.
+message offmap_area_t
+{
+    string name = 1;
+    repeated feature_t features = 2;
+    int32 counter_hex = 3; // Where the SB counter is chown, if any.
+    repeated int32 adjacent_hexes = 4;
+}
+
+message starting_national_holdings_t
 {
     repeated province_t provinces = 1;
+    offmap_area_t offmap_area = 2;
 }
 
 message map_t
 {
     int32 width = 1;
     int32 height = 2;
-    map<int32, province_list_t> provinces = 3;
-    repeated hex_t hexes = 4;
+    repeated int32 nz_planets = 3; // only in starting data (all planets are MIN)
+    repeated int32 nz_hexes = 4;   // only in starting data
+    map<string, starting_national_holdings_t> starting_national_holdings = 5;
+    repeated hex_t hexes = 6; // only in saved data
 }
 
 message model_t

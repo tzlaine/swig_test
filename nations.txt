@@ -40,7 +40,7 @@ nations: {
         },
         free_strategic_moves: 15,
         capital_star_points: 5,
-        offmap: {
+        offmap_possesions: {
             provinces: 3,
             mins: 0,
             majs: 0
@@ -84,7 +84,7 @@ nations: {
         },
         free_strategic_moves: 10,
         capital_star_points: 5,
-        offmap: {
+        offmap_possesions: {
             provinces: 3,
             mins: 2,
             majs: 0
@@ -120,7 +120,7 @@ nations: {
         },
         free_strategic_moves: 10,
         capital_star_points: 5,
-        offmap: {
+        offmap_possesions: {
             provinces: 2,
             mins: 1,
             majs: 2
@@ -141,7 +141,7 @@ nations: {
         },
         free_strategic_moves: 10,
         capital_star_points: 6,
-        offmap: {
+        offmap_possesions: {
             provinces: 8,
             mins: 2,
             majs: 1
@@ -189,7 +189,7 @@ nations: {
         },
         free_strategic_moves: 15,
         capital_star_points: 8,
-        offmap: {
+        offmap_possesions: {
             provinces: 0,
             mins: 0,
             majs: 0
@@ -231,7 +231,7 @@ nations: {
         },
         free_strategic_moves: 10,
         capital_star_points: 5,
-        offmap: {
+        offmap_possesions: {
             provinces: 3,
             mins: 2,
             majs: 1
@@ -282,7 +282,7 @@ nations: {
         },
         free_strategic_moves: 10,
         capital_star_points: 8,
-        offmap: {
+        offmap_possesions: {
             provinces: 4,
             mins: 2,
             majs: 2
@@ -347,7 +347,7 @@ nations: {
         },
         free_strategic_moves: 10,
         capital_star_points: 8,
-        offmap: {
+        offmap_possesions: {
             provinces: 0,
             mins: 0,
             majs: 0

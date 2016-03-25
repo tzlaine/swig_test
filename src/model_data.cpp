@@ -41,9 +41,9 @@ message::capital_t ToProtobuf (const capital_t& value)
     return retval;
 }
 
-message::offmap_t ToProtobuf (const offmap_t& value)
+message::offmap_possesions_t ToProtobuf (const offmap_possesions_t& value)
 {
-    message::offmap_t retval;
+    message::offmap_possesions_t retval;
     retval.set_provinces(value.provinces);
     retval.set_mins(value.mins);
     retval.set_majs(value.majs);
@@ -58,7 +58,7 @@ message::nation_t ToProtobuf (const nation_t& value)
     retval.mutable_capital()->CopyFrom(ToProtobuf(value.capital));
     retval.set_free_strategic_moves(value.free_strategic_moves);
     retval.set_capital_star_points(value.capital_star_points);
-    retval.mutable_offmap()->CopyFrom(ToProtobuf(value.offmap));
+    retval.mutable_offmap_possesions()->CopyFrom(ToProtobuf(value.offmap_possesions));
     retval.set_offmap_survey_ships(value.offmap_survey_ships);
     retval.set_nation_id(value.nation_id);
     retval.set_cannot_build_offmap_capital(value.cannot_build_offmap_capital);
@@ -87,21 +87,44 @@ message::hex_t ToProtobuf (const hex_t& value)
     return retval;
 }
 
+message::province_hex_t ToProtobuf (const province_hex_t& value)
+{
+    message::province_hex_t retval;
+    retval.set_hex(value.hex);
+    retval.set_feature(static_cast<message::feature_t>(value.feature));
+    return retval;
+}
+
 message::province_t ToProtobuf (const province_t& value)
 {
     message::province_t retval;
     for (const auto& x : value.hexes) {
-        retval.add_hexes(x);
+        retval.add_hexes()->CopyFrom(ToProtobuf(x));
     }
     return retval;
 }
 
-message::province_list_t ToProtobuf (const province_list_t& value)
+message::offmap_area_t ToProtobuf (const offmap_area_t& value)
 {
-    message::province_list_t retval;
+    message::offmap_area_t retval;
+    retval.set_name(value.name);
+    for (const auto& x : value.features) {
+        retval.add_features(static_cast<message::feature_t>(x));
+    }
+    retval.set_counter_hex(value.counter_hex);
+    for (const auto& x : value.adjacent_hexes) {
+        retval.add_adjacent_hexes(x);
+    }
+    return retval;
+}
+
+message::starting_national_holdings_t ToProtobuf (const starting_national_holdings_t& value)
+{
+    message::starting_national_holdings_t retval;
     for (const auto& x : value.provinces) {
         retval.add_provinces()->CopyFrom(ToProtobuf(x));
     }
+    retval.mutable_offmap_area()->CopyFrom(ToProtobuf(value.offmap_area));
     return retval;
 }
 
@@ -110,8 +133,14 @@ message::map_t ToProtobuf (const map_t& value)
     message::map_t retval;
     retval.set_width(value.width);
     retval.set_height(value.height);
-    for (const auto& x : value.provinces) {
-        (*retval.mutable_provinces())[x.first] = ToProtobuf(x.second);
+    for (const auto& x : value.nz_planets) {
+        retval.add_nz_planets(x);
+    }
+    for (const auto& x : value.nz_hexes) {
+        retval.add_nz_hexes(x);
+    }
+    for (const auto& x : value.starting_national_holdings) {
+        (*retval.mutable_starting_national_holdings())[x.first] = ToProtobuf(x.second);
     }
     for (const auto& x : value.hexes) {
         retval.add_hexes()->CopyFrom(ToProtobuf(x));
@@ -253,9 +282,9 @@ capital_t FromProtobuf (const message::capital_t& msg)
     return retval;
 }
 
-offmap_t FromProtobuf (const message::offmap_t& msg)
+offmap_possesions_t FromProtobuf (const message::offmap_possesions_t& msg)
 {
-    offmap_t retval;
+    offmap_possesions_t retval;
     retval.provinces = msg.provinces();
     retval.mins = msg.mins();
     retval.majs = msg.majs();
@@ -270,7 +299,7 @@ nation_t FromProtobuf (const message::nation_t& msg)
     retval.capital = FromProtobuf(msg.capital());
     retval.free_strategic_moves = msg.free_strategic_moves();
     retval.capital_star_points = msg.capital_star_points();
-    retval.offmap = FromProtobuf(msg.offmap());
+    retval.offmap_possesions = FromProtobuf(msg.offmap_possesions());
     retval.offmap_survey_ships = msg.offmap_survey_ships();
     retval.nation_id = msg.nation_id();
     retval.cannot_build_offmap_capital = msg.cannot_build_offmap_capital();
@@ -303,6 +332,14 @@ hex_t FromProtobuf (const message::hex_t& msg)
     return retval;
 }
 
+province_hex_t FromProtobuf (const message::province_hex_t& msg)
+{
+    province_hex_t retval;
+    retval.hex = msg.hex();
+    retval.feature = static_cast<feature_t>(msg.feature());
+    return retval;
+}
+
 province_t FromProtobuf (const message::province_t& msg)
 {
     province_t retval;
@@ -310,15 +347,37 @@ province_t FromProtobuf (const message::province_t& msg)
         retval.hexes.resize(msg.hexes_size());
         auto it = retval.hexes.begin();
         for (const auto& x : msg.hexes()) {
+            *it++ = FromProtobuf(x);
+        }
+    }
+    return retval;
+}
+
+offmap_area_t FromProtobuf (const message::offmap_area_t& msg)
+{
+    offmap_area_t retval;
+    retval.name = msg.name();
+    {
+        retval.features.resize(msg.features_size());
+        auto it = retval.features.begin();
+        for (const auto& x : msg.features()) {
+            *it++ = static_cast<feature_t>(x);
+        }
+    }
+    retval.counter_hex = msg.counter_hex();
+    {
+        retval.adjacent_hexes.resize(msg.adjacent_hexes_size());
+        auto it = retval.adjacent_hexes.begin();
+        for (const auto& x : msg.adjacent_hexes()) {
             *it++ = x;
         }
     }
     return retval;
 }
 
-province_list_t FromProtobuf (const message::province_list_t& msg)
+starting_national_holdings_t FromProtobuf (const message::starting_national_holdings_t& msg)
 {
-    province_list_t retval;
+    starting_national_holdings_t retval;
     {
         retval.provinces.resize(msg.provinces_size());
         auto it = retval.provinces.begin();
@@ -326,6 +385,7 @@ province_list_t FromProtobuf (const message::province_list_t& msg)
             *it++ = FromProtobuf(x);
         }
     }
+    retval.offmap_area = FromProtobuf(msg.offmap_area());
     return retval;
 }
 
@@ -334,8 +394,22 @@ map_t FromProtobuf (const message::map_t& msg)
     map_t retval;
     retval.width = msg.width();
     retval.height = msg.height();
-    for (const auto& x : msg.provinces()) {
-        retval.provinces[x.first] = FromProtobuf(x.second);
+    {
+        retval.nz_planets.resize(msg.nz_planets_size());
+        auto it = retval.nz_planets.begin();
+        for (const auto& x : msg.nz_planets()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.nz_hexes.resize(msg.nz_hexes_size());
+        auto it = retval.nz_hexes.begin();
+        for (const auto& x : msg.nz_hexes()) {
+            *it++ = x;
+        }
+    }
+    for (const auto& x : msg.starting_national_holdings()) {
+        retval.starting_national_holdings[x.first] = FromProtobuf(x.second);
     }
     {
         retval.hexes.resize(msg.hexes_size());

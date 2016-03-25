@@ -44,7 +44,7 @@ struct capital_t
     std::vector<capital_hex_t> hexes;
 };
 
-struct offmap_t
+struct offmap_possesions_t
 {
     int provinces;
     int mins;
@@ -58,7 +58,7 @@ struct nation_t
     capital_t capital;
     int free_strategic_moves;
     int capital_star_points;
-    offmap_t offmap;
+    offmap_possesions_t offmap_possesions;
     int offmap_survey_ships;
     int nation_id;
     int cannot_build_offmap_capital;
@@ -78,21 +78,38 @@ struct hex_t
     std::vector<int> neutral_zone_bordering;
 };
 
-struct province_t
+struct province_hex_t
 {
-    std::vector<int> hexes;
+    int hex;
+    feature_t feature;
 };
 
-struct province_list_t
+struct province_t
+{
+    std::vector<province_hex_t> hexes;
+};
+
+struct offmap_area_t
+{
+    std::string name;
+    std::vector<feature_t> features;
+    int counter_hex;
+    std::vector<int> adjacent_hexes;
+};
+
+struct starting_national_holdings_t
 {
     std::vector<province_t> provinces;
+    offmap_area_t offmap_area;
 };
 
 struct map_t
 {
     int width;
     int height;
-    std::map<int, province_list_t> provinces;
+    std::vector<int> nz_planets;
+    std::vector<int> nz_hexes;
+    std::map<std::string, starting_national_holdings_t> starting_national_holdings;
     std::vector<hex_t> hexes;
 };
 
@@ -157,8 +174,8 @@ capital_hex_t FromProtobuf (const message::capital_hex_t& msg);
 message::capital_t ToProtobuf (const capital_t& value);
 capital_t FromProtobuf (const message::capital_t& msg);
 
-message::offmap_t ToProtobuf (const offmap_t& value);
-offmap_t FromProtobuf (const message::offmap_t& msg);
+message::offmap_possesions_t ToProtobuf (const offmap_possesions_t& value);
+offmap_possesions_t FromProtobuf (const message::offmap_possesions_t& msg);
 
 message::nation_t ToProtobuf (const nation_t& value);
 nation_t FromProtobuf (const message::nation_t& msg);
@@ -169,11 +186,17 @@ nations_t FromProtobuf (const message::nations_t& msg);
 message::hex_t ToProtobuf (const hex_t& value);
 hex_t FromProtobuf (const message::hex_t& msg);
 
+message::province_hex_t ToProtobuf (const province_hex_t& value);
+province_hex_t FromProtobuf (const message::province_hex_t& msg);
+
 message::province_t ToProtobuf (const province_t& value);
 province_t FromProtobuf (const message::province_t& msg);
 
-message::province_list_t ToProtobuf (const province_list_t& value);
-province_list_t FromProtobuf (const message::province_list_t& msg);
+message::offmap_area_t ToProtobuf (const offmap_area_t& value);
+offmap_area_t FromProtobuf (const message::offmap_area_t& msg);
+
+message::starting_national_holdings_t ToProtobuf (const starting_national_holdings_t& value);
+starting_national_holdings_t FromProtobuf (const message::starting_national_holdings_t& msg);
 
 message::map_t ToProtobuf (const map_t& value);
 map_t FromProtobuf (const message::map_t& msg);
