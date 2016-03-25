@@ -69,14 +69,17 @@ for message in message_p.findall(contents):
     message_names.append(name)
     members = []
     for member in members_:
-        match = map_member_p.search(member)
         repeated = 'repeated' in member
+
+        match = map_member_p.search(member)
         if match:
             members.append((repeated, (match.group(1), match.group(2)), match.group(3)))
-        else:
-            match = member_p.search(member)
+            continue
+
+        match = member_p.search(member)
+        if match:
             members.append((repeated, match.group(1), match.group(2)))
-            message_names.append(name)
+
     messages.append((name, members))
 
 args.hpp_file.write('''#pragma once
@@ -191,10 +194,12 @@ for message in messages:
                 loop_stmt = '*it++ = static_cast<{value_type}>(x);'.format(**locals())
             else:
                 loop_stmt = '*it++ = x;'.format(**locals())
-            args.cpp_file.write('''    retval.{name}.resize(msg.{name}_size());
-    auto it = retval.{name}.begin();
-    for (const auto& x : msg.{name}()) {{
-        {loop_stmt}
+            args.cpp_file.write('''    {{
+        retval.{name}.resize(msg.{name}_size());
+        auto it = retval.{name}.begin();
+        for (const auto& x : msg.{name}()) {{
+            {loop_stmt}
+        }}
     }}
 '''.format(**locals()))
         elif type(member[1]) is tuple: # map

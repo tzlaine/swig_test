@@ -16,6 +16,11 @@ enum class feature_t {
     capital = 5,
 };
 
+enum class season_t {
+    spring = 0,
+    fall = 1,
+};
+
 struct hex_coord_t
 {
     int x;
@@ -97,6 +102,46 @@ struct model_t
     map_t map;
 };
 
+struct oob_unit_t
+{
+    std::string unit;
+    int times;
+};
+
+struct production_element_t
+{
+    int year;
+    season_t season;
+    std::vector<oob_unit_t> units;
+};
+
+struct starting_fleet_t
+{
+    std::vector<int> hexes;
+    std::vector<oob_unit_t> units;
+    int reserve;
+    std::vector<production_element_t> prewar_construction;
+};
+
+struct mothball_reserve_t
+{
+    std::vector<oob_unit_t> units;
+    std::vector<oob_unit_t> war_release;
+    std::vector<oob_unit_t> limited_war_release;
+};
+
+struct order_of_battle_t
+{
+    std::map<std::string, starting_fleet_t> starting_fleets;
+    mothball_reserve_t mothball_reserve;
+    std::vector<production_element_t> production;
+};
+
+struct orders_of_battle_t
+{
+    std::map<std::string, order_of_battle_t> oobs;
+};
+
 message::hex_coord_t ToProtobuf (const hex_coord_t& value);
 hex_coord_t FromProtobuf (const message::hex_coord_t& msg);
 
@@ -132,3 +177,21 @@ map_t FromProtobuf (const message::map_t& msg);
 
 message::model_t ToProtobuf (const model_t& value);
 model_t FromProtobuf (const message::model_t& msg);
+
+message::oob_unit_t ToProtobuf (const oob_unit_t& value);
+oob_unit_t FromProtobuf (const message::oob_unit_t& msg);
+
+message::production_element_t ToProtobuf (const production_element_t& value);
+production_element_t FromProtobuf (const message::production_element_t& msg);
+
+message::starting_fleet_t ToProtobuf (const starting_fleet_t& value);
+starting_fleet_t FromProtobuf (const message::starting_fleet_t& msg);
+
+message::mothball_reserve_t ToProtobuf (const mothball_reserve_t& value);
+mothball_reserve_t FromProtobuf (const message::mothball_reserve_t& msg);
+
+message::order_of_battle_t ToProtobuf (const order_of_battle_t& value);
+order_of_battle_t FromProtobuf (const message::order_of_battle_t& msg);
+
+message::orders_of_battle_t ToProtobuf (const orders_of_battle_t& value);
+orders_of_battle_t FromProtobuf (const message::orders_of_battle_t& msg);

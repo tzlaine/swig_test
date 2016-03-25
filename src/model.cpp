@@ -852,6 +852,7 @@ struct model_state_t
     bool initialized;
     nations_t nations;
     map_t m;
+    orders_of_battle_t oob;
     graph::graph g;
     graph::hex_id_property_map hex_id_property_map;
     graph::EdgeWeightPropertyMap edge_weight_map;
@@ -894,7 +895,7 @@ extern "C" {
             message::nations_t nations_msg;
             pb::io::ArrayInputStream is(nations_str, strlen(nations_str));
             if (!pb::TextFormat::Parse(&is, &nations_msg))
-                boost::throw_exception(std::runtime_error("Missing saved nations data"));
+                boost::throw_exception(std::runtime_error("Missing starting nations data"));
             g_model_state.nations = FromProtobuf(nations_msg);
             // TODO: Validate and fill in nation_ids.
         }
@@ -903,12 +904,19 @@ extern "C" {
             message::map_t map_msg;
             pb::io::ArrayInputStream is(map_str, strlen(map_str));
             if (!pb::TextFormat::Parse(&is, &map_msg))
-                boost::throw_exception(std::runtime_error("Missing saved map data"));
+                boost::throw_exception(std::runtime_error("Missing starting map data"));
             g_model_state.m = FromProtobuf(map_msg);
             // TODO: Validate and fill in nation_ids.
         }
 
-        // TODO: OOB.
+        if (0) { // TODO
+            message::orders_of_battle_t oob_msg;
+            pb::io::ArrayInputStream is(oob_str, strlen(oob_str));
+            if (!pb::TextFormat::Parse(&is, &oob_msg))
+                boost::throw_exception(std::runtime_error("Missing starting order of battle data"));
+            g_model_state.oob = FromProtobuf(oob_msg);
+            // TODO: Validate and fill in nation_ids.
+        }
 
 #if 0
         init_graph(

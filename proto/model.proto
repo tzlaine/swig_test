@@ -12,6 +12,11 @@ enum feature_t {
     capital = 5;
 }
 
+enum season_t {
+    spring = 0;
+    fall = 1;
+}
+
 message hex_coord_t
 {
     int32 x = 1;
@@ -91,4 +96,46 @@ message model_t
 {
     nations_t nations = 1;
     map_t map = 2;
+}
+
+message oob_unit_t
+{
+    string unit = 1;
+    int32 times = 2; // "times: 2", "times: 3", etc. -- omission implies x1
+}
+
+message production_element_t
+{
+    int32 year = 1;
+    season_t season = 2;
+    repeated oob_unit_t units = 3;
+}
+
+message starting_fleet_t
+{
+    repeated int32 hexes = 1;
+    repeated oob_unit_t units = 2;
+    int32 reserve = 3; // integer acting as boolean
+    repeated production_element_t prewar_construction = 4;
+}
+
+message mothball_reserve_t
+{
+    repeated oob_unit_t units = 1;
+    repeated oob_unit_t war_release = 2;
+    repeated oob_unit_t limited_war_release = 3;
+}
+
+// TODO Special production rules
+// TODO Production notes
+message order_of_battle_t
+{
+    map<string, starting_fleet_t> starting_fleets = 1;
+    mothball_reserve_t mothball_reserve = 2;
+    repeated production_element_t production = 3;
+}
+
+message orders_of_battle_t
+{
+    map<string, order_of_battle_t> oobs = 1;
 }
