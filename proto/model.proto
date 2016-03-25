@@ -45,6 +45,9 @@ message offmap_possesions_t
     int32 provinces = 1;
     int32 mins = 2;
     int32 majs = 3;
+    int32 survey_ships = 4;
+    int32 cannot_build_offmap_capital = 5;
+    int32 old_shipyard = 6;
 }
 
 message nation_t
@@ -55,10 +58,7 @@ message nation_t
     int32 free_strategic_moves = 4;
     int32 capital_star_points = 5;
     offmap_possesions_t offmap_possesions = 6;
-    int32 offmap_survey_ships = 7;
-    int32 nation_id = 8;
-    int32 cannot_build_offmap_capital = 9;
-    int32 old_offmap_shipyard = 10;
+    int32 nation_id = 7;
 }
 
 message nations_t

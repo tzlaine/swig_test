@@ -49,6 +49,9 @@ struct offmap_possesions_t
     int provinces;
     int mins;
     int majs;
+    int survey_ships;
+    int cannot_build_offmap_capital;
+    int old_shipyard;
 };
 
 struct nation_t
@@ -59,10 +62,7 @@ struct nation_t
     int free_strategic_moves;
     int capital_star_points;
     offmap_possesions_t offmap_possesions;
-    int offmap_survey_ships;
     int nation_id;
-    int cannot_build_offmap_capital;
-    int old_offmap_shipyard;
 };
 
 struct nations_t

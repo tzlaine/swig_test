@@ -47,6 +47,9 @@ message::offmap_possesions_t ToProtobuf (const offmap_possesions_t& value)
     retval.set_provinces(value.provinces);
     retval.set_mins(value.mins);
     retval.set_majs(value.majs);
+    retval.set_survey_ships(value.survey_ships);
+    retval.set_cannot_build_offmap_capital(value.cannot_build_offmap_capital);
+    retval.set_old_shipyard(value.old_shipyard);
     return retval;
 }
 
@@ -59,10 +62,7 @@ message::nation_t ToProtobuf (const nation_t& value)
     retval.set_free_strategic_moves(value.free_strategic_moves);
     retval.set_capital_star_points(value.capital_star_points);
     retval.mutable_offmap_possesions()->CopyFrom(ToProtobuf(value.offmap_possesions));
-    retval.set_offmap_survey_ships(value.offmap_survey_ships);
     retval.set_nation_id(value.nation_id);
-    retval.set_cannot_build_offmap_capital(value.cannot_build_offmap_capital);
-    retval.set_old_offmap_shipyard(value.old_offmap_shipyard);
     return retval;
 }
 
@@ -288,6 +288,9 @@ offmap_possesions_t FromProtobuf (const message::offmap_possesions_t& msg)
     retval.provinces = msg.provinces();
     retval.mins = msg.mins();
     retval.majs = msg.majs();
+    retval.survey_ships = msg.survey_ships();
+    retval.cannot_build_offmap_capital = msg.cannot_build_offmap_capital();
+    retval.old_shipyard = msg.old_shipyard();
     return retval;
 }
 
@@ -300,10 +303,7 @@ nation_t FromProtobuf (const message::nation_t& msg)
     retval.free_strategic_moves = msg.free_strategic_moves();
     retval.capital_star_points = msg.capital_star_points();
     retval.offmap_possesions = FromProtobuf(msg.offmap_possesions());
-    retval.offmap_survey_ships = msg.offmap_survey_ships();
     retval.nation_id = msg.nation_id();
-    retval.cannot_build_offmap_capital = msg.cannot_build_offmap_capital();
-    retval.old_offmap_shipyard = msg.old_offmap_shipyard();
     return retval;
 }
 

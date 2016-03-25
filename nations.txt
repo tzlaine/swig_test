@@ -43,9 +43,9 @@ nations: {
         offmap_possesions: {
             provinces: 3,
             mins: 0,
-            majs: 0
-        },
-        offmap_survey_ships: 7
+            majs: 0,
+            survey_ships: 7
+        }
     }
 },
 nations: {
@@ -87,9 +87,9 @@ nations: {
         offmap_possesions: {
             provinces: 3,
             mins: 2,
-            majs: 0
-        },
-        offmap_survey_ships: 2
+            majs: 0,
+            survey_ships: 2
+        }
     }
 },
 nations: {
@@ -123,10 +123,10 @@ nations: {
         offmap_possesions: {
             provinces: 2,
             mins: 1,
-            majs: 2
-        },
-        offmap_survey_ships: 3,
-        old_offmap_shipyard: 1
+            majs: 2,
+            survey_ships: 3,
+            old_shipyard: 1
+        }
     }
 },
 nations: {
@@ -144,9 +144,9 @@ nations: {
         offmap_possesions: {
             provinces: 8,
             mins: 2,
-            majs: 1
-        },
-        offmap_survey_ships: 8
+            majs: 1,
+            survey_ships: 8
+        }
     }
 },
 nations: {
@@ -192,10 +192,10 @@ nations: {
         offmap_possesions: {
             provinces: 0,
             mins: 0,
-            majs: 0
-        },
-        offmap_survey_ships: 2,
-        cannot_build_offmap_capital: 1
+            majs: 0,
+            survey_ships: 2,
+            cannot_build_offmap_capital: 1
+        }
     }
 },
 nations: {
@@ -234,9 +234,9 @@ nations: {
         offmap_possesions: {
             provinces: 3,
             mins: 2,
-            majs: 1
-        },
-        offmap_survey_ships: 3
+            majs: 1,
+            survey_ships: 3
+        }
     }
 },
 nations: {
@@ -285,9 +285,9 @@ nations: {
         offmap_possesions: {
             provinces: 4,
             mins: 2,
-            majs: 2
-        },
-        offmap_survey_ships: 3
+            majs: 2,
+            survey_ships: 3
+        }
     }
 },
 nations: {
@@ -350,10 +350,10 @@ nations: {
         offmap_possesions: {
             provinces: 0,
             mins: 0,
-            majs: 0
-        },
-        offmap_survey_ships: 0,
-        cannot_build_offmap_capital: 1
+            majs: 0,
+            survey_ships: 0,
+            cannot_build_offmap_capital: 1
+        }
     }
 },
 nations: {
