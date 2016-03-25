@@ -27,7 +27,8 @@ matrix:
                 - ubuntu-toolchain-r-test
                 - llvm-toolchain-precise-3.5
 
-        - env: CLANG_VERSION=3.7 BUILD_TYPE=Debug ASAN=off LIBCXX=on
+        # Turned off Linux+LIBCXX, due to an error found in Protobuf v3 beta 2
+        - env: CLANG_VERSION=3.7 BUILD_TYPE=Debug ASAN=off LIBCXX=off
           os: linux
           compiler: clang-3.7
           addons: &clang37
@@ -39,11 +40,6 @@ matrix:
               sources:
                 - ubuntu-toolchain-r-test
                 - llvm-toolchain-precise-3.7
-
-        - env: CLANG_VERSION=3.7 BUILD_TYPE=Debug ASAN=off LIBCXX=off
-          os: linux
-          compiler: clang-3.7
-          addons: *clang37
 
         # Gcc
         - env: GCC_VERSION=5 BUILD_TYPE=Debug ASAN=off LIBCXX=off
