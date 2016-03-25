@@ -2,6 +2,7 @@
 #include "model_data.hpp"
 
 #include <boost/array.hpp>
+#include <boost/container/static_vector.hpp>
 
 #if LOG
 #include <fstream>
@@ -93,39 +94,23 @@ inline int hex_id (hex_coord_t hc)
 
 
 // Static container for hex ids within R=2 of a central hex.
-struct neighbors_t // TODO: typedef boost::container::static_vector<hex_coord_t, 19> neighbors_t;
-{
-    typedef boost::array<hex_coord_t, 19> data_type;
-    typedef data_type::const_iterator iterator;
-
-    neighbors_t () : size (0) {}
-
-    std::size_t size;
-    data_type hexes;
-};
-
-neighbors_t::iterator begin (neighbors_t n)
-{ return n.hexes.begin(); }
-
-neighbors_t::iterator end (neighbors_t n)
-{ return n.hexes.begin() + n.size; }
-
+typedef boost::container::static_vector<hex_coord_t, 19> neighbors_t;
 
 inline neighbors_t adjacent_hex_coords (hex_coord_t hc, const map_t& m, int r = 1)
 {
     assert(r == 1 || r == 2);
     neighbors_t retval;
     if (on_map(hc, m)) {
-        retval.hexes[retval.size++] = hc;
+        retval.push_back(hc);
         for (hex_direction_t d : all_hex_directions) {
             hex_coord_t r1 = adjacent_hex_coord(hc, d);
             if (on_map(r1, m)) {
-                retval.hexes[retval.size++] = r1;
+                retval.push_back(r1);
 
                 {
                     hex_coord_t r2 = adjacent_hex_coord(r1, d);
                     if (on_map(r2, m))
-                        retval.hexes[retval.size++] = r2;
+                        retval.push_back(r2);
                 }
 
                 {
@@ -133,7 +118,7 @@ inline neighbors_t adjacent_hex_coords (hex_coord_t hc, const map_t& m, int r = 
                     ++d2;
                     hex_coord_t r2 = adjacent_hex_coord(r1, d2);
                     if (on_map(r2, m))
-                        retval.hexes[retval.size++] = r2;
+                        retval.push_back(r2);
                 }
             }
         }
