@@ -400,34 +400,11 @@ void init_graph (graph::graph& g,
     }
 }
 
-hex_coord_t hex_string_to_hex_coord (std::string str)
+hex_coord_t to_hex_coord (int hex_id)
 {
-    if (str[0] == '0')
-        str.substr(1, -1);
-    if (str[0] == '0')
-        str.substr(1, -1);
-    if (str[0] == '0')
-        str.substr(1, -1);
-    const int hex_id = boost::lexical_cast<int>(str);
     int hex_x = hex_id / 100 - 1;
     int hex_y = hex_id % 100 - 1;
     return hex_coord_t{hex_x, hex_y};
-}
-
-feature_t feature_string_to_feature (std::string str)
-{
-    feature_t retval = feature_t::none;
-    if (str == "BATS")
-        retval = feature_t::bats;
-    else if (str == "SB")
-        retval = feature_t::sb;
-    else if (str == "MIN")
-        retval = feature_t::min;
-    else if (str == "MAJ")
-        retval = feature_t::maj;
-    else if (str != "capital" && str != "none")
-        boost::throw_exception(std::runtime_error("Invalid hex feature \"" + str + "\" found in map.json"));
-    return retval;
 }
 
 
