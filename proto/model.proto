@@ -71,7 +71,7 @@ message hex_t
     hex_coord_t coord = 1;
     uint32 owner = 2;
     feature_t feature = 3;
-    repeated int32 neutral_zone_bordering = 4;
+    repeated int32 neutral_zone_bordering = 4 [packed=true];
 }
 
 message province_hex_t
@@ -89,9 +89,9 @@ message province_t
 message offmap_area_t
 {
     string name = 1;
-    repeated feature_t features = 2;
+    repeated feature_t features = 2 [packed=true];
     int32 counter_hex = 3; // Where the SB counter is chown, if any.
-    repeated int32 adjacent_hexes = 4;
+    repeated int32 adjacent_hexes = 4 [packed=true];
 }
 
 message starting_national_holdings_t
@@ -104,8 +104,8 @@ message map_t
 {
     int32 width = 1;
     int32 height = 2;
-    repeated int32 nz_planets = 3; // only in starting data (all planets are MIN)
-    repeated int32 nz_hexes = 4;   // only in starting data
+    repeated int32 nz_planets = 3 [packed=true]; // only in starting data (all planets are MIN)
+    repeated int32 nz_hexes = 4 [packed=true];   // only in starting data
     map<string, starting_national_holdings_t> starting_national_holdings = 5;
     repeated hex_t hexes = 6; // only in saved data
 }
@@ -131,7 +131,7 @@ message production_element_t
 
 message starting_fleet_t
 {
-    repeated int32 hexes = 1;
+    repeated int32 hexes = 1 [packed=true];
     repeated oob_unit_t units = 2;
     int32 reserve = 3; // integer acting as boolean
     repeated production_element_t prewar_construction = 4;
