@@ -26,7 +26,7 @@ message capital_hex_zone_t
 
 message capital_hex_t
 {
-    hex_coord_t coord = 1;
+    int32 coord = 1;
     repeated capital_hex_zone_t zones = 2;
 }
 
@@ -44,13 +44,16 @@ message offmap_t
 
 message nation_t
 {
-    string short_name = 1;
-    capital_t capital = 2;
-    int32 free_strat_moves = 3;
-    int32 capital_star_points = 4;
-    offmap_t offmap = 5;
-    int32 offmap_survey_ships = 6;
-    int32 nation_id = 7;
+    string name = 1;
+    string short_name = 2;
+    capital_t capital = 3;
+    int32 free_strategic_moves = 4;
+    int32 capital_star_points = 5;
+    offmap_t offmap = 6;
+    int32 offmap_survey_ships = 7;
+    int32 nation_id = 8;
+    int32 cannot_build_offmap_capital = 9;
+    int32 old_offmap_shipyard = 10;
 }
 
 message nations_t

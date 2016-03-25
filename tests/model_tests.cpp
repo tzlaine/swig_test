@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 
-TEST(test_case_name, test_name)
+TEST(whole_model_ops, init)
 {
-    
+    EXPECT_TRUE(init_model(nations_json_string, map_json_string, oob_json_string));
 }

@@ -30,7 +30,7 @@ struct capital_hex_zone_t
 
 struct capital_hex_t
 {
-    hex_coord_t coord;
+    int coord;
     std::vector<capital_hex_zone_t> zones;
 };
 
@@ -48,13 +48,16 @@ struct offmap_t
 
 struct nation_t
 {
+    std::string name;
     std::string short_name;
     capital_t capital;
-    int free_strat_moves;
+    int free_strategic_moves;
     int capital_star_points;
     offmap_t offmap;
     int offmap_survey_ships;
     int nation_id;
+    int cannot_build_offmap_capital;
+    int old_offmap_shipyard;
 };
 
 struct nations_t

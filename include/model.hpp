@@ -41,10 +41,10 @@ extern "C" {
     float test_3 (int n, ga_hex_t* hexes);
 
     MODEL_API
-    void init_model (const char* nations_str, const char* map_str, const char* oob_str);
+    int init_model (const char* nations_str, const char* map_str, const char* oob_str);
 
     MODEL_API
-    void reset_model ();
+    int reset_model ();
 
     MODEL_API
     int save_model (const char* filename);

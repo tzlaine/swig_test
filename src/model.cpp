@@ -885,7 +885,7 @@ extern "C" {
     } CATCH_AND_RETURN(0.0f);
 
     MODEL_API
-    void init_model (const char* nations_str, const char* map_str, const char* oob_str) try
+    int init_model (const char* nations_str, const char* map_str, const char* oob_str) try
     {
         if (g_model_state.initialized)
             boost::throw_exception(std::runtime_error("Attempted to duplicate-initialize model"));
@@ -899,7 +899,7 @@ extern "C" {
             // TODO: Validate and fill in nation_ids.
         }
 
-        {
+        if (0) { // TODO
             message::map_t map_msg;
             pb::io::ArrayInputStream is(map_str, strlen(map_str));
             if (!pb::TextFormat::Parse(&is, &map_msg))
@@ -910,6 +910,7 @@ extern "C" {
 
         // TODO: OOB.
 
+#if 0
         init_graph(
             g_model_state.g,
             g_model_state.hex_id_property_map,
@@ -919,17 +920,20 @@ extern "C" {
             [] (int id1, int id2) {return true;},
             [] (int id1, int id2) {return 1.0;}
         );
+#endif
 
         g_model_state.initialized = true;
 
-    } CATCH_AND_RETURN(/*void*/);
+        return 1;
+    } CATCH_AND_RETURN(0);
 
     MODEL_API
-    void reset_model () try
+    int reset_model () try
     {
         g_model_state = model_state_t();
+        return 1;
 
-    } CATCH_AND_RETURN(/*void*/);
+    } CATCH_AND_RETURN(0);
 
     MODEL_API
     int save_model (const char* filename) try

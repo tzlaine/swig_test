@@ -25,7 +25,7 @@ message::capital_hex_zone_t ToProtobuf (const capital_hex_zone_t& value)
 message::capital_hex_t ToProtobuf (const capital_hex_t& value)
 {
     message::capital_hex_t retval;
-    retval.mutable_coord()->CopyFrom(ToProtobuf(value.coord));
+    retval.set_coord(value.coord);
     for (const auto& x : value.zones) {
         retval.add_zones()->CopyFrom(ToProtobuf(x));
     }
@@ -53,13 +53,16 @@ message::offmap_t ToProtobuf (const offmap_t& value)
 message::nation_t ToProtobuf (const nation_t& value)
 {
     message::nation_t retval;
+    retval.set_name(value.name);
     retval.set_short_name(value.short_name);
     retval.mutable_capital()->CopyFrom(ToProtobuf(value.capital));
-    retval.set_free_strat_moves(value.free_strat_moves);
+    retval.set_free_strategic_moves(value.free_strategic_moves);
     retval.set_capital_star_points(value.capital_star_points);
     retval.mutable_offmap()->CopyFrom(ToProtobuf(value.offmap));
     retval.set_offmap_survey_ships(value.offmap_survey_ships);
     retval.set_nation_id(value.nation_id);
+    retval.set_cannot_build_offmap_capital(value.cannot_build_offmap_capital);
+    retval.set_old_offmap_shipyard(value.old_offmap_shipyard);
     return retval;
 }
 
@@ -147,7 +150,7 @@ capital_hex_zone_t FromProtobuf (const message::capital_hex_zone_t& msg)
 capital_hex_t FromProtobuf (const message::capital_hex_t& msg)
 {
     capital_hex_t retval;
-    retval.coord = FromProtobuf(msg.coord());
+    retval.coord = msg.coord();
     retval.zones.resize(msg.zones_size());
     auto it = retval.zones.begin();
     for (const auto& x : msg.zones()) {
@@ -179,13 +182,16 @@ offmap_t FromProtobuf (const message::offmap_t& msg)
 nation_t FromProtobuf (const message::nation_t& msg)
 {
     nation_t retval;
+    retval.name = msg.name();
     retval.short_name = msg.short_name();
     retval.capital = FromProtobuf(msg.capital());
-    retval.free_strat_moves = msg.free_strat_moves();
+    retval.free_strategic_moves = msg.free_strategic_moves();
     retval.capital_star_points = msg.capital_star_points();
     retval.offmap = FromProtobuf(msg.offmap());
     retval.offmap_survey_ships = msg.offmap_survey_ships();
     retval.nation_id = msg.nation_id();
+    retval.cannot_build_offmap_capital = msg.cannot_build_offmap_capital();
+    retval.old_offmap_shipyard = msg.old_offmap_shipyard();
     return retval;
 }
 
