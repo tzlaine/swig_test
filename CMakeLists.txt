@@ -22,13 +22,13 @@ add_custom_command(
         data.hpp
     COMMAND
         ${CMAKE_COMMAND}
-            -Dnations_file=${CMAKE_HOME_DIRECTORY}/nations.json
+            -Dnations_file=${CMAKE_HOME_DIRECTORY}/nations.txt
             -Dmap_file=${CMAKE_HOME_DIRECTORY}/default_map.json
             -Doob_file=${CMAKE_HOME_DIRECTORY}/default_oob.json
             -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/data.hpp.in
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     DEPENDS
-        ${CMAKE_HOME_DIRECTORY}/nations.json
+        ${CMAKE_HOME_DIRECTORY}/nations.txt
         ${CMAKE_HOME_DIRECTORY}/default_map.json
         ${CMAKE_HOME_DIRECTORY}/default_oob.json
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/data.hpp.in
