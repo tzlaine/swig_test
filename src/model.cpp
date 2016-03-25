@@ -909,13 +909,13 @@ extern "C" {
             // TODO: Validate and fill in nation_ids.
         }
 
-        if (0) { // TODO
+        {
             message::orders_of_battle_t oob_msg;
             pb::io::ArrayInputStream is(oob_str, strlen(oob_str));
             if (!pb::TextFormat::Parse(&is, &oob_msg))
                 boost::throw_exception(std::runtime_error("Missing starting order of battle data"));
             g_model_state.oob = FromProtobuf(oob_msg);
-            // TODO: Validate and fill in nation_ids.
+            // TODO: Validate and fill in oob_unit_t::times (0's should become 1's).
         }
 
 #if 0

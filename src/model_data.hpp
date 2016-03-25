@@ -121,6 +121,9 @@ struct starting_fleet_t
     std::vector<oob_unit_t> units;
     int reserve;
     std::vector<production_element_t> prewar_construction;
+    int strategic_move_arrival_year;
+    season_t strategic_move_arrival_season;
+    std::map<int, int> hex_placement_limits;
 };
 
 struct mothball_reserve_t

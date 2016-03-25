@@ -159,6 +159,11 @@ message::starting_fleet_t ToProtobuf (const starting_fleet_t& value)
     for (const auto& x : value.prewar_construction) {
         retval.add_prewar_construction()->CopyFrom(ToProtobuf(x));
     }
+    retval.set_strategic_move_arrival_year(value.strategic_move_arrival_year);
+    retval.set_strategic_move_arrival_season(static_cast<message::season_t>(value.strategic_move_arrival_season));
+    for (const auto& x : value.hex_placement_limits) {
+        (*retval.mutable_hex_placement_limits())[x.first] = x.second;
+    }
     return retval;
 }
 
@@ -397,6 +402,11 @@ starting_fleet_t FromProtobuf (const message::starting_fleet_t& msg)
         for (const auto& x : msg.prewar_construction()) {
             *it++ = FromProtobuf(x);
         }
+    }
+    retval.strategic_move_arrival_year = msg.strategic_move_arrival_year();
+    retval.strategic_move_arrival_season = static_cast<season_t>(msg.strategic_move_arrival_season());
+    for (const auto& x : msg.hex_placement_limits()) {
+        retval.hex_placement_limits[x.first] = x.second;
     }
     return retval;
 }

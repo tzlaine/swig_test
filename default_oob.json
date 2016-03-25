@@ -1,752 +1,1359 @@
-{
-    "FED": {
-        "starting force": {
-            "First Fleet": {
-                "hexes": [ "2908" ],
-                "units": [ "DN", "CC", "3xCA", "3xCL", "3xDD", "SC", "6xFF", "3xTG", "FRD", "3xMB (ND)" ],
-                 "PWC": [{
-                     "year": 171,
-                     "season": "spring",
-                     "units": [ "CVA", "ECL", "2xDE", "3xNCL", "3xFF" ]
-                 }]
-            },
-            "Second Fleet": {
-                "hexes": [ "2901" ],
-                "units": [ "3xCVL" ]
-            },
-            "Third Fleet": {
-                "hexes": [
-                    "2006", "2007", "2008", "2009", "2010", "2011", "2012",
-                    "2106", "2107", "2108", "2109", "2110", "2111", "2112", "2113",
-                    "2206", "2207", "2208", "2209", "2210", "2211", "2212", "2213",
-                    "2305", "2306", "2307", "2308", "2309", "2310", "2311", "2312", "2313", "2314",
-                    "2411", "2412", "2413", "2414",
-                    "2512", "2513", "2514", "2515",
-                    "2612", "2613", "2614", "2615",
-                    "2713", "2714", "2715", "2716"
-                ],
-                "units": [ "CVS", "DE", "FFE", "CC", "3xCA", "3xCL", "3xDD", "SC", "6xFF", "TG", "FRD" ],
-                "reserve": "true",
-                "PWC": [{
-                     "year": 168,
-                     "season": "fall",
-                     "units": [ "DN" ]
-                },
-                {
-                     "year": 169,
-                     "season": "spring",
-                     "units": [ "CVB", "DE", "FFE" ]
-                },
-                {
-                     "year": 170,
-                     "season": "spring",
-                     "units": [ "3xNCL", "3xFF" ]
-                }]
-            },
-            "Fourth Fleet": {
-                "hexes": [
-                    "2003", "2004", "2005",
-                    "2103", "2104", "2105",
-                    "2201", "2202", "2203", "2204", "2205",
-                    "2301", "2302", "2303", "2304",
-                    "2401", "2402", "2403"
-                ],
-                "units": [ "CC", "3xCA", "3xDD", "SC", "3xFF", "TG" ],
-                "reserve": "true",
-                "PWC": [{
-                     "year": 170,
-                     "season": "fall",
-                     "units": [ "DN", "3xNCL", "3xFF" ]
-                }]
-            },
-            "Fifth Fleet": {
-                "hexes": [
-                    "3301", "3401", "3501", "3601",
-                    "3302", "3402", "3502", "3602",
-                    "3303", "3403", "3503", "3603", "3703", "3803",
-                    "3304", "3404", "3504", "3604", "3704", "3804",
-                    "3505", "3605", "3705", "3805",
-                    "3506", "3606", "3706", "3806",
-                    "3507", "3607", "3707", "3807",
-                    "3508", "3608", "3708", "3808"
-                ],
-                "units": [ "CC", "3xCA", "3xDD", "SC", "3xFF", "TG" ],
-                "reserve": "true"
-            },
-            "Sixth Fleet": {
-                "hexes": [
-                    "3113", "3114", "3115", "3116",
-                    "3212", "3213", "3214", "3215",
-                    "3312", "3313", "3314", "3315",
-                    "3411", "3412", "3413", "3414",
-                    "3509", "3510", "3511", "3512", "3513", "3514",
-                    "3609", "3610", "3611", "3612", "3613",
-                    "3709", "3710", "3711", "3712", "3713",
-                    "3809", "3810", "3811", "3812"
-                ],
-                "units": [ "CVS", "DE", "FFE", "CC", "3xCA", "3xCL", "3xDD", "SC", "6xFF", "TG", "FRD" ],
-                "reserve": "true",
-                "PWC": [{
-                     "year": 169,
-                     "season": "fall",
-                     "units": [ "DN" ]
-                },
-                {
-                     "year": 170,
-                     "season": "spring",
-                     "units": [ "CVB", "DE", "FFE" ]
-                }]
-            },
-            "Seventh Fleet": {
-                "hexes": [
-                    "2813", "2814", "2815", "2816",
-                    "2914", "2915", "2916",
-                    "3013", "3014", "3015", "3016"
-                ],
-                "units": [ "CC", "3xCA", "3xDD", "SC", "3xFF" ]
-            }
-        },
-        "mothball reserve": {
-            "units": [ "6xCA", "18xCL", "18xFF", "3xDD" ],
-            "war release": [ "CA", "DD", "3xCL", "3xFF" ],
-            "limited war release": [ "CL", "FF" ]
-        },
-        "production": [{
-            "year": 171,
-            "season": "fall",
-            "units": [ "DN", "CA", "3xNCL", "3xFF" ]
-        },
-        {
-            "year": 172,
-            "season": "spring",
-            "units": [ "CVA", "ECL", "2xDE", "CA", "3xNCL", "3xFF" ]
-        },
-        {
-            "year": 172,
-            "season": "fall",
-            "units": [ "DN", "CA", "6xNCL", "6xFF" ]
-        },
-        {
-            "year": 173,
-            "season": "spring",
-            "units": [ "CVA", "ECL", "2xDE", "CC", "CA", "10xNCL", "12xFF" ]
-        },
-        {
-            "year": 173,
-            "season": "fall",
-            "units": [ "DN", "2xCA", "12xNCL", "12xFF" ]
-        },
-        {
-            "year": 175,
-            "season": "spring",
-            "units": [ "CVA", "ECL", "2xDE", "CC", "CA", "10xNCL", "14xFF" ]
-        },
-        {
-            "year": 175,
-            "season": "fall",
-            "units": [ "DN", "2xCA", "12xNCL", "14xFF" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "GOR": {
-        "starting force": {
-            "First Fleet": {
-                "hexes": [ "4402", "4403", "4503" ],
-                "units": [ "CC", "2xBC", "4xCL", "6xDD", "SC", "2xTG", "2xFRD", "2xMB (ND)" ],
-                "reserve": "true",
-                 "PWC": [{
-                     "year": 173,
-                     "season": "spring",
-                     "units": [ "DN", "3xHD", "6xBD", "CV", "CLE", "DE" ]
-                 }]
-            },
-            "Second Fleet": {
-                "hexes": [
-                    "3801",
-                    "3901", "3902",
-                    "4001", "4002", "4003", "4004", "4005", "4006",
-                    "4101", "4102", "4103", "4104", "4105", "4106"
-                ],
-                "units": [ "CC", "2xBC", "4xCL", "6xDD", "SC" ],
-                 "PWC": [{
-                     "year": 173,
-                     "season": "spring",
-                     "units": [ "DN", "3xHD", "6xBD" ]
-                 }]
-            },
-            "Sixth Fleet": {
-                "hexes": [
-                    "4007", "4008",
-                    "4107", "4108",
-                    "4206", "4207", "4208",
-                    "4307", "4308",
-                    "4407", "4408",
-                    "4507", "4508",
-                    "4607", "4608",
-                    "4707", "4708",
-                    "4806", "4807", "4808",
-                    "4906", "4907", "4908",
-                    "5006", "5007", "5008"
-                ],
-                "units": [ "CC", "2xBC", "4xCL", "6xDD", "SC" ],
-                "reserve": "true",
-                "PWC": [{
-                    "year": 173,
-                    "season": "spring",
-                    "units": [ "DN", "3xHD", "6xBD" ]
-                }]
-            },
-            "Offmap Reserve Fleet": {
-                "hexes": [ "offmap" ],
-                "units": [ "2xCL", "2xDD", "SC", "TG" ]
-            }
-        },
-        "production": [{
-            "year": 174,
-            "season": "spring",
-            "units": [ "DN", "3xHD", "4xBD" ]
-        },
-        {
-            "year": 174,
-            "season": "fall",
-            "units": [ "BC", "3xHD", "4xBD" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "HYD": {
-        "starting force": {
-            "Home Fleet": {
-                "hexes": [ "0617" ],
-                "units": [ "LM", "3xRN", "3xLN", "SC", "TG", "CR", "2xHN", "2xFRD", "2xMB (ND)" ],
-                "reserve": "true",
-                 "PWC": [{
-                     "year": 168,
-                     "season": "fall",
-                     "units": [ "RN", "HR", "3xHN" ]
-                 },
-                 {
-                     "year": 169,
-                     "season": "spring",
-                     "units": [ "PAL", "RN", "HR", "3xHN" ]
-                 },
-                 {
-                     "year": 169,
-                     "season": "fall",
-                     "units": [ "UH", "DE", "2xAH", "DG", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 170,
-                     "season": "spring",
-                     "units": [ "PAL", "RN", "2xHR", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 170,
-                     "season": "fall",
-                     "units": [ "CV", "DE", "2xAH", "DG", "2xHR", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 171,
-                     "season": "spring",
-                     "units": [ "PAL", "RN", "2xHR", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 171,
-                     "season": "fall",
-                     "units": [ "UH", "DE", "2xAH", "DG", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 172,
-                     "season": "spring",
-                     "units": [ "PAL", "RN", "2xHR", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 172,
-                     "season": "fall",
-                     "units": [ "CV", "DE", "2xAH", "DG", "2xHR", "TR", "3xHN", "3xCU" ]
-                 },
-                 {
-                     "year": 173,
-                     "season": "spring",
-                     "units": [ "PAL", "RN", "2xHR", "TR", "3xHN", "3xCU" ]
-                 }]
-            },
-            "Expeditionary Fleet": {
-                "hexes": [ "0716" ],
-                "units": [ "LB", "3xDG", "3xKN", "SC", "TG", "CR", "2xCU" ],
-                "reserve": "true"
-            },
-            "First Fleet": {
-                "hexes": [ "0915", "1017", "1116", "1217", "1219" ],
-                "units": [ "LM", "3xRN", "3xLN", "SC", "TG", "CR", "2xHN" ]
-            },
-            "Second Fleet": {
-                "hexes": [ "0114", "0215", "0315", "0515", "0714" ],
-                "units": [ "LB", "3xDG", "3xKN", "SC", "TG", "CR", "2xCU" ]
-            },
-            "Old Colonies Squadron": {
-                "hexes": [ "offmap" ],
-                "units": [ "LC", "3xLN", "CR", "2xHN" ]
-            }
-        },
-        "production": [{
-            "year": 169,
-            "season": "fall",
-            "units": [ "CC", "DG", "3xHR", "LN", "3xHN", "3xCU" ]
-        },
-        {
-            "year": 170,
-            "season": "spring",
-            "units": [ "PAL", "RN", "3xHR", "KN", "3xHN", "3xCU" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "KLI": {
-        "starting force": {
-            "Home Fleet": {
-                "hexes": [
-                    "1210", "1211", "1212",
-                    "1310", "1311", "1312", "1313",
-                    "1409", "1410", "1411", "1412", "1413",
-                    "1510", "1511", "1512", "1513",
-                    "1610", "1611", "1612"
-                ],
-                "units": [
-                    "C8", "D7C", "3xD7", "3xD6", "D6M", "3xD5", "6xF5", "3xF5L", "3xF5S", "F5V",
-                    "E4A", "6xE4", "TGA", "D6V", "2xE4A", "FRD", "2xMB (ND)"
-                ],
-                "reserve": "true"
-            },
-            "Eastern Fleet": {
-                "hexes": [
-                    "1709", "1710", "1711", "1712", "1713", "1714",
-                    "1807", "1808", "1809", "1810", "1811", "1812", "1813", "1814",
-                    "1914", "1915",
-                    "2014", "2015",
-                    "2115", "2116",
-                    "2215", "2216",
-                    "2316", "2317",
-                    "2416", "2417",
-                    "2517", "2518"
-                ],
-                "units": [
-                    "D7C", "3xD7", "3xD6", "D6D", "6xF5", "3xF5L", "F5S", "F5V",
-                    "E4A", "3xE4", "CVT", "2xE4A", "TGB"
-                ]
-            },
-            "Northern Fleet": {
-                "hexes": [
-                    "0906", "0907",
-                    "1006", "1007",
-                    "1107", "1108",
-                    "1207", "1208",
-                    "1307", "1308",
-                    "1407", "1408",
-                    "1507", "1508",
-                    "1607", "1608",
-                    "1707", "1708"
-                ],
-                "units": [
-                    "D7C", "3xD7", "3xD6", "D6D", "6xF5", "3xF5L", "F5S", "F5V",
-                    "E4A", "3xE4", "D6V", "2xE4A", "TGA"
-                ]
-            },
-            "Western Fleet": {
-                "hexes": [
-                    "1012", "1013",
-                    "1113", "1114",
-                    "1213", "1214",
-                    "1314", "1315",
-                    "1414", "1415", "1416", "1417", "1418", "1419",
-                    "1515", "1516", "1517", "1518", "1519"
-                ],
-                "units": [
-                    "D7C", "3xD7", "3xD6", "D6M", "6xF5", "3xF5L", "F5S", "F5V",
-                    "E4A", "3xE4", "CVT", "2xE4A", "TGA"
-                ]
-            },
-            "Tholian Border Squadron": {
-                "hexes": [ "2318", "2517", "2518", "2519" ],
-                "units": [ "D7C", "3xD7", "3xD6", "2xF5", "F5L", "F5S", "F5V", "E4A", "3xE4", "TGA" ],
-                "reserve": "true"
-            },
-            "Northern Reserve": {
-                "hexes": [ "1509" ],
-                "units": [
-                    "C8", "D7C", "3xD7", "3xD6", "D6M", "6xF5", "3xF5L", "F5S", "F5V",
-                    "E4A", "3xE4", "CVT", "2xE4A", "TGB", "FRD", "MB (ND)"
-                ],
-                "reserve": "true"
-            },
-            "Southern Reserve": {
-                "hexes": [ "1716" ],
-                "units": [
-                    "D7C", "3xD7", "3xD6", "D6D", "6xF5", "3xF5L", "F5S", "F5V",
-                    "E4A", "3xE4", "D6V", "2xE4A", "TGB", "FRD", "MB (ND)"
-                ],
-                "reserve": "true"
-            },
-            "Imperial War Reserve, Squadron I": {
-                "hexes": [ "1411" ],
-                "units": [ "D7C", "2xD7", "D6D", "F5S" ]
-            },
-            "Imperial War Reserve, Squadron II": {
-                "hexes": [ "1411" ],
-                "units": [ "D7C", "2xD7", "D6D", "F5S" ]
-            },
-            "Imperial War Reserve, Squadron III": {
-                "hexes": [ "1411" ],
-                "units": [ "D7C", "2xD7", "D6D", "F5S" ]
-            }
-        },
-        "mothball reserve": {
-            "units": [ "24xD6", "12xF5", "12xE4" ],
-            "war release": [ "2xD6", "2xF5", "3xE4" ],
-            "limited war release": [ "D6", "F5" ]
-        },
-        "production": [{
-            "year": 168,
-            "season": "fall",
-            "units": [ "D7C", "D7", "D6", "9xD5", "4xF5", "2xF5L", "3xE4" ]
-        },
-        {
-            "year": 169,
-            "season": "spring",
-            "units": [ "C8", "2xD7", "9xD5", "4xF5", "2xF5L", "3xE4" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "KZI": {
-        "starting force": {
-            "Home Fleet": {
-                "hexes": [ "1401" ],
-                "units": [
-                    "DN", "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE",
-                    "EFF", "CC", "3xBC", "CL", "3xDD", "3xFF", "DF", "SF",
-                    "TGC", "FRD", "MB (ND)"
-                ]
-            },
-            "Baron's Fleet": {
-                "hexes": [ "1401" ],
-                "units": [
-                    "CV", "CLE", "EFF", "CVE", "EFF", "CC", "3xBC", "CL",
-                    "DF", "SF", "TGT", "FRD", "MB (ND)"
-                ],
-                "strat move arrival": {
-                    "year": 169,
-                    "season": "spring"
-                }
-            },
-            "Marquis' Fleet": {
-                "hexes": [
-                    "1704",
-                    "1801", "1802", "1803",
-                    "1901", "1902",
-                    "2001"
-                ],
-                "units": [
-                    "CV", "CLE", "EFF", "CVL", "CLE", "EFF",
-                    "2xBC", "DF", "SF", "TGT"
-                ]
-            },
-            "Marquis' Reserve Fleet": {
-                "hexes": [
-                    "1704",
-                    "1801", "1802", "1803",
-                    "1901", "1902",
-                    "2001"
-                ],
-                "units": [
-                    "CC", "BC", "CL", "FF", "CVE", "EFF"
-                ]
-            },
-            "Duke's Fleet": {
-                "hexes": [
-                    "1003", "1004",
-                    "1104", "1105",
-                    "1204", "1205",
-                    "1304", "1305",
-                    "1404", "1405",
-                    "1504", "1505",
-                    "1604", "1605",
-                    "1705",
-                    "1804", "1805"
-                ],
-                "units": [
-                    "DN", "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE",
-                    "EFF", "CC", "3xBC", "CL", "DF", "FF", "SF", "TGC"
-                ],
-                "reserve": "true"
-            },
-            "Count's Fleet": {
-                "hexes": [
-                    "0701", "0702", "0703",
-                    "0801", "0802", "0803",
-                    "0901", "0902", "0903", "0904"
-                ],
-                "units": [
-                    "CV", "CLE", "EFF", "CVL", "CLE", "EFF", "CVE", "EFF",
-                    "CC", "3xBC", "CL", "DF", "FF", "SF", "TGT"
-                ],
-                "reserve": "true"
-            }
-        },
-        "production": [{
-            "year": 168,
-            "season": "fall",
-            "units": [ "BC", "CL", "DD", "2xFF" ]
-        },
-        {
-            "year": 169,
-            "season": "spring",
-            "units": [ "BC", "2xCM", "2xDD", "3xFF" ]
-        },
-        {
-            "year": 169,
-            "season": "fall",
-            "units": [ "CV", "MEC", "EFF", "BC", "CL", "2xCM", "5xFF" ]
-        },
-        {
-            "year": 170,
-            "season": "spring",
-            "units": [ "DN", "BC", "4xCM", "6xFF" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "LYR": {
-        "starting force": {
-            "Red Claw Fleet": {
-                "hexes": [
-                    "0303",
-                    "0401", "0402", "0403", "0404",
-                    "0501", "0502", "0503", "0504",
-                    "0604", "0605", "0606",
-                    "0705", "0706"
-                ],
-                "units": [ "BC", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "5xFF", "SC", "TGC", "MB (ND)" ],
-                "reserve": "true"
-            },
-            "Home Fleet": {
-                "hexes": [ "0408", "0608", "0707" ],
-                "units": [ "DN", "CC", "4xCA", "5xCW", "5xCL", "5xDD", "3xDW", "5xFF", "SC", "TGP", "FRD", "MB (ND)" ],
-                "reserve": "true",
-                "max units in": {
-                    "0707": 6
-                }
-            },
-            "Enemy’s Blood Fleet": {
-                "hexes": [
-                    "0111", "0112",
-                    "0211", "0212",
-                    "0312", "0313",
-                    "0411", "0412", "0413",
-                    "0512", "0513"
-                ],
-                "units": [ "BC", "CC", "3xCA", "3xCL", "4xDD", "4xFF", "SC", "TGC", "MB (ND)" ],
-                "reserve": "true"
-            },
-            "Far Stars Fleet": {
-                "hexes": [ "offmap" ],
-                "units": [ "CC", "4xCA", "5xCL", "4xDD", "4xFF", "CW", "DW", "SC", "TGP", "FRD" ],
-                "reserve": "true",
-                "strat move arrival": {
-                    "year": 169,
-                    "season": "spring"
+oobs: {
+    key: "FED",
+    value: {
+        starting_fleets: {
+            key: "First Fleet",
+            value: {
+                hexes: 2908,
+                units: { unit: "DN" },
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "CL", times: 3 },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "FF", times: 6 },
+                units: { unit: "TG", times: 3 },
+                units: { unit: "FRD" },
+                units: { unit: "MB", times: 3 }
+                prewar_construction: {
+                    year: 171,
+                    season: spring,
+                    units: { unit: "CVA" },
+                    units: { unit: "ECL" },
+                    units: { unit: "DE", times: 2 },
+                    units: { unit: "NCL", times: 3 },
+                    units: { unit: "FF", times: 3 }
                 }
             }
         },
-        "production": [{
-            "year": 168,
-            "season": "fall",
-            "units": [ "BC", "CA", "3xCW", "3xDW", "3xFF" ]
-        },
-        {
-            "year": 169,
-            "season": "spring",
-            "units": [ "DN", "CA", "3xCW", "3xDW", "3xFF" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "ROM": {
-        "starting force": {
-            "Home Fleet": {
-                "hexes": [ "4514", "4613" ],
-                "units": [
-                    "2xSP", "SK", "KE", "8xWE", "SE", "2xWH", "2xBHE", "FAL",
-                    "3xSN", "3xSNB, 2xFRD", "MB (ND)", "KRC", "2xKR", "KRM",
-                    "2xKRT", "2xK5Q", "K5S"
-                ],
-                "reserve": "true",
-                "PWC": [{
-                    "year": 173,
-                    "season": "spring",
-                    "units": [
-                        "KC9R", "CON", "SUP", "SPB", "2xSKE", "FH", "6xSP",
-                        "3xSPC", "3xSK", "SKF", "SKB", "SKE", "WE", "KE",
-                        "3xK4"
-                    ]
-                }]
-            },
-            "Fleet of the North": {
-                "hexes": [
-                    "4210", "4211", "4212", "4213", "4214",
-                    "4310", "4311", "4312", "4313", "4314", "4315",
-                    "4410", "4411", "4412", "4413", "4414",
-                    "4510", "4511", "4512", "4513",
-                    "4610", "4611", "4612",
-                    "4810", "4811", "4812",
-                    "4910", "4911",
-                    "5010", "5011"
-                ],
-                "units": [
-                    "KE", "8xWE", "SE", "FAL", "3xSN", "3xSNB", "3xFE", "MB (ND)",
-                    "KRC", "2xKR", "KRM", "K5Q", "K5S"
-                ],
-                "reserve": "true",
-                "PWC": [{
-                    "year": 173,
-                    "season": "spring",
-                    "units": [
-                        "CON", "SUP", "SPB", "2xSKE", "FH", "6xSP", "3xSK",
-                        "SKF", "SKB", "SKE", "WE", "KE", "3xK4"
-                    ]
-                }]
-            },
-            "Fleet of the West": {
-                "hexes": [
-                    "3317",
-                    "3416", "3417",
-                    "3516", "3517", "3518",
-                    "3615", "3616", "3617", "3618", "3619",
-                    "3715", "3716", "3717", "3718", "3719",
-                    "3814", "3815", "3816", "3817", "3818", "3819",
-                    "3914", "3915", "3916", "3917", "3918", "3919",
-                    "4010", "4011", "4012", "4013", "4014", "4016", "4018", "4019",
-                    "4110", "4111", "4112", "4113", "4114"
-                ],
-                "units": [
-                    "KE", "8xWE", "SE", "FAL", "2xWH", "2xBHE", "3xSN",
-                    "3xSNB", "3xFE", "MB (ND)", "KRC", "2xKR", "3xK7R", "KRM",
-                    "K5Q", "K5S"
-                ],
-                "reserve": "true",
-                "PWC": [{
-                    "year": 173,
-                    "season": "spring",
-                    "units": [
-                        "CON", "SUP", "SPB", "2xSKE", "FH", "5xSP", "3xSK",
-                        "SKF", "SKB", "SKE", "WE", "KE", "3xK4"
-                    ]
-                }]
-            },
-            "Patrol Detachment": {
-                "hexes": [ "3319" ],
-                "units": [ "SK", "6xWE", "4xBH", "3xSN", "3xSNB", "SE" ],
-                "PWC": [{
-                    "year": 173,
-                    "season": "spring",
-                    "units": [ "3xK4", "2xSP" ]
-                }]
+        starting_fleets: {
+            key: "Second Fleet",
+            value: {
+                hexes: 2901,
+                units: { unit: "CVL", times: 3 }
             }
         },
-        "mothball reserve": {
-            "units": [ "4xWE", "4xBH", "8xSN" ],
-            "war release": [ "2x[any]" ]
-        },
-        "production": [{
-            "year": 173,
-            "season": "spring",
-            "units": [ "NH", "FH", "4xSP", "3xSK", "WE", "SN" ]
-        },
-        {
-            "year": 173,
-            "season": "fall",
-            "units": [ "CON", "FH", "4xSP", "3xSK", "WE", "SN" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
-    },
-    "THO": {
-        "starting force": {
-            "First Fleet": {
-                "hexes": [ "2719", "2818", "2819" ],
-                "units": [ "CA", "DD, "3xPC, "SC" ],
-                "PWC": [{
-                    "year": 168,
-                    "season": "fall",
-                    "units": [ "PC" ]
+        starting_fleets: {
+            key: "Third Fleet",
+            value: {
+                hexes: 2006, hexes: 2007, hexes: 2008, hexes: 2009, hexes: 2010, hexes: 2011, hexes: 2012,
+                hexes: 2106, hexes: 2107, hexes: 2108, hexes: 2109, hexes: 2110, hexes: 2111, hexes: 2112, hexes: 2113,
+                hexes: 2206, hexes: 2207, hexes: 2208, hexes: 2209, hexes: 2210, hexes: 2211, hexes: 2212, hexes: 2213,
+                hexes: 2305, hexes: 2306, hexes: 2307, hexes: 2308, hexes: 2309, hexes: 2310, hexes: 2311, hexes: 2312, hexes: 2313, hexes: 2314,
+                hexes: 2411, hexes: 2412, hexes: 2413, hexes: 2414,
+                hexes: 2512, hexes: 2513, hexes: 2514, hexes: 2515,
+                hexes: 2612, hexes: 2613, hexes: 2614, hexes: 2615,
+                hexes: 2713, hexes: 2714, hexes: 2715, hexes: 2716,
+                units: { unit: "CVS" },
+                units: { unit: "DE" },
+                units: { unit: "FFE" },
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "CL", times: 3 },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "FF", times: 6 },
+                units: { unit: "TG" },
+                units: { unit: "FRD" }
+                reserve: 1,
+                prewar_construction: {
+                    year: 168,
+                    season: fall,
+                    units: { unit: "DN" }
                 },
-                {
-                    "year": 171,
-                    "season": "spring",
-                    "units": [ "DN", "PC" ]
-                }]
-            },
-            "Second Fleet": {
-                "hexes": [ "2918" ],
-                "units": [ "CA", "DD", "3xPC", "SC" ],
-                "PWC": [{
-                    "year": 169,
-                    "season": "fall",
-                    "units": [ "PC" ]
+                prewar_construction: {
+                    year: 169,
+                    season: spring,
+                    units: { unit: "CVB" },
+                    units: { unit: "DE" },
+                    units: { unit: "FFE" }
                 },
-                {
-                    "year": 172,
-                    "season": "spring",
-                    "units": [ "BW", "PCE", "PC" ]
-                }]
-            },
-            "Third Fleet": {
-                "hexes": [ "3018", "3019", "3119" ],
-                "units": [ "CA", "DD", "3xPC", "SC" ],
-                "PWC": [{
-                    "year": 170,
-                    "season": "fall",
-                    "units": [ "PC" ]
-                },
-                {
-                    "year": 171,
-                    "season": "fall",
-                    "units": [ "PC" ]
-                }]
-            },
-            "Home Fleet": {
-                "hexes": [ "2919" ],
-                "units": [ "CA", "DD", "3xPC", "3xCPC", "MB (ND)" ],
-                "reserve": "true",
-                "PWC": [{
-                    "year": 169,
-                    "season": "spring",
-                    "units": [ "DN", "PC" ]
-                },
-                {
-                    "year": 170,
-                    "season": "spring",
-                    "units": [ "BW", "PCE", "PC" ]
-                },
-                {
-                    "year": 172,
-                    "season": "fall",
-                    "units": [ "PC" ]
-                }]
+                prewar_construction: {
+                    year: 170,
+                    season: spring,
+                    units: { unit: "NCL", times: 3 },
+                    units: { unit: "FF", times: 3 }
+                }
             }
         },
-        "production": [{
-            "year": 168,
-            "season": "fall",
-            "units": [ "DD", "2xPC" ]
+        starting_fleets: {
+            key: "Fourth Fleet",
+            value: {
+                hexes: 2003, hexes: 2004, hexes: 2005,
+                hexes: 2103, hexes: 2104, hexes: 2105,
+                hexes: 2201, hexes: 2202, hexes: 2203, hexes: 2204, hexes: 2205,
+                hexes: 2301, hexes: 2302, hexes: 2303, hexes: 2304,
+                hexes: 2401, hexes: 2402, hexes: 2403,
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "FF", times: 3 },
+                units: { unit: "TG" }
+                reserve: 1,
+                prewar_construction: {
+                    year: 170,
+                    season: fall,
+                    units: { unit: "DN" },
+                    units: { unit: "NCL", times: 3 },
+                    units: { unit: "FF", times: 3 }
+                }
+            }
         },
-        {
-            "year": 169,
-            "season": "spring",
-            "units": [ "DN", "PC" ]
-        }],
-        "#TODO": "Special production rules"
-        "#TODO": "Production notes"
+        starting_fleets: {
+            key: "Fifth Fleet",
+            value: {
+                hexes: 3301, hexes: 3401, hexes: 3501, hexes: 3601,
+                hexes: 3302, hexes: 3402, hexes: 3502, hexes: 3602,
+                hexes: 3303, hexes: 3403, hexes: 3503, hexes: 3603, hexes: 3703, hexes: 3803,
+                hexes: 3304, hexes: 3404, hexes: 3504, hexes: 3604, hexes: 3704, hexes: 3804,
+                hexes: 3505, hexes: 3605, hexes: 3705, hexes: 3805,
+                hexes: 3506, hexes: 3606, hexes: 3706, hexes: 3806,
+                hexes: 3507, hexes: 3607, hexes: 3707, hexes: 3807,
+                hexes: 3508, hexes: 3608, hexes: 3708, hexes: 3808,
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "FF", times: 3 },
+                units: { unit: "TG" }
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Sixth Fleet",
+            value: {
+                hexes: 3113, hexes: 3114, hexes: 3115, hexes: 3116,
+                hexes: 3212, hexes: 3213, hexes: 3214, hexes: 3215,
+                hexes: 3312, hexes: 3313, hexes: 3314, hexes: 3315,
+                hexes: 3411, hexes: 3412, hexes: 3413, hexes: 3414,
+                hexes: 3509, hexes: 3510, hexes: 3511, hexes: 3512, hexes: 3513, hexes: 3514,
+                hexes: 3609, hexes: 3610, hexes: 3611, hexes: 3612, hexes: 3613,
+                hexes: 3709, hexes: 3710, hexes: 3711, hexes: 3712, hexes: 3713,
+                hexes: 3809, hexes: 3810, hexes: 3811, hexes: 3812,
+                units: { unit: "CVS" },
+                units: { unit: "DE" },
+                units: { unit: "FFE" },
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "CL", times: 3 },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "FF", times: 6 },
+                units: { unit: "TG" },
+                units: { unit: "FRD" }
+                reserve: 1,
+                prewar_construction: {
+                    year: 169,
+                    season: fall,
+                    units: { unit: "DN" }
+                },
+                prewar_construction: {
+                    year: 170,
+                    season: spring,
+                    units: { unit: "CVB" },
+                    units: { unit: "DE" },
+                    units: { unit: "FFE" }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Seventh Fleet",
+            value: {
+                hexes: 2813, hexes: 2814, hexes: 2815, hexes: 2816,
+                hexes: 2914, hexes: 2915, hexes: 2916,
+                hexes: 3013, hexes: 3014, hexes: 3015, hexes: 3016,
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "FF", times: 3 }
+            }
+        },
+        mothball_reserve: {
+            units: { unit: "CA", times: 6 },
+            units: { unit: "CL", times: 18 },
+            units: { unit: "FF", times: 18 },
+            units: { unit: "DD", times: 3 }
+            war_release: { unit: "CA" },
+            war_release: { unit: "DD" },
+            war_release: { unit: "CL", times: 3 },
+            war_release: { unit: "FF", times: 3 }
+            limited_war_release: { unit: "CL" },
+            limited_war_release: { unit: "FF" }
+        },
+        production: {
+            year: 171,
+            season: fall,
+            units: { unit: "DN" },
+            units: { unit: "CA" },
+            units: { unit: "NCL", times: 3 },
+            units: { unit: "FF", times: 3 }
+        },
+        production: {
+            year: 172,
+            season: spring,
+            units: { unit: "CVA" },
+            units: { unit: "ECL" },
+            units: { unit: "DE", times: 2 },
+            units: { unit: "CA" },
+            units: { unit: "NCL", times: 3 },
+            units: { unit: "FF", times: 3 }
+        },
+        production: {
+            year: 172,
+            season: fall,
+            units: { unit: "DN" },
+            units: { unit: "CA" },
+            units: { unit: "NCL", times: 6 },
+            units: { unit: "FF", times: 6 }
+        },
+        production: {
+            year: 173,
+            season: spring,
+            units: { unit: "CVA" },
+            units: { unit: "ECL" },
+            units: { unit: "DE", times: 2 },
+            units: { unit: "CC" },
+            units: { unit: "CA" },
+            units: { unit: "NCL", times: 10 },
+            units: { unit: "FF", times: 12 }
+        },
+        production: {
+            year: 173,
+            season: fall,
+            units: { unit: "DN" },
+            units: { unit: "CA", times: 2 },
+            units: { unit: "NCL", times: 12 },
+            units: { unit: "FF", times: 12 }
+        },
+        production: {
+            year: 175,
+            season: spring,
+            units: { unit: "CVA" },
+            units: { unit: "ECL" },
+            units: { unit: "DE", times: 2 },
+            units: { unit: "CC" },
+            units: { unit: "CA" },
+            units: { unit: "NCL", times: 10 },
+            units: { unit: "FF", times: 14 }
+        },
+        production: {
+            year: 175,
+            season: fall,
+            units: { unit: "DN" },
+            units: { unit: "CA", times: 2 },
+            units: { unit: "NCL", times: 12 },
+            units: { unit: "FF", times: 14 }
+        }
+    }
+},
+oobs: {
+    key: "GOR",
+    value: {
+        starting_fleets: {
+            key: "First Fleet",
+            value: {
+                hexes: 4402, hexes: 4403, hexes: 4503,
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 2 },
+                units: { unit: "CL", times: 4 },
+                units: { unit: "DD", times: 6 },
+                units: { unit: "SC" },
+                units: { unit: "TG", times: 2 },
+                units: { unit: "FRD", times: 2 },
+                units: { unit: "MB", times: 2 }
+                reserve: 1,
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "DN" },
+                    units: { unit: "HD", times: 3 },
+                    units: { unit: "BD", times: 6 },
+                    units: { unit: "CV" },
+                    units: { unit: "CLE" },
+                    units: { unit: "DE" }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Second Fleet",
+            value: {
+                hexes: 3801,
+                hexes: 3901, hexes: 3902,
+                hexes: 4001, hexes: 4002, hexes: 4003, hexes: 4004, hexes: 4005, hexes: 4006,
+                hexes: 4101, hexes: 4102, hexes: 4103, hexes: 4104, hexes: 4105, hexes: 4106,
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 2 },
+                units: { unit: "CL", times: 4 },
+                units: { unit: "DD", times: 6 },
+                units: { unit: "SC" }
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "DN" },
+                    units: { unit: "HD", times: 3 },
+                    units: { unit: "BD", times: 6 }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Sixth Fleet",
+            value: {
+                hexes: 4007, hexes: 4008,
+                hexes: 4107, hexes: 4108,
+                hexes: 4206, hexes: 4207, hexes: 4208,
+                hexes: 4307, hexes: 4308,
+                hexes: 4407, hexes: 4408,
+                hexes: 4507, hexes: 4508,
+                hexes: 4607, hexes: 4608,
+                hexes: 4707, hexes: 4708,
+                hexes: 4806, hexes: 4807, hexes: 4808,
+                hexes: 4906, hexes: 4907, hexes: 4908,
+                hexes: 5006, hexes: 5007, hexes: 5008,
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 2 },
+                units: { unit: "CL", times: 4 },
+                units: { unit: "DD", times: 6 },
+                units: { unit: "SC" }
+                reserve: 1,
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "DN" },
+                    units: { unit: "HD", times: 3 },
+                    units: { unit: "BD", times: 6 }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Offmap Reserve Fleet",
+            value: {
+                hexes: -1,
+                units: { unit: "CL", times: 2 },
+                units: { unit: "DD", times: 2 },
+                units: { unit: "SC" },
+                units: { unit: "TG" }
+            }
+        },
+        production: {
+            year: 174,
+            season: spring,
+            units: { unit: "DN" },
+            units: { unit: "HD", times: 3 },
+            units: { unit: "BD", times: 4 }
+        },
+        production: {
+            year: 174,
+            season: fall,
+            units: { unit: "BC" },
+            units: { unit: "HD", times: 3 },
+            units: { unit: "BD", times: 4 }
+        }
+    }
+},
+oobs: {
+    key: "HYD",
+    value: {
+        starting_fleets: {
+            key: "Home Fleet",
+            value: {
+                hexes: 617,
+                units: { unit: "LM" },
+                units: { unit: "RN", times: 3 },
+                units: { unit: "LN", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "TG" },
+                units: { unit: "CR" },
+                units: { unit: "HN", times: 2 },
+                units: { unit: "FRD", times: 2 },
+                units: { unit: "MB", times: 2 }
+                reserve: 1,
+                prewar_construction: {
+                    year: 168,
+                    season: fall,
+                    units: { unit: "RN" },
+                    units: { unit: "HR" },
+                    units: { unit: "HN", times: 3 }
+                },
+                prewar_construction: {
+                    year: 169,
+                    season: spring,
+                    units: { unit: "PAL" },
+                    units: { unit: "RN" },
+                    units: { unit: "HR" },
+                    units: { unit: "HN", times: 3 }
+                },
+                prewar_construction: {
+                    year: 169,
+                    season: fall,
+                    units: { unit: "UH" },
+                    units: { unit: "DE" },
+                    units: { unit: "AH", times: 2 },
+                    units: { unit: "DG" },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 170,
+                    season: spring,
+                    units: { unit: "PAL" },
+                    units: { unit: "RN" },
+                    units: { unit: "HR", times: 2 },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 170,
+                    season: fall,
+                    units: { unit: "CV" },
+                    units: { unit: "DE" },
+                    units: { unit: "AH", times: 2 },
+                    units: { unit: "DG" },
+                    units: { unit: "HR", times: 2 },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 171,
+                    season: spring,
+                    units: { unit: "PAL" },
+                    units: { unit: "RN" },
+                    units: { unit: "HR", times: 2 },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 171,
+                    season: fall,
+                    units: { unit: "UH" },
+                    units: { unit: "DE" },
+                    units: { unit: "AH", times: 2 },
+                    units: { unit: "DG" },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 172,
+                    season: spring,
+                    units: { unit: "PAL" },
+                    units: { unit: "RN" },
+                    units: { unit: "HR", times: 2 },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 172,
+                    season: fall,
+                    units: { unit: "CV" },
+                    units: { unit: "DE" },
+                    units: { unit: "AH", times: 2 },
+                    units: { unit: "DG" },
+                    units: { unit: "HR", times: 2 },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                },
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "PAL" },
+                    units: { unit: "RN" },
+                    units: { unit: "HR", times: 2 },
+                    units: { unit: "TR" },
+                    units: { unit: "HN", times: 3 },
+                    units: { unit: "CU", times: 3 }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Expeditionary Fleet",
+            value: {
+                hexes: 716,
+                units: { unit: "LB" },
+                units: { unit: "DG", times: 3 },
+                units: { unit: "KN", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "TG" },
+                units: { unit: "CR" },
+                units: { unit: "CU", times: 2 }
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "First Fleet",
+            value: {
+                hexes: 915, hexes: 1017, hexes: 1116, hexes: 1217, hexes: 1219,
+                units: { unit: "LM" },
+                units: { unit: "RN", times: 3 },
+                units: { unit: "LN", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "TG" },
+                units: { unit: "CR" },
+                units: { unit: "HN", times: 2 }
+            }
+        },
+        starting_fleets: {
+            key: "Second Fleet",
+            value: {
+                hexes: 114, hexes: 215, hexes: 315, hexes: 515, hexes: 714,
+                units: { unit: "LB" },
+                units: { unit: "DG", times: 3 },
+                units: { unit: "KN", times: 3 },
+                units: { unit: "SC" },
+                units: { unit: "TG" },
+                units: { unit: "CR" },
+                units: { unit: "CU", times: 2 }
+            }
+        },
+        starting_fleets: {
+            key: "Old Colonies Squadron",
+            value: {
+                hexes: -1,
+                units: { unit: "LC" },
+                units: { unit: "LN", times: 3 },
+                units: { unit: "CR" },
+                units: { unit: "HN", times: 2 }
+            }
+        },
+        production: {
+            year: 169,
+            season: fall,
+            units: { unit: "CC" },
+            units: { unit: "DG" },
+            units: { unit: "HR", times: 3 },
+            units: { unit: "LN" },
+            units: { unit: "HN", times: 3 },
+            units: { unit: "CU", times: 3 }
+        },
+        production: {
+            year: 170,
+            season: spring,
+            units: { unit: "PAL" },
+            units: { unit: "RN" },
+            units: { unit: "HR", times: 3 },
+            units: { unit: "KN" },
+            units: { unit: "HN", times: 3 },
+            units: { unit: "CU", times: 3 }
+        }
+    }
+},
+oobs: {
+    key: "KLI",
+    value: {
+        starting_fleets: {
+            key: "Home Fleet",
+            value: {
+                hexes: 1210, hexes: 1211, hexes: 1212,
+                hexes: 1310, hexes: 1311, hexes: 1312, hexes: 1313,
+                hexes: 1409, hexes: 1410, hexes: 1411, hexes: 1412, hexes: 1413,
+                hexes: 1510, hexes: 1511, hexes: 1512, hexes: 1513,
+                hexes: 1610, hexes: 1611, hexes: 1612,
+                units: { unit: "C8" },
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "D6M" },
+                units: { unit: "D5", times: 3 },
+                units: { unit: "F5", times: 6 },
+                units: { unit: "F5L", times: 3 },
+                units: { unit: "F5S", times: 3 },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 6 },
+                units: { unit: "TGA" },
+                units: { unit: "D6V" },
+                units: { unit: "E4A", times: 2 },
+                units: { unit: "FRD" },
+                units: { unit: "MB", times: 2 },
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Eastern Fleet",
+            value: {
+                hexes: 1709, hexes: 1710, hexes: 1711, hexes: 1712, hexes: 1713, hexes: 1714,
+                hexes: 1807, hexes: 1808, hexes: 1809, hexes: 1810, hexes: 1811, hexes: 1812, hexes: 1813, hexes: 1814,
+                hexes: 1914, hexes: 1915,
+                hexes: 2014, hexes: 2015,
+                hexes: 2115, hexes: 2116,
+                hexes: 2215, hexes: 2216,
+                hexes: 2316, hexes: 2317,
+                hexes: 2416, hexes: 2417,
+                hexes: 2517, hexes: 2518,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "D6D" },
+                units: { unit: "F5", times: 6 },
+                units: { unit: "F5L", times: 3 },
+                units: { unit: "F5S" },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 3 },
+                units: { unit: "CVT" },
+                units: { unit: "E4A", times: 2 },
+                units: { unit: "TGB" }
+            }
+        },
+        starting_fleets: {
+            key: "Northern Fleet",
+            value: {
+                hexes: 906, hexes: 907,
+                hexes: 1006, hexes: 1007,
+                hexes: 1107, hexes: 1108,
+                hexes: 1207, hexes: 1208,
+                hexes: 1307, hexes: 1308,
+                hexes: 1407, hexes: 1408,
+                hexes: 1507, hexes: 1508,
+                hexes: 1607, hexes: 1608,
+                hexes: 1707, hexes: 1708,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "D6D" },
+                units: { unit: "F5", times: 6 },
+                units: { unit: "F5L", times: 3 },
+                units: { unit: "F5S" },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 3 },
+                units: { unit: "D6V" },
+                units: { unit: "E4A", times: 2 },
+                units: { unit: "TGA" }
+               
+            }
+        },
+        starting_fleets: {
+            key: "Western Fleet",
+            value: {
+                hexes: 1012, hexes: 1013,
+                hexes: 1113, hexes: 1114,
+                hexes: 1213, hexes: 1214,
+                hexes: 1314, hexes: 1315,
+                hexes: 1414, hexes: 1415, hexes: 1416, hexes: 1417, hexes: 1418, hexes: 1419,
+                hexes: 1515, hexes: 1516, hexes: 1517, hexes: 1518, hexes: 1519,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "D6M" },
+                units: { unit: "F5", times: 6 },
+                units: { unit: "F5L", times: 3 },
+                units: { unit: "F5S" },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 3 },
+                units: { unit: "CVT" },
+                units: { unit: "E4A", times: 2 },
+                units: { unit: "TGA" }
+               
+            }
+        },
+        starting_fleets: {
+            key: "Tholian Border Squadron",
+            value: {
+                hexes: 2318, hexes: 2517, hexes: 2518, hexes: 2519,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "F5", times: 2 },
+                units: { unit: "F5L" },
+                units: { unit: "F5S" },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 3 },
+                units: { unit: "TGA" }
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Northern Reserve",
+            value: {
+                hexes: 1509,
+                units: { unit: "C8" },
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "D6M" },
+                units: { unit: "F5", times: 6 },
+                units: { unit: "F5L", times: 3 },
+                units: { unit: "F5S" },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 3 },
+                units: { unit: "CVT" },
+                units: { unit: "E4A", times: 2 },
+                units: { unit: "TGB" },
+                units: { unit: "FRD" },
+                units: { unit: "MB" },
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Southern Reserve",
+            value: {
+                hexes: 1716,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 3 },
+                units: { unit: "D6", times: 3 },
+                units: { unit: "D6D" },
+                units: { unit: "F5", times: 6 },
+                units: { unit: "F5L", times: 3 },
+                units: { unit: "F5S" },
+                units: { unit: "F5V" },
+                units: { unit: "E4A" },
+                units: { unit: "E4", times: 3 },
+                units: { unit: "D6V" },
+                units: { unit: "E4A", times: 2 },
+                units: { unit: "TGB" },
+                units: { unit: "FRD" },
+                units: { unit: "MB" },
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Imperial War Reserve, Squadron I",
+            value: {
+                hexes: 1411,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 2 },
+                units: { unit: "D6D" },
+                units: { unit: "F5S" }
+            }
+        },
+        starting_fleets: {
+            key: "Imperial War Reserve, Squadron II",
+            value: {
+                hexes: 1411,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 2 },
+                units: { unit: "D6D" },
+                units: { unit: "F5S" }
+            }
+        },
+        starting_fleets: {
+            key: "Imperial War Reserve, Squadron III",
+            value: {
+                hexes: 1411,
+                units: { unit: "D7C" },
+                units: { unit: "D7", times: 2 },
+                units: { unit: "D6D" },
+                units: { unit: "F5S" }
+            }
+        },
+        mothball_reserve: {
+            units: { unit: "D6", times: 24 },
+            units: { unit: "F5", times: 12 },
+            units: { unit: "E4", times: 12 }
+            war_release: { unit: "D6", times: 2 },
+            war_release: { unit: "F5", times: 2 },
+            war_release: { unit: "E4", times: 3 }
+            limited_war_release: { unit: "D6" },
+            limited_war_release: { unit: "F5" }
+        },
+        production: {
+            year: 168,
+            season: fall,
+            units: { unit: "D7C" },
+            units: { unit: "D7" },
+            units: { unit: "D6" },
+            units: { unit: "D5", times: 9 },
+            units: { unit: "F5", times: 4 },
+            units: { unit: "F5L", times: 2 },
+            units: { unit: "E4", times: 3 }
+        },
+        production: {
+            year: 169,
+            season: spring,
+            units: { unit: "C8" },
+            units: { unit: "D7", times: 2 },
+            units: { unit: "D5", times: 9 },
+            units: { unit: "F5", times: 4 },
+            units: { unit: "F5L", times: 2 },
+            units: { unit: "E4", times: 3 }
+        }
+    }
+},
+oobs: {
+    key: "KZI",
+    value: {
+        starting_fleets: {
+            key: "Home Fleet",
+            value: {
+                hexes: 1401,
+                units: { unit: "DN" },
+                units: { unit: "CV" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVL" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVE" },
+                units: { unit: "EFF" },
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 3 },
+                units: { unit: "CL" },
+                units: { unit: "DD", times: 3 },
+                units: { unit: "FF", times: 3 },
+                units: { unit: "DF" },
+                units: { unit: "SF" },
+                units: { unit: "TGC" },
+                units: { unit: "FRD" },
+                units: { unit: "MB" }
+               
+            }
+        },
+        starting_fleets: {
+            key: "Baron's Fleet",
+            value: {
+                hexes: 1401,
+                units: { unit: "CV" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVE" },
+                units: { unit: "EFF" },
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 3 },
+                units: { unit: "CL" },
+                units: { unit: "DF" },
+                units: { unit: "SF" },
+                units: { unit: "TGT" },
+                units: { unit: "FRD" },
+                units: { unit: "MB" },
+                strategic_move_arrival_year: 169,
+                strategic_move_arrival_season: spring
+            }
+        },
+        starting_fleets: {
+            key: "Marquis' Fleet",
+            value: {
+                hexes: 1704,
+                hexes: 1801, hexes: 1802, hexes: 1803,
+                hexes: 1901, hexes: 1902,
+                hexes: 2001,
+                units: { unit: "CV" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVL" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "BC", times: 2 },
+                units: { unit: "DF" },
+                units: { unit: "SF" },
+                units: { unit: "TGT" }
+            }
+        },
+        starting_fleets: {
+            key: "Marquis' Reserve Fleet",
+            value: {
+                hexes: 1704,
+                hexes: 1801, hexes: 1802, hexes: 1803,
+                hexes: 1901, hexes: 1902,
+                hexes: 2001,
+                units: { unit: "CC" },
+                units: { unit: "BC" },
+                units: { unit: "CL" },
+                units: { unit: "FF" },
+                units: { unit: "CVE" },
+                units: { unit: "EFF" }
+               
+            }
+        },
+        starting_fleets: {
+            key: "Duke's Fleet",
+            value: {
+                hexes: 1003, hexes: 1004,
+                hexes: 1104, hexes: 1105,
+                hexes: 1204, hexes: 1205,
+                hexes: 1304, hexes: 1305,
+                hexes: 1404, hexes: 1405,
+                hexes: 1504, hexes: 1505,
+                hexes: 1604, hexes: 1605,
+                hexes: 1705,
+                hexes: 1804, hexes: 1805,
+                units: { unit: "DN" },
+                units: { unit: "CV" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVL" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVE" },
+                units: { unit: "EFF" },
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 3 },
+                units: { unit: "CL" },
+                units: { unit: "DF" },
+                units: { unit: "FF" },
+                units: { unit: "SF" },
+                units: { unit: "TGC" },
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Count's Fleet",
+            value: {
+                hexes: 701, hexes: 702, hexes: 703,
+                hexes: 801, hexes: 802, hexes: 803,
+                hexes: 901, hexes: 902, hexes: 903, hexes: 904,
+                units: { unit: "CV" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVL" },
+                units: { unit: "CLE" },
+                units: { unit: "EFF" },
+                units: { unit: "CVE" },
+                units: { unit: "EFF" },
+                units: { unit: "CC" },
+                units: { unit: "BC", times: 3 },
+                units: { unit: "CL" },
+                units: { unit: "DF" },
+                units: { unit: "FF" },
+                units: { unit: "SF" },
+                units: { unit: "TGT" },
+                reserve: 1
+            }
+        },
+        production: {
+            year: 168,
+            season: fall,
+            units: { unit: "BC" },
+            units: { unit: "CL" },
+            units: { unit: "DD" },
+            units: { unit: "FF", times: 2 }
+        },
+        production: {
+            year: 169,
+            season: spring,
+            units: { unit: "BC" },
+            units: { unit: "CM", times: 2 },
+            units: { unit: "DD", times: 2 },
+            units: { unit: "FF", times: 3 }
+        },
+        production: {
+            year: 169,
+            season: fall,
+            units: { unit: "CV" },
+            units: { unit: "MEC" },
+            units: { unit: "EFF" },
+            units: { unit: "BC" },
+            units: { unit: "CL" },
+            units: { unit: "CM", times: 2 },
+            units: { unit: "FF", times: 5 }
+        },
+        production: {
+            year: 170,
+            season: spring,
+            units: { unit: "DN" },
+            units: { unit: "BC" },
+            units: { unit: "CM", times: 4 },
+            units: { unit: "FF", times: 6 }
+        }
+    }
+},
+oobs: {
+    key: "LYR",
+    value: {
+        starting_fleets: {
+            key: "Red Claw Fleet",
+            value: {
+                hexes: 303,
+                hexes: 401, hexes: 402, hexes: 403, hexes: 404,
+                hexes: 501, hexes: 502, hexes: 503, hexes: 504,
+                hexes: 604, hexes: 605, hexes: 606,
+                hexes: 705, hexes: 706,
+                units: { unit: "BC" },
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 4 },
+                units: { unit: "CW", times: 5 },
+                units: { unit: "CL", times: 5 },
+                units: { unit: "DD", times: 5 },
+                units: { unit: "FF", times: 5 },
+                units: { unit: "SC" },
+                units: { unit: "TGC" },
+                units: { unit: "MB" }
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Home Fleet",
+            value: {
+                hexes: 408, hexes: 608, hexes: 707,
+                units: { unit: "DN" },
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 4 },
+                units: { unit: "CW", times: 5 },
+                units: { unit: "CL", times: 5 },
+                units: { unit: "DD", times: 5 },
+                units: { unit: "DW", times: 3 },
+                units: { unit: "FF", times: 5 },
+                units: { unit: "SC" },
+                units: { unit: "TGP" },
+                units: { unit: "FRD" },
+                units: { unit: "MB" }
+                reserve: 1,
+                hex_placement_limits: {
+                    key: 707,
+                    value: 6
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Enemy’s Blood Fleet",
+            value: {
+                hexes: 111, hexes: 112,
+                hexes: 211, hexes: 212,
+                hexes: 312, hexes: 313,
+                hexes: 411, hexes: 412, hexes: 413,
+                hexes: 512, hexes: 513,
+                units: { unit: "BC" },
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 3 },
+                units: { unit: "CL", times: 3 },
+                units: { unit: "DD", times: 4 },
+                units: { unit: "FF", times: 4 },
+                units: { unit: "SC" },
+                units: { unit: "TGC" },
+                units: { unit: "MB" }
+                reserve: 1
+            }
+        },
+        starting_fleets: {
+            key: "Far Stars Fleet",
+            value: {
+                hexes: -1,
+                units: { unit: "CC" },
+                units: { unit: "CA", times: 4 },
+                units: { unit: "CL", times: 5 },
+                units: { unit: "DD", times: 4 },
+                units: { unit: "FF", times: 4 },
+                units: { unit: "CW" },
+                units: { unit: "DW" },
+                units: { unit: "SC" },
+                units: { unit: "TGP" },
+                units: { unit: "FRD" }
+                reserve: 1,
+                strategic_move_arrival_year: 169,
+                strategic_move_arrival_season: spring
+            }
+        },
+        production: {
+            year: 168,
+            season: fall,
+            units: { unit: "BC" },
+            units: { unit: "CA" },
+            units: { unit: "CW", times: 3 },
+            units: { unit: "DW", times: 3 },
+            units: { unit: "FF", times: 3 }
+        },
+        production: {
+            year: 169,
+            season: spring,
+            units: { unit: "DN" },
+            units: { unit: "CA" },
+            units: { unit: "CW", times: 3 },
+            units: { unit: "DW", times: 3 },
+            units: { unit: "FF", times: 3 }
+        }
+    }
+},
+oobs: {
+    key: "ROM",
+    value: {
+        starting_fleets: {
+            key: "Home Fleet",
+            value: {
+                hexes: 4514, hexes: 4613,
+                units: { unit: "SP", times: 2 },
+                units: { unit: "SK" },
+                units: { unit: "KE" },
+                units: { unit: "WE", times: 8 },
+                units: { unit: "SE" },
+                units: { unit: "WH", times: 2 },
+                units: { unit: "BHE", times: 2 },
+                units: { unit: "FAL" },
+                units: { unit: "SN", times: 3 },
+                units: { unit: "SNB, 2xFRD", times: 3 },
+                units: { unit: "MB" },
+                units: { unit: "KRC" },
+                units: { unit: "KR", times: 2 },
+                units: { unit: "KRM" },
+                units: { unit: "KRT", times: 2 },
+                units: { unit: "K5Q", times: 2 },
+                units: { unit: "K5S" },
+                reserve: 1,
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "KC9R" },
+                    units: { unit: "CON" },
+                    units: { unit: "SUP" },
+                    units: { unit: "SPB" },
+                    units: { unit: "SKE", times: 2 },
+                    units: { unit: "FH" },
+                    units: { unit: "SP", times: 6 },
+                    units: { unit: "SPC", times: 3 },
+                    units: { unit: "SK", times: 3 },
+                    units: { unit: "SKF" },
+                    units: { unit: "SKB" },
+                    units: { unit: "SKE" },
+                    units: { unit: "WE" },
+                    units: { unit: "KE" }
+                    units: { unit: "K4", times: 3 }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Fleet of the North",
+            value: {
+                hexes: 4210, hexes: 4211, hexes: 4212, hexes: 4213, hexes: 4214,
+                hexes: 4310, hexes: 4311, hexes: 4312, hexes: 4313, hexes: 4314, hexes: 4315,
+                hexes: 4410, hexes: 4411, hexes: 4412, hexes: 4413, hexes: 4414,
+                hexes: 4510, hexes: 4511, hexes: 4512, hexes: 4513,
+                hexes: 4610, hexes: 4611, hexes: 4612,
+                hexes: 4810, hexes: 4811, hexes: 4812,
+                hexes: 4910, hexes: 4911,
+                hexes: 5010, hexes: 5011,
+                units: { unit: "KE" },
+                units: { unit: "WE", times: 8 },
+                units: { unit: "SE" },
+                units: { unit: "FAL" },
+                units: { unit: "SN", times: 3 },
+                units: { unit: "SNB", times: 3 },
+                units: { unit: "FE", times: 3 },
+                units: { unit: "MB" },
+                units: { unit: "KRC" },
+                units: { unit: "KR", times: 2 },
+                units: { unit: "KRM" },
+                units: { unit: "K5Q" },
+                units: { unit: "K5S" },
+                reserve: 1,
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "CON" },
+                    units: { unit: "SUP" },
+                    units: { unit: "SPB" },
+                    units: { unit: "SKE", times: 2 },
+                    units: { unit: "FH" },
+                    units: { unit: "SP", times: 6 },
+                    units: { unit: "SK", times: 3 },
+                    units: { unit: "SKF" },
+                    units: { unit: "SKB" },
+                    units: { unit: "SKE" },
+                    units: { unit: "WE" },
+                    units: { unit: "KE" },
+                    units: { unit: "K4", times: 3 }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Fleet of the West",
+            value: {
+                hexes: 3317,
+                hexes: 3416, hexes: 3417,
+                hexes: 3516, hexes: 3517, hexes: 3518,
+                hexes: 3615, hexes: 3616, hexes: 3617, hexes: 3618, hexes: 3619,
+                hexes: 3715, hexes: 3716, hexes: 3717, hexes: 3718, hexes: 3719,
+                hexes: 3814, hexes: 3815, hexes: 3816, hexes: 3817, hexes: 3818, hexes: 3819,
+                hexes: 3914, hexes: 3915, hexes: 3916, hexes: 3917, hexes: 3918, hexes: 3919,
+                hexes: 4010, hexes: 4011, hexes: 4012, hexes: 4013, hexes: 4014, hexes: 4016, hexes: 4018, hexes: 4019,
+                hexes: 4110, hexes: 4111, hexes: 4112, hexes: 4113, hexes: 4114,
+                units: { unit: "KE" },
+                units: { unit: "WE", times: 8 },
+                units: { unit: "SE" },
+                units: { unit: "FAL" },
+                units: { unit: "WH", times: 2 },
+                units: { unit: "BHE", times: 2 },
+                units: { unit: "SN", times: 3 },
+                units: { unit: "SNB", times: 3 },
+                units: { unit: "FE", times: 3 },
+                units: { unit: "MB" },
+                units: { unit: "KRC" },
+                units: { unit: "KR", times: 2 },
+                units: { unit: "K7R", times: 3 },
+                units: { unit: "KRM" },
+                units: { unit: "K5Q" },
+                units: { unit: "K5S" },
+                reserve: 1,
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "CON" },
+                    units: { unit: "SUP" },
+                    units: { unit: "SPB" },
+                    units: { unit: "SKE", times: 2 },
+                    units: { unit: "FH" },
+                    units: { unit: "SP", times: 5 },
+                    units: { unit: "SK", times: 3 },
+                    units: { unit: "SKF" },
+                    units: { unit: "SKB" },
+                    units: { unit: "SKE" },
+                    units: { unit: "WE" },
+                    units: { unit: "KE" },
+                    units: { unit: "K4", times: 3 }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Patrol Detachment",
+            value: {
+                hexes: 3319,
+                units: { unit: "SK" },
+                units: { unit: "WE", times: 6 },
+                units: { unit: "BH", times: 4 },
+                units: { unit: "SN", times: 3 },
+                units: { unit: "SNB", times: 3 },
+                units: { unit: "SE" },
+                prewar_construction: {
+                    year: 173,
+                    season: spring,
+                    units: { unit: "K4", times: 3 },
+                    units: { unit: "SP", times: 2 }
+                }
+            }
+        },
+        mothball_reserve: {
+            units: { unit: "WE", times: 4 },
+            units: { unit: "BH", times: 4 },
+            units: { unit: "SN", times: 8 }
+            war_release: { unit: "[any]", times: 2 }
+        },
+        production: {
+            year: 173,
+            season: spring,
+            units: { unit: "NH" },
+            units: { unit: "FH" },
+            units: { unit: "SP", times: 4 },
+            units: { unit: "SK", times: 3 },
+            units: { unit: "WE" },
+            units: { unit: "SN" }
+        },
+        production: {
+            year: 173,
+            season: fall,
+            units: { unit: "CON" },
+            units: { unit: "FH" },
+            units: { unit: "SP", times: 4 },
+            units: { unit: "SK", times: 3 },
+            units: { unit: "WE" },
+            units: { unit: "SN" }
+        }
+    }
+},
+oobs: {
+    key: "THO",
+    value: {
+        starting_fleets: {
+            key: "First Fleet",
+            value: {
+                hexes: 2719, hexes: 2818, hexes: 2819,
+                units: { unit: "CA" },
+                units: { unit: "DD" },
+                units: { unit: "PC", times: 3 },
+                units: { unit: "SC" },
+                prewar_construction: {
+                    year: 168,
+                    season: fall,
+                    units: { unit: "PC" }
+                },
+                prewar_construction: {
+                    year: 171,
+                    season: spring,
+                    units: { unit: "DN" },
+                    units: { unit: "PC" }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Second Fleet",
+            value: {
+                hexes: 2918,
+                units: { unit: "CA" },
+                units: { unit: "DD" },
+                units: { unit: "PC", times: 3 },
+                units: { unit: "SC" }
+                prewar_construction: {
+                    year: 169,
+                    season: fall,
+                    units: { unit: "PC" }
+                },
+                prewar_construction: {
+                    year: 172,
+                    season: spring,
+                    units: { unit: "BW" },
+                    units: { unit: "PCE" },
+                    units: { unit: "PC" }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Third Fleet",
+            value: {
+                hexes: 3018, hexes: 3019, hexes: 3119,
+                units: { unit: "CA" },
+                units: { unit: "DD" },
+                units: { unit: "PC", times: 3 },
+                units: { unit: "SC" }
+                prewar_construction: {
+                    year: 170,
+                    season: fall,
+                    units: { unit: "PC" }
+                },
+                prewar_construction: {
+                    year: 171,
+                    season: fall,
+                    units: { unit: "PC" }
+                }
+            }
+        },
+        starting_fleets: {
+            key: "Home Fleet",
+            value: {
+                hexes: 2919,
+                units: { unit: "CA" },
+                units: { unit: "DD" },
+                units: { unit: "PC", times: 3 },
+                units: { unit: "CPC", times: 3 },
+                units: { unit: "MB" }
+                reserve: 1,
+                prewar_construction: {
+                    year: 169,
+                    season: spring,
+                    units: { unit: "DN" },
+                    units: { unit: "PC" }
+                },
+                prewar_construction: {
+                    year: 170,
+                    season: spring,
+                    units: { unit: "BW" },
+                    units: { unit: "PCE" },
+                    units: { unit: "PC" }
+                },
+                prewar_construction: {
+                    year: 172,
+                    season: fall,
+                    units: { unit: "PC" }
+                }
+            }
+        },
+        production: {
+            year: 168,
+            season: fall,
+            units: { unit: "DD" },
+            units: { unit: "PC", times: 2 }
+        },
+        production: {
+            year: 169,
+            season: spring,
+            units: { unit: "DN" },
+            units: { unit: "PC" }
+        }
     }
 }

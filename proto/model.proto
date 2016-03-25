@@ -117,6 +117,9 @@ message starting_fleet_t
     repeated oob_unit_t units = 2;
     int32 reserve = 3; // integer acting as boolean
     repeated production_element_t prewar_construction = 4;
+    int32 strategic_move_arrival_year = 5;
+    season_t strategic_move_arrival_season = 6;
+    map<int32, int32> hex_placement_limits = 7; // hex coord to unit limit
 }
 
 message mothball_reserve_t
