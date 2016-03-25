@@ -4,9 +4,9 @@ const char* nations_pbtxt_string = R"inline_json(
 @nations_contents@)inline_json";
 
 
-const char* map_json_string = R"inline_json(
+const char* map_pbtxt_string = R"inline_json(
 @map_contents@)inline_json";
 
 
-const char* oob_json_string = R"inline_json(
+const char* oob_pbtxt_string = R"inline_json(
 @oob_contents@)inline_json";

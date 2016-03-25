@@ -5,5 +5,5 @@
 
 TEST(whole_model_ops, init)
 {
-    EXPECT_TRUE(init_model(nations_pbtxt_string, map_json_string, oob_json_string));
+    EXPECT_TRUE(init_model(nations_pbtxt_string, map_pbtxt_string, oob_pbtxt_string));
 }
