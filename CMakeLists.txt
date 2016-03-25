@@ -19,24 +19,24 @@ endif ()
 
 add_custom_command(
     OUTPUT
-        data.hpp
+        test_data.hpp
     COMMAND
         ${CMAKE_COMMAND}
             -Dnations_file=${CMAKE_HOME_DIRECTORY}/nations.txt
             -Dmap_file=${CMAKE_HOME_DIRECTORY}/default_map.txt
             -Doob_file=${CMAKE_HOME_DIRECTORY}/default_oob.txt
-            -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/data.hpp.in
+            -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     DEPENDS
         ${CMAKE_HOME_DIRECTORY}/nations.txt
         ${CMAKE_HOME_DIRECTORY}/default_map.txt
         ${CMAKE_HOME_DIRECTORY}/default_oob.txt
-        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/data.hpp.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     COMMENT "Create JSON data header."
     VERBATIM
 )
-add_custom_target(data_header_target DEPENDS data.hpp)
+add_custom_target(data_header_target DEPENDS test_data.hpp)
 
 macro(generate_protobuf file_root target)
     add_custom_command(
