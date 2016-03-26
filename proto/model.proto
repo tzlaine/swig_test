@@ -23,6 +23,7 @@ message hex_coord_t
     int32 y = 2;
 }
 
+// nations messages
 message capital_hex_zone_t
 {
     string name = 1;
@@ -66,6 +67,7 @@ message nations_t
     map<string, nation_t> nations = 1;
 }
 
+// Map messages
 message hex_t
 {
     hex_coord_t coord = 1;
@@ -110,12 +112,14 @@ message map_t
     repeated hex_t hexes = 6; // only in saved data
 }
 
+// Game model (as in Model-View-Controller)
 message model_t
 {
     nations_t nations = 1;
     map_t map = 2;
 }
 
+// Order of Battle messages
 message oob_unit_t
 {
     string unit = 1;
