@@ -110,3 +110,93 @@ inline void validate_hex_coords (const nations_t& nations, int width, int height
     }
     // TODO: other hex coords
 }
+
+void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations)
+{
+    require_nonnegative(map.width, "map_t.width");
+    require_nonnegative(map.height, "map_t.height");
+
+    const hex_t uninitialized_hex = { invalid_hex_coord, -1 };
+    map.hexes.resize(map.width * map.height, uninitialized_hex);
+
+    // Add NZ hexes.
+    for (auto hex_id : map.nz_hexes) {
+        require_hex_coord(hex_id, map.width, map.height, "nz_hexes hex");
+
+        const hex_coord_t hc = to_hex_coord(hex_id);
+        const int i = hex_index(hc, map.width);
+        hex_t& hex = map.hexes[i];
+
+        if (hex.coord != invalid_hex_coord) {
+            boost::throw_exception(
+                std::runtime_error("Duplicate definition of NZ hex " + std::to_string(hex_id))
+            );
+        }
+
+        hex.coord = hc;
+        hex.owner = 0;
+    }
+
+    // Add NZ planets.
+    for (auto hex_id : map.nz_planets) {
+        require_hex_coord(hex_id, map.width, map.height, "nz_planets hex");
+
+        const hex_coord_t hc = to_hex_coord(hex_id);
+        const int i = hex_index(hc, map.width);
+        hex_t& hex = map.hexes[i];
+
+        if (hex.owner != 0) {
+            boost::throw_exception(
+                std::runtime_error(
+                    "Cannot place NX planet in " + std::to_string(hex_id) +
+                    ", because that is not a NZ hex.")
+            );
+        }
+
+        hex.feature = feature_t::min;
+    }
+
+    // Add hexes from initial national holdings.
+    for (const auto& holdings : map.starting_national_holdings) {
+        auto nations_it = nations.nations.find(holdings.first);
+        if (nations_it == nations.nations.end()) {
+            boost::throw_exception(
+                std::runtime_error("Unknown owner nation '" + holdings.first + "' encountered in map data")
+            );
+        }
+        const int nation_id = nations_it->second.nation_id;
+
+        for (const auto& province : holdings.second.provinces) {
+            for (const auto& province_hex : province.hexes) {
+                const auto hex_id = province_hex.hex;
+                require_hex_coord(hex_id, map.width, map.height, "starting province hex");
+
+                const hex_coord_t hc = to_hex_coord(hex_id);
+                const int i = hex_index(hc, map.width);
+                hex_t& hex = map.hexes[i];
+
+                if (hex.coord != invalid_hex_coord) {
+                    boost::throw_exception(
+                        std::runtime_error("Duplicate definition of hex " + std::to_string(hex_id))
+                    );
+                }
+
+                hex.coord = hc;
+                hex.owner = nation_id;
+                hex.feature = province_hex.feature;
+            }
+        }
+    }
+
+    for (std::size_t i = 0; i < map.hexes.size(); ++i) {
+        if (map.hexes[i].coord == invalid_hex_coord) {
+            int hex_x = i % map.width + 1;
+            int hex_y = i / map.width + 1;
+            std::string hex_str = boost::lexical_cast<std::string>(hex_x * 100 + hex_y);
+            while (hex_str.size() < 4u) {
+                hex_str = '0' + hex_str;
+            }
+            boost::throw_exception(std::runtime_error("Hex " + hex_str + " not defined in map.json"));
+        }
+    }
+}
