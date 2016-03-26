@@ -633,6 +633,21 @@ extern "C" {
     MODEL_API
     int init_model (const char* nations_str, const char* map_str, const char* oob_str) try
     {
+	if (nations_str == nullptr)
+	    throw std::runtime_error("init_model() was passed a null nations data string.");
+	if (map_str == nullptr)
+	    throw std::runtime_error("init_model() was passed a null map data string.");
+	if (oob_str == nullptr)
+	    throw std::runtime_error("init_model() was passed a null OOB data string.");
+
+        const std::string empty_str;
+	if (nations_str == empty_str)
+	    throw std::runtime_error("init_model() was passed an empty nations data string.");
+	if (map_str == empty_str)
+	    throw std::runtime_error("init_model() was passed an empty map data string.");
+	if (oob_str == empty_str)
+	    throw std::runtime_error("init_model() was passed an empty OOB data string.");
+
         if (g_model_state.initialized)
             throw std::runtime_error("Attempted to duplicate-initialize model");
 

@@ -40,4 +40,12 @@ if (PYTHON_EXECUTABLE)
     add_dependencies(model_tests model_data_target)
 endif ()
 
-add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests)
+set(model_test_args)
+if (MSVC)
+    set(model_test_args
+	${CMAKE_HOME_DIRECTORY}/nations.txt
+	${CMAKE_HOME_DIRECTORY}/default_map.txt
+	${CMAKE_HOME_DIRECTORY}/default_oob.txt
+    )
+endif ()
+add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests ${model_test_args})
