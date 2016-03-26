@@ -24,11 +24,20 @@ inline void require_nonempty(const std::string& s, const std::string& name)
         boost::throw_exception(std::runtime_error(name + " must be provided and must not be empty"));
 }
 
+inline void require_positive(int i, const std::string& name)
+{
+    if (i <= 0) {
+        boost::throw_exception(
+            std::runtime_error(name + " (=" + std::to_string(i) + ") must be positive (> 0)")
+        );
+    }
+}
+
 inline void require_nonnegative(int i, const std::string& name)
 {
     if (i < 0) {
         boost::throw_exception(
-            std::runtime_error(name + " (=" + std::to_string(i) + ") must be nonnegative")
+            std::runtime_error(name + " (=" + std::to_string(i) + ") must be nonnegative (>= 0)")
         );
     }
 }
@@ -109,7 +118,7 @@ inline void validate_hex_coords (const nations_t& nations, int width, int height
     }
 }
 
-void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations)
+inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations)
 {
     require_nonnegative(map.width, "map_t.width");
     require_nonnegative(map.height, "map_t.height");
@@ -195,6 +204,71 @@ void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations)
                 hex_str = '0' + hex_str;
             }
             boost::throw_exception(std::runtime_error("Hex " + hex_str + " not defined in map.json"));
+        }
+    }
+}
+
+inline void validate_and_fixup_oob_unit (oob_unit_t& oob_unit)
+{
+    require_nonempty(oob_unit.unit, "oob_unit_t.unit");
+    require_nonnegative(oob_unit.times, "oob_unit_t.times");
+    if (oob_unit.times == 0)
+        oob_unit.times = 1;
+}
+
+inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet, int width, int height)
+{
+    for (auto hex_id : starting_fleet.hexes) {
+        require_hex_coord(hex_id, width, height, "starting fleet hex");
+    }
+    for (auto& oob_unit : starting_fleet.units) {
+        validate_and_fixup_oob_unit(oob_unit);
+    }
+    require_boolean_int(starting_fleet.reserve, "starting_fleet_t.reserve");
+    for (auto& element : starting_fleet.prewar_construction) {
+        for (auto& oob_unit : element.units) {
+            validate_and_fixup_oob_unit(oob_unit);
+        }
+    }
+    require_nonnegative(
+        starting_fleet.strategic_move_arrival_year,
+        "starting_fleet_t.strategic_move_arrival_year"
+    );
+    for (auto limit : starting_fleet.hex_placement_limits) {
+        require_hex_coord(limit.first, width, height, "hex_placement_limit hex");
+        require_positive(limit.second, "hex_placement_limit unit limit number");
+    }
+}
+
+inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map_t& map, const nations_t& nations)
+{
+    for (auto& oob : oobs.oobs) {
+        if (nations.nations.count(oob.first) == 0) {
+            boost::throw_exception(
+                std::runtime_error("Unknown owner nation '" + oob.first + "' encountered in OOB data")
+            );
+        }
+
+        for (auto& fleet : oob.second.starting_fleets) {
+            require_nonempty(fleet.first, "starting_fleets_t name ('key')");
+
+            validate_and_fixup_starting_fleet(fleet.second, map.width, map.height);
+        }
+
+        for (auto& oob_unit : oob.second.mothball_reserve.units) {
+            validate_and_fixup_oob_unit(oob_unit);
+        }
+        for (auto& oob_unit : oob.second.mothball_reserve.war_release) {
+            validate_and_fixup_oob_unit(oob_unit);
+        }
+        for (auto& oob_unit : oob.second.mothball_reserve.limited_war_release) {
+            validate_and_fixup_oob_unit(oob_unit);
+        }
+
+        for (auto& element : oob.second.production) {
+            for (auto& oob_unit : element.units) {
+                validate_and_fixup_oob_unit(oob_unit);
+            }
         }
     }
 }

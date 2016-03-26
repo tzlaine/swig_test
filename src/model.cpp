@@ -665,7 +665,7 @@ extern "C" {
             if (!pb::TextFormat::Parse(&is, &oob_msg))
                 boost::throw_exception(std::runtime_error("Missing starting order of battle data"));
             g_model_state.oob = FromProtobuf(oob_msg);
-            // TODO: Validate and fill in oob_unit_t::times (0's should become 1's).
+            validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_model_state.nations);
         }
 
         validate_hex_coords(g_model_state.nations, g_model_state.m.width, g_model_state.m.height);
