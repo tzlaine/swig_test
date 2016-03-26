@@ -85,11 +85,11 @@ inline hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 }
 
 
-inline bool on_map (hex_coord_t hc, const map_t& m)
-{ return hc.x < m.width && hc.y < m.height; }
-
 inline bool on_map (hex_coord_t hc, int width, int height)
-{ return hc.x < width && hc.y < height; }
+{ return 0 <= hc.x && hc.x < width && 0 <= hc.y && hc.y < height; }
+
+inline bool on_map (hex_coord_t hc, const map_t& m)
+{ return on_map(hc, m.width, m.height); }
 
 
 inline int hex_index (hex_coord_t hc, int width)

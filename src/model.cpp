@@ -241,11 +241,11 @@ void init_graph (graph::graph& g,
         int i = 0;
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y, ++i) {
-                hex_coord_t coord{x, y};
+                const hex_coord_t coord{x, y};
                 for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
-                    hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
+                    const hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, width, height)) {
-                        int index = hex_index(adjacent_coord, width);
+                        const int index = hex_index(adjacent_coord, width);
                         if (!make_edge(i, index))
                             continue;
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
@@ -670,7 +670,6 @@ extern "C" {
 
         validate_hex_coords(g_model_state.nations, g_model_state.m.width, g_model_state.m.height);
 
-#if 0
         init_graph(
             g_model_state.g,
             g_model_state.hex_id_property_map,
@@ -680,7 +679,6 @@ extern "C" {
             [] (int id1, int id2) {return true;},
             [] (int id1, int id2) {return 1.0;}
         );
-#endif
 
         g_model_state.initialized = true;
 
