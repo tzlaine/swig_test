@@ -135,7 +135,7 @@ message production_element_t
 
 message starting_fleet_t
 {
-    repeated int32 hexes = 1 [packed=true];
+    repeated int32 hexes = 1 [packed=true]; // empty indicates offmap
     repeated oob_unit_t units = 2;
     int32 reserve = 3; // integer acting as boolean
     repeated production_element_t prewar_construction = 4;
