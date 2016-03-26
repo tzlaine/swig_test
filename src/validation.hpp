@@ -210,6 +210,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
 
 inline void validate_and_fixup_oob_unit (oob_unit_t& oob_unit)
 {
+    // TODO: Check that the unit is a known unit for this nation.
     require_nonempty(oob_unit.unit, "oob_unit_t.unit");
     require_nonnegative(oob_unit.times, "oob_unit_t.times");
     if (oob_unit.times == 0)
