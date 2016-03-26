@@ -258,10 +258,6 @@ void init_graph (graph::graph& g,
     }
 }
 
-
-int hex_coord_to_graph_id (hex_coord_t hc)
-{ return (hc.x + 1) * 100 + hc.y + 1; }
-
 struct supply_data
 {
     std::vector<int> supply;
