@@ -34,6 +34,13 @@ inline hex_direction_t& operator++(hex_direction_t& d)
 extern const hex_coord_t invalid_hex_coord;
 extern const hex_direction_t all_hex_directions[6];
 
+
+inline bool operator== (hex_coord_t lhs, hex_coord_t rhs)
+{ return lhs.x == rhs.x && lhs.y == rhs.y; }
+inline bool operator!= (hex_coord_t lhs, hex_coord_t rhs)
+{ return !(lhs == rhs); }
+
+
 #if LOG
 std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 {

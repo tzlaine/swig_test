@@ -73,7 +73,7 @@ struct nations_t
 struct hex_t
 {
     hex_coord_t coord;
-    unsigned int owner;
+    int owner;
     feature_t feature;
     std::vector<int> neutral_zone_bordering;
 };
