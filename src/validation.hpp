@@ -102,13 +102,11 @@ inline void validate_nations (const nations_t& nations)
 
 inline void validate_hex_coords (const nations_t& nations, int width, int height)
 {
-    // TODO: This obviously needs to be called after loading the map
     for (const auto& n : nations.nations) {
         for (const auto& hex : n.second.capital.hexes) {
             require_hex_coord(hex.coord, width, height, "capital_hex_t.coord");
         }
     }
-    // TODO: other hex coords
 }
 
 void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations)
