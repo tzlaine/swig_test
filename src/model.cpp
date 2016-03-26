@@ -634,13 +634,13 @@ extern "C" {
     int init_model (const char* nations_str, const char* map_str, const char* oob_str) try
     {
         if (g_model_state.initialized)
-            boost::throw_exception(std::runtime_error("Attempted to duplicate-initialize model"));
+            throw std::runtime_error("Attempted to duplicate-initialize model");
 
         {
             message::nations_t nations_msg;
             pb::io::ArrayInputStream is(nations_str, strlen(nations_str));
             if (!pb::TextFormat::Parse(&is, &nations_msg))
-                boost::throw_exception(std::runtime_error("Missing starting nations data"));
+                throw std::runtime_error("Missing starting nations data");
             g_model_state.nations = FromProtobuf(nations_msg);
             validate_nations(g_model_state.nations);
             fill_in_nation_ids(g_model_state.nations);
@@ -650,7 +650,7 @@ extern "C" {
             message::map_t map_msg;
             pb::io::ArrayInputStream is(map_str, strlen(map_str));
             if (!pb::TextFormat::Parse(&is, &map_msg))
-                boost::throw_exception(std::runtime_error("Missing starting map data"));
+                throw std::runtime_error("Missing starting map data");
             g_model_state.m = FromProtobuf(map_msg);
             validate_and_fill_in_map_hexes(g_model_state.m, g_model_state.nations);
         }
@@ -659,7 +659,7 @@ extern "C" {
             message::orders_of_battle_t oob_msg;
             pb::io::ArrayInputStream is(oob_str, strlen(oob_str));
             if (!pb::TextFormat::Parse(&is, &oob_msg))
-                boost::throw_exception(std::runtime_error("Missing starting order of battle data"));
+                throw std::runtime_error("Missing starting order of battle data");
             g_model_state.oob = FromProtobuf(oob_msg);
             validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_model_state.nations);
         }
@@ -693,7 +693,7 @@ extern "C" {
     int save_model (const char* filename) try
     {
         if (!g_model_state.initialized)
-            boost::throw_exception(std::runtime_error("Attempted to save an uninitialized model"));
+            throw std::runtime_error("Attempted to save an uninitialized model");
 
         std::ofstream ofs(filename);
         if (!ofs)
@@ -713,7 +713,7 @@ extern "C" {
     int load_model (const char* filename) try
     {
         if (g_model_state.initialized)
-            boost::throw_exception(std::runtime_error("Attempted to load over an initialized model"));
+            throw std::runtime_error("Attempted to load over an initialized model");
 
         std::ifstream ifs(filename);
         if (!ifs)
@@ -726,13 +726,13 @@ extern "C" {
 
         {
             if (!model.has_nations())
-                boost::throw_exception(std::runtime_error("Missing saved nations data"));
+                throw std::runtime_error("Missing saved nations data");
             g_model_state.nations = FromProtobuf(model.nations());
         }
 
         {
             if (!model.has_map())
-                boost::throw_exception(std::runtime_error("Missing saved map data"));
+                throw std::runtime_error("Missing saved map data");
             g_model_state.m = FromProtobuf(model.map());
         }
 
