@@ -51,7 +51,7 @@ macro(generate_protobuf file_root target)
             protoc
                 --proto_path=${CMAKE_SOURCE_DIR}/proto
                 --cpp_out=${CMAKE_BINARY_DIR}
-                --csharp_out=${CMAKE_BINARY_DIR}
+                --csharp_out=${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
         DEPENDS
             ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto

@@ -622,12 +622,20 @@ int get_impl (const T& obj, void** bytes, int* size)
     return 0;
 }
 
+struct loaded_nations_t
+{
+    loaded_nations_t () : initialized (false) {}
+
+    bool initialized;
+    nations_t nations;
+};
+loaded_nations_t g_loaded_nations;
+
 struct model_state_t
 {
     model_state_t () : initialized (false) {}
 
     bool initialized;
-    nations_t nations;
     map_t m;
     orders_of_battle_t oob;
     graph::graph g;
@@ -665,7 +673,7 @@ extern "C" {
     MODEL_API
     int get_nations (void** bytes, int* size)
     {
-        return get_impl(g_model_state.nations, bytes, size);
+        return get_impl(g_loaded_nations.nations, bytes, size);
     }
 
     MODEL_API
@@ -681,35 +689,49 @@ extern "C" {
     }
 
     MODEL_API
-    int init_model (const char* nations_str, const char* map_str, const char* oob_str) try
+    int init_nations (const char* nations_str) try
     {
-	if (nations_str == nullptr)
-	    throw std::runtime_error("init_model() was passed a null nations data string.");
-	if (map_str == nullptr)
-	    throw std::runtime_error("init_model() was passed a null map data string.");
-	if (oob_str == nullptr)
-	    throw std::runtime_error("init_model() was passed a null OOB data string.");
+        if (nations_str == nullptr)
+            throw std::runtime_error("init_model() was passed a null nations data string.");
 
         const std::string empty_str;
-	if (nations_str == empty_str)
-	    throw std::runtime_error("init_model() was passed an empty nations data string.");
-	if (map_str == empty_str)
-	    throw std::runtime_error("init_model() was passed an empty map data string.");
-	if (oob_str == empty_str)
-	    throw std::runtime_error("init_model() was passed an empty OOB data string.");
+        if (nations_str == empty_str)
+            throw std::runtime_error("init_model() was passed an empty nations data string.");
 
-        if (g_model_state.initialized)
-            throw std::runtime_error("Attempted to duplicate-initialize model");
+        if (g_loaded_nations.initialized)
+            return 1;
 
         {
             message::nations_t nations_msg;
             pb::io::ArrayInputStream is(nations_str, strlen(nations_str));
             if (!pb::TextFormat::Parse(&is, &nations_msg))
                 throw std::runtime_error("Missing starting nations data");
-            g_model_state.nations = FromProtobuf(nations_msg);
-            validate_nations(g_model_state.nations);
-            fill_in_nation_ids(g_model_state.nations);
+            g_loaded_nations.nations = FromProtobuf(nations_msg);
+            validate_nations(g_loaded_nations.nations);
+            fill_in_nation_ids(g_loaded_nations.nations);
         }
+
+        g_loaded_nations.initialized = true;
+
+        return 1;
+    } CATCH_AND_RETURN(0);
+
+    MODEL_API
+    int init_model (const char* map_str, const char* oob_str) try
+    {
+        if (map_str == nullptr)
+            throw std::runtime_error("init_model() was passed a null map data string.");
+        if (oob_str == nullptr)
+            throw std::runtime_error("init_model() was passed a null OOB data string.");
+
+        const std::string empty_str;
+        if (map_str == empty_str)
+            throw std::runtime_error("init_model() was passed an empty map data string.");
+        if (oob_str == empty_str)
+            throw std::runtime_error("init_model() was passed an empty OOB data string.");
+
+        if (g_model_state.initialized)
+            throw std::runtime_error("Attempted to duplicate-initialize model");
 
         {
             message::map_t map_msg;
@@ -717,7 +739,7 @@ extern "C" {
             if (!pb::TextFormat::Parse(&is, &map_msg))
                 throw std::runtime_error("Missing starting map data");
             g_model_state.m = FromProtobuf(map_msg);
-            validate_and_fill_in_map_hexes(g_model_state.m, g_model_state.nations);
+            validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
         }
 
         {
@@ -726,10 +748,10 @@ extern "C" {
             if (!pb::TextFormat::Parse(&is, &oob_msg))
                 throw std::runtime_error("Missing starting order of battle data");
             g_model_state.oob = FromProtobuf(oob_msg);
-            validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_model_state.nations);
+            validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations);
         }
 
-        validate_hex_coords(g_model_state.nations, g_model_state.m.width, g_model_state.m.height);
+        validate_hex_coords(g_loaded_nations.nations, g_model_state.m.width, g_model_state.m.height);
 
         init_graph(
             g_model_state.g,
@@ -749,6 +771,7 @@ extern "C" {
     MODEL_API
     int reset_model () try
     {
+        g_loaded_nations = loaded_nations_t();
         g_model_state = model_state_t();
         return 1;
 
@@ -766,7 +789,7 @@ extern "C" {
 
         message::model_t model;
 
-        *model.mutable_nations() = ToProtobuf(g_model_state.nations);
+        *model.mutable_nations() = ToProtobuf(g_loaded_nations.nations);
         *model.mutable_map() = ToProtobuf(g_model_state.m);
 
         pb::io::OstreamOutputStream os(&ofs);
@@ -792,7 +815,7 @@ extern "C" {
         {
             if (!model.has_nations())
                 throw std::runtime_error("Missing saved nations data");
-            g_model_state.nations = FromProtobuf(model.nations());
+            g_loaded_nations.nations = FromProtobuf(model.nations());
         }
 
         {
@@ -811,6 +834,7 @@ extern "C" {
             [] (int id1, int id2) {return 1.0;}
         );
 
+        g_loaded_nations.initialized = true;
         g_model_state.initialized = true;
 
         return 1;

@@ -21,9 +21,14 @@ std::string file_slurp (const char* filename)
 #include <test_data.hpp>
 #endif
 
-TEST(whole_model_ops, init)
+TEST(whole_model_ops, test_init_nations)
 {
-    EXPECT_TRUE(init_model(nations_pbtxt_string, map_pbtxt_string, oob_pbtxt_string));
+    EXPECT_TRUE(init_nations(nations_pbtxt_string));
+}
+
+TEST(whole_model_ops, test_init_model)
+{
+    EXPECT_TRUE(init_model(map_pbtxt_string, oob_pbtxt_string));
 }
 
 int main(int argc, char **argv)

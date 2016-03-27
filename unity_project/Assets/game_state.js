@@ -3,7 +3,7 @@
 import System.IO;
 import RadicalRoutineExtensions;
 import System.Runtime.InteropServices;
-import graph_algorithms;
+import model_plugin;
 
 @script SerializeAll
 
@@ -116,6 +116,7 @@ private static function determine_supply ()
         ++team_id;
     }
 
+/*  // TODO
     var m = this_.game_data_.map();
     var hexes = new supply_check_hex_t[m.width * m.height];
     var i = 0;
@@ -125,13 +126,13 @@ private static function determine_supply ()
         for (n in h.units) {
             var owner_team = nation_teams[this_.game_data_.id(n.Key)];
             for (u in n.Value) {
-                if (true /* ship */) { // TODO: Handle tugs with supply mission.
+                if (true) { // TODO: Handle tugs with supply mission.
                     sh.ship |= 1 << sh.owner_id;
-                    if (false /* supply tug */) // TODO: Handle tugs with supply mission.
+                    if (false) // TODO: Handle tugs with supply mission.
                         sh.supply_tug |= 1 << sh.owner_id;
                 } else {
                     sh.nonship_unit |= 1 << sh.owner_id;
-                    if (false /* convoy */) // TODO: Handle CONVOYs.
+                    if (false) // TODO: Handle CONVOYs.
                         sh.convoy |= 1 << sh.owner_id;
                 }
             }
@@ -141,11 +142,11 @@ private static function determine_supply ()
         // TODO: Use .zones instead.
         if (h.feature == 'SB') {
             sh.SB |= 1 << sh.owner_id;
-            if (true /* has fighters or PFs */)
+            if (true) // TODO: Handle fighters or PFs
                 sh.base_with_fighters |= 1 << sh.owner_id;
         } else if (h.feature == 'BATS') {
             sh.BATS |= 1 << sh.owner_id;
-            if (true /* has fighters or PFs */)
+            if (true) // TODO: Handle fighters or PFs
                 sh.base_with_fighters |= 1 << sh.owner_id;
         } else if (h.feature == 'MIN' || h.feature == 'MAJ' || h.feature == 'capitol') {
             sh.planet |= 1 << sh.owner_id;
@@ -154,28 +155,28 @@ private static function determine_supply ()
     }
 
     var offmap_border_hexes =
-        new int[this_.game_data_.nations_by_id.Count * graph_algorithms.max_offmap_border_hexes];
+        new int[this_.game_data_.nations_by_id.Count * model_plugin.max_offmap_border_hexes];
     for (i = 0; i < offmap_border_hexes.Length; ++i) {
         offmap_border_hexes[i] = -1;
     }
 
     for (offmap in m.offmap_areas) {
         var id_ = this_.game_data_.id(offmap.Key);
-        var index = id_ * graph_algorithms.max_offmap_border_hexes;
+        var index = id_ * model_plugin.max_offmap_border_hexes;
         for (hc in offmap.Value.adjacent_hexes) {
             offmap_border_hexes[index] = hc.GetHashCode();
             ++index;
         }
     }
 
-    var supply_ : System.IntPtr = graph_algorithms.determine_supply(
+    var supply_ : System.IntPtr = model_plugin.determine_supply(
         m.width, m.height,
         hexes,
         this_.game_data_.nation('NZ').id,
         nation_teams.Length,
         nation_teams,
         capitals,
-        graph_algorithms.max_offmap_border_hexes,
+        model_plugin.max_offmap_border_hexes,
         offmap_border_hexes
     );
 
@@ -225,6 +226,7 @@ private static function determine_supply ()
     for (var kv : KeyValuePair.<int, Array> in grids_by_owner_tmp) {
         grids_by_owner[kv.Key] = kv.Value.ToBuiltin(int);
     }
+*/
 
     Debug.Log('did supply determination step');
 }
@@ -776,12 +778,12 @@ function new_game (scenario_json : SimpleJSON.JSONNode, config : Dictionary.<Str
 }
 
 function Awake ()
-{// Debug.Log("test(3)=" + graph_algorithms.test(3)); // TODO
+{// Debug.Log("test(3)=" + model_plugin.test(3)); // TODO
   var floats = new float[3];
   floats[0] = 1.0;
   floats[1] = 2.0;
   floats[2] = 3.0;
-//  Debug.Log("test_2()=" + graph_algorithms.test_2(floats)); // TODO
+//  Debug.Log("test_2()=" + model_plugin.test_2(floats)); // TODO
   var hexes = new ga_hex_t[3];
   hexes[0].a = 1;
   hexes[1].a = 2;
@@ -789,8 +791,9 @@ function Awake ()
   hexes[0].b = 1.5;
   hexes[1].b = 2.5;
   hexes[2].b = 3.5;
-//  Debug.Log("test_3()=" + graph_algorithms.test_3(hexes)); // TODO
-    this_ = this; }
+//  Debug.Log("test_3()=" + model_plugin.test_3(hexes)); // TODO
+    this_ = this;
+}
 
 function Update ()
 {

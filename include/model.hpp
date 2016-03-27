@@ -44,7 +44,16 @@ extern "C" {
     int get_nations (void** bytes, int* size);
 
     MODEL_API
-    int init_model (const char* nations_str, const char* map_str, const char* oob_str);
+    int get_map (void** bytes, int* size);
+
+    MODEL_API
+    int get_oob (void** bytes, int* size);
+
+    MODEL_API
+    int init_nations (const char* nations_str);
+
+    MODEL_API
+    int init_model (const char* map_str, const char* oob_str);
 
     MODEL_API
     int reset_model ();
