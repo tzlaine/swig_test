@@ -41,6 +41,9 @@ extern "C" {
     float test_3 (int n, ga_hex_t* hexes);
 
     MODEL_API
+    int get_nations (void** bytes, int* size);
+
+    MODEL_API
     int init_model (const char* nations_str, const char* map_str, const char* oob_str);
 
     MODEL_API

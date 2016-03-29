@@ -590,6 +590,37 @@ void fill_in_nation_ids (nations_t& nations)
     }
 }
 
+std::vector<char> g_message_buffer;
+
+template <typename T>
+bool encode_into_buffer (const T& obj)
+{
+    auto const pb_obj = ToProtobuf(obj);
+    g_message_buffer.resize(pb_obj.ByteSize());
+    return pb_obj.SerializeToArray(&g_message_buffer[0], g_message_buffer.size());
+}
+
+template <typename T>
+bool decode_into_object (void* bytes, int size, T& obj)
+{
+    decltype(ToProtobuf(std::declval<T>())) pb_obj;
+    if (!pb_obj.ParseFromArray(bytes, size))
+        return false;
+    obj = FromProtobuf(pb_obj);
+    return true;
+}
+
+template <typename T>
+int get_impl (const T& obj, void** bytes, int* size)
+{
+    if (encode_into_buffer(obj)) {
+        *bytes = &g_message_buffer[0];
+        *size = static_cast<int>(g_message_buffer.size());
+        return 1;
+    }
+    return 0;
+}
+
 struct model_state_t
 {
     model_state_t () : initialized (false) {}
@@ -629,6 +660,24 @@ extern "C" {
         return retval;
 
     } CATCH_AND_RETURN(0.0f);
+
+    MODEL_API
+    int get_nations (void** bytes, int* size)
+    {
+        return get_impl(g_model_state.nations, bytes, size);
+    }
+
+    MODEL_API
+    int get_map (void** bytes, int* size)
+    {
+        return get_impl(g_model_state.m, bytes, size);
+    }
+
+    MODEL_API
+    int get_oob (void** bytes, int* size)
+    {
+        return get_impl(g_model_state.oob, bytes, size);
+    }
 
     MODEL_API
     int init_model (const char* nations_str, const char* map_str, const char* oob_str) try
