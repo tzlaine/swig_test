@@ -590,14 +590,15 @@ void fill_in_nation_ids (nations_t& nations)
     }
 }
 
-std::vector<char> g_message_buffer;
+std::string g_message_buffer;
 
 template <typename T>
 bool encode_into_buffer (const T& obj)
 {
     auto const pb_obj = ToProtobuf(obj);
-    g_message_buffer.resize(pb_obj.ByteSize());
-    return pb_obj.SerializeToArray(&g_message_buffer[0], g_message_buffer.size());
+    g_message_buffer.clear();
+    pb::io::StringOutputStream os(&g_message_buffer);
+    return pb_obj.SerializeToZeroCopyStream(&os);
 }
 
 template <typename T>
