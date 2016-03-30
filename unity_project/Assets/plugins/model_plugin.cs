@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using Message;
 
 
 [StructLayout(LayoutKind.Sequential)]
@@ -29,12 +30,6 @@ public struct supply_check_hex_t
 };
 */
 
-[StructLayout(LayoutKind.Sequential)]
-public struct nations_t
-{
-     // TODO
-};
-
 public class model_plugin
 {
     [DllImport("model_plugin")]
@@ -62,13 +57,46 @@ public class model_plugin
         [In] ga_hex_t[] hexes
     );
 
+    // Used in all the Protobuf blob getters.
+    private static int[] size_array = new int[1];
+    private static IntPtr[] bytes_array = new IntPtr[1];
+
 /* TODO
     [DllImport("model_plugin")]
-    private static extern int get_nations_blob ([In] uint[] size, [In] IntPtr[] bytes);
+    private static extern int get_nations_blob ([In] int[] size, [In] IntPtr[] bytes);
 */
 
     [DllImport("model_plugin")]
-    private static extern int init_model (string nations_str, string map_str, string oob_str);
+    private static extern int get_nations ([In] IntPtr[] bytes, [In] int[] size);
+
+    public static nations_t get_nations ()
+    {
+        if (get_nations(bytes_array, size_array) == 0)
+            return null;
+
+        byte[] copied_bytes = new byte[size_array[0]];
+        System.Runtime.InteropServices.Marshal.Copy(bytes_array[0], copied_bytes, 0, size_array[0]);
+
+/* TODO (for perf, maybe move this function into a DLL compiled with "unsafe" flag?
+        System.IO.UnmanagedMemoryStream ums;
+        unsafe {
+            ums = new System.IO.UnmanagedMemoryStream((Byte*)bytes_array[0], size_array[0]);
+        }
+*/
+        return nations_t.Parser.ParseFrom(copied_bytes);
+    }
+
+    [DllImport("model_plugin")]
+    private static extern int get_map ([In] IntPtr[] bytes, [In] int[] size);
+
+    [DllImport("model_plugin")]
+    private static extern int get_oob ([In] IntPtr[] bytes, [In] int[] size);
+
+    [DllImport("model_plugin")]
+    public static extern int init_nations (string nations_str);
+
+    [DllImport("model_plugin")]
+    public static extern int init_model (string map_str, string oob_str);
 
 /*
     public const int max_offmap_border_hexes = 13;

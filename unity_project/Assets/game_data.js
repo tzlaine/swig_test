@@ -8,9 +8,14 @@ import System.Text.RegularExpressions;
 import pair;
 import unit_costs_t;
 import towable_stats_t;
+import model_plugin;
+import Message;
 
-@SerializeThis
-private var nations : Dictionary.<String, nation_t> = new Dictionary.<String, nation_t>();
+@DoNotSerialize
+private var nations : nations_t = null;
+
+@DoNotSerialize
+private var orders_of_battle : orders_of_battle_t = null; // TODO: Initialize!
 
 @SerializeThis
 var nations_by_id : Dictionary.<int, String> = new Dictionary.<int, String>();
@@ -168,26 +173,6 @@ class production_turn_t
     var units : units_t;
 }
 
-class nation_t
-{
-    function nation_t ()
-    {
-        capital = new Dictionary.<String, capital_hex_t>();
-        starting_forces = new Dictionary.<String, starting_fleet>();
-        mothball_reserve = new mothball_reserve_t();
-    }
-
-    var id : int;
-    var name : String;
-    var short_name : String;
-    var abbr : String;
-    var capital : Dictionary.<String, capital_hex_t>;
-    var capital_star_points : int;
-    var starting_forces : Dictionary.<String, starting_fleet>;
-    var mothball_reserve : mothball_reserve_t;
-    var production : production_turn_t[];
-};
-
 class hex_zone_t
 {
     var name : String;
@@ -250,6 +235,11 @@ class map_t
 
     function set_hex (hc : hex_coord, h : hex_t)
     { hexes[hc.x + hc.y * width] = h; }
+
+    public function hex (hex_id : int) : hex_t
+    {
+        return hex(game_data.to_hex_coord(hex_id));
+    }
 
     public function hex (hc : hex_coord) : hex_t
     {
@@ -488,6 +478,13 @@ static function crippled_side (uncrippled_side : counter_side_t) : counter_side_
     return retval;
 }
 
+static function to_hex_coord (hex_id : int) : hex_coord
+{
+    var hex_x : int = hex_id / 100 - 1;
+    var hex_y : int = hex_id % 100 - 1;
+    return hex_coord(hex_x, hex_y);
+}
+
 static function str_to_hex_coord (hex_str : String) : hex_coord
 { return str_to_hex_coord(hex_str, hex_coord().y); }
 
@@ -559,20 +556,23 @@ function map () : map_t
 { return map_; }
 
 function id (abbreviated_name : String) : int
-{ return nations[abbreviated_name].id; }
+{ return nations.Nations[abbreviated_name].NationId; }
 
 function full_name (abbreviated_name : String) : String
-{ return nations[abbreviated_name].name; }
+{ return nations.Nations[abbreviated_name].Name; }
 
 function short_name (abbreviated_name : String) : String
-{ return nations[abbreviated_name].short_name; }
+{ return nations.Nations[abbreviated_name].ShortName; }
 
 function capital_star_points (abbreviated_name : String)
-{ return nations[abbreviated_name].capital_star_points; }
+{ return nations.Nations[abbreviated_name].CapitalStarPoints; }
 
 
 function nation (abbreviated_name : String) : nation_t
-{ return nations[abbreviated_name]; }
+{ return nations.Nations[abbreviated_name]; }
+
+function oob (abbreviated_name : String) : order_of_battle_t
+{ return orders_of_battle.Oobs[abbreviated_name]; }
 
 function scenario () : scenario_t
 { return scenario_; }
@@ -592,37 +592,6 @@ function add_hex (m : map_t, hex_str : String, owner : String, province : int, f
 
 private static function strip_quotes (str : String) : String
 { return str[0] == "'" || str[0] == '"' ? str.Substring(1, str.Length - 2) : str; }
-
-private function populate_nations (json : SimpleJSON.JSONNode)
-{
-    var latest_id : int = 0;
-    for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
-         json) {
-        nations.Add(nation.Key, new nation_t());
-        nations[nation.Key].id = latest_id++;
-        nations[nation.Key].capital_star_points = nation.Value['capital star points'].AsInt;
-        nations[nation.Key].name = nation.Value['name'];
-        nations[nation.Key].short_name = nation.Value['short name'];
-        nations[nation.Key].abbr = nation.Key;
-
-        for (var capital : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
-             nation.Value['capital']) {
-            nations[nation.Key].capital.Add(capital.Key, new capital_hex_t());
-            var hex = nations[nation.Key].capital[capital.Key];
-            for (var system : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
-                 capital.Value) {
-                hex.hc = str_to_hex_coord(capital.Key);
-                hex.name = system.Key;
-                var features = parse_strings(system.Value);
-                for (feature in features) {
-                    hex.features.Add(feature);
-                }
-            }
-        }
-
-        nations_by_id.Add(nations[nation.Key].id, nations[nation.Key].abbr);
-    }
-}
 
 private static var unit_regex = '(?:(\\d+)x)?(.+)';
 private function parse_units (json : SimpleJSON.JSONNode) : units_t
@@ -653,6 +622,7 @@ private static function parse_turn (json : SimpleJSON.JSONNode) : int
 
 private function populate_oob (json : SimpleJSON.JSONNode)
 {
+    /*
     for (var nation : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
         var forces = nations[nation.Key].starting_forces;
@@ -698,6 +668,7 @@ private function populate_oob (json : SimpleJSON.JSONNode)
         nations[nation.Key].mothball_reserve.limited_war_release =
             parse_units(mothball_reserve['limited war release']);
     }
+*/
 }
 
 private function parse_strings (json : SimpleJSON.JSONNode) : String[]
@@ -719,6 +690,7 @@ private function parse_condition (
 {
     var retval : event_condition_t = null;
 
+    /* TODO
     var subjects = future_belligerents;
     var subject_str : String = json[0];
     if (subject_str != 'future belligerents') {
@@ -766,11 +738,14 @@ private function parse_condition (
             retval = new destroy_object(subjects, destroyee.Key, hexes);
         }
     }
+    */
+
     return retval;
 }
 
 private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
 {
+/*
     var i = 0;
 
     scenario_ = new scenario_t();
@@ -858,10 +833,12 @@ private function populate_scenario (json : SimpleJSON.JSONNode, m : map_t)
     }
 
     // TODO: victory conditions
+*/
 }
 
 private function populate_counters (json : SimpleJSON.JSONNode)
 {
+    /*
     for (var n : System.Collections.Generic.KeyValuePair.<String, JSONNode> in
          json) {
         var nation_counters = new Dictionary.<String, counter_t>();
@@ -885,6 +862,7 @@ private function populate_counters (json : SimpleJSON.JSONNode)
         }
         counters.Add(n.Key, nation_counters);
     }
+*/
 }
 
 private function parse_unit_stats (json : SimpleJSON.JSONNode)
@@ -1060,12 +1038,13 @@ private function make_map (json : SimpleJSON.JSONNode) : map_t
 function Awake ()
 {
     if (!JSONLevelSerializer.IsDeserializing) {
-        var json : SimpleJSON.JSONNode =
-            JSON.Parse(System.IO.File.ReadAllText('../nations.json'));
-        populate_nations(json);
+        var pbtxt : String = System.IO.File.ReadAllText('../nations.txt');
+        model_plugin.init_nations(pbtxt);
+        nations = model_plugin.get_nations();
     }
 
-    json = JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
+    var json : SimpleJSON.JSONNode =
+        JSON.Parse(System.IO.File.ReadAllText('../unit_counters.json'));
     populate_counters(json);
 
     enabled = false;

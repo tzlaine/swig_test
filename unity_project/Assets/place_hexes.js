@@ -70,7 +70,7 @@ function clear_highlighting ()
 }
 
 function highlight_hexes (nation : String, fleet : String)
-{ highlight_hexes(game_data_.nation(nation).starting_forces[fleet].area); }
+{ highlight_hexes(game_data_.oob(nation).StartingFleets[fleet].Hexes); }
 
 function highlight_hexes (hexes : hex_coord[])
 {
@@ -82,6 +82,20 @@ function highlight_hexes (hexes : hex_coord[])
                 hex.highlight = true;
                 highlighting[hc.x, hc.y].SetActive(true);
             }
+        }
+    } else {
+        pending_highlights = hexes;
+    }
+}
+
+function highlight_hexes (hex_ids : Google.Protobuf.Collections.RepeatedField.<int>)
+{
+    var m : map_t = game_data_.map();
+    if (m && highlighting) {
+        var hexes : hex_coord[] = new hex_coord[hex_ids.Count];
+        var i : int = 0;
+        for (hex_id in hex_ids) {
+            hexes[i++] = game_data.to_hex_coord(hex_id);
         }
     } else {
         pending_highlights = hexes;

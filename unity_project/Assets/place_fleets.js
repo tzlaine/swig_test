@@ -86,39 +86,30 @@ function set_up (n : String)
 
     all_units_placed = true;
 
-    var starting_forces = game_data_.nation(nation_).starting_forces;
+    var starting_fleets = game_data_.oob(nation_).StartingFleets;
 
     var names = new Array();
-    for (f in starting_forces) {
-        if (f.Value.area.Length == 1) {
-            var hex = game_data_.map().hex(f.Value.area[0]);
-            var fleet = f.Value.units.units;
-            for (unit_type in fleet) {
+    for (f in starting_fleets) {
+        if (f.Value.Hexes.Count == 1) {
+            var hex = game_data_.map().hex(game_data.to_hex_coord(f.Value.Hexes[0]));
+            var units = f.Value.Units;
+            for (unit in units) {
                 var i = 0;
                 var placed_counter : counter;
-                for (i = 0; i < unit_type.Value.first; ++i) {
-                    hex.insert(nation_, unit_type.Key, false);
+                for (i = 0; i < unit.Times; ++i) {
+                    hex.insert(nation_, unit.Unit, false);
                     placed_counter = Instantiate(counter_);
-                    placed_counter.init(nation_, unit_type.Key, false);
-                    placed_counter.gameObject.SetActive(false);
-                    if (!pending_counters.ContainsKey(hex.hc))
-                        pending_counters.Add(hex.hc, new Array());
-                    pending_counters[hex.hc].Push(placed_counter.gameObject);
-                }
-                for (i = 0; i < unit_type.Value.second; ++i) {
-                    hex.insert(nation_, unit_type.Key, true);
-                    placed_counter = Instantiate(counter_);
-                    placed_counter.init(nation_, unit_type.Key, true);
+                    placed_counter.init(nation_, unit.Unit, false);
                     placed_counter.gameObject.SetActive(false);
                     if (!pending_counters.ContainsKey(hex.hc))
                         pending_counters.Add(hex.hc, new Array());
                     pending_counters[hex.hc].Push(placed_counter.gameObject);
                 }
             }
-            f.Value.units.clear();
+            f.Value.Units.Clear();
         } else {
             names.Push(f.Key);
-            if (f.Value.units.size())
+            if (f.Value.Units.Count)
                 all_units_placed = false;
         }
     }
@@ -192,17 +183,17 @@ private function select_fleet (fleet_name : String)
     place_hexes_.clear_highlighting();
     place_hexes_.highlight_hexes(nation_, fleet_name);
 
-    var starting_forces = game_data_.nation(nation_).starting_forces;
-    var fleet = starting_forces[fleet_name];
-    for (var i = 0; i < fleet.area.Length; ++i) {
-        if (fleet.area[i] == hex_coord())
+    var starting_fleets = game_data_.oob(nation_).StartingFleets;
+    var fleet = starting_fleets[fleet_name];
+    for (var i = 0; i < fleet.Hexes.Count; ++i) {
+        if (fleet.Hexes[i] == -1)
             continue;
-        var hex = game_data_.map().hex(fleet.area[i]);
-        if (fleet.area_unit_limits[i] &&
+        var hex = game_data_.map().hex(fleet.Hexes[i]);
+        if (fleet.HexPlacementLimits.ContainsKey(i) &&
             hex.units.ContainsKey(nation_) &&
-            fleet.area_unit_limits[i] <= hex.units[nation_].size()) {
+            fleet.HexPlacementLimits[i] <= hex.units[nation_].size()) {
             var hexes = new hex_coord[1];
-            hexes[0] = fleet.area[i];
+            hexes[0] = game_data.to_hex_coord(fleet.Hexes[i]);
             place_hexes_.unhighlight_hexes(hexes);
         }
     }
@@ -218,8 +209,9 @@ Debug.Log('select_unit(' + unit_name + ')');
 
 private function set_units (keep_selection_and_scroll : boolean)
 {
+    /*
     var fleet =
-        game_data_.nation(nation_).starting_forces[current_fleet()].units.units;
+        game_data_.oob(nation_).StartingFleets[current_fleet()].units.units;
     unit_buttons = new GameObject[fleet.Count];
     unit_names = new String[fleet.Count];
     var i = 0;
@@ -252,16 +244,18 @@ private function set_units (keep_selection_and_scroll : boolean)
     units_list.set_data(unit_buttons, 25);
     if (unit_buttons.Length)
         unit_buttons[unit == -1 ? 0 : unit].GetComponent(UI.Toggle).isOn = true;
+*/
 }
 
 private function hex_clicked (hc : hex_coord)
 {
     Debug.Log('hex_clicked()');
 
+    /*
     if (current_unit() < 0 || unit_names.Length <= current_unit())
         return;
 
-    var fleet = game_data_.nation(nation_).starting_forces[current_fleet()];
+    var fleet = game_data_.nation(nation_).starting_fleets[current_fleet()];
     var hex : hex_t;
     var limit = 10000;
     var in_fleet_area = false;
@@ -305,6 +299,7 @@ private function hex_clicked (hc : hex_coord)
 
     if (all_units_placed)
         done_button.interactable = true;
+*/
 }
 
 private function place (unit : String,
@@ -323,8 +318,8 @@ private function place (unit : String,
 
     if (!fleet.units.size()) {
         all_units_placed = true;
-        for (f in game_data_.nation(nation_).starting_forces) {
-            if (f.Value.units.size())
+        for (f in game_data_.oob(nation_).StartingFleets.Values) {
+            if (f.Units.Count)
                 all_units_placed = false;
         }
     }

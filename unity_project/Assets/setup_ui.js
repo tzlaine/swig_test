@@ -39,39 +39,30 @@ function set_up (n : String)
 
     all_units_placed = true;
 
-    var starting_forces = game_data_.nation(nation_).starting_forces;
+    var starting_fleets = game_data_.oob(nation_).StartingFleets;
 
     var names = new Array();
-    for (f in starting_forces) {
-        if (f.Value.area.Length == 1) {
-            var hex = game_data_.map().hex(f.Value.area[0]);
-            var fleet = f.Value.units.units;
-            for (unit_type in fleet) {
+    for (f in starting_fleets) {
+        if (f.Value.Hexes.Count == 1) {
+            var hex = game_data_.map().hex(f.Value.Hexes[0]);
+            var fleet = f.Value.Units;
+            for (unit in fleet) {
                 var i = 0;
                 var placed_counter : counter;
-                for (i = 0; i < unit_type.Value.first; ++i) {
-                    hex.insert(nation_, unit_type.Key, false);
+                for (i = 0; i < unit.Times; ++i) {
+                    hex.insert(nation_, unit.Unit, false);
                     placed_counter = Instantiate(counter_);
-                    placed_counter.init(nation_, unit_type.Key, false);
-                    placed_counter.gameObject.SetActive(false);
-                    if (!pending_counters.ContainsKey(hex.hc))
-                        pending_counters.Add(hex.hc, new Array());
-                    pending_counters[hex.hc].Push(placed_counter.gameObject);
-                }
-                for (i = 0; i < unit_type.Value.second; ++i) {
-                    hex.insert(nation_, unit_type.Key, true);
-                    placed_counter = Instantiate(counter_);
-                    placed_counter.init(nation_, unit_type.Key, true);
+                    placed_counter.init(nation_, unit.Unit, false);
                     placed_counter.gameObject.SetActive(false);
                     if (!pending_counters.ContainsKey(hex.hc))
                         pending_counters.Add(hex.hc, new Array());
                     pending_counters[hex.hc].Push(placed_counter.gameObject);
                 }
             }
-            f.Value.units.clear();
+            f.Value.Units.Clear();
         } else {
             names.Push(f.Key);
-            if (f.Value.units.size())
+            if (f.Value.Units.Count)
                 all_units_placed = false;
         }
     }
@@ -88,14 +79,14 @@ function set_up (n : String)
 function set_units (keep_selection_and_scroll : boolean)
 {
     var fleet =
-        game_data_.nation(nation_).starting_forces[fleet_names[fleet_selection]].units.units;
+        game_data_.oob(nation_).StartingFleets[fleet_names[fleet_selection]].Units;
     unit_names_with_quantities = new String[fleet.Count];
     unit_names = new String[fleet.Count];
     var i = 0;
-    for (unit_type in fleet) {
-        unit_names[i] = unit_type.Key;
+    for (unit in fleet) {
+        unit_names[i] = unit.Unit;
         unit_names_with_quantities[i] =
-            (1 < unit_type.Value.first ? unit_type.Value.first + 'x' : '') + unit_type.Key;
+            (1 < unit.Times ? unit.Times + 'x' : '') + unit.Unit;
         ++i;
     }
 
@@ -114,8 +105,20 @@ function Awake ()
         enabled = false;
 }
 
+private function erase_unit (unit : String, fleet : starting_fleet_t)
+{
+    for (unit in fleet.Units) {
+        if (unit.Times == 1) {
+            fleet.Units.Remove(unit);
+            break;
+        } else {
+            --unit.Times;
+        }
+    }
+}
+
 private function place (unit : String,
-                        fleet : starting_fleet,
+                        fleet : starting_fleet_t,
                         hex : hex_t,
                         limit : int)
 {
@@ -125,13 +128,13 @@ private function place (unit : String,
     placed_counter.init(nation_, unit, false);
 
     hex.insert(nation_, unit, false);
-    fleet.units.erase(unit, false);
+    erase_unit(unit, fleet);
     set_units(true);
 
-    if (!fleet.units.size()) {
+    if (!fleet.Units.Count) {
         all_units_placed = true;
-        for (f in game_data_.nation(nation_).starting_forces) {
-            if (f.Value.units.size())
+        for (f in game_data_.oob(nation_).StartingFleets) {
+            if (f.Value.Units.Count)
                 all_units_placed = false;
         }
     }
@@ -152,17 +155,17 @@ private function select_fleet (fleet_index)
     place_hexes_.clear_highlighting();
     place_hexes_.highlight_hexes(nation_, fleet_names[fleet_selection]);
 
-    var starting_forces = game_data_.nation(nation_).starting_forces;
-    var fleet = starting_forces[fleet_names[fleet_selection]];
-    for (var i = 0; i < fleet.area.Length; ++i) {
-        if (fleet.area[i] == hex_coord())
+    var starting_fleets = game_data_.oob(nation_).StartingFleets;
+    var fleet = starting_fleets[fleet_names[fleet_selection]];
+    for (var i = 0; i < fleet.Hexes.Count; ++i) {
+        if (fleet.Hexes[i] == hex_coord())
             continue;
-        var hex = game_data_.map().hex(fleet.area[i]);
-        if (fleet.area_unit_limits[i] &&
+        var hex = game_data_.map().hex(fleet.Hexes[i]);
+        if (fleet.HexPlacementLimits.ContainsKey(i) &&
             hex.units.ContainsKey(nation_) &&
-            fleet.area_unit_limits[i] <= hex.units[nation_].size()) {
+            fleet.HexPlacementLimits[i] <= hex.units[nation_].size()) {
             var hexes = new hex_coord[1];
-            hexes[0] = fleet.area[i];
+            hexes[0] = game_data.to_hex_coord(fleet.Hexes[i]);
             place_hexes_.unhighlight_hexes(hexes);
         }
     }
@@ -175,17 +178,17 @@ function hex_clicked (hc : hex_coord)
     if (fleet_selection < fleet_names.Length &&
         unit_selection < unit_names.Length) {
         var fleet =
-            game_data_.nation(nation_).starting_forces[fleet_names[fleet_selection]];
+            game_data_.oob(nation_).StartingFleets[fleet_names[fleet_selection]];
         var hex : hex_t;
         var limit = 10000;
         var in_fleet_area = false;
         var i = 0;
-        for (hc2 in fleet.area) {
+        for (hc2 in fleet.Hexes) {
             if (hc2 == hc) {
                 hex = game_data_.map().hex(hc);
                 if (hex.highlight) {
-                    if (fleet.area_unit_limits[i])
-                        limit = fleet.area_unit_limits[i];
+                    if (fleet.HexPlacementLimits.ContainsKey(i))
+                        limit = fleet.HexPlacementLimits[i];
                     in_fleet_area = true;
                     break;
                 }
@@ -207,7 +210,7 @@ function hex_clicked (hc : hex_coord)
         }
         game_state_.save_async();
 
-        if (!fleet.units.size() && fleet_selection < fleet_names.Length - 1)
+        if (!fleet.Units.Count && fleet_selection < fleet_names.Length - 1)
             select_fleet(fleet_selection + 1);
     }
 }

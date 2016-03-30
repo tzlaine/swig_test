@@ -103,12 +103,13 @@ private static function determine_supply ()
         nation_offmap_areas[k] = -1;
     }
 
+/*  // TODO
     var team_id = 0;
     for (team in scenario.teams) {
         for (member in team.Value) {
             var id = this_.game_data_.id(member);
             nation_teams[id] = team_id;
-            for (cap in this_.game_data_.nation(member).capital) {
+            for (cap in this_.game_data_.nation(member).Capital) {
                 if (cap.Value.features.Contains('CAP'))
                     capitals[id] = cap.Value.hc.GetHashCode();
             }
@@ -116,7 +117,6 @@ private static function determine_supply ()
         ++team_id;
     }
 
-/*  // TODO
     var m = this_.game_data_.map();
     var hexes = new supply_check_hex_t[m.width * m.height];
     var i = 0;
