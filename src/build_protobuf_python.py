@@ -22,7 +22,10 @@ else:
     env['PATH'] += ':' + args.protoc_path
 subprocess.check_call([sys.executable, 'setup.py', 'build'], cwd=args.working_dir, env=env)
 
-os.makedirs(args.protobuf_python_dir + '/Python27/site-packages')
+try:
+    os.makedirs(args.protobuf_python_dir + '/Python27/site-packages')
+except:
+    pass
 
 env = os.environ
 env['PYTHONUSERBASE'] = args.protobuf_python_dir
