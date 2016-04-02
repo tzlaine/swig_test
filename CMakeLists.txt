@@ -83,8 +83,9 @@ if (PYTHON_EXECUTABLE)
     )
     set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
 
-    add_custom_target(
-        build_protobuf_python
+    add_custom_command(
+        OUTPUT
+            ${protobuf_python_dir}/lib/python/site-packages/setuptools.pth
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
                 --working-dir ${CMAKE_HOME_DIRECTORY}/${protobuf_dir}/python
@@ -105,7 +106,7 @@ if (PYTHON_EXECUTABLE)
                 --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/model.desc
                 ${CMAKE_HOME_DIRECTORY}/proto/model.proto
         DEPENDS
-            build_protobuf_python
+            ${protobuf_python_dir}/lib/python/site-packages/setuptools.pth
             ${CMAKE_SOURCE_DIR}/proto/model.proto
         COMMENT "Make model.desc from model.proto."
         VERBATIM
