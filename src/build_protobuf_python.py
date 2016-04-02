@@ -19,7 +19,11 @@ env = os.environ
 if 'Windows' in platform.platform():
     env['PATH'] += ';' + args.protoc_path
 else:
+    old_path = env['PATH']
     env['PATH'] += ':' + args.protoc_path
+    print '********************************************************************************'
+    print old_path,'->',env['PATH']
+    print '********************************************************************************'
 subprocess.check_call([sys.executable, 'setup.py', 'build'], cwd=args.working_dir, env=env)
 
 try:

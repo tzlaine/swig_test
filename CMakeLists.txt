@@ -76,11 +76,6 @@ endmacro()
 
 find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
-    get_target_property(
-        protoc_path
-        protoc
-        RUNTIME_OUTPUT_DIRECTORY
-    )
     set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
 
     if (APPLE)
@@ -99,7 +94,7 @@ if (PYTHON_EXECUTABLE)
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
                 --working-dir ${CMAKE_HOME_DIRECTORY}/${protobuf_dir}/python
-                --protoc-path ${protoc_path}
+                --protoc-path $<TARGET_FILE_DIR:protoc>
                 --protobuf-python-dir ${protobuf_python_dir}
         DEPENDS
             protoc
