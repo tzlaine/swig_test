@@ -74,6 +74,23 @@ endmacro()
 
 find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
+    set(protoc_path ${CMAKE_BINARY_DIR}/${protobuf_dir}/cmake/Debug)
+    set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
+    add_custom_target(
+        build_protobuf_python
+ALL # TODO
+        COMMAND
+            ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
+                --working-dir ${CMAKE_HOME_DIRECTORY}/${protobuf_dir}/python
+                --protoc-path ${protoc_path}
+                --protobuf-python-dir ${protobuf_python_dir}
+        DEPENDS
+            protoc
+            ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
+        COMMENT "Build the Python Protobuf module."
+        VERBATIM
+    )
+
     add_custom_command(
         OUTPUT
             ${CMAKE_SOURCE_DIR}/src/model_data.hpp
@@ -95,6 +112,7 @@ if (PYTHON_EXECUTABLE)
             ${CMAKE_SOURCE_DIR}/src/model_data.hpp
             ${CMAKE_SOURCE_DIR}/src/model_data.cpp
     )
+
     set_source_files_properties(
         ${CMAKE_SOURCE_DIR}/src/model_data.hpp
         ${CMAKE_SOURCE_DIR}/src/model_data.cpp
