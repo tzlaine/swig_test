@@ -33,7 +33,11 @@ if (APPLE)
         USE_SOURCE_PERMISSIONS
     )
 else ()
-    add_definitions(-DBUILD_LIBRARY -Wall)
+    add_definitions(-DBUILD_LIBRARY)
+
+    if (NOT MSVC)
+        add_definitions(-Wall)
+    endif ()
 
     add_library(
         model_plugin
