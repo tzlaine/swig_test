@@ -595,7 +595,7 @@ std::string g_message_buffer;
 template <typename T>
 bool encode_into_buffer (const T& obj)
 {
-    auto const pb_obj = ToProtobuf(obj);
+    auto const pb_obj = to_protobuf(obj);
     g_message_buffer.clear();
     pb::io::StringOutputStream os(&g_message_buffer);
     return pb_obj.SerializeToZeroCopyStream(&os);
@@ -604,10 +604,10 @@ bool encode_into_buffer (const T& obj)
 template <typename T>
 bool decode_into_object (void* bytes, int size, T& obj)
 {
-    decltype(ToProtobuf(std::declval<T>())) pb_obj;
+    decltype(to_protobuf(std::declval<T>())) pb_obj;
     if (!pb_obj.ParseFromArray(bytes, size))
         return false;
-    obj = FromProtobuf(pb_obj);
+    obj = from_protobuf(pb_obj);
     return true;
 }
 
@@ -706,7 +706,7 @@ extern "C" {
             pb::io::ArrayInputStream is(nations_str, strlen(nations_str));
             if (!pb::TextFormat::Parse(&is, &nations_msg))
                 throw std::runtime_error("Missing starting nations data");
-            g_loaded_nations.nations = FromProtobuf(nations_msg);
+            g_loaded_nations.nations = from_protobuf(nations_msg);
             validate_nations(g_loaded_nations.nations);
             fill_in_nation_ids(g_loaded_nations.nations);
         }
@@ -738,7 +738,7 @@ extern "C" {
             pb::io::ArrayInputStream is(map_str, strlen(map_str));
             if (!pb::TextFormat::Parse(&is, &map_msg))
                 throw std::runtime_error("Missing starting map data");
-            g_model_state.m = FromProtobuf(map_msg);
+            g_model_state.m = from_protobuf(map_msg);
             validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
         }
 
@@ -747,7 +747,7 @@ extern "C" {
             pb::io::ArrayInputStream is(oob_str, strlen(oob_str));
             if (!pb::TextFormat::Parse(&is, &oob_msg))
                 throw std::runtime_error("Missing starting order of battle data");
-            g_model_state.oob = FromProtobuf(oob_msg);
+            g_model_state.oob = from_protobuf(oob_msg);
             validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations);
         }
 
@@ -789,8 +789,8 @@ extern "C" {
 
         message::model_t model;
 
-        *model.mutable_nations() = ToProtobuf(g_loaded_nations.nations);
-        *model.mutable_map() = ToProtobuf(g_model_state.m);
+        *model.mutable_nations() = to_protobuf(g_loaded_nations.nations);
+        *model.mutable_map() = to_protobuf(g_model_state.m);
 
         pb::io::OstreamOutputStream os(&ofs);
         return static_cast<int>(pb::TextFormat::Print(model, &os));
@@ -815,13 +815,13 @@ extern "C" {
         {
             if (!model.has_nations())
                 throw std::runtime_error("Missing saved nations data");
-            g_loaded_nations.nations = FromProtobuf(model.nations());
+            g_loaded_nations.nations = from_protobuf(model.nations());
         }
 
         {
             if (!model.has_map())
                 throw std::runtime_error("Missing saved map data");
-            g_model_state.m = FromProtobuf(model.map());
+            g_model_state.m = from_protobuf(model.map());
         }
 
         init_graph(

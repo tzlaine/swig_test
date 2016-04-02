@@ -1,10 +1,13 @@
-#pragma once
-
 // WARNING: Generated code.
+// This file was generated from model (proto3)
+#pragma once
 
 #include <model.pb.h>
 #include <string>
 #include <vector>
+#include <boost/container/flat_map.hpp>
+
+
 
 
 enum class feature_t {
@@ -67,7 +70,7 @@ struct nation_t
 
 struct nations_t
 {
-    std::map<std::string, nation_t> nations;
+    boost::container::flat_map<std::string, nation_t> nations;
 };
 
 struct hex_t
@@ -109,7 +112,7 @@ struct map_t
     int height;
     std::vector<int> nz_planets;
     std::vector<int> nz_hexes;
-    std::map<std::string, starting_national_holdings_t> starting_national_holdings;
+    boost::container::flat_map<std::string, starting_national_holdings_t> starting_national_holdings;
     std::vector<hex_t> hexes;
 };
 
@@ -140,7 +143,7 @@ struct starting_fleet_t
     std::vector<production_element_t> prewar_construction;
     int strategic_move_arrival_year;
     season_t strategic_move_arrival_season;
-    std::map<int, int> hex_placement_limits;
+    boost::container::flat_map<int, int> hex_placement_limits;
 };
 
 struct mothball_reserve_t
@@ -152,72 +155,74 @@ struct mothball_reserve_t
 
 struct order_of_battle_t
 {
-    std::map<std::string, starting_fleet_t> starting_fleets;
+    boost::container::flat_map<std::string, starting_fleet_t> starting_fleets;
     mothball_reserve_t mothball_reserve;
     std::vector<production_element_t> production;
 };
 
 struct orders_of_battle_t
 {
-    std::map<std::string, order_of_battle_t> oobs;
+    boost::container::flat_map<std::string, order_of_battle_t> oobs;
 };
 
-message::hex_coord_t ToProtobuf (const hex_coord_t& value);
-hex_coord_t FromProtobuf (const message::hex_coord_t& msg);
+message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
+::hex_coord_t from_protobuf (const message::hex_coord_t& msg);
 
-message::capital_hex_zone_t ToProtobuf (const capital_hex_zone_t& value);
-capital_hex_zone_t FromProtobuf (const message::capital_hex_zone_t& msg);
+message::capital_hex_zone_t to_protobuf (const ::capital_hex_zone_t& value);
+::capital_hex_zone_t from_protobuf (const message::capital_hex_zone_t& msg);
 
-message::capital_hex_t ToProtobuf (const capital_hex_t& value);
-capital_hex_t FromProtobuf (const message::capital_hex_t& msg);
+message::capital_hex_t to_protobuf (const ::capital_hex_t& value);
+::capital_hex_t from_protobuf (const message::capital_hex_t& msg);
 
-message::capital_t ToProtobuf (const capital_t& value);
-capital_t FromProtobuf (const message::capital_t& msg);
+message::capital_t to_protobuf (const ::capital_t& value);
+::capital_t from_protobuf (const message::capital_t& msg);
 
-message::offmap_possesions_t ToProtobuf (const offmap_possesions_t& value);
-offmap_possesions_t FromProtobuf (const message::offmap_possesions_t& msg);
+message::offmap_possesions_t to_protobuf (const ::offmap_possesions_t& value);
+::offmap_possesions_t from_protobuf (const message::offmap_possesions_t& msg);
 
-message::nation_t ToProtobuf (const nation_t& value);
-nation_t FromProtobuf (const message::nation_t& msg);
+message::nation_t to_protobuf (const ::nation_t& value);
+::nation_t from_protobuf (const message::nation_t& msg);
 
-message::nations_t ToProtobuf (const nations_t& value);
-nations_t FromProtobuf (const message::nations_t& msg);
+message::nations_t to_protobuf (const ::nations_t& value);
+::nations_t from_protobuf (const message::nations_t& msg);
 
-message::hex_t ToProtobuf (const hex_t& value);
-hex_t FromProtobuf (const message::hex_t& msg);
+message::hex_t to_protobuf (const ::hex_t& value);
+::hex_t from_protobuf (const message::hex_t& msg);
 
-message::province_hex_t ToProtobuf (const province_hex_t& value);
-province_hex_t FromProtobuf (const message::province_hex_t& msg);
+message::province_hex_t to_protobuf (const ::province_hex_t& value);
+::province_hex_t from_protobuf (const message::province_hex_t& msg);
 
-message::province_t ToProtobuf (const province_t& value);
-province_t FromProtobuf (const message::province_t& msg);
+message::province_t to_protobuf (const ::province_t& value);
+::province_t from_protobuf (const message::province_t& msg);
 
-message::offmap_area_t ToProtobuf (const offmap_area_t& value);
-offmap_area_t FromProtobuf (const message::offmap_area_t& msg);
+message::offmap_area_t to_protobuf (const ::offmap_area_t& value);
+::offmap_area_t from_protobuf (const message::offmap_area_t& msg);
 
-message::starting_national_holdings_t ToProtobuf (const starting_national_holdings_t& value);
-starting_national_holdings_t FromProtobuf (const message::starting_national_holdings_t& msg);
+message::starting_national_holdings_t to_protobuf (const ::starting_national_holdings_t& value);
+::starting_national_holdings_t from_protobuf (const message::starting_national_holdings_t& msg);
 
-message::map_t ToProtobuf (const map_t& value);
-map_t FromProtobuf (const message::map_t& msg);
+message::map_t to_protobuf (const ::map_t& value);
+::map_t from_protobuf (const message::map_t& msg);
 
-message::model_t ToProtobuf (const model_t& value);
-model_t FromProtobuf (const message::model_t& msg);
+message::model_t to_protobuf (const ::model_t& value);
+::model_t from_protobuf (const message::model_t& msg);
 
-message::oob_unit_t ToProtobuf (const oob_unit_t& value);
-oob_unit_t FromProtobuf (const message::oob_unit_t& msg);
+message::oob_unit_t to_protobuf (const ::oob_unit_t& value);
+::oob_unit_t from_protobuf (const message::oob_unit_t& msg);
 
-message::production_element_t ToProtobuf (const production_element_t& value);
-production_element_t FromProtobuf (const message::production_element_t& msg);
+message::production_element_t to_protobuf (const ::production_element_t& value);
+::production_element_t from_protobuf (const message::production_element_t& msg);
 
-message::starting_fleet_t ToProtobuf (const starting_fleet_t& value);
-starting_fleet_t FromProtobuf (const message::starting_fleet_t& msg);
+message::starting_fleet_t to_protobuf (const ::starting_fleet_t& value);
+::starting_fleet_t from_protobuf (const message::starting_fleet_t& msg);
 
-message::mothball_reserve_t ToProtobuf (const mothball_reserve_t& value);
-mothball_reserve_t FromProtobuf (const message::mothball_reserve_t& msg);
+message::mothball_reserve_t to_protobuf (const ::mothball_reserve_t& value);
+::mothball_reserve_t from_protobuf (const message::mothball_reserve_t& msg);
 
-message::order_of_battle_t ToProtobuf (const order_of_battle_t& value);
-order_of_battle_t FromProtobuf (const message::order_of_battle_t& msg);
+message::order_of_battle_t to_protobuf (const ::order_of_battle_t& value);
+::order_of_battle_t from_protobuf (const message::order_of_battle_t& msg);
 
-message::orders_of_battle_t ToProtobuf (const orders_of_battle_t& value);
-orders_of_battle_t FromProtobuf (const message::orders_of_battle_t& msg);
+message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value);
+::orders_of_battle_t from_protobuf (const message::orders_of_battle_t& msg);
+
+
