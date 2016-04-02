@@ -1003,7 +1003,7 @@ oobs: {
             }
         },
         starting_fleets: {
-            key: "Enemy’s Blood Fleet",
+            key: "Enemy's Blood Fleet",
             value: {
                 hexes: 111, hexes: 112,
                 hexes: 211, hexes: 212,
