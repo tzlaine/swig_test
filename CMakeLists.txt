@@ -83,9 +83,19 @@ if (PYTHON_EXECUTABLE)
     )
     set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
 
+    if (APPLE)
+        set(protobuf_python_pth_dir ${protobuf_python_dir}/lib/python/site-packages)
+    elseif (WIN32)
+        set(protobuf_python_pth_dir ${protobuf_python_dir}/Python27/site-packages)
+    elseif (LINUX)
+        #TODO
+        message(FATAL_ERROR Fixme)
+        set(protobuf_python_pth_dir ${protobuf_python_dir}/TODO)
+    endif()
+
     add_custom_command(
         OUTPUT
-            ${protobuf_python_dir}/lib/python/site-packages/setuptools.pth
+            ${protobuf_python_pth_dir}/setuptools.pth
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
                 --working-dir ${CMAKE_HOME_DIRECTORY}/${protobuf_dir}/python
@@ -106,7 +116,7 @@ if (PYTHON_EXECUTABLE)
                 --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/model.desc
                 ${CMAKE_HOME_DIRECTORY}/proto/model.proto
         DEPENDS
-            ${protobuf_python_dir}/lib/python/site-packages/setuptools.pth
+            ${protobuf_python_pth_dir}/setuptools.pth
             ${CMAKE_SOURCE_DIR}/proto/model.proto
         COMMENT "Make model.desc from model.proto."
         VERBATIM
@@ -118,7 +128,7 @@ if (PYTHON_EXECUTABLE)
             ${CMAKE_SOURCE_DIR}/src/model_data.cpp
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
-                --site-packages ${protobuf_python_dir}/lib/python/site-packages
+                --site-packages ${protobuf_python_pth_dir}
                 --proto-file ${CMAKE_SOURCE_DIR}/proto/model.proto
                 --desc-file=${CMAKE_CURRENT_BINARY_DIR}/model.desc
                 --hpp-file ${CMAKE_SOURCE_DIR}/src/model_data.hpp
