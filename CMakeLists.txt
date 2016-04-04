@@ -78,14 +78,14 @@ find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
     set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
 
-    if (APPLE)
+    if (CYGWIN OR MINGW)
+        message(FATAL_ERROR "Cygwin and MSYS builds are not supported!  Use the Windows version of CMake.")
+    elseif (APPLE)
         set(protobuf_python_pth_dir ${protobuf_python_dir}/lib/python/site-packages)
     elseif (WIN32)
         set(protobuf_python_pth_dir ${protobuf_python_dir}/Python27/site-packages)
-    elseif (LINUX)
-        #TODO
-        message(FATAL_ERROR Fixme)
-        set(protobuf_python_pth_dir ${protobuf_python_dir}/TODO)
+    elseif (UNIX)
+        set(protobuf_python_pth_dir ${protobuf_python_dir}/lib/python2.7/site-packages)
     endif()
 
     add_custom_command(
