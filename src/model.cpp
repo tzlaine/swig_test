@@ -598,7 +598,7 @@ template <typename T>
 bool encode_into_buffer (const T& obj)
 {
     auto const pb_obj = to_protobuf(obj);
-    g_message_buffer = pb2json(pb_obj);
+    pb2json(pb_obj, g_message_buffer);
     return true;
 }
 
