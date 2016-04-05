@@ -23,6 +23,9 @@ if (NOT MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif ()
 
+add_subdirectory(jansson)
+include_directories(${CMAKE_BINARY_DIR}/jansson/include)
+
 add_custom_command(
     OUTPUT
         test_data.hpp
