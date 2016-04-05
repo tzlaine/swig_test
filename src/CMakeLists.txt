@@ -15,6 +15,7 @@ if (APPLE)
         model_plugin
         MODULE
         model.cpp
+        ${CMAKE_HOME_DIRECTORY}/json2pb/json2pb.cc
         ${CMAKE_CURRENT_SOURCE_DIR}/model_data.cpp
         ${CMAKE_BINARY_DIR}/model.pb.cc
     )
@@ -43,6 +44,7 @@ else ()
         model_plugin
         SHARED
         model.cpp
+        ${CMAKE_HOME_DIRECTORY}/json2pb/json2pb.cc
         ${CMAKE_CURRENT_SOURCE_DIR}/model_data.cpp
         ${CMAKE_BINARY_DIR}/model.pb.cc
     )
@@ -64,6 +66,7 @@ endif ()
 target_link_libraries(
     model_plugin
     libprotobuf
+    jansson
 )
 
 add_dependencies(model_plugin model_message_target)

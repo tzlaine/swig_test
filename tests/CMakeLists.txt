@@ -15,6 +15,7 @@ include_directories(
 add_executable(
     model_tests
     ${CMAKE_HOME_DIRECTORY}/src/model.cpp
+    ${CMAKE_HOME_DIRECTORY}/json2pb/json2pb.cc
     ${CMAKE_HOME_DIRECTORY}/src/model_data.cpp
     ${CMAKE_BINARY_DIR}/model.pb.cc
     model_tests.cpp
@@ -23,6 +24,7 @@ add_executable(
 target_link_libraries(
     model_tests
     libprotobuf
+    jansson
     gtest
     gtest_main
 )

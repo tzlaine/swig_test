@@ -4,6 +4,8 @@
 #include "validation.hpp"
 #include "hex_operations.hpp"
 
+#include <json2pb.h>
+
 #include <boost/container/flat_map.hpp>
 
 #include <boost/exception/diagnostic_information.hpp>
@@ -596,9 +598,8 @@ template <typename T>
 bool encode_into_buffer (const T& obj)
 {
     auto const pb_obj = to_protobuf(obj);
-    g_message_buffer.clear();
-    pb::io::StringOutputStream os(&g_message_buffer);
-    return pb_obj.SerializeToZeroCopyStream(&os);
+    g_message_buffer = pb2json(pb_obj);
+    return true;
 }
 
 template <typename T>
