@@ -112,7 +112,7 @@ if (MSVC)
    
 endif()
 
-if (NOT WIN32 AND (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX))
+if (UNIX AND NOT APPLE)
    add_definitions("-fPIC")
 endif()
 
