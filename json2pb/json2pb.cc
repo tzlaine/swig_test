@@ -278,3 +278,11 @@ void pb2json(const Message &msg, std::string& r)
 	json_autoptr _auto(root);
 	json_dump_callback(root, json_dump_std_string, &r, 0);
 }
+
+void pb2json_compact(const Message &msg, std::string& r)
+{
+	r.clear();
+	json_t *root = _pb2json(msg);
+	json_autoptr _auto(root);
+	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT);
+}
