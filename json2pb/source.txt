@@ -1,0 +1,2 @@
+git@github.com:shramov/json2pb.git
+d08c7fd54b657f6dc4c7f99bd4cd35376e174e76
