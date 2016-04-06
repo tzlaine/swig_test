@@ -125,7 +125,7 @@ nations: {
             mins: 1,
             majs: 2,
             survey_ships: 3,
-            old_shipyard: 1
+            old_shipyard: true
         }
     }
 },
@@ -137,6 +137,10 @@ nations: {
         capital: {
             hexes: {
                 coord: 5910
+                zones: {
+                    name: "ISC Capital",
+                    features: capital
+                },
             }
         },
         free_strategic_moves: 10,
@@ -194,7 +198,7 @@ nations: {
             mins: 0,
             majs: 0,
             survey_ships: 2,
-            cannot_build_offmap_capital: 1
+            cannot_build_offmap_capital: true
         }
     }
 },
@@ -303,7 +307,6 @@ nations: {
     value: {
         name: "Orion",
         short_name: "Orion",
-        capital: {},
         free_strategic_moves: 0,
         capital_star_points: 6
     }
@@ -352,7 +355,7 @@ nations: {
             mins: 0,
             majs: 0,
             survey_ships: 0,
-            cannot_build_offmap_capital: 1
+            cannot_build_offmap_capital: true
         }
     }
 },

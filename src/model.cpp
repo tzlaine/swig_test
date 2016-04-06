@@ -741,9 +741,7 @@ extern "C" {
 
         {
             message::unit_defs_t unit_defs_msg;
-            pb::io::ArrayInputStream is(unit_defs_str, strlen(unit_defs_str));
-            if (!pb::TextFormat::Parse(&is, &unit_defs_msg))
-                throw std::runtime_error("Missing starting units data");
+            json2pb(unit_defs_msg, unit_defs_str, strlen(unit_defs_str));
             g_loaded_unit_defs.unit_defs = from_protobuf(unit_defs_msg);
             validate_unit_defs(g_loaded_unit_defs.unit_defs);
         }

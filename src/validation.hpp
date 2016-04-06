@@ -7,21 +7,10 @@
 #include <boost/lexical_cast.hpp>
 
 
-// TODO: Just use bool.
-inline void require_boolean_int (int i, const std::string& name)
+template <typename Cont>
+inline void require_nonempty (const Cont& c, const std::string& name)
 {
-    if (i != 0 && i != 1) {
-        boost::throw_exception(
-            std::runtime_error(
-                name + " (=" + std::to_string(i) +") must be 1 for true or 0 for false"
-            )
-        );
-    }
-}
-
-inline void require_nonempty (const std::string& s, const std::string& name)
-{
-    if (s.empty())
+    if (c.empty())
         boost::throw_exception(std::runtime_error(name + " must be provided and must not be empty"));
 }
 
@@ -77,13 +66,14 @@ inline void require_hex_coord (int i, int width, int height, const std::string& 
 
 inline void validate_turn (const turn_t& turn)
 {
-    require_within(turn.year, 140, 185, "turn.year"); // TODO: Use the right year range!
+    require_within(turn.year, 50, 185, "turn.year"); // TODO: Use the right year range!
 }
 
 inline void validate_capital (const capital_t& capital)
 {
-    for (const auto& hex : capital.hexes) {
-        for (const auto& zone : hex.zones) {
+    for (const auto& capital_hex : capital.hexes) {
+        require_nonempty(capital_hex.zones, "capital_hex_t.zones");
+        for (const auto& zone : capital_hex.zones) {
             require_nonempty(zone.name, "capital_hex_zone_t.name");
         }
     }
@@ -95,8 +85,6 @@ inline void validate_offmap_possesions (const offmap_possesions_t& offmap_posses
     require_nonnegative(offmap_possesions.mins, "offmap_possesions_t.mins");
     require_nonnegative(offmap_possesions.majs, "offmap_possesions_t.majs");
     require_nonnegative(offmap_possesions.survey_ships, "offmap_possesions_t.survey_ships");
-    require_boolean_int(offmap_possesions.cannot_build_offmap_capital, "offmap_possesions_t.cannot_build_offmap_capital");
-    require_boolean_int(offmap_possesions.old_shipyard, "offmap_possesions_t.old_shipyard");
 }
 
 inline void validate_nation (const nation_t& nation)
@@ -113,6 +101,7 @@ inline void validate_nation (const nation_t& nation)
 
 inline void validate_nations (const nations_t& nations)
 {
+    require_nonempty(nations.nations, "nations_t.nations");
     for (const auto& n : nations.nations) {
         validate_nation(n.second);
     }
@@ -182,7 +171,9 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
         }
         const int nation_id = nations_it->second.nation_id;
 
+        require_nonempty(holdings.second.provinces, "starting_national_holdings_t.provinces");
         for (const auto& province : holdings.second.provinces) {
+            require_nonempty(province.hexes, "province_t.hexes");
             for (const auto& province_hex : province.hexes) {
                 const auto hex_id = province_hex.hex;
                 require_hex_coord(hex_id, map.width, map.height, "starting province hex");
@@ -231,10 +222,10 @@ inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet,
     for (auto hex_id : starting_fleet.hexes) {
         require_hex_coord(hex_id, width, height, "starting fleet hex");
     }
+    require_nonempty(starting_fleet.units, "starting_fleet_t.units");
     for (auto& oob_unit : starting_fleet.units) {
         validate_and_fixup_oob_unit(oob_unit);
     }
-    require_boolean_int(starting_fleet.reserve, "starting_fleet_t.reserve");
     for (auto& element : starting_fleet.prewar_construction) {
         for (auto& oob_unit : element.units) {
             validate_and_fixup_oob_unit(oob_unit);
@@ -252,6 +243,7 @@ inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet,
 
 inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map_t& map, const nations_t& nations)
 {
+    require_nonempty(oobs.oobs, "orders_of_battle_t.oobs");
     for (auto& oob : oobs.oobs) {
         if (nations.nations.count(oob.first) == 0) {
             boost::throw_exception(
@@ -259,6 +251,7 @@ inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map
             );
         }
 
+        require_nonempty(oob.second.starting_fleets, "order_of_battle_t.starting_fleets");
         for (auto& fleet : oob.second.starting_fleets) {
             require_nonempty(fleet.first, "starting_fleets_t name ('key')");
 
@@ -275,6 +268,7 @@ inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map
             validate_and_fixup_oob_unit(oob_unit);
         }
 
+        require_nonempty(oob.second.production, "order_of_battle_t.production");
         for (auto& element : oob.second.production) {
             for (auto& oob_unit : element.units) {
                 validate_and_fixup_oob_unit(oob_unit);
@@ -320,7 +314,12 @@ inline void validate_unit_def (const unit_def_t& unit_def)
 
 inline void validate_unit_defs (const unit_defs_t& unit_defs)
 {
-    for (const auto& u : unit_defs.units) {
-        validate_unit_def(u);
+    require_nonempty(unit_defs.nation_units, "unit_defs_t.nation_units");
+    for (const auto& pair : unit_defs.nation_units) {
+        require_nonempty(pair.first, "unit_def_t.nation_units.name");
+        require_nonempty(pair.second.units, "unit_def_t.nation_units.units");
+        for (const auto& u : pair.second.units) {
+            validate_unit_def(u);
+        }
     }
 }

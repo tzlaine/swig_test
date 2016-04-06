@@ -574,7 +574,9 @@ message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
     retval.set_scout(value.scout);
     retval.set_fighters(value.fighters);
     retval.set_heavy_fighter_bonus(value.heavy_fighter_bonus);
+    retval.set_pfs(value.pfs);
     retval.set_drones(value.drones);
+    retval.set_mauler(value.mauler);
     for (const auto& x : value.tug_missions) {
         retval.add_tug_missions(static_cast< message::tug_mission_t >(x));
     }
@@ -589,7 +591,9 @@ message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
     retval.scout = msg.scout();
     retval.fighters = msg.fighters();
     retval.heavy_fighter_bonus = msg.heavy_fighter_bonus();
+    retval.pfs = msg.pfs();
     retval.drones = msg.drones();
+    retval.mauler = msg.mauler();
     {
         retval.tug_missions.resize(msg.tug_missions_size());
         auto it = retval.tug_missions.begin();
@@ -641,6 +645,8 @@ message::unit_def_t to_protobuf (const ::unit_def_t& value)
     retval.mutable_crippled()->CopyFrom(to_protobuf(value.crippled));
     retval.set_escort_type(static_cast< message::escort_type_t >(value.escort_type));
     retval.mutable_available()->CopyFrom(to_protobuf(value.available));
+    retval.set_pod(value.pod);
+    retval.set_max_in_service(value.max_in_service);
     retval.mutable_construction()->CopyFrom(to_protobuf(value.construction));
     for (const auto& x : value.substitutions) {
         (*retval.mutable_substitutions())[x.first] = to_protobuf(x.second);
@@ -650,7 +656,7 @@ message::unit_def_t to_protobuf (const ::unit_def_t& value)
     }
     retval.set_move(value.move);
     retval.set_carrier_type(static_cast< message::carrier_type_t >(value.carrier_type));
-    retval.set_spaceworthy(value.spaceworthy);
+    retval.set_not_spaceworthy(value.not_spaceworthy);
     retval.mutable_towable()->CopyFrom(to_protobuf(value.towable));
     retval.set_salvage(value.salvage);
     retval.set_notes(value.notes);
@@ -666,6 +672,8 @@ message::unit_def_t to_protobuf (const ::unit_def_t& value)
     retval.crippled = from_protobuf(msg.crippled());
     retval.escort_type = static_cast< escort_type_t >(msg.escort_type());
     retval.available = from_protobuf(msg.available());
+    retval.pod = msg.pod();
+    retval.max_in_service = msg.max_in_service();
     retval.construction = from_protobuf(msg.construction());
     {
         for (const auto& x : msg.substitutions()) {
@@ -679,18 +687,40 @@ message::unit_def_t to_protobuf (const ::unit_def_t& value)
     }
     retval.move = msg.move();
     retval.carrier_type = static_cast< carrier_type_t >(msg.carrier_type());
-    retval.spaceworthy = msg.spaceworthy();
+    retval.not_spaceworthy = msg.not_spaceworthy();
     retval.towable = from_protobuf(msg.towable());
     retval.salvage = msg.salvage();
     retval.notes = msg.notes();
     return retval;
 }
 
+message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value)
+{
+    message::nation_unit_defs_t retval;
+    for (const auto& x : value.units) {
+        retval.add_units()->CopyFrom(to_protobuf(x));
+    }
+    return retval;
+}
+
+::nation_unit_defs_t from_protobuf (const message::nation_unit_defs_t& msg)
+{
+    ::nation_unit_defs_t retval;
+    {
+        retval.units.resize(msg.units_size());
+        auto it = retval.units.begin();
+        for (const auto& x : msg.units()) {
+            *it++ = from_protobuf(x);
+        }
+    }
+    return retval;
+}
+
 message::unit_defs_t to_protobuf (const ::unit_defs_t& value)
 {
     message::unit_defs_t retval;
-    for (const auto& x : value.units) {
-        retval.add_units()->CopyFrom(to_protobuf(x));
+    for (const auto& x : value.nation_units) {
+        (*retval.mutable_nation_units())[x.first] = to_protobuf(x.second);
     }
     return retval;
 }
@@ -699,10 +729,8 @@ message::unit_defs_t to_protobuf (const ::unit_defs_t& value)
 {
     ::unit_defs_t retval;
     {
-        retval.units.resize(msg.units_size());
-        auto it = retval.units.begin();
-        for (const auto& x : msg.units()) {
-            *it++ = from_protobuf(x);
+        for (const auto& x : msg.nation_units()) {
+            retval.nation_units[x.first] = from_protobuf(x.second);
         }
     }
     return retval;

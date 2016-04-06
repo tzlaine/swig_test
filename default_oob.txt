@@ -367,7 +367,7 @@ oobs: {
                 units: { unit: "HN", times: 2 },
                 units: { unit: "FRD", times: 2 },
                 units: { unit: "MB", times: 2 }
-                reserve: 1,
+                reserve: true,
                 prewar_construction: {
                     year: 168,
                     season: fall,
@@ -482,7 +482,7 @@ oobs: {
                 units: { unit: "TG" },
                 units: { unit: "CR" },
                 units: { unit: "CU", times: 2 }
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -570,7 +570,7 @@ oobs: {
                 units: { unit: "E4A", times: 2 },
                 units: { unit: "FRD" },
                 units: { unit: "MB", times: 2 },
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -667,7 +667,7 @@ oobs: {
                 units: { unit: "E4A" },
                 units: { unit: "E4", times: 3 },
                 units: { unit: "TGA" }
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -690,7 +690,7 @@ oobs: {
                 units: { unit: "TGB" },
                 units: { unit: "FRD" },
                 units: { unit: "MB" },
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -712,7 +712,7 @@ oobs: {
                 units: { unit: "TGB" },
                 units: { unit: "FRD" },
                 units: { unit: "MB" },
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -891,7 +891,7 @@ oobs: {
                 units: { unit: "FF" },
                 units: { unit: "SF" },
                 units: { unit: "TGC" },
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -915,7 +915,7 @@ oobs: {
                 units: { unit: "FF" },
                 units: { unit: "SF" },
                 units: { unit: "TGT" },
-                reserve: 1
+                reserve: true
             }
         },
         production: {
@@ -976,7 +976,7 @@ oobs: {
                 units: { unit: "SC" },
                 units: { unit: "TGC" },
                 units: { unit: "MB" }
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -995,7 +995,7 @@ oobs: {
                 units: { unit: "TGP" },
                 units: { unit: "FRD" },
                 units: { unit: "MB" }
-                reserve: 1,
+                reserve: true,
                 hex_placement_limits: {
                     key: 707,
                     value: 6
@@ -1019,7 +1019,7 @@ oobs: {
                 units: { unit: "SC" },
                 units: { unit: "TGC" },
                 units: { unit: "MB" }
-                reserve: 1
+                reserve: true
             }
         },
         starting_fleets: {
@@ -1035,7 +1035,7 @@ oobs: {
                 units: { unit: "SC" },
                 units: { unit: "TGP" },
                 units: { unit: "FRD" }
-                reserve: 1,
+                reserve: true,
                 strategic_move_arrival_year: 169,
                 strategic_move_arrival_season: spring
             }
@@ -1084,7 +1084,7 @@ oobs: {
                 units: { unit: "KRT", times: 2 },
                 units: { unit: "K5Q", times: 2 },
                 units: { unit: "K5S" },
-                reserve: 1,
+                reserve: true,
                 prewar_construction: {
                     year: 173,
                     season: spring,
@@ -1130,7 +1130,7 @@ oobs: {
                 units: { unit: "KRM" },
                 units: { unit: "K5Q" },
                 units: { unit: "K5S" },
-                reserve: 1,
+                reserve: true,
                 prewar_construction: {
                     year: 173,
                     season: spring,
@@ -1178,7 +1178,7 @@ oobs: {
                 units: { unit: "KRM" },
                 units: { unit: "K5Q" },
                 units: { unit: "K5S" },
-                reserve: 1,
+                reserve: true,
                 prewar_construction: {
                     year: 173,
                     season: spring,
@@ -1319,7 +1319,7 @@ oobs: {
                 units: { unit: "PC", times: 3 },
                 units: { unit: "CPC", times: 3 },
                 units: { unit: "MB" }
-                reserve: 1,
+                reserve: true,
                 prewar_construction: {
                     year: 169,
                     season: spring,

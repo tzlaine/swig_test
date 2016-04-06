@@ -48,6 +48,7 @@ if (MSVC)
 	${CMAKE_HOME_DIRECTORY}/nations.txt
 	${CMAKE_HOME_DIRECTORY}/default_map.txt
 	${CMAKE_HOME_DIRECTORY}/default_oob.txt
+	${CMAKE_HOME_DIRECTORY}/units.json
     )
 endif ()
 add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests ${model_test_args})

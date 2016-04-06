@@ -10,3 +10,7 @@ const char* map_pbtxt_string = R"inline_json(
 
 const char* oob_pbtxt_string = R"inline_json(
 @oob_contents@)inline_json";
+
+
+const char* units_json_string = R"inline_json(
+@units_contents@)inline_json";

@@ -93,8 +93,8 @@ struct offmap_possesions_t
     int mins;
     int majs;
     int survey_ships;
-    int cannot_build_offmap_capital;
-    int old_shipyard;
+    bool cannot_build_offmap_capital;
+    bool old_shipyard;
 };
 
 struct nation_t
@@ -179,7 +179,7 @@ struct starting_fleet_t
 {
     std::vector<int> hexes;
     std::vector<oob_unit_t> units;
-    int reserve;
+    bool reserve;
     std::vector<production_element_t> prewar_construction;
     int strategic_move_arrival_year;
     season_t strategic_move_arrival_season;
@@ -207,12 +207,14 @@ struct orders_of_battle_t
 
 struct unit_def_side_t
 {
-    int att;
-    int def;
+    float att;
+    float def;
     bool scout;
     float fighters;
     float heavy_fighter_bonus;
+    int pfs;
     int drones;
+    bool mauler;
     std::vector<tug_mission_t> tug_missions;
 };
 
@@ -236,20 +238,27 @@ struct unit_def_t
     unit_def_side_t crippled;
     escort_type_t escort_type;
     turn_t available;
+    bool pod;
+    int max_in_service;
     production_cost_t construction;
     boost::container::flat_map<std::string, production_cost_t> substitutions;
     boost::container::flat_map<std::string, production_cost_t> conversions;
     int move;
     carrier_type_t carrier_type;
-    bool spaceworthy;
+    bool not_spaceworthy;
     towable_t towable;
     int salvage;
     std::string notes;
 };
 
-struct unit_defs_t
+struct nation_unit_defs_t
 {
     std::vector<unit_def_t> units;
+};
+
+struct unit_defs_t
+{
+    boost::container::flat_map<std::string, nation_unit_defs_t> nation_units;
 };
 
 message::turn_t to_protobuf (const ::turn_t& value);
@@ -326,6 +335,9 @@ message::production_cost_t to_protobuf (const ::production_cost_t& value);
 
 message::unit_def_t to_protobuf (const ::unit_def_t& value);
 ::unit_def_t from_protobuf (const message::unit_def_t& msg);
+
+message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value);
+::nation_unit_defs_t from_protobuf (const message::nation_unit_defs_t& msg);
 
 message::unit_defs_t to_protobuf (const ::unit_defs_t& value);
 ::unit_defs_t from_protobuf (const message::unit_defs_t& msg);

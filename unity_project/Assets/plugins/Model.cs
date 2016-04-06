@@ -33,7 +33,7 @@ namespace Message {
             "dGFsX2hleF90IpUBChNvZmZtYXBfcG9zc2VzaW9uc190EhEKCXByb3ZpbmNl",
             "cxgBIAEoBRIMCgRtaW5zGAIgASgFEgwKBG1hanMYAyABKAUSFAoMc3VydmV5",
             "X3NoaXBzGAQgASgFEiMKG2Nhbm5vdF9idWlsZF9vZmZtYXBfY2FwaXRhbBgF",
-            "IAEoBRIUCgxvbGRfc2hpcHlhcmQYBiABKAUi2AEKCG5hdGlvbl90EgwKBG5h",
+            "IAEoCBIUCgxvbGRfc2hpcHlhcmQYBiABKAgi2AEKCG5hdGlvbl90EgwKBG5h",
             "bWUYASABKAkSEgoKc2hvcnRfbmFtZRgCIAEoCRIjCgdjYXBpdGFsGAMgASgL",
             "MhIubWVzc2FnZS5jYXBpdGFsX3QSHAoUZnJlZV9zdHJhdGVnaWNfbW92ZXMY",
             "BCABKAUSGwoTY2FwaXRhbF9zdGFyX3BvaW50cxgFIAEoBRI3ChFvZmZtYXBf",
@@ -66,7 +66,7 @@ namespace Message {
             "MhEubWVzc2FnZS5zZWFzb25fdBIiCgV1bml0cxgDIAMoCzITLm1lc3NhZ2Uu",
             "b29iX3VuaXRfdCKBAwoQc3RhcnRpbmdfZmxlZXRfdBIRCgVoZXhlcxgBIAMo",
             "BUICEAESIgoFdW5pdHMYAiADKAsyEy5tZXNzYWdlLm9vYl91bml0X3QSDwoH",
-            "cmVzZXJ2ZRgDIAEoBRI6ChNwcmV3YXJfY29uc3RydWN0aW9uGAQgAygLMh0u",
+            "cmVzZXJ2ZRgDIAEoCBI6ChNwcmV3YXJfY29uc3RydWN0aW9uGAQgAygLMh0u",
             "bWVzc2FnZS5wcm9kdWN0aW9uX2VsZW1lbnRfdBIjChtzdHJhdGVnaWNfbW92",
             "ZV9hcnJpdmFsX3llYXIYBSABKAUSOAodc3RyYXRlZ2ljX21vdmVfYXJyaXZh",
             "bF9zZWFzb24YBiABKA4yES5tZXNzYWdlLnNlYXNvbl90Ek8KFGhleF9wbGFj",
@@ -85,40 +85,46 @@ namespace Message {
             "ZS5zdGFydGluZ19mbGVldF90OgI4ASKSAQoSb3JkZXJzX29mX2JhdHRsZV90",
             "EjMKBG9vYnMYASADKAsyJS5tZXNzYWdlLm9yZGVyc19vZl9iYXR0bGVfdC5P",
             "b2JzRW50cnkaRwoJT29ic0VudHJ5EgsKA2tleRgBIAEoCRIpCgV2YWx1ZRgC",
-            "IAEoCzIaLm1lc3NhZ2Uub3JkZXJfb2ZfYmF0dGxlX3Q6AjgBIqcBCg91bml0",
-            "X2RlZl9zaWRlX3QSCwoDYXR0GAEgASgFEgsKA2RlZhgCIAEoBRINCgVzY291",
+            "IAEoCzIaLm1lc3NhZ2Uub3JkZXJfb2ZfYmF0dGxlX3Q6AjgBIsQBCg91bml0",
+            "X2RlZl9zaWRlX3QSCwoDYXR0GAEgASgCEgsKA2RlZhgCIAEoAhINCgVzY291",
             "dBgDIAEoCBIQCghmaWdodGVycxgEIAEoAhIbChNoZWF2eV9maWdodGVyX2Jv",
-            "bnVzGAUgASgCEg4KBmRyb25lcxgGIAEoBRIsCgx0dWdfbWlzc2lvbnMYByAD",
-            "KA4yFi5tZXNzYWdlLnR1Z19taXNzaW9uX3QiOAoJdG93YWJsZV90EhEKCW1v",
-            "dmVfY29zdBgBIAEoBRIYChBzdHJhdF9tb3ZlX2xpbWl0GAIgASgFIjcKEXBy",
-            "b2R1Y3Rpb25fY29zdF90EgwKBGNvc3QYASABKAUSFAoMZmlnaHRlcl9jb3N0",
-            "GAIgASgFIrcFCgp1bml0X2RlZl90EgwKBG5hbWUYASABKAkSCwoDY21kGAIg",
-            "ASgFEiwKCnVuY3JpcHBsZWQYAyABKAsyGC5tZXNzYWdlLnVuaXRfZGVmX3Np",
-            "ZGVfdBIqCghjcmlwcGxlZBgEIAEoCzIYLm1lc3NhZ2UudW5pdF9kZWZfc2lk",
-            "ZV90EisKC2VzY29ydF90eXBlGAUgASgOMhYubWVzc2FnZS5lc2NvcnRfdHlw",
-            "ZV90EiIKCWF2YWlsYWJsZRgGIAEoCzIPLm1lc3NhZ2UudHVybl90EjAKDGNv",
-            "bnN0cnVjdGlvbhgHIAEoCzIaLm1lc3NhZ2UucHJvZHVjdGlvbl9jb3N0X3QS",
-            "PQoNc3Vic3RpdHV0aW9ucxgIIAMoCzImLm1lc3NhZ2UudW5pdF9kZWZfdC5T",
-            "dWJzdGl0dXRpb25zRW50cnkSOQoLY29udmVyc2lvbnMYCSADKAsyJC5tZXNz",
-            "YWdlLnVuaXRfZGVmX3QuQ29udmVyc2lvbnNFbnRyeRIMCgRtb3ZlGAogASgF",
-            "Ei0KDGNhcnJpZXJfdHlwZRgLIAEoDjIXLm1lc3NhZ2UuY2Fycmllcl90eXBl",
-            "X3QSEwoLc3BhY2V3b3J0aHkYDCABKAgSIwoHdG93YWJsZRgNIAEoCzISLm1l",
-            "c3NhZ2UudG93YWJsZV90Eg8KB3NhbHZhZ2UYDiABKAUSDQoFbm90ZXMYDyAB",
-            "KAkaUAoSU3Vic3RpdHV0aW9uc0VudHJ5EgsKA2tleRgBIAEoCRIpCgV2YWx1",
-            "ZRgCIAEoCzIaLm1lc3NhZ2UucHJvZHVjdGlvbl9jb3N0X3Q6AjgBGk4KEENv",
-            "bnZlcnNpb25zRW50cnkSCwoDa2V5GAEgASgJEikKBXZhbHVlGAIgASgLMhou",
-            "bWVzc2FnZS5wcm9kdWN0aW9uX2Nvc3RfdDoCOAEiMQoLdW5pdF9kZWZzX3QS",
-            "IgoFdW5pdHMYASADKAsyEy5tZXNzYWdlLnVuaXRfZGVmX3QqTAoJZmVhdHVy",
-            "ZV90Eg4KCm5vX2ZlYXR1cmUQABIICgRiYXRzEAESBgoCc2IQAhIHCgNtaW4Q",
-            "AxIHCgNtYWoQBBILCgdjYXBpdGFsEAUqIAoIc2Vhc29uX3QSCgoGc3ByaW5n",
-            "EAASCAoEZmFsbBABKooBCg10dWdfbWlzc2lvbl90EgUKAUEQABIFCgFCEAES",
-            "BQoBQxACEgUKAUQQAxIFCgFFEAQSBQoBRhAFEgUKAUcQBhIFCgFIEAcSBQoB",
-            "SRAIEgYKAkoxEAkSBgoCSjIQChIGCgJLMRALEgYKAksyEAwSBQoBTBANEgUK",
-            "AU0QDhIFCgFOEA8SBQoBTxAQKnYKDmNhcnJpZXJfdHlwZV90EhEKDW5vdF9h",
-            "X2NhcnJpZXIQABIXChNzaW5nbGVfc2hpcF9jYXJyaWVyEAESEQoNbGlnaHRf",
-            "Y2FycmllchACEhIKDm1lZGl1bV9jYXJyaWVyEAMSEQoNaGVhdnlfY2Fycmll",
-            "chAEKkYKDWVzY29ydF90eXBlX3QSEQoNbm90X2FuX2VzY29ydBAAEhAKDGxp",
-            "Z2h0X2VzY29ydBABEhAKDGhlYXZ5X2VzY29ydBACYgZwcm90bzM="));
+            "bnVzGAUgASgCEgsKA3BmcxgGIAEoBRIOCgZkcm9uZXMYByABKAUSDgoGbWF1",
+            "bGVyGAggASgIEiwKDHR1Z19taXNzaW9ucxgJIAMoDjIWLm1lc3NhZ2UudHVn",
+            "X21pc3Npb25fdCI4Cgl0b3dhYmxlX3QSEQoJbW92ZV9jb3N0GAEgASgFEhgK",
+            "EHN0cmF0X21vdmVfbGltaXQYAiABKAUiNwoRcHJvZHVjdGlvbl9jb3N0X3QS",
+            "DAoEY29zdBgBIAEoBRIUCgxmaWdodGVyX2Nvc3QYAiABKAUi4AUKCnVuaXRf",
+            "ZGVmX3QSDAoEbmFtZRgBIAEoCRILCgNjbWQYAiABKAUSLAoKdW5jcmlwcGxl",
+            "ZBgDIAEoCzIYLm1lc3NhZ2UudW5pdF9kZWZfc2lkZV90EioKCGNyaXBwbGVk",
+            "GAQgASgLMhgubWVzc2FnZS51bml0X2RlZl9zaWRlX3QSKwoLZXNjb3J0X3R5",
+            "cGUYBSABKA4yFi5tZXNzYWdlLmVzY29ydF90eXBlX3QSIgoJYXZhaWxhYmxl",
+            "GAYgASgLMg8ubWVzc2FnZS50dXJuX3QSCwoDcG9kGAcgASgIEhYKDm1heF9p",
+            "bl9zZXJ2aWNlGAggASgFEjAKDGNvbnN0cnVjdGlvbhgJIAEoCzIaLm1lc3Nh",
+            "Z2UucHJvZHVjdGlvbl9jb3N0X3QSPQoNc3Vic3RpdHV0aW9ucxgKIAMoCzIm",
+            "Lm1lc3NhZ2UudW5pdF9kZWZfdC5TdWJzdGl0dXRpb25zRW50cnkSOQoLY29u",
+            "dmVyc2lvbnMYCyADKAsyJC5tZXNzYWdlLnVuaXRfZGVmX3QuQ29udmVyc2lv",
+            "bnNFbnRyeRIMCgRtb3ZlGAwgASgFEi0KDGNhcnJpZXJfdHlwZRgNIAEoDjIX",
+            "Lm1lc3NhZ2UuY2Fycmllcl90eXBlX3QSFwoPbm90X3NwYWNld29ydGh5GA4g",
+            "ASgIEiMKB3Rvd2FibGUYDyABKAsyEi5tZXNzYWdlLnRvd2FibGVfdBIPCgdz",
+            "YWx2YWdlGBAgASgFEg0KBW5vdGVzGBEgASgJGlAKElN1YnN0aXR1dGlvbnNF",
+            "bnRyeRILCgNrZXkYASABKAkSKQoFdmFsdWUYAiABKAsyGi5tZXNzYWdlLnBy",
+            "b2R1Y3Rpb25fY29zdF90OgI4ARpOChBDb252ZXJzaW9uc0VudHJ5EgsKA2tl",
+            "eRgBIAEoCRIpCgV2YWx1ZRgCIAEoCzIaLm1lc3NhZ2UucHJvZHVjdGlvbl9j",
+            "b3N0X3Q6AjgBIjgKEm5hdGlvbl91bml0X2RlZnNfdBIiCgV1bml0cxgBIAMo",
+            "CzITLm1lc3NhZ2UudW5pdF9kZWZfdCKbAQoLdW5pdF9kZWZzX3QSOwoMbmF0",
+            "aW9uX3VuaXRzGAEgAygLMiUubWVzc2FnZS51bml0X2RlZnNfdC5OYXRpb25V",
+            "bml0c0VudHJ5Gk8KEE5hdGlvblVuaXRzRW50cnkSCwoDa2V5GAEgASgJEioK",
+            "BXZhbHVlGAIgASgLMhsubWVzc2FnZS5uYXRpb25fdW5pdF9kZWZzX3Q6AjgB",
+            "KkwKCWZlYXR1cmVfdBIOCgpub19mZWF0dXJlEAASCAoEYmF0cxABEgYKAnNi",
+            "EAISBwoDbWluEAMSBwoDbWFqEAQSCwoHY2FwaXRhbBAFKiAKCHNlYXNvbl90",
+            "EgoKBnNwcmluZxAAEggKBGZhbGwQASqKAQoNdHVnX21pc3Npb25fdBIFCgFB",
+            "EAASBQoBQhABEgUKAUMQAhIFCgFEEAMSBQoBRRAEEgUKAUYQBRIFCgFHEAYS",
+            "BQoBSBAHEgUKAUkQCBIGCgJKMRAJEgYKAkoyEAoSBgoCSzEQCxIGCgJLMhAM",
+            "EgUKAUwQDRIFCgFNEA4SBQoBThAPEgUKAU8QECp2Cg5jYXJyaWVyX3R5cGVf",
+            "dBIRCg1ub3RfYV9jYXJyaWVyEAASFwoTc2luZ2xlX3NoaXBfY2FycmllchAB",
+            "EhEKDWxpZ2h0X2NhcnJpZXIQAhISCg5tZWRpdW1fY2FycmllchADEhEKDWhl",
+            "YXZ5X2NhcnJpZXIQBCpGCg1lc2NvcnRfdHlwZV90EhEKDW5vdF9hbl9lc2Nv",
+            "cnQQABIQCgxsaWdodF9lc2NvcnQQARIQCgxoZWF2eV9lc2NvcnQQAmIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), typeof(global::Message.tug_mission_t), typeof(global::Message.carrier_type_t), typeof(global::Message.escort_type_t), }, new pbr::GeneratedCodeInfo[] {
@@ -143,11 +149,12 @@ namespace Message {
             new pbr::GeneratedCodeInfo(typeof(global::Message.mothball_reserve_t), global::Message.mothball_reserve_t.Parser, new[]{ "Units", "WarRelease", "LimitedWarRelease" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.order_of_battle_t), global::Message.order_of_battle_t.Parser, new[]{ "StartingFleets", "MothballReserve", "Production" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
             new pbr::GeneratedCodeInfo(typeof(global::Message.orders_of_battle_t), global::Message.orders_of_battle_t.Parser, new[]{ "Oobs" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_side_t), global::Message.unit_def_side_t.Parser, new[]{ "Att", "Def", "Scout", "Fighters", "HeavyFighterBonus", "Drones", "TugMissions" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_side_t), global::Message.unit_def_side_t.Parser, new[]{ "Att", "Def", "Scout", "Fighters", "HeavyFighterBonus", "Pfs", "Drones", "Mauler", "TugMissions" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.towable_t), global::Message.towable_t.Parser, new[]{ "MoveCost", "StratMoveLimit" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.production_cost_t), global::Message.production_cost_t.Parser, new[]{ "Cost", "FighterCost" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_t), global::Message.unit_def_t.Parser, new[]{ "Name", "Cmd", "Uncrippled", "Crippled", "EscortType", "Available", "Construction", "Substitutions", "Conversions", "Move", "CarrierType", "Spaceworthy", "Towable", "Salvage", "Notes" }, null, null, new pbr::GeneratedCodeInfo[] { null, null, }),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_defs_t), global::Message.unit_defs_t.Parser, new[]{ "Units" }, null, null, null)
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_t), global::Message.unit_def_t.Parser, new[]{ "Name", "Cmd", "Uncrippled", "Crippled", "EscortType", "Available", "Pod", "MaxInService", "Construction", "Substitutions", "Conversions", "Move", "CarrierType", "NotSpaceworthy", "Towable", "Salvage", "Notes" }, null, null, new pbr::GeneratedCodeInfo[] { null, null, }),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.nation_unit_defs_t), global::Message.nation_unit_defs_t.Parser, new[]{ "Units" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_defs_t), global::Message.unit_defs_t.Parser, new[]{ "NationUnits" }, null, null, new pbr::GeneratedCodeInfo[] { null, })
           }));
     }
     #endregion
@@ -882,8 +889,8 @@ namespace Message {
 
     /// <summary>Field number for the "cannot_build_offmap_capital" field.</summary>
     public const int CannotBuildOffmapCapitalFieldNumber = 5;
-    private int cannotBuildOffmapCapital_;
-    public int CannotBuildOffmapCapital {
+    private bool cannotBuildOffmapCapital_;
+    public bool CannotBuildOffmapCapital {
       get { return cannotBuildOffmapCapital_; }
       set {
         cannotBuildOffmapCapital_ = value;
@@ -892,8 +899,8 @@ namespace Message {
 
     /// <summary>Field number for the "old_shipyard" field.</summary>
     public const int OldShipyardFieldNumber = 6;
-    private int oldShipyard_;
-    public int OldShipyard {
+    private bool oldShipyard_;
+    public bool OldShipyard {
       get { return oldShipyard_; }
       set {
         oldShipyard_ = value;
@@ -926,8 +933,8 @@ namespace Message {
       if (Mins != 0) hash ^= Mins.GetHashCode();
       if (Majs != 0) hash ^= Majs.GetHashCode();
       if (SurveyShips != 0) hash ^= SurveyShips.GetHashCode();
-      if (CannotBuildOffmapCapital != 0) hash ^= CannotBuildOffmapCapital.GetHashCode();
-      if (OldShipyard != 0) hash ^= OldShipyard.GetHashCode();
+      if (CannotBuildOffmapCapital != false) hash ^= CannotBuildOffmapCapital.GetHashCode();
+      if (OldShipyard != false) hash ^= OldShipyard.GetHashCode();
       return hash;
     }
 
@@ -952,13 +959,13 @@ namespace Message {
         output.WriteRawTag(32);
         output.WriteInt32(SurveyShips);
       }
-      if (CannotBuildOffmapCapital != 0) {
+      if (CannotBuildOffmapCapital != false) {
         output.WriteRawTag(40);
-        output.WriteInt32(CannotBuildOffmapCapital);
+        output.WriteBool(CannotBuildOffmapCapital);
       }
-      if (OldShipyard != 0) {
+      if (OldShipyard != false) {
         output.WriteRawTag(48);
-        output.WriteInt32(OldShipyard);
+        output.WriteBool(OldShipyard);
       }
     }
 
@@ -976,11 +983,11 @@ namespace Message {
       if (SurveyShips != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SurveyShips);
       }
-      if (CannotBuildOffmapCapital != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CannotBuildOffmapCapital);
+      if (CannotBuildOffmapCapital != false) {
+        size += 1 + 1;
       }
-      if (OldShipyard != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(OldShipyard);
+      if (OldShipyard != false) {
+        size += 1 + 1;
       }
       return size;
     }
@@ -1001,10 +1008,10 @@ namespace Message {
       if (other.SurveyShips != 0) {
         SurveyShips = other.SurveyShips;
       }
-      if (other.CannotBuildOffmapCapital != 0) {
+      if (other.CannotBuildOffmapCapital != false) {
         CannotBuildOffmapCapital = other.CannotBuildOffmapCapital;
       }
-      if (other.OldShipyard != 0) {
+      if (other.OldShipyard != false) {
         OldShipyard = other.OldShipyard;
       }
     }
@@ -1033,11 +1040,11 @@ namespace Message {
             break;
           }
           case 40: {
-            CannotBuildOffmapCapital = input.ReadInt32();
+            CannotBuildOffmapCapital = input.ReadBool();
             break;
           }
           case 48: {
-            OldShipyard = input.ReadInt32();
+            OldShipyard = input.ReadBool();
             break;
           }
         }
@@ -2842,11 +2849,8 @@ namespace Message {
 
     /// <summary>Field number for the "reserve" field.</summary>
     public const int ReserveFieldNumber = 3;
-    private int reserve_;
-    /// <summary>
-    ///  integer acting as boolean
-    /// </summary>
-    public int Reserve {
+    private bool reserve_;
+    public bool Reserve {
       get { return reserve_; }
       set {
         reserve_ = value;
@@ -2919,7 +2923,7 @@ namespace Message {
       int hash = 1;
       hash ^= hexes_.GetHashCode();
       hash ^= units_.GetHashCode();
-      if (Reserve != 0) hash ^= Reserve.GetHashCode();
+      if (Reserve != false) hash ^= Reserve.GetHashCode();
       hash ^= prewarConstruction_.GetHashCode();
       if (StrategicMoveArrivalYear != 0) hash ^= StrategicMoveArrivalYear.GetHashCode();
       if (StrategicMoveArrivalSeason != global::Message.season_t.spring) hash ^= StrategicMoveArrivalSeason.GetHashCode();
@@ -2934,9 +2938,9 @@ namespace Message {
     public void WriteTo(pb::CodedOutputStream output) {
       hexes_.WriteTo(output, _repeated_hexes_codec);
       units_.WriteTo(output, _repeated_units_codec);
-      if (Reserve != 0) {
+      if (Reserve != false) {
         output.WriteRawTag(24);
-        output.WriteInt32(Reserve);
+        output.WriteBool(Reserve);
       }
       prewarConstruction_.WriteTo(output, _repeated_prewarConstruction_codec);
       if (StrategicMoveArrivalYear != 0) {
@@ -2954,8 +2958,8 @@ namespace Message {
       int size = 0;
       size += hexes_.CalculateSize(_repeated_hexes_codec);
       size += units_.CalculateSize(_repeated_units_codec);
-      if (Reserve != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Reserve);
+      if (Reserve != false) {
+        size += 1 + 1;
       }
       size += prewarConstruction_.CalculateSize(_repeated_prewarConstruction_codec);
       if (StrategicMoveArrivalYear != 0) {
@@ -2974,7 +2978,7 @@ namespace Message {
       }
       hexes_.Add(other.hexes_);
       units_.Add(other.units_);
-      if (other.Reserve != 0) {
+      if (other.Reserve != false) {
         Reserve = other.Reserve;
       }
       prewarConstruction_.Add(other.prewarConstruction_);
@@ -3004,7 +3008,7 @@ namespace Message {
             break;
           }
           case 24: {
-            Reserve = input.ReadInt32();
+            Reserve = input.ReadBool();
             break;
           }
           case 34: {
@@ -3436,7 +3440,9 @@ namespace Message {
       scout_ = other.scout_;
       fighters_ = other.fighters_;
       heavyFighterBonus_ = other.heavyFighterBonus_;
+      pfs_ = other.pfs_;
       drones_ = other.drones_;
+      mauler_ = other.mauler_;
       tugMissions_ = other.tugMissions_.Clone();
     }
 
@@ -3446,8 +3452,8 @@ namespace Message {
 
     /// <summary>Field number for the "att" field.</summary>
     public const int AttFieldNumber = 1;
-    private int att_;
-    public int Att {
+    private float att_;
+    public float Att {
       get { return att_; }
       set {
         att_ = value;
@@ -3456,8 +3462,8 @@ namespace Message {
 
     /// <summary>Field number for the "def" field.</summary>
     public const int DefFieldNumber = 2;
-    private int def_;
-    public int Def {
+    private float def_;
+    public float Def {
       get { return def_; }
       set {
         def_ = value;
@@ -3494,8 +3500,18 @@ namespace Message {
       }
     }
 
+    /// <summary>Field number for the "pfs" field.</summary>
+    public const int PfsFieldNumber = 6;
+    private int pfs_;
+    public int Pfs {
+      get { return pfs_; }
+      set {
+        pfs_ = value;
+      }
+    }
+
     /// <summary>Field number for the "drones" field.</summary>
-    public const int DronesFieldNumber = 6;
+    public const int DronesFieldNumber = 7;
     private int drones_;
     public int Drones {
       get { return drones_; }
@@ -3504,10 +3520,20 @@ namespace Message {
       }
     }
 
+    /// <summary>Field number for the "mauler" field.</summary>
+    public const int MaulerFieldNumber = 8;
+    private bool mauler_;
+    public bool Mauler {
+      get { return mauler_; }
+      set {
+        mauler_ = value;
+      }
+    }
+
     /// <summary>Field number for the "tug_missions" field.</summary>
-    public const int TugMissionsFieldNumber = 7;
+    public const int TugMissionsFieldNumber = 9;
     private static readonly pb::FieldCodec<global::Message.tug_mission_t> _repeated_tugMissions_codec
-        = pb::FieldCodec.ForEnum(58, x => (int) x, x => (global::Message.tug_mission_t) x);
+        = pb::FieldCodec.ForEnum(74, x => (int) x, x => (global::Message.tug_mission_t) x);
     private readonly pbc::RepeatedField<global::Message.tug_mission_t> tugMissions_ = new pbc::RepeatedField<global::Message.tug_mission_t>();
     public pbc::RepeatedField<global::Message.tug_mission_t> TugMissions {
       get { return tugMissions_; }
@@ -3529,19 +3555,23 @@ namespace Message {
       if (Scout != other.Scout) return false;
       if (Fighters != other.Fighters) return false;
       if (HeavyFighterBonus != other.HeavyFighterBonus) return false;
+      if (Pfs != other.Pfs) return false;
       if (Drones != other.Drones) return false;
+      if (Mauler != other.Mauler) return false;
       if(!tugMissions_.Equals(other.tugMissions_)) return false;
       return true;
     }
 
     public override int GetHashCode() {
       int hash = 1;
-      if (Att != 0) hash ^= Att.GetHashCode();
-      if (Def != 0) hash ^= Def.GetHashCode();
+      if (Att != 0F) hash ^= Att.GetHashCode();
+      if (Def != 0F) hash ^= Def.GetHashCode();
       if (Scout != false) hash ^= Scout.GetHashCode();
       if (Fighters != 0F) hash ^= Fighters.GetHashCode();
       if (HeavyFighterBonus != 0F) hash ^= HeavyFighterBonus.GetHashCode();
+      if (Pfs != 0) hash ^= Pfs.GetHashCode();
       if (Drones != 0) hash ^= Drones.GetHashCode();
+      if (Mauler != false) hash ^= Mauler.GetHashCode();
       hash ^= tugMissions_.GetHashCode();
       return hash;
     }
@@ -3551,13 +3581,13 @@ namespace Message {
     }
 
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Att != 0) {
-        output.WriteRawTag(8);
-        output.WriteInt32(Att);
+      if (Att != 0F) {
+        output.WriteRawTag(13);
+        output.WriteFloat(Att);
       }
-      if (Def != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Def);
+      if (Def != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(Def);
       }
       if (Scout != false) {
         output.WriteRawTag(24);
@@ -3571,20 +3601,28 @@ namespace Message {
         output.WriteRawTag(45);
         output.WriteFloat(HeavyFighterBonus);
       }
-      if (Drones != 0) {
+      if (Pfs != 0) {
         output.WriteRawTag(48);
+        output.WriteInt32(Pfs);
+      }
+      if (Drones != 0) {
+        output.WriteRawTag(56);
         output.WriteInt32(Drones);
+      }
+      if (Mauler != false) {
+        output.WriteRawTag(64);
+        output.WriteBool(Mauler);
       }
       tugMissions_.WriteTo(output, _repeated_tugMissions_codec);
     }
 
     public int CalculateSize() {
       int size = 0;
-      if (Att != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Att);
+      if (Att != 0F) {
+        size += 1 + 4;
       }
-      if (Def != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Def);
+      if (Def != 0F) {
+        size += 1 + 4;
       }
       if (Scout != false) {
         size += 1 + 1;
@@ -3595,8 +3633,14 @@ namespace Message {
       if (HeavyFighterBonus != 0F) {
         size += 1 + 4;
       }
+      if (Pfs != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pfs);
+      }
       if (Drones != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Drones);
+      }
+      if (Mauler != false) {
+        size += 1 + 1;
       }
       size += tugMissions_.CalculateSize(_repeated_tugMissions_codec);
       return size;
@@ -3606,10 +3650,10 @@ namespace Message {
       if (other == null) {
         return;
       }
-      if (other.Att != 0) {
+      if (other.Att != 0F) {
         Att = other.Att;
       }
-      if (other.Def != 0) {
+      if (other.Def != 0F) {
         Def = other.Def;
       }
       if (other.Scout != false) {
@@ -3621,8 +3665,14 @@ namespace Message {
       if (other.HeavyFighterBonus != 0F) {
         HeavyFighterBonus = other.HeavyFighterBonus;
       }
+      if (other.Pfs != 0) {
+        Pfs = other.Pfs;
+      }
       if (other.Drones != 0) {
         Drones = other.Drones;
+      }
+      if (other.Mauler != false) {
+        Mauler = other.Mauler;
       }
       tugMissions_.Add(other.tugMissions_);
     }
@@ -3634,12 +3684,12 @@ namespace Message {
           default:
             input.SkipLastField();
             break;
-          case 8: {
-            Att = input.ReadInt32();
+          case 13: {
+            Att = input.ReadFloat();
             break;
           }
-          case 16: {
-            Def = input.ReadInt32();
+          case 21: {
+            Def = input.ReadFloat();
             break;
           }
           case 24: {
@@ -3655,11 +3705,19 @@ namespace Message {
             break;
           }
           case 48: {
+            Pfs = input.ReadInt32();
+            break;
+          }
+          case 56: {
             Drones = input.ReadInt32();
             break;
           }
-          case 58:
-          case 56: {
+          case 64: {
+            Mauler = input.ReadBool();
+            break;
+          }
+          case 74:
+          case 72: {
             tugMissions_.AddEntriesFrom(input, _repeated_tugMissions_codec);
             break;
           }
@@ -3955,12 +4013,14 @@ namespace Message {
       Crippled = other.crippled_ != null ? other.Crippled.Clone() : null;
       escortType_ = other.escortType_;
       Available = other.available_ != null ? other.Available.Clone() : null;
+      pod_ = other.pod_;
+      maxInService_ = other.maxInService_;
       Construction = other.construction_ != null ? other.Construction.Clone() : null;
       substitutions_ = other.substitutions_.Clone();
       conversions_ = other.conversions_.Clone();
       move_ = other.move_;
       carrierType_ = other.carrierType_;
-      spaceworthy_ = other.spaceworthy_;
+      notSpaceworthy_ = other.notSpaceworthy_;
       Towable = other.towable_ != null ? other.Towable.Clone() : null;
       salvage_ = other.salvage_;
       notes_ = other.notes_;
@@ -4030,8 +4090,28 @@ namespace Message {
       }
     }
 
+    /// <summary>Field number for the "pod" field.</summary>
+    public const int PodFieldNumber = 7;
+    private bool pod_;
+    public bool Pod {
+      get { return pod_; }
+      set {
+        pod_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "max_in_service" field.</summary>
+    public const int MaxInServiceFieldNumber = 8;
+    private int maxInService_;
+    public int MaxInService {
+      get { return maxInService_; }
+      set {
+        maxInService_ = value;
+      }
+    }
+
     /// <summary>Field number for the "construction" field.</summary>
-    public const int ConstructionFieldNumber = 7;
+    public const int ConstructionFieldNumber = 9;
     private global::Message.production_cost_t construction_;
     public global::Message.production_cost_t Construction {
       get { return construction_; }
@@ -4041,25 +4121,25 @@ namespace Message {
     }
 
     /// <summary>Field number for the "substitutions" field.</summary>
-    public const int SubstitutionsFieldNumber = 8;
+    public const int SubstitutionsFieldNumber = 10;
     private static readonly pbc::MapField<string, global::Message.production_cost_t>.Codec _map_substitutions_codec
-        = new pbc::MapField<string, global::Message.production_cost_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.production_cost_t.Parser), 66);
+        = new pbc::MapField<string, global::Message.production_cost_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.production_cost_t.Parser), 82);
     private readonly pbc::MapField<string, global::Message.production_cost_t> substitutions_ = new pbc::MapField<string, global::Message.production_cost_t>();
     public pbc::MapField<string, global::Message.production_cost_t> Substitutions {
       get { return substitutions_; }
     }
 
     /// <summary>Field number for the "conversions" field.</summary>
-    public const int ConversionsFieldNumber = 9;
+    public const int ConversionsFieldNumber = 11;
     private static readonly pbc::MapField<string, global::Message.production_cost_t>.Codec _map_conversions_codec
-        = new pbc::MapField<string, global::Message.production_cost_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.production_cost_t.Parser), 74);
+        = new pbc::MapField<string, global::Message.production_cost_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.production_cost_t.Parser), 90);
     private readonly pbc::MapField<string, global::Message.production_cost_t> conversions_ = new pbc::MapField<string, global::Message.production_cost_t>();
     public pbc::MapField<string, global::Message.production_cost_t> Conversions {
       get { return conversions_; }
     }
 
     /// <summary>Field number for the "move" field.</summary>
-    public const int MoveFieldNumber = 10;
+    public const int MoveFieldNumber = 12;
     private int move_;
     public int Move {
       get { return move_; }
@@ -4069,7 +4149,7 @@ namespace Message {
     }
 
     /// <summary>Field number for the "carrier_type" field.</summary>
-    public const int CarrierTypeFieldNumber = 11;
+    public const int CarrierTypeFieldNumber = 13;
     private global::Message.carrier_type_t carrierType_ = global::Message.carrier_type_t.not_a_carrier;
     public global::Message.carrier_type_t CarrierType {
       get { return carrierType_; }
@@ -4078,18 +4158,18 @@ namespace Message {
       }
     }
 
-    /// <summary>Field number for the "spaceworthy" field.</summary>
-    public const int SpaceworthyFieldNumber = 12;
-    private bool spaceworthy_;
-    public bool Spaceworthy {
-      get { return spaceworthy_; }
+    /// <summary>Field number for the "not_spaceworthy" field.</summary>
+    public const int NotSpaceworthyFieldNumber = 14;
+    private bool notSpaceworthy_;
+    public bool NotSpaceworthy {
+      get { return notSpaceworthy_; }
       set {
-        spaceworthy_ = value;
+        notSpaceworthy_ = value;
       }
     }
 
     /// <summary>Field number for the "towable" field.</summary>
-    public const int TowableFieldNumber = 13;
+    public const int TowableFieldNumber = 15;
     private global::Message.towable_t towable_;
     public global::Message.towable_t Towable {
       get { return towable_; }
@@ -4099,7 +4179,7 @@ namespace Message {
     }
 
     /// <summary>Field number for the "salvage" field.</summary>
-    public const int SalvageFieldNumber = 14;
+    public const int SalvageFieldNumber = 16;
     private int salvage_;
     public int Salvage {
       get { return salvage_; }
@@ -4109,7 +4189,7 @@ namespace Message {
     }
 
     /// <summary>Field number for the "notes" field.</summary>
-    public const int NotesFieldNumber = 15;
+    public const int NotesFieldNumber = 17;
     private string notes_ = "";
     public string Notes {
       get { return notes_; }
@@ -4135,12 +4215,14 @@ namespace Message {
       if (!object.Equals(Crippled, other.Crippled)) return false;
       if (EscortType != other.EscortType) return false;
       if (!object.Equals(Available, other.Available)) return false;
+      if (Pod != other.Pod) return false;
+      if (MaxInService != other.MaxInService) return false;
       if (!object.Equals(Construction, other.Construction)) return false;
       if (!Substitutions.Equals(other.Substitutions)) return false;
       if (!Conversions.Equals(other.Conversions)) return false;
       if (Move != other.Move) return false;
       if (CarrierType != other.CarrierType) return false;
-      if (Spaceworthy != other.Spaceworthy) return false;
+      if (NotSpaceworthy != other.NotSpaceworthy) return false;
       if (!object.Equals(Towable, other.Towable)) return false;
       if (Salvage != other.Salvage) return false;
       if (Notes != other.Notes) return false;
@@ -4155,12 +4237,14 @@ namespace Message {
       if (crippled_ != null) hash ^= Crippled.GetHashCode();
       if (EscortType != global::Message.escort_type_t.not_an_escort) hash ^= EscortType.GetHashCode();
       if (available_ != null) hash ^= Available.GetHashCode();
+      if (Pod != false) hash ^= Pod.GetHashCode();
+      if (MaxInService != 0) hash ^= MaxInService.GetHashCode();
       if (construction_ != null) hash ^= Construction.GetHashCode();
       hash ^= Substitutions.GetHashCode();
       hash ^= Conversions.GetHashCode();
       if (Move != 0) hash ^= Move.GetHashCode();
       if (CarrierType != global::Message.carrier_type_t.not_a_carrier) hash ^= CarrierType.GetHashCode();
-      if (Spaceworthy != false) hash ^= Spaceworthy.GetHashCode();
+      if (NotSpaceworthy != false) hash ^= NotSpaceworthy.GetHashCode();
       if (towable_ != null) hash ^= Towable.GetHashCode();
       if (Salvage != 0) hash ^= Salvage.GetHashCode();
       if (Notes.Length != 0) hash ^= Notes.GetHashCode();
@@ -4196,34 +4280,42 @@ namespace Message {
         output.WriteRawTag(50);
         output.WriteMessage(Available);
       }
+      if (Pod != false) {
+        output.WriteRawTag(56);
+        output.WriteBool(Pod);
+      }
+      if (MaxInService != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(MaxInService);
+      }
       if (construction_ != null) {
-        output.WriteRawTag(58);
+        output.WriteRawTag(74);
         output.WriteMessage(Construction);
       }
       substitutions_.WriteTo(output, _map_substitutions_codec);
       conversions_.WriteTo(output, _map_conversions_codec);
       if (Move != 0) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(96);
         output.WriteInt32(Move);
       }
       if (CarrierType != global::Message.carrier_type_t.not_a_carrier) {
-        output.WriteRawTag(88);
+        output.WriteRawTag(104);
         output.WriteEnum((int) CarrierType);
       }
-      if (Spaceworthy != false) {
-        output.WriteRawTag(96);
-        output.WriteBool(Spaceworthy);
+      if (NotSpaceworthy != false) {
+        output.WriteRawTag(112);
+        output.WriteBool(NotSpaceworthy);
       }
       if (towable_ != null) {
-        output.WriteRawTag(106);
+        output.WriteRawTag(122);
         output.WriteMessage(Towable);
       }
       if (Salvage != 0) {
-        output.WriteRawTag(112);
+        output.WriteRawTag(128, 1);
         output.WriteInt32(Salvage);
       }
       if (Notes.Length != 0) {
-        output.WriteRawTag(122);
+        output.WriteRawTag(138, 1);
         output.WriteString(Notes);
       }
     }
@@ -4248,6 +4340,12 @@ namespace Message {
       if (available_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Available);
       }
+      if (Pod != false) {
+        size += 1 + 1;
+      }
+      if (MaxInService != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxInService);
+      }
       if (construction_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Construction);
       }
@@ -4259,17 +4357,17 @@ namespace Message {
       if (CarrierType != global::Message.carrier_type_t.not_a_carrier) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) CarrierType);
       }
-      if (Spaceworthy != false) {
+      if (NotSpaceworthy != false) {
         size += 1 + 1;
       }
       if (towable_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Towable);
       }
       if (Salvage != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Salvage);
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(Salvage);
       }
       if (Notes.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Notes);
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(Notes);
       }
       return size;
     }
@@ -4305,6 +4403,12 @@ namespace Message {
         }
         Available.MergeFrom(other.Available);
       }
+      if (other.Pod != false) {
+        Pod = other.Pod;
+      }
+      if (other.MaxInService != 0) {
+        MaxInService = other.MaxInService;
+      }
       if (other.construction_ != null) {
         if (construction_ == null) {
           construction_ = new global::Message.production_cost_t();
@@ -4319,8 +4423,8 @@ namespace Message {
       if (other.CarrierType != global::Message.carrier_type_t.not_a_carrier) {
         CarrierType = other.CarrierType;
       }
-      if (other.Spaceworthy != false) {
-        Spaceworthy = other.Spaceworthy;
+      if (other.NotSpaceworthy != false) {
+        NotSpaceworthy = other.NotSpaceworthy;
       }
       if (other.towable_ != null) {
         if (towable_ == null) {
@@ -4376,45 +4480,53 @@ namespace Message {
             input.ReadMessage(available_);
             break;
           }
-          case 58: {
+          case 56: {
+            Pod = input.ReadBool();
+            break;
+          }
+          case 64: {
+            MaxInService = input.ReadInt32();
+            break;
+          }
+          case 74: {
             if (construction_ == null) {
               construction_ = new global::Message.production_cost_t();
             }
             input.ReadMessage(construction_);
             break;
           }
-          case 66: {
+          case 82: {
             substitutions_.AddEntriesFrom(input, _map_substitutions_codec);
             break;
           }
-          case 74: {
+          case 90: {
             conversions_.AddEntriesFrom(input, _map_conversions_codec);
             break;
           }
-          case 80: {
+          case 96: {
             Move = input.ReadInt32();
             break;
           }
-          case 88: {
+          case 104: {
             carrierType_ = (global::Message.carrier_type_t) input.ReadEnum();
             break;
           }
-          case 96: {
-            Spaceworthy = input.ReadBool();
+          case 112: {
+            NotSpaceworthy = input.ReadBool();
             break;
           }
-          case 106: {
+          case 122: {
             if (towable_ == null) {
               towable_ = new global::Message.towable_t();
             }
             input.ReadMessage(towable_);
             break;
           }
-          case 112: {
+          case 128: {
             Salvage = input.ReadInt32();
             break;
           }
-          case 122: {
+          case 138: {
             Notes = input.ReadString();
             break;
           }
@@ -4425,9 +4537,9 @@ namespace Message {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-  public sealed partial class unit_defs_t : pb::IMessage<unit_defs_t> {
-    private static readonly pb::MessageParser<unit_defs_t> _parser = new pb::MessageParser<unit_defs_t>(() => new unit_defs_t());
-    public static pb::MessageParser<unit_defs_t> Parser { get { return _parser; } }
+  public sealed partial class nation_unit_defs_t : pb::IMessage<nation_unit_defs_t> {
+    private static readonly pb::MessageParser<nation_unit_defs_t> _parser = new pb::MessageParser<nation_unit_defs_t>(() => new nation_unit_defs_t());
+    public static pb::MessageParser<nation_unit_defs_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
       get { return global::Message.ModelReflection.Descriptor.MessageTypes[25]; }
@@ -4437,18 +4549,18 @@ namespace Message {
       get { return Descriptor; }
     }
 
-    public unit_defs_t() {
+    public nation_unit_defs_t() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
-    public unit_defs_t(unit_defs_t other) : this() {
+    public nation_unit_defs_t(nation_unit_defs_t other) : this() {
       units_ = other.units_.Clone();
     }
 
-    public unit_defs_t Clone() {
-      return new unit_defs_t(this);
+    public nation_unit_defs_t Clone() {
+      return new nation_unit_defs_t(this);
     }
 
     /// <summary>Field number for the "units" field.</summary>
@@ -4461,10 +4573,10 @@ namespace Message {
     }
 
     public override bool Equals(object other) {
-      return Equals(other as unit_defs_t);
+      return Equals(other as nation_unit_defs_t);
     }
 
-    public bool Equals(unit_defs_t other) {
+    public bool Equals(nation_unit_defs_t other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -4495,7 +4607,7 @@ namespace Message {
       return size;
     }
 
-    public void MergeFrom(unit_defs_t other) {
+    public void MergeFrom(nation_unit_defs_t other) {
       if (other == null) {
         return;
       }
@@ -4511,6 +4623,101 @@ namespace Message {
             break;
           case 10: {
             units_.AddEntriesFrom(input, _repeated_units_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class unit_defs_t : pb::IMessage<unit_defs_t> {
+    private static readonly pb::MessageParser<unit_defs_t> _parser = new pb::MessageParser<unit_defs_t>(() => new unit_defs_t());
+    public static pb::MessageParser<unit_defs_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[26]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public unit_defs_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public unit_defs_t(unit_defs_t other) : this() {
+      nationUnits_ = other.nationUnits_.Clone();
+    }
+
+    public unit_defs_t Clone() {
+      return new unit_defs_t(this);
+    }
+
+    /// <summary>Field number for the "nation_units" field.</summary>
+    public const int NationUnitsFieldNumber = 1;
+    private static readonly pbc::MapField<string, global::Message.nation_unit_defs_t>.Codec _map_nationUnits_codec
+        = new pbc::MapField<string, global::Message.nation_unit_defs_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.nation_unit_defs_t.Parser), 10);
+    private readonly pbc::MapField<string, global::Message.nation_unit_defs_t> nationUnits_ = new pbc::MapField<string, global::Message.nation_unit_defs_t>();
+    public pbc::MapField<string, global::Message.nation_unit_defs_t> NationUnits {
+      get { return nationUnits_; }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as unit_defs_t);
+    }
+
+    public bool Equals(unit_defs_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!NationUnits.Equals(other.NationUnits)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= NationUnits.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      nationUnits_.WriteTo(output, _map_nationUnits_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      size += nationUnits_.CalculateSize(_map_nationUnits_codec);
+      return size;
+    }
+
+    public void MergeFrom(unit_defs_t other) {
+      if (other == null) {
+        return;
+      }
+      nationUnits_.Add(other.nationUnits_);
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            nationUnits_.AddEntriesFrom(input, _map_nationUnits_codec);
             break;
           }
         }

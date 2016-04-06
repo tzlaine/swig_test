@@ -35,12 +35,14 @@ add_custom_command(
             -Dnations_file=${CMAKE_HOME_DIRECTORY}/nations.txt
             -Dmap_file=${CMAKE_HOME_DIRECTORY}/default_map.txt
             -Doob_file=${CMAKE_HOME_DIRECTORY}/default_oob.txt
+            -Dunits_file=${CMAKE_HOME_DIRECTORY}/units.json
             -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     DEPENDS
         ${CMAKE_HOME_DIRECTORY}/nations.txt
         ${CMAKE_HOME_DIRECTORY}/default_map.txt
         ${CMAKE_HOME_DIRECTORY}/default_oob.txt
+        ${CMAKE_HOME_DIRECTORY}/units.json
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     COMMENT "Create JSON data header."

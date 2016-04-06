@@ -87,8 +87,8 @@ message offmap_possesions_t
     int32 mins = 2;
     int32 majs = 3;
     int32 survey_ships = 4;
-    int32 cannot_build_offmap_capital = 5;
-    int32 old_shipyard = 6;
+    bool cannot_build_offmap_capital = 5;
+    bool old_shipyard = 6;
 }
 
 message nation_t
@@ -179,7 +179,7 @@ message starting_fleet_t
 {
     repeated int32 hexes = 1 [packed=true]; // empty indicates offmap
     repeated oob_unit_t units = 2;
-    int32 reserve = 3; // integer acting as boolean
+    bool reserve = 3;
     repeated production_element_t prewar_construction = 4;
     int32 strategic_move_arrival_year = 5;
     season_t strategic_move_arrival_season = 6;
@@ -211,13 +211,15 @@ message orders_of_battle_t
 // units
 message unit_def_side_t
 {
-    int32 att = 1;
-    int32 def = 2;
+    float att = 1;
+    float def = 2;
     bool scout = 3;
     float fighters = 4;
     float heavy_fighter_bonus = 5;
-    int32 drones = 6;
-    repeated tug_mission_t tug_missions = 7;
+    int32 pfs = 6;
+    int32 drones = 7;
+    bool mauler = 8;
+    repeated tug_mission_t tug_missions = 9;
 }
 
 message towable_t
@@ -240,18 +242,25 @@ message unit_def_t
     unit_def_side_t crippled = 4;
     escort_type_t escort_type = 5;
     turn_t available = 6;
-    production_cost_t construction = 7;
-    map<string, production_cost_t> substitutions = 8;
-    map<string, production_cost_t> conversions = 9;
-    int32 move = 10;
-    carrier_type_t carrier_type = 11;
-    bool spaceworthy = 12;
-    towable_t towable = 13;
-    int32 salvage = 14;
-    string notes = 15;
+    bool pod = 7;
+    int32 max_in_service = 8;
+    production_cost_t construction = 9;
+    map<string, production_cost_t> substitutions = 10;
+    map<string, production_cost_t> conversions = 11;
+    int32 move = 12;
+    carrier_type_t carrier_type = 13;
+    bool not_spaceworthy = 14;
+    towable_t towable = 15;
+    int32 salvage = 16;
+    string notes = 17;
+}
+
+message nation_unit_defs_t
+{
+    repeated unit_def_t units = 1;
 }
 
 message unit_defs_t
 {
-    repeated unit_def_t units = 1;
+    map<string, nation_unit_defs_t> nation_units = 1;
 }
