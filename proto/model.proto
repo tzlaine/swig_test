@@ -4,7 +4,7 @@ package message;
 
 
 enum feature_t {
-    none = 0;
+    no_feature = 0;
     bats = 1;
     sb = 2;
     min = 3;
@@ -15,6 +15,46 @@ enum feature_t {
 enum season_t {
     spring = 0;
     fall = 1;
+}
+
+enum tug_mission_t {
+    A = 0;
+    B = 1;
+    C = 2;
+    D = 3;
+    E = 4;
+    F = 5;
+    G = 6;
+    H = 7;
+    I = 8;
+    J1 = 9;
+    J2 = 10;
+    K1 = 11;
+    K2 = 12;
+    L = 13;
+    M = 14;
+    N = 15;
+    O = 16;
+}
+
+enum carrier_type_t {
+    not_a_carrier = 0;
+    single_ship_carrier = 1;
+    light_carrier = 2;
+    medium_carrier = 3;
+    heavy_carrier = 4;
+}
+
+enum escort_type_t {
+    not_an_escort = 0;
+    light_escort = 1;
+    heavy_escort = 2;
+}
+
+message turn_t
+{
+    int32 year = 1;
+    season_t season = 2;
 }
 
 message hex_coord_t
@@ -126,6 +166,7 @@ message oob_unit_t
     int32 times = 2; // "times: 2", "times: 3", etc. -- omission implies x1
 }
 
+// TODO: year,season -> turn_t
 message production_element_t
 {
     int32 year = 1;
@@ -133,6 +174,7 @@ message production_element_t
     repeated oob_unit_t units = 3;
 }
 
+// TODO: year,season -> turn_t
 message starting_fleet_t
 {
     repeated int32 hexes = 1 [packed=true]; // empty indicates offmap
@@ -163,4 +205,48 @@ message order_of_battle_t
 message orders_of_battle_t
 {
     map<string, order_of_battle_t> oobs = 1;
+}
+
+
+// units
+message unit_def_side_t
+{
+    int32 att = 1;
+    int32 def = 2;
+    bool scout = 3;
+    float fighters = 4;
+    float heavy_fighter_bonus = 5;
+    int32 drones = 6;
+    repeated tug_mission_t tug_missions = 7;
+}
+
+message towable_t
+{
+    int32 move_cost = 1;
+    int32 strat_move_limit = 2;
+}
+
+message production_cost_t
+{
+    int32 cost = 1;
+    int32 fighter_cost = 2;
+}
+
+message unit_def_t
+{
+    string name = 1;
+    int32 cmd = 2;
+    unit_def_side_t uncrippled = 3;
+    unit_def_side_t crippled = 4;
+    escort_type_t escort_type = 5;
+    turn_t available = 6;
+    production_cost_t construction = 7;
+    map<string, production_cost_t> substitutions = 8;
+    map<string, production_cost_t> conversions = 9;
+    int32 move = 10;
+    carrier_type_t carrier_type = 11;
+    bool spaceworthy = 12;
+    towable_t towable = 13;
+    int32 salvage = 14;
+    string notes = 15;
 }

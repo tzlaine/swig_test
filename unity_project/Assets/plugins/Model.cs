@@ -23,74 +23,105 @@ namespace Message {
     static ModelReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgttb2RlbC5wcm90bxIHbWVzc2FnZSIjCgtoZXhfY29vcmRfdBIJCgF4GAEg",
-            "ASgFEgkKAXkYAiABKAUiTAoSY2FwaXRhbF9oZXhfem9uZV90EgwKBG5hbWUY",
-            "ASABKAkSKAoIZmVhdHVyZXMYAiADKA4yEi5tZXNzYWdlLmZlYXR1cmVfdEIC",
-            "EAEiSgoNY2FwaXRhbF9oZXhfdBINCgVjb29yZBgBIAEoBRIqCgV6b25lcxgC",
-            "IAMoCzIbLm1lc3NhZ2UuY2FwaXRhbF9oZXhfem9uZV90IjIKCWNhcGl0YWxf",
-            "dBIlCgVoZXhlcxgBIAMoCzIWLm1lc3NhZ2UuY2FwaXRhbF9oZXhfdCKVAQoT",
-            "b2ZmbWFwX3Bvc3Nlc2lvbnNfdBIRCglwcm92aW5jZXMYASABKAUSDAoEbWlu",
-            "cxgCIAEoBRIMCgRtYWpzGAMgASgFEhQKDHN1cnZleV9zaGlwcxgEIAEoBRIj",
-            "ChtjYW5ub3RfYnVpbGRfb2ZmbWFwX2NhcGl0YWwYBSABKAUSFAoMb2xkX3No",
-            "aXB5YXJkGAYgASgFItgBCghuYXRpb25fdBIMCgRuYW1lGAEgASgJEhIKCnNo",
-            "b3J0X25hbWUYAiABKAkSIwoHY2FwaXRhbBgDIAEoCzISLm1lc3NhZ2UuY2Fw",
-            "aXRhbF90EhwKFGZyZWVfc3RyYXRlZ2ljX21vdmVzGAQgASgFEhsKE2NhcGl0",
-            "YWxfc3Rhcl9wb2ludHMYBSABKAUSNwoRb2ZmbWFwX3Bvc3Nlc2lvbnMYBiAB",
-            "KAsyHC5tZXNzYWdlLm9mZm1hcF9wb3NzZXNpb25zX3QSEQoJbmF0aW9uX2lk",
-            "GAcgASgFIoABCgluYXRpb25zX3QSMAoHbmF0aW9ucxgBIAMoCzIfLm1lc3Nh",
-            "Z2UubmF0aW9uc190Lk5hdGlvbnNFbnRyeRpBCgxOYXRpb25zRW50cnkSCwoD",
-            "a2V5GAEgASgJEiAKBXZhbHVlGAIgASgLMhEubWVzc2FnZS5uYXRpb25fdDoC",
-            "OAEihAEKBWhleF90EiMKBWNvb3JkGAEgASgLMhQubWVzc2FnZS5oZXhfY29v",
-            "cmRfdBINCgVvd25lchgCIAEoBRIjCgdmZWF0dXJlGAMgASgOMhIubWVzc2Fn",
-            "ZS5mZWF0dXJlX3QSIgoWbmV1dHJhbF96b25lX2JvcmRlcmluZxgEIAMoBUIC",
-            "EAEiQgoOcHJvdmluY2VfaGV4X3QSCwoDaGV4GAEgASgFEiMKB2ZlYXR1cmUY",
-            "AiABKA4yEi5tZXNzYWdlLmZlYXR1cmVfdCI0Cgpwcm92aW5jZV90EiYKBWhl",
-            "eGVzGAEgAygLMhcubWVzc2FnZS5wcm92aW5jZV9oZXhfdCJ4Cg1vZmZtYXBf",
-            "YXJlYV90EgwKBG5hbWUYASABKAkSKAoIZmVhdHVyZXMYAiADKA4yEi5tZXNz",
-            "YWdlLmZlYXR1cmVfdEICEAESEwoLY291bnRlcl9oZXgYAyABKAUSGgoOYWRq",
-            "YWNlbnRfaGV4ZXMYBCADKAVCAhABInMKHHN0YXJ0aW5nX25hdGlvbmFsX2hv",
-            "bGRpbmdzX3QSJgoJcHJvdmluY2VzGAEgAygLMhMubWVzc2FnZS5wcm92aW5j",
-            "ZV90EisKC29mZm1hcF9hcmVhGAIgASgLMhYubWVzc2FnZS5vZmZtYXBfYXJl",
-            "YV90Iq0CCgVtYXBfdBINCgV3aWR0aBgBIAEoBRIOCgZoZWlnaHQYAiABKAUS",
-            "FgoKbnpfcGxhbmV0cxgDIAMoBUICEAESFAoIbnpfaGV4ZXMYBCADKAVCAhAB",
-            "ElAKGnN0YXJ0aW5nX25hdGlvbmFsX2hvbGRpbmdzGAUgAygLMiwubWVzc2Fn",
-            "ZS5tYXBfdC5TdGFydGluZ05hdGlvbmFsSG9sZGluZ3NFbnRyeRIdCgVoZXhl",
-            "cxgGIAMoCzIOLm1lc3NhZ2UuaGV4X3QaZgodU3RhcnRpbmdOYXRpb25hbEhv",
-            "bGRpbmdzRW50cnkSCwoDa2V5GAEgASgJEjQKBXZhbHVlGAIgASgLMiUubWVz",
-            "c2FnZS5zdGFydGluZ19uYXRpb25hbF9ob2xkaW5nc190OgI4ASJLCgdtb2Rl",
-            "bF90EiMKB25hdGlvbnMYASABKAsyEi5tZXNzYWdlLm5hdGlvbnNfdBIbCgNt",
-            "YXAYAiABKAsyDi5tZXNzYWdlLm1hcF90IikKCm9vYl91bml0X3QSDAoEdW5p",
-            "dBgBIAEoCRINCgV0aW1lcxgCIAEoBSJrChRwcm9kdWN0aW9uX2VsZW1lbnRf",
-            "dBIMCgR5ZWFyGAEgASgFEiEKBnNlYXNvbhgCIAEoDjIRLm1lc3NhZ2Uuc2Vh",
-            "c29uX3QSIgoFdW5pdHMYAyADKAsyEy5tZXNzYWdlLm9vYl91bml0X3QigQMK",
-            "EHN0YXJ0aW5nX2ZsZWV0X3QSEQoFaGV4ZXMYASADKAVCAhABEiIKBXVuaXRz",
-            "GAIgAygLMhMubWVzc2FnZS5vb2JfdW5pdF90Eg8KB3Jlc2VydmUYAyABKAUS",
-            "OgoTcHJld2FyX2NvbnN0cnVjdGlvbhgEIAMoCzIdLm1lc3NhZ2UucHJvZHVj",
-            "dGlvbl9lbGVtZW50X3QSIwobc3RyYXRlZ2ljX21vdmVfYXJyaXZhbF95ZWFy",
-            "GAUgASgFEjgKHXN0cmF0ZWdpY19tb3ZlX2Fycml2YWxfc2Vhc29uGAYgASgO",
-            "MhEubWVzc2FnZS5zZWFzb25fdBJPChRoZXhfcGxhY2VtZW50X2xpbWl0cxgH",
-            "IAMoCzIxLm1lc3NhZ2Uuc3RhcnRpbmdfZmxlZXRfdC5IZXhQbGFjZW1lbnRM",
-            "aW1pdHNFbnRyeRo5ChdIZXhQbGFjZW1lbnRMaW1pdHNFbnRyeRILCgNrZXkY",
-            "ASABKAUSDQoFdmFsdWUYAiABKAU6AjgBIpQBChJtb3RoYmFsbF9yZXNlcnZl",
-            "X3QSIgoFdW5pdHMYASADKAsyEy5tZXNzYWdlLm9vYl91bml0X3QSKAoLd2Fy",
-            "X3JlbGVhc2UYAiADKAsyEy5tZXNzYWdlLm9vYl91bml0X3QSMAoTbGltaXRl",
-            "ZF93YXJfcmVsZWFzZRgDIAMoCzITLm1lc3NhZ2Uub29iX3VuaXRfdCKYAgoR",
-            "b3JkZXJfb2ZfYmF0dGxlX3QSRwoPc3RhcnRpbmdfZmxlZXRzGAEgAygLMi4u",
-            "bWVzc2FnZS5vcmRlcl9vZl9iYXR0bGVfdC5TdGFydGluZ0ZsZWV0c0VudHJ5",
-            "EjUKEG1vdGhiYWxsX3Jlc2VydmUYAiABKAsyGy5tZXNzYWdlLm1vdGhiYWxs",
-            "X3Jlc2VydmVfdBIxCgpwcm9kdWN0aW9uGAMgAygLMh0ubWVzc2FnZS5wcm9k",
-            "dWN0aW9uX2VsZW1lbnRfdBpQChNTdGFydGluZ0ZsZWV0c0VudHJ5EgsKA2tl",
-            "eRgBIAEoCRIoCgV2YWx1ZRgCIAEoCzIZLm1lc3NhZ2Uuc3RhcnRpbmdfZmxl",
-            "ZXRfdDoCOAEikgEKEm9yZGVyc19vZl9iYXR0bGVfdBIzCgRvb2JzGAEgAygL",
-            "MiUubWVzc2FnZS5vcmRlcnNfb2ZfYmF0dGxlX3QuT29ic0VudHJ5GkcKCU9v",
-            "YnNFbnRyeRILCgNrZXkYASABKAkSKQoFdmFsdWUYAiABKAsyGi5tZXNzYWdl",
-            "Lm9yZGVyX29mX2JhdHRsZV90OgI4ASpGCglmZWF0dXJlX3QSCAoEbm9uZRAA",
-            "EggKBGJhdHMQARIGCgJzYhACEgcKA21pbhADEgcKA21hahAEEgsKB2NhcGl0",
-            "YWwQBSogCghzZWFzb25fdBIKCgZzcHJpbmcQABIICgRmYWxsEAFiBnByb3Rv",
-            "Mw=="));
+            "Cgttb2RlbC5wcm90bxIHbWVzc2FnZSI5CgZ0dXJuX3QSDAoEeWVhchgBIAEo",
+            "BRIhCgZzZWFzb24YAiABKA4yES5tZXNzYWdlLnNlYXNvbl90IiMKC2hleF9j",
+            "b29yZF90EgkKAXgYASABKAUSCQoBeRgCIAEoBSJMChJjYXBpdGFsX2hleF96",
+            "b25lX3QSDAoEbmFtZRgBIAEoCRIoCghmZWF0dXJlcxgCIAMoDjISLm1lc3Nh",
+            "Z2UuZmVhdHVyZV90QgIQASJKCg1jYXBpdGFsX2hleF90Eg0KBWNvb3JkGAEg",
+            "ASgFEioKBXpvbmVzGAIgAygLMhsubWVzc2FnZS5jYXBpdGFsX2hleF96b25l",
+            "X3QiMgoJY2FwaXRhbF90EiUKBWhleGVzGAEgAygLMhYubWVzc2FnZS5jYXBp",
+            "dGFsX2hleF90IpUBChNvZmZtYXBfcG9zc2VzaW9uc190EhEKCXByb3ZpbmNl",
+            "cxgBIAEoBRIMCgRtaW5zGAIgASgFEgwKBG1hanMYAyABKAUSFAoMc3VydmV5",
+            "X3NoaXBzGAQgASgFEiMKG2Nhbm5vdF9idWlsZF9vZmZtYXBfY2FwaXRhbBgF",
+            "IAEoBRIUCgxvbGRfc2hpcHlhcmQYBiABKAUi2AEKCG5hdGlvbl90EgwKBG5h",
+            "bWUYASABKAkSEgoKc2hvcnRfbmFtZRgCIAEoCRIjCgdjYXBpdGFsGAMgASgL",
+            "MhIubWVzc2FnZS5jYXBpdGFsX3QSHAoUZnJlZV9zdHJhdGVnaWNfbW92ZXMY",
+            "BCABKAUSGwoTY2FwaXRhbF9zdGFyX3BvaW50cxgFIAEoBRI3ChFvZmZtYXBf",
+            "cG9zc2VzaW9ucxgGIAEoCzIcLm1lc3NhZ2Uub2ZmbWFwX3Bvc3Nlc2lvbnNf",
+            "dBIRCgluYXRpb25faWQYByABKAUigAEKCW5hdGlvbnNfdBIwCgduYXRpb25z",
+            "GAEgAygLMh8ubWVzc2FnZS5uYXRpb25zX3QuTmF0aW9uc0VudHJ5GkEKDE5h",
+            "dGlvbnNFbnRyeRILCgNrZXkYASABKAkSIAoFdmFsdWUYAiABKAsyES5tZXNz",
+            "YWdlLm5hdGlvbl90OgI4ASKEAQoFaGV4X3QSIwoFY29vcmQYASABKAsyFC5t",
+            "ZXNzYWdlLmhleF9jb29yZF90Eg0KBW93bmVyGAIgASgFEiMKB2ZlYXR1cmUY",
+            "AyABKA4yEi5tZXNzYWdlLmZlYXR1cmVfdBIiChZuZXV0cmFsX3pvbmVfYm9y",
+            "ZGVyaW5nGAQgAygFQgIQASJCCg5wcm92aW5jZV9oZXhfdBILCgNoZXgYASAB",
+            "KAUSIwoHZmVhdHVyZRgCIAEoDjISLm1lc3NhZ2UuZmVhdHVyZV90IjQKCnBy",
+            "b3ZpbmNlX3QSJgoFaGV4ZXMYASADKAsyFy5tZXNzYWdlLnByb3ZpbmNlX2hl",
+            "eF90IngKDW9mZm1hcF9hcmVhX3QSDAoEbmFtZRgBIAEoCRIoCghmZWF0dXJl",
+            "cxgCIAMoDjISLm1lc3NhZ2UuZmVhdHVyZV90QgIQARITCgtjb3VudGVyX2hl",
+            "eBgDIAEoBRIaCg5hZGphY2VudF9oZXhlcxgEIAMoBUICEAEicwocc3RhcnRp",
+            "bmdfbmF0aW9uYWxfaG9sZGluZ3NfdBImCglwcm92aW5jZXMYASADKAsyEy5t",
+            "ZXNzYWdlLnByb3ZpbmNlX3QSKwoLb2ZmbWFwX2FyZWEYAiABKAsyFi5tZXNz",
+            "YWdlLm9mZm1hcF9hcmVhX3QirQIKBW1hcF90Eg0KBXdpZHRoGAEgASgFEg4K",
+            "BmhlaWdodBgCIAEoBRIWCgpuel9wbGFuZXRzGAMgAygFQgIQARIUCghuel9o",
+            "ZXhlcxgEIAMoBUICEAESUAoac3RhcnRpbmdfbmF0aW9uYWxfaG9sZGluZ3MY",
+            "BSADKAsyLC5tZXNzYWdlLm1hcF90LlN0YXJ0aW5nTmF0aW9uYWxIb2xkaW5n",
+            "c0VudHJ5Eh0KBWhleGVzGAYgAygLMg4ubWVzc2FnZS5oZXhfdBpmCh1TdGFy",
+            "dGluZ05hdGlvbmFsSG9sZGluZ3NFbnRyeRILCgNrZXkYASABKAkSNAoFdmFs",
+            "dWUYAiABKAsyJS5tZXNzYWdlLnN0YXJ0aW5nX25hdGlvbmFsX2hvbGRpbmdz",
+            "X3Q6AjgBIksKB21vZGVsX3QSIwoHbmF0aW9ucxgBIAEoCzISLm1lc3NhZ2Uu",
+            "bmF0aW9uc190EhsKA21hcBgCIAEoCzIOLm1lc3NhZ2UubWFwX3QiKQoKb29i",
+            "X3VuaXRfdBIMCgR1bml0GAEgASgJEg0KBXRpbWVzGAIgASgFImsKFHByb2R1",
+            "Y3Rpb25fZWxlbWVudF90EgwKBHllYXIYASABKAUSIQoGc2Vhc29uGAIgASgO",
+            "MhEubWVzc2FnZS5zZWFzb25fdBIiCgV1bml0cxgDIAMoCzITLm1lc3NhZ2Uu",
+            "b29iX3VuaXRfdCKBAwoQc3RhcnRpbmdfZmxlZXRfdBIRCgVoZXhlcxgBIAMo",
+            "BUICEAESIgoFdW5pdHMYAiADKAsyEy5tZXNzYWdlLm9vYl91bml0X3QSDwoH",
+            "cmVzZXJ2ZRgDIAEoBRI6ChNwcmV3YXJfY29uc3RydWN0aW9uGAQgAygLMh0u",
+            "bWVzc2FnZS5wcm9kdWN0aW9uX2VsZW1lbnRfdBIjChtzdHJhdGVnaWNfbW92",
+            "ZV9hcnJpdmFsX3llYXIYBSABKAUSOAodc3RyYXRlZ2ljX21vdmVfYXJyaXZh",
+            "bF9zZWFzb24YBiABKA4yES5tZXNzYWdlLnNlYXNvbl90Ek8KFGhleF9wbGFj",
+            "ZW1lbnRfbGltaXRzGAcgAygLMjEubWVzc2FnZS5zdGFydGluZ19mbGVldF90",
+            "LkhleFBsYWNlbWVudExpbWl0c0VudHJ5GjkKF0hleFBsYWNlbWVudExpbWl0",
+            "c0VudHJ5EgsKA2tleRgBIAEoBRINCgV2YWx1ZRgCIAEoBToCOAEilAEKEm1v",
+            "dGhiYWxsX3Jlc2VydmVfdBIiCgV1bml0cxgBIAMoCzITLm1lc3NhZ2Uub29i",
+            "X3VuaXRfdBIoCgt3YXJfcmVsZWFzZRgCIAMoCzITLm1lc3NhZ2Uub29iX3Vu",
+            "aXRfdBIwChNsaW1pdGVkX3dhcl9yZWxlYXNlGAMgAygLMhMubWVzc2FnZS5v",
+            "b2JfdW5pdF90IpgCChFvcmRlcl9vZl9iYXR0bGVfdBJHCg9zdGFydGluZ19m",
+            "bGVldHMYASADKAsyLi5tZXNzYWdlLm9yZGVyX29mX2JhdHRsZV90LlN0YXJ0",
+            "aW5nRmxlZXRzRW50cnkSNQoQbW90aGJhbGxfcmVzZXJ2ZRgCIAEoCzIbLm1l",
+            "c3NhZ2UubW90aGJhbGxfcmVzZXJ2ZV90EjEKCnByb2R1Y3Rpb24YAyADKAsy",
+            "HS5tZXNzYWdlLnByb2R1Y3Rpb25fZWxlbWVudF90GlAKE1N0YXJ0aW5nRmxl",
+            "ZXRzRW50cnkSCwoDa2V5GAEgASgJEigKBXZhbHVlGAIgASgLMhkubWVzc2Fn",
+            "ZS5zdGFydGluZ19mbGVldF90OgI4ASKSAQoSb3JkZXJzX29mX2JhdHRsZV90",
+            "EjMKBG9vYnMYASADKAsyJS5tZXNzYWdlLm9yZGVyc19vZl9iYXR0bGVfdC5P",
+            "b2JzRW50cnkaRwoJT29ic0VudHJ5EgsKA2tleRgBIAEoCRIpCgV2YWx1ZRgC",
+            "IAEoCzIaLm1lc3NhZ2Uub3JkZXJfb2ZfYmF0dGxlX3Q6AjgBIqcBCg91bml0",
+            "X2RlZl9zaWRlX3QSCwoDYXR0GAEgASgFEgsKA2RlZhgCIAEoBRINCgVzY291",
+            "dBgDIAEoCBIQCghmaWdodGVycxgEIAEoAhIbChNoZWF2eV9maWdodGVyX2Jv",
+            "bnVzGAUgASgCEg4KBmRyb25lcxgGIAEoBRIsCgx0dWdfbWlzc2lvbnMYByAD",
+            "KA4yFi5tZXNzYWdlLnR1Z19taXNzaW9uX3QiOAoJdG93YWJsZV90EhEKCW1v",
+            "dmVfY29zdBgBIAEoBRIYChBzdHJhdF9tb3ZlX2xpbWl0GAIgASgFIjcKEXBy",
+            "b2R1Y3Rpb25fY29zdF90EgwKBGNvc3QYASABKAUSFAoMZmlnaHRlcl9jb3N0",
+            "GAIgASgFIrcFCgp1bml0X2RlZl90EgwKBG5hbWUYASABKAkSCwoDY21kGAIg",
+            "ASgFEiwKCnVuY3JpcHBsZWQYAyABKAsyGC5tZXNzYWdlLnVuaXRfZGVmX3Np",
+            "ZGVfdBIqCghjcmlwcGxlZBgEIAEoCzIYLm1lc3NhZ2UudW5pdF9kZWZfc2lk",
+            "ZV90EisKC2VzY29ydF90eXBlGAUgASgOMhYubWVzc2FnZS5lc2NvcnRfdHlw",
+            "ZV90EiIKCWF2YWlsYWJsZRgGIAEoCzIPLm1lc3NhZ2UudHVybl90EjAKDGNv",
+            "bnN0cnVjdGlvbhgHIAEoCzIaLm1lc3NhZ2UucHJvZHVjdGlvbl9jb3N0X3QS",
+            "PQoNc3Vic3RpdHV0aW9ucxgIIAMoCzImLm1lc3NhZ2UudW5pdF9kZWZfdC5T",
+            "dWJzdGl0dXRpb25zRW50cnkSOQoLY29udmVyc2lvbnMYCSADKAsyJC5tZXNz",
+            "YWdlLnVuaXRfZGVmX3QuQ29udmVyc2lvbnNFbnRyeRIMCgRtb3ZlGAogASgF",
+            "Ei0KDGNhcnJpZXJfdHlwZRgLIAEoDjIXLm1lc3NhZ2UuY2Fycmllcl90eXBl",
+            "X3QSEwoLc3BhY2V3b3J0aHkYDCABKAgSIwoHdG93YWJsZRgNIAEoCzISLm1l",
+            "c3NhZ2UudG93YWJsZV90Eg8KB3NhbHZhZ2UYDiABKAUSDQoFbm90ZXMYDyAB",
+            "KAkaUAoSU3Vic3RpdHV0aW9uc0VudHJ5EgsKA2tleRgBIAEoCRIpCgV2YWx1",
+            "ZRgCIAEoCzIaLm1lc3NhZ2UucHJvZHVjdGlvbl9jb3N0X3Q6AjgBGk4KEENv",
+            "bnZlcnNpb25zRW50cnkSCwoDa2V5GAEgASgJEikKBXZhbHVlGAIgASgLMhou",
+            "bWVzc2FnZS5wcm9kdWN0aW9uX2Nvc3RfdDoCOAEqTAoJZmVhdHVyZV90Eg4K",
+            "Cm5vX2ZlYXR1cmUQABIICgRiYXRzEAESBgoCc2IQAhIHCgNtaW4QAxIHCgNt",
+            "YWoQBBILCgdjYXBpdGFsEAUqIAoIc2Vhc29uX3QSCgoGc3ByaW5nEAASCAoE",
+            "ZmFsbBABKooBCg10dWdfbWlzc2lvbl90EgUKAUEQABIFCgFCEAESBQoBQxAC",
+            "EgUKAUQQAxIFCgFFEAQSBQoBRhAFEgUKAUcQBhIFCgFIEAcSBQoBSRAIEgYK",
+            "AkoxEAkSBgoCSjIQChIGCgJLMRALEgYKAksyEAwSBQoBTBANEgUKAU0QDhIF",
+            "CgFOEA8SBQoBTxAQKnYKDmNhcnJpZXJfdHlwZV90EhEKDW5vdF9hX2NhcnJp",
+            "ZXIQABIXChNzaW5nbGVfc2hpcF9jYXJyaWVyEAESEQoNbGlnaHRfY2Fycmll",
+            "chACEhIKDm1lZGl1bV9jYXJyaWVyEAMSEQoNaGVhdnlfY2FycmllchAEKkYK",
+            "DWVzY29ydF90eXBlX3QSEQoNbm90X2FuX2VzY29ydBAAEhAKDGxpZ2h0X2Vz",
+            "Y29ydBABEhAKDGhlYXZ5X2VzY29ydBACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), }, new pbr::GeneratedCodeInfo[] {
+          new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), typeof(global::Message.tug_mission_t), typeof(global::Message.carrier_type_t), typeof(global::Message.escort_type_t), }, new pbr::GeneratedCodeInfo[] {
+            new pbr::GeneratedCodeInfo(typeof(global::Message.turn_t), global::Message.turn_t.Parser, new[]{ "Year", "Season" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.hex_coord_t), global::Message.hex_coord_t.Parser, new[]{ "X", "Y" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.capital_hex_zone_t), global::Message.capital_hex_zone_t.Parser, new[]{ "Name", "Features" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.capital_hex_t), global::Message.capital_hex_t.Parser, new[]{ "Coord", "Zones" }, null, null, null),
@@ -110,7 +141,11 @@ namespace Message {
             new pbr::GeneratedCodeInfo(typeof(global::Message.starting_fleet_t), global::Message.starting_fleet_t.Parser, new[]{ "Hexes", "Units", "Reserve", "PrewarConstruction", "StrategicMoveArrivalYear", "StrategicMoveArrivalSeason", "HexPlacementLimits" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
             new pbr::GeneratedCodeInfo(typeof(global::Message.mothball_reserve_t), global::Message.mothball_reserve_t.Parser, new[]{ "Units", "WarRelease", "LimitedWarRelease" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.order_of_battle_t), global::Message.order_of_battle_t.Parser, new[]{ "StartingFleets", "MothballReserve", "Production" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.orders_of_battle_t), global::Message.orders_of_battle_t.Parser, new[]{ "Oobs" }, null, null, new pbr::GeneratedCodeInfo[] { null, })
+            new pbr::GeneratedCodeInfo(typeof(global::Message.orders_of_battle_t), global::Message.orders_of_battle_t.Parser, new[]{ "Oobs" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_side_t), global::Message.unit_def_side_t.Parser, new[]{ "Att", "Def", "Scout", "Fighters", "HeavyFighterBonus", "Drones", "TugMissions" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.towable_t), global::Message.towable_t.Parser, new[]{ "MoveCost", "StratMoveLimit" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.production_cost_t), global::Message.production_cost_t.Parser, new[]{ "Cost", "FighterCost" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_t), global::Message.unit_def_t.Parser, new[]{ "Name", "Cmd", "Uncrippled", "Crippled", "EscortType", "Available", "Construction", "Substitutions", "Conversions", "Move", "CarrierType", "Spaceworthy", "Towable", "Salvage", "Notes" }, null, null, new pbr::GeneratedCodeInfo[] { null, null, })
           }));
     }
     #endregion
@@ -118,7 +153,7 @@ namespace Message {
   }
   #region Enums
   public enum feature_t {
-    none = 0,
+    no_feature = 0,
     bats = 1,
     sb = 2,
     min = 3,
@@ -131,16 +166,180 @@ namespace Message {
     fall = 1,
   }
 
+  public enum tug_mission_t {
+    A = 0,
+    B = 1,
+    C = 2,
+    D = 3,
+    E = 4,
+    F = 5,
+    G = 6,
+    H = 7,
+    I = 8,
+    J1 = 9,
+    J2 = 10,
+    K1 = 11,
+    K2 = 12,
+    L = 13,
+    M = 14,
+    N = 15,
+    O = 16,
+  }
+
+  public enum carrier_type_t {
+    not_a_carrier = 0,
+    single_ship_carrier = 1,
+    light_carrier = 2,
+    medium_carrier = 3,
+    heavy_carrier = 4,
+  }
+
+  public enum escort_type_t {
+    not_an_escort = 0,
+    light_escort = 1,
+    heavy_escort = 2,
+  }
+
   #endregion
 
   #region Messages
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class turn_t : pb::IMessage<turn_t> {
+    private static readonly pb::MessageParser<turn_t> _parser = new pb::MessageParser<turn_t>(() => new turn_t());
+    public static pb::MessageParser<turn_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public turn_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public turn_t(turn_t other) : this() {
+      year_ = other.year_;
+      season_ = other.season_;
+    }
+
+    public turn_t Clone() {
+      return new turn_t(this);
+    }
+
+    /// <summary>Field number for the "year" field.</summary>
+    public const int YearFieldNumber = 1;
+    private int year_;
+    public int Year {
+      get { return year_; }
+      set {
+        year_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "season" field.</summary>
+    public const int SeasonFieldNumber = 2;
+    private global::Message.season_t season_ = global::Message.season_t.spring;
+    public global::Message.season_t Season {
+      get { return season_; }
+      set {
+        season_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as turn_t);
+    }
+
+    public bool Equals(turn_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Year != other.Year) return false;
+      if (Season != other.Season) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Year != 0) hash ^= Year.GetHashCode();
+      if (Season != global::Message.season_t.spring) hash ^= Season.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Year != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Year);
+      }
+      if (Season != global::Message.season_t.spring) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) Season);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Year != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Year);
+      }
+      if (Season != global::Message.season_t.spring) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Season);
+      }
+      return size;
+    }
+
+    public void MergeFrom(turn_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Year != 0) {
+        Year = other.Year;
+      }
+      if (other.Season != global::Message.season_t.spring) {
+        Season = other.Season;
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Year = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            season_ = (global::Message.season_t) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class hex_coord_t : pb::IMessage<hex_coord_t> {
     private static readonly pb::MessageParser<hex_coord_t> _parser = new pb::MessageParser<hex_coord_t>(() => new hex_coord_t());
     public static pb::MessageParser<hex_coord_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[1]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -273,7 +472,7 @@ namespace Message {
     public static pb::MessageParser<capital_hex_zone_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[2]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -396,7 +595,7 @@ namespace Message {
     public static pb::MessageParser<capital_hex_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[3]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -518,7 +717,7 @@ namespace Message {
     public static pb::MessageParser<capital_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[4]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -613,7 +812,7 @@ namespace Message {
     public static pb::MessageParser<offmap_possesions_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[5]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -851,7 +1050,7 @@ namespace Message {
     public static pb::MessageParser<nation_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[6]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1128,7 +1327,7 @@ namespace Message {
     public static pb::MessageParser<nations_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[7]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1226,7 +1425,7 @@ namespace Message {
     public static pb::MessageParser<hex_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[8]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1272,7 +1471,7 @@ namespace Message {
 
     /// <summary>Field number for the "feature" field.</summary>
     public const int FeatureFieldNumber = 3;
-    private global::Message.feature_t feature_ = global::Message.feature_t.none;
+    private global::Message.feature_t feature_ = global::Message.feature_t.no_feature;
     public global::Message.feature_t Feature {
       get { return feature_; }
       set {
@@ -1311,7 +1510,7 @@ namespace Message {
       int hash = 1;
       if (coord_ != null) hash ^= Coord.GetHashCode();
       if (Owner != 0) hash ^= Owner.GetHashCode();
-      if (Feature != global::Message.feature_t.none) hash ^= Feature.GetHashCode();
+      if (Feature != global::Message.feature_t.no_feature) hash ^= Feature.GetHashCode();
       hash ^= neutralZoneBordering_.GetHashCode();
       return hash;
     }
@@ -1329,7 +1528,7 @@ namespace Message {
         output.WriteRawTag(16);
         output.WriteInt32(Owner);
       }
-      if (Feature != global::Message.feature_t.none) {
+      if (Feature != global::Message.feature_t.no_feature) {
         output.WriteRawTag(24);
         output.WriteEnum((int) Feature);
       }
@@ -1344,7 +1543,7 @@ namespace Message {
       if (Owner != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Owner);
       }
-      if (Feature != global::Message.feature_t.none) {
+      if (Feature != global::Message.feature_t.no_feature) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Feature);
       }
       size += neutralZoneBordering_.CalculateSize(_repeated_neutralZoneBordering_codec);
@@ -1364,7 +1563,7 @@ namespace Message {
       if (other.Owner != 0) {
         Owner = other.Owner;
       }
-      if (other.Feature != global::Message.feature_t.none) {
+      if (other.Feature != global::Message.feature_t.no_feature) {
         Feature = other.Feature;
       }
       neutralZoneBordering_.Add(other.neutralZoneBordering_);
@@ -1409,7 +1608,7 @@ namespace Message {
     public static pb::MessageParser<province_hex_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[9]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1443,7 +1642,7 @@ namespace Message {
 
     /// <summary>Field number for the "feature" field.</summary>
     public const int FeatureFieldNumber = 2;
-    private global::Message.feature_t feature_ = global::Message.feature_t.none;
+    private global::Message.feature_t feature_ = global::Message.feature_t.no_feature;
     public global::Message.feature_t Feature {
       get { return feature_; }
       set {
@@ -1470,7 +1669,7 @@ namespace Message {
     public override int GetHashCode() {
       int hash = 1;
       if (Hex != 0) hash ^= Hex.GetHashCode();
-      if (Feature != global::Message.feature_t.none) hash ^= Feature.GetHashCode();
+      if (Feature != global::Message.feature_t.no_feature) hash ^= Feature.GetHashCode();
       return hash;
     }
 
@@ -1483,7 +1682,7 @@ namespace Message {
         output.WriteRawTag(8);
         output.WriteInt32(Hex);
       }
-      if (Feature != global::Message.feature_t.none) {
+      if (Feature != global::Message.feature_t.no_feature) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Feature);
       }
@@ -1494,7 +1693,7 @@ namespace Message {
       if (Hex != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Hex);
       }
-      if (Feature != global::Message.feature_t.none) {
+      if (Feature != global::Message.feature_t.no_feature) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Feature);
       }
       return size;
@@ -1507,7 +1706,7 @@ namespace Message {
       if (other.Hex != 0) {
         Hex = other.Hex;
       }
-      if (other.Feature != global::Message.feature_t.none) {
+      if (other.Feature != global::Message.feature_t.no_feature) {
         Feature = other.Feature;
       }
     }
@@ -1539,7 +1738,7 @@ namespace Message {
     public static pb::MessageParser<province_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[10]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1637,7 +1836,7 @@ namespace Message {
     public static pb::MessageParser<offmap_area_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[11]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1810,7 +2009,7 @@ namespace Message {
     public static pb::MessageParser<starting_national_holdings_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[12]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -1938,7 +2137,7 @@ namespace Message {
     public static pb::MessageParser<map_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[13]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -2158,7 +2357,7 @@ namespace Message {
     public static pb::MessageParser<model_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[14]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -2303,7 +2502,7 @@ namespace Message {
     public static pb::MessageParser<oob_unit_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[15]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -2430,13 +2629,16 @@ namespace Message {
 
   }
 
+  /// <summary>
+  ///  TODO: year,season -> turn_t
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class production_element_t : pb::IMessage<production_element_t> {
     private static readonly pb::MessageParser<production_element_t> _parser = new pb::MessageParser<production_element_t>(() => new production_element_t());
     public static pb::MessageParser<production_element_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[16]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -2579,13 +2781,16 @@ namespace Message {
 
   }
 
+  /// <summary>
+  ///  TODO: year,season -> turn_t
+  /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
   public sealed partial class starting_fleet_t : pb::IMessage<starting_fleet_t> {
     private static readonly pb::MessageParser<starting_fleet_t> _parser = new pb::MessageParser<starting_fleet_t>(() => new starting_fleet_t());
     public static pb::MessageParser<starting_fleet_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[17]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -2828,7 +3033,7 @@ namespace Message {
     public static pb::MessageParser<mothball_reserve_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[18]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -2965,7 +3170,7 @@ namespace Message {
     public static pb::MessageParser<order_of_battle_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[19]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -3112,7 +3317,7 @@ namespace Message {
     public static pb::MessageParser<orders_of_battle_t> Parser { get { return _parser; } }
 
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Message.ModelReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[20]; }
     }
 
     pbr::MessageDescriptor pb::IMessage.Descriptor {
@@ -3193,6 +3398,1022 @@ namespace Message {
             break;
           case 10: {
             oobs_.AddEntriesFrom(input, _map_oobs_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  ///  units
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class unit_def_side_t : pb::IMessage<unit_def_side_t> {
+    private static readonly pb::MessageParser<unit_def_side_t> _parser = new pb::MessageParser<unit_def_side_t>(() => new unit_def_side_t());
+    public static pb::MessageParser<unit_def_side_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[21]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public unit_def_side_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public unit_def_side_t(unit_def_side_t other) : this() {
+      att_ = other.att_;
+      def_ = other.def_;
+      scout_ = other.scout_;
+      fighters_ = other.fighters_;
+      heavyFighterBonus_ = other.heavyFighterBonus_;
+      drones_ = other.drones_;
+      tugMissions_ = other.tugMissions_.Clone();
+    }
+
+    public unit_def_side_t Clone() {
+      return new unit_def_side_t(this);
+    }
+
+    /// <summary>Field number for the "att" field.</summary>
+    public const int AttFieldNumber = 1;
+    private int att_;
+    public int Att {
+      get { return att_; }
+      set {
+        att_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "def" field.</summary>
+    public const int DefFieldNumber = 2;
+    private int def_;
+    public int Def {
+      get { return def_; }
+      set {
+        def_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "scout" field.</summary>
+    public const int ScoutFieldNumber = 3;
+    private bool scout_;
+    public bool Scout {
+      get { return scout_; }
+      set {
+        scout_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "fighters" field.</summary>
+    public const int FightersFieldNumber = 4;
+    private float fighters_;
+    public float Fighters {
+      get { return fighters_; }
+      set {
+        fighters_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "heavy_fighter_bonus" field.</summary>
+    public const int HeavyFighterBonusFieldNumber = 5;
+    private float heavyFighterBonus_;
+    public float HeavyFighterBonus {
+      get { return heavyFighterBonus_; }
+      set {
+        heavyFighterBonus_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "drones" field.</summary>
+    public const int DronesFieldNumber = 6;
+    private int drones_;
+    public int Drones {
+      get { return drones_; }
+      set {
+        drones_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "tug_missions" field.</summary>
+    public const int TugMissionsFieldNumber = 7;
+    private static readonly pb::FieldCodec<global::Message.tug_mission_t> _repeated_tugMissions_codec
+        = pb::FieldCodec.ForEnum(58, x => (int) x, x => (global::Message.tug_mission_t) x);
+    private readonly pbc::RepeatedField<global::Message.tug_mission_t> tugMissions_ = new pbc::RepeatedField<global::Message.tug_mission_t>();
+    public pbc::RepeatedField<global::Message.tug_mission_t> TugMissions {
+      get { return tugMissions_; }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as unit_def_side_t);
+    }
+
+    public bool Equals(unit_def_side_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Att != other.Att) return false;
+      if (Def != other.Def) return false;
+      if (Scout != other.Scout) return false;
+      if (Fighters != other.Fighters) return false;
+      if (HeavyFighterBonus != other.HeavyFighterBonus) return false;
+      if (Drones != other.Drones) return false;
+      if(!tugMissions_.Equals(other.tugMissions_)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Att != 0) hash ^= Att.GetHashCode();
+      if (Def != 0) hash ^= Def.GetHashCode();
+      if (Scout != false) hash ^= Scout.GetHashCode();
+      if (Fighters != 0F) hash ^= Fighters.GetHashCode();
+      if (HeavyFighterBonus != 0F) hash ^= HeavyFighterBonus.GetHashCode();
+      if (Drones != 0) hash ^= Drones.GetHashCode();
+      hash ^= tugMissions_.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Att != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Att);
+      }
+      if (Def != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Def);
+      }
+      if (Scout != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(Scout);
+      }
+      if (Fighters != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(Fighters);
+      }
+      if (HeavyFighterBonus != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(HeavyFighterBonus);
+      }
+      if (Drones != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Drones);
+      }
+      tugMissions_.WriteTo(output, _repeated_tugMissions_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Att != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Att);
+      }
+      if (Def != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Def);
+      }
+      if (Scout != false) {
+        size += 1 + 1;
+      }
+      if (Fighters != 0F) {
+        size += 1 + 4;
+      }
+      if (HeavyFighterBonus != 0F) {
+        size += 1 + 4;
+      }
+      if (Drones != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Drones);
+      }
+      size += tugMissions_.CalculateSize(_repeated_tugMissions_codec);
+      return size;
+    }
+
+    public void MergeFrom(unit_def_side_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Att != 0) {
+        Att = other.Att;
+      }
+      if (other.Def != 0) {
+        Def = other.Def;
+      }
+      if (other.Scout != false) {
+        Scout = other.Scout;
+      }
+      if (other.Fighters != 0F) {
+        Fighters = other.Fighters;
+      }
+      if (other.HeavyFighterBonus != 0F) {
+        HeavyFighterBonus = other.HeavyFighterBonus;
+      }
+      if (other.Drones != 0) {
+        Drones = other.Drones;
+      }
+      tugMissions_.Add(other.tugMissions_);
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Att = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            Def = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            Scout = input.ReadBool();
+            break;
+          }
+          case 37: {
+            Fighters = input.ReadFloat();
+            break;
+          }
+          case 45: {
+            HeavyFighterBonus = input.ReadFloat();
+            break;
+          }
+          case 48: {
+            Drones = input.ReadInt32();
+            break;
+          }
+          case 58:
+          case 56: {
+            tugMissions_.AddEntriesFrom(input, _repeated_tugMissions_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class towable_t : pb::IMessage<towable_t> {
+    private static readonly pb::MessageParser<towable_t> _parser = new pb::MessageParser<towable_t>(() => new towable_t());
+    public static pb::MessageParser<towable_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[22]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public towable_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public towable_t(towable_t other) : this() {
+      moveCost_ = other.moveCost_;
+      stratMoveLimit_ = other.stratMoveLimit_;
+    }
+
+    public towable_t Clone() {
+      return new towable_t(this);
+    }
+
+    /// <summary>Field number for the "move_cost" field.</summary>
+    public const int MoveCostFieldNumber = 1;
+    private int moveCost_;
+    public int MoveCost {
+      get { return moveCost_; }
+      set {
+        moveCost_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "strat_move_limit" field.</summary>
+    public const int StratMoveLimitFieldNumber = 2;
+    private int stratMoveLimit_;
+    public int StratMoveLimit {
+      get { return stratMoveLimit_; }
+      set {
+        stratMoveLimit_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as towable_t);
+    }
+
+    public bool Equals(towable_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (MoveCost != other.MoveCost) return false;
+      if (StratMoveLimit != other.StratMoveLimit) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (MoveCost != 0) hash ^= MoveCost.GetHashCode();
+      if (StratMoveLimit != 0) hash ^= StratMoveLimit.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (MoveCost != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(MoveCost);
+      }
+      if (StratMoveLimit != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(StratMoveLimit);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (MoveCost != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MoveCost);
+      }
+      if (StratMoveLimit != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(StratMoveLimit);
+      }
+      return size;
+    }
+
+    public void MergeFrom(towable_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.MoveCost != 0) {
+        MoveCost = other.MoveCost;
+      }
+      if (other.StratMoveLimit != 0) {
+        StratMoveLimit = other.StratMoveLimit;
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            MoveCost = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            StratMoveLimit = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class production_cost_t : pb::IMessage<production_cost_t> {
+    private static readonly pb::MessageParser<production_cost_t> _parser = new pb::MessageParser<production_cost_t>(() => new production_cost_t());
+    public static pb::MessageParser<production_cost_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[23]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public production_cost_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public production_cost_t(production_cost_t other) : this() {
+      cost_ = other.cost_;
+      fighterCost_ = other.fighterCost_;
+    }
+
+    public production_cost_t Clone() {
+      return new production_cost_t(this);
+    }
+
+    /// <summary>Field number for the "cost" field.</summary>
+    public const int CostFieldNumber = 1;
+    private int cost_;
+    public int Cost {
+      get { return cost_; }
+      set {
+        cost_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "fighter_cost" field.</summary>
+    public const int FighterCostFieldNumber = 2;
+    private int fighterCost_;
+    public int FighterCost {
+      get { return fighterCost_; }
+      set {
+        fighterCost_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as production_cost_t);
+    }
+
+    public bool Equals(production_cost_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Cost != other.Cost) return false;
+      if (FighterCost != other.FighterCost) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Cost != 0) hash ^= Cost.GetHashCode();
+      if (FighterCost != 0) hash ^= FighterCost.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Cost != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Cost);
+      }
+      if (FighterCost != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(FighterCost);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Cost != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Cost);
+      }
+      if (FighterCost != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FighterCost);
+      }
+      return size;
+    }
+
+    public void MergeFrom(production_cost_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Cost != 0) {
+        Cost = other.Cost;
+      }
+      if (other.FighterCost != 0) {
+        FighterCost = other.FighterCost;
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Cost = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            FighterCost = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class unit_def_t : pb::IMessage<unit_def_t> {
+    private static readonly pb::MessageParser<unit_def_t> _parser = new pb::MessageParser<unit_def_t>(() => new unit_def_t());
+    public static pb::MessageParser<unit_def_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[24]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public unit_def_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public unit_def_t(unit_def_t other) : this() {
+      name_ = other.name_;
+      cmd_ = other.cmd_;
+      Uncrippled = other.uncrippled_ != null ? other.Uncrippled.Clone() : null;
+      Crippled = other.crippled_ != null ? other.Crippled.Clone() : null;
+      escortType_ = other.escortType_;
+      Available = other.available_ != null ? other.Available.Clone() : null;
+      Construction = other.construction_ != null ? other.Construction.Clone() : null;
+      substitutions_ = other.substitutions_.Clone();
+      conversions_ = other.conversions_.Clone();
+      move_ = other.move_;
+      carrierType_ = other.carrierType_;
+      spaceworthy_ = other.spaceworthy_;
+      Towable = other.towable_ != null ? other.Towable.Clone() : null;
+      salvage_ = other.salvage_;
+      notes_ = other.notes_;
+    }
+
+    public unit_def_t Clone() {
+      return new unit_def_t(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "cmd" field.</summary>
+    public const int CmdFieldNumber = 2;
+    private int cmd_;
+    public int Cmd {
+      get { return cmd_; }
+      set {
+        cmd_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "uncrippled" field.</summary>
+    public const int UncrippledFieldNumber = 3;
+    private global::Message.unit_def_side_t uncrippled_;
+    public global::Message.unit_def_side_t Uncrippled {
+      get { return uncrippled_; }
+      set {
+        uncrippled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "crippled" field.</summary>
+    public const int CrippledFieldNumber = 4;
+    private global::Message.unit_def_side_t crippled_;
+    public global::Message.unit_def_side_t Crippled {
+      get { return crippled_; }
+      set {
+        crippled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "escort_type" field.</summary>
+    public const int EscortTypeFieldNumber = 5;
+    private global::Message.escort_type_t escortType_ = global::Message.escort_type_t.not_an_escort;
+    public global::Message.escort_type_t EscortType {
+      get { return escortType_; }
+      set {
+        escortType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "available" field.</summary>
+    public const int AvailableFieldNumber = 6;
+    private global::Message.turn_t available_;
+    public global::Message.turn_t Available {
+      get { return available_; }
+      set {
+        available_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "construction" field.</summary>
+    public const int ConstructionFieldNumber = 7;
+    private global::Message.production_cost_t construction_;
+    public global::Message.production_cost_t Construction {
+      get { return construction_; }
+      set {
+        construction_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "substitutions" field.</summary>
+    public const int SubstitutionsFieldNumber = 8;
+    private static readonly pbc::MapField<string, global::Message.production_cost_t>.Codec _map_substitutions_codec
+        = new pbc::MapField<string, global::Message.production_cost_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.production_cost_t.Parser), 66);
+    private readonly pbc::MapField<string, global::Message.production_cost_t> substitutions_ = new pbc::MapField<string, global::Message.production_cost_t>();
+    public pbc::MapField<string, global::Message.production_cost_t> Substitutions {
+      get { return substitutions_; }
+    }
+
+    /// <summary>Field number for the "conversions" field.</summary>
+    public const int ConversionsFieldNumber = 9;
+    private static readonly pbc::MapField<string, global::Message.production_cost_t>.Codec _map_conversions_codec
+        = new pbc::MapField<string, global::Message.production_cost_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.production_cost_t.Parser), 74);
+    private readonly pbc::MapField<string, global::Message.production_cost_t> conversions_ = new pbc::MapField<string, global::Message.production_cost_t>();
+    public pbc::MapField<string, global::Message.production_cost_t> Conversions {
+      get { return conversions_; }
+    }
+
+    /// <summary>Field number for the "move" field.</summary>
+    public const int MoveFieldNumber = 10;
+    private int move_;
+    public int Move {
+      get { return move_; }
+      set {
+        move_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "carrier_type" field.</summary>
+    public const int CarrierTypeFieldNumber = 11;
+    private global::Message.carrier_type_t carrierType_ = global::Message.carrier_type_t.not_a_carrier;
+    public global::Message.carrier_type_t CarrierType {
+      get { return carrierType_; }
+      set {
+        carrierType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "spaceworthy" field.</summary>
+    public const int SpaceworthyFieldNumber = 12;
+    private bool spaceworthy_;
+    public bool Spaceworthy {
+      get { return spaceworthy_; }
+      set {
+        spaceworthy_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "towable" field.</summary>
+    public const int TowableFieldNumber = 13;
+    private global::Message.towable_t towable_;
+    public global::Message.towable_t Towable {
+      get { return towable_; }
+      set {
+        towable_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "salvage" field.</summary>
+    public const int SalvageFieldNumber = 14;
+    private int salvage_;
+    public int Salvage {
+      get { return salvage_; }
+      set {
+        salvage_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "notes" field.</summary>
+    public const int NotesFieldNumber = 15;
+    private string notes_ = "";
+    public string Notes {
+      get { return notes_; }
+      set {
+        notes_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as unit_def_t);
+    }
+
+    public bool Equals(unit_def_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if (Cmd != other.Cmd) return false;
+      if (!object.Equals(Uncrippled, other.Uncrippled)) return false;
+      if (!object.Equals(Crippled, other.Crippled)) return false;
+      if (EscortType != other.EscortType) return false;
+      if (!object.Equals(Available, other.Available)) return false;
+      if (!object.Equals(Construction, other.Construction)) return false;
+      if (!Substitutions.Equals(other.Substitutions)) return false;
+      if (!Conversions.Equals(other.Conversions)) return false;
+      if (Move != other.Move) return false;
+      if (CarrierType != other.CarrierType) return false;
+      if (Spaceworthy != other.Spaceworthy) return false;
+      if (!object.Equals(Towable, other.Towable)) return false;
+      if (Salvage != other.Salvage) return false;
+      if (Notes != other.Notes) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Cmd != 0) hash ^= Cmd.GetHashCode();
+      if (uncrippled_ != null) hash ^= Uncrippled.GetHashCode();
+      if (crippled_ != null) hash ^= Crippled.GetHashCode();
+      if (EscortType != global::Message.escort_type_t.not_an_escort) hash ^= EscortType.GetHashCode();
+      if (available_ != null) hash ^= Available.GetHashCode();
+      if (construction_ != null) hash ^= Construction.GetHashCode();
+      hash ^= Substitutions.GetHashCode();
+      hash ^= Conversions.GetHashCode();
+      if (Move != 0) hash ^= Move.GetHashCode();
+      if (CarrierType != global::Message.carrier_type_t.not_a_carrier) hash ^= CarrierType.GetHashCode();
+      if (Spaceworthy != false) hash ^= Spaceworthy.GetHashCode();
+      if (towable_ != null) hash ^= Towable.GetHashCode();
+      if (Salvage != 0) hash ^= Salvage.GetHashCode();
+      if (Notes.Length != 0) hash ^= Notes.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Name.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (Cmd != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Cmd);
+      }
+      if (uncrippled_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Uncrippled);
+      }
+      if (crippled_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Crippled);
+      }
+      if (EscortType != global::Message.escort_type_t.not_an_escort) {
+        output.WriteRawTag(40);
+        output.WriteEnum((int) EscortType);
+      }
+      if (available_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(Available);
+      }
+      if (construction_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(Construction);
+      }
+      substitutions_.WriteTo(output, _map_substitutions_codec);
+      conversions_.WriteTo(output, _map_conversions_codec);
+      if (Move != 0) {
+        output.WriteRawTag(80);
+        output.WriteInt32(Move);
+      }
+      if (CarrierType != global::Message.carrier_type_t.not_a_carrier) {
+        output.WriteRawTag(88);
+        output.WriteEnum((int) CarrierType);
+      }
+      if (Spaceworthy != false) {
+        output.WriteRawTag(96);
+        output.WriteBool(Spaceworthy);
+      }
+      if (towable_ != null) {
+        output.WriteRawTag(106);
+        output.WriteMessage(Towable);
+      }
+      if (Salvage != 0) {
+        output.WriteRawTag(112);
+        output.WriteInt32(Salvage);
+      }
+      if (Notes.Length != 0) {
+        output.WriteRawTag(122);
+        output.WriteString(Notes);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Cmd != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Cmd);
+      }
+      if (uncrippled_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Uncrippled);
+      }
+      if (crippled_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Crippled);
+      }
+      if (EscortType != global::Message.escort_type_t.not_an_escort) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) EscortType);
+      }
+      if (available_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Available);
+      }
+      if (construction_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Construction);
+      }
+      size += substitutions_.CalculateSize(_map_substitutions_codec);
+      size += conversions_.CalculateSize(_map_conversions_codec);
+      if (Move != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Move);
+      }
+      if (CarrierType != global::Message.carrier_type_t.not_a_carrier) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) CarrierType);
+      }
+      if (Spaceworthy != false) {
+        size += 1 + 1;
+      }
+      if (towable_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Towable);
+      }
+      if (Salvage != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Salvage);
+      }
+      if (Notes.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Notes);
+      }
+      return size;
+    }
+
+    public void MergeFrom(unit_def_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Cmd != 0) {
+        Cmd = other.Cmd;
+      }
+      if (other.uncrippled_ != null) {
+        if (uncrippled_ == null) {
+          uncrippled_ = new global::Message.unit_def_side_t();
+        }
+        Uncrippled.MergeFrom(other.Uncrippled);
+      }
+      if (other.crippled_ != null) {
+        if (crippled_ == null) {
+          crippled_ = new global::Message.unit_def_side_t();
+        }
+        Crippled.MergeFrom(other.Crippled);
+      }
+      if (other.EscortType != global::Message.escort_type_t.not_an_escort) {
+        EscortType = other.EscortType;
+      }
+      if (other.available_ != null) {
+        if (available_ == null) {
+          available_ = new global::Message.turn_t();
+        }
+        Available.MergeFrom(other.Available);
+      }
+      if (other.construction_ != null) {
+        if (construction_ == null) {
+          construction_ = new global::Message.production_cost_t();
+        }
+        Construction.MergeFrom(other.Construction);
+      }
+      substitutions_.Add(other.substitutions_);
+      conversions_.Add(other.conversions_);
+      if (other.Move != 0) {
+        Move = other.Move;
+      }
+      if (other.CarrierType != global::Message.carrier_type_t.not_a_carrier) {
+        CarrierType = other.CarrierType;
+      }
+      if (other.Spaceworthy != false) {
+        Spaceworthy = other.Spaceworthy;
+      }
+      if (other.towable_ != null) {
+        if (towable_ == null) {
+          towable_ = new global::Message.towable_t();
+        }
+        Towable.MergeFrom(other.Towable);
+      }
+      if (other.Salvage != 0) {
+        Salvage = other.Salvage;
+      }
+      if (other.Notes.Length != 0) {
+        Notes = other.Notes;
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 16: {
+            Cmd = input.ReadInt32();
+            break;
+          }
+          case 26: {
+            if (uncrippled_ == null) {
+              uncrippled_ = new global::Message.unit_def_side_t();
+            }
+            input.ReadMessage(uncrippled_);
+            break;
+          }
+          case 34: {
+            if (crippled_ == null) {
+              crippled_ = new global::Message.unit_def_side_t();
+            }
+            input.ReadMessage(crippled_);
+            break;
+          }
+          case 40: {
+            escortType_ = (global::Message.escort_type_t) input.ReadEnum();
+            break;
+          }
+          case 50: {
+            if (available_ == null) {
+              available_ = new global::Message.turn_t();
+            }
+            input.ReadMessage(available_);
+            break;
+          }
+          case 58: {
+            if (construction_ == null) {
+              construction_ = new global::Message.production_cost_t();
+            }
+            input.ReadMessage(construction_);
+            break;
+          }
+          case 66: {
+            substitutions_.AddEntriesFrom(input, _map_substitutions_codec);
+            break;
+          }
+          case 74: {
+            conversions_.AddEntriesFrom(input, _map_conversions_codec);
+            break;
+          }
+          case 80: {
+            Move = input.ReadInt32();
+            break;
+          }
+          case 88: {
+            carrierType_ = (global::Message.carrier_type_t) input.ReadEnum();
+            break;
+          }
+          case 96: {
+            Spaceworthy = input.ReadBool();
+            break;
+          }
+          case 106: {
+            if (towable_ == null) {
+              towable_ = new global::Message.towable_t();
+            }
+            input.ReadMessage(towable_);
+            break;
+          }
+          case 112: {
+            Salvage = input.ReadInt32();
+            break;
+          }
+          case 122: {
+            Notes = input.ReadString();
             break;
           }
         }
