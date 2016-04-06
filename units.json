@@ -72,7 +72,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -1197,7 +1197,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -1281,7 +1281,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -2127,7 +2127,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -2211,7 +2211,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "PAL": {
             "cmd": 10,
             "uncrippled": {
@@ -3317,7 +3317,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -3401,7 +3401,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "B10": {
             "cmd": 10,
             "uncrippled": {
@@ -4481,7 +4481,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -4565,7 +4565,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -5488,7 +5488,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -5572,7 +5572,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -6523,7 +6523,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -6607,7 +6607,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "CA": {
             "cmd": 8,
             "uncrippled": {
@@ -6878,7 +6878,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -6962,7 +6962,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "CON": {
             "cmd": 10,
             "uncrippled": {
@@ -7844,7 +7844,7 @@
             "cmd": 3,
             "uncrippled": {
                 "att": 2,
-                "def": 6U
+                "def": 6
             },
             "crippled": {
                 "att": 1,
@@ -7864,7 +7864,7 @@
             },
             "move": 6,
             "salvage": 4,
-            "notes": "Theater Transport"
+            "notes": "Theater Transport TODO def: 6U"
         },
         "SE": {
             "cmd": 8,
@@ -8261,7 +8261,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
@@ -8270,7 +8270,7 @@
             },
             "spaceworthy": "false",
             "notes": "See (508.1) and (431.2). No cloak.  For conversion from PGB, see (441.3)."
-        },
+        }
     },
     "THO": {
         "BATS": {
@@ -8345,7 +8345,7 @@
             },
             "move": 0,
             "notes": "Starbase. See (433.41)"
-        }
+        },
         "DN": {
             "cmd": 10,
             "uncrippled": {
@@ -8489,8 +8489,8 @@
         "CPC": {
             "cmd": 3,
             "uncrippled": {
-                "att": 4U,
-                "def": 4U
+                "att": 4,
+                "def": 4
             },
             "crippled": {
                 "att": 2,
@@ -8512,7 +8512,7 @@
             },
             "move": 6,
             "salvage": 0,
-            "notes": "Theater transport"
+            "notes": "Theater transport TODO att: 4U def: 4U"
         },
         "SC": {
             "cmd": 3,
@@ -8779,7 +8779,7 @@
             "conversions from": {
                 "PBG": {
                     "cost": 0
-                },
+                }
             },
             "move": 0,
             "towable": {
