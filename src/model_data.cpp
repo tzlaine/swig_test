@@ -6,6 +6,22 @@
 
 
 
+message::turn_t to_protobuf (const ::turn_t& value)
+{
+    message::turn_t retval;
+    retval.set_year(value.year);
+    retval.set_season(static_cast< message::season_t >(value.season));
+    return retval;
+}
+
+::turn_t from_protobuf (const message::turn_t& msg)
+{
+    ::turn_t retval;
+    retval.year = msg.year();
+    retval.season = static_cast< season_t >(msg.season());
+    return retval;
+}
+
 message::hex_coord_t to_protobuf (const ::hex_coord_t& value)
 {
     message::hex_coord_t retval;
@@ -545,6 +561,148 @@ message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value)
     {
         for (const auto& x : msg.oobs()) {
             retval.oobs[x.first] = from_protobuf(x.second);
+        }
+    }
+    return retval;
+}
+
+message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
+{
+    message::unit_def_side_t retval;
+    retval.set_att(value.att);
+    retval.set_def(value.def);
+    retval.set_scout(value.scout);
+    retval.set_fighters(value.fighters);
+    retval.set_heavy_fighter_bonus(value.heavy_fighter_bonus);
+    retval.set_drones(value.drones);
+    for (const auto& x : value.tug_missions) {
+        retval.add_tug_missions(static_cast< message::tug_mission_t >(x));
+    }
+    return retval;
+}
+
+::unit_def_side_t from_protobuf (const message::unit_def_side_t& msg)
+{
+    ::unit_def_side_t retval;
+    retval.att = msg.att();
+    retval.def = msg.def();
+    retval.scout = msg.scout();
+    retval.fighters = msg.fighters();
+    retval.heavy_fighter_bonus = msg.heavy_fighter_bonus();
+    retval.drones = msg.drones();
+    {
+        retval.tug_missions.resize(msg.tug_missions_size());
+        auto it = retval.tug_missions.begin();
+        for (const auto& x : msg.tug_missions()) {
+            *it++ = static_cast<tug_mission_t>(x);
+        }
+    }
+    return retval;
+}
+
+message::towable_t to_protobuf (const ::towable_t& value)
+{
+    message::towable_t retval;
+    retval.set_move_cost(value.move_cost);
+    retval.set_strat_move_limit(value.strat_move_limit);
+    return retval;
+}
+
+::towable_t from_protobuf (const message::towable_t& msg)
+{
+    ::towable_t retval;
+    retval.move_cost = msg.move_cost();
+    retval.strat_move_limit = msg.strat_move_limit();
+    return retval;
+}
+
+message::production_cost_t to_protobuf (const ::production_cost_t& value)
+{
+    message::production_cost_t retval;
+    retval.set_cost(value.cost);
+    retval.set_fighter_cost(value.fighter_cost);
+    return retval;
+}
+
+::production_cost_t from_protobuf (const message::production_cost_t& msg)
+{
+    ::production_cost_t retval;
+    retval.cost = msg.cost();
+    retval.fighter_cost = msg.fighter_cost();
+    return retval;
+}
+
+message::unit_def_t to_protobuf (const ::unit_def_t& value)
+{
+    message::unit_def_t retval;
+    retval.set_name(value.name);
+    retval.set_cmd(value.cmd);
+    retval.mutable_uncrippled()->CopyFrom(to_protobuf(value.uncrippled));
+    retval.mutable_crippled()->CopyFrom(to_protobuf(value.crippled));
+    retval.set_escort_type(static_cast< message::escort_type_t >(value.escort_type));
+    retval.mutable_available()->CopyFrom(to_protobuf(value.available));
+    retval.mutable_construction()->CopyFrom(to_protobuf(value.construction));
+    for (const auto& x : value.substitutions) {
+        (*retval.mutable_substitutions())[x.first] = to_protobuf(x.second);
+    }
+    for (const auto& x : value.conversions) {
+        (*retval.mutable_conversions())[x.first] = to_protobuf(x.second);
+    }
+    retval.set_move(value.move);
+    retval.set_carrier_type(static_cast< message::carrier_type_t >(value.carrier_type));
+    retval.set_spaceworthy(value.spaceworthy);
+    retval.mutable_towable()->CopyFrom(to_protobuf(value.towable));
+    retval.set_salvage(value.salvage);
+    retval.set_notes(value.notes);
+    return retval;
+}
+
+::unit_def_t from_protobuf (const message::unit_def_t& msg)
+{
+    ::unit_def_t retval;
+    retval.name = msg.name();
+    retval.cmd = msg.cmd();
+    retval.uncrippled = from_protobuf(msg.uncrippled());
+    retval.crippled = from_protobuf(msg.crippled());
+    retval.escort_type = static_cast< escort_type_t >(msg.escort_type());
+    retval.available = from_protobuf(msg.available());
+    retval.construction = from_protobuf(msg.construction());
+    {
+        for (const auto& x : msg.substitutions()) {
+            retval.substitutions[x.first] = from_protobuf(x.second);
+        }
+    }
+    {
+        for (const auto& x : msg.conversions()) {
+            retval.conversions[x.first] = from_protobuf(x.second);
+        }
+    }
+    retval.move = msg.move();
+    retval.carrier_type = static_cast< carrier_type_t >(msg.carrier_type());
+    retval.spaceworthy = msg.spaceworthy();
+    retval.towable = from_protobuf(msg.towable());
+    retval.salvage = msg.salvage();
+    retval.notes = msg.notes();
+    return retval;
+}
+
+message::unit_defs_t to_protobuf (const ::unit_defs_t& value)
+{
+    message::unit_defs_t retval;
+    for (const auto& x : value.units) {
+        retval.add_units()->CopyFrom(to_protobuf(x));
+    }
+    return retval;
+}
+
+::unit_defs_t from_protobuf (const message::unit_defs_t& msg)
+{
+    ::unit_defs_t retval;
+    {
+        retval.units.resize(msg.units_size());
+        auto it = retval.units.begin();
+        for (const auto& x : msg.units()) {
+            *it++ = from_protobuf(x);
         }
     }
     return retval;

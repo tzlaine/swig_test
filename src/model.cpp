@@ -632,6 +632,15 @@ struct loaded_nations_t
 };
 loaded_nations_t g_loaded_nations;
 
+struct loaded_unit_defs_t
+{
+    loaded_unit_defs_t () : initialized (false) {}
+
+    bool initialized;
+    unit_defs_t unit_defs;
+};
+loaded_unit_defs_t g_loaded_unit_defs;
+
 struct model_state_t
 {
     model_state_t () : initialized (false) {}
@@ -713,6 +722,33 @@ extern "C" {
         }
 
         g_loaded_nations.initialized = true;
+
+        return 1;
+    } CATCH_AND_RETURN(0);
+
+    MODEL_API
+    int init_unit_defs (const char* unit_defs_str) try
+    {
+        if (unit_defs_str == nullptr)
+            throw std::runtime_error("init_unit_defs() was passed a null units data string.");
+
+        const std::string empty_str;
+        if (unit_defs_str == empty_str)
+            throw std::runtime_error("init_unit_defs() was passed an empty units data string.");
+
+        if (g_loaded_unit_defs.initialized)
+            return 1;
+
+        {
+            message::unit_defs_t unit_defs_msg;
+            pb::io::ArrayInputStream is(unit_defs_str, strlen(unit_defs_str));
+            if (!pb::TextFormat::Parse(&is, &unit_defs_msg))
+                throw std::runtime_error("Missing starting units data");
+            g_loaded_unit_defs.unit_defs = from_protobuf(unit_defs_msg);
+            validate_unit_defs(g_loaded_unit_defs.unit_defs);
+        }
+
+        g_loaded_unit_defs.initialized = true;
 
         return 1;
     } CATCH_AND_RETURN(0);

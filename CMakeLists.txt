@@ -134,6 +134,7 @@ if (PYTHON_EXECUTABLE)
                 --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
         DEPENDS
             ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
+            ${CMAKE_SOURCE_DIR}/proto/model.proto
             make_desc_file
         COMMENT "Create model_data.{h,c}pp."
         VERBATIM

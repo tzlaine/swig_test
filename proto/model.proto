@@ -250,3 +250,8 @@ message unit_def_t
     int32 salvage = 14;
     string notes = 15;
 }
+
+message unit_defs_t
+{
+    repeated unit_def_t units = 1;
+}

@@ -107,17 +107,18 @@ namespace Message {
             "KAkaUAoSU3Vic3RpdHV0aW9uc0VudHJ5EgsKA2tleRgBIAEoCRIpCgV2YWx1",
             "ZRgCIAEoCzIaLm1lc3NhZ2UucHJvZHVjdGlvbl9jb3N0X3Q6AjgBGk4KEENv",
             "bnZlcnNpb25zRW50cnkSCwoDa2V5GAEgASgJEikKBXZhbHVlGAIgASgLMhou",
-            "bWVzc2FnZS5wcm9kdWN0aW9uX2Nvc3RfdDoCOAEqTAoJZmVhdHVyZV90Eg4K",
-            "Cm5vX2ZlYXR1cmUQABIICgRiYXRzEAESBgoCc2IQAhIHCgNtaW4QAxIHCgNt",
-            "YWoQBBILCgdjYXBpdGFsEAUqIAoIc2Vhc29uX3QSCgoGc3ByaW5nEAASCAoE",
-            "ZmFsbBABKooBCg10dWdfbWlzc2lvbl90EgUKAUEQABIFCgFCEAESBQoBQxAC",
-            "EgUKAUQQAxIFCgFFEAQSBQoBRhAFEgUKAUcQBhIFCgFIEAcSBQoBSRAIEgYK",
-            "AkoxEAkSBgoCSjIQChIGCgJLMRALEgYKAksyEAwSBQoBTBANEgUKAU0QDhIF",
-            "CgFOEA8SBQoBTxAQKnYKDmNhcnJpZXJfdHlwZV90EhEKDW5vdF9hX2NhcnJp",
-            "ZXIQABIXChNzaW5nbGVfc2hpcF9jYXJyaWVyEAESEQoNbGlnaHRfY2Fycmll",
-            "chACEhIKDm1lZGl1bV9jYXJyaWVyEAMSEQoNaGVhdnlfY2FycmllchAEKkYK",
-            "DWVzY29ydF90eXBlX3QSEQoNbm90X2FuX2VzY29ydBAAEhAKDGxpZ2h0X2Vz",
-            "Y29ydBABEhAKDGhlYXZ5X2VzY29ydBACYgZwcm90bzM="));
+            "bWVzc2FnZS5wcm9kdWN0aW9uX2Nvc3RfdDoCOAEiMQoLdW5pdF9kZWZzX3QS",
+            "IgoFdW5pdHMYASADKAsyEy5tZXNzYWdlLnVuaXRfZGVmX3QqTAoJZmVhdHVy",
+            "ZV90Eg4KCm5vX2ZlYXR1cmUQABIICgRiYXRzEAESBgoCc2IQAhIHCgNtaW4Q",
+            "AxIHCgNtYWoQBBILCgdjYXBpdGFsEAUqIAoIc2Vhc29uX3QSCgoGc3ByaW5n",
+            "EAASCAoEZmFsbBABKooBCg10dWdfbWlzc2lvbl90EgUKAUEQABIFCgFCEAES",
+            "BQoBQxACEgUKAUQQAxIFCgFFEAQSBQoBRhAFEgUKAUcQBhIFCgFIEAcSBQoB",
+            "SRAIEgYKAkoxEAkSBgoCSjIQChIGCgJLMRALEgYKAksyEAwSBQoBTBANEgUK",
+            "AU0QDhIFCgFOEA8SBQoBTxAQKnYKDmNhcnJpZXJfdHlwZV90EhEKDW5vdF9h",
+            "X2NhcnJpZXIQABIXChNzaW5nbGVfc2hpcF9jYXJyaWVyEAESEQoNbGlnaHRf",
+            "Y2FycmllchACEhIKDm1lZGl1bV9jYXJyaWVyEAMSEQoNaGVhdnlfY2Fycmll",
+            "chAEKkYKDWVzY29ydF90eXBlX3QSEQoNbm90X2FuX2VzY29ydBAAEhAKDGxp",
+            "Z2h0X2VzY29ydBABEhAKDGhlYXZ5X2VzY29ydBACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), typeof(global::Message.tug_mission_t), typeof(global::Message.carrier_type_t), typeof(global::Message.escort_type_t), }, new pbr::GeneratedCodeInfo[] {
@@ -145,7 +146,8 @@ namespace Message {
             new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_side_t), global::Message.unit_def_side_t.Parser, new[]{ "Att", "Def", "Scout", "Fighters", "HeavyFighterBonus", "Drones", "TugMissions" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.towable_t), global::Message.towable_t.Parser, new[]{ "MoveCost", "StratMoveLimit" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.production_cost_t), global::Message.production_cost_t.Parser, new[]{ "Cost", "FighterCost" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_t), global::Message.unit_def_t.Parser, new[]{ "Name", "Cmd", "Uncrippled", "Crippled", "EscortType", "Available", "Construction", "Substitutions", "Conversions", "Move", "CarrierType", "Spaceworthy", "Towable", "Salvage", "Notes" }, null, null, new pbr::GeneratedCodeInfo[] { null, null, })
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_t), global::Message.unit_def_t.Parser, new[]{ "Name", "Cmd", "Uncrippled", "Crippled", "EscortType", "Available", "Construction", "Substitutions", "Conversions", "Move", "CarrierType", "Spaceworthy", "Towable", "Salvage", "Notes" }, null, null, new pbr::GeneratedCodeInfo[] { null, null, }),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_defs_t), global::Message.unit_defs_t.Parser, new[]{ "Units" }, null, null, null)
           }));
     }
     #endregion
@@ -4414,6 +4416,101 @@ namespace Message {
           }
           case 122: {
             Notes = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class unit_defs_t : pb::IMessage<unit_defs_t> {
+    private static readonly pb::MessageParser<unit_defs_t> _parser = new pb::MessageParser<unit_defs_t>(() => new unit_defs_t());
+    public static pb::MessageParser<unit_defs_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[25]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public unit_defs_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public unit_defs_t(unit_defs_t other) : this() {
+      units_ = other.units_.Clone();
+    }
+
+    public unit_defs_t Clone() {
+      return new unit_defs_t(this);
+    }
+
+    /// <summary>Field number for the "units" field.</summary>
+    public const int UnitsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Message.unit_def_t> _repeated_units_codec
+        = pb::FieldCodec.ForMessage(10, global::Message.unit_def_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.unit_def_t> units_ = new pbc::RepeatedField<global::Message.unit_def_t>();
+    public pbc::RepeatedField<global::Message.unit_def_t> Units {
+      get { return units_; }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as unit_defs_t);
+    }
+
+    public bool Equals(unit_defs_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!units_.Equals(other.units_)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= units_.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      units_.WriteTo(output, _repeated_units_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      size += units_.CalculateSize(_repeated_units_codec);
+      return size;
+    }
+
+    public void MergeFrom(unit_defs_t other) {
+      if (other == null) {
+        return;
+      }
+      units_.Add(other.units_);
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            units_.AddEntriesFrom(input, _repeated_units_codec);
             break;
           }
         }

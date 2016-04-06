@@ -53,6 +53,9 @@ extern "C" {
     int init_nations (const char* nations_str);
 
     MODEL_API
+    int init_unit_defs (const char* unit_defs_str);
+
+    MODEL_API
     int init_model (const char* map_str, const char* oob_str);
 
     MODEL_API

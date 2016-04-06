@@ -11,7 +11,7 @@
 
 
 enum class feature_t {
-    none = 0,
+    no_feature = 0,
     bats = 1,
     sb = 2,
     min = 3,
@@ -22,6 +22,46 @@ enum class feature_t {
 enum class season_t {
     spring = 0,
     fall = 1,
+};
+
+enum class tug_mission_t {
+    A = 0,
+    B = 1,
+    C = 2,
+    D = 3,
+    E = 4,
+    F = 5,
+    G = 6,
+    H = 7,
+    I = 8,
+    J1 = 9,
+    J2 = 10,
+    K1 = 11,
+    K2 = 12,
+    L = 13,
+    M = 14,
+    N = 15,
+    O = 16,
+};
+
+enum class carrier_type_t {
+    not_a_carrier = 0,
+    single_ship_carrier = 1,
+    light_carrier = 2,
+    medium_carrier = 3,
+    heavy_carrier = 4,
+};
+
+enum class escort_type_t {
+    not_an_escort = 0,
+    light_escort = 1,
+    heavy_escort = 2,
+};
+
+struct turn_t
+{
+    int year;
+    season_t season;
 };
 
 struct hex_coord_t
@@ -165,6 +205,56 @@ struct orders_of_battle_t
     boost::container::flat_map<std::string, order_of_battle_t> oobs;
 };
 
+struct unit_def_side_t
+{
+    int att;
+    int def;
+    bool scout;
+    float fighters;
+    float heavy_fighter_bonus;
+    int drones;
+    std::vector<tug_mission_t> tug_missions;
+};
+
+struct towable_t
+{
+    int move_cost;
+    int strat_move_limit;
+};
+
+struct production_cost_t
+{
+    int cost;
+    int fighter_cost;
+};
+
+struct unit_def_t
+{
+    std::string name;
+    int cmd;
+    unit_def_side_t uncrippled;
+    unit_def_side_t crippled;
+    escort_type_t escort_type;
+    turn_t available;
+    production_cost_t construction;
+    boost::container::flat_map<std::string, production_cost_t> substitutions;
+    boost::container::flat_map<std::string, production_cost_t> conversions;
+    int move;
+    carrier_type_t carrier_type;
+    bool spaceworthy;
+    towable_t towable;
+    int salvage;
+    std::string notes;
+};
+
+struct unit_defs_t
+{
+    std::vector<unit_def_t> units;
+};
+
+message::turn_t to_protobuf (const ::turn_t& value);
+::turn_t from_protobuf (const message::turn_t& msg);
+
 message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
 ::hex_coord_t from_protobuf (const message::hex_coord_t& msg);
 
@@ -224,5 +314,20 @@ message::order_of_battle_t to_protobuf (const ::order_of_battle_t& value);
 
 message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value);
 ::orders_of_battle_t from_protobuf (const message::orders_of_battle_t& msg);
+
+message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value);
+::unit_def_side_t from_protobuf (const message::unit_def_side_t& msg);
+
+message::towable_t to_protobuf (const ::towable_t& value);
+::towable_t from_protobuf (const message::towable_t& msg);
+
+message::production_cost_t to_protobuf (const ::production_cost_t& value);
+::production_cost_t from_protobuf (const message::production_cost_t& msg);
+
+message::unit_def_t to_protobuf (const ::unit_def_t& value);
+::unit_def_t from_protobuf (const message::unit_def_t& msg);
+
+message::unit_defs_t to_protobuf (const ::unit_defs_t& value);
+::unit_defs_t from_protobuf (const message::unit_defs_t& msg);
 
 

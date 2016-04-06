@@ -7,7 +7,8 @@
 #include <boost/lexical_cast.hpp>
 
 
-inline void require_boolean_int(int i, const std::string& name)
+// TODO: Just use bool.
+inline void require_boolean_int (int i, const std::string& name)
 {
     if (i != 0 && i != 1) {
         boost::throw_exception(
@@ -18,43 +19,46 @@ inline void require_boolean_int(int i, const std::string& name)
     }
 }
 
-inline void require_nonempty(const std::string& s, const std::string& name)
+inline void require_nonempty (const std::string& s, const std::string& name)
 {
     if (s.empty())
         boost::throw_exception(std::runtime_error(name + " must be provided and must not be empty"));
 }
 
-inline void require_positive(int i, const std::string& name)
+template <typename T>
+inline void require_positive (T t, const std::string& name)
 {
-    if (i <= 0) {
+    if (t <= 0) {
         boost::throw_exception(
-            std::runtime_error(name + " (=" + std::to_string(i) + ") must be positive (> 0)")
+            std::runtime_error(name + " (=" + std::to_string(t) + ") must be positive (> 0)")
         );
     }
 }
 
-inline void require_nonnegative(int i, const std::string& name)
+template <typename T>
+inline void require_nonnegative (T t, const std::string& name)
 {
-    if (i < 0) {
+    if (t < 0) {
         boost::throw_exception(
-            std::runtime_error(name + " (=" + std::to_string(i) + ") must be nonnegative (>= 0)")
+            std::runtime_error(name + " (=" + std::to_string(t) + ") must be nonnegative (>= 0)")
         );
     }
 }
 
-inline void require_within(int i, int low, int high, const std::string& name)
+template <typename T>
+inline void require_within (T t, T low, T high, const std::string& name)
 {
-    if (i < low || high < i) {
+    if (t < low || high < t) {
         boost::throw_exception(
             std::runtime_error(
-                name + " (=" + std::to_string(i) + ") must be between " + std::to_string(low) +
+                name + " (=" + std::to_string(t) + ") must be between " + std::to_string(low) +
                 " and " + std::to_string(high) + " inclusive"
             )
         );
     }
 }
 
-inline void require_hex_coord(int i, int width, int height, const std::string& name)
+inline void require_hex_coord (int i, int width, int height, const std::string& name)
 {
     const auto hc = to_hex_coord(i);
     if (!on_map(hc, width, height)) {
@@ -69,6 +73,11 @@ inline void require_hex_coord(int i, int width, int height, const std::string& n
             )
         );
     }
+}
+
+inline void validate_turn (const turn_t& turn)
+{
+    require_within(turn.year, 140, 185, "turn.year"); // TODO: Use the right year range!
 }
 
 inline void validate_capital (const capital_t& capital)
@@ -271,5 +280,47 @@ inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map
                 validate_and_fixup_oob_unit(oob_unit);
             }
         }
+    }
+}
+
+inline void validate_unit_def_side (const unit_def_side_t& unit_def_side)
+{
+    require_nonnegative(unit_def_side.att, "unit_def_side_t.att");
+    require_nonnegative(unit_def_side.def, "unit_def_side_t.def");
+    require_nonnegative(unit_def_side.fighters, "unit_def_side_t.fighters");
+    require_nonnegative(unit_def_side.heavy_fighter_bonus, "unit_def_side_t.heavy_fighter_bonus");
+    require_nonnegative(unit_def_side.drones, "unit_def_side_t.drones");
+}
+
+inline void validate_production_cost (const production_cost_t& production_cost)
+{
+    require_nonnegative(production_cost.cost, "production_cost.cost");
+    require_nonnegative(production_cost.fighter_cost, "production_cost.fighter_cost");
+}
+
+inline void validate_unit_def (const unit_def_t& unit_def)
+{
+    require_nonempty(unit_def.name, "unit_def_t.name");
+    require_nonnegative(unit_def.cmd, "unit_def_t.cmd");
+    validate_unit_def_side(unit_def.uncrippled);
+    validate_unit_def_side(unit_def.crippled);
+    validate_turn(unit_def.available);
+    validate_production_cost(unit_def.construction);
+    for (auto const& pair : unit_def.substitutions) {
+        require_nonempty(pair.first, "unit_def_t.substitutions.name");
+        validate_production_cost(pair.second);
+    }
+    for (auto const& pair : unit_def.conversions) {
+        require_nonempty(pair.first, "unit_def_t.conversions.name");
+        validate_production_cost(pair.second);
+    }
+    require_nonnegative(unit_def.move, "unit_def_t.move");
+    require_nonnegative(unit_def.salvage, "unit_def_t.salvage");
+}
+
+inline void validate_unit_defs (const unit_defs_t& unit_defs)
+{
+    for (const auto& u : unit_defs.units) {
+        validate_unit_def(u);
     }
 }
