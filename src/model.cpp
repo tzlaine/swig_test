@@ -713,9 +713,7 @@ extern "C" {
 
         {
             message::nations_t nations_msg;
-            pb::io::ArrayInputStream is(nations_str, strlen(nations_str));
-            if (!pb::TextFormat::Parse(&is, &nations_msg))
-                throw std::runtime_error("Missing starting nations data");
+            json2pb(nations_msg, nations_str, strlen(nations_str));
             g_loaded_nations.nations = from_protobuf(nations_msg);
             validate_nations(g_loaded_nations.nations);
             fill_in_nation_ids(g_loaded_nations.nations);
@@ -770,18 +768,14 @@ extern "C" {
 
         {
             message::map_t map_msg;
-            pb::io::ArrayInputStream is(map_str, strlen(map_str));
-            if (!pb::TextFormat::Parse(&is, &map_msg))
-                throw std::runtime_error("Missing starting map data");
+            json2pb(map_msg, map_str, strlen(map_str));
             g_model_state.m = from_protobuf(map_msg);
             validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
         }
 
         {
             message::orders_of_battle_t oob_msg;
-            pb::io::ArrayInputStream is(oob_str, strlen(oob_str));
-            if (!pb::TextFormat::Parse(&is, &oob_msg))
-                throw std::runtime_error("Missing starting order of battle data");
+            json2pb(oob_msg, oob_str, strlen(oob_str));
             g_model_state.oob = from_protobuf(oob_msg);
             validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations);
         }

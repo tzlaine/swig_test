@@ -10,8 +10,8 @@
         "Coalition": [ "LYR", "KLI" ]
     },
     "team turn order": [ "Coalition", "Alliance" ],
-    "map": "../default_map.txt",
-    "order of battle": "../default_oob.txt",
+    "map": "../default_map.json",
+    "order of battle": "../default_oob.json",
     "setup order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
     "nations": {
         "FED": {

@@ -1038,7 +1038,7 @@ private function make_map (json : SimpleJSON.JSONNode) : map_t
 function Awake ()
 {
     if (!JSONLevelSerializer.IsDeserializing) {
-        var pbtxt : String = System.IO.File.ReadAllText('../nations.txt');
+        var pbtxt : String = System.IO.File.ReadAllText('../nations.json');
         model_plugin.init_nations(pbtxt);
         nations = model_plugin.get_nations();
     }

@@ -45,9 +45,9 @@ endif ()
 set(model_test_args)
 if (MSVC)
     set(model_test_args
-	${CMAKE_HOME_DIRECTORY}/nations.txt
-	${CMAKE_HOME_DIRECTORY}/default_map.txt
-	${CMAKE_HOME_DIRECTORY}/default_oob.txt
+	${CMAKE_HOME_DIRECTORY}/nations.json
+	${CMAKE_HOME_DIRECTORY}/default_map.json
+	${CMAKE_HOME_DIRECTORY}/default_oob.json
 	${CMAKE_HOME_DIRECTORY}/units.json
     )
 endif ()
