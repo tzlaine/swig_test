@@ -294,9 +294,9 @@ struct scenario_condition_t
         std::vector<std::string> names;
         std::vector<int> hexes;
     };
-    std::string actor;
+    std::vector<std::string> actors;
     action_t action;
-    object_t object;
+    std::vector<object_t> one_of;
 };
 
 struct fleet_release_condition_t
@@ -325,10 +325,11 @@ struct scenario_turn_t
         struct action_t
         {
             action_type_t type;
-            std::vector<std::string> objects;
+            std::vector<std::string> names;
         };
         std::vector<action_t> actions;
     };
+    int turn;
     boost::container::flat_map<std::string, national_action_t> national_actions;
 };
 
@@ -342,6 +343,8 @@ struct scenario_t
         war_footing_t economy;
         int exhaustion_turns;
         bool accumulate_exhaustion_at_peace;
+        std::vector<fleet_release_condition_t> release_conditions;
+        std::vector<war_entry_condition_t> war_entry_conditions;
     };
     std::string name;
     std::string description;
@@ -351,9 +354,8 @@ struct scenario_t
     std::string map;
     std::string order_of_battle;
     std::vector<std::string> setup_order;
-    std::vector<fleet_release_condition_t> release_conditions;
-    std::vector<war_entry_condition_t> war_entry_conditions;
-    std::vector<scenario_turn_t> scenario_turns;
+    boost::container::flat_map<std::string, nation_t> nations;
+    std::vector<scenario_turn_t> turns;
 };
 
 message::turn_t to_protobuf (const ::turn_t& value);

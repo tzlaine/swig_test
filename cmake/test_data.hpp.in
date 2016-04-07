@@ -1,16 +1,20 @@
 #pragma once
 
-const char* nations_pbtxt_string = R"inline_json(
+const char* nations_json_string = R"inline_json(
 @nations_contents@)inline_json";
 
 
-const char* map_pbtxt_string = R"inline_json(
+const char* map_json_string = R"inline_json(
 @map_contents@)inline_json";
 
 
-const char* oob_pbtxt_string = R"inline_json(
+const char* oob_json_string = R"inline_json(
 @oob_contents@)inline_json";
 
 
 const char* units_json_string = R"inline_json(
 @units_contents@)inline_json";
+
+
+const char* scenario_json_string = R"inline_json(
+@scenario_contents@)inline_json";

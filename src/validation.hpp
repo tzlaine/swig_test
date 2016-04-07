@@ -64,6 +64,15 @@ inline void require_hex_coord (int i, int width, int height, const std::string& 
     }
 }
 
+inline void require_nation (const std::string& str, const nations_t& nations)
+{
+    if (nations.nations.count(str) == 0) {
+        boost::throw_exception(
+            std::runtime_error("Nation '" + str + "' is not found in the nation definitions")
+        );
+    }
+}
+
 inline void validate_turn (const turn_t& turn)
 {
     require_within(turn.year, 50, 185, "turn.year"); // TODO: Use the right year range!
@@ -236,7 +245,8 @@ inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet,
         "starting_fleet_t.strategic_move_arrival_year"
     );
     for (auto limit : starting_fleet.hex_placement_limits) {
-        require_hex_coord(limit.first, width, height, "hex_placement_limit hex");
+        
+require_hex_coord(limit.first, width, height, "hex_placement_limit hex");
         require_positive(limit.second, "hex_placement_limit unit limit number");
     }
 }
@@ -245,11 +255,7 @@ inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map
 {
     require_nonempty(oobs.oobs, "orders_of_battle_t.oobs");
     for (auto& oob : oobs.oobs) {
-        if (nations.nations.count(oob.first) == 0) {
-            boost::throw_exception(
-                std::runtime_error("Unknown owner nation '" + oob.first + "' encountered in OOB data")
-            );
-        }
+        require_nation(oob.first, nations);
 
         require_nonempty(oob.second.starting_fleets, "order_of_battle_t.starting_fleets");
         for (auto& fleet : oob.second.starting_fleets) {
@@ -323,5 +329,112 @@ inline void validate_unit_defs (const unit_defs_t& unit_defs)
         for (const auto& u : pair.second.units) {
             validate_unit_def(u);
         }
+    }
+}
+
+inline void validate_team (const team_t& team, const nations_t& nations)
+{
+    require_nonempty(team.name, "team_t.name");
+    for (const auto& nation : team.nations) {
+        require_nation(nation, nations);
+    }
+}
+
+inline void validate_scenario_condition (const scenario_condition_t& scenario_condition, const nations_t& nations)
+{
+    // TODO
+}
+
+inline void validate_scenario_nation (const scenario_t::nation_t& nation, const nations_t& nations)
+{
+    for (const auto& name : nation.at_war_with) {
+        require_nation(name, nations);
+        // TODO: Require name is not on this nation's team.
+    }
+    for (const auto& name : nation.future_belligerents) {
+        require_nation(name, nations);
+        // TODO: Require name is not on this nation's team.
+    }
+
+    require_nonnegative(nation.exhaustion_turns, "scenario_t.nation_t.exhaustion_turns");
+
+    for (const auto& condition : nation.release_conditions) {
+        // TODO: Compare condition.fleet against fleet names in OOB.
+        validate_scenario_condition(condition.condition, nations);
+    }
+
+    for (const auto& condition : nation.war_entry_conditions) {
+        validate_scenario_condition(condition.condition, nations);
+    }
+}
+
+inline void validate_scenario_turn (const scenario_turn_t& turn, const nations_t& nations)
+{
+    require_nonnegative(turn.turn, "scenario_turn_t.turn");
+    for (const auto& national_action : turn.national_actions) {
+        require_nation(national_action.first, nations);
+        for (const auto& action : national_action.second.actions) {
+            switch (action.type) {
+            case scenario_turn_t::national_action_t::action_type_t::release_fleets:
+                // TODO: Compare action.names against fleet names in OOB.
+                break;
+            case scenario_turn_t::national_action_t::action_type_t::declare_war:
+                for (const auto& name : action.names) {
+                    require_nation(name, nations);
+                }
+                break;
+            }
+        }
+    }
+}
+
+inline void validate_scenario (const scenario_t& scenario, const nations_t& nations)
+{
+    require_nonempty(scenario.name, "scenario.name");
+    require_nonempty(scenario.description, "scenario.description");
+    validate_turn(scenario.start_turn);
+
+    std::vector<std::string> team_names;
+    std::vector<std::string> team_member_names;
+    for (const auto& team : scenario.teams) {
+        validate_team(team, nations);
+        team_names.push_back(team.name);
+        team_member_names.insert(team_member_names.end(), team.nations.begin(), team.nations.end());
+    }
+
+    std::sort(team_names.begin(), team_names.end());
+    if (std::unique(team_names.begin(), team_names.end()) != team_names.end())
+        boost::throw_exception(std::runtime_error("Each team name in a scenario must be unique"));
+
+    std::sort(team_member_names.begin(), team_member_names.end());
+    if (std::unique(team_member_names.begin(), team_member_names.end()) != team_member_names.end())
+        boost::throw_exception(std::runtime_error("Each nation in a scenario can belong to at most one team"));
+
+    auto team_turn_order = scenario.team_turn_order;
+    std::sort(team_turn_order.begin(), team_turn_order.end());
+    if (!std::equal(team_turn_order.begin(), team_turn_order.end(), team_names.begin())) {
+        boost::throw_exception(
+            std::runtime_error("Every team in a scenario must be listed in the turn order (with no extras)")
+        );
+    }
+
+    require_nonempty(scenario.map, "scenario.map");
+    require_nonempty(scenario.order_of_battle, "scenario.order_of_battle");
+
+    auto setup_order = scenario.setup_order;
+    std::sort(setup_order.begin(), setup_order.end());
+    if (!std::equal(setup_order.begin(), setup_order.end(), team_member_names.begin())) {
+        boost::throw_exception(
+            std::runtime_error("Every nation in a scenario must be listed in the setup order (with no extras)")
+        );
+    }
+
+    for (const auto& nation : scenario.nations) {
+        require_nation(nation.first, nations);
+        validate_scenario_nation(nation.second, nations);
+    }
+
+    for (const auto& turn : scenario.turns) {
+        validate_scenario_turn(turn, nations);
     }
 }

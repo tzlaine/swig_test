@@ -641,6 +641,15 @@ struct loaded_unit_defs_t
 };
 loaded_unit_defs_t g_loaded_unit_defs;
 
+struct loaded_scenario_t
+{
+    loaded_scenario_t () : initialized (false) {}
+
+    bool initialized;
+    scenario_t scenario;
+};
+loaded_scenario_t g_loaded_scenario;
+
 struct model_state_t
 {
     model_state_t () : initialized (false) {}
@@ -745,6 +754,31 @@ extern "C" {
         }
 
         g_loaded_unit_defs.initialized = true;
+
+        return 1;
+    } CATCH_AND_RETURN(0);
+
+    MODEL_API
+    int init_scenario (const char* scenario_str) try
+    {
+        if (scenario_str == nullptr)
+            throw std::runtime_error("init_scenario() was passed a null scenario data string.");
+
+        const std::string empty_str;
+        if (scenario_str == empty_str)
+            throw std::runtime_error("init_scenario() was passed an empty scenario data string.");
+
+        if (g_loaded_scenario.initialized)
+            return 1;
+
+        {
+            message::scenario_t scenario_msg;
+            json2pb(scenario_msg, scenario_str, strlen(scenario_str));
+            g_loaded_scenario.scenario = from_protobuf(scenario_msg);
+            validate_scenario(g_loaded_scenario.scenario, g_loaded_nations.nations);
+        }
+
+        g_loaded_scenario.initialized = true;
 
         return 1;
     } CATCH_AND_RETURN(0);

@@ -114,53 +114,56 @@ namespace Message {
             "aW9uX3VuaXRzGAEgAygLMiUubWVzc2FnZS51bml0X2RlZnNfdC5OYXRpb25V",
             "bml0c0VudHJ5Gk8KEE5hdGlvblVuaXRzRW50cnkSCwoDa2V5GAEgASgJEioK",
             "BXZhbHVlGAIgASgLMhsubWVzc2FnZS5uYXRpb25fdW5pdF9kZWZzX3Q6AjgB",
-            "IicKBnRlYW1fdBIMCgRuYW1lGAEgASgJEg8KB25hdGlvbnMYAiADKAki4gIK",
-            "FHNjZW5hcmlvX2NvbmRpdGlvbl90Eg0KBWFjdG9yGAEgASgJEjYKBmFjdGlv",
-            "bhgCIAEoDjImLm1lc3NhZ2Uuc2NlbmFyaW9fY29uZGl0aW9uX3QuYWN0aW9u",
-            "X3QSNgoGb2JqZWN0GAMgASgLMiYubWVzc2FnZS5zY2VuYXJpb19jb25kaXRp",
-            "b25fdC5vYmplY3RfdBpjCghvYmplY3RfdBI5CgR0eXBlGAEgASgOMisubWVz",
-            "c2FnZS5zY2VuYXJpb19jb25kaXRpb25fdC5vYmplY3RfdHlwZV90Eg0KBW5h",
-            "bWVzGAIgAygJEg0KBWhleGVzGAMgAygFIiYKCGFjdGlvbl90EgwKCG9jY3Vw",
-            "aWVzEAASDAoIZGVzdHJveXMQASI+Cg1vYmplY3RfdHlwZV90EgkKBWhleGVz",
-            "EAASDgoKZmxlZXRfYXJlYRABEgoKBm5hdGlvbhACEgYKAnNiEAMiXAoZZmxl",
-            "ZXRfcmVsZWFzZV9jb25kaXRpb25fdBINCgVmbGVldBgBIAEoCRIwCgljb25k",
-            "aXRpb24YAiABKAsyHS5tZXNzYWdlLnNjZW5hcmlvX2NvbmRpdGlvbl90InIK",
-            "FXdhcl9lbnRyeV9jb25kaXRpb25fdBInCgdlY29ub215GAMgASgOMhYubWVz",
-            "c2FnZS53YXJfZm9vdGluZ190EjAKCWNvbmRpdGlvbhgCIAEoCzIdLm1lc3Nh",
-            "Z2Uuc2NlbmFyaW9fY29uZGl0aW9uX3QitQMKD3NjZW5hcmlvX3R1cm5fdBJH",
-            "ChBuYXRpb25hbF9hY3Rpb25zGAEgAygLMi0ubWVzc2FnZS5zY2VuYXJpb190",
-            "dXJuX3QuTmF0aW9uYWxBY3Rpb25zRW50cnka9AEKEW5hdGlvbmFsX2FjdGlv",
-            "bl90EkQKB2FjdGlvbnMYASADKAsyMy5tZXNzYWdlLnNjZW5hcmlvX3R1cm5f",
-            "dC5uYXRpb25hbF9hY3Rpb25fdC5hY3Rpb25fdBpjCghhY3Rpb25fdBJGCgR0",
-            "eXBlGAEgASgOMjgubWVzc2FnZS5zY2VuYXJpb190dXJuX3QubmF0aW9uYWxf",
-            "YWN0aW9uX3QuYWN0aW9uX3R5cGVfdBIPCgdvYmplY3RzGAIgAygJIjQKDWFj",
-            "dGlvbl90eXBlX3QSEgoOcmVsZWFzZV9mbGVldHMQABIPCgtkZWNsYXJlX3dh",
-            "chABGmIKFE5hdGlvbmFsQWN0aW9uc0VudHJ5EgsKA2tleRgBIAEoCRI5CgV2",
-            "YWx1ZRgCIAEoCzIqLm1lc3NhZ2Uuc2NlbmFyaW9fdHVybl90Lm5hdGlvbmFs",
-            "X2FjdGlvbl90OgI4ASKiBAoKc2NlbmFyaW9fdBIMCgRuYW1lGAEgASgJEhMK",
-            "C2Rlc2NyaXB0aW9uGAIgASgJEiMKCnN0YXJ0X3R1cm4YAyABKAsyDy5tZXNz",
-            "YWdlLnR1cm5fdBIeCgV0ZWFtcxgEIAMoCzIPLm1lc3NhZ2UudGVhbV90EhcK",
-            "D3RlYW1fdHVybl9vcmRlchgFIAMoCRILCgNtYXAYBiABKAkSFwoPb3JkZXJf",
-            "b2ZfYmF0dGxlGAcgASgJEhMKC3NldHVwX29yZGVyGAggAygJEj4KEnJlbGVh",
-            "c2VfY29uZGl0aW9ucxgJIAMoCzIiLm1lc3NhZ2UuZmxlZXRfcmVsZWFzZV9j",
-            "b25kaXRpb25fdBI8ChR3YXJfZW50cnlfY29uZGl0aW9ucxgKIAMoCzIeLm1l",
-            "c3NhZ2Uud2FyX2VudHJ5X2NvbmRpdGlvbl90EjAKDnNjZW5hcmlvX3R1cm5z",
-            "GAsgAygLMhgubWVzc2FnZS5zY2VuYXJpb190dXJuX3QapwEKCG5hdGlvbl90",
-            "EhMKC2F0X3dhcl93aXRoGAEgAygJEhsKE2Z1dHVyZV9iZWxsaWdlcmVudHMY",
-            "AiADKAkSJwoHZWNvbm9teRgDIAEoDjIWLm1lc3NhZ2Uud2FyX2Zvb3Rpbmdf",
-            "dBIYChBleGhhdXN0aW9uX3R1cm5zGAQgASgFEiYKHmFjY3VtdWxhdGVfZXho",
-            "YXVzdGlvbl9hdF9wZWFjZRgFIAEoCCpMCglmZWF0dXJlX3QSDgoKbm9fZmVh",
-            "dHVyZRAAEggKBGJhdHMQARIGCgJzYhACEgcKA21pbhADEgcKA21hahAEEgsK",
-            "B2NhcGl0YWwQBSogCghzZWFzb25fdBIKCgZzcHJpbmcQABIICgRmYWxsEAEq",
-            "igEKDXR1Z19taXNzaW9uX3QSBQoBQRAAEgUKAUIQARIFCgFDEAISBQoBRBAD",
-            "EgUKAUUQBBIFCgFGEAUSBQoBRxAGEgUKAUgQBxIFCgFJEAgSBgoCSjEQCRIG",
-            "CgJKMhAKEgYKAksxEAsSBgoCSzIQDBIFCgFMEA0SBQoBTRAOEgUKAU4QDxIF",
-            "CgFPEBAqdgoOY2Fycmllcl90eXBlX3QSEQoNbm90X2FfY2FycmllchAAEhcK",
-            "E3NpbmdsZV9zaGlwX2NhcnJpZXIQARIRCg1saWdodF9jYXJyaWVyEAISEgoO",
-            "bWVkaXVtX2NhcnJpZXIQAxIRCg1oZWF2eV9jYXJyaWVyEAQqRgoNZXNjb3J0",
-            "X3R5cGVfdBIRCg1ub3RfYW5fZXNjb3J0EAASEAoMbGlnaHRfZXNjb3J0EAES",
-            "EAoMaGVhdnlfZXNjb3J0EAIqNAoNd2FyX2Zvb3RpbmdfdBIHCgN3YXIQABIP",
-            "CgtsaW1pdGVkX3dhchABEgkKBXBlYWNlEAJiBnByb3RvMw=="));
+            "IicKBnRlYW1fdBIMCgRuYW1lGAEgASgJEg8KB25hdGlvbnMYAiADKAki4wIK",
+            "FHNjZW5hcmlvX2NvbmRpdGlvbl90Eg4KBmFjdG9ycxgBIAMoCRI2CgZhY3Rp",
+            "b24YAiABKA4yJi5tZXNzYWdlLnNjZW5hcmlvX2NvbmRpdGlvbl90LmFjdGlv",
+            "bl90EjYKBm9uZV9vZhgDIAMoCzImLm1lc3NhZ2Uuc2NlbmFyaW9fY29uZGl0",
+            "aW9uX3Qub2JqZWN0X3QaYwoIb2JqZWN0X3QSOQoEdHlwZRgBIAEoDjIrLm1l",
+            "c3NhZ2Uuc2NlbmFyaW9fY29uZGl0aW9uX3Qub2JqZWN0X3R5cGVfdBINCgVu",
+            "YW1lcxgCIAMoCRINCgVoZXhlcxgDIAMoBSImCghhY3Rpb25fdBIMCghvY2N1",
+            "cGllcxAAEgwKCGRlc3Ryb3lzEAEiPgoNb2JqZWN0X3R5cGVfdBIJCgVoZXhl",
+            "cxAAEg4KCmZsZWV0X2FyZWEQARIKCgZuYXRpb24QAhIGCgJzYhADIlwKGWZs",
+            "ZWV0X3JlbGVhc2VfY29uZGl0aW9uX3QSDQoFZmxlZXQYASABKAkSMAoJY29u",
+            "ZGl0aW9uGAIgASgLMh0ubWVzc2FnZS5zY2VuYXJpb19jb25kaXRpb25fdCJy",
+            "ChV3YXJfZW50cnlfY29uZGl0aW9uX3QSJwoHZWNvbm9teRgDIAEoDjIWLm1l",
+            "c3NhZ2Uud2FyX2Zvb3RpbmdfdBIwCgljb25kaXRpb24YAiABKAsyHS5tZXNz",
+            "YWdlLnNjZW5hcmlvX2NvbmRpdGlvbl90IsEDCg9zY2VuYXJpb190dXJuX3QS",
+            "DAoEdHVybhgBIAEoBRJHChBuYXRpb25hbF9hY3Rpb25zGAIgAygLMi0ubWVz",
+            "c2FnZS5zY2VuYXJpb190dXJuX3QuTmF0aW9uYWxBY3Rpb25zRW50cnka8gEK",
+            "EW5hdGlvbmFsX2FjdGlvbl90EkQKB2FjdGlvbnMYASADKAsyMy5tZXNzYWdl",
+            "LnNjZW5hcmlvX3R1cm5fdC5uYXRpb25hbF9hY3Rpb25fdC5hY3Rpb25fdBph",
+            "CghhY3Rpb25fdBJGCgR0eXBlGAEgASgOMjgubWVzc2FnZS5zY2VuYXJpb190",
+            "dXJuX3QubmF0aW9uYWxfYWN0aW9uX3QuYWN0aW9uX3R5cGVfdBINCgVuYW1l",
+            "cxgCIAMoCSI0Cg1hY3Rpb25fdHlwZV90EhIKDnJlbGVhc2VfZmxlZXRzEAAS",
+            "DwoLZGVjbGFyZV93YXIQARpiChROYXRpb25hbEFjdGlvbnNFbnRyeRILCgNr",
+            "ZXkYASABKAkSOQoFdmFsdWUYAiABKAsyKi5tZXNzYWdlLnNjZW5hcmlvX3R1",
+            "cm5fdC5uYXRpb25hbF9hY3Rpb25fdDoCOAEimgUKCnNjZW5hcmlvX3QSDAoE",
+            "bmFtZRgBIAEoCRITCgtkZXNjcmlwdGlvbhgCIAEoCRIjCgpzdGFydF90dXJu",
+            "GAMgASgLMg8ubWVzc2FnZS50dXJuX3QSHgoFdGVhbXMYBCADKAsyDy5tZXNz",
+            "YWdlLnRlYW1fdBIXCg90ZWFtX3R1cm5fb3JkZXIYBSADKAkSCwoDbWFwGAYg",
+            "ASgJEhcKD29yZGVyX29mX2JhdHRsZRgHIAEoCRITCgtzZXR1cF9vcmRlchgI",
+            "IAMoCRIxCgduYXRpb25zGAkgAygLMiAubWVzc2FnZS5zY2VuYXJpb190Lk5h",
+            "dGlvbnNFbnRyeRInCgV0dXJucxgKIAMoCzIYLm1lc3NhZ2Uuc2NlbmFyaW9f",
+            "dHVybl90GqUCCghuYXRpb25fdBITCgthdF93YXJfd2l0aBgBIAMoCRIbChNm",
+            "dXR1cmVfYmVsbGlnZXJlbnRzGAIgAygJEicKB2Vjb25vbXkYAyABKA4yFi5t",
+            "ZXNzYWdlLndhcl9mb290aW5nX3QSGAoQZXhoYXVzdGlvbl90dXJucxgEIAEo",
+            "BRImCh5hY2N1bXVsYXRlX2V4aGF1c3Rpb25fYXRfcGVhY2UYBSABKAgSPgoS",
+            "cmVsZWFzZV9jb25kaXRpb25zGAYgAygLMiIubWVzc2FnZS5mbGVldF9yZWxl",
+            "YXNlX2NvbmRpdGlvbl90EjwKFHdhcl9lbnRyeV9jb25kaXRpb25zGAcgAygL",
+            "Mh4ubWVzc2FnZS53YXJfZW50cnlfY29uZGl0aW9uX3QaTAoMTmF0aW9uc0Vu",
+            "dHJ5EgsKA2tleRgBIAEoCRIrCgV2YWx1ZRgCIAEoCzIcLm1lc3NhZ2Uuc2Nl",
+            "bmFyaW9fdC5uYXRpb25fdDoCOAEqTAoJZmVhdHVyZV90Eg4KCm5vX2ZlYXR1",
+            "cmUQABIICgRiYXRzEAESBgoCc2IQAhIHCgNtaW4QAxIHCgNtYWoQBBILCgdj",
+            "YXBpdGFsEAUqIAoIc2Vhc29uX3QSCgoGc3ByaW5nEAASCAoEZmFsbBABKooB",
+            "Cg10dWdfbWlzc2lvbl90EgUKAUEQABIFCgFCEAESBQoBQxACEgUKAUQQAxIF",
+            "CgFFEAQSBQoBRhAFEgUKAUcQBhIFCgFIEAcSBQoBSRAIEgYKAkoxEAkSBgoC",
+            "SjIQChIGCgJLMRALEgYKAksyEAwSBQoBTBANEgUKAU0QDhIFCgFOEA8SBQoB",
+            "TxAQKnYKDmNhcnJpZXJfdHlwZV90EhEKDW5vdF9hX2NhcnJpZXIQABIXChNz",
+            "aW5nbGVfc2hpcF9jYXJyaWVyEAESEQoNbGlnaHRfY2FycmllchACEhIKDm1l",
+            "ZGl1bV9jYXJyaWVyEAMSEQoNaGVhdnlfY2FycmllchAEKkYKDWVzY29ydF90",
+            "eXBlX3QSEQoNbm90X2FuX2VzY29ydBAAEhAKDGxpZ2h0X2VzY29ydBABEhAK",
+            "DGhlYXZ5X2VzY29ydBACKjQKDXdhcl9mb290aW5nX3QSBwoDd2FyEAASDwoL",
+            "bGltaXRlZF93YXIQARIJCgVwZWFjZRACYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), typeof(global::Message.tug_mission_t), typeof(global::Message.carrier_type_t), typeof(global::Message.escort_type_t), typeof(global::Message.war_footing_t), }, new pbr::GeneratedCodeInfo[] {
@@ -192,12 +195,13 @@ namespace Message {
             new pbr::GeneratedCodeInfo(typeof(global::Message.nation_unit_defs_t), global::Message.nation_unit_defs_t.Parser, new[]{ "Units" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.unit_defs_t), global::Message.unit_defs_t.Parser, new[]{ "NationUnits" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
             new pbr::GeneratedCodeInfo(typeof(global::Message.team_t), global::Message.team_t.Parser, new[]{ "Name", "Nations" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_condition_t), global::Message.scenario_condition_t.Parser, new[]{ "Actor", "Action", "Object" }, null, new[]{ typeof(global::Message.scenario_condition_t.Types.action_t), typeof(global::Message.scenario_condition_t.Types.object_type_t) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_condition_t.Types.object_t), global::Message.scenario_condition_t.Types.object_t.Parser, new[]{ "Type", "Names", "Hexes" }, null, null, null)}),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_condition_t), global::Message.scenario_condition_t.Parser, new[]{ "Actors", "Action", "OneOf" }, null, new[]{ typeof(global::Message.scenario_condition_t.Types.action_t), typeof(global::Message.scenario_condition_t.Types.object_type_t) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_condition_t.Types.object_t), global::Message.scenario_condition_t.Types.object_t.Parser, new[]{ "Type", "Names", "Hexes" }, null, null, null)}),
             new pbr::GeneratedCodeInfo(typeof(global::Message.fleet_release_condition_t), global::Message.fleet_release_condition_t.Parser, new[]{ "Fleet", "Condition" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.war_entry_condition_t), global::Message.war_entry_condition_t.Parser, new[]{ "Economy", "Condition" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t), global::Message.scenario_turn_t.Parser, new[]{ "NationalActions" }, null, null, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t.Types.national_action_t), global::Message.scenario_turn_t.Types.national_action_t.Parser, new[]{ "Actions" }, null, new[]{ typeof(global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t.Types.national_action_t.Types.action_t), global::Message.scenario_turn_t.Types.national_action_t.Types.action_t.Parser, new[]{ "Type", "Objects" }, null, null, null)}),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t), global::Message.scenario_turn_t.Parser, new[]{ "Turn", "NationalActions" }, null, null, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t.Types.national_action_t), global::Message.scenario_turn_t.Types.national_action_t.Parser, new[]{ "Actions" }, null, new[]{ typeof(global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t.Types.national_action_t.Types.action_t), global::Message.scenario_turn_t.Types.national_action_t.Types.action_t.Parser, new[]{ "Type", "Names" }, null, null, null)}),
             null, }),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_t), global::Message.scenario_t.Parser, new[]{ "Name", "Description", "StartTurn", "Teams", "TeamTurnOrder", "Map", "OrderOfBattle", "SetupOrder", "ReleaseConditions", "WarEntryConditions", "ScenarioTurns" }, null, null, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_t.Types.nation_t), global::Message.scenario_t.Types.nation_t.Parser, new[]{ "AtWarWith", "FutureBelligerents", "Economy", "ExhaustionTurns", "AccumulateExhaustionAtPeace" }, null, null, null)})
+            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_t), global::Message.scenario_t.Parser, new[]{ "Name", "Description", "StartTurn", "Teams", "TeamTurnOrder", "Map", "OrderOfBattle", "SetupOrder", "Nations", "Turns" }, null, null, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_t.Types.nation_t), global::Message.scenario_t.Types.nation_t.Parser, new[]{ "AtWarWith", "FutureBelligerents", "Economy", "ExhaustionTurns", "AccumulateExhaustionAtPeace", "ReleaseConditions", "WarEntryConditions" }, null, null, null),
+            null, })
           }));
     }
     #endregion
@@ -4917,23 +4921,22 @@ namespace Message {
     partial void OnConstruction();
 
     public scenario_condition_t(scenario_condition_t other) : this() {
-      actor_ = other.actor_;
+      actors_ = other.actors_.Clone();
       action_ = other.action_;
-      Object = other.object_ != null ? other.Object.Clone() : null;
+      oneOf_ = other.oneOf_.Clone();
     }
 
     public scenario_condition_t Clone() {
       return new scenario_condition_t(this);
     }
 
-    /// <summary>Field number for the "actor" field.</summary>
-    public const int ActorFieldNumber = 1;
-    private string actor_ = "";
-    public string Actor {
-      get { return actor_; }
-      set {
-        actor_ = pb::Preconditions.CheckNotNull(value, "value");
-      }
+    /// <summary>Field number for the "actors" field.</summary>
+    public const int ActorsFieldNumber = 1;
+    private static readonly pb::FieldCodec<string> _repeated_actors_codec
+        = pb::FieldCodec.ForString(10);
+    private readonly pbc::RepeatedField<string> actors_ = new pbc::RepeatedField<string>();
+    public pbc::RepeatedField<string> Actors {
+      get { return actors_; }
     }
 
     /// <summary>Field number for the "action" field.</summary>
@@ -4946,14 +4949,13 @@ namespace Message {
       }
     }
 
-    /// <summary>Field number for the "object" field.</summary>
-    public const int ObjectFieldNumber = 3;
-    private global::Message.scenario_condition_t.Types.object_t object_;
-    public global::Message.scenario_condition_t.Types.object_t Object {
-      get { return object_; }
-      set {
-        object_ = value;
-      }
+    /// <summary>Field number for the "one_of" field.</summary>
+    public const int OneOfFieldNumber = 3;
+    private static readonly pb::FieldCodec<global::Message.scenario_condition_t.Types.object_t> _repeated_oneOf_codec
+        = pb::FieldCodec.ForMessage(26, global::Message.scenario_condition_t.Types.object_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.scenario_condition_t.Types.object_t> oneOf_ = new pbc::RepeatedField<global::Message.scenario_condition_t.Types.object_t>();
+    public pbc::RepeatedField<global::Message.scenario_condition_t.Types.object_t> OneOf {
+      get { return oneOf_; }
     }
 
     public override bool Equals(object other) {
@@ -4967,17 +4969,17 @@ namespace Message {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Actor != other.Actor) return false;
+      if(!actors_.Equals(other.actors_)) return false;
       if (Action != other.Action) return false;
-      if (!object.Equals(Object, other.Object)) return false;
+      if(!oneOf_.Equals(other.oneOf_)) return false;
       return true;
     }
 
     public override int GetHashCode() {
       int hash = 1;
-      if (Actor.Length != 0) hash ^= Actor.GetHashCode();
+      hash ^= actors_.GetHashCode();
       if (Action != global::Message.scenario_condition_t.Types.action_t.occupies) hash ^= Action.GetHashCode();
-      if (object_ != null) hash ^= Object.GetHashCode();
+      hash ^= oneOf_.GetHashCode();
       return hash;
     }
 
@@ -4986,31 +4988,21 @@ namespace Message {
     }
 
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Actor.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Actor);
-      }
+      actors_.WriteTo(output, _repeated_actors_codec);
       if (Action != global::Message.scenario_condition_t.Types.action_t.occupies) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Action);
       }
-      if (object_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Object);
-      }
+      oneOf_.WriteTo(output, _repeated_oneOf_codec);
     }
 
     public int CalculateSize() {
       int size = 0;
-      if (Actor.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Actor);
-      }
+      size += actors_.CalculateSize(_repeated_actors_codec);
       if (Action != global::Message.scenario_condition_t.Types.action_t.occupies) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Action);
       }
-      if (object_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Object);
-      }
+      size += oneOf_.CalculateSize(_repeated_oneOf_codec);
       return size;
     }
 
@@ -5018,18 +5010,11 @@ namespace Message {
       if (other == null) {
         return;
       }
-      if (other.Actor.Length != 0) {
-        Actor = other.Actor;
-      }
+      actors_.Add(other.actors_);
       if (other.Action != global::Message.scenario_condition_t.Types.action_t.occupies) {
         Action = other.Action;
       }
-      if (other.object_ != null) {
-        if (object_ == null) {
-          object_ = new global::Message.scenario_condition_t.Types.object_t();
-        }
-        Object.MergeFrom(other.Object);
-      }
+      oneOf_.Add(other.oneOf_);
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
@@ -5040,7 +5025,7 @@ namespace Message {
             input.SkipLastField();
             break;
           case 10: {
-            Actor = input.ReadString();
+            actors_.AddEntriesFrom(input, _repeated_actors_codec);
             break;
           }
           case 16: {
@@ -5048,10 +5033,7 @@ namespace Message {
             break;
           }
           case 26: {
-            if (object_ == null) {
-              object_ = new global::Message.scenario_condition_t.Types.object_t();
-            }
-            input.ReadMessage(object_);
+            oneOf_.AddEntriesFrom(input, _repeated_oneOf_codec);
             break;
           }
         }
@@ -5513,6 +5495,7 @@ namespace Message {
     partial void OnConstruction();
 
     public scenario_turn_t(scenario_turn_t other) : this() {
+      turn_ = other.turn_;
       nationalActions_ = other.nationalActions_.Clone();
     }
 
@@ -5520,10 +5503,20 @@ namespace Message {
       return new scenario_turn_t(this);
     }
 
+    /// <summary>Field number for the "turn" field.</summary>
+    public const int TurnFieldNumber = 1;
+    private int turn_;
+    public int Turn {
+      get { return turn_; }
+      set {
+        turn_ = value;
+      }
+    }
+
     /// <summary>Field number for the "national_actions" field.</summary>
-    public const int NationalActionsFieldNumber = 1;
+    public const int NationalActionsFieldNumber = 2;
     private static readonly pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>.Codec _map_nationalActions_codec
-        = new pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.scenario_turn_t.Types.national_action_t.Parser), 10);
+        = new pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.scenario_turn_t.Types.national_action_t.Parser), 18);
     private readonly pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t> nationalActions_ = new pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>();
     public pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t> NationalActions {
       get { return nationalActions_; }
@@ -5540,12 +5533,14 @@ namespace Message {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Turn != other.Turn) return false;
       if (!NationalActions.Equals(other.NationalActions)) return false;
       return true;
     }
 
     public override int GetHashCode() {
       int hash = 1;
+      if (Turn != 0) hash ^= Turn.GetHashCode();
       hash ^= NationalActions.GetHashCode();
       return hash;
     }
@@ -5555,11 +5550,18 @@ namespace Message {
     }
 
     public void WriteTo(pb::CodedOutputStream output) {
+      if (Turn != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Turn);
+      }
       nationalActions_.WriteTo(output, _map_nationalActions_codec);
     }
 
     public int CalculateSize() {
       int size = 0;
+      if (Turn != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Turn);
+      }
       size += nationalActions_.CalculateSize(_map_nationalActions_codec);
       return size;
     }
@@ -5567,6 +5569,9 @@ namespace Message {
     public void MergeFrom(scenario_turn_t other) {
       if (other == null) {
         return;
+      }
+      if (other.Turn != 0) {
+        Turn = other.Turn;
       }
       nationalActions_.Add(other.nationalActions_);
     }
@@ -5578,7 +5583,11 @@ namespace Message {
           default:
             input.SkipLastField();
             break;
-          case 10: {
+          case 8: {
+            Turn = input.ReadInt32();
+            break;
+          }
+          case 18: {
             nationalActions_.AddEntriesFrom(input, _map_nationalActions_codec);
             break;
           }
@@ -5713,7 +5722,7 @@ namespace Message {
 
             public action_t(action_t other) : this() {
               type_ = other.type_;
-              objects_ = other.objects_.Clone();
+              names_ = other.names_.Clone();
             }
 
             public action_t Clone() {
@@ -5730,13 +5739,13 @@ namespace Message {
               }
             }
 
-            /// <summary>Field number for the "objects" field.</summary>
-            public const int ObjectsFieldNumber = 2;
-            private static readonly pb::FieldCodec<string> _repeated_objects_codec
+            /// <summary>Field number for the "names" field.</summary>
+            public const int NamesFieldNumber = 2;
+            private static readonly pb::FieldCodec<string> _repeated_names_codec
                 = pb::FieldCodec.ForString(18);
-            private readonly pbc::RepeatedField<string> objects_ = new pbc::RepeatedField<string>();
-            public pbc::RepeatedField<string> Objects {
-              get { return objects_; }
+            private readonly pbc::RepeatedField<string> names_ = new pbc::RepeatedField<string>();
+            public pbc::RepeatedField<string> Names {
+              get { return names_; }
             }
 
             public override bool Equals(object other) {
@@ -5751,14 +5760,14 @@ namespace Message {
                 return true;
               }
               if (Type != other.Type) return false;
-              if(!objects_.Equals(other.objects_)) return false;
+              if(!names_.Equals(other.names_)) return false;
               return true;
             }
 
             public override int GetHashCode() {
               int hash = 1;
               if (Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) hash ^= Type.GetHashCode();
-              hash ^= objects_.GetHashCode();
+              hash ^= names_.GetHashCode();
               return hash;
             }
 
@@ -5771,7 +5780,7 @@ namespace Message {
                 output.WriteRawTag(8);
                 output.WriteEnum((int) Type);
               }
-              objects_.WriteTo(output, _repeated_objects_codec);
+              names_.WriteTo(output, _repeated_names_codec);
             }
 
             public int CalculateSize() {
@@ -5779,7 +5788,7 @@ namespace Message {
               if (Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) {
                 size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
               }
-              size += objects_.CalculateSize(_repeated_objects_codec);
+              size += names_.CalculateSize(_repeated_names_codec);
               return size;
             }
 
@@ -5790,7 +5799,7 @@ namespace Message {
               if (other.Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) {
                 Type = other.Type;
               }
-              objects_.Add(other.objects_);
+              names_.Add(other.names_);
             }
 
             public void MergeFrom(pb::CodedInputStream input) {
@@ -5805,7 +5814,7 @@ namespace Message {
                     break;
                   }
                   case 18: {
-                    objects_.AddEntriesFrom(input, _repeated_objects_codec);
+                    names_.AddEntriesFrom(input, _repeated_names_codec);
                     break;
                   }
                 }
@@ -5852,9 +5861,8 @@ namespace Message {
       map_ = other.map_;
       orderOfBattle_ = other.orderOfBattle_;
       setupOrder_ = other.setupOrder_.Clone();
-      releaseConditions_ = other.releaseConditions_.Clone();
-      warEntryConditions_ = other.warEntryConditions_.Clone();
-      scenarioTurns_ = other.scenarioTurns_.Clone();
+      nations_ = other.nations_.Clone();
+      turns_ = other.turns_.Clone();
     }
 
     public scenario_t Clone() {
@@ -5938,31 +5946,22 @@ namespace Message {
       get { return setupOrder_; }
     }
 
-    /// <summary>Field number for the "release_conditions" field.</summary>
-    public const int ReleaseConditionsFieldNumber = 9;
-    private static readonly pb::FieldCodec<global::Message.fleet_release_condition_t> _repeated_releaseConditions_codec
-        = pb::FieldCodec.ForMessage(74, global::Message.fleet_release_condition_t.Parser);
-    private readonly pbc::RepeatedField<global::Message.fleet_release_condition_t> releaseConditions_ = new pbc::RepeatedField<global::Message.fleet_release_condition_t>();
-    public pbc::RepeatedField<global::Message.fleet_release_condition_t> ReleaseConditions {
-      get { return releaseConditions_; }
+    /// <summary>Field number for the "nations" field.</summary>
+    public const int NationsFieldNumber = 9;
+    private static readonly pbc::MapField<string, global::Message.scenario_t.Types.nation_t>.Codec _map_nations_codec
+        = new pbc::MapField<string, global::Message.scenario_t.Types.nation_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.scenario_t.Types.nation_t.Parser), 74);
+    private readonly pbc::MapField<string, global::Message.scenario_t.Types.nation_t> nations_ = new pbc::MapField<string, global::Message.scenario_t.Types.nation_t>();
+    public pbc::MapField<string, global::Message.scenario_t.Types.nation_t> Nations {
+      get { return nations_; }
     }
 
-    /// <summary>Field number for the "war_entry_conditions" field.</summary>
-    public const int WarEntryConditionsFieldNumber = 10;
-    private static readonly pb::FieldCodec<global::Message.war_entry_condition_t> _repeated_warEntryConditions_codec
-        = pb::FieldCodec.ForMessage(82, global::Message.war_entry_condition_t.Parser);
-    private readonly pbc::RepeatedField<global::Message.war_entry_condition_t> warEntryConditions_ = new pbc::RepeatedField<global::Message.war_entry_condition_t>();
-    public pbc::RepeatedField<global::Message.war_entry_condition_t> WarEntryConditions {
-      get { return warEntryConditions_; }
-    }
-
-    /// <summary>Field number for the "scenario_turns" field.</summary>
-    public const int ScenarioTurnsFieldNumber = 11;
-    private static readonly pb::FieldCodec<global::Message.scenario_turn_t> _repeated_scenarioTurns_codec
-        = pb::FieldCodec.ForMessage(90, global::Message.scenario_turn_t.Parser);
-    private readonly pbc::RepeatedField<global::Message.scenario_turn_t> scenarioTurns_ = new pbc::RepeatedField<global::Message.scenario_turn_t>();
-    public pbc::RepeatedField<global::Message.scenario_turn_t> ScenarioTurns {
-      get { return scenarioTurns_; }
+    /// <summary>Field number for the "turns" field.</summary>
+    public const int TurnsFieldNumber = 10;
+    private static readonly pb::FieldCodec<global::Message.scenario_turn_t> _repeated_turns_codec
+        = pb::FieldCodec.ForMessage(82, global::Message.scenario_turn_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.scenario_turn_t> turns_ = new pbc::RepeatedField<global::Message.scenario_turn_t>();
+    public pbc::RepeatedField<global::Message.scenario_turn_t> Turns {
+      get { return turns_; }
     }
 
     public override bool Equals(object other) {
@@ -5984,9 +5983,8 @@ namespace Message {
       if (Map != other.Map) return false;
       if (OrderOfBattle != other.OrderOfBattle) return false;
       if(!setupOrder_.Equals(other.setupOrder_)) return false;
-      if(!releaseConditions_.Equals(other.releaseConditions_)) return false;
-      if(!warEntryConditions_.Equals(other.warEntryConditions_)) return false;
-      if(!scenarioTurns_.Equals(other.scenarioTurns_)) return false;
+      if (!Nations.Equals(other.Nations)) return false;
+      if(!turns_.Equals(other.turns_)) return false;
       return true;
     }
 
@@ -6000,9 +5998,8 @@ namespace Message {
       if (Map.Length != 0) hash ^= Map.GetHashCode();
       if (OrderOfBattle.Length != 0) hash ^= OrderOfBattle.GetHashCode();
       hash ^= setupOrder_.GetHashCode();
-      hash ^= releaseConditions_.GetHashCode();
-      hash ^= warEntryConditions_.GetHashCode();
-      hash ^= scenarioTurns_.GetHashCode();
+      hash ^= Nations.GetHashCode();
+      hash ^= turns_.GetHashCode();
       return hash;
     }
 
@@ -6034,9 +6031,8 @@ namespace Message {
         output.WriteString(OrderOfBattle);
       }
       setupOrder_.WriteTo(output, _repeated_setupOrder_codec);
-      releaseConditions_.WriteTo(output, _repeated_releaseConditions_codec);
-      warEntryConditions_.WriteTo(output, _repeated_warEntryConditions_codec);
-      scenarioTurns_.WriteTo(output, _repeated_scenarioTurns_codec);
+      nations_.WriteTo(output, _map_nations_codec);
+      turns_.WriteTo(output, _repeated_turns_codec);
     }
 
     public int CalculateSize() {
@@ -6059,9 +6055,8 @@ namespace Message {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(OrderOfBattle);
       }
       size += setupOrder_.CalculateSize(_repeated_setupOrder_codec);
-      size += releaseConditions_.CalculateSize(_repeated_releaseConditions_codec);
-      size += warEntryConditions_.CalculateSize(_repeated_warEntryConditions_codec);
-      size += scenarioTurns_.CalculateSize(_repeated_scenarioTurns_codec);
+      size += nations_.CalculateSize(_map_nations_codec);
+      size += turns_.CalculateSize(_repeated_turns_codec);
       return size;
     }
 
@@ -6090,9 +6085,8 @@ namespace Message {
         OrderOfBattle = other.OrderOfBattle;
       }
       setupOrder_.Add(other.setupOrder_);
-      releaseConditions_.Add(other.releaseConditions_);
-      warEntryConditions_.Add(other.warEntryConditions_);
-      scenarioTurns_.Add(other.scenarioTurns_);
+      nations_.Add(other.nations_);
+      turns_.Add(other.turns_);
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
@@ -6138,15 +6132,11 @@ namespace Message {
             break;
           }
           case 74: {
-            releaseConditions_.AddEntriesFrom(input, _repeated_releaseConditions_codec);
+            nations_.AddEntriesFrom(input, _map_nations_codec);
             break;
           }
           case 82: {
-            warEntryConditions_.AddEntriesFrom(input, _repeated_warEntryConditions_codec);
-            break;
-          }
-          case 90: {
-            scenarioTurns_.AddEntriesFrom(input, _repeated_scenarioTurns_codec);
+            turns_.AddEntriesFrom(input, _repeated_turns_codec);
             break;
           }
         }
@@ -6182,6 +6172,8 @@ namespace Message {
           economy_ = other.economy_;
           exhaustionTurns_ = other.exhaustionTurns_;
           accumulateExhaustionAtPeace_ = other.accumulateExhaustionAtPeace_;
+          releaseConditions_ = other.releaseConditions_.Clone();
+          warEntryConditions_ = other.warEntryConditions_.Clone();
         }
 
         public nation_t Clone() {
@@ -6236,6 +6228,24 @@ namespace Message {
           }
         }
 
+        /// <summary>Field number for the "release_conditions" field.</summary>
+        public const int ReleaseConditionsFieldNumber = 6;
+        private static readonly pb::FieldCodec<global::Message.fleet_release_condition_t> _repeated_releaseConditions_codec
+            = pb::FieldCodec.ForMessage(50, global::Message.fleet_release_condition_t.Parser);
+        private readonly pbc::RepeatedField<global::Message.fleet_release_condition_t> releaseConditions_ = new pbc::RepeatedField<global::Message.fleet_release_condition_t>();
+        public pbc::RepeatedField<global::Message.fleet_release_condition_t> ReleaseConditions {
+          get { return releaseConditions_; }
+        }
+
+        /// <summary>Field number for the "war_entry_conditions" field.</summary>
+        public const int WarEntryConditionsFieldNumber = 7;
+        private static readonly pb::FieldCodec<global::Message.war_entry_condition_t> _repeated_warEntryConditions_codec
+            = pb::FieldCodec.ForMessage(58, global::Message.war_entry_condition_t.Parser);
+        private readonly pbc::RepeatedField<global::Message.war_entry_condition_t> warEntryConditions_ = new pbc::RepeatedField<global::Message.war_entry_condition_t>();
+        public pbc::RepeatedField<global::Message.war_entry_condition_t> WarEntryConditions {
+          get { return warEntryConditions_; }
+        }
+
         public override bool Equals(object other) {
           return Equals(other as nation_t);
         }
@@ -6252,6 +6262,8 @@ namespace Message {
           if (Economy != other.Economy) return false;
           if (ExhaustionTurns != other.ExhaustionTurns) return false;
           if (AccumulateExhaustionAtPeace != other.AccumulateExhaustionAtPeace) return false;
+          if(!releaseConditions_.Equals(other.releaseConditions_)) return false;
+          if(!warEntryConditions_.Equals(other.warEntryConditions_)) return false;
           return true;
         }
 
@@ -6262,6 +6274,8 @@ namespace Message {
           if (Economy != global::Message.war_footing_t.war) hash ^= Economy.GetHashCode();
           if (ExhaustionTurns != 0) hash ^= ExhaustionTurns.GetHashCode();
           if (AccumulateExhaustionAtPeace != false) hash ^= AccumulateExhaustionAtPeace.GetHashCode();
+          hash ^= releaseConditions_.GetHashCode();
+          hash ^= warEntryConditions_.GetHashCode();
           return hash;
         }
 
@@ -6284,6 +6298,8 @@ namespace Message {
             output.WriteRawTag(40);
             output.WriteBool(AccumulateExhaustionAtPeace);
           }
+          releaseConditions_.WriteTo(output, _repeated_releaseConditions_codec);
+          warEntryConditions_.WriteTo(output, _repeated_warEntryConditions_codec);
         }
 
         public int CalculateSize() {
@@ -6299,6 +6315,8 @@ namespace Message {
           if (AccumulateExhaustionAtPeace != false) {
             size += 1 + 1;
           }
+          size += releaseConditions_.CalculateSize(_repeated_releaseConditions_codec);
+          size += warEntryConditions_.CalculateSize(_repeated_warEntryConditions_codec);
           return size;
         }
 
@@ -6317,6 +6335,8 @@ namespace Message {
           if (other.AccumulateExhaustionAtPeace != false) {
             AccumulateExhaustionAtPeace = other.AccumulateExhaustionAtPeace;
           }
+          releaseConditions_.Add(other.releaseConditions_);
+          warEntryConditions_.Add(other.warEntryConditions_);
         }
 
         public void MergeFrom(pb::CodedInputStream input) {
@@ -6344,6 +6364,14 @@ namespace Message {
               }
               case 40: {
                 AccumulateExhaustionAtPeace = input.ReadBool();
+                break;
+              }
+              case 50: {
+                releaseConditions_.AddEntriesFrom(input, _repeated_releaseConditions_codec);
+                break;
+              }
+              case 58: {
+                warEntryConditions_.AddEntriesFrom(input, _repeated_warEntryConditions_codec);
                 break;
               }
             }

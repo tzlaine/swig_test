@@ -49,6 +49,7 @@ if (MSVC)
 	${CMAKE_HOME_DIRECTORY}/default_map.json
 	${CMAKE_HOME_DIRECTORY}/default_oob.json
 	${CMAKE_HOME_DIRECTORY}/units.json
+	${CMAKE_HOME_DIRECTORY}/scenarios/the_wind.json
     )
 endif ()
 add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests ${model_test_args})

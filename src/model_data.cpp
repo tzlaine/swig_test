@@ -797,18 +797,34 @@ message::scenario_condition_t::object_t to_protobuf (const ::scenario_condition_
 message::scenario_condition_t to_protobuf (const ::scenario_condition_t& value)
 {
     message::scenario_condition_t retval;
-    retval.set_actor(value.actor);
+    for (const auto& x : value.actors) {
+        retval.add_actors(x);
+    }
     retval.set_action(static_cast< message::scenario_condition_t::action_t >(value.action));
-    retval.mutable_object()->CopyFrom(to_protobuf(value.object));
+    for (const auto& x : value.one_of) {
+        retval.add_one_of()->CopyFrom(to_protobuf(x));
+    }
     return retval;
 }
 
 ::scenario_condition_t from_protobuf (const message::scenario_condition_t& msg)
 {
     ::scenario_condition_t retval;
-    retval.actor = msg.actor();
+    {
+        retval.actors.resize(msg.actors_size());
+        auto it = retval.actors.begin();
+        for (const auto& x : msg.actors()) {
+            *it++ = x;
+        }
+    }
     retval.action = static_cast< scenario_condition_t::action_t >(msg.action());
-    retval.object = from_protobuf(msg.object());
+    {
+        retval.one_of.resize(msg.one_of_size());
+        auto it = retval.one_of.begin();
+        for (const auto& x : msg.one_of()) {
+            *it++ = from_protobuf(x);
+        }
+    }
     return retval;
 }
 
@@ -848,8 +864,8 @@ message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scena
 {
     message::scenario_turn_t::national_action_t::action_t retval;
     retval.set_type(static_cast< message::scenario_turn_t::national_action_t::action_type_t >(value.type));
-    for (const auto& x : value.objects) {
-        retval.add_objects(x);
+    for (const auto& x : value.names) {
+        retval.add_names(x);
     }
     return retval;
 }
@@ -859,9 +875,9 @@ message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scena
     ::scenario_turn_t::national_action_t::action_t retval;
     retval.type = static_cast< scenario_turn_t::national_action_t::action_type_t >(msg.type());
     {
-        retval.objects.resize(msg.objects_size());
-        auto it = retval.objects.begin();
-        for (const auto& x : msg.objects()) {
+        retval.names.resize(msg.names_size());
+        auto it = retval.names.begin();
+        for (const auto& x : msg.names()) {
             *it++ = x;
         }
     }
@@ -893,6 +909,7 @@ message::scenario_turn_t::national_action_t to_protobuf (const ::scenario_turn_t
 message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value)
 {
     message::scenario_turn_t retval;
+    retval.set_turn(value.turn);
     for (const auto& x : value.national_actions) {
         (*retval.mutable_national_actions())[x.first] = to_protobuf(x.second);
     }
@@ -902,6 +919,7 @@ message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value)
 ::scenario_turn_t from_protobuf (const message::scenario_turn_t& msg)
 {
     ::scenario_turn_t retval;
+    retval.turn = msg.turn();
     {
         for (const auto& x : msg.national_actions()) {
             retval.national_actions[x.first] = from_protobuf(x.second);
@@ -922,6 +940,12 @@ message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value)
     retval.set_economy(static_cast< message::war_footing_t >(value.economy));
     retval.set_exhaustion_turns(value.exhaustion_turns);
     retval.set_accumulate_exhaustion_at_peace(value.accumulate_exhaustion_at_peace);
+    for (const auto& x : value.release_conditions) {
+        retval.add_release_conditions()->CopyFrom(to_protobuf(x));
+    }
+    for (const auto& x : value.war_entry_conditions) {
+        retval.add_war_entry_conditions()->CopyFrom(to_protobuf(x));
+    }
     return retval;
 }
 
@@ -945,6 +969,20 @@ message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value)
     retval.economy = static_cast< war_footing_t >(msg.economy());
     retval.exhaustion_turns = msg.exhaustion_turns();
     retval.accumulate_exhaustion_at_peace = msg.accumulate_exhaustion_at_peace();
+    {
+        retval.release_conditions.resize(msg.release_conditions_size());
+        auto it = retval.release_conditions.begin();
+        for (const auto& x : msg.release_conditions()) {
+            *it++ = from_protobuf(x);
+        }
+    }
+    {
+        retval.war_entry_conditions.resize(msg.war_entry_conditions_size());
+        auto it = retval.war_entry_conditions.begin();
+        for (const auto& x : msg.war_entry_conditions()) {
+            *it++ = from_protobuf(x);
+        }
+    }
     return retval;
 }
 
@@ -965,14 +1003,11 @@ message::scenario_t to_protobuf (const ::scenario_t& value)
     for (const auto& x : value.setup_order) {
         retval.add_setup_order(x);
     }
-    for (const auto& x : value.release_conditions) {
-        retval.add_release_conditions()->CopyFrom(to_protobuf(x));
+    for (const auto& x : value.nations) {
+        (*retval.mutable_nations())[x.first] = to_protobuf(x.second);
     }
-    for (const auto& x : value.war_entry_conditions) {
-        retval.add_war_entry_conditions()->CopyFrom(to_protobuf(x));
-    }
-    for (const auto& x : value.scenario_turns) {
-        retval.add_scenario_turns()->CopyFrom(to_protobuf(x));
+    for (const auto& x : value.turns) {
+        retval.add_turns()->CopyFrom(to_protobuf(x));
     }
     return retval;
 }
@@ -1007,23 +1042,14 @@ message::scenario_t to_protobuf (const ::scenario_t& value)
         }
     }
     {
-        retval.release_conditions.resize(msg.release_conditions_size());
-        auto it = retval.release_conditions.begin();
-        for (const auto& x : msg.release_conditions()) {
-            *it++ = from_protobuf(x);
+        for (const auto& x : msg.nations()) {
+            retval.nations[x.first] = from_protobuf(x.second);
         }
     }
     {
-        retval.war_entry_conditions.resize(msg.war_entry_conditions_size());
-        auto it = retval.war_entry_conditions.begin();
-        for (const auto& x : msg.war_entry_conditions()) {
-            *it++ = from_protobuf(x);
-        }
-    }
-    {
-        retval.scenario_turns.resize(msg.scenario_turns_size());
-        auto it = retval.scenario_turns.begin();
-        for (const auto& x : msg.scenario_turns()) {
+        retval.turns.resize(msg.turns_size());
+        auto it = retval.turns.begin();
+        for (const auto& x : msg.turns()) {
             *it++ = from_protobuf(x);
         }
     }

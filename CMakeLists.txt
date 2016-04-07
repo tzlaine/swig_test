@@ -36,6 +36,7 @@ add_custom_command(
             -Dmap_file=${CMAKE_HOME_DIRECTORY}/default_map.json
             -Doob_file=${CMAKE_HOME_DIRECTORY}/default_oob.json
             -Dunits_file=${CMAKE_HOME_DIRECTORY}/units.json
+            -Dscenario_file=${CMAKE_HOME_DIRECTORY}/scenarios/the_wind.json
             -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     DEPENDS
@@ -43,6 +44,7 @@ add_custom_command(
         ${CMAKE_HOME_DIRECTORY}/default_map.json
         ${CMAKE_HOME_DIRECTORY}/default_oob.json
         ${CMAKE_HOME_DIRECTORY}/units.json
+        ${CMAKE_HOME_DIRECTORY}/scenarios/the_wind.json
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     COMMENT "Create JSON data header."
