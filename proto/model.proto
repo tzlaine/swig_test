@@ -51,6 +51,12 @@ enum escort_type_t {
     heavy_escort = 2;
 }
 
+enum war_footing_t {
+    war = 0;
+    limited_war = 1;
+    peace = 2;
+}
+
 message turn_t
 {
     int32 year = 1;
@@ -263,4 +269,93 @@ message nation_unit_defs_t
 message unit_defs_t
 {
     map<string, nation_unit_defs_t> nation_units = 1;
+}
+
+message team_t
+{
+    string name = 1;
+    repeated string nations = 2;
+}
+
+message scenario_condition_t
+{
+    enum action_t {
+        occupies = 0;
+        destroys = 1;
+    };
+
+    enum object_type_t {
+        hexes = 0;
+        fleet_area = 1;
+        nation = 2;
+        sb = 3;
+    }
+
+    message object_t
+    {
+        object_type_t type = 1;
+        repeated string names = 2;
+        repeated int32 hexes = 3;
+    }
+
+    string actor = 1;
+    action_t action = 2;
+    object_t object = 3;
+};
+
+message fleet_release_condition_t
+{
+    string fleet = 1;
+    scenario_condition_t condition = 2;
+};
+
+message war_entry_condition_t
+{
+    war_footing_t economy = 3;
+    scenario_condition_t condition = 2;
+}
+
+message scenario_turn_t
+{
+    message national_action_t
+    {
+        enum action_type_t {
+            release_fleets = 0;
+            declare_war = 1;
+        }
+
+        message action_t
+        {
+            action_type_t type = 1;
+            repeated string objects = 2;
+        }
+
+        repeated action_t actions = 1;
+    }
+
+    map<string, national_action_t> national_actions = 1;
+}
+
+message scenario_t
+{
+    message nation_t
+    {
+        repeated string at_war_with = 1;
+        repeated string future_belligerents = 2;
+        war_footing_t economy = 3;
+        int32 exhaustion_turns = 4;
+        bool accumulate_exhaustion_at_peace = 5;
+    }
+
+    string name = 1;
+    string description = 2;
+    turn_t start_turn = 3;
+    repeated team_t teams = 4;
+    repeated string team_turn_order = 5;
+    string map = 6;
+    string order_of_battle = 7;
+    repeated string setup_order = 8;
+    repeated fleet_release_condition_t release_conditions = 9;
+    repeated war_entry_condition_t war_entry_conditions = 10;
+    repeated scenario_turn_t scenario_turns = 11;
 }

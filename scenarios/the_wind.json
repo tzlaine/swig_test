@@ -1,26 +1,26 @@
 {
     "name": "The Wind",
     "description": "Even the greatest storm begins with a mere puff of wind.\n    —Confucius\n\nThis scenario depicts the first three years of the General War (Turns #1-#6). This was before the Federation became involved. The Klingons and Lyrans were attempting to eliminate the Hydrans and Kzintis as significant powers.",
-    "start turn": {
+    "start_turn": {
         "year": 168,
         "season" "fall"
     },
     "teams": {
-        "Alliance": [ "KZI", "HYD", "FED" ],
-        "Coalition": [ "LYR", "KLI" ]
+        { "name": "Alliance", "nations": [ "KZI", "HYD", "FED" ] },
+        { "name": "Coalition", "nations": [ "LYR", "KLI" ] }
     },
-    "team turn order": [ "Coalition", "Alliance" ],
+    "team_turn_order": [ "Coalition", "Alliance" ],
     "map": "../default_map.json",
-    "order of battle": "../default_oob.json",
-    "setup order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
+    "order_of_battle": "../default_oob.json",
+    "setup_order": [ "LYR", "KZI", "KLI", "FED", "HYD" ],
     "nations": {
         "FED": {
-            "at war with": [],
-            "future belligerents": [ "KLI", "LYR", "ROM" ],
+            "at_war_with": [],
+            "future_belligerents": [ "KLI", "LYR", "ROM" ],
             "economy": "peace",
-            "exhaustion turns:" 0,
-            "accumulate exhaustion at peace": "false",
-            "release conditions": {
+            "exhaustion_turns:" 0,
+            "accumulate_exhaustion_at_peace": "false",
+            "release_conditions": {
                 "Fourth Fleet": [
                     "future belligerent",
                     "occupies",
@@ -30,8 +30,8 @@
                     }
                 ]
             },
-            "war entry conditions": {
-                "limited war": [
+            "war_entry_conditions": {
+                "limited_war": [
                     "future belligerent",
                     "occupies",
                     {
@@ -42,12 +42,12 @@
             }
         },
         "HYD": {
-            "at war with": [],
-            "future belligerents": [ "KLI", "LYR", "ROM" ],
+            "at_war_with": [],
+            "future_belligerents": [ "KLI", "LYR", "ROM" ],
             "economy": "peace",
-            "exhaustion turns:" 0,
-            "accumulate exhaustion at peace": "true"
-            "release conditions": {
+            "exhaustion_turns:" 0,
+            "accumulate_exhaustion_at_peace": "true"
+            "release_conditions": {
                 "Old Colonies Squadron": [
                     "future belligerent",
                     "occupies",
@@ -61,12 +61,12 @@
             }
         },
         "KLI": {
-            "at war with": [],
-            "future belligerents": [ "FED", "GOR", "HYD", "KZI" ],
+            "at_war_with": [],
+            "future_belligerents": [ "FED", "GOR", "HYD", "KZI" ],
             "economy": "war",
-            "exhaustion turns:" 0,
-            "accumulate exhaustion at peace": "true",
-            "release conditions": {
+            "exhaustion_turns:" 0,
+            "accumulate_exhaustion_at_peace": "true",
+            "release_conditions": {
                 "Home Fleet": [
                     "HYD",
                     "occupies",
@@ -88,12 +88,12 @@
             }
         },
         "KZI": {
-            "at war with": [ "LYR" ],
-            "future belligerents": [ "KLI", "LYR", "ROM" ],
+            "at_war_with": [ "LYR" ],
+            "future_belligerents": [ "KLI", "LYR", "ROM" ],
             "economy": "war",
-            "exhaustion turns:" 0,
-            "accumulate exhaustion at peace": "false",
-            "release conditions": {
+            "exhaustion_turns:" 0,
+            "accumulate_exhaustion_at_peace": "false",
+            "release_conditions": {
                 "Marquis' Fleet": [
                     "future belligerent",
                     "occupies",
@@ -110,55 +110,55 @@
             }
         },
         "LYR": {
-            "at war with": [ "KZI" ],
-            "future belligerents": [ "FED", "GOR", "HYD", "KZI" ],
+            "at_war_with": [ "KZI" ],
+            "future_belligerents": [ "FED", "GOR", "HYD", "KZI" ],
             "economy": "war",
-            "exhaustion turns:" 0,
-            "accumulate exhaustion at peace": "false"
+            "exhaustion_turns:" 0,
+            "accumulate_exhaustion_at_peace": "false"
         }
     },
     "turns": {
         "1": {
             "KZI": {
-                "release fleets": [ "Count's Fleet", "Duke's Fleet", "Home Fleet" ]
+                "release_fleets": [ "Count's Fleet", "Duke's Fleet", "Home Fleet" ]
             },
             "LYR": {
-                "release fleets": [ "Red Claw Fleet", "Home Fleet" ]
+                "release_fleets": [ "Red Claw Fleet", "Home Fleet" ]
             }
         },
         "2": {
             "KLI": {
-                "declare war": [ "KZI" ],
-                "release fleets": [ "Northern Fleet", "Northern Reserve Fleet", "Tholian Border Squadron" ]
+                "declare_war": [ "KZI" ],
+                "release_fleets": [ "Northern Fleet", "Northern Reserve Fleet", "Tholian Border Squadron" ]
             },
             "KZI": {
-                "declare war": [ "KLI" ],
-                "release fleets": [ "Baron's Fleet" ]
+                "declare_war": [ "KLI" ],
+                "release_fleets": [ "Baron's Fleet" ]
             },
             "LYR": {
-                "release fleets": [ "Far Stars" ]
+                "release_fleets": [ "Far Stars" ]
             }
         },
         "3": {
             "HYD": {
-                "declare war": [ "KLI", "LYR" ],
-                "release fleets": [ "Home Fleet", "Expeditionary Fleet", "First Fleet", "Second Fleet" ]
+                "declare_war": [ "KLI", "LYR" ],
+                "release_fleets": [ "Home Fleet", "Expeditionary Fleet", "First Fleet", "Second Fleet" ]
             },
             "KLI": {
-                "declare war": [ "HYD" ],
-                "release fleets": [ "Western Fleet" ]
+                "declare_war": [ "HYD" ],
+                "release_fleets": [ "Western Fleet" ]
             },
             "KZI": {
-                "release fleets": [ "Baron's Fleet" ]
+                "release_fleets": [ "Baron's Fleet" ]
             },
             "LYR": {
-                "declare war": [ "HYD" ],
-                "release fleets": [ "Enemy's Blood Fleet" ]
+                "declare_war": [ "HYD" ],
+                "release_fleets": [ "Enemy's Blood Fleet" ]
             }
         },
         "4": {
             "KLI": {
-                "release fleets": [ "Home Fleet", "Southern Reserve Fleet" ]
+                "release_fleets": [ "Home Fleet", "Southern Reserve Fleet" ]
             }
         },
         "5": {},

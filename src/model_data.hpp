@@ -58,6 +58,12 @@ enum class escort_type_t {
     heavy_escort = 2,
 };
 
+enum class war_footing_t {
+    war = 0,
+    limited_war = 1,
+    peace = 2,
+};
+
 struct turn_t
 {
     int year;
@@ -261,6 +267,95 @@ struct unit_defs_t
     boost::container::flat_map<std::string, nation_unit_defs_t> nation_units;
 };
 
+struct team_t
+{
+    std::string name;
+    std::vector<std::string> nations;
+};
+
+struct scenario_condition_t
+{
+
+    enum class action_t {
+        occupies = 0,
+        destroys = 1,
+    };
+
+    enum class object_type_t {
+        hexes = 0,
+        fleet_area = 1,
+        nation = 2,
+        sb = 3,
+    };
+
+    struct object_t
+    {
+        object_type_t type;
+        std::vector<std::string> names;
+        std::vector<int> hexes;
+    };
+    std::string actor;
+    action_t action;
+    object_t object;
+};
+
+struct fleet_release_condition_t
+{
+    std::string fleet;
+    scenario_condition_t condition;
+};
+
+struct war_entry_condition_t
+{
+    war_footing_t economy;
+    scenario_condition_t condition;
+};
+
+struct scenario_turn_t
+{
+
+    struct national_action_t
+    {
+
+        enum class action_type_t {
+            release_fleets = 0,
+            declare_war = 1,
+        };
+
+        struct action_t
+        {
+            action_type_t type;
+            std::vector<std::string> objects;
+        };
+        std::vector<action_t> actions;
+    };
+    boost::container::flat_map<std::string, national_action_t> national_actions;
+};
+
+struct scenario_t
+{
+
+    struct nation_t
+    {
+        std::vector<std::string> at_war_with;
+        std::vector<std::string> future_belligerents;
+        war_footing_t economy;
+        int exhaustion_turns;
+        bool accumulate_exhaustion_at_peace;
+    };
+    std::string name;
+    std::string description;
+    turn_t start_turn;
+    std::vector<team_t> teams;
+    std::vector<std::string> team_turn_order;
+    std::string map;
+    std::string order_of_battle;
+    std::vector<std::string> setup_order;
+    std::vector<fleet_release_condition_t> release_conditions;
+    std::vector<war_entry_condition_t> war_entry_conditions;
+    std::vector<scenario_turn_t> scenario_turns;
+};
+
 message::turn_t to_protobuf (const ::turn_t& value);
 ::turn_t from_protobuf (const message::turn_t& msg);
 
@@ -341,5 +436,35 @@ message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value);
 
 message::unit_defs_t to_protobuf (const ::unit_defs_t& value);
 ::unit_defs_t from_protobuf (const message::unit_defs_t& msg);
+
+message::team_t to_protobuf (const ::team_t& value);
+::team_t from_protobuf (const message::team_t& msg);
+
+message::scenario_condition_t::object_t to_protobuf (const ::scenario_condition_t::object_t& value);
+::scenario_condition_t::object_t from_protobuf (const message::scenario_condition_t::object_t& msg);
+
+message::scenario_condition_t to_protobuf (const ::scenario_condition_t& value);
+::scenario_condition_t from_protobuf (const message::scenario_condition_t& msg);
+
+message::fleet_release_condition_t to_protobuf (const ::fleet_release_condition_t& value);
+::fleet_release_condition_t from_protobuf (const message::fleet_release_condition_t& msg);
+
+message::war_entry_condition_t to_protobuf (const ::war_entry_condition_t& value);
+::war_entry_condition_t from_protobuf (const message::war_entry_condition_t& msg);
+
+message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scenario_turn_t::national_action_t::action_t& value);
+::scenario_turn_t::national_action_t::action_t from_protobuf (const message::scenario_turn_t::national_action_t::action_t& msg);
+
+message::scenario_turn_t::national_action_t to_protobuf (const ::scenario_turn_t::national_action_t& value);
+::scenario_turn_t::national_action_t from_protobuf (const message::scenario_turn_t::national_action_t& msg);
+
+message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value);
+::scenario_turn_t from_protobuf (const message::scenario_turn_t& msg);
+
+message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value);
+::scenario_t::nation_t from_protobuf (const message::scenario_t::nation_t& msg);
+
+message::scenario_t to_protobuf (const ::scenario_t& value);
+::scenario_t from_protobuf (const message::scenario_t& msg);
 
 

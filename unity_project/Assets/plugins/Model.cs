@@ -114,20 +114,56 @@ namespace Message {
             "aW9uX3VuaXRzGAEgAygLMiUubWVzc2FnZS51bml0X2RlZnNfdC5OYXRpb25V",
             "bml0c0VudHJ5Gk8KEE5hdGlvblVuaXRzRW50cnkSCwoDa2V5GAEgASgJEioK",
             "BXZhbHVlGAIgASgLMhsubWVzc2FnZS5uYXRpb25fdW5pdF9kZWZzX3Q6AjgB",
-            "KkwKCWZlYXR1cmVfdBIOCgpub19mZWF0dXJlEAASCAoEYmF0cxABEgYKAnNi",
-            "EAISBwoDbWluEAMSBwoDbWFqEAQSCwoHY2FwaXRhbBAFKiAKCHNlYXNvbl90",
-            "EgoKBnNwcmluZxAAEggKBGZhbGwQASqKAQoNdHVnX21pc3Npb25fdBIFCgFB",
-            "EAASBQoBQhABEgUKAUMQAhIFCgFEEAMSBQoBRRAEEgUKAUYQBRIFCgFHEAYS",
-            "BQoBSBAHEgUKAUkQCBIGCgJKMRAJEgYKAkoyEAoSBgoCSzEQCxIGCgJLMhAM",
-            "EgUKAUwQDRIFCgFNEA4SBQoBThAPEgUKAU8QECp2Cg5jYXJyaWVyX3R5cGVf",
-            "dBIRCg1ub3RfYV9jYXJyaWVyEAASFwoTc2luZ2xlX3NoaXBfY2FycmllchAB",
-            "EhEKDWxpZ2h0X2NhcnJpZXIQAhISCg5tZWRpdW1fY2FycmllchADEhEKDWhl",
-            "YXZ5X2NhcnJpZXIQBCpGCg1lc2NvcnRfdHlwZV90EhEKDW5vdF9hbl9lc2Nv",
-            "cnQQABIQCgxsaWdodF9lc2NvcnQQARIQCgxoZWF2eV9lc2NvcnQQAmIGcHJv",
-            "dG8z"));
+            "IicKBnRlYW1fdBIMCgRuYW1lGAEgASgJEg8KB25hdGlvbnMYAiADKAki4gIK",
+            "FHNjZW5hcmlvX2NvbmRpdGlvbl90Eg0KBWFjdG9yGAEgASgJEjYKBmFjdGlv",
+            "bhgCIAEoDjImLm1lc3NhZ2Uuc2NlbmFyaW9fY29uZGl0aW9uX3QuYWN0aW9u",
+            "X3QSNgoGb2JqZWN0GAMgASgLMiYubWVzc2FnZS5zY2VuYXJpb19jb25kaXRp",
+            "b25fdC5vYmplY3RfdBpjCghvYmplY3RfdBI5CgR0eXBlGAEgASgOMisubWVz",
+            "c2FnZS5zY2VuYXJpb19jb25kaXRpb25fdC5vYmplY3RfdHlwZV90Eg0KBW5h",
+            "bWVzGAIgAygJEg0KBWhleGVzGAMgAygFIiYKCGFjdGlvbl90EgwKCG9jY3Vw",
+            "aWVzEAASDAoIZGVzdHJveXMQASI+Cg1vYmplY3RfdHlwZV90EgkKBWhleGVz",
+            "EAASDgoKZmxlZXRfYXJlYRABEgoKBm5hdGlvbhACEgYKAnNiEAMiXAoZZmxl",
+            "ZXRfcmVsZWFzZV9jb25kaXRpb25fdBINCgVmbGVldBgBIAEoCRIwCgljb25k",
+            "aXRpb24YAiABKAsyHS5tZXNzYWdlLnNjZW5hcmlvX2NvbmRpdGlvbl90InIK",
+            "FXdhcl9lbnRyeV9jb25kaXRpb25fdBInCgdlY29ub215GAMgASgOMhYubWVz",
+            "c2FnZS53YXJfZm9vdGluZ190EjAKCWNvbmRpdGlvbhgCIAEoCzIdLm1lc3Nh",
+            "Z2Uuc2NlbmFyaW9fY29uZGl0aW9uX3QitQMKD3NjZW5hcmlvX3R1cm5fdBJH",
+            "ChBuYXRpb25hbF9hY3Rpb25zGAEgAygLMi0ubWVzc2FnZS5zY2VuYXJpb190",
+            "dXJuX3QuTmF0aW9uYWxBY3Rpb25zRW50cnka9AEKEW5hdGlvbmFsX2FjdGlv",
+            "bl90EkQKB2FjdGlvbnMYASADKAsyMy5tZXNzYWdlLnNjZW5hcmlvX3R1cm5f",
+            "dC5uYXRpb25hbF9hY3Rpb25fdC5hY3Rpb25fdBpjCghhY3Rpb25fdBJGCgR0",
+            "eXBlGAEgASgOMjgubWVzc2FnZS5zY2VuYXJpb190dXJuX3QubmF0aW9uYWxf",
+            "YWN0aW9uX3QuYWN0aW9uX3R5cGVfdBIPCgdvYmplY3RzGAIgAygJIjQKDWFj",
+            "dGlvbl90eXBlX3QSEgoOcmVsZWFzZV9mbGVldHMQABIPCgtkZWNsYXJlX3dh",
+            "chABGmIKFE5hdGlvbmFsQWN0aW9uc0VudHJ5EgsKA2tleRgBIAEoCRI5CgV2",
+            "YWx1ZRgCIAEoCzIqLm1lc3NhZ2Uuc2NlbmFyaW9fdHVybl90Lm5hdGlvbmFs",
+            "X2FjdGlvbl90OgI4ASKiBAoKc2NlbmFyaW9fdBIMCgRuYW1lGAEgASgJEhMK",
+            "C2Rlc2NyaXB0aW9uGAIgASgJEiMKCnN0YXJ0X3R1cm4YAyABKAsyDy5tZXNz",
+            "YWdlLnR1cm5fdBIeCgV0ZWFtcxgEIAMoCzIPLm1lc3NhZ2UudGVhbV90EhcK",
+            "D3RlYW1fdHVybl9vcmRlchgFIAMoCRILCgNtYXAYBiABKAkSFwoPb3JkZXJf",
+            "b2ZfYmF0dGxlGAcgASgJEhMKC3NldHVwX29yZGVyGAggAygJEj4KEnJlbGVh",
+            "c2VfY29uZGl0aW9ucxgJIAMoCzIiLm1lc3NhZ2UuZmxlZXRfcmVsZWFzZV9j",
+            "b25kaXRpb25fdBI8ChR3YXJfZW50cnlfY29uZGl0aW9ucxgKIAMoCzIeLm1l",
+            "c3NhZ2Uud2FyX2VudHJ5X2NvbmRpdGlvbl90EjAKDnNjZW5hcmlvX3R1cm5z",
+            "GAsgAygLMhgubWVzc2FnZS5zY2VuYXJpb190dXJuX3QapwEKCG5hdGlvbl90",
+            "EhMKC2F0X3dhcl93aXRoGAEgAygJEhsKE2Z1dHVyZV9iZWxsaWdlcmVudHMY",
+            "AiADKAkSJwoHZWNvbm9teRgDIAEoDjIWLm1lc3NhZ2Uud2FyX2Zvb3Rpbmdf",
+            "dBIYChBleGhhdXN0aW9uX3R1cm5zGAQgASgFEiYKHmFjY3VtdWxhdGVfZXho",
+            "YXVzdGlvbl9hdF9wZWFjZRgFIAEoCCpMCglmZWF0dXJlX3QSDgoKbm9fZmVh",
+            "dHVyZRAAEggKBGJhdHMQARIGCgJzYhACEgcKA21pbhADEgcKA21hahAEEgsK",
+            "B2NhcGl0YWwQBSogCghzZWFzb25fdBIKCgZzcHJpbmcQABIICgRmYWxsEAEq",
+            "igEKDXR1Z19taXNzaW9uX3QSBQoBQRAAEgUKAUIQARIFCgFDEAISBQoBRBAD",
+            "EgUKAUUQBBIFCgFGEAUSBQoBRxAGEgUKAUgQBxIFCgFJEAgSBgoCSjEQCRIG",
+            "CgJKMhAKEgYKAksxEAsSBgoCSzIQDBIFCgFMEA0SBQoBTRAOEgUKAU4QDxIF",
+            "CgFPEBAqdgoOY2Fycmllcl90eXBlX3QSEQoNbm90X2FfY2FycmllchAAEhcK",
+            "E3NpbmdsZV9zaGlwX2NhcnJpZXIQARIRCg1saWdodF9jYXJyaWVyEAISEgoO",
+            "bWVkaXVtX2NhcnJpZXIQAxIRCg1oZWF2eV9jYXJyaWVyEAQqRgoNZXNjb3J0",
+            "X3R5cGVfdBIRCg1ub3RfYW5fZXNjb3J0EAASEAoMbGlnaHRfZXNjb3J0EAES",
+            "EAoMaGVhdnlfZXNjb3J0EAIqNAoNd2FyX2Zvb3RpbmdfdBIHCgN3YXIQABIP",
+            "CgtsaW1pdGVkX3dhchABEgkKBXBlYWNlEAJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), typeof(global::Message.tug_mission_t), typeof(global::Message.carrier_type_t), typeof(global::Message.escort_type_t), }, new pbr::GeneratedCodeInfo[] {
+          new pbr::GeneratedCodeInfo(new[] {typeof(global::Message.feature_t), typeof(global::Message.season_t), typeof(global::Message.tug_mission_t), typeof(global::Message.carrier_type_t), typeof(global::Message.escort_type_t), typeof(global::Message.war_footing_t), }, new pbr::GeneratedCodeInfo[] {
             new pbr::GeneratedCodeInfo(typeof(global::Message.turn_t), global::Message.turn_t.Parser, new[]{ "Year", "Season" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.hex_coord_t), global::Message.hex_coord_t.Parser, new[]{ "X", "Y" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.capital_hex_zone_t), global::Message.capital_hex_zone_t.Parser, new[]{ "Name", "Features" }, null, null, null),
@@ -154,7 +190,14 @@ namespace Message {
             new pbr::GeneratedCodeInfo(typeof(global::Message.production_cost_t), global::Message.production_cost_t.Parser, new[]{ "Cost", "FighterCost" }, null, null, null),
             new pbr::GeneratedCodeInfo(typeof(global::Message.unit_def_t), global::Message.unit_def_t.Parser, new[]{ "Name", "Cmd", "Uncrippled", "Crippled", "EscortType", "Available", "Pod", "MaxInService", "Construction", "Substitutions", "Conversions", "Move", "CarrierType", "NotSpaceworthy", "Towable", "Salvage", "Notes" }, null, null, new pbr::GeneratedCodeInfo[] { null, null, }),
             new pbr::GeneratedCodeInfo(typeof(global::Message.nation_unit_defs_t), global::Message.nation_unit_defs_t.Parser, new[]{ "Units" }, null, null, null),
-            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_defs_t), global::Message.unit_defs_t.Parser, new[]{ "NationUnits" }, null, null, new pbr::GeneratedCodeInfo[] { null, })
+            new pbr::GeneratedCodeInfo(typeof(global::Message.unit_defs_t), global::Message.unit_defs_t.Parser, new[]{ "NationUnits" }, null, null, new pbr::GeneratedCodeInfo[] { null, }),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.team_t), global::Message.team_t.Parser, new[]{ "Name", "Nations" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_condition_t), global::Message.scenario_condition_t.Parser, new[]{ "Actor", "Action", "Object" }, null, new[]{ typeof(global::Message.scenario_condition_t.Types.action_t), typeof(global::Message.scenario_condition_t.Types.object_type_t) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_condition_t.Types.object_t), global::Message.scenario_condition_t.Types.object_t.Parser, new[]{ "Type", "Names", "Hexes" }, null, null, null)}),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.fleet_release_condition_t), global::Message.fleet_release_condition_t.Parser, new[]{ "Fleet", "Condition" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.war_entry_condition_t), global::Message.war_entry_condition_t.Parser, new[]{ "Economy", "Condition" }, null, null, null),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t), global::Message.scenario_turn_t.Parser, new[]{ "NationalActions" }, null, null, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t.Types.national_action_t), global::Message.scenario_turn_t.Types.national_action_t.Parser, new[]{ "Actions" }, null, new[]{ typeof(global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t) }, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_turn_t.Types.national_action_t.Types.action_t), global::Message.scenario_turn_t.Types.national_action_t.Types.action_t.Parser, new[]{ "Type", "Objects" }, null, null, null)}),
+            null, }),
+            new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_t), global::Message.scenario_t.Parser, new[]{ "Name", "Description", "StartTurn", "Teams", "TeamTurnOrder", "Map", "OrderOfBattle", "SetupOrder", "ReleaseConditions", "WarEntryConditions", "ScenarioTurns" }, null, null, new pbr::GeneratedCodeInfo[] { new pbr::GeneratedCodeInfo(typeof(global::Message.scenario_t.Types.nation_t), global::Message.scenario_t.Types.nation_t.Parser, new[]{ "AtWarWith", "FutureBelligerents", "Economy", "ExhaustionTurns", "AccumulateExhaustionAtPeace" }, null, null, null)})
           }));
     }
     #endregion
@@ -207,6 +250,12 @@ namespace Message {
     not_an_escort = 0,
     light_escort = 1,
     heavy_escort = 2,
+  }
+
+  public enum war_footing_t {
+    war = 0,
+    limited_war = 1,
+    peace = 2,
   }
 
   #endregion
@@ -4723,6 +4772,1588 @@ namespace Message {
         }
       }
     }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class team_t : pb::IMessage<team_t> {
+    private static readonly pb::MessageParser<team_t> _parser = new pb::MessageParser<team_t>(() => new team_t());
+    public static pb::MessageParser<team_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[27]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public team_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public team_t(team_t other) : this() {
+      name_ = other.name_;
+      nations_ = other.nations_.Clone();
+    }
+
+    public team_t Clone() {
+      return new team_t(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "nations" field.</summary>
+    public const int NationsFieldNumber = 2;
+    private static readonly pb::FieldCodec<string> _repeated_nations_codec
+        = pb::FieldCodec.ForString(18);
+    private readonly pbc::RepeatedField<string> nations_ = new pbc::RepeatedField<string>();
+    public pbc::RepeatedField<string> Nations {
+      get { return nations_; }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as team_t);
+    }
+
+    public bool Equals(team_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if(!nations_.Equals(other.nations_)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      hash ^= nations_.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Name.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      nations_.WriteTo(output, _repeated_nations_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      size += nations_.CalculateSize(_repeated_nations_codec);
+      return size;
+    }
+
+    public void MergeFrom(team_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      nations_.Add(other.nations_);
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 18: {
+            nations_.AddEntriesFrom(input, _repeated_nations_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class scenario_condition_t : pb::IMessage<scenario_condition_t> {
+    private static readonly pb::MessageParser<scenario_condition_t> _parser = new pb::MessageParser<scenario_condition_t>(() => new scenario_condition_t());
+    public static pb::MessageParser<scenario_condition_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[28]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public scenario_condition_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public scenario_condition_t(scenario_condition_t other) : this() {
+      actor_ = other.actor_;
+      action_ = other.action_;
+      Object = other.object_ != null ? other.Object.Clone() : null;
+    }
+
+    public scenario_condition_t Clone() {
+      return new scenario_condition_t(this);
+    }
+
+    /// <summary>Field number for the "actor" field.</summary>
+    public const int ActorFieldNumber = 1;
+    private string actor_ = "";
+    public string Actor {
+      get { return actor_; }
+      set {
+        actor_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "action" field.</summary>
+    public const int ActionFieldNumber = 2;
+    private global::Message.scenario_condition_t.Types.action_t action_ = global::Message.scenario_condition_t.Types.action_t.occupies;
+    public global::Message.scenario_condition_t.Types.action_t Action {
+      get { return action_; }
+      set {
+        action_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "object" field.</summary>
+    public const int ObjectFieldNumber = 3;
+    private global::Message.scenario_condition_t.Types.object_t object_;
+    public global::Message.scenario_condition_t.Types.object_t Object {
+      get { return object_; }
+      set {
+        object_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as scenario_condition_t);
+    }
+
+    public bool Equals(scenario_condition_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Actor != other.Actor) return false;
+      if (Action != other.Action) return false;
+      if (!object.Equals(Object, other.Object)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Actor.Length != 0) hash ^= Actor.GetHashCode();
+      if (Action != global::Message.scenario_condition_t.Types.action_t.occupies) hash ^= Action.GetHashCode();
+      if (object_ != null) hash ^= Object.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Actor.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Actor);
+      }
+      if (Action != global::Message.scenario_condition_t.Types.action_t.occupies) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) Action);
+      }
+      if (object_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Object);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Actor.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Actor);
+      }
+      if (Action != global::Message.scenario_condition_t.Types.action_t.occupies) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Action);
+      }
+      if (object_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Object);
+      }
+      return size;
+    }
+
+    public void MergeFrom(scenario_condition_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Actor.Length != 0) {
+        Actor = other.Actor;
+      }
+      if (other.Action != global::Message.scenario_condition_t.Types.action_t.occupies) {
+        Action = other.Action;
+      }
+      if (other.object_ != null) {
+        if (object_ == null) {
+          object_ = new global::Message.scenario_condition_t.Types.object_t();
+        }
+        Object.MergeFrom(other.Object);
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Actor = input.ReadString();
+            break;
+          }
+          case 16: {
+            action_ = (global::Message.scenario_condition_t.Types.action_t) input.ReadEnum();
+            break;
+          }
+          case 26: {
+            if (object_ == null) {
+              object_ = new global::Message.scenario_condition_t.Types.object_t();
+            }
+            input.ReadMessage(object_);
+            break;
+          }
+        }
+      }
+    }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the scenario_condition_t message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public static partial class Types {
+      public enum action_t {
+        occupies = 0,
+        destroys = 1,
+      }
+
+      public enum object_type_t {
+        hexes = 0,
+        fleet_area = 1,
+        nation = 2,
+        sb = 3,
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class object_t : pb::IMessage<object_t> {
+        private static readonly pb::MessageParser<object_t> _parser = new pb::MessageParser<object_t>(() => new object_t());
+        public static pb::MessageParser<object_t> Parser { get { return _parser; } }
+
+        public static pbr::MessageDescriptor Descriptor {
+          get { return global::Message.scenario_condition_t.Descriptor.NestedTypes[0]; }
+        }
+
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+          get { return Descriptor; }
+        }
+
+        public object_t() {
+          OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        public object_t(object_t other) : this() {
+          type_ = other.type_;
+          names_ = other.names_.Clone();
+          hexes_ = other.hexes_.Clone();
+        }
+
+        public object_t Clone() {
+          return new object_t(this);
+        }
+
+        /// <summary>Field number for the "type" field.</summary>
+        public const int TypeFieldNumber = 1;
+        private global::Message.scenario_condition_t.Types.object_type_t type_ = global::Message.scenario_condition_t.Types.object_type_t.hexes;
+        public global::Message.scenario_condition_t.Types.object_type_t Type {
+          get { return type_; }
+          set {
+            type_ = value;
+          }
+        }
+
+        /// <summary>Field number for the "names" field.</summary>
+        public const int NamesFieldNumber = 2;
+        private static readonly pb::FieldCodec<string> _repeated_names_codec
+            = pb::FieldCodec.ForString(18);
+        private readonly pbc::RepeatedField<string> names_ = new pbc::RepeatedField<string>();
+        public pbc::RepeatedField<string> Names {
+          get { return names_; }
+        }
+
+        /// <summary>Field number for the "hexes" field.</summary>
+        public const int HexesFieldNumber = 3;
+        private static readonly pb::FieldCodec<int> _repeated_hexes_codec
+            = pb::FieldCodec.ForInt32(26);
+        private readonly pbc::RepeatedField<int> hexes_ = new pbc::RepeatedField<int>();
+        public pbc::RepeatedField<int> Hexes {
+          get { return hexes_; }
+        }
+
+        public override bool Equals(object other) {
+          return Equals(other as object_t);
+        }
+
+        public bool Equals(object_t other) {
+          if (ReferenceEquals(other, null)) {
+            return false;
+          }
+          if (ReferenceEquals(other, this)) {
+            return true;
+          }
+          if (Type != other.Type) return false;
+          if(!names_.Equals(other.names_)) return false;
+          if(!hexes_.Equals(other.hexes_)) return false;
+          return true;
+        }
+
+        public override int GetHashCode() {
+          int hash = 1;
+          if (Type != global::Message.scenario_condition_t.Types.object_type_t.hexes) hash ^= Type.GetHashCode();
+          hash ^= names_.GetHashCode();
+          hash ^= hexes_.GetHashCode();
+          return hash;
+        }
+
+        public override string ToString() {
+          return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        public void WriteTo(pb::CodedOutputStream output) {
+          if (Type != global::Message.scenario_condition_t.Types.object_type_t.hexes) {
+            output.WriteRawTag(8);
+            output.WriteEnum((int) Type);
+          }
+          names_.WriteTo(output, _repeated_names_codec);
+          hexes_.WriteTo(output, _repeated_hexes_codec);
+        }
+
+        public int CalculateSize() {
+          int size = 0;
+          if (Type != global::Message.scenario_condition_t.Types.object_type_t.hexes) {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+          }
+          size += names_.CalculateSize(_repeated_names_codec);
+          size += hexes_.CalculateSize(_repeated_hexes_codec);
+          return size;
+        }
+
+        public void MergeFrom(object_t other) {
+          if (other == null) {
+            return;
+          }
+          if (other.Type != global::Message.scenario_condition_t.Types.object_type_t.hexes) {
+            Type = other.Type;
+          }
+          names_.Add(other.names_);
+          hexes_.Add(other.hexes_);
+        }
+
+        public void MergeFrom(pb::CodedInputStream input) {
+          uint tag;
+          while ((tag = input.ReadTag()) != 0) {
+            switch(tag) {
+              default:
+                input.SkipLastField();
+                break;
+              case 8: {
+                type_ = (global::Message.scenario_condition_t.Types.object_type_t) input.ReadEnum();
+                break;
+              }
+              case 18: {
+                names_.AddEntriesFrom(input, _repeated_names_codec);
+                break;
+              }
+              case 26:
+              case 24: {
+                hexes_.AddEntriesFrom(input, _repeated_hexes_codec);
+                break;
+              }
+            }
+          }
+        }
+
+      }
+
+    }
+    #endregion
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class fleet_release_condition_t : pb::IMessage<fleet_release_condition_t> {
+    private static readonly pb::MessageParser<fleet_release_condition_t> _parser = new pb::MessageParser<fleet_release_condition_t>(() => new fleet_release_condition_t());
+    public static pb::MessageParser<fleet_release_condition_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[29]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public fleet_release_condition_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public fleet_release_condition_t(fleet_release_condition_t other) : this() {
+      fleet_ = other.fleet_;
+      Condition = other.condition_ != null ? other.Condition.Clone() : null;
+    }
+
+    public fleet_release_condition_t Clone() {
+      return new fleet_release_condition_t(this);
+    }
+
+    /// <summary>Field number for the "fleet" field.</summary>
+    public const int FleetFieldNumber = 1;
+    private string fleet_ = "";
+    public string Fleet {
+      get { return fleet_; }
+      set {
+        fleet_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "condition" field.</summary>
+    public const int ConditionFieldNumber = 2;
+    private global::Message.scenario_condition_t condition_;
+    public global::Message.scenario_condition_t Condition {
+      get { return condition_; }
+      set {
+        condition_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as fleet_release_condition_t);
+    }
+
+    public bool Equals(fleet_release_condition_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Fleet != other.Fleet) return false;
+      if (!object.Equals(Condition, other.Condition)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Fleet.Length != 0) hash ^= Fleet.GetHashCode();
+      if (condition_ != null) hash ^= Condition.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Fleet.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Fleet);
+      }
+      if (condition_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Condition);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Fleet.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Fleet);
+      }
+      if (condition_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Condition);
+      }
+      return size;
+    }
+
+    public void MergeFrom(fleet_release_condition_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Fleet.Length != 0) {
+        Fleet = other.Fleet;
+      }
+      if (other.condition_ != null) {
+        if (condition_ == null) {
+          condition_ = new global::Message.scenario_condition_t();
+        }
+        Condition.MergeFrom(other.Condition);
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Fleet = input.ReadString();
+            break;
+          }
+          case 18: {
+            if (condition_ == null) {
+              condition_ = new global::Message.scenario_condition_t();
+            }
+            input.ReadMessage(condition_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class war_entry_condition_t : pb::IMessage<war_entry_condition_t> {
+    private static readonly pb::MessageParser<war_entry_condition_t> _parser = new pb::MessageParser<war_entry_condition_t>(() => new war_entry_condition_t());
+    public static pb::MessageParser<war_entry_condition_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[30]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public war_entry_condition_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public war_entry_condition_t(war_entry_condition_t other) : this() {
+      economy_ = other.economy_;
+      Condition = other.condition_ != null ? other.Condition.Clone() : null;
+    }
+
+    public war_entry_condition_t Clone() {
+      return new war_entry_condition_t(this);
+    }
+
+    /// <summary>Field number for the "economy" field.</summary>
+    public const int EconomyFieldNumber = 3;
+    private global::Message.war_footing_t economy_ = global::Message.war_footing_t.war;
+    public global::Message.war_footing_t Economy {
+      get { return economy_; }
+      set {
+        economy_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "condition" field.</summary>
+    public const int ConditionFieldNumber = 2;
+    private global::Message.scenario_condition_t condition_;
+    public global::Message.scenario_condition_t Condition {
+      get { return condition_; }
+      set {
+        condition_ = value;
+      }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as war_entry_condition_t);
+    }
+
+    public bool Equals(war_entry_condition_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Economy != other.Economy) return false;
+      if (!object.Equals(Condition, other.Condition)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Economy != global::Message.war_footing_t.war) hash ^= Economy.GetHashCode();
+      if (condition_ != null) hash ^= Condition.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (condition_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Condition);
+      }
+      if (Economy != global::Message.war_footing_t.war) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Economy);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Economy != global::Message.war_footing_t.war) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Economy);
+      }
+      if (condition_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Condition);
+      }
+      return size;
+    }
+
+    public void MergeFrom(war_entry_condition_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Economy != global::Message.war_footing_t.war) {
+        Economy = other.Economy;
+      }
+      if (other.condition_ != null) {
+        if (condition_ == null) {
+          condition_ = new global::Message.scenario_condition_t();
+        }
+        Condition.MergeFrom(other.Condition);
+      }
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 18: {
+            if (condition_ == null) {
+              condition_ = new global::Message.scenario_condition_t();
+            }
+            input.ReadMessage(condition_);
+            break;
+          }
+          case 24: {
+            economy_ = (global::Message.war_footing_t) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class scenario_turn_t : pb::IMessage<scenario_turn_t> {
+    private static readonly pb::MessageParser<scenario_turn_t> _parser = new pb::MessageParser<scenario_turn_t>(() => new scenario_turn_t());
+    public static pb::MessageParser<scenario_turn_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[31]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public scenario_turn_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public scenario_turn_t(scenario_turn_t other) : this() {
+      nationalActions_ = other.nationalActions_.Clone();
+    }
+
+    public scenario_turn_t Clone() {
+      return new scenario_turn_t(this);
+    }
+
+    /// <summary>Field number for the "national_actions" field.</summary>
+    public const int NationalActionsFieldNumber = 1;
+    private static readonly pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>.Codec _map_nationalActions_codec
+        = new pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>.Codec(pb::FieldCodec.ForString(10), pb::FieldCodec.ForMessage(18, global::Message.scenario_turn_t.Types.national_action_t.Parser), 10);
+    private readonly pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t> nationalActions_ = new pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t>();
+    public pbc::MapField<string, global::Message.scenario_turn_t.Types.national_action_t> NationalActions {
+      get { return nationalActions_; }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as scenario_turn_t);
+    }
+
+    public bool Equals(scenario_turn_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!NationalActions.Equals(other.NationalActions)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= NationalActions.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      nationalActions_.WriteTo(output, _map_nationalActions_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      size += nationalActions_.CalculateSize(_map_nationalActions_codec);
+      return size;
+    }
+
+    public void MergeFrom(scenario_turn_t other) {
+      if (other == null) {
+        return;
+      }
+      nationalActions_.Add(other.nationalActions_);
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            nationalActions_.AddEntriesFrom(input, _map_nationalActions_codec);
+            break;
+          }
+        }
+      }
+    }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the scenario_turn_t message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public static partial class Types {
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class national_action_t : pb::IMessage<national_action_t> {
+        private static readonly pb::MessageParser<national_action_t> _parser = new pb::MessageParser<national_action_t>(() => new national_action_t());
+        public static pb::MessageParser<national_action_t> Parser { get { return _parser; } }
+
+        public static pbr::MessageDescriptor Descriptor {
+          get { return global::Message.scenario_turn_t.Descriptor.NestedTypes[0]; }
+        }
+
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+          get { return Descriptor; }
+        }
+
+        public national_action_t() {
+          OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        public national_action_t(national_action_t other) : this() {
+          actions_ = other.actions_.Clone();
+        }
+
+        public national_action_t Clone() {
+          return new national_action_t(this);
+        }
+
+        /// <summary>Field number for the "actions" field.</summary>
+        public const int ActionsFieldNumber = 1;
+        private static readonly pb::FieldCodec<global::Message.scenario_turn_t.Types.national_action_t.Types.action_t> _repeated_actions_codec
+            = pb::FieldCodec.ForMessage(10, global::Message.scenario_turn_t.Types.national_action_t.Types.action_t.Parser);
+        private readonly pbc::RepeatedField<global::Message.scenario_turn_t.Types.national_action_t.Types.action_t> actions_ = new pbc::RepeatedField<global::Message.scenario_turn_t.Types.national_action_t.Types.action_t>();
+        public pbc::RepeatedField<global::Message.scenario_turn_t.Types.national_action_t.Types.action_t> Actions {
+          get { return actions_; }
+        }
+
+        public override bool Equals(object other) {
+          return Equals(other as national_action_t);
+        }
+
+        public bool Equals(national_action_t other) {
+          if (ReferenceEquals(other, null)) {
+            return false;
+          }
+          if (ReferenceEquals(other, this)) {
+            return true;
+          }
+          if(!actions_.Equals(other.actions_)) return false;
+          return true;
+        }
+
+        public override int GetHashCode() {
+          int hash = 1;
+          hash ^= actions_.GetHashCode();
+          return hash;
+        }
+
+        public override string ToString() {
+          return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        public void WriteTo(pb::CodedOutputStream output) {
+          actions_.WriteTo(output, _repeated_actions_codec);
+        }
+
+        public int CalculateSize() {
+          int size = 0;
+          size += actions_.CalculateSize(_repeated_actions_codec);
+          return size;
+        }
+
+        public void MergeFrom(national_action_t other) {
+          if (other == null) {
+            return;
+          }
+          actions_.Add(other.actions_);
+        }
+
+        public void MergeFrom(pb::CodedInputStream input) {
+          uint tag;
+          while ((tag = input.ReadTag()) != 0) {
+            switch(tag) {
+              default:
+                input.SkipLastField();
+                break;
+              case 10: {
+                actions_.AddEntriesFrom(input, _repeated_actions_codec);
+                break;
+              }
+            }
+          }
+        }
+
+        #region Nested types
+        /// <summary>Container for nested types declared in the national_action_t message type.</summary>
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public static partial class Types {
+          public enum action_type_t {
+            release_fleets = 0,
+            declare_war = 1,
+          }
+
+          [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+          public sealed partial class action_t : pb::IMessage<action_t> {
+            private static readonly pb::MessageParser<action_t> _parser = new pb::MessageParser<action_t>(() => new action_t());
+            public static pb::MessageParser<action_t> Parser { get { return _parser; } }
+
+            public static pbr::MessageDescriptor Descriptor {
+              get { return global::Message.scenario_turn_t.Types.national_action_t.Descriptor.NestedTypes[0]; }
+            }
+
+            pbr::MessageDescriptor pb::IMessage.Descriptor {
+              get { return Descriptor; }
+            }
+
+            public action_t() {
+              OnConstruction();
+            }
+
+            partial void OnConstruction();
+
+            public action_t(action_t other) : this() {
+              type_ = other.type_;
+              objects_ = other.objects_.Clone();
+            }
+
+            public action_t Clone() {
+              return new action_t(this);
+            }
+
+            /// <summary>Field number for the "type" field.</summary>
+            public const int TypeFieldNumber = 1;
+            private global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t type_ = global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets;
+            public global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t Type {
+              get { return type_; }
+              set {
+                type_ = value;
+              }
+            }
+
+            /// <summary>Field number for the "objects" field.</summary>
+            public const int ObjectsFieldNumber = 2;
+            private static readonly pb::FieldCodec<string> _repeated_objects_codec
+                = pb::FieldCodec.ForString(18);
+            private readonly pbc::RepeatedField<string> objects_ = new pbc::RepeatedField<string>();
+            public pbc::RepeatedField<string> Objects {
+              get { return objects_; }
+            }
+
+            public override bool Equals(object other) {
+              return Equals(other as action_t);
+            }
+
+            public bool Equals(action_t other) {
+              if (ReferenceEquals(other, null)) {
+                return false;
+              }
+              if (ReferenceEquals(other, this)) {
+                return true;
+              }
+              if (Type != other.Type) return false;
+              if(!objects_.Equals(other.objects_)) return false;
+              return true;
+            }
+
+            public override int GetHashCode() {
+              int hash = 1;
+              if (Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) hash ^= Type.GetHashCode();
+              hash ^= objects_.GetHashCode();
+              return hash;
+            }
+
+            public override string ToString() {
+              return pb::JsonFormatter.ToDiagnosticString(this);
+            }
+
+            public void WriteTo(pb::CodedOutputStream output) {
+              if (Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) {
+                output.WriteRawTag(8);
+                output.WriteEnum((int) Type);
+              }
+              objects_.WriteTo(output, _repeated_objects_codec);
+            }
+
+            public int CalculateSize() {
+              int size = 0;
+              if (Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+              }
+              size += objects_.CalculateSize(_repeated_objects_codec);
+              return size;
+            }
+
+            public void MergeFrom(action_t other) {
+              if (other == null) {
+                return;
+              }
+              if (other.Type != global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t.release_fleets) {
+                Type = other.Type;
+              }
+              objects_.Add(other.objects_);
+            }
+
+            public void MergeFrom(pb::CodedInputStream input) {
+              uint tag;
+              while ((tag = input.ReadTag()) != 0) {
+                switch(tag) {
+                  default:
+                    input.SkipLastField();
+                    break;
+                  case 8: {
+                    type_ = (global::Message.scenario_turn_t.Types.national_action_t.Types.action_type_t) input.ReadEnum();
+                    break;
+                  }
+                  case 18: {
+                    objects_.AddEntriesFrom(input, _repeated_objects_codec);
+                    break;
+                  }
+                }
+              }
+            }
+
+          }
+
+        }
+        #endregion
+
+      }
+
+    }
+    #endregion
+
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+  public sealed partial class scenario_t : pb::IMessage<scenario_t> {
+    private static readonly pb::MessageParser<scenario_t> _parser = new pb::MessageParser<scenario_t>(() => new scenario_t());
+    public static pb::MessageParser<scenario_t> Parser { get { return _parser; } }
+
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Message.ModelReflection.Descriptor.MessageTypes[32]; }
+    }
+
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    public scenario_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    public scenario_t(scenario_t other) : this() {
+      name_ = other.name_;
+      description_ = other.description_;
+      StartTurn = other.startTurn_ != null ? other.StartTurn.Clone() : null;
+      teams_ = other.teams_.Clone();
+      teamTurnOrder_ = other.teamTurnOrder_.Clone();
+      map_ = other.map_;
+      orderOfBattle_ = other.orderOfBattle_;
+      setupOrder_ = other.setupOrder_.Clone();
+      releaseConditions_ = other.releaseConditions_.Clone();
+      warEntryConditions_ = other.warEntryConditions_.Clone();
+      scenarioTurns_ = other.scenarioTurns_.Clone();
+    }
+
+    public scenario_t Clone() {
+      return new scenario_t(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "description" field.</summary>
+    public const int DescriptionFieldNumber = 2;
+    private string description_ = "";
+    public string Description {
+      get { return description_; }
+      set {
+        description_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "start_turn" field.</summary>
+    public const int StartTurnFieldNumber = 3;
+    private global::Message.turn_t startTurn_;
+    public global::Message.turn_t StartTurn {
+      get { return startTurn_; }
+      set {
+        startTurn_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "teams" field.</summary>
+    public const int TeamsFieldNumber = 4;
+    private static readonly pb::FieldCodec<global::Message.team_t> _repeated_teams_codec
+        = pb::FieldCodec.ForMessage(34, global::Message.team_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.team_t> teams_ = new pbc::RepeatedField<global::Message.team_t>();
+    public pbc::RepeatedField<global::Message.team_t> Teams {
+      get { return teams_; }
+    }
+
+    /// <summary>Field number for the "team_turn_order" field.</summary>
+    public const int TeamTurnOrderFieldNumber = 5;
+    private static readonly pb::FieldCodec<string> _repeated_teamTurnOrder_codec
+        = pb::FieldCodec.ForString(42);
+    private readonly pbc::RepeatedField<string> teamTurnOrder_ = new pbc::RepeatedField<string>();
+    public pbc::RepeatedField<string> TeamTurnOrder {
+      get { return teamTurnOrder_; }
+    }
+
+    /// <summary>Field number for the "map" field.</summary>
+    public const int MapFieldNumber = 6;
+    private string map_ = "";
+    public string Map {
+      get { return map_; }
+      set {
+        map_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "order_of_battle" field.</summary>
+    public const int OrderOfBattleFieldNumber = 7;
+    private string orderOfBattle_ = "";
+    public string OrderOfBattle {
+      get { return orderOfBattle_; }
+      set {
+        orderOfBattle_ = pb::Preconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "setup_order" field.</summary>
+    public const int SetupOrderFieldNumber = 8;
+    private static readonly pb::FieldCodec<string> _repeated_setupOrder_codec
+        = pb::FieldCodec.ForString(66);
+    private readonly pbc::RepeatedField<string> setupOrder_ = new pbc::RepeatedField<string>();
+    public pbc::RepeatedField<string> SetupOrder {
+      get { return setupOrder_; }
+    }
+
+    /// <summary>Field number for the "release_conditions" field.</summary>
+    public const int ReleaseConditionsFieldNumber = 9;
+    private static readonly pb::FieldCodec<global::Message.fleet_release_condition_t> _repeated_releaseConditions_codec
+        = pb::FieldCodec.ForMessage(74, global::Message.fleet_release_condition_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.fleet_release_condition_t> releaseConditions_ = new pbc::RepeatedField<global::Message.fleet_release_condition_t>();
+    public pbc::RepeatedField<global::Message.fleet_release_condition_t> ReleaseConditions {
+      get { return releaseConditions_; }
+    }
+
+    /// <summary>Field number for the "war_entry_conditions" field.</summary>
+    public const int WarEntryConditionsFieldNumber = 10;
+    private static readonly pb::FieldCodec<global::Message.war_entry_condition_t> _repeated_warEntryConditions_codec
+        = pb::FieldCodec.ForMessage(82, global::Message.war_entry_condition_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.war_entry_condition_t> warEntryConditions_ = new pbc::RepeatedField<global::Message.war_entry_condition_t>();
+    public pbc::RepeatedField<global::Message.war_entry_condition_t> WarEntryConditions {
+      get { return warEntryConditions_; }
+    }
+
+    /// <summary>Field number for the "scenario_turns" field.</summary>
+    public const int ScenarioTurnsFieldNumber = 11;
+    private static readonly pb::FieldCodec<global::Message.scenario_turn_t> _repeated_scenarioTurns_codec
+        = pb::FieldCodec.ForMessage(90, global::Message.scenario_turn_t.Parser);
+    private readonly pbc::RepeatedField<global::Message.scenario_turn_t> scenarioTurns_ = new pbc::RepeatedField<global::Message.scenario_turn_t>();
+    public pbc::RepeatedField<global::Message.scenario_turn_t> ScenarioTurns {
+      get { return scenarioTurns_; }
+    }
+
+    public override bool Equals(object other) {
+      return Equals(other as scenario_t);
+    }
+
+    public bool Equals(scenario_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if (Description != other.Description) return false;
+      if (!object.Equals(StartTurn, other.StartTurn)) return false;
+      if(!teams_.Equals(other.teams_)) return false;
+      if(!teamTurnOrder_.Equals(other.teamTurnOrder_)) return false;
+      if (Map != other.Map) return false;
+      if (OrderOfBattle != other.OrderOfBattle) return false;
+      if(!setupOrder_.Equals(other.setupOrder_)) return false;
+      if(!releaseConditions_.Equals(other.releaseConditions_)) return false;
+      if(!warEntryConditions_.Equals(other.warEntryConditions_)) return false;
+      if(!scenarioTurns_.Equals(other.scenarioTurns_)) return false;
+      return true;
+    }
+
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Description.Length != 0) hash ^= Description.GetHashCode();
+      if (startTurn_ != null) hash ^= StartTurn.GetHashCode();
+      hash ^= teams_.GetHashCode();
+      hash ^= teamTurnOrder_.GetHashCode();
+      if (Map.Length != 0) hash ^= Map.GetHashCode();
+      if (OrderOfBattle.Length != 0) hash ^= OrderOfBattle.GetHashCode();
+      hash ^= setupOrder_.GetHashCode();
+      hash ^= releaseConditions_.GetHashCode();
+      hash ^= warEntryConditions_.GetHashCode();
+      hash ^= scenarioTurns_.GetHashCode();
+      return hash;
+    }
+
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Name.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (Description.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Description);
+      }
+      if (startTurn_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(StartTurn);
+      }
+      teams_.WriteTo(output, _repeated_teams_codec);
+      teamTurnOrder_.WriteTo(output, _repeated_teamTurnOrder_codec);
+      if (Map.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(Map);
+      }
+      if (OrderOfBattle.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(OrderOfBattle);
+      }
+      setupOrder_.WriteTo(output, _repeated_setupOrder_codec);
+      releaseConditions_.WriteTo(output, _repeated_releaseConditions_codec);
+      warEntryConditions_.WriteTo(output, _repeated_warEntryConditions_codec);
+      scenarioTurns_.WriteTo(output, _repeated_scenarioTurns_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Description.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
+      }
+      if (startTurn_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(StartTurn);
+      }
+      size += teams_.CalculateSize(_repeated_teams_codec);
+      size += teamTurnOrder_.CalculateSize(_repeated_teamTurnOrder_codec);
+      if (Map.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Map);
+      }
+      if (OrderOfBattle.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(OrderOfBattle);
+      }
+      size += setupOrder_.CalculateSize(_repeated_setupOrder_codec);
+      size += releaseConditions_.CalculateSize(_repeated_releaseConditions_codec);
+      size += warEntryConditions_.CalculateSize(_repeated_warEntryConditions_codec);
+      size += scenarioTurns_.CalculateSize(_repeated_scenarioTurns_codec);
+      return size;
+    }
+
+    public void MergeFrom(scenario_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Description.Length != 0) {
+        Description = other.Description;
+      }
+      if (other.startTurn_ != null) {
+        if (startTurn_ == null) {
+          startTurn_ = new global::Message.turn_t();
+        }
+        StartTurn.MergeFrom(other.StartTurn);
+      }
+      teams_.Add(other.teams_);
+      teamTurnOrder_.Add(other.teamTurnOrder_);
+      if (other.Map.Length != 0) {
+        Map = other.Map;
+      }
+      if (other.OrderOfBattle.Length != 0) {
+        OrderOfBattle = other.OrderOfBattle;
+      }
+      setupOrder_.Add(other.setupOrder_);
+      releaseConditions_.Add(other.releaseConditions_);
+      warEntryConditions_.Add(other.warEntryConditions_);
+      scenarioTurns_.Add(other.scenarioTurns_);
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 18: {
+            Description = input.ReadString();
+            break;
+          }
+          case 26: {
+            if (startTurn_ == null) {
+              startTurn_ = new global::Message.turn_t();
+            }
+            input.ReadMessage(startTurn_);
+            break;
+          }
+          case 34: {
+            teams_.AddEntriesFrom(input, _repeated_teams_codec);
+            break;
+          }
+          case 42: {
+            teamTurnOrder_.AddEntriesFrom(input, _repeated_teamTurnOrder_codec);
+            break;
+          }
+          case 50: {
+            Map = input.ReadString();
+            break;
+          }
+          case 58: {
+            OrderOfBattle = input.ReadString();
+            break;
+          }
+          case 66: {
+            setupOrder_.AddEntriesFrom(input, _repeated_setupOrder_codec);
+            break;
+          }
+          case 74: {
+            releaseConditions_.AddEntriesFrom(input, _repeated_releaseConditions_codec);
+            break;
+          }
+          case 82: {
+            warEntryConditions_.AddEntriesFrom(input, _repeated_warEntryConditions_codec);
+            break;
+          }
+          case 90: {
+            scenarioTurns_.AddEntriesFrom(input, _repeated_scenarioTurns_codec);
+            break;
+          }
+        }
+      }
+    }
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the scenario_t message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    public static partial class Types {
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+      public sealed partial class nation_t : pb::IMessage<nation_t> {
+        private static readonly pb::MessageParser<nation_t> _parser = new pb::MessageParser<nation_t>(() => new nation_t());
+        public static pb::MessageParser<nation_t> Parser { get { return _parser; } }
+
+        public static pbr::MessageDescriptor Descriptor {
+          get { return global::Message.scenario_t.Descriptor.NestedTypes[0]; }
+        }
+
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+          get { return Descriptor; }
+        }
+
+        public nation_t() {
+          OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        public nation_t(nation_t other) : this() {
+          atWarWith_ = other.atWarWith_.Clone();
+          futureBelligerents_ = other.futureBelligerents_.Clone();
+          economy_ = other.economy_;
+          exhaustionTurns_ = other.exhaustionTurns_;
+          accumulateExhaustionAtPeace_ = other.accumulateExhaustionAtPeace_;
+        }
+
+        public nation_t Clone() {
+          return new nation_t(this);
+        }
+
+        /// <summary>Field number for the "at_war_with" field.</summary>
+        public const int AtWarWithFieldNumber = 1;
+        private static readonly pb::FieldCodec<string> _repeated_atWarWith_codec
+            = pb::FieldCodec.ForString(10);
+        private readonly pbc::RepeatedField<string> atWarWith_ = new pbc::RepeatedField<string>();
+        public pbc::RepeatedField<string> AtWarWith {
+          get { return atWarWith_; }
+        }
+
+        /// <summary>Field number for the "future_belligerents" field.</summary>
+        public const int FutureBelligerentsFieldNumber = 2;
+        private static readonly pb::FieldCodec<string> _repeated_futureBelligerents_codec
+            = pb::FieldCodec.ForString(18);
+        private readonly pbc::RepeatedField<string> futureBelligerents_ = new pbc::RepeatedField<string>();
+        public pbc::RepeatedField<string> FutureBelligerents {
+          get { return futureBelligerents_; }
+        }
+
+        /// <summary>Field number for the "economy" field.</summary>
+        public const int EconomyFieldNumber = 3;
+        private global::Message.war_footing_t economy_ = global::Message.war_footing_t.war;
+        public global::Message.war_footing_t Economy {
+          get { return economy_; }
+          set {
+            economy_ = value;
+          }
+        }
+
+        /// <summary>Field number for the "exhaustion_turns" field.</summary>
+        public const int ExhaustionTurnsFieldNumber = 4;
+        private int exhaustionTurns_;
+        public int ExhaustionTurns {
+          get { return exhaustionTurns_; }
+          set {
+            exhaustionTurns_ = value;
+          }
+        }
+
+        /// <summary>Field number for the "accumulate_exhaustion_at_peace" field.</summary>
+        public const int AccumulateExhaustionAtPeaceFieldNumber = 5;
+        private bool accumulateExhaustionAtPeace_;
+        public bool AccumulateExhaustionAtPeace {
+          get { return accumulateExhaustionAtPeace_; }
+          set {
+            accumulateExhaustionAtPeace_ = value;
+          }
+        }
+
+        public override bool Equals(object other) {
+          return Equals(other as nation_t);
+        }
+
+        public bool Equals(nation_t other) {
+          if (ReferenceEquals(other, null)) {
+            return false;
+          }
+          if (ReferenceEquals(other, this)) {
+            return true;
+          }
+          if(!atWarWith_.Equals(other.atWarWith_)) return false;
+          if(!futureBelligerents_.Equals(other.futureBelligerents_)) return false;
+          if (Economy != other.Economy) return false;
+          if (ExhaustionTurns != other.ExhaustionTurns) return false;
+          if (AccumulateExhaustionAtPeace != other.AccumulateExhaustionAtPeace) return false;
+          return true;
+        }
+
+        public override int GetHashCode() {
+          int hash = 1;
+          hash ^= atWarWith_.GetHashCode();
+          hash ^= futureBelligerents_.GetHashCode();
+          if (Economy != global::Message.war_footing_t.war) hash ^= Economy.GetHashCode();
+          if (ExhaustionTurns != 0) hash ^= ExhaustionTurns.GetHashCode();
+          if (AccumulateExhaustionAtPeace != false) hash ^= AccumulateExhaustionAtPeace.GetHashCode();
+          return hash;
+        }
+
+        public override string ToString() {
+          return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        public void WriteTo(pb::CodedOutputStream output) {
+          atWarWith_.WriteTo(output, _repeated_atWarWith_codec);
+          futureBelligerents_.WriteTo(output, _repeated_futureBelligerents_codec);
+          if (Economy != global::Message.war_footing_t.war) {
+            output.WriteRawTag(24);
+            output.WriteEnum((int) Economy);
+          }
+          if (ExhaustionTurns != 0) {
+            output.WriteRawTag(32);
+            output.WriteInt32(ExhaustionTurns);
+          }
+          if (AccumulateExhaustionAtPeace != false) {
+            output.WriteRawTag(40);
+            output.WriteBool(AccumulateExhaustionAtPeace);
+          }
+        }
+
+        public int CalculateSize() {
+          int size = 0;
+          size += atWarWith_.CalculateSize(_repeated_atWarWith_codec);
+          size += futureBelligerents_.CalculateSize(_repeated_futureBelligerents_codec);
+          if (Economy != global::Message.war_footing_t.war) {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Economy);
+          }
+          if (ExhaustionTurns != 0) {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(ExhaustionTurns);
+          }
+          if (AccumulateExhaustionAtPeace != false) {
+            size += 1 + 1;
+          }
+          return size;
+        }
+
+        public void MergeFrom(nation_t other) {
+          if (other == null) {
+            return;
+          }
+          atWarWith_.Add(other.atWarWith_);
+          futureBelligerents_.Add(other.futureBelligerents_);
+          if (other.Economy != global::Message.war_footing_t.war) {
+            Economy = other.Economy;
+          }
+          if (other.ExhaustionTurns != 0) {
+            ExhaustionTurns = other.ExhaustionTurns;
+          }
+          if (other.AccumulateExhaustionAtPeace != false) {
+            AccumulateExhaustionAtPeace = other.AccumulateExhaustionAtPeace;
+          }
+        }
+
+        public void MergeFrom(pb::CodedInputStream input) {
+          uint tag;
+          while ((tag = input.ReadTag()) != 0) {
+            switch(tag) {
+              default:
+                input.SkipLastField();
+                break;
+              case 10: {
+                atWarWith_.AddEntriesFrom(input, _repeated_atWarWith_codec);
+                break;
+              }
+              case 18: {
+                futureBelligerents_.AddEntriesFrom(input, _repeated_futureBelligerents_codec);
+                break;
+              }
+              case 24: {
+                economy_ = (global::Message.war_footing_t) input.ReadEnum();
+                break;
+              }
+              case 32: {
+                ExhaustionTurns = input.ReadInt32();
+                break;
+              }
+              case 40: {
+                AccumulateExhaustionAtPeace = input.ReadBool();
+                break;
+              }
+            }
+          }
+        }
+
+      }
+
+    }
+    #endregion
 
   }
 

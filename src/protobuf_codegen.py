@@ -57,7 +57,16 @@ def get_cpp_type(typecode):
     return retval
 
 def map_field_entry_type(descriptor_proto):
+    # TODO: return descriptor_proto.options.map_entry == True
     return descriptor_proto.name not in proto_contents
+
+def type_without_namespace(field_descriptor_proto, namespace):
+    typenames = field_descriptor_proto.type_name.split('.')[1:]
+    prefix = filter(lambda x: x[0] == x[1], zip(typenames, namespace))
+    return '.'.join(typenames[len(prefix):])
+
+def to_cpp_namespace(typename):
+    return typename.replace('.', '::')
 
 def indent_str(i):
     return '    ' * i
@@ -129,8 +138,9 @@ def field_type(field_descriptor_proto):
         typename = 'std::vector<{}>'.format(typename)
     return typename
 
+#StartingNationalHoldingsEntry
 def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
-    leaf_type = field_descriptor_proto.type_name.split('.')[-1]
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     if leaf_type in map_fields:
         key_type = field_type(map_fields[leaf_type].field[0])
         value_type = field_type(map_fields[leaf_type].field[1])
@@ -139,7 +149,7 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
         typename = field_type(field_descriptor_proto)
         args.hpp_file.write('{}{} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
 
-def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, to_decls, from_decls, map_fields):
+def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, to_decls, from_decls, map_fields):
     args.hpp_file.write('\n')
     args.hpp_file.write('{0}struct {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
     depth += 1
@@ -149,17 +159,27 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
 
     for descriptor in descriptor_proto.nested_type:
         if map_field_entry_type(descriptor):
-            map_fields[descriptor.name] = descriptor
+            field = None
+            for f in descriptor_proto.field:
+                if f.type_name.endswith(descriptor.name):
+                    field = f
+                    break
+            name = type_without_namespace(field, protobuf_namespace)
+            map_fields[name] = descriptor
         else:
-            declare_descriptor_proto(descriptor, protobuf_namespace, user_namespace, depth, to_decls, from_decls, map_fields)
+            declare_descriptor_proto(descriptor, protobuf_namespace, user_namespace, depth, scope + [descriptor_proto.name], to_decls, from_decls, map_fields)
 
     for field_descriptor_proto in descriptor_proto.field:
         declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields)
     depth -= 1
     args.hpp_file.write('{}}};\n'.format(indent_str(depth)))
 
+    scope_ns = '::'.join(scope)
     proto_ns = '::'.join(protobuf_namespace)
     user_ns = '::'.join(user_namespace)
+    if scope_ns != '':
+        proto_ns += '::' + scope_ns
+        user_ns += '::' + scope_ns
     to_decl = (
         '{0}::{1}'.format(proto_ns, descriptor_proto.name),
         'to_protobuf (const {0}::{1}& value)'.format(user_ns, descriptor_proto.name),
@@ -174,7 +194,7 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     from_decls.append(from_decl)
 
 def define_to_impl_field(field_descriptor_proto, depth, map_fields):
-    leaf_type = field_descriptor_proto.type_name.split('.')[-1]
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     proto_ns = '::'.join(protobuf_namespace)
     if repeated(field_descriptor_proto):
         args.cpp_file.write('{0}for (const auto& x : value.{1}) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
@@ -185,13 +205,13 @@ def define_to_impl_field(field_descriptor_proto, depth, map_fields):
                 args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = to_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field)
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, leaf_type))
+                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
             else:
                 args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}retval.add_{1}()->CopyFrom(to_protobuf(x));\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.add_{1}(static_cast< {2}::{3} >(x));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, leaf_type))
+            args.cpp_file.write('{0}retval.add_{1}(static_cast< {2}::{3} >(x));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
         else:
             args.cpp_file.write('{0}retval.add_{1}(x);\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
@@ -200,7 +220,7 @@ def define_to_impl_field(field_descriptor_proto, depth, map_fields):
         if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}retval.mutable_{1}()->CopyFrom(to_protobuf(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.set_{1}(static_cast< {2}::{3} >(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, leaf_type))
+            args.cpp_file.write('{0}retval.set_{1}(static_cast< {2}::{3} >(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
         else:
             args.cpp_file.write('{0}retval.set_{1}(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
 
@@ -219,7 +239,7 @@ def define_to_impl(to_decl, depth, map_fields):
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
 def define_from_impl_field(field_descriptor_proto, depth, map_fields):
-    leaf_type = field_descriptor_proto.type_name.split('.')[-1]
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     proto_ns = '::'.join(protobuf_namespace)
     if repeated(field_descriptor_proto):
         args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
@@ -236,14 +256,14 @@ def define_from_impl_field(field_descriptor_proto, depth, map_fields):
                 args.cpp_file.write('{0}retval.{1}[x.first] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field)
-                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast<{2}>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, leaf_type))
+                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast<{2}>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
             else:
                 args.cpp_file.write('{0}retval.{1}[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             value_type = field_type(field_descriptor_proto)
-            args.cpp_file.write('{0}*it++ = static_cast<{1}>(x);\n'.format(indent_str(depth), leaf_type))
+            args.cpp_file.write('{0}*it++ = static_cast<{1}>(x);\n'.format(indent_str(depth), to_cpp_namespace(leaf_type)))
         else:
             args.cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
@@ -254,7 +274,7 @@ def define_from_impl_field(field_descriptor_proto, depth, map_fields):
         if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}retval.{1} = from_protobuf(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.{1} = static_cast< {2} >(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name, leaf_type))
+            args.cpp_file.write('{0}retval.{1} = static_cast< {2} >(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
         else:
             args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
 
@@ -284,12 +304,6 @@ for field_descriptor_proto in file_descriptor_set.file:
     user_namespace = args.namespace and args.namespace.split('::') or []
     depth = open_namespace(user_namespace)
 
-    if False:
-        print proto_source
-        print syntax
-        print protobuf_namespace
-        print user_namespace
-
     for enum_descriptor_proto in field_descriptor_proto.enum_type:
         handle_enum_descriptor_proto(enum_descriptor_proto, depth)
 
@@ -297,7 +311,7 @@ for field_descriptor_proto in file_descriptor_set.file:
     from_decls = []
     map_fields = {}
     for descriptor_proto in field_descriptor_proto.message_type:
-        declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, to_decls, from_decls, map_fields)
+        declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, [], to_decls, from_decls, map_fields)
 
     for i in range(len(to_decls)):
         args.hpp_file.write('''
