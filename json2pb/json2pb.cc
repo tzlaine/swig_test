@@ -92,7 +92,7 @@ static json_t * _field2json(const Message& msg, const FieldDescriptor *field, si
 				ref->GetRepeatedEnum(msg, field, index):
 				ref->GetEnum(msg, field);
 
-			jf = json_integer(ef->number());
+			jf = json_string(ef->name().c_str());
 			break;
 		}
 		default:
