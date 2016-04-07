@@ -1,35 +1,12 @@
 {
   "oobs": [
     {
+      "key": "FED",
       "value": {
         "starting_fleets": [
           {
+            "key": "First Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "year": 171,
-                  "units": [
-                    {
-                      "unit": "CVA"
-                    },
-                    {
-                      "unit": "ECL"
-                    },
-                    {
-                      "unit": "DE",
-                      "times": 2
-                    },
-                    {
-                      "unit": "NCL",
-                      "times": 3
-                    },
-                    {
-                      "unit": "FF",
-                      "times": 3
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 2908
               ],
@@ -70,53 +47,21 @@
                   "unit": "MB",
                   "times": 3
                 }
-              ]
-            },
-            "key": "First Fleet"
-          },
-          {
-            "value": {
-              "hexes": [
-                2901
               ],
-              "units": [
-                {
-                  "unit": "CVL",
-                  "times": 3
-                }
-              ]
-            },
-            "key": "Second Fleet"
-          },
-          {
-            "value": {
               "prewar_construction": [
                 {
-                  "season": "fall",
-                  "year": 168,
+                  "year": 171,
                   "units": [
                     {
-                      "unit": "DN"
-                    }
-                  ]
-                },
-                {
-                  "year": 169,
-                  "units": [
-                    {
-                      "unit": "CVB"
+                      "unit": "CVA"
                     },
                     {
-                      "unit": "DE"
+                      "unit": "ECL"
                     },
                     {
-                      "unit": "FFE"
-                    }
-                  ]
-                },
-                {
-                  "year": 170,
-                  "units": [
+                      "unit": "DE",
+                      "times": 2
+                    },
                     {
                       "unit": "NCL",
                       "times": 3
@@ -127,7 +72,26 @@
                     }
                   ]
                 }
+              ]
+            }
+          },
+          {
+            "key": "Second Fleet",
+            "value": {
+              "hexes": [
+                2901
               ],
+              "units": [
+                {
+                  "unit": "CVL",
+                  "times": 3
+                }
+              ]
+            }
+          },
+          {
+            "key": "Third Fleet",
+            "value": {
               "hexes": [
                 2006,
                 2007,
@@ -179,7 +143,6 @@
                 2715,
                 2716
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CVS"
@@ -218,20 +181,35 @@
                 {
                   "unit": "FRD"
                 }
-              ]
-            },
-            "key": "Third Fleet"
-          },
-          {
-            "value": {
+              ],
+              "reserve": true,
               "prewar_construction": [
                 {
+                  "year": 168,
                   "season": "fall",
-                  "year": 170,
                   "units": [
                     {
                       "unit": "DN"
+                    }
+                  ]
+                },
+                {
+                  "year": 169,
+                  "units": [
+                    {
+                      "unit": "CVB"
                     },
+                    {
+                      "unit": "DE"
+                    },
+                    {
+                      "unit": "FFE"
+                    }
+                  ]
+                },
+                {
+                  "year": 170,
+                  "units": [
                     {
                       "unit": "NCL",
                       "times": 3
@@ -242,7 +220,12 @@
                     }
                   ]
                 }
-              ],
+              ]
+            }
+          },
+          {
+            "key": "Fourth Fleet",
+            "value": {
               "hexes": [
                 2003,
                 2004,
@@ -263,7 +246,6 @@
                 2402,
                 2403
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CC"
@@ -286,11 +268,31 @@
                 {
                   "unit": "TG"
                 }
+              ],
+              "reserve": true,
+              "prewar_construction": [
+                {
+                  "year": 170,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "DN"
+                    },
+                    {
+                      "unit": "NCL",
+                      "times": 3
+                    },
+                    {
+                      "unit": "FF",
+                      "times": 3
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Fourth Fleet"
+            }
           },
           {
+            "key": "Fifth Fleet",
             "value": {
               "hexes": [
                 3301,
@@ -330,7 +332,6 @@
                 3708,
                 3808
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CC"
@@ -353,37 +354,13 @@
                 {
                   "unit": "TG"
                 }
-              ]
-            },
-            "key": "Fifth Fleet"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Sixth Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "season": "fall",
-                  "year": 169,
-                  "units": [
-                    {
-                      "unit": "DN"
-                    }
-                  ]
-                },
-                {
-                  "year": 170,
-                  "units": [
-                    {
-                      "unit": "CVB"
-                    },
-                    {
-                      "unit": "DE"
-                    },
-                    {
-                      "unit": "FFE"
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 3113,
                 3114,
@@ -422,7 +399,6 @@
                 3811,
                 3812
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CVS"
@@ -461,11 +437,37 @@
                 {
                   "unit": "FRD"
                 }
+              ],
+              "reserve": true,
+              "prewar_construction": [
+                {
+                  "year": 169,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "DN"
+                    }
+                  ]
+                },
+                {
+                  "year": 170,
+                  "units": [
+                    {
+                      "unit": "CVB"
+                    },
+                    {
+                      "unit": "DE"
+                    },
+                    {
+                      "unit": "FFE"
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Sixth Fleet"
+            }
           },
           {
+            "key": "Seventh Fleet",
             "value": {
               "hexes": [
                 2813,
@@ -500,17 +502,26 @@
                   "times": 3
                 }
               ]
-            },
-            "key": "Seventh Fleet"
+            }
           }
         ],
         "mothball_reserve": {
-          "limited_war_release": [
+          "units": [
             {
-              "unit": "CL"
+              "unit": "CA",
+              "times": 6
             },
             {
-              "unit": "FF"
+              "unit": "CL",
+              "times": 18
+            },
+            {
+              "unit": "FF",
+              "times": 18
+            },
+            {
+              "unit": "DD",
+              "times": 3
             }
           ],
           "war_release": [
@@ -529,29 +540,19 @@
               "times": 3
             }
           ],
-          "units": [
+          "limited_war_release": [
             {
-              "unit": "CA",
-              "times": 6
+              "unit": "CL"
             },
             {
-              "unit": "CL",
-              "times": 18
-            },
-            {
-              "unit": "FF",
-              "times": 18
-            },
-            {
-              "unit": "DD",
-              "times": 3
+              "unit": "FF"
             }
           ]
         },
         "production": [
           {
-            "season": "fall",
             "year": 171,
+            "season": "fall",
             "units": [
               {
                 "unit": "DN"
@@ -596,8 +597,8 @@
             ]
           },
           {
-            "season": "fall",
             "year": 172,
+            "season": "fall",
             "units": [
               {
                 "unit": "DN"
@@ -645,8 +646,8 @@
             ]
           },
           {
-            "season": "fall",
             "year": 173,
+            "season": "fall",
             "units": [
               {
                 "unit": "DN"
@@ -695,8 +696,8 @@
             ]
           },
           {
-            "season": "fall",
             "year": 175,
+            "season": "fall",
             "units": [
               {
                 "unit": "DN"
@@ -716,47 +717,20 @@
             ]
           }
         ]
-      },
-      "key": "FED"
+      }
     },
     {
+      "key": "GOR",
       "value": {
         "starting_fleets": [
           {
+            "key": "First Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "year": 173,
-                  "units": [
-                    {
-                      "unit": "DN"
-                    },
-                    {
-                      "unit": "HD",
-                      "times": 3
-                    },
-                    {
-                      "unit": "BD",
-                      "times": 6
-                    },
-                    {
-                      "unit": "CV"
-                    },
-                    {
-                      "unit": "CLE"
-                    },
-                    {
-                      "unit": "DE"
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 4402,
                 4403,
                 4503
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CC"
@@ -788,12 +762,8 @@
                   "unit": "MB",
                   "times": 2
                 }
-              ]
-            },
-            "key": "First Fleet"
-          },
-          {
-            "value": {
+              ],
+              "reserve": true,
               "prewar_construction": [
                 {
                   "year": 173,
@@ -808,10 +778,24 @@
                     {
                       "unit": "BD",
                       "times": 6
+                    },
+                    {
+                      "unit": "CV"
+                    },
+                    {
+                      "unit": "CLE"
+                    },
+                    {
+                      "unit": "DE"
                     }
                   ]
                 }
-              ],
+              ]
+            }
+          },
+          {
+            "key": "Second Fleet",
+            "value": {
               "hexes": [
                 3801,
                 3901,
@@ -848,12 +832,7 @@
                 {
                   "unit": "SC"
                 }
-              ]
-            },
-            "key": "Second Fleet"
-          },
-          {
-            "value": {
+              ],
               "prewar_construction": [
                 {
                   "year": 173,
@@ -871,7 +850,12 @@
                     }
                   ]
                 }
-              ],
+              ]
+            }
+          },
+          {
+            "key": "Sixth Fleet",
+            "value": {
               "hexes": [
                 4007,
                 4008,
@@ -900,7 +884,6 @@
                 5007,
                 5008
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CC"
@@ -920,11 +903,30 @@
                 {
                   "unit": "SC"
                 }
+              ],
+              "reserve": true,
+              "prewar_construction": [
+                {
+                  "year": 173,
+                  "units": [
+                    {
+                      "unit": "DN"
+                    },
+                    {
+                      "unit": "HD",
+                      "times": 3
+                    },
+                    {
+                      "unit": "BD",
+                      "times": 6
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Sixth Fleet"
+            }
           },
           {
+            "key": "Offmap Reserve Fleet",
             "value": {
               "units": [
                 {
@@ -942,8 +944,7 @@
                   "unit": "TG"
                 }
               ]
-            },
-            "key": "Offmap Reserve Fleet"
+            }
           }
         ],
         "production": [
@@ -964,8 +965,8 @@
             ]
           },
           {
-            "season": "fall",
             "year": 174,
+            "season": "fall",
             "units": [
               {
                 "unit": "BC"
@@ -981,286 +982,18 @@
             ]
           }
         ]
-      },
-      "key": "GOR"
+      }
     },
     {
+      "key": "HYD",
       "value": {
         "starting_fleets": [
           {
+            "key": "Home Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "season": "fall",
-                  "year": 168,
-                  "units": [
-                    {
-                      "unit": "RN"
-                    },
-                    {
-                      "unit": "HR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "year": 169,
-                  "units": [
-                    {
-                      "unit": "PAL"
-                    },
-                    {
-                      "unit": "RN"
-                    },
-                    {
-                      "unit": "HR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "season": "fall",
-                  "year": 169,
-                  "units": [
-                    {
-                      "unit": "UH"
-                    },
-                    {
-                      "unit": "DE"
-                    },
-                    {
-                      "unit": "AH",
-                      "times": 2
-                    },
-                    {
-                      "unit": "DG"
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "year": 170,
-                  "units": [
-                    {
-                      "unit": "PAL"
-                    },
-                    {
-                      "unit": "RN"
-                    },
-                    {
-                      "unit": "HR",
-                      "times": 2
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "season": "fall",
-                  "year": 170,
-                  "units": [
-                    {
-                      "unit": "CV"
-                    },
-                    {
-                      "unit": "DE"
-                    },
-                    {
-                      "unit": "AH",
-                      "times": 2
-                    },
-                    {
-                      "unit": "DG"
-                    },
-                    {
-                      "unit": "HR",
-                      "times": 2
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "year": 171,
-                  "units": [
-                    {
-                      "unit": "PAL"
-                    },
-                    {
-                      "unit": "RN"
-                    },
-                    {
-                      "unit": "HR",
-                      "times": 2
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "season": "fall",
-                  "year": 171,
-                  "units": [
-                    {
-                      "unit": "UH"
-                    },
-                    {
-                      "unit": "DE"
-                    },
-                    {
-                      "unit": "AH",
-                      "times": 2
-                    },
-                    {
-                      "unit": "DG"
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "year": 172,
-                  "units": [
-                    {
-                      "unit": "PAL"
-                    },
-                    {
-                      "unit": "RN"
-                    },
-                    {
-                      "unit": "HR",
-                      "times": 2
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "season": "fall",
-                  "year": 172,
-                  "units": [
-                    {
-                      "unit": "CV"
-                    },
-                    {
-                      "unit": "DE"
-                    },
-                    {
-                      "unit": "AH",
-                      "times": 2
-                    },
-                    {
-                      "unit": "DG"
-                    },
-                    {
-                      "unit": "HR",
-                      "times": 2
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                },
-                {
-                  "year": 173,
-                  "units": [
-                    {
-                      "unit": "PAL"
-                    },
-                    {
-                      "unit": "RN"
-                    },
-                    {
-                      "unit": "HR",
-                      "times": 2
-                    },
-                    {
-                      "unit": "TR"
-                    },
-                    {
-                      "unit": "HN",
-                      "times": 3
-                    },
-                    {
-                      "unit": "CU",
-                      "times": 3
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 617
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "LM"
@@ -1294,16 +1027,284 @@
                   "unit": "MB",
                   "times": 2
                 }
+              ],
+              "reserve": true,
+              "prewar_construction": [
+                {
+                  "year": 168,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "RN"
+                    },
+                    {
+                      "unit": "HR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 169,
+                  "units": [
+                    {
+                      "unit": "PAL"
+                    },
+                    {
+                      "unit": "RN"
+                    },
+                    {
+                      "unit": "HR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 169,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "UH"
+                    },
+                    {
+                      "unit": "DE"
+                    },
+                    {
+                      "unit": "AH",
+                      "times": 2
+                    },
+                    {
+                      "unit": "DG"
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 170,
+                  "units": [
+                    {
+                      "unit": "PAL"
+                    },
+                    {
+                      "unit": "RN"
+                    },
+                    {
+                      "unit": "HR",
+                      "times": 2
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 170,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "CV"
+                    },
+                    {
+                      "unit": "DE"
+                    },
+                    {
+                      "unit": "AH",
+                      "times": 2
+                    },
+                    {
+                      "unit": "DG"
+                    },
+                    {
+                      "unit": "HR",
+                      "times": 2
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 171,
+                  "units": [
+                    {
+                      "unit": "PAL"
+                    },
+                    {
+                      "unit": "RN"
+                    },
+                    {
+                      "unit": "HR",
+                      "times": 2
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 171,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "UH"
+                    },
+                    {
+                      "unit": "DE"
+                    },
+                    {
+                      "unit": "AH",
+                      "times": 2
+                    },
+                    {
+                      "unit": "DG"
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 172,
+                  "units": [
+                    {
+                      "unit": "PAL"
+                    },
+                    {
+                      "unit": "RN"
+                    },
+                    {
+                      "unit": "HR",
+                      "times": 2
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 172,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "CV"
+                    },
+                    {
+                      "unit": "DE"
+                    },
+                    {
+                      "unit": "AH",
+                      "times": 2
+                    },
+                    {
+                      "unit": "DG"
+                    },
+                    {
+                      "unit": "HR",
+                      "times": 2
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                },
+                {
+                  "year": 173,
+                  "units": [
+                    {
+                      "unit": "PAL"
+                    },
+                    {
+                      "unit": "RN"
+                    },
+                    {
+                      "unit": "HR",
+                      "times": 2
+                    },
+                    {
+                      "unit": "TR"
+                    },
+                    {
+                      "unit": "HN",
+                      "times": 3
+                    },
+                    {
+                      "unit": "CU",
+                      "times": 3
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Home Fleet"
+            }
           },
           {
+            "key": "Expeditionary Fleet",
             "value": {
               "hexes": [
                 716
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "LB"
@@ -1329,11 +1330,12 @@
                   "unit": "CU",
                   "times": 2
                 }
-              ]
-            },
-            "key": "Expeditionary Fleet"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "First Fleet",
             "value": {
               "hexes": [
                 915,
@@ -1368,10 +1370,10 @@
                   "times": 2
                 }
               ]
-            },
-            "key": "First Fleet"
+            }
           },
           {
+            "key": "Second Fleet",
             "value": {
               "hexes": [
                 114,
@@ -1406,10 +1408,10 @@
                   "times": 2
                 }
               ]
-            },
-            "key": "Second Fleet"
+            }
           },
           {
+            "key": "Old Colonies Squadron",
             "value": {
               "units": [
                 {
@@ -1427,14 +1429,13 @@
                   "times": 2
                 }
               ]
-            },
-            "key": "Old Colonies Squadron"
+            }
           }
         ],
         "production": [
           {
-            "season": "fall",
             "year": 169,
+            "season": "fall",
             "units": [
               {
                 "unit": "CC"
@@ -1486,13 +1487,14 @@
             ]
           }
         ]
-      },
-      "key": "HYD"
+      }
     },
     {
+      "key": "KLI",
       "value": {
         "starting_fleets": [
           {
+            "key": "Home Fleet",
             "value": {
               "hexes": [
                 1210,
@@ -1515,7 +1517,6 @@
                 1611,
                 1612
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "C8"
@@ -1577,11 +1578,12 @@
                   "unit": "MB",
                   "times": 2
                 }
-              ]
-            },
-            "key": "Home Fleet"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Eastern Fleet",
             "value": {
               "hexes": [
                 1709,
@@ -1660,10 +1662,10 @@
                   "unit": "TGB"
                 }
               ]
-            },
-            "key": "Eastern Fleet"
+            }
           },
           {
+            "key": "Northern Fleet",
             "value": {
               "hexes": [
                 906,
@@ -1732,10 +1734,10 @@
                   "unit": "TGA"
                 }
               ]
-            },
-            "key": "Northern Fleet"
+            }
           },
           {
+            "key": "Western Fleet",
             "value": {
               "hexes": [
                 1012,
@@ -1805,10 +1807,10 @@
                   "unit": "TGA"
                 }
               ]
-            },
-            "key": "Western Fleet"
+            }
           },
           {
+            "key": "Tholian Border Squadron",
             "value": {
               "hexes": [
                 2318,
@@ -1816,7 +1818,6 @@
                 2518,
                 2519
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "D7C"
@@ -1852,16 +1853,16 @@
                 {
                   "unit": "TGA"
                 }
-              ]
-            },
-            "key": "Tholian Border Squadron"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Northern Reserve",
             "value": {
               "hexes": [
                 1509
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "C8"
@@ -1917,16 +1918,16 @@
                 {
                   "unit": "MB"
                 }
-              ]
-            },
-            "key": "Northern Reserve"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Southern Reserve",
             "value": {
               "hexes": [
                 1716
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "D7C"
@@ -1979,11 +1980,12 @@
                 {
                   "unit": "MB"
                 }
-              ]
-            },
-            "key": "Southern Reserve"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Imperial War Reserve, Squadron I",
             "value": {
               "hexes": [
                 1411
@@ -2003,10 +2005,10 @@
                   "unit": "F5S"
                 }
               ]
-            },
-            "key": "Imperial War Reserve, Squadron I"
+            }
           },
           {
+            "key": "Imperial War Reserve, Squadron II",
             "value": {
               "hexes": [
                 1411
@@ -2026,10 +2028,10 @@
                   "unit": "F5S"
                 }
               ]
-            },
-            "key": "Imperial War Reserve, Squadron II"
+            }
           },
           {
+            "key": "Imperial War Reserve, Squadron III",
             "value": {
               "hexes": [
                 1411
@@ -2049,17 +2051,22 @@
                   "unit": "F5S"
                 }
               ]
-            },
-            "key": "Imperial War Reserve, Squadron III"
+            }
           }
         ],
         "mothball_reserve": {
-          "limited_war_release": [
+          "units": [
             {
-              "unit": "D6"
+              "unit": "D6",
+              "times": 24
             },
             {
-              "unit": "F5"
+              "unit": "F5",
+              "times": 12
+            },
+            {
+              "unit": "E4",
+              "times": 12
             }
           ],
           "war_release": [
@@ -2076,25 +2083,19 @@
               "times": 3
             }
           ],
-          "units": [
+          "limited_war_release": [
             {
-              "unit": "D6",
-              "times": 24
+              "unit": "D6"
             },
             {
-              "unit": "F5",
-              "times": 12
-            },
-            {
-              "unit": "E4",
-              "times": 12
+              "unit": "F5"
             }
           ]
         },
         "production": [
           {
-            "season": "fall",
             "year": 168,
+            "season": "fall",
             "units": [
               {
                 "unit": "D7C"
@@ -2152,13 +2153,14 @@
             ]
           }
         ]
-      },
-      "key": "KLI"
+      }
     },
     {
+      "key": "KZI",
       "value": {
         "starting_fleets": [
           {
+            "key": "Home Fleet",
             "value": {
               "hexes": [
                 1401
@@ -2225,10 +2227,10 @@
                   "unit": "MB"
                 }
               ]
-            },
-            "key": "Home Fleet"
+            }
           },
           {
+            "key": "Baron's Fleet",
             "value": {
               "hexes": [
                 1401
@@ -2276,10 +2278,10 @@
                 }
               ],
               "strategic_move_arrival_year": 169
-            },
-            "key": "Baron's Fleet"
+            }
           },
           {
+            "key": "Marquis' Fleet",
             "value": {
               "hexes": [
                 1704,
@@ -2323,10 +2325,10 @@
                   "unit": "TGT"
                 }
               ]
-            },
-            "key": "Marquis' Fleet"
+            }
           },
           {
+            "key": "Marquis' Reserve Fleet",
             "value": {
               "hexes": [
                 1704,
@@ -2357,10 +2359,10 @@
                   "unit": "EFF"
                 }
               ]
-            },
-            "key": "Marquis' Reserve Fleet"
+            }
           },
           {
+            "key": "Duke's Fleet",
             "value": {
               "hexes": [
                 1003,
@@ -2381,7 +2383,6 @@
                 1804,
                 1805
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "DN"
@@ -2432,11 +2433,12 @@
                 {
                   "unit": "TGC"
                 }
-              ]
-            },
-            "key": "Duke's Fleet"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Count's Fleet",
             "value": {
               "hexes": [
                 701,
@@ -2450,7 +2452,6 @@
                 903,
                 904
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "CV"
@@ -2498,15 +2499,15 @@
                 {
                   "unit": "TGT"
                 }
-              ]
-            },
-            "key": "Count's Fleet"
+              ],
+              "reserve": true
+            }
           }
         ],
         "production": [
           {
-            "season": "fall",
             "year": 168,
+            "season": "fall",
             "units": [
               {
                 "unit": "BC"
@@ -2544,8 +2545,8 @@
             ]
           },
           {
-            "season": "fall",
             "year": 169,
+            "season": "fall",
             "units": [
               {
                 "unit": "CV"
@@ -2592,13 +2593,14 @@
             ]
           }
         ]
-      },
-      "key": "KZI"
+      }
     },
     {
+      "key": "LYR",
       "value": {
         "starting_fleets": [
           {
+            "key": "Red Claw Fleet",
             "value": {
               "hexes": [
                 303,
@@ -2616,7 +2618,6 @@
                 705,
                 706
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "BC"
@@ -2653,24 +2654,18 @@
                 {
                   "unit": "MB"
                 }
-              ]
-            },
-            "key": "Red Claw Fleet"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Home Fleet",
             "value": {
               "hexes": [
                 408,
                 608,
                 707
               ],
-              "hex_placement_limits": [
-                {
-                  "value": 6,
-                  "key": 707
-                }
-              ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "DN"
@@ -2714,11 +2709,18 @@
                 {
                   "unit": "MB"
                 }
+              ],
+              "reserve": true,
+              "hex_placement_limits": [
+                {
+                  "key": 707,
+                  "value": 6
+                }
               ]
-            },
-            "key": "Home Fleet"
+            }
           },
           {
+            "key": "Enemy's Blood Fleet",
             "value": {
               "hexes": [
                 111,
@@ -2733,7 +2735,6 @@
                 512,
                 513
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "BC"
@@ -2766,13 +2767,13 @@
                 {
                   "unit": "MB"
                 }
-              ]
-            },
-            "key": "Enemy's Blood Fleet"
+              ],
+              "reserve": true
+            }
           },
           {
+            "key": "Far Stars Fleet",
             "value": {
-              "reserve": true,
               "units": [
                 {
                   "unit": "CC"
@@ -2809,15 +2810,15 @@
                   "unit": "FRD"
                 }
               ],
+              "reserve": true,
               "strategic_move_arrival_year": 169
-            },
-            "key": "Far Stars Fleet"
+            }
           }
         ],
         "production": [
           {
-            "season": "fall",
             "year": 168,
+            "season": "fall",
             "units": [
               {
                 "unit": "BC"
@@ -2863,76 +2864,19 @@
             ]
           }
         ]
-      },
-      "key": "LYR"
+      }
     },
     {
+      "key": "ROM",
       "value": {
         "starting_fleets": [
           {
+            "key": "Home Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "year": 173,
-                  "units": [
-                    {
-                      "unit": "KC9R"
-                    },
-                    {
-                      "unit": "CON"
-                    },
-                    {
-                      "unit": "SUP"
-                    },
-                    {
-                      "unit": "SPB"
-                    },
-                    {
-                      "unit": "SKE",
-                      "times": 2
-                    },
-                    {
-                      "unit": "FH"
-                    },
-                    {
-                      "unit": "SP",
-                      "times": 6
-                    },
-                    {
-                      "unit": "SPC",
-                      "times": 3
-                    },
-                    {
-                      "unit": "SK",
-                      "times": 3
-                    },
-                    {
-                      "unit": "SKF"
-                    },
-                    {
-                      "unit": "SKB"
-                    },
-                    {
-                      "unit": "SKE"
-                    },
-                    {
-                      "unit": "WE"
-                    },
-                    {
-                      "unit": "KE"
-                    },
-                    {
-                      "unit": "K4",
-                      "times": 3
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 4514,
                 4613
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "SP",
@@ -2994,12 +2938,149 @@
                 {
                   "unit": "K5S"
                 }
+              ],
+              "reserve": true,
+              "prewar_construction": [
+                {
+                  "year": 173,
+                  "units": [
+                    {
+                      "unit": "KC9R"
+                    },
+                    {
+                      "unit": "CON"
+                    },
+                    {
+                      "unit": "SUP"
+                    },
+                    {
+                      "unit": "SPB"
+                    },
+                    {
+                      "unit": "SKE",
+                      "times": 2
+                    },
+                    {
+                      "unit": "FH"
+                    },
+                    {
+                      "unit": "SP",
+                      "times": 6
+                    },
+                    {
+                      "unit": "SPC",
+                      "times": 3
+                    },
+                    {
+                      "unit": "SK",
+                      "times": 3
+                    },
+                    {
+                      "unit": "SKF"
+                    },
+                    {
+                      "unit": "SKB"
+                    },
+                    {
+                      "unit": "SKE"
+                    },
+                    {
+                      "unit": "WE"
+                    },
+                    {
+                      "unit": "KE"
+                    },
+                    {
+                      "unit": "K4",
+                      "times": 3
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Home Fleet"
+            }
           },
           {
+            "key": "Fleet of the North",
             "value": {
+              "hexes": [
+                4210,
+                4211,
+                4212,
+                4213,
+                4214,
+                4310,
+                4311,
+                4312,
+                4313,
+                4314,
+                4315,
+                4410,
+                4411,
+                4412,
+                4413,
+                4414,
+                4510,
+                4511,
+                4512,
+                4513,
+                4610,
+                4611,
+                4612,
+                4810,
+                4811,
+                4812,
+                4910,
+                4911,
+                5010,
+                5011
+              ],
+              "units": [
+                {
+                  "unit": "KE"
+                },
+                {
+                  "unit": "WE",
+                  "times": 8
+                },
+                {
+                  "unit": "SE"
+                },
+                {
+                  "unit": "FAL"
+                },
+                {
+                  "unit": "SN",
+                  "times": 3
+                },
+                {
+                  "unit": "SNB",
+                  "times": 3
+                },
+                {
+                  "unit": "FE",
+                  "times": 3
+                },
+                {
+                  "unit": "MB"
+                },
+                {
+                  "unit": "KRC"
+                },
+                {
+                  "unit": "KR",
+                  "times": 2
+                },
+                {
+                  "unit": "KRM"
+                },
+                {
+                  "unit": "K5Q"
+                },
+                {
+                  "unit": "K5S"
+                }
+              ],
+              "reserve": true,
               "prewar_construction": [
                 {
                   "year": 173,
@@ -3049,141 +3130,12 @@
                     }
                   ]
                 }
-              ],
-              "hexes": [
-                4210,
-                4211,
-                4212,
-                4213,
-                4214,
-                4310,
-                4311,
-                4312,
-                4313,
-                4314,
-                4315,
-                4410,
-                4411,
-                4412,
-                4413,
-                4414,
-                4510,
-                4511,
-                4512,
-                4513,
-                4610,
-                4611,
-                4612,
-                4810,
-                4811,
-                4812,
-                4910,
-                4911,
-                5010,
-                5011
-              ],
-              "reserve": true,
-              "units": [
-                {
-                  "unit": "KE"
-                },
-                {
-                  "unit": "WE",
-                  "times": 8
-                },
-                {
-                  "unit": "SE"
-                },
-                {
-                  "unit": "FAL"
-                },
-                {
-                  "unit": "SN",
-                  "times": 3
-                },
-                {
-                  "unit": "SNB",
-                  "times": 3
-                },
-                {
-                  "unit": "FE",
-                  "times": 3
-                },
-                {
-                  "unit": "MB"
-                },
-                {
-                  "unit": "KRC"
-                },
-                {
-                  "unit": "KR",
-                  "times": 2
-                },
-                {
-                  "unit": "KRM"
-                },
-                {
-                  "unit": "K5Q"
-                },
-                {
-                  "unit": "K5S"
-                }
               ]
-            },
-            "key": "Fleet of the North"
+            }
           },
           {
+            "key": "Fleet of the West",
             "value": {
-              "prewar_construction": [
-                {
-                  "year": 173,
-                  "units": [
-                    {
-                      "unit": "CON"
-                    },
-                    {
-                      "unit": "SUP"
-                    },
-                    {
-                      "unit": "SPB"
-                    },
-                    {
-                      "unit": "SKE",
-                      "times": 2
-                    },
-                    {
-                      "unit": "FH"
-                    },
-                    {
-                      "unit": "SP",
-                      "times": 5
-                    },
-                    {
-                      "unit": "SK",
-                      "times": 3
-                    },
-                    {
-                      "unit": "SKF"
-                    },
-                    {
-                      "unit": "SKB"
-                    },
-                    {
-                      "unit": "SKE"
-                    },
-                    {
-                      "unit": "WE"
-                    },
-                    {
-                      "unit": "KE"
-                    },
-                    {
-                      "unit": "K4",
-                      "times": 3
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 3317,
                 3416,
@@ -3227,7 +3179,6 @@
                 4113,
                 4114
               ],
-              "reserve": true,
               "units": [
                 {
                   "unit": "KE"
@@ -3285,27 +3236,63 @@
                 {
                   "unit": "K5S"
                 }
-              ]
-            },
-            "key": "Fleet of the West"
-          },
-          {
-            "value": {
+              ],
+              "reserve": true,
               "prewar_construction": [
                 {
                   "year": 173,
                   "units": [
                     {
-                      "unit": "K4",
-                      "times": 3
+                      "unit": "CON"
+                    },
+                    {
+                      "unit": "SUP"
+                    },
+                    {
+                      "unit": "SPB"
+                    },
+                    {
+                      "unit": "SKE",
+                      "times": 2
+                    },
+                    {
+                      "unit": "FH"
                     },
                     {
                       "unit": "SP",
-                      "times": 2
+                      "times": 5
+                    },
+                    {
+                      "unit": "SK",
+                      "times": 3
+                    },
+                    {
+                      "unit": "SKF"
+                    },
+                    {
+                      "unit": "SKB"
+                    },
+                    {
+                      "unit": "SKE"
+                    },
+                    {
+                      "unit": "WE"
+                    },
+                    {
+                      "unit": "KE"
+                    },
+                    {
+                      "unit": "K4",
+                      "times": 3
                     }
                   ]
                 }
-              ],
+              ]
+            }
+          },
+          {
+            "key": "Patrol Detachment",
+            "value": {
               "hexes": [
                 3319
               ],
@@ -3332,18 +3319,26 @@
                 {
                   "unit": "SE"
                 }
+              ],
+              "prewar_construction": [
+                {
+                  "year": 173,
+                  "units": [
+                    {
+                      "unit": "K4",
+                      "times": 3
+                    },
+                    {
+                      "unit": "SP",
+                      "times": 2
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Patrol Detachment"
+            }
           }
         ],
         "mothball_reserve": {
-          "war_release": [
-            {
-              "unit": "[any]",
-              "times": 2
-            }
-          ],
           "units": [
             {
               "unit": "WE",
@@ -3356,6 +3351,12 @@
             {
               "unit": "SN",
               "times": 8
+            }
+          ],
+          "war_release": [
+            {
+              "unit": "[any]",
+              "times": 2
             }
           ]
         },
@@ -3386,8 +3387,8 @@
             ]
           },
           {
-            "season": "fall",
             "year": 173,
+            "season": "fall",
             "units": [
               {
                 "unit": "CON"
@@ -3412,36 +3413,15 @@
             ]
           }
         ]
-      },
-      "key": "ROM"
+      }
     },
     {
+      "key": "THO",
       "value": {
         "starting_fleets": [
           {
+            "key": "First Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "season": "fall",
-                  "year": 168,
-                  "units": [
-                    {
-                      "unit": "PC"
-                    }
-                  ]
-                },
-                {
-                  "year": 171,
-                  "units": [
-                    {
-                      "unit": "DN"
-                    },
-                    {
-                      "unit": "PC"
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 2719,
                 2818,
@@ -3461,16 +3441,56 @@
                 {
                   "unit": "SC"
                 }
-              ]
-            },
-            "key": "First Fleet"
-          },
-          {
-            "value": {
+              ],
               "prewar_construction": [
                 {
+                  "year": 168,
                   "season": "fall",
+                  "units": [
+                    {
+                      "unit": "PC"
+                    }
+                  ]
+                },
+                {
+                  "year": 171,
+                  "units": [
+                    {
+                      "unit": "DN"
+                    },
+                    {
+                      "unit": "PC"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "key": "Second Fleet",
+            "value": {
+              "hexes": [
+                2918
+              ],
+              "units": [
+                {
+                  "unit": "CA"
+                },
+                {
+                  "unit": "DD"
+                },
+                {
+                  "unit": "PC",
+                  "times": 3
+                },
+                {
+                  "unit": "SC"
+                }
+              ],
+              "prewar_construction": [
+                {
                   "year": 169,
+                  "season": "fall",
                   "units": [
                     {
                       "unit": "PC"
@@ -3491,50 +3511,12 @@
                     }
                   ]
                 }
-              ],
-              "hexes": [
-                2918
-              ],
-              "units": [
-                {
-                  "unit": "CA"
-                },
-                {
-                  "unit": "DD"
-                },
-                {
-                  "unit": "PC",
-                  "times": 3
-                },
-                {
-                  "unit": "SC"
-                }
               ]
-            },
-            "key": "Second Fleet"
+            }
           },
           {
+            "key": "Third Fleet",
             "value": {
-              "prewar_construction": [
-                {
-                  "season": "fall",
-                  "year": 170,
-                  "units": [
-                    {
-                      "unit": "PC"
-                    }
-                  ]
-                },
-                {
-                  "season": "fall",
-                  "year": 171,
-                  "units": [
-                    {
-                      "unit": "PC"
-                    }
-                  ]
-                }
-              ],
               "hexes": [
                 3018,
                 3019,
@@ -3554,12 +3536,55 @@
                 {
                   "unit": "SC"
                 }
+              ],
+              "prewar_construction": [
+                {
+                  "year": 170,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "PC"
+                    }
+                  ]
+                },
+                {
+                  "year": 171,
+                  "season": "fall",
+                  "units": [
+                    {
+                      "unit": "PC"
+                    }
+                  ]
+                }
               ]
-            },
-            "key": "Third Fleet"
+            }
           },
           {
+            "key": "Home Fleet",
             "value": {
+              "hexes": [
+                2919
+              ],
+              "units": [
+                {
+                  "unit": "CA"
+                },
+                {
+                  "unit": "DD"
+                },
+                {
+                  "unit": "PC",
+                  "times": 3
+                },
+                {
+                  "unit": "CPC",
+                  "times": 3
+                },
+                {
+                  "unit": "MB"
+                }
+              ],
+              "reserve": true,
               "prewar_construction": [
                 {
                   "year": 169,
@@ -3587,46 +3612,22 @@
                   ]
                 },
                 {
-                  "season": "fall",
                   "year": 172,
+                  "season": "fall",
                   "units": [
                     {
                       "unit": "PC"
                     }
                   ]
                 }
-              ],
-              "hexes": [
-                2919
-              ],
-              "reserve": true,
-              "units": [
-                {
-                  "unit": "CA"
-                },
-                {
-                  "unit": "DD"
-                },
-                {
-                  "unit": "PC",
-                  "times": 3
-                },
-                {
-                  "unit": "CPC",
-                  "times": 3
-                },
-                {
-                  "unit": "MB"
-                }
               ]
-            },
-            "key": "Home Fleet"
+            }
           }
         ],
         "production": [
           {
-            "season": "fall",
             "year": 168,
+            "season": "fall",
             "units": [
               {
                 "unit": "DD"
@@ -3649,8 +3650,7 @@
             ]
           }
         ]
-      },
-      "key": "THO"
+      }
     }
   ]
 }

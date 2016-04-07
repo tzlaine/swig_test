@@ -1,17 +1,14 @@
 {
   "nations": [
     {
+      "key": "FED",
       "value": {
-        "offmap_possesions": {
-          "provinces": 3,
-          "survey_ships": 7
-        },
         "name": "United Federation of Planets",
-        "free_strategic_moves": 15,
         "short_name": "Federation",
         "capital": {
           "hexes": [
             {
+              "coord": 2908,
               "zones": [
                 {
                   "name": "Earth",
@@ -51,28 +48,27 @@
                     "sb"
                   ]
                 }
-              ],
-              "coord": 2908
+              ]
             }
           ]
         },
-        "capital_star_points": 5
-      },
-      "key": "FED"
-    },
-    {
-      "value": {
+        "free_strategic_moves": 15,
+        "capital_star_points": 5,
         "offmap_possesions": {
           "provinces": 3,
-          "mins": 2,
-          "survey_ships": 2
-        },
+          "survey_ships": 7
+        }
+      }
+    },
+    {
+      "key": "GOR",
+      "value": {
         "name": "Gorn Confederation",
-        "free_strategic_moves": 10,
         "short_name": "Gorn",
         "capital": {
           "hexes": [
             {
+              "coord": 4402,
               "zones": [
                 {
                   "name": "Ghdar I",
@@ -82,10 +78,10 @@
                     "sb"
                   ]
                 }
-              ],
-              "coord": 4402
+              ]
             },
             {
+              "coord": 4403,
               "zones": [
                 {
                   "name": "Ghdar II",
@@ -95,10 +91,10 @@
                     "sb"
                   ]
                 }
-              ],
-              "coord": 4403
+              ]
             },
             {
+              "coord": 4503,
               "zones": [
                 {
                   "name": "Ghdar III",
@@ -108,30 +104,28 @@
                     "sb"
                   ]
                 }
-              ],
-              "coord": 4503
+              ]
             }
           ]
         },
-        "capital_star_points": 5
-      },
-      "key": "GOR"
+        "free_strategic_moves": 10,
+        "capital_star_points": 5,
+        "offmap_possesions": {
+          "provinces": 3,
+          "mins": 2,
+          "survey_ships": 2
+        }
+      }
     },
     {
+      "key": "HYD",
       "value": {
-        "offmap_possesions": {
-          "majs": 2,
-          "provinces": 2,
-          "mins": 1,
-          "survey_ships": 3,
-          "old_shipyard": true
-        },
         "name": "Hydran Kingdom",
-        "free_strategic_moves": 10,
         "short_name": "Hydran",
         "capital": {
           "hexes": [
             {
+              "coord": 617,
               "zones": [
                 {
                   "name": "Hydrax",
@@ -155,29 +149,30 @@
                     "min"
                   ]
                 }
-              ],
-              "coord": 617
+              ]
             }
           ]
         },
-        "capital_star_points": 5
-      },
-      "key": "HYD"
+        "free_strategic_moves": 10,
+        "capital_star_points": 5,
+        "offmap_possesions": {
+          "provinces": 2,
+          "mins": 1,
+          "majs": 2,
+          "survey_ships": 3,
+          "old_shipyard": true
+        }
+      }
     },
     {
+      "key": "ISC",
       "value": {
-        "offmap_possesions": {
-          "majs": 1,
-          "provinces": 8,
-          "mins": 2,
-          "survey_ships": 8
-        },
         "name": "Interstellar Concordium",
-        "free_strategic_moves": 10,
         "short_name": "ISC",
         "capital": {
           "hexes": [
             {
+              "coord": 5910,
               "zones": [
                 {
                   "name": "ISC Capital",
@@ -185,27 +180,29 @@
                     "capital"
                   ]
                 }
-              ],
-              "coord": 5910
+              ]
             }
           ]
         },
-        "capital_star_points": 6
-      },
-      "key": "ISC"
+        "free_strategic_moves": 10,
+        "capital_star_points": 6,
+        "offmap_possesions": {
+          "provinces": 8,
+          "mins": 2,
+          "majs": 1,
+          "survey_ships": 8
+        }
+      }
     },
     {
+      "key": "KLI",
       "value": {
-        "offmap_possesions": {
-          "survey_ships": 2,
-          "cannot_build_offmap_capital": true
-        },
         "name": "Klingon Empire",
-        "free_strategic_moves": 15,
         "short_name": "Klingon",
         "capital": {
           "hexes": [
             {
+              "coord": 1411,
               "zones": [
                 {
                   "name": "Klinshai",
@@ -243,29 +240,27 @@
                     "min"
                   ]
                 }
-              ],
-              "coord": 1411
+              ]
             }
           ]
         },
-        "capital_star_points": 8
-      },
-      "key": "KLI"
+        "free_strategic_moves": 15,
+        "capital_star_points": 8,
+        "offmap_possesions": {
+          "survey_ships": 2,
+          "cannot_build_offmap_capital": true
+        }
+      }
     },
     {
+      "key": "KZI",
       "value": {
-        "offmap_possesions": {
-          "majs": 1,
-          "provinces": 3,
-          "mins": 2,
-          "survey_ships": 3
-        },
         "name": "Kzinti Hegemony",
-        "free_strategic_moves": 10,
         "short_name": "Kzinti",
         "capital": {
           "hexes": [
             {
+              "coord": 1401,
               "zones": [
                 {
                   "name": "Kzintai",
@@ -296,37 +291,37 @@
                     "maj"
                   ]
                 }
-              ],
-              "coord": 1401
+              ]
             }
           ]
         },
-        "capital_star_points": 5
-      },
-      "key": "KZI"
+        "free_strategic_moves": 10,
+        "capital_star_points": 5,
+        "offmap_possesions": {
+          "provinces": 3,
+          "mins": 2,
+          "majs": 1,
+          "survey_ships": 3
+        }
+      }
     },
     {
+      "key": "LDR",
       "value": {
         "name": "Lyran Democratic Republic",
         "short_name": "LDR",
         "capital_star_points": 6
-      },
-      "key": "LDR"
+      }
     },
     {
+      "key": "LYR",
       "value": {
-        "offmap_possesions": {
-          "majs": 2,
-          "provinces": 4,
-          "mins": 2,
-          "survey_ships": 3
-        },
         "name": "Lyran Empire",
-        "free_strategic_moves": 10,
         "short_name": "Lyran",
         "capital": {
           "hexes": [
             {
+              "coord": 408,
               "zones": [
                 {
                   "name": "Lyrantan",
@@ -358,42 +353,45 @@
                     "min"
                   ]
                 }
-              ],
-              "coord": 408
+              ]
             }
           ]
         },
-        "capital_star_points": 8
-      },
-      "key": "LYR"
+        "free_strategic_moves": 10,
+        "capital_star_points": 8,
+        "offmap_possesions": {
+          "provinces": 4,
+          "mins": 2,
+          "majs": 2,
+          "survey_ships": 3
+        }
+      }
     },
     {
+      "key": "NZ",
       "value": {
         "name": "Neutral Zone",
         "short_name": "Neutral Zone",
         "capital_star_points": 6
-      },
-      "key": "NZ"
+      }
     },
     {
+      "key": "ORI",
       "value": {
         "name": "Orion",
         "short_name": "Orion",
         "capital_star_points": 6
-      },
-      "key": "ORI"
+      }
     },
     {
+      "key": "ROM",
       "value": {
-        "offmap_possesions": {
-          "cannot_build_offmap_capital": true
-        },
         "name": "Romulan Star Empire",
-        "free_strategic_moves": 10,
         "short_name": "Romulan",
         "capital": {
           "hexes": [
             {
+              "coord": 4514,
               "zones": [
                 {
                   "name": "Remus",
@@ -411,10 +409,10 @@
                     "min"
                   ]
                 }
-              ],
-              "coord": 4514
+              ]
             },
             {
+              "coord": 4613,
               "zones": [
                 {
                   "name": "Romulus",
@@ -432,23 +430,26 @@
                     "min"
                   ]
                 }
-              ],
-              "coord": 4613
+              ]
             }
           ]
         },
-        "capital_star_points": 8
-      },
-      "key": "ROM"
+        "free_strategic_moves": 10,
+        "capital_star_points": 8,
+        "offmap_possesions": {
+          "cannot_build_offmap_capital": true
+        }
+      }
     },
     {
+      "key": "THO",
       "value": {
         "name": "Tholian Holdfast",
-        "free_strategic_moves": 5,
         "short_name": "Tholian",
         "capital": {
           "hexes": [
             {
+              "coord": 2919,
               "zones": [
                 {
                   "name": "Tholia",
@@ -457,22 +458,21 @@
                     "sb"
                   ]
                 }
-              ],
-              "coord": 2919
+              ]
             }
           ]
         },
+        "free_strategic_moves": 5,
         "capital_star_points": 6
-      },
-      "key": "THO"
+      }
     },
     {
+      "key": "WYN",
       "value": {
         "name": "Wyn Star Cluster",
         "short_name": "Wyn",
         "capital_star_points": 6
-      },
-      "key": "WYN"
+      }
     }
   ]
 }

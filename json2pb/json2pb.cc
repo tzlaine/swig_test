@@ -13,6 +13,7 @@
 
 #include <json2pb.h>
 
+#include <algorithm>
 #include <stdexcept>
 
 namespace {
@@ -113,6 +114,13 @@ static json_t * _pb2json(const Message& msg)
 
 	std::vector<const FieldDescriptor *> fields;
 	ref->ListFields(msg, &fields);
+
+        std::sort(
+            fields.begin(), fields.end(),
+            [](const FieldDescriptor * lhs, const FieldDescriptor * rhs) {
+                return lhs->number() < rhs->number();
+            }
+        );
 
 	for (size_t i = 0; i != fields.size(); i++)
 	{
@@ -264,20 +272,18 @@ int json_dump_std_string(const char *buf, size_t size, void *data)
 std::string pb2json(const Message &msg)
 {
 	std::string r;
-
 	json_t *root = _pb2json(msg);
 	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_INDENT(2));
+	json_dump_callback(root, json_dump_std_string, &r, JSON_INDENT(2) | JSON_PRESERVE_ORDER);
 	return r;
 }
 
 std::string pb2json_compact(const Message &msg)
 {
 	std::string r;
-
 	json_t *root = _pb2json(msg);
 	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT);
+	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT | JSON_PRESERVE_ORDER);
 	return r;
 }
 
@@ -286,7 +292,7 @@ void pb2json(const Message &msg, std::string& r)
 	r.clear();
 	json_t *root = _pb2json(msg);
 	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_INDENT(2));
+	json_dump_callback(root, json_dump_std_string, &r, JSON_INDENT(2) | JSON_PRESERVE_ORDER);
 }
 
 void pb2json_compact(const Message &msg, std::string& r)
@@ -294,5 +300,5 @@ void pb2json_compact(const Message &msg, std::string& r)
 	r.clear();
 	json_t *root = _pb2json(msg);
 	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT);
+	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT | JSON_PRESERVE_ORDER);
 }

@@ -1,6 +1,14 @@
 {
   "width": 61,
   "height": 19,
+  "nz_planets": [
+    2214,
+    3415,
+    3912,
+    4309,
+    5109,
+    5403
+  ],
   "nz_hexes": [
     113,
     213,
@@ -161,16 +169,9 @@
     6102,
     6101
   ],
-  "nz_planets": [
-    2214,
-    3415,
-    3912,
-    4309,
-    5109,
-    5403
-  ],
   "starting_national_holdings": [
     {
+      "key": "FED",
       "value": {
         "provinces": [
           {
@@ -179,8 +180,8 @@
                 "hex": 2003
               },
               {
-                "feature": "bats",
-                "hex": 2103
+                "hex": 2103,
+                "feature": "bats"
               },
               {
                 "hex": 2104
@@ -199,22 +200,22 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2004
+                "hex": 2004,
+                "feature": "bats"
               },
               {
                 "hex": 2005
               },
               {
-                "feature": "bats",
-                "hex": 2006
+                "hex": 2006,
+                "feature": "bats"
               },
               {
                 "hex": 2105
               },
               {
-                "feature": "min",
-                "hex": 2106
+                "hex": 2106,
+                "feature": "min"
               },
               {
                 "hex": 2107
@@ -227,8 +228,8 @@
                 "hex": 2007
               },
               {
-                "feature": "bats",
-                "hex": 2008
+                "hex": 2008,
+                "feature": "bats"
               },
               {
                 "hex": 2009
@@ -247,15 +248,15 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2010
+                "hex": 2010,
+                "feature": "bats"
               },
               {
                 "hex": 2011
               },
               {
-                "feature": "bats",
-                "hex": 2012
+                "hex": 2012,
+                "feature": "bats"
               },
               {
                 "hex": 2111
@@ -271,8 +272,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2201
+                "hex": 2201,
+                "feature": "bats"
               },
               {
                 "hex": 2301
@@ -285,8 +286,8 @@
           {
             "hexes": [
               {
-                "feature": "sb",
-                "hex": 2204
+                "hex": 2204,
+                "feature": "sb"
               },
               {
                 "hex": 2205
@@ -298,8 +299,8 @@
                 "hex": 2305
               },
               {
-                "feature": "maj",
-                "hex": 2306
+                "hex": 2306,
+                "feature": "maj"
               },
               {
                 "hex": 2307
@@ -318,8 +319,8 @@
                 "hex": 2209
               },
               {
-                "feature": "bats",
-                "hex": 2308
+                "hex": 2308,
+                "feature": "bats"
               },
               {
                 "hex": 2309
@@ -335,8 +336,8 @@
                 "hex": 2210
               },
               {
-                "feature": "sb",
-                "hex": 2211
+                "hex": 2211,
+                "feature": "sb"
               },
               {
                 "hex": 2311
@@ -358,8 +359,8 @@
                 "hex": 2212
               },
               {
-                "feature": "bats",
-                "hex": 2213
+                "hex": 2213,
+                "feature": "bats"
               },
               {
                 "hex": 2313
@@ -371,8 +372,8 @@
                 "hex": 2413
               },
               {
-                "feature": "bats",
-                "hex": 2414
+                "hex": 2414,
+                "feature": "bats"
               }
             ]
           },
@@ -401,8 +402,8 @@
                 "hex": 2304
               },
               {
-                "feature": "min",
-                "hex": 2403
+                "hex": 2403,
+                "feature": "min"
               },
               {
                 "hex": 2404
@@ -411,8 +412,8 @@
                 "hex": 2504
               },
               {
-                "feature": "min",
-                "hex": 2505
+                "hex": 2505,
+                "feature": "min"
               }
             ]
           },
@@ -450,8 +451,8 @@
                 "hex": 2410
               },
               {
-                "feature": "min",
-                "hex": 2509
+                "hex": 2509,
+                "feature": "min"
               },
               {
                 "hex": 2510
@@ -483,8 +484,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2603
+                "hex": 2603,
+                "feature": "bats"
               },
               {
                 "hex": 2604
@@ -496,8 +497,8 @@
                 "hex": 2704
               },
               {
-                "feature": "min",
-                "hex": 2705
+                "hex": 2705,
+                "feature": "min"
               },
               {
                 "hex": 2706
@@ -507,8 +508,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2606
+                "hex": 2606,
+                "feature": "bats"
               },
               {
                 "hex": 2607
@@ -520,8 +521,8 @@
                 "hex": 2707
               },
               {
-                "feature": "maj",
-                "hex": 2708
+                "hex": 2708,
+                "feature": "maj"
               },
               {
                 "hex": 2709
@@ -531,12 +532,12 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2609
+                "hex": 2609,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 2610
+                "hex": 2610,
+                "feature": "min"
               },
               {
                 "hex": 2611
@@ -561,8 +562,8 @@
                 "hex": 2513
               },
               {
-                "feature": "bats",
-                "hex": 2612
+                "hex": 2612,
+                "feature": "bats"
               },
               {
                 "hex": 2613
@@ -587,12 +588,12 @@
                 "hex": 2614
               },
               {
-                "feature": "bats",
-                "hex": 2615
+                "hex": 2615,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 2715
+                "hex": 2715,
+                "feature": "min"
               },
               {
                 "hex": 2716
@@ -608,8 +609,8 @@
                 "hex": 2802
               },
               {
-                "feature": "sb",
-                "hex": 2901
+                "hex": 2901,
+                "feature": "sb"
               },
               {
                 "hex": 2902
@@ -653,15 +654,15 @@
                 "hex": 2806
               },
               {
-                "feature": "bats",
-                "hex": 2905
+                "hex": 2905,
+                "feature": "bats"
               },
               {
                 "hex": 2906
               },
               {
-                "feature": "min",
-                "hex": 3005
+                "hex": 3005,
+                "feature": "min"
               },
               {
                 "hex": 3006
@@ -674,23 +675,23 @@
                 "hex": 2807
               },
               {
-                "feature": "sb",
-                "hex": 2808
+                "hex": 2808,
+                "feature": "sb"
               },
               {
-                "feature": "sb",
-                "hex": 2907
+                "hex": 2907,
+                "feature": "sb"
               },
               {
-                "feature": "capital",
-                "hex": 2908
+                "hex": 2908,
+                "feature": "capital"
               },
               {
                 "hex": 3007
               },
               {
-                "feature": "sb",
-                "hex": 3008
+                "hex": 3008,
+                "feature": "sb"
               }
             ]
           },
@@ -719,16 +720,16 @@
           {
             "hexes": [
               {
-                "feature": "min",
-                "hex": 2811
+                "hex": 2811,
+                "feature": "min"
               },
               {
-                "feature": "maj",
-                "hex": 2812
+                "hex": 2812,
+                "feature": "maj"
               },
               {
-                "feature": "bats",
-                "hex": 2911
+                "hex": 2911,
+                "feature": "bats"
               },
               {
                 "hex": 2912
@@ -756,8 +757,8 @@
                 "hex": 2914
               },
               {
-                "feature": "sb",
-                "hex": 2915
+                "hex": 2915,
+                "feature": "sb"
               },
               {
                 "hex": 3013
@@ -773,8 +774,8 @@
                 "hex": 2815
               },
               {
-                "feature": "bats",
-                "hex": 2816
+                "hex": 2816,
+                "feature": "bats"
               },
               {
                 "hex": 2916
@@ -783,8 +784,8 @@
                 "hex": 3015
               },
               {
-                "feature": "bats",
-                "hex": 3016
+                "hex": 3016,
+                "feature": "bats"
               }
             ]
           },
@@ -819,8 +820,8 @@
                 "hex": 3106
               },
               {
-                "feature": "bats",
-                "hex": 3203
+                "hex": 3203,
+                "feature": "bats"
               },
               {
                 "hex": 3204
@@ -842,8 +843,8 @@
                 "hex": 3109
               },
               {
-                "feature": "bats",
-                "hex": 3206
+                "hex": 3206,
+                "feature": "bats"
               },
               {
                 "hex": 3207
@@ -865,12 +866,12 @@
                 "hex": 3112
               },
               {
-                "feature": "bats",
-                "hex": 3209
+                "hex": 3209,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 3210
+                "hex": 3210,
+                "feature": "min"
               },
               {
                 "hex": 3211
@@ -886,8 +887,8 @@
                 "hex": 3114
               },
               {
-                "feature": "bats",
-                "hex": 3212
+                "hex": 3212,
+                "feature": "bats"
               },
               {
                 "hex": 3213
@@ -912,8 +913,8 @@
                 "hex": 3214
               },
               {
-                "feature": "bats",
-                "hex": 3215
+                "hex": 3215,
+                "feature": "bats"
               },
               {
                 "hex": 3314
@@ -964,8 +965,8 @@
           {
             "hexes": [
               {
-                "feature": "maj",
-                "hex": 3306
+                "hex": 3306,
+                "feature": "maj"
               },
               {
                 "hex": 3307
@@ -1015,8 +1016,8 @@
                 "hex": 3502
               },
               {
-                "feature": "bats",
-                "hex": 3601
+                "hex": 3601,
+                "feature": "bats"
               }
             ]
           },
@@ -1032,8 +1033,8 @@
                 "hex": 3507
               },
               {
-                "feature": "sb",
-                "hex": 3604
+                "hex": 3604,
+                "feature": "sb"
               },
               {
                 "hex": 3605
@@ -1046,12 +1047,12 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 3508
+                "hex": 3508,
+                "feature": "bats"
               },
               {
-                "feature": "maj",
-                "hex": 3509
+                "hex": 3509,
+                "feature": "maj"
               },
               {
                 "hex": 3510
@@ -1085,8 +1086,8 @@
                 "hex": 3610
               },
               {
-                "feature": "sb",
-                "hex": 3611
+                "hex": 3611,
+                "feature": "sb"
               }
             ]
           },
@@ -1096,8 +1097,8 @@
                 "hex": 3413
               },
               {
-                "feature": "bats",
-                "hex": 3414
+                "hex": 3414,
+                "feature": "bats"
               },
               {
                 "hex": 3513
@@ -1106,12 +1107,12 @@
                 "hex": 3514
               },
               {
-                "feature": "min",
-                "hex": 3612
+                "hex": 3612,
+                "feature": "min"
               },
               {
-                "feature": "bats",
-                "hex": 3613
+                "hex": 3613,
+                "feature": "bats"
               }
             ]
           },
@@ -1127,8 +1128,8 @@
                 "hex": 3603
               },
               {
-                "feature": "bats",
-                "hex": 3703
+                "hex": 3703,
+                "feature": "bats"
               },
               {
                 "hex": 3704
@@ -1144,22 +1145,22 @@
                 "hex": 3705
               },
               {
-                "feature": "min",
-                "hex": 3706
+                "hex": 3706,
+                "feature": "min"
               },
               {
                 "hex": 3707
               },
               {
-                "feature": "bats",
-                "hex": 3804
+                "hex": 3804,
+                "feature": "bats"
               },
               {
                 "hex": 3805
               },
               {
-                "feature": "bats",
-                "hex": 3806
+                "hex": 3806,
+                "feature": "bats"
               }
             ]
           },
@@ -1178,8 +1179,8 @@
                 "hex": 3807
               },
               {
-                "feature": "bats",
-                "hex": 3808
+                "hex": 3808,
+                "feature": "bats"
               },
               {
                 "hex": 3809
@@ -1189,8 +1190,8 @@
           {
             "hexes": [
               {
-                "feature": "min",
-                "hex": 3711
+                "hex": 3711,
+                "feature": "min"
               },
               {
                 "hex": 3712
@@ -1199,15 +1200,15 @@
                 "hex": 3713
               },
               {
-                "feature": "bats",
-                "hex": 3810
+                "hex": 3810,
+                "feature": "bats"
               },
               {
                 "hex": 3811
               },
               {
-                "feature": "bats",
-                "hex": 3812
+                "hex": 3812,
+                "feature": "bats"
               }
             ]
           }
@@ -1226,17 +1227,17 @@
             3101
           ]
         }
-      },
-      "key": "FED"
+      }
     },
     {
+      "key": "GOR",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 3801
+                "hex": 3801,
+                "feature": "bats"
               },
               {
                 "hex": 3901
@@ -1249,12 +1250,12 @@
           {
             "hexes": [
               {
-                "feature": "min",
-                "hex": 4001
+                "hex": 4001,
+                "feature": "min"
               },
               {
-                "feature": "bats",
-                "hex": 4002
+                "hex": 4002,
+                "feature": "bats"
               },
               {
                 "hex": 4003
@@ -1273,15 +1274,15 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 4004
+                "hex": 4004,
+                "feature": "bats"
               },
               {
                 "hex": 4005
               },
               {
-                "feature": "bats",
-                "hex": 4006
+                "hex": 4006,
+                "feature": "bats"
               },
               {
                 "hex": 4104
@@ -1300,8 +1301,8 @@
                 "hex": 4007
               },
               {
-                "feature": "bats",
-                "hex": 4008
+                "hex": 4008,
+                "feature": "bats"
               },
               {
                 "hex": 4107
@@ -1313,8 +1314,8 @@
                 "hex": 4207
               },
               {
-                "feature": "bats",
-                "hex": 4208
+                "hex": 4208,
+                "feature": "bats"
               }
             ]
           },
@@ -1327,8 +1328,8 @@
                 "hex": 4202
               },
               {
-                "feature": "bats",
-                "hex": 4203
+                "hex": 4203,
+                "feature": "bats"
               },
               {
                 "hex": 4301
@@ -1350,8 +1351,8 @@
                 "hex": 4205
               },
               {
-                "feature": "sb",
-                "hex": 4206
+                "hex": 4206,
+                "feature": "sb"
               },
               {
                 "hex": 4304
@@ -1380,16 +1381,16 @@
           {
             "hexes": [
               {
-                "feature": "capital",
-                "hex": 4402
+                "hex": 4402,
+                "feature": "capital"
               },
               {
-                "feature": "capital",
-                "hex": 4403
+                "hex": 4403,
+                "feature": "capital"
               },
               {
-                "feature": "capital",
-                "hex": 4503
+                "hex": 4503,
+                "feature": "capital"
               }
             ]
           },
@@ -1411,8 +1412,8 @@
                 "hex": 4505
               },
               {
-                "feature": "bats",
-                "hex": 4506
+                "hex": 4506,
+                "feature": "bats"
               }
             ]
           },
@@ -1428,8 +1429,8 @@
                 "hex": 4407
               },
               {
-                "feature": "bats",
-                "hex": 4408
+                "hex": 4408,
+                "feature": "bats"
               },
               {
                 "hex": 4507
@@ -1451,8 +1452,8 @@
                 "hex": 4701
               },
               {
-                "feature": "min",
-                "hex": 4702
+                "hex": 4702,
+                "feature": "min"
               },
               {
                 "hex": 4801
@@ -1493,8 +1494,8 @@
                 "hex": 4606
               },
               {
-                "feature": "min",
-                "hex": 4705
+                "hex": 4705,
+                "feature": "min"
               },
               {
                 "hex": 4706
@@ -1503,8 +1504,8 @@
                 "hex": 4805
               },
               {
-                "feature": "sb",
-                "hex": 4806
+                "hex": 4806,
+                "feature": "sb"
               }
             ]
           },
@@ -1514,8 +1515,8 @@
                 "hex": 4607
               },
               {
-                "feature": "bats",
-                "hex": 4608
+                "hex": 4608,
+                "feature": "bats"
               },
               {
                 "hex": 4707
@@ -1527,8 +1528,8 @@
                 "hex": 4807
               },
               {
-                "feature": "bats",
-                "hex": 4808
+                "hex": 4808,
+                "feature": "bats"
               }
             ]
           },
@@ -1541,12 +1542,12 @@
                 "hex": 4902
               },
               {
-                "feature": "min",
-                "hex": 4903
+                "hex": 4903,
+                "feature": "min"
               },
               {
-                "feature": "bats",
-                "hex": 4904
+                "hex": 4904,
+                "feature": "bats"
               },
               {
                 "hex": 5001
@@ -1565,8 +1566,8 @@
                 "hex": 4905
               },
               {
-                "feature": "min",
-                "hex": 5004
+                "hex": 5004,
+                "feature": "min"
               },
               {
                 "hex": 5005
@@ -1575,8 +1576,8 @@
                 "hex": 5104
               },
               {
-                "feature": "bats",
-                "hex": 5105
+                "hex": 5105,
+                "feature": "bats"
               },
               {
                 "hex": 5204
@@ -1595,15 +1596,15 @@
                 "hex": 4908
               },
               {
-                "feature": "bats",
-                "hex": 5006
+                "hex": 5006,
+                "feature": "bats"
               },
               {
                 "hex": 5007
               },
               {
-                "feature": "bats",
-                "hex": 5008
+                "hex": 5008,
+                "feature": "bats"
               }
             ]
           },
@@ -1619,15 +1620,15 @@
                 "hex": 5103
               },
               {
-                "feature": "bats",
-                "hex": 5201
+                "hex": 5201,
+                "feature": "bats"
               },
               {
                 "hex": 5202
               },
               {
-                "feature": "bats",
-                "hex": 5203
+                "hex": 5203,
+                "feature": "bats"
               }
             ]
           }
@@ -1652,17 +1653,17 @@
             5101
           ]
         }
-      },
-      "key": "GOR"
+      }
     },
     {
+      "key": "HYD",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 114
+                "hex": 114,
+                "feature": "bats"
               },
               {
                 "hex": 115
@@ -1674,12 +1675,12 @@
                 "hex": 214
               },
               {
-                "feature": "sb",
-                "hex": 215
+                "hex": 215,
+                "feature": "sb"
               },
               {
-                "feature": "bats",
-                "hex": 315
+                "hex": 315,
+                "feature": "bats"
               }
             ]
           },
@@ -1701,8 +1702,8 @@
                 "hex": 317
               },
               {
-                "feature": "min",
-                "hex": 416
+                "hex": 416,
+                "feature": "min"
               }
             ]
           },
@@ -1721,8 +1722,8 @@
                 "hex": 219
               },
               {
-                "feature": "bats",
-                "hex": 318
+                "hex": 318,
+                "feature": "bats"
               },
               {
                 "hex": 319
@@ -1735,8 +1736,8 @@
                 "hex": 415
               },
               {
-                "feature": "bats",
-                "hex": 515
+                "hex": 515,
+                "feature": "bats"
               },
               {
                 "hex": 516
@@ -1767,20 +1768,20 @@
                 "hex": 518
               },
               {
-                "feature": "min",
-                "hex": 519
+                "hex": 519,
+                "feature": "min"
               },
               {
-                "feature": "capital",
-                "hex": 617
+                "hex": 617,
+                "feature": "capital"
               }
             ]
           },
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 714
+                "hex": 714,
+                "feature": "bats"
               },
               {
                 "hex": 715
@@ -1792,8 +1793,8 @@
                 "hex": 815
               },
               {
-                "feature": "bats",
-                "hex": 915
+                "hex": 915,
+                "feature": "bats"
               },
               {
                 "hex": 916
@@ -1806,8 +1807,8 @@
                 "hex": 616
               },
               {
-                "feature": "sb",
-                "hex": 716
+                "hex": 716,
+                "feature": "sb"
               },
               {
                 "hex": 717
@@ -1829,8 +1830,8 @@
                 "hex": 619
               },
               {
-                "feature": "maj",
-                "hex": 718
+                "hex": 718,
+                "feature": "maj"
               },
               {
                 "hex": 719
@@ -1855,8 +1856,8 @@
                 "hex": 919
               },
               {
-                "feature": "sb",
-                "hex": 1017
+                "hex": 1017,
+                "feature": "sb"
               },
               {
                 "hex": 1018
@@ -1875,8 +1876,8 @@
                 "hex": 1016
               },
               {
-                "feature": "bats",
-                "hex": 1116
+                "hex": 1116,
+                "feature": "bats"
               },
               {
                 "hex": 1117
@@ -1895,15 +1896,15 @@
                 "hex": 1119
               },
               {
-                "feature": "bats",
-                "hex": 1217
+                "hex": 1217,
+                "feature": "bats"
               },
               {
                 "hex": 1218
               },
               {
-                "feature": "bats",
-                "hex": 1219
+                "hex": 1219,
+                "feature": "bats"
               }
             ]
           }
@@ -1920,24 +1921,24 @@
             119
           ]
         }
-      },
-      "key": "HYD"
+      }
     },
     {
+      "key": "ISC",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 5206
+                "hex": 5206,
+                "feature": "bats"
               },
               {
                 "hex": 5207
               },
               {
-                "feature": "bats",
-                "hex": 5208
+                "hex": 5208,
+                "feature": "bats"
               },
               {
                 "hex": 5306
@@ -1972,15 +1973,15 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 5211
+                "hex": 5211,
+                "feature": "bats"
               },
               {
                 "hex": 5212
               },
               {
-                "feature": "bats",
-                "hex": 5213
+                "hex": 5213,
+                "feature": "bats"
               },
               {
                 "hex": 5312
@@ -1996,8 +1997,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 5405
+                "hex": 5405,
+                "feature": "bats"
               },
               {
                 "hex": 5406
@@ -2009,8 +2010,8 @@
                 "hex": 5506
               },
               {
-                "feature": "bats",
-                "hex": 5604
+                "hex": 5604,
+                "feature": "bats"
               },
               {
                 "hex": 5605
@@ -2026,12 +2027,12 @@
                 "hex": 5408
               },
               {
-                "feature": "min",
-                "hex": 5507
+                "hex": 5507,
+                "feature": "min"
               },
               {
-                "feature": "sb",
-                "hex": 5508
+                "hex": 5508,
+                "feature": "sb"
               },
               {
                 "hex": 5606
@@ -2053,8 +2054,8 @@
                 "hex": 5509
               },
               {
-                "feature": "min",
-                "hex": 5510
+                "hex": 5510,
+                "feature": "min"
               },
               {
                 "hex": 5511
@@ -2070,8 +2071,8 @@
                 "hex": 5412
               },
               {
-                "feature": "sb",
-                "hex": 5512
+                "hex": 5512,
+                "feature": "sb"
               },
               {
                 "hex": 5513
@@ -2090,8 +2091,8 @@
                 "hex": 5413
               },
               {
-                "feature": "bats",
-                "hex": 5414
+                "hex": 5414,
+                "feature": "bats"
               },
               {
                 "hex": 5514
@@ -2103,8 +2104,8 @@
                 "hex": 5614
               },
               {
-                "feature": "bats",
-                "hex": 5615
+                "hex": 5615,
+                "feature": "bats"
               }
             ]
           },
@@ -2117,8 +2118,8 @@
                 "hex": 5705
               },
               {
-                "feature": "bats",
-                "hex": 5803
+                "hex": 5803,
+                "feature": "bats"
               },
               {
                 "hex": 5804
@@ -2149,8 +2150,8 @@
                 "hex": 5905
               },
               {
-                "feature": "sb",
-                "hex": 5906
+                "hex": 5906,
+                "feature": "sb"
               }
             ]
           },
@@ -2172,30 +2173,30 @@
                 "hex": 5807
               },
               {
-                "feature": "bats",
-                "hex": 5808
+                "hex": 5808,
+                "feature": "bats"
               }
             ]
           },
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 5710
+                "hex": 5710,
+                "feature": "bats"
               },
               {
                 "hex": 5809
               },
               {
-                "feature": "maj",
-                "hex": 5810
+                "hex": 5810,
+                "feature": "maj"
               },
               {
                 "hex": 5909
               },
               {
-                "feature": "capital",
-                "hex": 5910
+                "hex": 5910,
+                "feature": "capital"
               },
               {
                 "hex": 5911
@@ -2217,8 +2218,8 @@
                 "hex": 5712
               },
               {
-                "feature": "bats",
-                "hex": 5811
+                "hex": 5811,
+                "feature": "bats"
               },
               {
                 "hex": 5812
@@ -2240,8 +2241,8 @@
                 "hex": 5814
               },
               {
-                "feature": "sb",
-                "hex": 5914
+                "hex": 5914,
+                "feature": "sb"
               },
               {
                 "hex": 5915
@@ -2260,8 +2261,8 @@
                 "hex": 5815
               },
               {
-                "feature": "bats",
-                "hex": 5816
+                "hex": 5816,
+                "feature": "bats"
               },
               {
                 "hex": 5916
@@ -2274,8 +2275,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 6003
+                "hex": 6003,
+                "feature": "bats"
               },
               {
                 "hex": 6004
@@ -2310,15 +2311,15 @@
                 "hex": 5907
               },
               {
-                "feature": "maj",
-                "hex": 5908
+                "hex": 5908,
+                "feature": "maj"
               },
               {
                 "hex": 6007
               },
               {
-                "feature": "bats",
-                "hex": 6008
+                "hex": 6008,
+                "feature": "bats"
               },
               {
                 "hex": 6108
@@ -2337,8 +2338,8 @@
                 "hex": 6010
               },
               {
-                "feature": "bats",
-                "hex": 6110
+                "hex": 6110,
+                "feature": "bats"
               }
             ]
           },
@@ -2351,15 +2352,15 @@
                 "hex": 5913
               },
               {
-                "feature": "bats",
-                "hex": 6011
+                "hex": 6011,
+                "feature": "bats"
               },
               {
                 "hex": 6012
               },
               {
-                "feature": "min",
-                "hex": 6111
+                "hex": 6111,
+                "feature": "min"
               },
               {
                 "hex": 6112
@@ -2388,8 +2389,8 @@
                 "hex": 6015
               },
               {
-                "feature": "bats",
-                "hex": 6016
+                "hex": 6016,
+                "feature": "bats"
               },
               {
                 "hex": 6115
@@ -2421,24 +2422,24 @@
             6115
           ]
         }
-      },
-      "key": "ISC"
+      }
     },
     {
+      "key": "KLI",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 906
+                "hex": 906,
+                "feature": "bats"
               },
               {
                 "hex": 907
               },
               {
-                "feature": "bats",
-                "hex": 908
+                "hex": 908,
+                "feature": "bats"
               },
               {
                 "hex": 1006
@@ -2454,12 +2455,12 @@
                 "hex": 1008
               },
               {
-                "feature": "bats",
-                "hex": 1009
+                "hex": 1009,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 1010
+                "hex": 1010,
+                "feature": "min"
               },
               {
                 "hex": 1109
@@ -2472,8 +2473,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 1011
+                "hex": 1011,
+                "feature": "bats"
               },
               {
                 "hex": 1012
@@ -2482,8 +2483,8 @@
                 "hex": 1111
               },
               {
-                "feature": "maj",
-                "hex": 1112
+                "hex": 1112,
+                "feature": "maj"
               },
               {
                 "hex": 1211
@@ -2493,8 +2494,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 1013
+                "hex": 1013,
+                "feature": "bats"
               },
               {
                 "hex": 1113
@@ -2506,16 +2507,16 @@
                 "hex": 1213
               },
               {
-                "feature": "bats",
-                "hex": 1214
+                "hex": 1214,
+                "feature": "bats"
               }
             ]
           },
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 1107
+                "hex": 1107,
+                "feature": "bats"
               },
               {
                 "hex": 1108
@@ -2527,8 +2528,8 @@
                 "hex": 1208
               },
               {
-                "feature": "bats",
-                "hex": 1307
+                "hex": 1307,
+                "feature": "bats"
               },
               {
                 "hex": 1308
@@ -2538,12 +2539,12 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 1209
+                "hex": 1209,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 1210
+                "hex": 1210,
+                "feature": "min"
               },
               {
                 "hex": 1309
@@ -2562,8 +2563,8 @@
                 "hex": 1212
               },
               {
-                "feature": "min",
-                "hex": 1312
+                "hex": 1312,
+                "feature": "min"
               },
               {
                 "hex": 1313
@@ -2588,8 +2589,8 @@
                 "hex": 1414
               },
               {
-                "feature": "bats",
-                "hex": 1415
+                "hex": 1415,
+                "feature": "bats"
               },
               {
                 "hex": 1515
@@ -2602,8 +2603,8 @@
                 "hex": 1416
               },
               {
-                "feature": "bats",
-                "hex": 1417
+                "hex": 1417,
+                "feature": "bats"
               },
               {
                 "hex": 1516
@@ -2625,8 +2626,8 @@
                 "hex": 1418
               },
               {
-                "feature": "bats",
-                "hex": 1419
+                "hex": 1419,
+                "feature": "bats"
               },
               {
                 "hex": 1518
@@ -2635,8 +2636,8 @@
                 "hex": 1519
               },
               {
-                "feature": "bats",
-                "hex": 1618
+                "hex": 1618,
+                "feature": "bats"
               },
               {
                 "hex": 1619
@@ -2646,12 +2647,12 @@
           {
             "hexes": [
               {
-                "feature": "min",
-                "hex": 1407
+                "hex": 1407,
+                "feature": "min"
               },
               {
-                "feature": "bats",
-                "hex": 1507
+                "hex": 1507,
+                "feature": "bats"
               },
               {
                 "hex": 1508
@@ -2673,8 +2674,8 @@
                 "hex": 1409
               },
               {
-                "feature": "sb",
-                "hex": 1509
+                "hex": 1509,
+                "feature": "sb"
               },
               {
                 "hex": 1510
@@ -2693,8 +2694,8 @@
                 "hex": 1410
               },
               {
-                "feature": "capital",
-                "hex": 1411
+                "hex": 1411,
+                "feature": "capital"
               },
               {
                 "hex": 1511
@@ -2703,8 +2704,8 @@
                 "hex": 1512
               },
               {
-                "feature": "maj",
-                "hex": 1611
+                "hex": 1611,
+                "feature": "maj"
               }
             ]
           },
@@ -2714,8 +2715,8 @@
                 "hex": 1513
               },
               {
-                "feature": "min",
-                "hex": 1514
+                "hex": 1514,
+                "feature": "min"
               },
               {
                 "hex": 1612
@@ -2731,8 +2732,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 1707
+                "hex": 1707,
+                "feature": "bats"
               },
               {
                 "hex": 1708
@@ -2741,8 +2742,8 @@
                 "hex": 1709
               },
               {
-                "feature": "bats",
-                "hex": 1807
+                "hex": 1807,
+                "feature": "bats"
               },
               {
                 "hex": 1808
@@ -2758,15 +2759,15 @@
                 "hex": 1711
               },
               {
-                "feature": "bats",
-                "hex": 1809
+                "hex": 1809,
+                "feature": "bats"
               },
               {
                 "hex": 1810
               },
               {
-                "feature": "bats",
-                "hex": 1811
+                "hex": 1811,
+                "feature": "bats"
               }
             ]
           },
@@ -2779,15 +2780,15 @@
                 "hex": 1713
               },
               {
-                "feature": "maj",
-                "hex": 1714
+                "hex": 1714,
+                "feature": "maj"
               },
               {
                 "hex": 1812
               },
               {
-                "feature": "bats",
-                "hex": 1813
+                "hex": 1813,
+                "feature": "bats"
               }
             ]
           },
@@ -2800,8 +2801,8 @@
                 "hex": 1715
               },
               {
-                "feature": "sb",
-                "hex": 1716
+                "hex": 1716,
+                "feature": "sb"
               },
               {
                 "hex": 1717
@@ -2845,8 +2846,8 @@
                 "hex": 1915
               },
               {
-                "feature": "bats",
-                "hex": 2014
+                "hex": 2014,
+                "feature": "bats"
               },
               {
                 "hex": 2015
@@ -2856,15 +2857,15 @@
           {
             "hexes": [
               {
-                "feature": "min",
-                "hex": 1916
+                "hex": 1916,
+                "feature": "min"
               },
               {
                 "hex": 1917
               },
               {
-                "feature": "bats",
-                "hex": 1918
+                "hex": 1918,
+                "feature": "bats"
               },
               {
                 "hex": 2016
@@ -2902,12 +2903,12 @@
                 "hex": 2116
               },
               {
-                "feature": "bats",
-                "hex": 2215
+                "hex": 2215,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 2216
+                "hex": 2216,
+                "feature": "min"
               },
               {
                 "hex": 2316
@@ -2926,12 +2927,12 @@
                 "hex": 2217
               },
               {
-                "feature": "bats",
-                "hex": 2218
+                "hex": 2218,
+                "feature": "bats"
               },
               {
-                "feature": "sb",
-                "hex": 2318
+                "hex": 2318,
+                "feature": "sb"
               }
             ]
           },
@@ -2941,19 +2942,19 @@
                 "hex": 2317
               },
               {
-                "feature": "bats",
-                "hex": 2416
+                "hex": 2416,
+                "feature": "bats"
               },
               {
                 "hex": 2417
               },
               {
-                "feature": "bats",
-                "hex": 2517
+                "hex": 2517,
+                "feature": "bats"
               },
               {
-                "feature": "maj",
-                "hex": 2518
+                "hex": 2518,
+                "feature": "maj"
               }
             ]
           },
@@ -2969,30 +2970,30 @@
                 "hex": 2419
               },
               {
-                "feature": "bats",
-                "hex": 2519
+                "hex": 2519,
+                "feature": "bats"
               }
             ]
           }
         ]
-      },
-      "key": "KLI"
+      }
     },
     {
+      "key": "KZI",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 701
+                "hex": 701,
+                "feature": "bats"
               },
               {
                 "hex": 702
               },
               {
-                "feature": "bats",
-                "hex": 703
+                "hex": 703,
+                "feature": "bats"
               },
               {
                 "hex": 801
@@ -3008,12 +3009,12 @@
                 "hex": 901
               },
               {
-                "feature": "sb",
-                "hex": 902
+                "hex": 902,
+                "feature": "sb"
               },
               {
-                "feature": "min",
-                "hex": 1001
+                "hex": 1001,
+                "feature": "min"
               },
               {
                 "hex": 1002
@@ -3023,8 +3024,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 803
+                "hex": 803,
+                "feature": "bats"
               },
               {
                 "hex": 903
@@ -3036,8 +3037,8 @@
                 "hex": 1003
               },
               {
-                "feature": "bats",
-                "hex": 1004
+                "hex": 1004,
+                "feature": "bats"
               }
             ]
           },
@@ -3056,8 +3057,8 @@
                 "hex": 1201
               },
               {
-                "feature": "min",
-                "hex": 1202
+                "hex": 1202,
+                "feature": "min"
               }
             ]
           },
@@ -3067,15 +3068,15 @@
                 "hex": 1104
               },
               {
-                "feature": "min",
-                "hex": 1105
+                "hex": 1105,
+                "feature": "min"
               },
               {
                 "hex": 1204
               },
               {
-                "feature": "bats",
-                "hex": 1205
+                "hex": 1205,
+                "feature": "bats"
               },
               {
                 "hex": 1305
@@ -3091,8 +3092,8 @@
                 "hex": 1302
               },
               {
-                "feature": "capital",
-                "hex": 1401
+                "hex": 1401,
+                "feature": "capital"
               }
             ]
           },
@@ -3105,8 +3106,8 @@
                 "hex": 1303
               },
               {
-                "feature": "sb",
-                "hex": 1304
+                "hex": 1304,
+                "feature": "sb"
               },
               {
                 "hex": 1402
@@ -3122,8 +3123,8 @@
                 "hex": 1501
               },
               {
-                "feature": "maj",
-                "hex": 1502
+                "hex": 1502,
+                "feature": "maj"
               },
               {
                 "hex": 1601
@@ -3158,12 +3159,12 @@
                 "hex": 1404
               },
               {
-                "feature": "bats",
-                "hex": 1405
+                "hex": 1405,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 1504
+                "hex": 1504,
+                "feature": "min"
               },
               {
                 "hex": 1505
@@ -3172,8 +3173,8 @@
                 "hex": 1604
               },
               {
-                "feature": "bats",
-                "hex": 1605
+                "hex": 1605,
+                "feature": "bats"
               }
             ]
           },
@@ -3183,15 +3184,15 @@
                 "hex": 1801
               },
               {
-                "feature": "min",
-                "hex": 1802
+                "hex": 1802,
+                "feature": "min"
               },
               {
                 "hex": 1901
               },
               {
-                "feature": "bats",
-                "hex": 1902
+                "hex": 1902,
+                "feature": "bats"
               },
               {
                 "hex": 2001
@@ -3201,22 +3202,22 @@
           {
             "hexes": [
               {
-                "feature": "sb",
-                "hex": 1704
+                "hex": 1704,
+                "feature": "sb"
               },
               {
                 "hex": 1705
               },
               {
-                "feature": "bats",
-                "hex": 1803
+                "hex": 1803,
+                "feature": "bats"
               },
               {
                 "hex": 1804
               },
               {
-                "feature": "bats",
-                "hex": 1805
+                "hex": 1805,
+                "feature": "bats"
               }
             ]
           }
@@ -3237,10 +3238,10 @@
             1701
           ]
         }
-      },
-      "key": "KZI"
+      }
     },
     {
+      "key": "LYR",
       "value": {
         "provinces": [
           {
@@ -3268,8 +3269,8 @@
                 "hex": 103
               },
               {
-                "feature": "bats",
-                "hex": 104
+                "hex": 104,
+                "feature": "bats"
               },
               {
                 "hex": 203
@@ -3291,8 +3292,8 @@
                 "hex": 106
               },
               {
-                "feature": "min",
-                "hex": 205
+                "hex": 205,
+                "feature": "min"
               }
             ]
           },
@@ -3318,8 +3319,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 109
+                "hex": 109,
+                "feature": "bats"
               },
               {
                 "hex": 110
@@ -3344,8 +3345,8 @@
                 "hex": 211
               },
               {
-                "feature": "bats",
-                "hex": 212
+                "hex": 212,
+                "feature": "bats"
               }
             ]
           },
@@ -3361,8 +3362,8 @@
                 "hex": 501
               },
               {
-                "feature": "bats",
-                "hex": 502
+                "hex": 502,
+                "feature": "bats"
               }
             ]
           },
@@ -3381,8 +3382,8 @@
                 "hex": 503
               },
               {
-                "feature": "bats",
-                "hex": 504
+                "hex": 504,
+                "feature": "bats"
               }
             ]
           },
@@ -3392,8 +3393,8 @@
                 "hex": 305
               },
               {
-                "feature": "sb",
-                "hex": 404
+                "hex": 404,
+                "feature": "sb"
               },
               {
                 "hex": 405
@@ -3415,8 +3416,8 @@
                 "hex": 306
               },
               {
-                "feature": "maj",
-                "hex": 307
+                "hex": 307,
+                "feature": "maj"
               },
               {
                 "hex": 406
@@ -3435,15 +3436,15 @@
                 "hex": 309
               },
               {
-                "feature": "capital",
-                "hex": 408
+                "hex": 408,
+                "feature": "capital"
               },
               {
                 "hex": 409
               },
               {
-                "feature": "maj",
-                "hex": 509
+                "hex": 509,
+                "feature": "maj"
               },
               {
                 "hex": 510
@@ -3462,8 +3463,8 @@
                 "hex": 410
               },
               {
-                "feature": "sb",
-                "hex": 411
+                "hex": 411,
+                "feature": "sb"
               },
               {
                 "hex": 511
@@ -3482,8 +3483,8 @@
                 "hex": 412
               },
               {
-                "feature": "bats",
-                "hex": 413
+                "hex": 413,
+                "feature": "bats"
               },
               {
                 "hex": 512
@@ -3505,8 +3506,8 @@
                 "hex": 606
               },
               {
-                "feature": "bats",
-                "hex": 705
+                "hex": 705,
+                "feature": "bats"
               },
               {
                 "hex": 706
@@ -3519,16 +3520,16 @@
                 "hex": 508
               },
               {
-                "feature": "min",
-                "hex": 607
+                "hex": 607,
+                "feature": "min"
               },
               {
-                "feature": "sb",
-                "hex": 608
+                "hex": 608,
+                "feature": "sb"
               },
               {
-                "feature": "bats",
-                "hex": 707
+                "hex": 707,
+                "feature": "bats"
               },
               {
                 "hex": 708
@@ -3544,19 +3545,19 @@
                 "hex": 610
               },
               {
-                "feature": "min",
-                "hex": 709
+                "hex": 709,
+                "feature": "min"
               },
               {
                 "hex": 710
               },
               {
-                "feature": "bats",
-                "hex": 809
+                "hex": 809,
+                "feature": "bats"
               },
               {
-                "feature": "maj",
-                "hex": 810
+                "hex": 810,
+                "feature": "maj"
               }
             ]
           }
@@ -3579,10 +3580,10 @@
             109
           ]
         }
-      },
-      "key": "LYR"
+      }
     },
     {
+      "key": "LDR",
       "value": {
         "provinces": [
           {
@@ -3591,12 +3592,12 @@
                 "hex": 611
               },
               {
-                "feature": "bats",
-                "hex": 612
+                "hex": 612,
+                "feature": "bats"
               },
               {
-                "feature": "min",
-                "hex": 711
+                "hex": 711,
+                "feature": "min"
               },
               {
                 "hex": 712
@@ -3605,23 +3606,23 @@
                 "hex": 811
               },
               {
-                "feature": "bats",
-                "hex": 812
+                "hex": 812,
+                "feature": "bats"
               }
             ]
           }
         ]
-      },
-      "key": "LDR"
+      }
     },
     {
+      "key": "ROM",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 3317
+                "hex": 3317,
+                "feature": "bats"
               },
               {
                 "hex": 3416
@@ -3630,8 +3631,8 @@
                 "hex": 3417
               },
               {
-                "feature": "bats",
-                "hex": 3516
+                "hex": 3516,
+                "feature": "bats"
               },
               {
                 "hex": 3517
@@ -3647,8 +3648,8 @@
                 "hex": 3318
               },
               {
-                "feature": "bats",
-                "hex": 3319
+                "hex": 3319,
+                "feature": "bats"
               },
               {
                 "hex": 3418
@@ -3664,8 +3665,8 @@
           {
             "hexes": [
               {
-                "feature": "sb",
-                "hex": 3518
+                "hex": 3518,
+                "feature": "sb"
               },
               {
                 "hex": 3617
@@ -3690,8 +3691,8 @@
                 "hex": 3615
               },
               {
-                "feature": "bats",
-                "hex": 3715
+                "hex": 3715,
+                "feature": "bats"
               },
               {
                 "hex": 3716
@@ -3716,8 +3717,8 @@
                 "hex": 3816
               },
               {
-                "feature": "bats",
-                "hex": 3817
+                "hex": 3817,
+                "feature": "bats"
               },
               {
                 "hex": 3916
@@ -3755,34 +3756,34 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 4010
+                "hex": 4010,
+                "feature": "bats"
               },
               {
                 "hex": 4011
               },
               {
-                "feature": "bats",
-                "hex": 4110
+                "hex": 4110,
+                "feature": "bats"
               },
               {
                 "hex": 4111
               },
               {
-                "feature": "min",
-                "hex": 4112
+                "hex": 4112,
+                "feature": "min"
               }
             ]
           },
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 3914
+                "hex": 3914,
+                "feature": "bats"
               },
               {
-                "feature": "bats",
-                "hex": 4012
+                "hex": 4012,
+                "feature": "bats"
               },
               {
                 "hex": 4013
@@ -3801,8 +3802,8 @@
           {
             "hexes": [
               {
-                "feature": "sb",
-                "hex": 4015
+                "hex": 4015,
+                "feature": "sb"
               },
               {
                 "hex": 4115
@@ -3852,8 +3853,8 @@
                 "hex": 4211
               },
               {
-                "feature": "bats",
-                "hex": 4310
+                "hex": 4310,
+                "feature": "bats"
               },
               {
                 "hex": 4311
@@ -3875,12 +3876,12 @@
                 "hex": 4312
               },
               {
-                "feature": "min",
-                "hex": 4313
+                "hex": 4313,
+                "feature": "min"
               },
               {
-                "feature": "sb",
-                "hex": 4411
+                "hex": 4411,
+                "feature": "sb"
               },
               {
                 "hex": 4412
@@ -3890,8 +3891,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 4214
+                "hex": 4214,
+                "feature": "bats"
               },
               {
                 "hex": 4314
@@ -3913,8 +3914,8 @@
                 "hex": 4317
               },
               {
-                "feature": "bats",
-                "hex": 4318
+                "hex": 4318,
+                "feature": "bats"
               },
               {
                 "hex": 4416
@@ -3952,8 +3953,8 @@
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 4510
+                "hex": 4510,
+                "feature": "bats"
               },
               {
                 "hex": 4511
@@ -3962,12 +3963,12 @@
                 "hex": 4610
               },
               {
-                "feature": "bats",
-                "hex": 4611
+                "hex": 4611,
+                "feature": "bats"
               },
               {
-                "feature": "bats",
-                "hex": 4710
+                "hex": 4710,
+                "feature": "bats"
               },
               {
                 "hex": 4711
@@ -3992,20 +3993,20 @@
                 "hex": 4713
               },
               {
-                "feature": "sb",
-                "hex": 4812
+                "hex": 4812,
+                "feature": "sb"
               }
             ]
           },
           {
             "hexes": [
               {
-                "feature": "capital",
-                "hex": 4514
+                "hex": 4514,
+                "feature": "capital"
               },
               {
-                "feature": "capital",
-                "hex": 4613
+                "hex": 4613,
+                "feature": "capital"
               }
             ]
           },
@@ -4037,15 +4038,15 @@
                 "hex": 4617
               },
               {
-                "feature": "maj",
-                "hex": 4716
+                "hex": 4716,
+                "feature": "maj"
               },
               {
                 "hex": 4717
               },
               {
-                "feature": "bats",
-                "hex": 4718
+                "hex": 4718,
+                "feature": "bats"
               }
             ]
           },
@@ -4077,15 +4078,15 @@
                 "hex": 4811
               },
               {
-                "feature": "bats",
-                "hex": 4910
+                "hex": 4910,
+                "feature": "bats"
               },
               {
                 "hex": 4911
               },
               {
-                "feature": "bats",
-                "hex": 5010
+                "hex": 5010,
+                "feature": "bats"
               },
               {
                 "hex": 5011
@@ -4104,15 +4105,15 @@
                 "hex": 4914
               },
               {
-                "feature": "bats",
-                "hex": 5012
+                "hex": 5012,
+                "feature": "bats"
               },
               {
                 "hex": 5013
               },
               {
-                "feature": "bats",
-                "hex": 5014
+                "hex": 5014,
+                "feature": "bats"
               }
             ]
           },
@@ -4147,8 +4148,8 @@
                 "hex": 4817
               },
               {
-                "feature": "bats",
-                "hex": 4916
+                "hex": 4916,
+                "feature": "bats"
               },
               {
                 "hex": 4917
@@ -4189,8 +4190,8 @@
                 "hex": 5116
               },
               {
-                "feature": "bats",
-                "hex": 5215
+                "hex": 5215,
+                "feature": "bats"
               },
               {
                 "hex": 5216
@@ -4203,8 +4204,8 @@
           {
             "hexes": [
               {
-                "feature": "min",
-                "hex": 5117
+                "hex": 5117,
+                "feature": "min"
               },
               {
                 "hex": 5118
@@ -4229,8 +4230,8 @@
                 "hex": 5317
               },
               {
-                "feature": "bats",
-                "hex": 5416
+                "hex": 5416,
+                "feature": "bats"
               },
               {
                 "hex": 5417
@@ -4242,16 +4243,16 @@
                 "hex": 5518
               },
               {
-                "feature": "bats",
-                "hex": 5617
+                "hex": 5617,
+                "feature": "bats"
               }
             ]
           },
           {
             "hexes": [
               {
-                "feature": "sb",
-                "hex": 5318
+                "hex": 5318,
+                "feature": "sb"
               },
               {
                 "hex": 5319
@@ -4273,8 +4274,8 @@
                 "hex": 5618
               },
               {
-                "feature": "min",
-                "hex": 5619
+                "hex": 5619,
+                "feature": "min"
               },
               {
                 "hex": 5718
@@ -4283,12 +4284,12 @@
                 "hex": 5719
               },
               {
-                "feature": "bats",
-                "hex": 5818
+                "hex": 5818,
+                "feature": "bats"
               },
               {
-                "feature": "bats",
-                "hex": 5819
+                "hex": 5819,
+                "feature": "bats"
               }
             ]
           }
@@ -4301,53 +4302,53 @@
             6119
           ]
         }
-      },
-      "key": "ROM"
+      }
     },
     {
+      "key": "THO",
       "value": {
         "provinces": [
           {
             "hexes": [
               {
-                "feature": "bats",
-                "hex": 2719
+                "hex": 2719,
+                "feature": "bats"
               },
               {
-                "feature": "bats",
-                "hex": 2818
+                "hex": 2818,
+                "feature": "bats"
               },
               {
-                "feature": "sb",
-                "hex": 2819
+                "hex": 2819,
+                "feature": "sb"
               },
               {
-                "feature": "bats",
-                "hex": 2918
+                "hex": 2918,
+                "feature": "bats"
               },
               {
-                "feature": "capital",
-                "hex": 2919
+                "hex": 2919,
+                "feature": "capital"
               },
               {
-                "feature": "bats",
-                "hex": 3018
+                "hex": 3018,
+                "feature": "bats"
               },
               {
-                "feature": "sb",
-                "hex": 3019
+                "hex": 3019,
+                "feature": "sb"
               },
               {
-                "feature": "bats",
-                "hex": 3119
+                "hex": 3119,
+                "feature": "bats"
               }
             ]
           }
         ]
-      },
-      "key": "THO"
+      }
     },
     {
+      "key": "WYN",
       "value": {
         "provinces": [
           {
@@ -4358,8 +4359,7 @@
             ]
           }
         ]
-      },
-      "key": "WYN"
+      }
     }
   ]
 }
