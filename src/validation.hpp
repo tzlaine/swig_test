@@ -309,6 +309,8 @@ inline void validate_unit_def (const unit_def_t& unit_def)
         validate_production_cost(pair.second);
     }
     require_nonnegative(unit_def.move, "unit_def_t.move");
+    require_nonnegative(unit_def.towable.move_cost, "towable_t.move_cost");
+    require_nonnegative(unit_def.towable.strat_move_limit, "towable_t.strat_move_limit");
     require_nonnegative(unit_def.salvage, "unit_def_t.salvage");
 }
 
