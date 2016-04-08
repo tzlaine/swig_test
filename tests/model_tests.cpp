@@ -23,27 +23,82 @@ std::string file_slurp (const char* filename)
 #include <test_data.hpp>
 #endif
 
-TEST(whole_model_ops, test_init_nations)
+TEST(init_model_ops, test_init_nations)
 {
     EXPECT_TRUE(init_nations(nations_json_string));
-}
-
-TEST(whole_model_ops, test_init_model)
-{
     EXPECT_TRUE(init_nations(nations_json_string));
-    EXPECT_TRUE(init_scenario(scenario_json_string));
-    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
+
+    EXPECT_TRUE(reset_model());
 }
 
-TEST(whole_model_ops, test_init_units)
+TEST(init_model_ops, test_init_units)
 {
     EXPECT_TRUE(init_unit_defs(units_json_string));
+    EXPECT_TRUE(init_unit_defs(units_json_string));
+
+    EXPECT_TRUE(reset_model());
 }
 
-TEST(whole_model_ops, test_init_scenario)
+TEST(init_model_ops, test_init_scenario)
 {
+    EXPECT_FALSE(init_scenario(scenario_json_string));
+
     EXPECT_TRUE(init_nations(nations_json_string));
     EXPECT_TRUE(init_scenario(scenario_json_string));
+
+    EXPECT_TRUE(init_scenario(scenario_json_string));
+
+    EXPECT_TRUE(reset_model());
+}
+
+TEST(init_model_ops, test_init_model)
+{
+    EXPECT_FALSE(init_model(map_json_string, oob_json_string));
+
+    EXPECT_TRUE(init_nations(nations_json_string));
+
+    EXPECT_FALSE(init_model(map_json_string, oob_json_string));
+
+    EXPECT_TRUE(init_scenario(scenario_json_string));
+    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
+
+    EXPECT_TRUE(reset_model());
+}
+
+TEST(init_model_ops, test_null_string_init)
+{
+    EXPECT_FALSE(init_nations(nullptr));
+    EXPECT_FALSE(init_unit_defs(nullptr));
+
+    EXPECT_TRUE(init_nations(nations_json_string));
+
+    EXPECT_FALSE(init_scenario(nullptr));
+    EXPECT_TRUE(init_scenario(scenario_json_string));
+
+    EXPECT_FALSE(init_model(nullptr, oob_json_string));
+    EXPECT_FALSE(init_model(map_json_string, nullptr));
+
+    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
+
+    EXPECT_TRUE(reset_model());
+}
+
+TEST(init_model_ops, test_empty_string_init)
+{
+    EXPECT_FALSE(init_nations(""));
+    EXPECT_FALSE(init_unit_defs(""));
+
+    EXPECT_TRUE(init_nations(nations_json_string));
+
+    EXPECT_FALSE(init_scenario(""));
+    EXPECT_TRUE(init_scenario(scenario_json_string));
+
+    EXPECT_FALSE(init_model("", oob_json_string));
+    EXPECT_FALSE(init_model(map_json_string, ""));
+
+    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
+
+    EXPECT_TRUE(reset_model());
 }
 
 int main(int argc, char **argv)

@@ -768,6 +768,9 @@ extern "C" {
         if (scenario_str == empty_str)
             throw std::runtime_error("init_scenario() was passed an empty scenario data string.");
 
+        if (!g_loaded_nations.initialized)
+            throw std::runtime_error("init_scenario() was called without loaded nations data available.");
+
         if (g_loaded_scenario.initialized)
             return 1;
 
@@ -796,6 +799,11 @@ extern "C" {
             throw std::runtime_error("init_model() was passed an empty map data string.");
         if (oob_str == empty_str)
             throw std::runtime_error("init_model() was passed an empty OOB data string.");
+
+        if (!g_loaded_nations.initialized)
+            throw std::runtime_error("init_model() was called without loaded nations data available.");
+        if (!g_loaded_scenario.initialized)
+            throw std::runtime_error("init_model() was called without loaded scenario data available.");
 
         if (g_model_state.initialized)
             throw std::runtime_error("Attempted to duplicate-initialize model");
@@ -835,6 +843,7 @@ extern "C" {
     int reset_model () try
     {
         g_loaded_nations = loaded_nations_t();
+        g_loaded_scenario = loaded_scenario_t();
         g_model_state = model_state_t();
         return 1;
 
