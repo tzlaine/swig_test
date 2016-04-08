@@ -112,6 +112,7 @@
               "actors": [
                 "future belligerent"
               ],
+              "action": "occupies",
               "one_of": [
                 {
                   "hexes": [

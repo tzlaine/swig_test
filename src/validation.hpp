@@ -340,31 +340,146 @@ inline void validate_team (const team_t& team, const nations_t& nations)
     }
 }
 
-inline void validate_scenario_condition (const scenario_condition_t& scenario_condition, const nations_t& nations)
+inline bool any_sb (const scenario_condition_t::object_t& object)
 {
-    // TODO
+    return
+        object.type == scenario_condition_t::object_type_t::sb &&
+        object.hexes.empty() &&
+        object.names.size() == 1u && object.names[0] == "any";
 }
 
-inline void validate_scenario_nation (const scenario_t::nation_t& nation, const nations_t& nations)
+inline void validate_scenario_condition (const scenario_condition_t& scenario_condition,
+                                         const team_t& team,
+                                         const nations_t& nations)
 {
+    auto require_different_team = [&team](const std::string& name) {
+        auto it = std::find(team.nations.begin(), team.nations.end(), name);
+        if (it != team.nations.end()) {
+            static auto msg =
+                "A release or war entry condition cannot be based on the actions of fellow team member " + name;
+            boost::throw_exception(std::runtime_error(msg.c_str()));
+        }
+    };
+
+    for (const auto& actor : scenario_condition.actors) {
+        if (actor == "future belligerent")
+            continue;
+        require_nation(actor, nations);
+        require_different_team(actor);
+    }
+
+    auto find_sb = [&scenario_condition]() {
+        return std::find_if(
+            scenario_condition.one_of.begin(), scenario_condition.one_of.end(),
+            [](const scenario_condition_t::object_t& o) {
+                return o.type == scenario_condition_t::object_type_t::sb;
+            }
+        );
+    };
+
+    switch (scenario_condition.action) {
+    case scenario_condition_t::action_t::occupies:
+        if (find_sb() != scenario_condition.one_of.end()) {
+            boost::throw_exception(
+                std::runtime_error(
+                    "scenario_condition_t.action_t 'occupies' is incompatible with object_type_t 'sb'"
+                )
+            );
+        }
+        break;
+    case scenario_condition_t::action_t::destroys:
+        if (find_sb() == scenario_condition.one_of.end()) {
+            boost::throw_exception(
+                std::runtime_error(
+                    "scenario_condition_t.action_t 'destroys' is only compatible with object_type_t 'sb'"
+                )
+            );
+        }
+        break;
+    }
+
+    for (const auto& object : scenario_condition.one_of) {
+        switch (object.type) {
+        case scenario_condition_t::object_type_t::hexes: // fallthrough
+        case scenario_condition_t::object_type_t::sb:
+            if (!object.names.empty() && !any_sb(object)) {
+                boost::throw_exception(
+                    std::runtime_error(
+                        "You cannot define object_t.names when object_t.type is 'hexes' or 'sb', "
+                        "except that you can say 'any' with 'sb'"
+                    )
+                );
+            }
+#if 0 // TODO: Do after the map is loaded.
+            if (any_sb(object)) {
+                // TODO: Fill in hexes with all the starting SB hexes.
+            }
+            for (auto hex_id : object.hexes) {
+                require_hex_coord(hex_id, map.width, map.height, "scenario_condition_t.object_t.hexes");
+                if (object.type == scenario_condition_t::object_type_t::sb) {
+                    // TODO: Verify that there is a starbase at hex_id.
+                }
+            }
+#endif
+            break;
+        case scenario_condition_t::object_type_t::fleet_area:
+#if 0 // TODO: Do after the map is loaded.
+            for (const auto& name : object.names) {
+                // TODO: Verify that the given fleet exists.
+                // TODO: Fill in object.hexes from fleet area.
+                std::sort(object.hexes.begin(), object.hexes.end());
+            }
+            object.names.clear();
+#endif
+            break;
+        case scenario_condition_t::object_type_t::nation:
+            for (const auto& name : object.names) {
+                require_nation(name, nations);
+#if 0 // TODO: Do after the map is loaded.
+                // TODO: Fill in object.hexes from nation's area.
+                std::sort(object.hexes.begin(), object.hexes.end());
+#endif
+            }
+#if 0 // TODO: Do after the map is loaded.
+            object.names.clear();
+#endif
+            break;
+        }
+    }
+}
+
+inline void validate_scenario_nation (const scenario_t::nation_t& nation,
+                                      const team_t& team,
+                                      const nations_t& nations)
+{
+    auto require_different_team = [&team](const std::string& name) {
+        auto it = std::find(team.nations.begin(), team.nations.end(), name);
+        if (it != team.nations.end()) {
+            static auto msg =
+                "A nation cannot be at war with or a future belligerent of " + name +
+                " and on the same team with " + name;
+            boost::throw_exception(std::runtime_error(msg.c_str()));
+        }
+    };
+
     for (const auto& name : nation.at_war_with) {
         require_nation(name, nations);
-        // TODO: Require name is not on this nation's team.
+        require_different_team(name);
     }
     for (const auto& name : nation.future_belligerents) {
         require_nation(name, nations);
-        // TODO: Require name is not on this nation's team.
+        require_different_team(name);
     }
 
     require_nonnegative(nation.exhaustion_turns, "scenario_t.nation_t.exhaustion_turns");
 
     for (const auto& condition : nation.release_conditions) {
         // TODO: Compare condition.fleet against fleet names in OOB.
-        validate_scenario_condition(condition.condition, nations);
+        validate_scenario_condition(condition.condition, team, nations);
     }
 
     for (const auto& condition : nation.war_entry_conditions) {
-        validate_scenario_condition(condition.condition, nations);
+        validate_scenario_condition(condition.condition, team, nations);
     }
 }
 
@@ -431,7 +546,20 @@ inline void validate_scenario (const scenario_t& scenario, const nations_t& nati
 
     for (const auto& nation : scenario.nations) {
         require_nation(nation.first, nations);
-        validate_scenario_nation(nation.second, nations);
+
+        auto it = std::find_if(
+            scenario.teams.begin(), scenario.teams.end(),
+            [&nation](const team_t& team) {
+                auto it = std::find(team.nations.begin(), team.nations.end(), nation.first);
+                return it != team.nations.end();
+            }
+        );
+        if (it == scenario.teams.end()) {
+            static auto msg = "Unable to find the team to which nation " + nation.first + " belongs.";
+            boost::throw_exception(std::runtime_error(msg.c_str()));
+        }
+
+        validate_scenario_nation(nation.second, *it, nations);
     }
 
     for (const auto& turn : scenario.turns) {

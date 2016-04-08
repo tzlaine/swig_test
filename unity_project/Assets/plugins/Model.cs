@@ -122,7 +122,7 @@ namespace Message {
             "c3NhZ2Uuc2NlbmFyaW9fY29uZGl0aW9uX3Qub2JqZWN0X3R5cGVfdBINCgVu",
             "YW1lcxgCIAMoCRINCgVoZXhlcxgDIAMoBSImCghhY3Rpb25fdBIMCghvY2N1",
             "cGllcxAAEgwKCGRlc3Ryb3lzEAEiPgoNb2JqZWN0X3R5cGVfdBIJCgVoZXhl",
-            "cxAAEg4KCmZsZWV0X2FyZWEQARIKCgZuYXRpb24QAhIGCgJzYhADIlwKGWZs",
+            "cxAAEgYKAnNiEAESDgoKZmxlZXRfYXJlYRACEgoKBm5hdGlvbhADIlwKGWZs",
             "ZWV0X3JlbGVhc2VfY29uZGl0aW9uX3QSDQoFZmxlZXQYASABKAkSMAoJY29u",
             "ZGl0aW9uGAIgASgLMh0ubWVzc2FnZS5zY2VuYXJpb19jb25kaXRpb25fdCJy",
             "ChV3YXJfZW50cnlfY29uZGl0aW9uX3QSJwoHZWNvbm9teRgDIAEoDjIWLm1l",
@@ -5051,9 +5051,9 @@ namespace Message {
 
       public enum object_type_t {
         hexes = 0,
-        fleet_area = 1,
-        nation = 2,
-        sb = 3,
+        sb = 1,
+        fleet_area = 2,
+        nation = 3,
       }
 
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

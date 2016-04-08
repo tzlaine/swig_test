@@ -283,9 +283,9 @@ struct scenario_condition_t
 
     enum class object_type_t {
         hexes = 0,
-        fleet_area = 1,
-        nation = 2,
-        sb = 3,
+        sb = 1,
+        fleet_area = 2,
+        nation = 3,
     };
 
     struct object_t
