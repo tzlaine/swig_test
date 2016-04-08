@@ -10,6 +10,7 @@ const char* nations_json_string = nullptr;
 const char* map_json_string = nullptr;
 const char* oob_json_string = nullptr;
 const char* units_json_string = nullptr;
+const char* scenario_json_string = nullptr;
 
 std::string file_slurp (const char* filename)
 {
@@ -30,6 +31,7 @@ TEST(whole_model_ops, test_init_nations)
 TEST(whole_model_ops, test_init_model)
 {
     EXPECT_TRUE(init_nations(nations_json_string));
+    EXPECT_TRUE(init_scenario(scenario_json_string));
     EXPECT_TRUE(init_model(map_json_string, oob_json_string));
 }
 
