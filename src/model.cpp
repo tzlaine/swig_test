@@ -800,6 +800,8 @@ extern "C" {
         if (oob_str == empty_str)
             throw std::runtime_error("init_model() was passed an empty OOB data string.");
 
+        if (!g_loaded_unit_defs.initialized)
+            throw std::runtime_error("init_model() was called without loaded unit_defs data available.");
         if (!g_loaded_nations.initialized)
             throw std::runtime_error("init_model() was called without loaded nations data available.");
         if (!g_loaded_scenario.initialized)
@@ -819,10 +821,12 @@ extern "C" {
             message::orders_of_battle_t oob_msg;
             json2pb(oob_msg, oob_str, strlen(oob_str));
             g_model_state.oob = from_protobuf(oob_msg);
-            validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations);
+            validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations, g_loaded_unit_defs.unit_defs);
         }
 
         validate_hex_coords(g_loaded_nations.nations, g_model_state.m.width, g_model_state.m.height);
+
+        validate_scenario_with_map_and_oob(g_loaded_scenario.scenario, g_model_state.m, g_model_state.oob);
 
         init_graph(
             g_model_state.g,
@@ -842,6 +846,7 @@ extern "C" {
     MODEL_API
     int reset_model () try
     {
+        g_loaded_unit_defs = loaded_unit_defs_t();
         g_loaded_nations = loaded_nations_t();
         g_loaded_scenario = loaded_scenario_t();
         g_model_state = model_state_t();

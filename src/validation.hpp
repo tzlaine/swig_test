@@ -2,8 +2,10 @@
 #include "model_data.hpp"
 #include "hex_operations.hpp"
 
+#if 0
+#include <boost/container/flat_set.hpp>
+#endif
 #include <boost/exception/diagnostic_information.hpp>
-
 #include <boost/lexical_cast.hpp>
 
 
@@ -217,7 +219,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
     }
 }
 
-inline void validate_and_fixup_oob_unit (oob_unit_t& oob_unit)
+inline void validate_and_fixup_oob_unit (oob_unit_t& oob_unit, const nation_unit_defs_t& unit_defs)
 {
     // TODO: Check that the unit is a known unit for this nation.
     require_nonempty(oob_unit.unit, "oob_unit_t.unit");
@@ -226,18 +228,21 @@ inline void validate_and_fixup_oob_unit (oob_unit_t& oob_unit)
         oob_unit.times = 1;
 }
 
-inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet, int width, int height)
+inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet,
+                                               int width,
+                                               int height,
+                                               const nation_unit_defs_t& unit_defs)
 {
     for (auto hex_id : starting_fleet.hexes) {
         require_hex_coord(hex_id, width, height, "starting fleet hex");
     }
     require_nonempty(starting_fleet.units, "starting_fleet_t.units");
     for (auto& oob_unit : starting_fleet.units) {
-        validate_and_fixup_oob_unit(oob_unit);
+        validate_and_fixup_oob_unit(oob_unit, unit_defs);
     }
     for (auto& element : starting_fleet.prewar_construction) {
         for (auto& oob_unit : element.units) {
-            validate_and_fixup_oob_unit(oob_unit);
+            validate_and_fixup_oob_unit(oob_unit, unit_defs);
         }
     }
     require_nonnegative(
@@ -245,39 +250,59 @@ inline void validate_and_fixup_starting_fleet (starting_fleet_t& starting_fleet,
         "starting_fleet_t.strategic_move_arrival_year"
     );
     for (auto limit : starting_fleet.hex_placement_limits) {
-        
-require_hex_coord(limit.first, width, height, "hex_placement_limit hex");
+        require_hex_coord(limit.first, width, height, "hex_placement_limit hex");
         require_positive(limit.second, "hex_placement_limit unit limit number");
     }
 }
 
-inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs, const map_t& map, const nations_t& nations)
+inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs,
+                                             const map_t& map,
+                                             const nations_t& nations,
+                                             const unit_defs_t& unit_defs_)
 {
+#if 0
+    boost::container::flat_set<std::string> nation_units;
+#endif
     require_nonempty(oobs.oobs, "orders_of_battle_t.oobs");
     for (auto& oob : oobs.oobs) {
         require_nation(oob.first, nations);
+
+        if (unit_defs_.nation_units.count(oob.first) == 0) {
+            static std::string msg;
+            msg = "Cannot validate the OOB for " + oob.first +
+                " because there are no units defined for that nation.";
+            boost::throw_exception(std::runtime_error(msg.c_str()));
+        }
+        const auto& unit_defs =
+            unit_defs_.nation_units.find(oob.first)->second;
+#if 0
+        nation_units.clear();
+        for (const auto& unit : unit_defs.units) {
+            nation_units.insert(unit.name);
+        }
+#endif
 
         require_nonempty(oob.second.starting_fleets, "order_of_battle_t.starting_fleets");
         for (auto& fleet : oob.second.starting_fleets) {
             require_nonempty(fleet.first, "starting_fleets_t name ('key')");
 
-            validate_and_fixup_starting_fleet(fleet.second, map.width, map.height);
+            validate_and_fixup_starting_fleet(fleet.second, map.width, map.height, unit_defs);
         }
 
         for (auto& oob_unit : oob.second.mothball_reserve.units) {
-            validate_and_fixup_oob_unit(oob_unit);
+            validate_and_fixup_oob_unit(oob_unit, unit_defs);
         }
         for (auto& oob_unit : oob.second.mothball_reserve.war_release) {
-            validate_and_fixup_oob_unit(oob_unit);
+            validate_and_fixup_oob_unit(oob_unit, unit_defs);
         }
         for (auto& oob_unit : oob.second.mothball_reserve.limited_war_release) {
-            validate_and_fixup_oob_unit(oob_unit);
+            validate_and_fixup_oob_unit(oob_unit, unit_defs);
         }
 
         require_nonempty(oob.second.production, "order_of_battle_t.production");
         for (auto& element : oob.second.production) {
             for (auto& oob_unit : element.units) {
-                validate_and_fixup_oob_unit(oob_unit);
+                validate_and_fixup_oob_unit(oob_unit, unit_defs);
             }
         }
     }
@@ -355,7 +380,8 @@ inline void validate_scenario_condition (const scenario_condition_t& scenario_co
     auto require_different_team = [&team](const std::string& name) {
         auto it = std::find(team.nations.begin(), team.nations.end(), name);
         if (it != team.nations.end()) {
-            static auto msg =
+            static std::string msg;
+            msg =
                 "A release or war entry condition cannot be based on the actions of fellow team member " + name;
             boost::throw_exception(std::runtime_error(msg.c_str()));
         }
@@ -455,7 +481,8 @@ inline void validate_scenario_nation (const scenario_t::nation_t& nation,
     auto require_different_team = [&team](const std::string& name) {
         auto it = std::find(team.nations.begin(), team.nations.end(), name);
         if (it != team.nations.end()) {
-            static auto msg =
+            static std::string msg;
+            msg =
                 "A nation cannot be at war with or a future belligerent of " + name +
                 " and on the same team with " + name;
             boost::throw_exception(std::runtime_error(msg.c_str()));
@@ -555,7 +582,8 @@ inline void validate_scenario (const scenario_t& scenario, const nations_t& nati
             }
         );
         if (it == scenario.teams.end()) {
-            static auto msg = "Unable to find the team to which nation " + nation.first + " belongs.";
+            static std::string msg;
+            msg = "Unable to find the team to which nation " + nation.first + " belongs.";
             boost::throw_exception(std::runtime_error(msg.c_str()));
         }
 
@@ -565,4 +593,11 @@ inline void validate_scenario (const scenario_t& scenario, const nations_t& nati
     for (const auto& turn : scenario.turns) {
         validate_scenario_turn(turn, nations);
     }
+}
+
+void validate_scenario_with_map_and_oob (const scenario_t& scenario,
+                                         const map_t& map,
+                                         const orders_of_battle_t& oobs)
+{
+    // TODO
 }

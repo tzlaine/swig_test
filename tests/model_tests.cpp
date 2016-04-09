@@ -55,6 +55,10 @@ TEST(init_model_ops, test_init_model)
 {
     EXPECT_FALSE(init_model(map_json_string, oob_json_string));
 
+    EXPECT_TRUE(init_unit_defs(units_json_string));
+
+    EXPECT_FALSE(init_model(map_json_string, oob_json_string));
+
     EXPECT_TRUE(init_nations(nations_json_string));
 
     EXPECT_FALSE(init_model(map_json_string, oob_json_string));
@@ -75,6 +79,8 @@ TEST(init_model_ops, test_null_string_init)
     EXPECT_FALSE(init_scenario(nullptr));
     EXPECT_TRUE(init_scenario(scenario_json_string));
 
+    EXPECT_TRUE(init_unit_defs(units_json_string));
+
     EXPECT_FALSE(init_model(nullptr, oob_json_string));
     EXPECT_FALSE(init_model(map_json_string, nullptr));
 
@@ -92,6 +98,8 @@ TEST(init_model_ops, test_empty_string_init)
 
     EXPECT_FALSE(init_scenario(""));
     EXPECT_TRUE(init_scenario(scenario_json_string));
+
+    EXPECT_TRUE(init_unit_defs(units_json_string));
 
     EXPECT_FALSE(init_model("", oob_json_string));
     EXPECT_FALSE(init_model(map_json_string, ""));
