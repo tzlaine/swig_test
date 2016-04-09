@@ -10,10 +10,12 @@
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
+#include <google/protobuf/descriptor.pb.h>
 
 #include <json2pb.h>
 
-#include <algorithm>
+#include <boost/container/flat_map.hpp>
+
 #include <stdexcept>
 
 namespace {
@@ -115,19 +117,49 @@ static json_t * _pb2json(const Message& msg)
 	std::vector<const FieldDescriptor *> fields;
 	ref->ListFields(msg, &fields);
 
-        std::sort(
-            fields.begin(), fields.end(),
-            [](const FieldDescriptor * lhs, const FieldDescriptor * rhs) {
-                return lhs->number() < rhs->number();
-            }
-        );
-
 	for (size_t i = 0; i != fields.size(); i++)
 	{
 		const FieldDescriptor *field = fields[i];
 
 		json_t *jf = 0;
-		if(field->is_repeated()) {
+
+                const std::string &name = (field->is_extension())?field->full_name():field->name();
+
+                const FieldDescriptor *map_entry_key_field = nullptr;
+                if (field->is_map())
+                {
+                    map_entry_key_field = field->message_type()->FindFieldByName("key");
+                }
+
+		if(map_entry_key_field &&
+                   map_entry_key_field->cpp_type() == FieldDescriptor::CPPTYPE_STRING) {
+			size_t count = ref->FieldSize(msg, field);
+			if (!count) continue;
+
+                        json_t *map_root = json_object();
+                        json_autoptr _map_auto(map_root);
+
+                        boost::container::flat_map<std::string, const Message*> sorted_messages;
+                        sorted_messages.reserve(count);
+			for (size_t j = 0; j < count; j++) {
+                            auto& map_entry_msg = ref->GetRepeatedMessage(msg, field, j);
+                            auto map_entry_msg_ref = map_entry_msg.GetReflection();
+                            std::string scratch;
+                            const std::string &key_str = map_entry_msg_ref->GetStringReference(
+                                map_entry_msg,
+                                map_entry_key_field, &scratch
+                            );
+                            sorted_messages[key_str] = &map_entry_msg;
+                        }
+
+                        auto map_entry_value_field = field->message_type()->FindFieldByName("value");
+                        for (const auto& pair : sorted_messages) {
+                            jf = _field2json(*pair.second, map_entry_value_field, 0);
+                            json_object_set_new(map_root, pair.first.c_str(), jf);
+                        }
+
+                        json_object_set_new(root, name.c_str(), _map_auto.release());
+		} else if(field->is_repeated()) {
 			size_t count = ref->FieldSize(msg, field);
 			if (!count) continue;
 
@@ -135,13 +167,11 @@ static json_t * _pb2json(const Message& msg)
 			for (size_t j = 0; j < count; j++)
 				json_array_append_new(array.ptr, _field2json(msg, field, j));
 			jf = array.release();
-		} else if (ref->HasField(msg, field))
+                        json_object_set_new(root, name.c_str(), jf);
+		} else if (ref->HasField(msg, field)) {
 			jf = _field2json(msg, field, 0);
-		else
-			continue;
-
-		const std::string &name = (field->is_extension())?field->full_name():field->name();
-		json_object_set_new(root, name.c_str(), jf);
+                        json_object_set_new(root, name.c_str(), jf);
+                }
 	}
 	return _auto.release();
 }
@@ -234,7 +264,28 @@ static void _json2pb(Message& msg, json_t *root)
 
 		if (!field) throw j2pb_error("Unknown field: " + std::string(name));
 
-		if (field->is_repeated()) {
+                const FieldDescriptor *map_entry_key_field = nullptr;
+                if (field->is_map())
+                {
+                    map_entry_key_field = field->message_type()->FindFieldByName("key");
+                }
+
+		if(map_entry_key_field &&
+                   map_entry_key_field->cpp_type() == FieldDescriptor::CPPTYPE_STRING) {
+                    auto map_entry_value_field = field->message_type()->FindFieldByName("value");
+
+                    auto map_root = jf;
+                    for (void *j = json_object_iter(map_root);
+                         j;
+                         j = json_object_iter_next(map_root, j)) {
+                        auto msg_j = ref->AddMessage(&msg, field);
+                        auto msg_j_ref = msg_j->GetReflection();
+                        const char *name_j = json_object_iter_key(j);
+                        json_t *jf_j = json_object_iter_value(j);
+                        msg_j_ref->SetString(msg_j, map_entry_key_field, name_j);
+                        _json2field(*msg_j, map_entry_value_field, jf_j);
+                    }
+		} else if (field->is_repeated()) {
 			if (!json_is_array(jf))
 				throw j2pb_error(field, "Not array");
 			for (size_t j = 0; j < json_array_size(jf); j++)

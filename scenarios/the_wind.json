@@ -35,334 +35,99 @@
     "FED",
     "HYD"
   ],
-  "nations": [
-    {
-      "key": "FED",
-      "value": {
-        "future_belligerents": [
-          "KLI",
-          "LYR",
-          "ROM"
-        ],
-        "economy": "peace",
-        "release_conditions": [
-          {
-            "fleet": "Fourth Fleet",
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "one_of": [
-                {
-                  "type": "fleet_area",
-                  "names": [
-                    "Marquis' Fleet"
-                  ]
-                },
-                {
-                  "type": "nation",
-                  "names": [
-                    "KZI"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "war_entry_conditions": [
-          {
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "one_of": [
-                {
-                  "type": "fleet_area",
-                  "names": [
-                    "Marquis' Fleet"
-                  ]
-                },
-                {
-                  "type": "nation",
-                  "names": [
-                    "KZI"
-                  ]
-                }
-              ]
-            },
-            "economy": "limited_war"
-          }
-        ]
-      }
-    },
-    {
-      "key": "HYD",
-      "value": {
-        "future_belligerents": [
-          "KLI",
-          "LYR",
-          "ROM"
-        ],
-        "economy": "peace",
-        "accumulate_exhaustion_at_peace": true,
-        "release_conditions": [
-          {
-            "fleet": "Old Colonies Squadron",
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "action": "occupies",
-              "one_of": [
-                {
-                  "hexes": [
-                    617
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "fleet": "Old Colonies Squadron",
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "action": "destroys",
-              "one_of": [
-                {
-                  "type": "sb",
-                  "names": [
-                    "any"
-                  ]
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "key": "KLI",
-      "value": {
-        "future_belligerents": [
-          "FED",
-          "GOR",
-          "HYD",
-          "KZI"
-        ],
-        "accumulate_exhaustion_at_peace": true,
-        "release_conditions": [
-          {
-            "fleet": "Home Fleet",
-            "condition": {
-              "actors": [
-                "HYD"
-              ],
-              "one_of": [
-                {
-                  "type": "nation",
-                  "names": [
-                    "KLI",
-                    "LYR"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "fleet": "Eastern Fleet",
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "one_of": [
-                {
-                  "type": "fleet_area",
-                  "names": [
-                    "Eastern Fleet"
-                  ]
-                },
-                {
-                  "type": "nation",
-                  "names": [
-                    "KLI"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "fleet": "Southern Reserve Fleet",
-            "condition": {
-              "actors": [
-                "HYD"
-              ],
-              "one_of": [
-                {
-                  "type": "nation",
-                  "names": [
-                    "KLI",
-                    "LYR"
-                  ]
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "key": "KZI",
-      "value": {
-        "at_war_with": [
-          "LYR"
-        ],
-        "future_belligerents": [
-          "KLI",
-          "LYR",
-          "ROM"
-        ],
-        "release_conditions": [
-          {
-            "fleet": "Marquis' Fleet",
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "one_of": [
-                {
-                  "type": "nation",
-                  "names": [
-                    "KZI"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "fleet": "Marquis' Reserve Fleet",
-            "condition": {
-              "actors": [
-                "future belligerent"
-              ],
-              "one_of": [
-                {
-                  "type": "fleet_area",
-                  "names": [
-                    "Marquis' Fleet"
-                  ]
-                },
-                {
-                  "type": "nation",
-                  "names": [
-                    "KZI"
-                  ]
-                }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    {
-      "key": "LYR",
-      "value": {
-        "at_war_with": [
-          "KZI"
-        ],
-        "future_belligerents": [
-          "FED",
-          "GOR",
-          "HYD",
-          "KZI"
-        ]
-      }
-    }
-  ],
-  "turns": [
-    {
-      "turn": 1,
-      "national_actions": [
+  "nations": {
+    "FED": {
+      "future_belligerents": [
+        "KLI",
+        "LYR",
+        "ROM"
+      ],
+      "economy": "peace",
+      "release_conditions": [
         {
-          "key": "KZI",
-          "value": {
-            "actions": [
+          "fleet": "Fourth Fleet",
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "one_of": [
               {
+                "type": "fleet_area",
                 "names": [
-                  "Count's Fleet",
-                  "Duke's Fleet",
-                  "Home Fleet"
+                  "Marquis' Fleet"
                 ]
-              }
-            ]
-          }
-        },
-        {
-          "key": "LYR",
-          "value": {
-            "actions": [
+              },
               {
-                "names": [
-                  "Red Claw Fleet",
-                  "Home Fleet"
-                ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "turn": 2,
-      "national_actions": [
-        {
-          "key": "KLI",
-          "value": {
-            "actions": [
-              {
-                "type": "declare_war",
+                "type": "nation",
                 "names": [
                   "KZI"
                 ]
+              }
+            ]
+          }
+        }
+      ],
+      "war_entry_conditions": [
+        {
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "one_of": [
+              {
+                "type": "fleet_area",
+                "names": [
+                  "Marquis' Fleet"
+                ]
               },
               {
+                "type": "nation",
                 "names": [
-                  "Northern Fleet",
-                  "Northern Reserve Fleet",
-                  "Tholian Border Squadron"
+                  "KZI"
+                ]
+              }
+            ]
+          },
+          "economy": "limited_war"
+        }
+      ]
+    },
+    "HYD": {
+      "future_belligerents": [
+        "KLI",
+        "LYR",
+        "ROM"
+      ],
+      "economy": "peace",
+      "accumulate_exhaustion_at_peace": true,
+      "release_conditions": [
+        {
+          "fleet": "Old Colonies Squadron",
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "one_of": [
+              {
+                "hexes": [
+                  617
                 ]
               }
             ]
           }
         },
         {
-          "key": "KZI",
-          "value": {
-            "actions": [
+          "fleet": "Old Colonies Squadron",
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "action": "destroys",
+            "one_of": [
               {
-                "type": "declare_war",
+                "type": "sb",
                 "names": [
-                  "KLI"
-                ]
-              },
-              {
-                "type": "release_fleets",
-                "names": [
-                  "Baron's Fleet"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "key": "LYR",
-          "value": {
-            "actions": [
-              {
-                "type": "release_fleets",
-                "names": [
-                  "Far Stars"
+                  "any"
                 ]
               }
             ]
@@ -370,78 +135,66 @@
         }
       ]
     },
-    {
-      "turn": 3,
-      "national_actions": [
+    "KLI": {
+      "future_belligerents": [
+        "FED",
+        "GOR",
+        "HYD",
+        "KZI"
+      ],
+      "accumulate_exhaustion_at_peace": true,
+      "release_conditions": [
         {
-          "key": "HYD",
-          "value": {
-            "actions": [
+          "fleet": "Home Fleet",
+          "condition": {
+            "actors": [
+              "HYD"
+            ],
+            "one_of": [
               {
-                "type": "declare_war",
+                "type": "nation",
                 "names": [
                   "KLI",
                   "LYR"
                 ]
+              }
+            ]
+          }
+        },
+        {
+          "fleet": "Eastern Fleet",
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "one_of": [
+              {
+                "type": "fleet_area",
+                "names": [
+                  "Eastern Fleet"
+                ]
               },
               {
-                "type": "release_fleets",
+                "type": "nation",
                 "names": [
-                  "Home Fleet",
-                  "Expeditionary Fleet",
-                  "First Fleet",
-                  "Second Fleet"
+                  "KLI"
                 ]
               }
             ]
           }
         },
         {
-          "key": "KLI",
-          "value": {
-            "actions": [
+          "fleet": "Southern Reserve Fleet",
+          "condition": {
+            "actors": [
+              "HYD"
+            ],
+            "one_of": [
               {
-                "type": "declare_war",
+                "type": "nation",
                 "names": [
-                  "HYD"
-                ]
-              },
-              {
-                "type": "release_fleets",
-                "names": [
-                  "Western Fleet"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "key": "KZI",
-          "value": {
-            "actions": [
-              {
-                "type": "release_fleets",
-                "names": [
-                  "Baron's Fleet"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "key": "LYR",
-          "value": {
-            "actions": [
-              {
-                "type": "declare_war",
-                "names": [
-                  "HYD"
-                ]
-              },
-              {
-                "type": "release_fleets",
-                "names": [
-                  "Enemy's Blood Fleet"
+                  "KLI",
+                  "LYR"
                 ]
               }
             ]
@@ -449,24 +202,218 @@
         }
       ]
     },
-    {
-      "turn": 4,
-      "national_actions": [
+    "KZI": {
+      "at_war_with": [
+        "LYR"
+      ],
+      "future_belligerents": [
+        "KLI",
+        "LYR",
+        "ROM"
+      ],
+      "release_conditions": [
         {
-          "key": "KLI",
-          "value": {
-            "actions": [
+          "fleet": "Marquis' Fleet",
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "one_of": [
               {
-                "type": "release_fleets",
+                "type": "nation",
                 "names": [
-                  "Home Fleet",
-                  "Southern Reserve Fleet"
+                  "KZI"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "fleet": "Marquis' Reserve Fleet",
+          "condition": {
+            "actors": [
+              "future belligerent"
+            ],
+            "one_of": [
+              {
+                "type": "fleet_area",
+                "names": [
+                  "Marquis' Fleet"
+                ]
+              },
+              {
+                "type": "nation",
+                "names": [
+                  "KZI"
                 ]
               }
             ]
           }
         }
       ]
+    },
+    "LYR": {
+      "at_war_with": [
+        "KZI"
+      ],
+      "future_belligerents": [
+        "FED",
+        "GOR",
+        "HYD",
+        "KZI"
+      ]
+    }
+  },
+  "turns": [
+    {
+      "turn": 1,
+      "national_actions": {
+        "KZI": {
+          "actions": [
+            {
+              "names": [
+                "Count's Fleet",
+                "Duke's Fleet",
+                "Home Fleet"
+              ]
+            }
+          ]
+        },
+        "LYR": {
+          "actions": [
+            {
+              "names": [
+                "Red Claw Fleet",
+                "Home Fleet"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "national_actions": {
+        "KLI": {
+          "actions": [
+            {
+              "type": "declare_war",
+              "names": [
+                "KZI"
+              ]
+            },
+            {
+              "names": [
+                "Northern Fleet",
+                "Northern Reserve Fleet",
+                "Tholian Border Squadron"
+              ]
+            }
+          ]
+        },
+        "KZI": {
+          "actions": [
+            {
+              "type": "declare_war",
+              "names": [
+                "KLI"
+              ]
+            },
+            {
+              "names": [
+                "Baron's Fleet"
+              ]
+            }
+          ]
+        },
+        "LYR": {
+          "actions": [
+            {
+              "names": [
+                "Far Stars"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "national_actions": {
+        "HYD": {
+          "actions": [
+            {
+              "type": "declare_war",
+              "names": [
+                "KLI",
+                "LYR"
+              ]
+            },
+            {
+              "names": [
+                "Home Fleet",
+                "Expeditionary Fleet",
+                "First Fleet",
+                "Second Fleet"
+              ]
+            }
+          ]
+        },
+        "KLI": {
+          "actions": [
+            {
+              "type": "declare_war",
+              "names": [
+                "HYD"
+              ]
+            },
+            {
+              "names": [
+                "Western Fleet"
+              ]
+            }
+          ]
+        },
+        "KZI": {
+          "actions": [
+            {
+              "names": [
+                "Baron's Fleet"
+              ]
+            }
+          ]
+        },
+        "LYR": {
+          "actions": [
+            {
+              "type": "declare_war",
+              "names": [
+                "HYD"
+              ]
+            },
+            {
+              "names": [
+                "Enemy's Blood Fleet"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "turn": 4,
+      "national_actions": {
+        "KLI": {
+          "actions": [
+            {
+              "names": [
+                "Home Fleet",
+                "Southern Reserve Fleet"
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "turn": 5

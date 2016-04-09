@@ -57,8 +57,7 @@ def get_cpp_type(typecode):
     return retval
 
 def map_field_entry_type(descriptor_proto):
-    # TODO: return descriptor_proto.options.map_entry == True
-    return descriptor_proto.name not in proto_contents
+    return descriptor_proto.options.map_entry == True
 
 def type_without_namespace(field_descriptor_proto, namespace):
     typenames = field_descriptor_proto.type_name.split('.')[1:]
