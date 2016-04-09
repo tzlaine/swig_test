@@ -590,6 +590,8 @@ if (NOT JANSSON_WITHOUT_TESTS)
    endif ()
 endif ()
 
+if (false)
+
 #
 # Installation preparation.
 #
@@ -691,3 +693,5 @@ install(EXPORT JanssonTargets
 
 # For use when simply using add_library from a parent project to build jansson.
 set(JANSSON_LIBRARIES jansson CACHE STRING "Jansson libraries")
+
+endif ()
