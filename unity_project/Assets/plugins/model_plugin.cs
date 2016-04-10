@@ -1,8 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
-using Message;
 using SimpleJSON;
-using model_data_conversions;
+using model_data;
 
 
 [StructLayout(LayoutKind.Sequential)]
@@ -82,7 +81,7 @@ public class model_plugin
         );
 
         SimpleJSON.JSONNode json = JSON.Parse(copied_string);
-        return convert.to_nations_t(json);
+        return null;// TODO convert.to_nations_t(json);
     }
 
     [DllImport("model_plugin")]

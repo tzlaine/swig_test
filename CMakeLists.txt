@@ -61,7 +61,6 @@ macro(generate_protobuf file_root target)
             protoc
                 --proto_path=${CMAKE_SOURCE_DIR}/proto
                 --cpp_out=${CMAKE_BINARY_DIR}
-                --csharp_out=${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
         DEPENDS
             ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
@@ -136,7 +135,7 @@ if (PYTHON_EXECUTABLE)
                 --desc-file ${CMAKE_CURRENT_BINARY_DIR}/model.desc
                 --hpp-file ${CMAKE_SOURCE_DIR}/src/model_data.hpp
                 --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
-                --cs-file ${CMAKE_SOURCE_DIR}/unity_project/Assets/plugins/model_data_conversions.cs
+                --cs-file ${CMAKE_SOURCE_DIR}/unity_project/Assets/plugins/model_data.cs
         DEPENDS
             ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
             ${CMAKE_SOURCE_DIR}/proto/model.proto

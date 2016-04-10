@@ -9,7 +9,7 @@ import pair;
 import unit_costs_t;
 import towable_stats_t;
 import model_plugin;
-import Message;
+import model_data;
 
 @DoNotSerialize
 private var nations : nations_t = null;
