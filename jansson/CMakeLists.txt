@@ -465,7 +465,7 @@ if (JANSSON_BUILD_DOCS)
 endif ()
 
 
-option(JANSSON_WITHOUT_TESTS "Don't build tests ('make test' to execute tests)" OFF)
+option(JANSSON_WITHOUT_TESTS "Don't build tests ('make test' to execute tests)" ON)
 
 if (NOT JANSSON_WITHOUT_TESTS)
    option(JANSSON_TEST_WITH_VALGRIND "Enable valgrind tests." OFF)
