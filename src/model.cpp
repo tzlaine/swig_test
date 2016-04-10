@@ -598,18 +598,21 @@ template <typename T>
 bool encode_into_buffer (const T& obj)
 {
     auto const pb_obj = to_protobuf(obj);
-    pb2json_compact(pb_obj, g_message_buffer);
+    pb2json(pb_obj, g_message_buffer, map_encoding_t::verbose, whitespace_t::minified);
     return true;
 }
 
 template <typename T>
 bool decode_into_object (void* bytes, int size, T& obj)
 {
+#if 0 // Change to expect JSON
     decltype(to_protobuf(std::declval<T>())) pb_obj;
     if (!pb_obj.ParseFromArray(bytes, size))
         return false;
     obj = from_protobuf(pb_obj);
     return true;
+#endif
+    return false;
 }
 
 template <typename T>
@@ -722,7 +725,7 @@ extern "C" {
 
         {
             message::nations_t nations_msg;
-            json2pb(nations_msg, nations_str, strlen(nations_str));
+            json2pb(nations_msg, nations_str, strlen(nations_str), map_encoding_t::compact);
             g_loaded_nations.nations = from_protobuf(nations_msg);
             validate_nations(g_loaded_nations.nations);
             fill_in_nation_ids(g_loaded_nations.nations);
@@ -748,7 +751,7 @@ extern "C" {
 
         {
             message::unit_defs_t unit_defs_msg;
-            json2pb(unit_defs_msg, unit_defs_str, strlen(unit_defs_str));
+            json2pb(unit_defs_msg, unit_defs_str, strlen(unit_defs_str), map_encoding_t::compact);
             g_loaded_unit_defs.unit_defs = from_protobuf(unit_defs_msg);
             validate_unit_defs(g_loaded_unit_defs.unit_defs);
         }
@@ -776,7 +779,7 @@ extern "C" {
 
         {
             message::scenario_t scenario_msg;
-            json2pb(scenario_msg, scenario_str, strlen(scenario_str));
+            json2pb(scenario_msg, scenario_str, strlen(scenario_str), map_encoding_t::compact);
             g_loaded_scenario.scenario = from_protobuf(scenario_msg);
             validate_scenario(g_loaded_scenario.scenario, g_loaded_nations.nations);
         }
@@ -812,14 +815,14 @@ extern "C" {
 
         {
             message::map_t map_msg;
-            json2pb(map_msg, map_str, strlen(map_str));
+            json2pb(map_msg, map_str, strlen(map_str), map_encoding_t::compact);
             g_model_state.m = from_protobuf(map_msg);
             validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
         }
 
         {
             message::orders_of_battle_t oob_msg;
-            json2pb(oob_msg, oob_str, strlen(oob_str));
+            json2pb(oob_msg, oob_str, strlen(oob_str), map_encoding_t::compact);
             g_model_state.oob = from_protobuf(oob_msg);
             validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations, g_loaded_unit_defs.unit_defs);
         }

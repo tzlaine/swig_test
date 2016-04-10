@@ -20,6 +20,8 @@
 
 namespace {
 #include "bin2ascii.h"
+
+    map_encoding_t g_map_encoding = map_encoding_t::verbose;
 }
 
 using google::protobuf::Message;
@@ -131,7 +133,8 @@ static json_t * _pb2json(const Message& msg)
                     map_entry_key_field = field->message_type()->FindFieldByName("key");
                 }
 
-		if(map_entry_key_field &&
+		if(g_map_encoding == map_encoding_t::compact &&
+                   map_entry_key_field &&
                    map_entry_key_field->cpp_type() == FieldDescriptor::CPPTYPE_STRING) {
 			size_t count = ref->FieldSize(msg, field);
 			if (!count) continue;
@@ -270,7 +273,8 @@ static void _json2pb(Message& msg, json_t *root)
                     map_entry_key_field = field->message_type()->FindFieldByName("key");
                 }
 
-		if(map_entry_key_field &&
+		if(g_map_encoding == map_encoding_t::compact &&
+                   map_entry_key_field &&
                    map_entry_key_field->cpp_type() == FieldDescriptor::CPPTYPE_STRING) {
                     auto map_entry_value_field = field->message_type()->FindFieldByName("value");
 
@@ -295,7 +299,7 @@ static void _json2pb(Message& msg, json_t *root)
 	}
 }
 
-void json2pb(Message &msg, const char *buf, size_t size)
+void json2pb(Message &msg, const char *buf, size_t size, map_encoding_t map_encoding)
 {
 	json_t *root;
 	json_error_t error;
@@ -310,6 +314,8 @@ void json2pb(Message &msg, const char *buf, size_t size)
 	if (!json_is_object(root))
 		throw j2pb_error("Malformed JSON: not an object");
 
+        g_map_encoding = map_encoding;
+
 	_json2pb(msg, root);
 }
 
@@ -320,36 +326,26 @@ int json_dump_std_string(const char *buf, size_t size, void *data)
 	return 0;
 }
 
-std::string pb2json(const Message &msg)
+std::string pb2json(const Message &msg,
+                    map_encoding_t map_encoding,
+                    whitespace_t whitespace)
 {
 	std::string r;
-	json_t *root = _pb2json(msg);
-	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_INDENT(2) | JSON_PRESERVE_ORDER);
+        pb2json(msg, r, map_encoding, whitespace);
 	return r;
 }
 
-std::string pb2json_compact(const Message &msg)
-{
-	std::string r;
-	json_t *root = _pb2json(msg);
-	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT | JSON_PRESERVE_ORDER);
-	return r;
-}
-
-void pb2json(const Message &msg, std::string& r)
+void pb2json(const Message &msg,
+             std::string& r,
+             map_encoding_t map_encoding,
+             whitespace_t whitespace)
 {
 	r.clear();
 	json_t *root = _pb2json(msg);
 	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_INDENT(2) | JSON_PRESERVE_ORDER);
-}
-
-void pb2json_compact(const Message &msg, std::string& r)
-{
-	r.clear();
-	json_t *root = _pb2json(msg);
-	json_autoptr _auto(root);
-	json_dump_callback(root, json_dump_std_string, &r, JSON_COMPACT | JSON_PRESERVE_ORDER);
+        auto const flags = whitespace == whitespace_t::minified ?
+            JSON_COMPACT | JSON_PRESERVE_ORDER :
+            JSON_INDENT(2) | JSON_PRESERVE_ORDER;
+        g_map_encoding = map_encoding;
+	json_dump_callback(root, json_dump_std_string, &r, flags);
 }
