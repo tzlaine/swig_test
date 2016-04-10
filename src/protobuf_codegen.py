@@ -15,6 +15,8 @@ parser.add_argument('--cpp-file', required=True, type=argparse.FileType('w'),
                     help='Output .cpp file')
 parser.add_argument('--hpp-file', required=True, type=argparse.FileType('w'),
                     help='Output .hpp file')
+parser.add_argument('--cs-file', required=True, type=argparse.FileType('w'),
+                    help='Output .cs file')
 args = parser.parse_args()
 
 import site
@@ -176,18 +178,23 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     scope_ns = '::'.join(scope)
     proto_ns = '::'.join(protobuf_namespace)
     user_ns = '::'.join(user_namespace)
+    proto_ns_with_scope = proto_ns
+    user_ns_with_scope = user_ns
     if scope_ns != '':
-        proto_ns += '::' + scope_ns
-        user_ns += '::' + scope_ns
+        proto_ns_with_scope += '::' + scope_ns
+        user_ns_with_scope += '::' + scope_ns
     to_decl = (
-        '{0}::{1}'.format(proto_ns, descriptor_proto.name),
-        'to_protobuf (const {0}::{1}& value)'.format(user_ns, descriptor_proto.name),
+        '{0}::{1}'.format(proto_ns_with_scope, descriptor_proto.name),
+        'to_protobuf (const {0}::{1}& value)'.format(user_ns_with_scope, descriptor_proto.name),
         descriptor_proto
     )
     from_decl = (
-        '{0}::{1}'.format(user_ns, descriptor_proto.name),
-        'from_protobuf (const {0}::{1}& msg)'.format(proto_ns, descriptor_proto.name),
-        descriptor_proto
+        '{0}::{1}'.format(user_ns_with_scope, descriptor_proto.name),
+        'from_protobuf (const {0}::{1}& msg)'.format(proto_ns_with_scope, descriptor_proto.name),
+        descriptor_proto,
+        proto_ns,
+        scope,
+        descriptor_proto.name
     )
     to_decls.append(to_decl)
     from_decls.append(from_decl)
@@ -291,6 +298,43 @@ def define_from_impl(from_decl, depth, map_fields):
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
+def to_csharp_namespace(namespace):
+    if type(namespace) is list:
+        temp_list = namespace
+    else:
+        temp_list = namespace.split('::')
+    def pascal_case(s):
+        s_pieces = s.split('_')
+        return ''.join(map(lambda x: x.capitalize(), s_pieces))
+    return '.'.join(map(lambda x: pascal_case(x), temp_list))
+
+def define_csharp_from(from_decl, map_fields):
+    ns = to_csharp_namespace(from_decl[3])
+    typename = from_decl[5]
+    if len(from_decl[4]):
+        typename = '.Types.'.join(from_decl[4]) + '.Types.' + typename
+    if len(ns):
+        typename = ns + '.' + typename
+    args.cs_file.write('''public static SimpleJSON.JSONNode from_protobuf({} msg)
+{{
+'''.format(typename))
+    args.cs_file.write('    return null; // TODO\n')
+    args.cs_file.write('}\n\n')
+
+def define_csharp_to(from_decl, map_fields):
+    ns = to_csharp_namespace(from_decl[3])
+    typename = from_decl[5]
+    if len(from_decl[4]):
+        typename = '.Types.'.join(from_decl[4]) + '.Types.' + typename
+    fn_name = 'to_' + typename.replace('.', '_')
+    if len(ns):
+        typename = ns + '.' + typename
+    args.cs_file.write('''public static {} {}(SimpleJSON.JSONNode json)
+{{
+'''.format(typename, fn_name))
+    args.cs_file.write('    return null; // TODO\n')
+    args.cs_file.write('}\n\n')
+
 file_descriptor_set = descriptor_pb2.FileDescriptorSet()
 file_descriptor_set.ParseFromString(args.desc_file.read())
 for field_descriptor_proto in file_descriptor_set.file:
@@ -299,6 +343,20 @@ for field_descriptor_proto in file_descriptor_set.file:
     protobuf_namespace = str(field_descriptor_proto.package).split('.')
 
     add_header_comment_and_includes(proto_source, syntax)
+
+    if args.cs_file:
+        args.cs_file.write('''// WARNING: Generated code.
+// This file was generated from {} ({})
+
+using SimpleJSON;
+using {};
+
+namespace model_data_conversions {{
+
+public class convert
+{{
+
+'''.format(proto_source, syntax, to_csharp_namespace(protobuf_namespace)))
 
     user_namespace = args.namespace and args.namespace.split('::') or []
     depth = open_namespace(user_namespace)
@@ -320,4 +378,11 @@ for field_descriptor_proto in file_descriptor_set.file:
         define_to_impl(to_decls[i], depth, map_fields)
         define_from_impl(from_decls[i], depth, map_fields)
 
+        if args.cs_file:
+            define_csharp_from(from_decls[i], map_fields)
+            define_csharp_to(from_decls[i], map_fields)
+
     close_namespace(user_namespace)
+    
+    if args.cs_file:
+        args.cs_file.write('};\n}\n')

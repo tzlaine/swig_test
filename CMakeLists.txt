@@ -133,9 +133,10 @@ if (PYTHON_EXECUTABLE)
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 --site-packages ${protobuf_python_pth_dir}
                 --proto-file ${CMAKE_SOURCE_DIR}/proto/model.proto
-                --desc-file=${CMAKE_CURRENT_BINARY_DIR}/model.desc
+                --desc-file ${CMAKE_CURRENT_BINARY_DIR}/model.desc
                 --hpp-file ${CMAKE_SOURCE_DIR}/src/model_data.hpp
                 --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+                --cs-file ${CMAKE_SOURCE_DIR}/unity_project/Assets/plugins/model_data_conversions.cs
         DEPENDS
             ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
             ${CMAKE_SOURCE_DIR}/proto/model.proto
