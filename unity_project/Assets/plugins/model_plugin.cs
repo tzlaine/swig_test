@@ -74,16 +74,12 @@ public class model_plugin
         if (get_nations(bytes_array, size_array) == 0)
             return null;
 
-        byte[] copied_bytes = new byte[size_array[0]];
-        System.Runtime.InteropServices.Marshal.Copy(bytes_array[0], copied_bytes, 0, size_array[0]);
+        string copied_string = System.Runtime.InteropServices.Marshal.PtrToStringAnsi(
+            bytes_array[0],
+            size_array[0]
+        );
 
-/* TODO (for perf, maybe move this function into a DLL compiled with "unsafe" flag?
-        System.IO.UnmanagedMemoryStream ums;
-        unsafe {
-            ums = new System.IO.UnmanagedMemoryStream((Byte*)bytes_array[0], size_array[0]);
-        }
-*/
-        return nations_t.Parser.ParseFrom(copied_bytes);
+        return nations_t.Parser.ParseJson(copied_string);
     }
 
     [DllImport("model_plugin")]
