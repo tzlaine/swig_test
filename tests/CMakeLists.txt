@@ -52,4 +52,4 @@ if (MSVC)
 	${CMAKE_HOME_DIRECTORY}/scenarios/the_wind.json
     )
 endif ()
-add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests ${model_test_args})
+add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests ${model_test_args} --gtest_catch_exceptions=0)

@@ -17,6 +17,8 @@ parser.add_argument('--hpp-file', required=True, type=argparse.FileType('w'),
                     help='Output .hpp file')
 parser.add_argument('--cs-file', required=True, type=argparse.FileType('w'),
                     help='Output .cs file')
+parser.add_argument('--cs-namespace', type=str,
+                    help='C# namespace into which to place generated code (e.g. foo.bar).')
 args = parser.parse_args()
 
 import site
@@ -146,7 +148,7 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth):
 def repeated(field_descriptor_proto):
     return field_descriptor_proto.label is field_descriptor_proto.LABEL_REPEATED
 
-def field_type(field_descriptor_proto, lang):
+def field_element_type(field_descriptor_proto, lang):
     if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE or \
        field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
         typename = field_descriptor_proto.type_name.split('.')[-1]
@@ -155,12 +157,70 @@ def field_type(field_descriptor_proto, lang):
             typename = get_cpp_type(field_descriptor_proto.type)
         else:
             typename = get_csharp_type(field_descriptor_proto.type)
+    return typename
+
+def field_type(field_descriptor_proto, lang):
+    typename = field_element_type(field_descriptor_proto, lang)
     if repeated(field_descriptor_proto):
         if lang is 'cpp':
             typename = 'std::vector<{}>'.format(typename)
         else:
             typename = '{}[]'.format(typename)
     return typename
+
+def to_csharp_namespace(namespace):
+    def pascal_case(s):
+        s_pieces = s.split('_')
+        return ''.join(map(lambda x: x.capitalize(), s_pieces))
+    return '.'.join(map(lambda x: pascal_case(x), namespace))
+
+def make_decl_impl(decl_data, kind, return_type_only):
+    kind_args = kind.split('+')
+    if kind_args[2] == 'cpp':
+        scope_ns = '::'.join(decl_data['scope_ns'])
+        proto_ns = '::'.join(decl_data['proto_ns'])
+        user_ns = '::'.join(decl_data['user_ns'])
+        proto_ns_with_scope = proto_ns
+        user_ns_with_scope = user_ns
+        if scope_ns != '':
+            proto_ns_with_scope += '::' + scope_ns
+            user_ns_with_scope += '::' + scope_ns
+        if kind_args[1] == 'pb':
+            if kind_args[0] == 'to':
+                format_str = return_type_only and '{1}::{2}' or '{1}::{2} to_protobuf (const {0}::{2}& value)'
+                return format_str.format(user_ns_with_scope, proto_ns_with_scope, decl_data['name'])
+            else:
+                format_str = return_type_only and '{0}::{2}' or '{0}::{2} from_protobuf (const {1}::{2}& msg)'
+                return format_str.format(user_ns_with_scope, proto_ns_with_scope, decl_data['name'])
+        else:
+            raise Exception('{to,from}+<non-pb>+cpp not yet implemented')
+    elif kind_args[2] == 'cs':
+        typename = decl_data['name']
+        if len(decl_data['scope_ns']):
+            typename = '.'.join(decl_data['scope_ns']) + '.' + typename
+        fn_name = 'to_' + typename.replace('.', '_')
+
+        if kind_args[1] == 'pb':
+            raise Exception('{to,from}+pb+cs not defined')
+        elif kind_args[1] == 'bin':
+            if kind_args[0] == 'to':
+                format_str = return_type_only and 'void' or 'void to_bin({} value, byte[] bin, ref int offset)'
+                return format_str.format(typename)
+            else:
+                format_str = return_type_only and '{0}' or '{0} {1}_from_bin(byte[] bin, ref int offset)'
+                return format_str.format(typename, typename.replace('.', '_'))
+        elif kind_args[1] == 'size':
+            return 'int size({} value)'.format(typename)
+        else:
+            raise Exception('{to,from}+<non-bin>+cpp not yet implemented')
+    else:
+        raise Exception('Unknown language {} in {}'.format(kind_args[2], kind))
+
+def make_decl(decl_data, kind):
+    return make_decl_impl(decl_data, kind, False)
+
+def make_return_type(decl_data, kind):
+    return make_decl_impl(decl_data, kind, True)
 
 def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -180,7 +240,7 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
             typename = field_type(field_descriptor_proto, 'csharp')
             args.cs_file.write('{}public {} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
 
-def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, to_decls, from_decls, map_fields):
+def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, all_decl_data, map_fields):
     args.hpp_file.write('\n')
     args.hpp_file.write('{0}struct {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
     if args.cs_file:
@@ -201,7 +261,7 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
             name = type_without_namespace(field, protobuf_namespace)
             map_fields[name] = descriptor
         else:
-            declare_descriptor_proto(descriptor, protobuf_namespace, user_namespace, depth, scope + [descriptor_proto.name], to_decls, from_decls, map_fields)
+            declare_descriptor_proto(descriptor, protobuf_namespace, user_namespace, depth, scope + [descriptor_proto.name], all_decl_data, map_fields)
 
     for field_descriptor_proto in descriptor_proto.field:
         declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields)
@@ -210,29 +270,14 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     if args.cs_file:
         args.cs_file.write('{}}};\n'.format(indent_str(depth)))
 
-    scope_ns = '::'.join(scope)
-    proto_ns = '::'.join(protobuf_namespace)
-    user_ns = '::'.join(user_namespace)
-    proto_ns_with_scope = proto_ns
-    user_ns_with_scope = user_ns
-    if scope_ns != '':
-        proto_ns_with_scope += '::' + scope_ns
-        user_ns_with_scope += '::' + scope_ns
-    to_decl = (
-        '{0}::{1}'.format(proto_ns_with_scope, descriptor_proto.name),
-        'to_protobuf (const {0}::{1}& value)'.format(user_ns_with_scope, descriptor_proto.name),
-        descriptor_proto
-    )
-    from_decl = (
-        '{0}::{1}'.format(user_ns_with_scope, descriptor_proto.name),
-        'from_protobuf (const {0}::{1}& msg)'.format(proto_ns_with_scope, descriptor_proto.name),
-        descriptor_proto,
-        proto_ns,
-        scope,
-        descriptor_proto.name
-    )
-    to_decls.append(to_decl)
-    from_decls.append(from_decl)
+    decl_data = {
+        'scope_ns': scope,
+        'proto_ns': protobuf_namespace,
+        'user_ns': user_namespace,
+        'name': descriptor_proto.name,
+        'descriptor_proto': descriptor_proto
+    }
+    all_decl_data.append(decl_data)
 
 def define_to_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -265,14 +310,14 @@ def define_to_impl_field(field_descriptor_proto, depth, map_fields):
         else:
             args.cpp_file.write('{0}retval.set_{1}(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
 
-def define_to_impl(to_decl, depth, map_fields):
+def define_to_impl(decl_data, depth, map_fields):
     args.cpp_file.write('''
-{0}{1} {2}
+{0}{1}
 {0}{{
-'''.format(indent_str(depth), to_decl[0], to_decl[1]))
-    descriptor_proto = to_decl[2]
+'''.format(indent_str(depth), make_decl(decl_data, 'to+pb+cpp')))
+    descriptor_proto = decl_data['descriptor_proto']
     depth += 1
-    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), to_decl[0]))
+    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'to+pb+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
         define_to_impl_field(field_descriptor_proto, depth, map_fields)
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
@@ -319,56 +364,168 @@ def define_from_impl_field(field_descriptor_proto, depth, map_fields):
         else:
             args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
 
-def define_from_impl(from_decl, depth, map_fields):
+def define_from_impl(decl_data, depth, map_fields):
     args.cpp_file.write('''
-{0}{1} {2}
+{0}{1}
 {0}{{
-'''.format(indent_str(depth), from_decl[0], from_decl[1]))
-    descriptor_proto = from_decl[2]
+'''.format(indent_str(depth), make_decl(decl_data, 'from+pb+cpp')))
+    descriptor_proto = decl_data['descriptor_proto']
     depth += 1
-    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), from_decl[0]))
+    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+pb+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
         define_from_impl_field(field_descriptor_proto, depth, map_fields)
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
-def to_csharp_namespace(namespace):
-    if type(namespace) is list:
-        temp_list = namespace
+def define_csharp_size_field(field_descriptor_proto, depth, map_fields):
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
+    field_type = field_element_type(field_descriptor_proto, 'cs')
+    if repeated(field_descriptor_proto):
+        args.cs_file.write('{0}retval += sizeof(int); '.format(indent_str(depth)))
+        args.cs_file.write('foreach (var x in value.{1}) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
+        depth += 1
+        if leaf_type in map_fields:
+            key_field = map_fields[leaf_type].field[0]
+            key_field_type = field_element_type(key_field, 'cs')
+            if key_field.type is key_field.TYPE_STRING:
+                args.cs_file.write('{0}retval += sizeof(int) + x.Key.Length;\n'.format(indent_str(depth)))
+            else:
+                if key_field.type is key_field.TYPE_ENUM:
+                    key_field_type = 'int'
+                args.cs_file.write('{0}retval += sizeof({1});\n'.format(indent_str(depth), key_field_type))
+            value_field = map_fields[leaf_type].field[1]
+            value_field_type = field_element_type(value_field, 'cs')
+            if value_field.type is value_field.TYPE_MESSAGE:
+                args.cs_file.write('{0}retval += size(x.Value);\n'.format(indent_str(depth)))
+            elif value_field.type is value_field.TYPE_STRING:
+                args.cs_file.write('{0}retval += sizeof(int) + x.Value.Length;\n'.format(indent_str(depth)))
+            else:
+                if value_field.type is value_field.TYPE_ENUM:
+                    value_field_type = 'int'
+                args.cs_file.write('{0}retval += sizeof({1});\n'.format(indent_str(depth), value_field_type))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+            args.cs_file.write('{0}retval += size(x);\n'.format(indent_str(depth)))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cs_file.write('{0}retval += sizeof(int) + x.Length;\n'.format(indent_str(depth)))
+        else:
+            if field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+                field_type = 'int'
+            args.cs_file.write('{0}retval += sizeof({1});\n'.format(indent_str(depth), field_type))
+        depth -= 1
+        args.cs_file.write('{0}}}\n'.format(indent_str(depth)))
     else:
-        temp_list = namespace.split('::')
-    def pascal_case(s):
-        s_pieces = s.split('_')
-        return ''.join(map(lambda x: x.capitalize(), s_pieces))
-    return '.'.join(map(lambda x: pascal_case(x), temp_list))
+        if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+            args.cs_file.write('{0}retval += size(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cs_file.write('{0}retval += sizeof(int) + value.{1}.Length;\n'.format(indent_str(depth), field_descriptor_proto.name))
+        else:
+            if field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+                field_type = 'int'
+            args.cs_file.write('{0}retval += sizeof({1});\n'.format(indent_str(depth), field_type))
 
-def define_csharp_from(from_decl, map_fields):
-    ns = to_csharp_namespace(from_decl[3])
-    typename = from_decl[5]
-    if len(from_decl[4]):
-        typename = '.Types.'.join(from_decl[4]) + '.Types.' + typename
-    if len(ns):
-        typename = ns + '.' + typename
-    args.cs_file.write('''public static SimpleJSON.JSONNode from_protobuf({} msg)
-{{
-'''.format(typename))
-    args.cs_file.write('    return null; // TODO\n')
-    args.cs_file.write('}\n\n')
+def define_csharp_size(decl_data, depth, map_fields):
+    args.cs_file.write('''{0}public static {1}
+{0}{{
+'''.format(indent_str(depth), make_decl(decl_data, 'to+size+cs')))
+    depth += 1
+    args.cs_file.write('{0}int retval = 0;\n'.format(indent_str(depth)))
+    for field_descriptor_proto in decl_data['descriptor_proto'].field:
+        define_csharp_size_field(field_descriptor_proto, depth, map_fields)
+    args.cs_file.write('{0}return retval;\n'.format(indent_str(depth)))
+    depth -= 1
+    args.cs_file.write('{0}}}\n\n'.format(indent_str(depth)))
 
-def define_csharp_to(from_decl, map_fields):
-    ns = to_csharp_namespace(from_decl[3])
-    typename = from_decl[5]
-    if len(from_decl[4]):
-        typename = '.Types.'.join(from_decl[4]) + '.Types.' + typename
-    fn_name = 'to_' + typename.replace('.', '_')
-    if len(ns):
-        typename = ns + '.' + typename
-    args.cs_file.write('''public static {} {}(SimpleJSON.JSONNode json)
-{{
-'''.format(typename, fn_name))
-    args.cs_file.write('    return null; // TODO\n')
-    args.cs_file.write('}\n\n')
+def define_csharp_from_field(field_descriptor_proto, depth, map_fields):
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
+    field_type = field_element_type(field_descriptor_proto, 'cs')
+    if repeated(field_descriptor_proto):
+        args.cs_file.write('{0}{{\n'.format(indent_str(depth)))
+        depth += 1
+        args.cs_file.write('{0}int size = int_from_bin(bin, ref offset);\n'.format(indent_str(depth)))
+        if leaf_type in map_fields:
+            key_field = map_fields[leaf_type].field[0]
+            key_field_type = field_element_type(key_field, 'cs')
+            value_field = map_fields[leaf_type].field[1]
+            value_field_type = field_element_type(value_field, 'cs')
+            args.cs_file.write('{0}retval.{1} = new Dictionary<{2}, {3}>();\n'.format(indent_str(depth), field_descriptor_proto.name, key_field_type, value_field_type))
+        else:
+            args.cs_file.write('{0}retval.{1} = new {2}[size];\n'.format(indent_str(depth), field_descriptor_proto.name, field_type))
+
+        args.cs_file.write('{0}foreach (var i in Enumerable.Range(0, size)) {{\n'.format(indent_str(depth)))
+        depth += 1
+        if leaf_type in map_fields:
+            key_field = map_fields[leaf_type].field[0]
+            key_field_type = field_element_type(key_field, 'cs')
+            if key_field.type is key_field.TYPE_STRING:
+                args.cs_file.write('{0}string key = string_from_bin(bin, ref offset);\n'.format(indent_str(depth)))
+            elif key_field.type is key_field.TYPE_ENUM:
+                args.cs_file.write('{0}{1} key = enum_from_bin<{1}>(bin, ref offset);\n'.format(indent_str(depth), key_field_type))
+            else:
+                args.cs_file.write('{0}{1} key = {1}_from_bin(bin, ref offset);\n'.format(indent_str(depth), key_field_type))
+            value_field = map_fields[leaf_type].field[1]
+            value_field_type = field_element_type(value_field, 'cs')
+            if value_field.type is value_field.TYPE_MESSAGE:
+                args.cs_file.write('{0}{1} value = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), value_field_type, value_field_type.replace('.', '_')))
+            elif value_field.type is value_field.TYPE_STRING:
+                args.cs_file.write('{0}string value = string_from_bin(bin, ref offset);\n'.format(indent_str(depth)))
+            elif value_field.type is value_field.TYPE_ENUM:
+                args.cs_file.write('{0}{1} value = enum_from_bin<{1}>(bin, ref offset);\n'.format(indent_str(depth), value_field_type))
+            else:
+                args.cs_file.write('{0}{1} value = {1}_from_bin(bin, ref offset);\n'.format(indent_str(depth), value_field_type))
+            args.cs_file.write('{0}retval.{1}[key] = value;\n'.format(indent_str(depth), field_descriptor_proto.name))
+        else:
+            if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+                args.cs_file.write('{0}{1} x = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_type, field_type.replace('.', '_')))
+            elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+                args.cs_file.write('{0}string x = string_from_bin(bin, ref offset);\n'.format(indent_str(depth)))
+            elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+                args.cs_file.write('{0}{1} value = enum_from_bin<{1}>(bin, ref offset);\n'.format(indent_str(depth), field_type))
+            else:
+                args.cs_file.write('{0}{1} value = {1}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_type))
+            args.cs_file.write('{0}retval.{1}[i] = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
+        depth -= 1
+        args.cs_file.write('{0}}}\n'.format(indent_str(depth)))
+        depth -= 1
+        args.cs_file.write('{0}}}\n'.format(indent_str(depth)))
+    else:
+        if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+            args.cs_file.write('{0}retval.{1} = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_descriptor_proto.name, field_type.replace('.', '_')))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cs_file.write('{0}retval.{1} = string_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_descriptor_proto.name))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+            args.cs_file.write('{0}retval.{1} = enum_from_bin<{2}>(bin, ref offset);\n'.format(indent_str(depth), field_descriptor_proto.name, field_type))
+        else:
+            args.cs_file.write('{0}retval.{1} = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_descriptor_proto.name, field_type))
+
+def define_csharp_from(decl_data, depth, map_fields):
+    args.cs_file.write('''{0}public static {1}
+{0}{{
+'''.format(indent_str(depth), make_decl(decl_data, 'from+bin+cs')))
+    depth += 1
+    args.cs_file.write('{0}{1} retval = new {1}();\n'.format(indent_str(depth), make_return_type(decl_data, 'from+bin+cs')))
+    for field_descriptor_proto in decl_data['descriptor_proto'].field:
+        define_csharp_from_field(field_descriptor_proto, depth, map_fields)
+    args.cs_file.write('{0}return retval;\n'.format(indent_str(depth)))
+    depth -= 1
+    args.cs_file.write('{0}}}\n\n'.format(indent_str(depth)))
+
+def define_csharp_to(decl_data, depth, map_fields):
+    args.cs_file.write('''{0}public static {1}
+{0}{{
+'''.format(indent_str(depth), make_decl(decl_data, 'to+bin+cs')))
+    depth += 1
+    args.cs_file.write('{0}// TODO\n'.format(indent_str(depth)))
+    depth -= 1
+    args.cs_file.write('{0}}}\n\n'.format(indent_str(depth)))
+
+user_namespace = args.namespace and args.namespace.split('::') or []
+cs_namespace = user_namespace
+if args.cs_namespace:
+    cs_namespace = args.cs_namespace.split('.')
+
+if args.cs_file and len(cs_namespace) == 0:
+    raise Exception('When --cs-file is defined, a nonempty --cs-namespace must also be provided.')
 
 file_descriptor_set = descriptor_pb2.FileDescriptorSet()
 file_descriptor_set.ParseFromString(args.desc_file.read())
@@ -383,41 +540,128 @@ for field_descriptor_proto in file_descriptor_set.file:
         args.cs_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
 
+using System;
+using System.Text;
 using System.Collections.Generic;
 
-namespace model_data {{
-'''.format(proto_source, syntax))
+namespace {} {{
+'''.format(proto_source, syntax, '.'.join(cs_namespace)))
 
-    user_namespace = args.namespace and args.namespace.split('::') or []
     depth = open_namespace(user_namespace)
 
     for enum_descriptor_proto in field_descriptor_proto.enum_type:
         handle_enum_descriptor_proto(enum_descriptor_proto, depth)
 
-    to_decls = []
-    from_decls = []
+    all_decl_data = []
     map_fields = {}
     for descriptor_proto in field_descriptor_proto.message_type:
-        declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, [], to_decls, from_decls, map_fields)
+        declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, [], all_decl_data, map_fields)
 
     if args.cs_file:
         args.cs_file.write('''
 public class convert
-{{
+{
 
-'''.format(proto_source, syntax, to_csharp_namespace(protobuf_namespace)))
+    private static Encoding ascii_encoding = Encoding.ASCII;
 
-    for i in range(len(to_decls)):
+    private static bool bool_from_bin(byte[] bin, ref int offset)
+    {
+        bool retval = bin[offset] == 0 ? false : true;
+        offset += 1;
+        return retval;
+    }
+
+    private static int int_from_bin(byte[] bin, ref int offset)
+    {
+        int retval =
+            bin[offset + 0] << 24 +
+            bin[offset + 1] << 16 +
+            bin[offset + 2] <<  8 +
+            bin[offset + 3] <<  0;
+        offset += 4;
+        return retval;
+    }
+
+    private static float float_from_bin(byte[] bin, ref int offset)
+    {
+        float retval = BitConverter.ToSingle(bin, offset);
+        offset += sizeof(float);
+        return retval;
+    }
+
+    private static double double_from_bin(byte[] bin, ref int offset)
+    {
+        double retval = BitConverter.ToDouble(bin, offset);
+        offset += sizeof(double);
+        return retval;
+    }
+
+    private static T enum_from_bin<T>(byte[] bin, ref int offset)
+    {
+        int i = int_from_bin(bin, ref offset);
+        return (T)Enum.ToObject(typeof(T), i);
+    }
+
+    private static string string_from_bin(byte[] bin, ref int offset)
+    {
+        int length = int_from_bin(bin, ref offset);
+        string retval = ascii_encoding.GetString(bin, offset, length);
+        offset += length;
+        return retval;
+    }
+
+    private static void to_bin(bool b, byte[] bin, ref int offset)
+    {
+        bin[offset] = (byte)(b == true ? 1 : 0);
+        offset += 1;
+    }
+
+    private static void to_bin(int i, byte[] bin, ref int offset)
+    {
+        bin[offset + 0] = (byte)((i >> 24) & 0xff);
+        bin[offset + 1] = (byte)((i >> 16) & 0xff);
+        bin[offset + 2] = (byte)((i >>  8) & 0xff);
+        bin[offset + 3] = (byte)((i >>  0) & 0xff);
+        offset += 4;
+    }
+
+    private static void to_bin(float f, byte[] bin, ref int offset)
+    {
+        foreach (byte b in BitConverter.GetBytes(f)) {
+            bin[offset++] = b;
+        }
+    }
+
+    private static void to_bin(double d, byte[] bin, ref int offset)
+    {
+        foreach (byte b in BitConverter.GetBytes(d)) {
+            bin[offset++] = b;
+        }
+    }
+
+    private static void to_bin(string s, byte[] bin, ref int offset)
+    {
+        int length = ascii_encoding.GetByteCount(s);
+        to_bin(length, bin, ref offset);
+        foreach (byte b in ascii_encoding.GetBytes(s)) {
+            bin[offset++] = b;
+        }
+    }
+
+''')
+
+    for i in range(len(all_decl_data)):
         args.hpp_file.write('''
-{0}{1} {2};
-{0}{3} {4};
-'''.format(indent_str(depth), to_decls[i][0], to_decls[i][1], from_decls[i][0], from_decls[i][1]))
-        define_to_impl(to_decls[i], depth, map_fields)
-        define_from_impl(from_decls[i], depth, map_fields)
+{0}{1};
+{0}{2};
+'''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+pb+cpp'), make_decl(all_decl_data[i], 'from+pb+cpp')))
+        define_to_impl(all_decl_data[i], depth, map_fields)
+        define_from_impl(all_decl_data[i], depth, map_fields)
 
-        if False and args.cs_file:
-            define_csharp_from(from_decls[i], map_fields)
-            define_csharp_to(from_decls[i], map_fields)
+        if args.cs_file:
+            define_csharp_size(all_decl_data[i], 1, map_fields)
+            define_csharp_from(all_decl_data[i], 1, map_fields)
+            define_csharp_to(all_decl_data[i], 1, map_fields)
 
     close_namespace(user_namespace)
     

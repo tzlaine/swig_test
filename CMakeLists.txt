@@ -136,6 +136,7 @@ if (PYTHON_EXECUTABLE)
                 --hpp-file ${CMAKE_SOURCE_DIR}/src/model_data.hpp
                 --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
                 --cs-file ${CMAKE_SOURCE_DIR}/unity_project/Assets/plugins/model_data.cs
+                --cs-namespace model_data
         DEPENDS
             ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
             ${CMAKE_SOURCE_DIR}/proto/model.proto
