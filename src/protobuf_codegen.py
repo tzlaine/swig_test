@@ -279,7 +279,7 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     }
     all_decl_data.append(decl_data)
 
-def define_to_impl_field(field_descriptor_proto, depth, map_fields):
+def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     proto_ns = '::'.join(protobuf_namespace)
     if repeated(field_descriptor_proto):
@@ -310,7 +310,7 @@ def define_to_impl_field(field_descriptor_proto, depth, map_fields):
         else:
             args.cpp_file.write('{0}retval.set_{1}(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
 
-def define_to_impl(decl_data, depth, map_fields):
+def define_cpp_to_pb_impl(decl_data, depth, map_fields):
     args.cpp_file.write('''
 {0}{1}
 {0}{{
@@ -319,12 +319,12 @@ def define_to_impl(decl_data, depth, map_fields):
     depth += 1
     args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'to+pb+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
-        define_to_impl_field(field_descriptor_proto, depth, map_fields)
+        define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields)
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
-def define_from_impl_field(field_descriptor_proto, depth, map_fields):
+def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     proto_ns = '::'.join(protobuf_namespace)
     if repeated(field_descriptor_proto):
@@ -364,7 +364,7 @@ def define_from_impl_field(field_descriptor_proto, depth, map_fields):
         else:
             args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
 
-def define_from_impl(decl_data, depth, map_fields):
+def define_cpp_from_pb_impl(decl_data, depth, map_fields):
     args.cpp_file.write('''
 {0}{1}
 {0}{{
@@ -373,12 +373,12 @@ def define_from_impl(decl_data, depth, map_fields):
     depth += 1
     args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+pb+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
-        define_from_impl_field(field_descriptor_proto, depth, map_fields)
+        define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields)
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
-def define_csharp_size_field(field_descriptor_proto, depth, map_fields):
+def define_csharp_bin_size_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     field_type = field_element_type(field_descriptor_proto, 'cs')
     if repeated(field_descriptor_proto):
@@ -424,14 +424,14 @@ def define_csharp_size_field(field_descriptor_proto, depth, map_fields):
                 field_type = 'int'
             args.cs_file.write('{0}retval += sizeof({1});\n'.format(indent_str(depth), field_type))
 
-def define_csharp_size(decl_data, depth, map_fields):
+def define_csharp_bin_size(decl_data, depth, map_fields):
     args.cs_file.write('''{0}public static {1}
 {0}{{
 '''.format(indent_str(depth), make_decl(decl_data, 'to+size+cs')))
     depth += 1
     args.cs_file.write('{0}int retval = 0;\n'.format(indent_str(depth)))
     for field_descriptor_proto in decl_data['descriptor_proto'].field:
-        define_csharp_size_field(field_descriptor_proto, depth, map_fields)
+        define_csharp_bin_size_field(field_descriptor_proto, depth, map_fields)
     args.cs_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cs_file.write('{0}}}\n\n'.format(indent_str(depth)))
@@ -655,11 +655,11 @@ public class convert
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+pb+cpp'), make_decl(all_decl_data[i], 'from+pb+cpp')))
-        define_to_impl(all_decl_data[i], depth, map_fields)
-        define_from_impl(all_decl_data[i], depth, map_fields)
+        define_cpp_to_pb_impl(all_decl_data[i], depth, map_fields)
+        define_cpp_from_pb_impl(all_decl_data[i], depth, map_fields)
 
         if args.cs_file:
-            define_csharp_size(all_decl_data[i], 1, map_fields)
+            define_csharp_bin_size(all_decl_data[i], 1, map_fields)
             define_csharp_from(all_decl_data[i], 1, map_fields)
             define_csharp_to(all_decl_data[i], 1, map_fields)
 
