@@ -122,6 +122,14 @@ void to_bin (const ::turn_t& value, std::vector<unsigned char>& bin)
     to_bin(value.season, bin);
 }
 
+::turn_t turn_t_from_bin (unsigned char*& bin)
+{
+    ::turn_t retval;
+    retval.year = int_from_bin(bin);
+    retval.season = enum_from_bin< season_t >(bin);
+    return retval;
+}
+
 message::hex_coord_t to_protobuf (const ::hex_coord_t& value)
 {
     message::hex_coord_t retval;
@@ -144,6 +152,14 @@ void to_bin (const ::hex_coord_t& value, std::vector<unsigned char>& bin)
     to_bin(value.y, bin);
 }
 
+::hex_coord_t hex_coord_t_from_bin (unsigned char*& bin)
+{
+    ::hex_coord_t retval;
+    retval.x = int_from_bin(bin);
+    retval.y = int_from_bin(bin);
+    return retval;
+}
+
 message::capital_hex_zone_t to_protobuf (const ::capital_hex_zone_t& value)
 {
     message::capital_hex_zone_t retval;
@@ -162,7 +178,7 @@ message::capital_hex_zone_t to_protobuf (const ::capital_hex_zone_t& value)
         retval.features.resize(msg.features_size());
         auto it = retval.features.begin();
         for (const auto& x : msg.features()) {
-            *it++ = static_cast<feature_t>(x);
+            *it++ = static_cast< feature_t >(x);
         }
     }
     return retval;
@@ -178,6 +194,21 @@ void to_bin (const ::capital_hex_zone_t& value, std::vector<unsigned char>& bin)
             to_bin(x, bin);
         }
     }
+}
+
+::capital_hex_zone_t capital_hex_zone_t_from_bin (unsigned char*& bin)
+{
+    ::capital_hex_zone_t retval;
+    retval.name = string_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.features.resize(length);
+        for (int i = 0; i < length; ++i) {
+            feature_t x = enum_from_bin< feature_t >(bin);
+            retval.features[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::capital_hex_t to_protobuf (const ::capital_hex_t& value)
@@ -216,6 +247,21 @@ void to_bin (const ::capital_hex_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::capital_hex_t capital_hex_t_from_bin (unsigned char*& bin)
+{
+    ::capital_hex_t retval;
+    retval.coord = int_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.zones.resize(length);
+        for (int i = 0; i < length; ++i) {
+            capital_hex_zone_t x = capital_hex_zone_t_from_bin(bin);
+            retval.zones[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::capital_t to_protobuf (const ::capital_t& value)
 {
     message::capital_t retval;
@@ -247,6 +293,20 @@ void to_bin (const ::capital_t& value, std::vector<unsigned char>& bin)
             to_bin(x, bin);
         }
     }
+}
+
+::capital_t capital_t_from_bin (unsigned char*& bin)
+{
+    ::capital_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            capital_hex_t x = capital_hex_t_from_bin(bin);
+            retval.hexes[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::offmap_possesions_t to_protobuf (const ::offmap_possesions_t& value)
@@ -281,6 +341,18 @@ void to_bin (const ::offmap_possesions_t& value, std::vector<unsigned char>& bin
     to_bin(value.survey_ships, bin);
     to_bin(value.cannot_build_offmap_capital, bin);
     to_bin(value.old_shipyard, bin);
+}
+
+::offmap_possesions_t offmap_possesions_t_from_bin (unsigned char*& bin)
+{
+    ::offmap_possesions_t retval;
+    retval.provinces = int_from_bin(bin);
+    retval.mins = int_from_bin(bin);
+    retval.majs = int_from_bin(bin);
+    retval.survey_ships = int_from_bin(bin);
+    retval.cannot_build_offmap_capital = bool_from_bin(bin);
+    retval.old_shipyard = bool_from_bin(bin);
+    return retval;
 }
 
 message::nation_t to_protobuf (const ::nation_t& value)
@@ -320,6 +392,19 @@ void to_bin (const ::nation_t& value, std::vector<unsigned char>& bin)
     to_bin(value.nation_id, bin);
 }
 
+::nation_t nation_t_from_bin (unsigned char*& bin)
+{
+    ::nation_t retval;
+    retval.name = string_from_bin(bin);
+    retval.short_name = string_from_bin(bin);
+    retval.capital = capital_t_from_bin(bin);
+    retval.free_strategic_moves = int_from_bin(bin);
+    retval.capital_star_points = int_from_bin(bin);
+    retval.offmap_possesions = offmap_possesions_t_from_bin(bin);
+    retval.nation_id = int_from_bin(bin);
+    return retval;
+}
+
 message::nations_t to_protobuf (const ::nations_t& value)
 {
     message::nations_t retval;
@@ -350,6 +435,20 @@ void to_bin (const ::nations_t& value, std::vector<unsigned char>& bin)
             to_bin(x.second, bin);
         }
     }
+}
+
+::nations_t nations_t_from_bin (unsigned char*& bin)
+{
+    ::nations_t retval;
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            nation_t value = nation_t_from_bin(bin);
+            retval.nations[key] = value;
+        }
+    }
+    return retval;
 }
 
 message::hex_t to_protobuf (const ::hex_t& value)
@@ -394,6 +493,23 @@ void to_bin (const ::hex_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::hex_t hex_t_from_bin (unsigned char*& bin)
+{
+    ::hex_t retval;
+    retval.coord = hex_coord_t_from_bin(bin);
+    retval.owner = int_from_bin(bin);
+    retval.feature = enum_from_bin< feature_t >(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.neutral_zone_bordering.resize(length);
+        for (int i = 0; i < length; ++i) {
+            int x = int_from_bin(bin);
+            retval.neutral_zone_bordering[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::province_hex_t to_protobuf (const ::province_hex_t& value)
 {
     message::province_hex_t retval;
@@ -414,6 +530,14 @@ void to_bin (const ::province_hex_t& value, std::vector<unsigned char>& bin)
 {
     to_bin(value.hex, bin);
     to_bin(value.feature, bin);
+}
+
+::province_hex_t province_hex_t_from_bin (unsigned char*& bin)
+{
+    ::province_hex_t retval;
+    retval.hex = int_from_bin(bin);
+    retval.feature = enum_from_bin< feature_t >(bin);
+    return retval;
 }
 
 message::province_t to_protobuf (const ::province_t& value)
@@ -449,6 +573,20 @@ void to_bin (const ::province_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::province_t province_t_from_bin (unsigned char*& bin)
+{
+    ::province_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            province_hex_t x = province_hex_t_from_bin(bin);
+            retval.hexes[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::offmap_area_t to_protobuf (const ::offmap_area_t& value)
 {
     message::offmap_area_t retval;
@@ -471,7 +609,7 @@ message::offmap_area_t to_protobuf (const ::offmap_area_t& value)
         retval.features.resize(msg.features_size());
         auto it = retval.features.begin();
         for (const auto& x : msg.features()) {
-            *it++ = static_cast<feature_t>(x);
+            *it++ = static_cast< feature_t >(x);
         }
     }
     retval.counter_hex = msg.counter_hex();
@@ -503,6 +641,30 @@ void to_bin (const ::offmap_area_t& value, std::vector<unsigned char>& bin)
             to_bin(x, bin);
         }
     }
+}
+
+::offmap_area_t offmap_area_t_from_bin (unsigned char*& bin)
+{
+    ::offmap_area_t retval;
+    retval.name = string_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.features.resize(length);
+        for (int i = 0; i < length; ++i) {
+            feature_t x = enum_from_bin< feature_t >(bin);
+            retval.features[i] = x;
+        }
+    }
+    retval.counter_hex = int_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.adjacent_hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            int x = int_from_bin(bin);
+            retval.adjacent_hexes[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::starting_national_holdings_t to_protobuf (const ::starting_national_holdings_t& value)
@@ -539,6 +701,21 @@ void to_bin (const ::starting_national_holdings_t& value, std::vector<unsigned c
         }
     }
     to_bin(value.offmap_area, bin);
+}
+
+::starting_national_holdings_t starting_national_holdings_t_from_bin (unsigned char*& bin)
+{
+    ::starting_national_holdings_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.provinces.resize(length);
+        for (int i = 0; i < length; ++i) {
+            province_t x = province_t_from_bin(bin);
+            retval.provinces[i] = x;
+        }
+    }
+    retval.offmap_area = offmap_area_t_from_bin(bin);
+    return retval;
 }
 
 message::map_t to_protobuf (const ::map_t& value)
@@ -630,6 +807,46 @@ void to_bin (const ::map_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::map_t map_t_from_bin (unsigned char*& bin)
+{
+    ::map_t retval;
+    retval.width = int_from_bin(bin);
+    retval.height = int_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.nz_planets.resize(length);
+        for (int i = 0; i < length; ++i) {
+            int x = int_from_bin(bin);
+            retval.nz_planets[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.nz_hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            int x = int_from_bin(bin);
+            retval.nz_hexes[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            starting_national_holdings_t value = starting_national_holdings_t_from_bin(bin);
+            retval.starting_national_holdings[key] = value;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            hex_t x = hex_t_from_bin(bin);
+            retval.hexes[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::model_t to_protobuf (const ::model_t& value)
 {
     message::model_t retval;
@@ -652,6 +869,14 @@ void to_bin (const ::model_t& value, std::vector<unsigned char>& bin)
     to_bin(value.map, bin);
 }
 
+::model_t model_t_from_bin (unsigned char*& bin)
+{
+    ::model_t retval;
+    retval.nations = nations_t_from_bin(bin);
+    retval.map = map_t_from_bin(bin);
+    return retval;
+}
+
 message::oob_unit_t to_protobuf (const ::oob_unit_t& value)
 {
     message::oob_unit_t retval;
@@ -672,6 +897,14 @@ void to_bin (const ::oob_unit_t& value, std::vector<unsigned char>& bin)
 {
     to_bin(value.unit, bin);
     to_bin(value.times, bin);
+}
+
+::oob_unit_t oob_unit_t_from_bin (unsigned char*& bin)
+{
+    ::oob_unit_t retval;
+    retval.unit = string_from_bin(bin);
+    retval.times = int_from_bin(bin);
+    return retval;
 }
 
 message::production_element_t to_protobuf (const ::production_element_t& value)
@@ -711,6 +944,22 @@ void to_bin (const ::production_element_t& value, std::vector<unsigned char>& bi
             to_bin(x, bin);
         }
     }
+}
+
+::production_element_t production_element_t_from_bin (unsigned char*& bin)
+{
+    ::production_element_t retval;
+    retval.year = int_from_bin(bin);
+    retval.season = enum_from_bin< season_t >(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.units.resize(length);
+        for (int i = 0; i < length; ++i) {
+            oob_unit_t x = oob_unit_t_from_bin(bin);
+            retval.units[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::starting_fleet_t to_protobuf (const ::starting_fleet_t& value)
@@ -805,6 +1054,47 @@ void to_bin (const ::starting_fleet_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::starting_fleet_t starting_fleet_t_from_bin (unsigned char*& bin)
+{
+    ::starting_fleet_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            int x = int_from_bin(bin);
+            retval.hexes[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.units.resize(length);
+        for (int i = 0; i < length; ++i) {
+            oob_unit_t x = oob_unit_t_from_bin(bin);
+            retval.units[i] = x;
+        }
+    }
+    retval.reserve = bool_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.prewar_construction.resize(length);
+        for (int i = 0; i < length; ++i) {
+            production_element_t x = production_element_t_from_bin(bin);
+            retval.prewar_construction[i] = x;
+        }
+    }
+    retval.strategic_move_arrival_year = int_from_bin(bin);
+    retval.strategic_move_arrival_season = enum_from_bin< season_t >(bin);
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            int key = int_from_bin(bin);
+            int value = int_from_bin(bin);
+            retval.hex_placement_limits[key] = value;
+        }
+    }
+    return retval;
+}
+
 message::mothball_reserve_t to_protobuf (const ::mothball_reserve_t& value)
 {
     message::mothball_reserve_t retval;
@@ -872,6 +1162,36 @@ void to_bin (const ::mothball_reserve_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::mothball_reserve_t mothball_reserve_t_from_bin (unsigned char*& bin)
+{
+    ::mothball_reserve_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.units.resize(length);
+        for (int i = 0; i < length; ++i) {
+            oob_unit_t x = oob_unit_t_from_bin(bin);
+            retval.units[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.war_release.resize(length);
+        for (int i = 0; i < length; ++i) {
+            oob_unit_t x = oob_unit_t_from_bin(bin);
+            retval.war_release[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.limited_war_release.resize(length);
+        for (int i = 0; i < length; ++i) {
+            oob_unit_t x = oob_unit_t_from_bin(bin);
+            retval.limited_war_release[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::order_of_battle_t to_protobuf (const ::order_of_battle_t& value)
 {
     message::order_of_battle_t retval;
@@ -924,6 +1244,29 @@ void to_bin (const ::order_of_battle_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::order_of_battle_t order_of_battle_t_from_bin (unsigned char*& bin)
+{
+    ::order_of_battle_t retval;
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            starting_fleet_t value = starting_fleet_t_from_bin(bin);
+            retval.starting_fleets[key] = value;
+        }
+    }
+    retval.mothball_reserve = mothball_reserve_t_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.production.resize(length);
+        for (int i = 0; i < length; ++i) {
+            production_element_t x = production_element_t_from_bin(bin);
+            retval.production[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value)
 {
     message::orders_of_battle_t retval;
@@ -954,6 +1297,20 @@ void to_bin (const ::orders_of_battle_t& value, std::vector<unsigned char>& bin)
             to_bin(x.second, bin);
         }
     }
+}
+
+::orders_of_battle_t orders_of_battle_t_from_bin (unsigned char*& bin)
+{
+    ::orders_of_battle_t retval;
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            order_of_battle_t value = order_of_battle_t_from_bin(bin);
+            retval.oobs[key] = value;
+        }
+    }
+    return retval;
 }
 
 message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
@@ -988,7 +1345,7 @@ message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
         retval.tug_missions.resize(msg.tug_missions_size());
         auto it = retval.tug_missions.begin();
         for (const auto& x : msg.tug_missions()) {
-            *it++ = static_cast<tug_mission_t>(x);
+            *it++ = static_cast< tug_mission_t >(x);
         }
     }
     return retval;
@@ -1013,6 +1370,28 @@ void to_bin (const ::unit_def_side_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::unit_def_side_t unit_def_side_t_from_bin (unsigned char*& bin)
+{
+    ::unit_def_side_t retval;
+    retval.att = float_from_bin(bin);
+    retval.def = float_from_bin(bin);
+    retval.scout = bool_from_bin(bin);
+    retval.fighters = float_from_bin(bin);
+    retval.heavy_fighter_bonus = float_from_bin(bin);
+    retval.pfs = int_from_bin(bin);
+    retval.drones = int_from_bin(bin);
+    retval.mauler = bool_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.tug_missions.resize(length);
+        for (int i = 0; i < length; ++i) {
+            tug_mission_t x = enum_from_bin< tug_mission_t >(bin);
+            retval.tug_missions[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::towable_t to_protobuf (const ::towable_t& value)
 {
     message::towable_t retval;
@@ -1035,6 +1414,14 @@ void to_bin (const ::towable_t& value, std::vector<unsigned char>& bin)
     to_bin(value.strat_move_limit, bin);
 }
 
+::towable_t towable_t_from_bin (unsigned char*& bin)
+{
+    ::towable_t retval;
+    retval.move_cost = int_from_bin(bin);
+    retval.strat_move_limit = int_from_bin(bin);
+    return retval;
+}
+
 message::production_cost_t to_protobuf (const ::production_cost_t& value)
 {
     message::production_cost_t retval;
@@ -1055,6 +1442,14 @@ void to_bin (const ::production_cost_t& value, std::vector<unsigned char>& bin)
 {
     to_bin(value.cost, bin);
     to_bin(value.fighter_cost, bin);
+}
+
+::production_cost_t production_cost_t_from_bin (unsigned char*& bin)
+{
+    ::production_cost_t retval;
+    retval.cost = int_from_bin(bin);
+    retval.fighter_cost = int_from_bin(bin);
+    return retval;
 }
 
 message::unit_def_t to_protobuf (const ::unit_def_t& value)
@@ -1150,6 +1545,43 @@ void to_bin (const ::unit_def_t& value, std::vector<unsigned char>& bin)
     to_bin(value.notes, bin);
 }
 
+::unit_def_t unit_def_t_from_bin (unsigned char*& bin)
+{
+    ::unit_def_t retval;
+    retval.name = string_from_bin(bin);
+    retval.cmd = int_from_bin(bin);
+    retval.uncrippled = unit_def_side_t_from_bin(bin);
+    retval.crippled = unit_def_side_t_from_bin(bin);
+    retval.escort_type = enum_from_bin< escort_type_t >(bin);
+    retval.available = turn_t_from_bin(bin);
+    retval.pod = bool_from_bin(bin);
+    retval.max_in_service = int_from_bin(bin);
+    retval.construction = production_cost_t_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            production_cost_t value = production_cost_t_from_bin(bin);
+            retval.substitutions[key] = value;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            production_cost_t value = production_cost_t_from_bin(bin);
+            retval.conversions[key] = value;
+        }
+    }
+    retval.move = int_from_bin(bin);
+    retval.carrier_type = enum_from_bin< carrier_type_t >(bin);
+    retval.not_spaceworthy = bool_from_bin(bin);
+    retval.towable = towable_t_from_bin(bin);
+    retval.salvage = int_from_bin(bin);
+    retval.notes = string_from_bin(bin);
+    return retval;
+}
+
 message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value)
 {
     message::nation_unit_defs_t retval;
@@ -1183,6 +1615,20 @@ void to_bin (const ::nation_unit_defs_t& value, std::vector<unsigned char>& bin)
     }
 }
 
+::nation_unit_defs_t nation_unit_defs_t_from_bin (unsigned char*& bin)
+{
+    ::nation_unit_defs_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.units.resize(length);
+        for (int i = 0; i < length; ++i) {
+            unit_def_t x = unit_def_t_from_bin(bin);
+            retval.units[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::unit_defs_t to_protobuf (const ::unit_defs_t& value)
 {
     message::unit_defs_t retval;
@@ -1213,6 +1659,20 @@ void to_bin (const ::unit_defs_t& value, std::vector<unsigned char>& bin)
             to_bin(x.second, bin);
         }
     }
+}
+
+::unit_defs_t unit_defs_t_from_bin (unsigned char*& bin)
+{
+    ::unit_defs_t retval;
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            nation_unit_defs_t value = nation_unit_defs_t_from_bin(bin);
+            retval.nation_units[key] = value;
+        }
+    }
+    return retval;
 }
 
 message::team_t to_protobuf (const ::team_t& value)
@@ -1249,6 +1709,21 @@ void to_bin (const ::team_t& value, std::vector<unsigned char>& bin)
             to_bin(x, bin);
         }
     }
+}
+
+::team_t team_t_from_bin (unsigned char*& bin)
+{
+    ::team_t retval;
+    retval.name = string_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.nations.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.nations[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::scenario_condition_t::object_t to_protobuf (const ::scenario_condition_t::object_t& value)
@@ -1304,6 +1779,29 @@ void to_bin (const ::scenario_condition_t::object_t& value, std::vector<unsigned
     }
 }
 
+::scenario_condition_t::object_t scenario_condition_t_object_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_condition_t::object_t retval;
+    retval.type = enum_from_bin< scenario_condition_t::object_type_t >(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.names.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.names[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.hexes.resize(length);
+        for (int i = 0; i < length; ++i) {
+            int x = int_from_bin(bin);
+            retval.hexes[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::scenario_condition_t to_protobuf (const ::scenario_condition_t& value)
 {
     message::scenario_condition_t retval;
@@ -1357,6 +1855,29 @@ void to_bin (const ::scenario_condition_t& value, std::vector<unsigned char>& bi
     }
 }
 
+::scenario_condition_t scenario_condition_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_condition_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.actors.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.actors[i] = x;
+        }
+    }
+    retval.action = enum_from_bin< scenario_condition_t::action_t >(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.one_of.resize(length);
+        for (int i = 0; i < length; ++i) {
+            scenario_condition_t::object_t x = scenario_condition_t_object_t_from_bin(bin);
+            retval.one_of[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::fleet_release_condition_t to_protobuf (const ::fleet_release_condition_t& value)
 {
     message::fleet_release_condition_t retval;
@@ -1379,6 +1900,14 @@ void to_bin (const ::fleet_release_condition_t& value, std::vector<unsigned char
     to_bin(value.condition, bin);
 }
 
+::fleet_release_condition_t fleet_release_condition_t_from_bin (unsigned char*& bin)
+{
+    ::fleet_release_condition_t retval;
+    retval.fleet = string_from_bin(bin);
+    retval.condition = scenario_condition_t_from_bin(bin);
+    return retval;
+}
+
 message::war_entry_condition_t to_protobuf (const ::war_entry_condition_t& value)
 {
     message::war_entry_condition_t retval;
@@ -1399,6 +1928,14 @@ void to_bin (const ::war_entry_condition_t& value, std::vector<unsigned char>& b
 {
     to_bin(value.economy, bin);
     to_bin(value.condition, bin);
+}
+
+::war_entry_condition_t war_entry_condition_t_from_bin (unsigned char*& bin)
+{
+    ::war_entry_condition_t retval;
+    retval.economy = enum_from_bin< war_footing_t >(bin);
+    retval.condition = scenario_condition_t_from_bin(bin);
+    return retval;
 }
 
 message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scenario_turn_t::national_action_t::action_t& value)
@@ -1437,6 +1974,21 @@ void to_bin (const ::scenario_turn_t::national_action_t::action_t& value, std::v
     }
 }
 
+::scenario_turn_t::national_action_t::action_t scenario_turn_t_national_action_t_action_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_turn_t::national_action_t::action_t retval;
+    retval.type = enum_from_bin< scenario_turn_t::national_action_t::action_type_t >(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.names.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.names[i] = x;
+        }
+    }
+    return retval;
+}
+
 message::scenario_turn_t::national_action_t to_protobuf (const ::scenario_turn_t::national_action_t& value)
 {
     message::scenario_turn_t::national_action_t retval;
@@ -1468,6 +2020,20 @@ void to_bin (const ::scenario_turn_t::national_action_t& value, std::vector<unsi
             to_bin(x, bin);
         }
     }
+}
+
+::scenario_turn_t::national_action_t scenario_turn_t_national_action_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_turn_t::national_action_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.actions.resize(length);
+        for (int i = 0; i < length; ++i) {
+            scenario_turn_t::national_action_t::action_t x = scenario_turn_t_national_action_t_action_t_from_bin(bin);
+            retval.actions[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value)
@@ -1503,6 +2069,21 @@ void to_bin (const ::scenario_turn_t& value, std::vector<unsigned char>& bin)
             to_bin(x.second, bin);
         }
     }
+}
+
+::scenario_turn_t scenario_turn_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_turn_t retval;
+    retval.turn = int_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            scenario_turn_t::national_action_t value = scenario_turn_t_national_action_t_from_bin(bin);
+            retval.national_actions[key] = value;
+        }
+    }
+    return retval;
 }
 
 message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value)
@@ -1596,6 +2177,47 @@ void to_bin (const ::scenario_t::nation_t& value, std::vector<unsigned char>& bi
             to_bin(x, bin);
         }
     }
+}
+
+::scenario_t::nation_t scenario_t_nation_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_t::nation_t retval;
+    {
+        int length = int_from_bin(bin);
+        retval.at_war_with.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.at_war_with[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.future_belligerents.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.future_belligerents[i] = x;
+        }
+    }
+    retval.economy = enum_from_bin< war_footing_t >(bin);
+    retval.exhaustion_turns = int_from_bin(bin);
+    retval.accumulate_exhaustion_at_peace = bool_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.release_conditions.resize(length);
+        for (int i = 0; i < length; ++i) {
+            fleet_release_condition_t x = fleet_release_condition_t_from_bin(bin);
+            retval.release_conditions[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.war_entry_conditions.resize(length);
+        for (int i = 0; i < length; ++i) {
+            war_entry_condition_t x = war_entry_condition_t_from_bin(bin);
+            retval.war_entry_conditions[i] = x;
+        }
+    }
+    return retval;
 }
 
 message::scenario_t to_protobuf (const ::scenario_t& value)
@@ -1711,6 +2333,57 @@ void to_bin (const ::scenario_t& value, std::vector<unsigned char>& bin)
             to_bin(x, bin);
         }
     }
+}
+
+::scenario_t scenario_t_from_bin (unsigned char*& bin)
+{
+    ::scenario_t retval;
+    retval.name = string_from_bin(bin);
+    retval.description = string_from_bin(bin);
+    retval.start_turn = turn_t_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.teams.resize(length);
+        for (int i = 0; i < length; ++i) {
+            team_t x = team_t_from_bin(bin);
+            retval.teams[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.team_turn_order.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.team_turn_order[i] = x;
+        }
+    }
+    retval.map = string_from_bin(bin);
+    retval.order_of_battle = string_from_bin(bin);
+    {
+        int length = int_from_bin(bin);
+        retval.setup_order.resize(length);
+        for (int i = 0; i < length; ++i) {
+            std::string x = string_from_bin(bin);
+            retval.setup_order[i] = x;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        for (int i = 0; i < length; ++i) {
+            std::string key = string_from_bin(bin);
+            scenario_t::nation_t value = scenario_t_nation_t_from_bin(bin);
+            retval.nations[key] = value;
+        }
+    }
+    {
+        int length = int_from_bin(bin);
+        retval.turns.resize(length);
+        for (int i = 0; i < length; ++i) {
+            scenario_turn_t x = scenario_turn_t_from_bin(bin);
+            retval.turns[i] = x;
+        }
+    }
+    return retval;
 }
 
 

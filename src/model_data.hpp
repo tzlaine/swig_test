@@ -290,13 +290,13 @@ struct scenario_condition_t
 
     struct object_t
     {
-        object_type_t type;
+        scenario_condition_t::object_type_t type;
         std::vector<std::string> names;
         std::vector<int> hexes;
     };
     std::vector<std::string> actors;
-    action_t action;
-    std::vector<object_t> one_of;
+    scenario_condition_t::action_t action;
+    std::vector<scenario_condition_t::object_t> one_of;
 };
 
 struct fleet_release_condition_t
@@ -324,13 +324,13 @@ struct scenario_turn_t
 
         struct action_t
         {
-            action_type_t type;
+            scenario_turn_t::national_action_t::action_type_t type;
             std::vector<std::string> names;
         };
-        std::vector<action_t> actions;
+        std::vector<scenario_turn_t::national_action_t::action_t> actions;
     };
     int turn;
-    boost::container::flat_map<std::string, national_action_t> national_actions;
+    boost::container::flat_map<std::string, scenario_turn_t::national_action_t> national_actions;
 };
 
 struct scenario_t
@@ -354,7 +354,7 @@ struct scenario_t
     std::string map;
     std::string order_of_battle;
     std::vector<std::string> setup_order;
-    boost::container::flat_map<std::string, nation_t> nations;
+    boost::container::flat_map<std::string, scenario_t::nation_t> nations;
     std::vector<scenario_turn_t> turns;
 };
 

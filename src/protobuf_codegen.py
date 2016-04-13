@@ -151,7 +151,9 @@ def repeated(field_descriptor_proto):
 def field_element_type(field_descriptor_proto, lang):
     if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE or \
        field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-        typename = field_descriptor_proto.type_name.split('.')[-1]
+        typename = type_without_namespace(field_descriptor_proto, protobuf_namespace)
+        if lang is 'cpp':
+            typename = typename.replace('.', '::')
     else:
         if lang is 'cpp':
             typename = get_cpp_type(field_descriptor_proto.type)
@@ -352,14 +354,14 @@ def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
                 args.cpp_file.write('{0}retval.{1}[x.first] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field, 'cpp')
-                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast<{2}>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
+                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast< {2} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
             else:
                 args.cpp_file.write('{0}retval.{1}[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             value_type = field_type(field_descriptor_proto, 'cpp')
-            args.cpp_file.write('{0}*it++ = static_cast<{1}>(x);\n'.format(indent_str(depth), to_cpp_namespace(leaf_type)))
+            args.cpp_file.write('{0}*it++ = static_cast< {1} >(x);\n'.format(indent_str(depth), to_cpp_namespace(leaf_type)))
         else:
             args.cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
@@ -387,20 +389,6 @@ def define_cpp_from_pb_impl(decl_data, depth, map_fields):
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
-
-
-
-
-
-
-
-################################################################################
-
-
-
-
-
-
 
 def define_cpp_to_bin_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -441,43 +429,54 @@ def define_cpp_to_bin_impl(decl_data, depth, map_fields):
 
 def define_cpp_from_bin_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
-    proto_ns = '::'.join(protobuf_namespace)
+    field_type = field_element_type(field_descriptor_proto, 'cpp')
     if repeated(field_descriptor_proto):
         args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
         depth += 1
+        args.cpp_file.write('{0}int length = int_from_bin(bin);\n'.format(indent_str(depth)))
         if leaf_type not in map_fields:
-            args.cpp_file.write('''{0}retval.{1}.resize(msg.{1}_size());
-{0}auto it = retval.{1}.begin();
-'''.format(indent_str(depth), field_descriptor_proto.name))
-        args.cpp_file.write('{0}for (const auto& x : msg.{1}()) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
+            args.cpp_file.write('{0}retval.{1}.resize(length);\n'.format(indent_str(depth), field_descriptor_proto.name))
+        args.cpp_file.write('{0}for (int i = 0; i < length; ++i) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
-            value_field = map_fields[leaf_type].field[1]
-            if value_field.type is value_field.TYPE_MESSAGE:
-                args.cpp_file.write('{0}retval.{1}[x.first] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
-            elif value_field.type is value_field.TYPE_ENUM:
-                value_type = field_type(value_field, 'cpp')
-                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast<{2}>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
+            key_field = map_fields[leaf_type].field[0]
+            key_field_type = field_element_type(key_field, 'cpp')
+            if key_field.type is key_field.TYPE_STRING:
+                args.cpp_file.write('{0}std::string key = string_from_bin(bin);\n'.format(indent_str(depth)))
+            elif key_field.type is key_field.TYPE_ENUM:
+                args.cpp_file.write('{0}{1} key = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), type_without_namespace(key_field, protobuf_namespace)))
             else:
-                args.cpp_file.write('{0}retval.{1}[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
-        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-            args.cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
-        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            value_type = field_type(field_descriptor_proto, 'cpp')
-            args.cpp_file.write('{0}*it++ = static_cast<{1}>(x);\n'.format(indent_str(depth), to_cpp_namespace(leaf_type)))
+                args.cpp_file.write('{0}{1} key = {1}_from_bin(bin);\n'.format(indent_str(depth), key_field_type))
+            value_field = map_fields[leaf_type].field[1]
+            value_field_type = field_element_type(value_field, 'cpp')
+            if value_field.type is value_field.TYPE_MESSAGE:
+                args.cpp_file.write('{0}{1} value = {2}_from_bin(bin);\n'.format(indent_str(depth), value_field_type, value_field_type.replace('::', '_')))
+            elif value_field.type is value_field.TYPE_STRING:
+                args.cpp_file.write('{0}std::string value = string_from_bin(bin);\n'.format(indent_str(depth)))
+            elif value_field.type is value_field.TYPE_ENUM:
+                args.cpp_file.write('{0}{1} value = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), to_cpp_namespace(type_without_namespace(value_field, protobuf_namespace))))
+            else:
+                args.cpp_file.write('{0}{1} value = {1}_from_bin(bin);\n'.format(indent_str(depth), value_field_type))
+            args.cpp_file.write('{0}retval.{1}[key] = value;\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
-            args.cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
+            if field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+                args.cpp_file.write('{0}std::string x = string_from_bin(bin);\n'.format(indent_str(depth)))
+            elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+                args.cpp_file.write('{0}{1} x = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), to_cpp_namespace(leaf_type)))
+            else:
+                args.cpp_file.write('{0}{1} x = {2}_from_bin(bin);\n'.format(indent_str(depth), field_type, field_type.replace('::', '_')))
+            args.cpp_file.write('{0}retval.{1}[i] = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
         args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
         depth -= 1
         args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
     else:
-        if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-            args.cpp_file.write('{0}retval.{1} = from_protobuf(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
+        if field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cpp_file.write('{0}retval.{1} = string_from_bin(bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.{1} = static_cast< {2} >(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
+            args.cpp_file.write('{0}retval.{1} = enum_from_bin< {2} >(bin);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
         else:
-            args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
+            args.cpp_file.write('{0}retval.{1} = {2}_from_bin(bin);\n'.format(indent_str(depth), field_descriptor_proto.name, field_type.replace('::', '_')))
 
 def define_cpp_from_bin_impl(decl_data, depth, map_fields):
     args.cpp_file.write('''
@@ -492,25 +491,6 @@ def define_cpp_from_bin_impl(decl_data, depth, map_fields):
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
-
-
-
-
-
-
-
-
-################################################################################
-
-
-
-
-
-
-
-
-
-
 
 def define_csharp_bin_size_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -599,24 +579,20 @@ def define_csharp_from_field(field_descriptor_proto, depth, map_fields):
                 args.cs_file.write('{0}{1} key = {1}_from_bin(bin, ref offset);\n'.format(indent_str(depth), key_field_type))
             value_field = map_fields[leaf_type].field[1]
             value_field_type = field_element_type(value_field, 'cs')
-            if value_field.type is value_field.TYPE_MESSAGE:
-                args.cs_file.write('{0}{1} value = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), value_field_type, value_field_type.replace('.', '_')))
-            elif value_field.type is value_field.TYPE_STRING:
+            if value_field.type is value_field.TYPE_STRING:
                 args.cs_file.write('{0}string value = string_from_bin(bin, ref offset);\n'.format(indent_str(depth)))
             elif value_field.type is value_field.TYPE_ENUM:
                 args.cs_file.write('{0}{1} value = enum_from_bin<{1}>(bin, ref offset);\n'.format(indent_str(depth), value_field_type))
             else:
-                args.cs_file.write('{0}{1} value = {1}_from_bin(bin, ref offset);\n'.format(indent_str(depth), value_field_type))
+                args.cs_file.write('{0}{1} value = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), value_field_type, value_field_type.replace('.', '_')))
             args.cs_file.write('{0}retval.{1}[key] = value;\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
-            if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-                args.cs_file.write('{0}{1} x = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_type, field_type.replace('.', '_')))
-            elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            if field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
                 args.cs_file.write('{0}string x = string_from_bin(bin, ref offset);\n'.format(indent_str(depth)))
             elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-                args.cs_file.write('{0}{1} value = enum_from_bin<{1}>(bin, ref offset);\n'.format(indent_str(depth), field_type))
+                args.cs_file.write('{0}{1} x = enum_from_bin<{1}>(bin, ref offset);\n'.format(indent_str(depth), field_type))
             else:
-                args.cs_file.write('{0}{1} value = {1}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_type))
+                args.cs_file.write('{0}{1} x = {2}_from_bin(bin, ref offset);\n'.format(indent_str(depth), field_type, field_type.replace('.', '_')))
             args.cs_file.write('{0}retval.{1}[i] = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
         args.cs_file.write('{0}}}\n'.format(indent_str(depth)))
@@ -893,7 +869,7 @@ namespace {
         define_cpp_to_pb_impl(all_decl_data[i], depth, map_fields)
         define_cpp_from_pb_impl(all_decl_data[i], depth, map_fields)
         define_cpp_to_bin_impl(all_decl_data[i], depth, map_fields)
-        #define_cpp_from_bin_impl(all_decl_data[i], depth, map_fields)
+        define_cpp_from_bin_impl(all_decl_data[i], depth, map_fields)
 
         if args.cs_file:
             define_csharp_bin_size(all_decl_data[i], 1, map_fields)
