@@ -361,112 +361,223 @@ struct scenario_t
 message::turn_t to_protobuf (const ::turn_t& value);
 ::turn_t from_protobuf (const message::turn_t& msg);
 
+void to_bin (const ::turn_t& value, std::vector<unsigned char>& bin);
+::turn_t turn_t_from_bin (unsigned char*& bin);
+
 message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
 ::hex_coord_t from_protobuf (const message::hex_coord_t& msg);
+
+void to_bin (const ::hex_coord_t& value, std::vector<unsigned char>& bin);
+::hex_coord_t hex_coord_t_from_bin (unsigned char*& bin);
 
 message::capital_hex_zone_t to_protobuf (const ::capital_hex_zone_t& value);
 ::capital_hex_zone_t from_protobuf (const message::capital_hex_zone_t& msg);
 
+void to_bin (const ::capital_hex_zone_t& value, std::vector<unsigned char>& bin);
+::capital_hex_zone_t capital_hex_zone_t_from_bin (unsigned char*& bin);
+
 message::capital_hex_t to_protobuf (const ::capital_hex_t& value);
 ::capital_hex_t from_protobuf (const message::capital_hex_t& msg);
+
+void to_bin (const ::capital_hex_t& value, std::vector<unsigned char>& bin);
+::capital_hex_t capital_hex_t_from_bin (unsigned char*& bin);
 
 message::capital_t to_protobuf (const ::capital_t& value);
 ::capital_t from_protobuf (const message::capital_t& msg);
 
+void to_bin (const ::capital_t& value, std::vector<unsigned char>& bin);
+::capital_t capital_t_from_bin (unsigned char*& bin);
+
 message::offmap_possesions_t to_protobuf (const ::offmap_possesions_t& value);
 ::offmap_possesions_t from_protobuf (const message::offmap_possesions_t& msg);
+
+void to_bin (const ::offmap_possesions_t& value, std::vector<unsigned char>& bin);
+::offmap_possesions_t offmap_possesions_t_from_bin (unsigned char*& bin);
 
 message::nation_t to_protobuf (const ::nation_t& value);
 ::nation_t from_protobuf (const message::nation_t& msg);
 
+void to_bin (const ::nation_t& value, std::vector<unsigned char>& bin);
+::nation_t nation_t_from_bin (unsigned char*& bin);
+
 message::nations_t to_protobuf (const ::nations_t& value);
 ::nations_t from_protobuf (const message::nations_t& msg);
+
+void to_bin (const ::nations_t& value, std::vector<unsigned char>& bin);
+::nations_t nations_t_from_bin (unsigned char*& bin);
 
 message::hex_t to_protobuf (const ::hex_t& value);
 ::hex_t from_protobuf (const message::hex_t& msg);
 
+void to_bin (const ::hex_t& value, std::vector<unsigned char>& bin);
+::hex_t hex_t_from_bin (unsigned char*& bin);
+
 message::province_hex_t to_protobuf (const ::province_hex_t& value);
 ::province_hex_t from_protobuf (const message::province_hex_t& msg);
+
+void to_bin (const ::province_hex_t& value, std::vector<unsigned char>& bin);
+::province_hex_t province_hex_t_from_bin (unsigned char*& bin);
 
 message::province_t to_protobuf (const ::province_t& value);
 ::province_t from_protobuf (const message::province_t& msg);
 
+void to_bin (const ::province_t& value, std::vector<unsigned char>& bin);
+::province_t province_t_from_bin (unsigned char*& bin);
+
 message::offmap_area_t to_protobuf (const ::offmap_area_t& value);
 ::offmap_area_t from_protobuf (const message::offmap_area_t& msg);
+
+void to_bin (const ::offmap_area_t& value, std::vector<unsigned char>& bin);
+::offmap_area_t offmap_area_t_from_bin (unsigned char*& bin);
 
 message::starting_national_holdings_t to_protobuf (const ::starting_national_holdings_t& value);
 ::starting_national_holdings_t from_protobuf (const message::starting_national_holdings_t& msg);
 
+void to_bin (const ::starting_national_holdings_t& value, std::vector<unsigned char>& bin);
+::starting_national_holdings_t starting_national_holdings_t_from_bin (unsigned char*& bin);
+
 message::map_t to_protobuf (const ::map_t& value);
 ::map_t from_protobuf (const message::map_t& msg);
+
+void to_bin (const ::map_t& value, std::vector<unsigned char>& bin);
+::map_t map_t_from_bin (unsigned char*& bin);
 
 message::model_t to_protobuf (const ::model_t& value);
 ::model_t from_protobuf (const message::model_t& msg);
 
+void to_bin (const ::model_t& value, std::vector<unsigned char>& bin);
+::model_t model_t_from_bin (unsigned char*& bin);
+
 message::oob_unit_t to_protobuf (const ::oob_unit_t& value);
 ::oob_unit_t from_protobuf (const message::oob_unit_t& msg);
+
+void to_bin (const ::oob_unit_t& value, std::vector<unsigned char>& bin);
+::oob_unit_t oob_unit_t_from_bin (unsigned char*& bin);
 
 message::production_element_t to_protobuf (const ::production_element_t& value);
 ::production_element_t from_protobuf (const message::production_element_t& msg);
 
+void to_bin (const ::production_element_t& value, std::vector<unsigned char>& bin);
+::production_element_t production_element_t_from_bin (unsigned char*& bin);
+
 message::starting_fleet_t to_protobuf (const ::starting_fleet_t& value);
 ::starting_fleet_t from_protobuf (const message::starting_fleet_t& msg);
+
+void to_bin (const ::starting_fleet_t& value, std::vector<unsigned char>& bin);
+::starting_fleet_t starting_fleet_t_from_bin (unsigned char*& bin);
 
 message::mothball_reserve_t to_protobuf (const ::mothball_reserve_t& value);
 ::mothball_reserve_t from_protobuf (const message::mothball_reserve_t& msg);
 
+void to_bin (const ::mothball_reserve_t& value, std::vector<unsigned char>& bin);
+::mothball_reserve_t mothball_reserve_t_from_bin (unsigned char*& bin);
+
 message::order_of_battle_t to_protobuf (const ::order_of_battle_t& value);
 ::order_of_battle_t from_protobuf (const message::order_of_battle_t& msg);
+
+void to_bin (const ::order_of_battle_t& value, std::vector<unsigned char>& bin);
+::order_of_battle_t order_of_battle_t_from_bin (unsigned char*& bin);
 
 message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value);
 ::orders_of_battle_t from_protobuf (const message::orders_of_battle_t& msg);
 
+void to_bin (const ::orders_of_battle_t& value, std::vector<unsigned char>& bin);
+::orders_of_battle_t orders_of_battle_t_from_bin (unsigned char*& bin);
+
 message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value);
 ::unit_def_side_t from_protobuf (const message::unit_def_side_t& msg);
+
+void to_bin (const ::unit_def_side_t& value, std::vector<unsigned char>& bin);
+::unit_def_side_t unit_def_side_t_from_bin (unsigned char*& bin);
 
 message::towable_t to_protobuf (const ::towable_t& value);
 ::towable_t from_protobuf (const message::towable_t& msg);
 
+void to_bin (const ::towable_t& value, std::vector<unsigned char>& bin);
+::towable_t towable_t_from_bin (unsigned char*& bin);
+
 message::production_cost_t to_protobuf (const ::production_cost_t& value);
 ::production_cost_t from_protobuf (const message::production_cost_t& msg);
+
+void to_bin (const ::production_cost_t& value, std::vector<unsigned char>& bin);
+::production_cost_t production_cost_t_from_bin (unsigned char*& bin);
 
 message::unit_def_t to_protobuf (const ::unit_def_t& value);
 ::unit_def_t from_protobuf (const message::unit_def_t& msg);
 
+void to_bin (const ::unit_def_t& value, std::vector<unsigned char>& bin);
+::unit_def_t unit_def_t_from_bin (unsigned char*& bin);
+
 message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value);
 ::nation_unit_defs_t from_protobuf (const message::nation_unit_defs_t& msg);
+
+void to_bin (const ::nation_unit_defs_t& value, std::vector<unsigned char>& bin);
+::nation_unit_defs_t nation_unit_defs_t_from_bin (unsigned char*& bin);
 
 message::unit_defs_t to_protobuf (const ::unit_defs_t& value);
 ::unit_defs_t from_protobuf (const message::unit_defs_t& msg);
 
+void to_bin (const ::unit_defs_t& value, std::vector<unsigned char>& bin);
+::unit_defs_t unit_defs_t_from_bin (unsigned char*& bin);
+
 message::team_t to_protobuf (const ::team_t& value);
 ::team_t from_protobuf (const message::team_t& msg);
+
+void to_bin (const ::team_t& value, std::vector<unsigned char>& bin);
+::team_t team_t_from_bin (unsigned char*& bin);
 
 message::scenario_condition_t::object_t to_protobuf (const ::scenario_condition_t::object_t& value);
 ::scenario_condition_t::object_t from_protobuf (const message::scenario_condition_t::object_t& msg);
 
+void to_bin (const ::scenario_condition_t::object_t& value, std::vector<unsigned char>& bin);
+::scenario_condition_t::object_t scenario_condition_t_object_t_from_bin (unsigned char*& bin);
+
 message::scenario_condition_t to_protobuf (const ::scenario_condition_t& value);
 ::scenario_condition_t from_protobuf (const message::scenario_condition_t& msg);
+
+void to_bin (const ::scenario_condition_t& value, std::vector<unsigned char>& bin);
+::scenario_condition_t scenario_condition_t_from_bin (unsigned char*& bin);
 
 message::fleet_release_condition_t to_protobuf (const ::fleet_release_condition_t& value);
 ::fleet_release_condition_t from_protobuf (const message::fleet_release_condition_t& msg);
 
+void to_bin (const ::fleet_release_condition_t& value, std::vector<unsigned char>& bin);
+::fleet_release_condition_t fleet_release_condition_t_from_bin (unsigned char*& bin);
+
 message::war_entry_condition_t to_protobuf (const ::war_entry_condition_t& value);
 ::war_entry_condition_t from_protobuf (const message::war_entry_condition_t& msg);
+
+void to_bin (const ::war_entry_condition_t& value, std::vector<unsigned char>& bin);
+::war_entry_condition_t war_entry_condition_t_from_bin (unsigned char*& bin);
 
 message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scenario_turn_t::national_action_t::action_t& value);
 ::scenario_turn_t::national_action_t::action_t from_protobuf (const message::scenario_turn_t::national_action_t::action_t& msg);
 
+void to_bin (const ::scenario_turn_t::national_action_t::action_t& value, std::vector<unsigned char>& bin);
+::scenario_turn_t::national_action_t::action_t scenario_turn_t_national_action_t_action_t_from_bin (unsigned char*& bin);
+
 message::scenario_turn_t::national_action_t to_protobuf (const ::scenario_turn_t::national_action_t& value);
 ::scenario_turn_t::national_action_t from_protobuf (const message::scenario_turn_t::national_action_t& msg);
+
+void to_bin (const ::scenario_turn_t::national_action_t& value, std::vector<unsigned char>& bin);
+::scenario_turn_t::national_action_t scenario_turn_t_national_action_t_from_bin (unsigned char*& bin);
 
 message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value);
 ::scenario_turn_t from_protobuf (const message::scenario_turn_t& msg);
 
+void to_bin (const ::scenario_turn_t& value, std::vector<unsigned char>& bin);
+::scenario_turn_t scenario_turn_t_from_bin (unsigned char*& bin);
+
 message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value);
 ::scenario_t::nation_t from_protobuf (const message::scenario_t::nation_t& msg);
 
+void to_bin (const ::scenario_t::nation_t& value, std::vector<unsigned char>& bin);
+::scenario_t::nation_t scenario_t_nation_t_from_bin (unsigned char*& bin);
+
 message::scenario_t to_protobuf (const ::scenario_t& value);
 ::scenario_t from_protobuf (const message::scenario_t& msg);
+
+void to_bin (const ::scenario_t& value, std::vector<unsigned char>& bin);
+::scenario_t scenario_t_from_bin (unsigned char*& bin);
 
 

@@ -6,6 +6,100 @@
 
 
 
+namespace {
+
+    bool bool_from_bin (unsigned char*& bin)
+    {
+        bool retval = static_cast<bool>(*bin);
+        bin += 1;
+        return retval;
+    }
+
+    int int_from_bin (unsigned char*& bin)
+    {
+        int retval =
+            (bin[0] << 24) +
+            (bin[1] << 16) +
+            (bin[2] <<  8) +
+            (bin[3] <<  0);
+        bin += 4;
+        return retval;
+    }
+
+    float float_from_bin (unsigned char*& bin)
+    {
+        float retval;
+        memcpy(&retval, bin, sizeof(float));
+        bin += sizeof(float);
+        return retval;
+    }
+
+    double double_from_bin (unsigned char*& bin)
+    {
+        double retval;
+        memcpy(&retval, bin, sizeof(double));
+        bin += sizeof(double);
+        return retval;
+    }
+
+    template <typename T>
+    T enum_from_bin (unsigned char*& bin)
+    {
+        int i = int_from_bin(bin);
+        return static_cast<T>(i);
+    }
+
+    std::string string_from_bin (unsigned char*& bin)
+    {
+        std::size_t length = int_from_bin(bin);
+        std::string retval((const char*)bin, length);
+        bin += length;
+        return retval;
+    }
+
+    void to_bin (bool b, std::vector<unsigned char>& bin)
+    {
+        bin.push_back(static_cast<unsigned char>(b));
+    }
+
+    void to_bin (int i, std::vector<unsigned char>& bin)
+    {
+        bin.push_back(static_cast<unsigned char>((i >> 24) & 0xff));
+        bin.push_back(static_cast<unsigned char>((i >> 16) & 0xff));
+        bin.push_back(static_cast<unsigned char>((i >>  8) & 0xff));
+        bin.push_back(static_cast<unsigned char>((i >>  0) & 0xff));
+    }
+
+    void to_bin (float f, std::vector<unsigned char>& bin)
+    {
+        bin.resize(bin.size() + sizeof(float));
+        memcpy(&bin[bin.size() - sizeof(float)], &f, sizeof(float));
+    }
+
+    void to_bin (double d, std::vector<unsigned char>& bin)
+    {
+        bin.resize(bin.size() + sizeof(double));
+        memcpy(&bin[bin.size() - sizeof(double)], &d, sizeof(double));
+    }
+
+    template <typename T>
+    void to_bin (T e, std::vector<unsigned char>& bin)
+    {
+        int i = static_cast<int>(e);
+        to_bin(i, bin);
+    }
+
+    void to_bin (const std::string s, std::vector<unsigned char>& bin)
+    {
+        int length = static_cast<int>(s.size());
+        to_bin(length, bin);
+        bin.resize(bin.size() + length);
+        std::copy(s.begin(), s.end(), bin.end() - length);
+    }
+
+}
+
+
 message::turn_t to_protobuf (const ::turn_t& value)
 {
     message::turn_t retval;
@@ -22,6 +116,12 @@ message::turn_t to_protobuf (const ::turn_t& value)
     return retval;
 }
 
+void to_bin (const ::turn_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.year, bin);
+    to_bin(value.season, bin);
+}
+
 message::hex_coord_t to_protobuf (const ::hex_coord_t& value)
 {
     message::hex_coord_t retval;
@@ -36,6 +136,12 @@ message::hex_coord_t to_protobuf (const ::hex_coord_t& value)
     retval.x = msg.x();
     retval.y = msg.y();
     return retval;
+}
+
+void to_bin (const ::hex_coord_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.x, bin);
+    to_bin(value.y, bin);
 }
 
 message::capital_hex_zone_t to_protobuf (const ::capital_hex_zone_t& value)
@@ -62,6 +168,18 @@ message::capital_hex_zone_t to_protobuf (const ::capital_hex_zone_t& value)
     return retval;
 }
 
+void to_bin (const ::capital_hex_zone_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.name, bin);
+    {
+        int length = static_cast<int>(value.features.size());
+        to_bin(length, bin);
+        for (const auto& x : value.features) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::capital_hex_t to_protobuf (const ::capital_hex_t& value)
 {
     message::capital_hex_t retval;
@@ -86,6 +204,18 @@ message::capital_hex_t to_protobuf (const ::capital_hex_t& value)
     return retval;
 }
 
+void to_bin (const ::capital_hex_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.coord, bin);
+    {
+        int length = static_cast<int>(value.zones.size());
+        to_bin(length, bin);
+        for (const auto& x : value.zones) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::capital_t to_protobuf (const ::capital_t& value)
 {
     message::capital_t retval;
@@ -106,6 +236,17 @@ message::capital_t to_protobuf (const ::capital_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::capital_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.hexes) {
+            to_bin(x, bin);
+        }
+    }
 }
 
 message::offmap_possesions_t to_protobuf (const ::offmap_possesions_t& value)
@@ -130,6 +271,16 @@ message::offmap_possesions_t to_protobuf (const ::offmap_possesions_t& value)
     retval.cannot_build_offmap_capital = msg.cannot_build_offmap_capital();
     retval.old_shipyard = msg.old_shipyard();
     return retval;
+}
+
+void to_bin (const ::offmap_possesions_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.provinces, bin);
+    to_bin(value.mins, bin);
+    to_bin(value.majs, bin);
+    to_bin(value.survey_ships, bin);
+    to_bin(value.cannot_build_offmap_capital, bin);
+    to_bin(value.old_shipyard, bin);
 }
 
 message::nation_t to_protobuf (const ::nation_t& value)
@@ -158,6 +309,17 @@ message::nation_t to_protobuf (const ::nation_t& value)
     return retval;
 }
 
+void to_bin (const ::nation_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.name, bin);
+    to_bin(value.short_name, bin);
+    to_bin(value.capital, bin);
+    to_bin(value.free_strategic_moves, bin);
+    to_bin(value.capital_star_points, bin);
+    to_bin(value.offmap_possesions, bin);
+    to_bin(value.nation_id, bin);
+}
+
 message::nations_t to_protobuf (const ::nations_t& value)
 {
     message::nations_t retval;
@@ -176,6 +338,18 @@ message::nations_t to_protobuf (const ::nations_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::nations_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.nations.size());
+        to_bin(length, bin);
+        for (const auto& x : value.nations) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
 }
 
 message::hex_t to_protobuf (const ::hex_t& value)
@@ -206,6 +380,20 @@ message::hex_t to_protobuf (const ::hex_t& value)
     return retval;
 }
 
+void to_bin (const ::hex_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.coord, bin);
+    to_bin(value.owner, bin);
+    to_bin(value.feature, bin);
+    {
+        int length = static_cast<int>(value.neutral_zone_bordering.size());
+        to_bin(length, bin);
+        for (const auto& x : value.neutral_zone_bordering) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::province_hex_t to_protobuf (const ::province_hex_t& value)
 {
     message::province_hex_t retval;
@@ -220,6 +408,12 @@ message::province_hex_t to_protobuf (const ::province_hex_t& value)
     retval.hex = msg.hex();
     retval.feature = static_cast< feature_t >(msg.feature());
     return retval;
+}
+
+void to_bin (const ::province_hex_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.hex, bin);
+    to_bin(value.feature, bin);
 }
 
 message::province_t to_protobuf (const ::province_t& value)
@@ -242,6 +436,17 @@ message::province_t to_protobuf (const ::province_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::province_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.hexes) {
+            to_bin(x, bin);
+        }
+    }
 }
 
 message::offmap_area_t to_protobuf (const ::offmap_area_t& value)
@@ -280,6 +485,26 @@ message::offmap_area_t to_protobuf (const ::offmap_area_t& value)
     return retval;
 }
 
+void to_bin (const ::offmap_area_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.name, bin);
+    {
+        int length = static_cast<int>(value.features.size());
+        to_bin(length, bin);
+        for (const auto& x : value.features) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.counter_hex, bin);
+    {
+        int length = static_cast<int>(value.adjacent_hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.adjacent_hexes) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::starting_national_holdings_t to_protobuf (const ::starting_national_holdings_t& value)
 {
     message::starting_national_holdings_t retval;
@@ -302,6 +527,18 @@ message::starting_national_holdings_t to_protobuf (const ::starting_national_hol
     }
     retval.offmap_area = from_protobuf(msg.offmap_area());
     return retval;
+}
+
+void to_bin (const ::starting_national_holdings_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.provinces.size());
+        to_bin(length, bin);
+        for (const auto& x : value.provinces) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.offmap_area, bin);
 }
 
 message::map_t to_protobuf (const ::map_t& value)
@@ -358,6 +595,41 @@ message::map_t to_protobuf (const ::map_t& value)
     return retval;
 }
 
+void to_bin (const ::map_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.width, bin);
+    to_bin(value.height, bin);
+    {
+        int length = static_cast<int>(value.nz_planets.size());
+        to_bin(length, bin);
+        for (const auto& x : value.nz_planets) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.nz_hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.nz_hexes) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.starting_national_holdings.size());
+        to_bin(length, bin);
+        for (const auto& x : value.starting_national_holdings) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.hexes) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::model_t to_protobuf (const ::model_t& value)
 {
     message::model_t retval;
@@ -374,6 +646,12 @@ message::model_t to_protobuf (const ::model_t& value)
     return retval;
 }
 
+void to_bin (const ::model_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.nations, bin);
+    to_bin(value.map, bin);
+}
+
 message::oob_unit_t to_protobuf (const ::oob_unit_t& value)
 {
     message::oob_unit_t retval;
@@ -388,6 +666,12 @@ message::oob_unit_t to_protobuf (const ::oob_unit_t& value)
     retval.unit = msg.unit();
     retval.times = msg.times();
     return retval;
+}
+
+void to_bin (const ::oob_unit_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.unit, bin);
+    to_bin(value.times, bin);
 }
 
 message::production_element_t to_protobuf (const ::production_element_t& value)
@@ -414,6 +698,19 @@ message::production_element_t to_protobuf (const ::production_element_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::production_element_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.year, bin);
+    to_bin(value.season, bin);
+    {
+        int length = static_cast<int>(value.units.size());
+        to_bin(length, bin);
+        for (const auto& x : value.units) {
+            to_bin(x, bin);
+        }
+    }
 }
 
 message::starting_fleet_t to_protobuf (const ::starting_fleet_t& value)
@@ -472,6 +769,42 @@ message::starting_fleet_t to_protobuf (const ::starting_fleet_t& value)
     return retval;
 }
 
+void to_bin (const ::starting_fleet_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.hexes) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.units.size());
+        to_bin(length, bin);
+        for (const auto& x : value.units) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.reserve, bin);
+    {
+        int length = static_cast<int>(value.prewar_construction.size());
+        to_bin(length, bin);
+        for (const auto& x : value.prewar_construction) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.strategic_move_arrival_year, bin);
+    to_bin(value.strategic_move_arrival_season, bin);
+    {
+        int length = static_cast<int>(value.hex_placement_limits.size());
+        to_bin(length, bin);
+        for (const auto& x : value.hex_placement_limits) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
+}
+
 message::mothball_reserve_t to_protobuf (const ::mothball_reserve_t& value)
 {
     message::mothball_reserve_t retval;
@@ -514,6 +847,31 @@ message::mothball_reserve_t to_protobuf (const ::mothball_reserve_t& value)
     return retval;
 }
 
+void to_bin (const ::mothball_reserve_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.units.size());
+        to_bin(length, bin);
+        for (const auto& x : value.units) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.war_release.size());
+        to_bin(length, bin);
+        for (const auto& x : value.war_release) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.limited_war_release.size());
+        to_bin(length, bin);
+        for (const auto& x : value.limited_war_release) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::order_of_battle_t to_protobuf (const ::order_of_battle_t& value)
 {
     message::order_of_battle_t retval;
@@ -546,6 +904,26 @@ message::order_of_battle_t to_protobuf (const ::order_of_battle_t& value)
     return retval;
 }
 
+void to_bin (const ::order_of_battle_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.starting_fleets.size());
+        to_bin(length, bin);
+        for (const auto& x : value.starting_fleets) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
+    to_bin(value.mothball_reserve, bin);
+    {
+        int length = static_cast<int>(value.production.size());
+        to_bin(length, bin);
+        for (const auto& x : value.production) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value)
 {
     message::orders_of_battle_t retval;
@@ -564,6 +942,18 @@ message::orders_of_battle_t to_protobuf (const ::orders_of_battle_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::orders_of_battle_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.oobs.size());
+        to_bin(length, bin);
+        for (const auto& x : value.oobs) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
 }
 
 message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
@@ -604,6 +994,25 @@ message::unit_def_side_t to_protobuf (const ::unit_def_side_t& value)
     return retval;
 }
 
+void to_bin (const ::unit_def_side_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.att, bin);
+    to_bin(value.def, bin);
+    to_bin(value.scout, bin);
+    to_bin(value.fighters, bin);
+    to_bin(value.heavy_fighter_bonus, bin);
+    to_bin(value.pfs, bin);
+    to_bin(value.drones, bin);
+    to_bin(value.mauler, bin);
+    {
+        int length = static_cast<int>(value.tug_missions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.tug_missions) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::towable_t to_protobuf (const ::towable_t& value)
 {
     message::towable_t retval;
@@ -620,6 +1029,12 @@ message::towable_t to_protobuf (const ::towable_t& value)
     return retval;
 }
 
+void to_bin (const ::towable_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.move_cost, bin);
+    to_bin(value.strat_move_limit, bin);
+}
+
 message::production_cost_t to_protobuf (const ::production_cost_t& value)
 {
     message::production_cost_t retval;
@@ -634,6 +1049,12 @@ message::production_cost_t to_protobuf (const ::production_cost_t& value)
     retval.cost = msg.cost();
     retval.fighter_cost = msg.fighter_cost();
     return retval;
+}
+
+void to_bin (const ::production_cost_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.cost, bin);
+    to_bin(value.fighter_cost, bin);
 }
 
 message::unit_def_t to_protobuf (const ::unit_def_t& value)
@@ -694,6 +1115,41 @@ message::unit_def_t to_protobuf (const ::unit_def_t& value)
     return retval;
 }
 
+void to_bin (const ::unit_def_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.name, bin);
+    to_bin(value.cmd, bin);
+    to_bin(value.uncrippled, bin);
+    to_bin(value.crippled, bin);
+    to_bin(value.escort_type, bin);
+    to_bin(value.available, bin);
+    to_bin(value.pod, bin);
+    to_bin(value.max_in_service, bin);
+    to_bin(value.construction, bin);
+    {
+        int length = static_cast<int>(value.substitutions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.substitutions) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.conversions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.conversions) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
+    to_bin(value.move, bin);
+    to_bin(value.carrier_type, bin);
+    to_bin(value.not_spaceworthy, bin);
+    to_bin(value.towable, bin);
+    to_bin(value.salvage, bin);
+    to_bin(value.notes, bin);
+}
+
 message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value)
 {
     message::nation_unit_defs_t retval;
@@ -716,6 +1172,17 @@ message::nation_unit_defs_t to_protobuf (const ::nation_unit_defs_t& value)
     return retval;
 }
 
+void to_bin (const ::nation_unit_defs_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.units.size());
+        to_bin(length, bin);
+        for (const auto& x : value.units) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::unit_defs_t to_protobuf (const ::unit_defs_t& value)
 {
     message::unit_defs_t retval;
@@ -734,6 +1201,18 @@ message::unit_defs_t to_protobuf (const ::unit_defs_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::unit_defs_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.nation_units.size());
+        to_bin(length, bin);
+        for (const auto& x : value.nation_units) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
 }
 
 message::team_t to_protobuf (const ::team_t& value)
@@ -758,6 +1237,18 @@ message::team_t to_protobuf (const ::team_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::team_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.name, bin);
+    {
+        int length = static_cast<int>(value.nations.size());
+        to_bin(length, bin);
+        for (const auto& x : value.nations) {
+            to_bin(x, bin);
+        }
+    }
 }
 
 message::scenario_condition_t::object_t to_protobuf (const ::scenario_condition_t::object_t& value)
@@ -794,6 +1285,25 @@ message::scenario_condition_t::object_t to_protobuf (const ::scenario_condition_
     return retval;
 }
 
+void to_bin (const ::scenario_condition_t::object_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.type, bin);
+    {
+        int length = static_cast<int>(value.names.size());
+        to_bin(length, bin);
+        for (const auto& x : value.names) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.hexes.size());
+        to_bin(length, bin);
+        for (const auto& x : value.hexes) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::scenario_condition_t to_protobuf (const ::scenario_condition_t& value)
 {
     message::scenario_condition_t retval;
@@ -828,6 +1338,25 @@ message::scenario_condition_t to_protobuf (const ::scenario_condition_t& value)
     return retval;
 }
 
+void to_bin (const ::scenario_condition_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.actors.size());
+        to_bin(length, bin);
+        for (const auto& x : value.actors) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.action, bin);
+    {
+        int length = static_cast<int>(value.one_of.size());
+        to_bin(length, bin);
+        for (const auto& x : value.one_of) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::fleet_release_condition_t to_protobuf (const ::fleet_release_condition_t& value)
 {
     message::fleet_release_condition_t retval;
@@ -844,6 +1373,12 @@ message::fleet_release_condition_t to_protobuf (const ::fleet_release_condition_
     return retval;
 }
 
+void to_bin (const ::fleet_release_condition_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.fleet, bin);
+    to_bin(value.condition, bin);
+}
+
 message::war_entry_condition_t to_protobuf (const ::war_entry_condition_t& value)
 {
     message::war_entry_condition_t retval;
@@ -858,6 +1393,12 @@ message::war_entry_condition_t to_protobuf (const ::war_entry_condition_t& value
     retval.economy = static_cast< war_footing_t >(msg.economy());
     retval.condition = from_protobuf(msg.condition());
     return retval;
+}
+
+void to_bin (const ::war_entry_condition_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.economy, bin);
+    to_bin(value.condition, bin);
 }
 
 message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scenario_turn_t::national_action_t::action_t& value)
@@ -884,6 +1425,18 @@ message::scenario_turn_t::national_action_t::action_t to_protobuf (const ::scena
     return retval;
 }
 
+void to_bin (const ::scenario_turn_t::national_action_t::action_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.type, bin);
+    {
+        int length = static_cast<int>(value.names.size());
+        to_bin(length, bin);
+        for (const auto& x : value.names) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::scenario_turn_t::national_action_t to_protobuf (const ::scenario_turn_t::national_action_t& value)
 {
     message::scenario_turn_t::national_action_t retval;
@@ -906,6 +1459,17 @@ message::scenario_turn_t::national_action_t to_protobuf (const ::scenario_turn_t
     return retval;
 }
 
+void to_bin (const ::scenario_turn_t::national_action_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.actions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.actions) {
+            to_bin(x, bin);
+        }
+    }
+}
+
 message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value)
 {
     message::scenario_turn_t retval;
@@ -926,6 +1490,19 @@ message::scenario_turn_t to_protobuf (const ::scenario_turn_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::scenario_turn_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.turn, bin);
+    {
+        int length = static_cast<int>(value.national_actions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.national_actions) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
 }
 
 message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value)
@@ -984,6 +1561,41 @@ message::scenario_t::nation_t to_protobuf (const ::scenario_t::nation_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::scenario_t::nation_t& value, std::vector<unsigned char>& bin)
+{
+    {
+        int length = static_cast<int>(value.at_war_with.size());
+        to_bin(length, bin);
+        for (const auto& x : value.at_war_with) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.future_belligerents.size());
+        to_bin(length, bin);
+        for (const auto& x : value.future_belligerents) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.economy, bin);
+    to_bin(value.exhaustion_turns, bin);
+    to_bin(value.accumulate_exhaustion_at_peace, bin);
+    {
+        int length = static_cast<int>(value.release_conditions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.release_conditions) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.war_entry_conditions.size());
+        to_bin(length, bin);
+        for (const auto& x : value.war_entry_conditions) {
+            to_bin(x, bin);
+        }
+    }
 }
 
 message::scenario_t to_protobuf (const ::scenario_t& value)
@@ -1054,6 +1666,51 @@ message::scenario_t to_protobuf (const ::scenario_t& value)
         }
     }
     return retval;
+}
+
+void to_bin (const ::scenario_t& value, std::vector<unsigned char>& bin)
+{
+    to_bin(value.name, bin);
+    to_bin(value.description, bin);
+    to_bin(value.start_turn, bin);
+    {
+        int length = static_cast<int>(value.teams.size());
+        to_bin(length, bin);
+        for (const auto& x : value.teams) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.team_turn_order.size());
+        to_bin(length, bin);
+        for (const auto& x : value.team_turn_order) {
+            to_bin(x, bin);
+        }
+    }
+    to_bin(value.map, bin);
+    to_bin(value.order_of_battle, bin);
+    {
+        int length = static_cast<int>(value.setup_order.size());
+        to_bin(length, bin);
+        for (const auto& x : value.setup_order) {
+            to_bin(x, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.nations.size());
+        to_bin(length, bin);
+        for (const auto& x : value.nations) {
+            to_bin(x.first, bin);
+            to_bin(x.second, bin);
+        }
+    }
+    {
+        int length = static_cast<int>(value.turns.size());
+        to_bin(length, bin);
+        for (const auto& x : value.turns) {
+            to_bin(x, bin);
+        }
+    }
 }
 
 

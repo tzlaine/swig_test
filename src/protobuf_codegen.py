@@ -192,6 +192,16 @@ def make_decl_impl(decl_data, kind, return_type_only):
             else:
                 format_str = return_type_only and '{0}::{2}' or '{0}::{2} from_protobuf (const {1}::{2}& msg)'
                 return format_str.format(user_ns_with_scope, proto_ns_with_scope, decl_data['name'])
+        elif kind_args[1] == 'bin':
+            if kind_args[0] == 'to':
+                format_str = return_type_only and 'void' or 'void to_bin (const {0}::{1}& value, std::vector<unsigned char>& bin)'
+                return format_str.format(user_ns_with_scope, decl_data['name'])
+            else:
+                typename = decl_data['name']
+                if len(decl_data['scope_ns']):
+                    typename = '_'.join(decl_data['scope_ns']) + '_' + typename
+                format_str = return_type_only and '{0}::{1}' or '{0}::{1} {2}_from_bin (unsigned char*& bin)'
+                return format_str.format(user_ns_with_scope, decl_data['name'], typename)
         else:
             raise Exception('{to,from}+<non-pb>+cpp not yet implemented')
     elif kind_args[2] == 'cs':
@@ -377,6 +387,130 @@ def define_cpp_from_pb_impl(decl_data, depth, map_fields):
     args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
     args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+
+
+
+
+
+
+
+################################################################################
+
+
+
+
+
+
+
+def define_cpp_to_bin_impl_field(field_descriptor_proto, depth, map_fields):
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
+    proto_ns = '::'.join(protobuf_namespace)
+    if repeated(field_descriptor_proto):
+        args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
+        depth += 1
+        args.cpp_file.write('''{0}int length = static_cast<int>(value.{1}.size());
+{0}to_bin(length, bin);
+{0}for (const auto& x : value.{1}) {{
+'''.format(indent_str(depth), field_descriptor_proto.name))
+        depth += 1
+        if leaf_type in map_fields:
+            value_field = map_fields[leaf_type].field[1]
+            args.cpp_file.write('''{0}to_bin(x.first, bin);
+{0}to_bin(x.second, bin);
+'''.format(indent_str(depth)))
+        else:
+            args.cpp_file.write('{0}to_bin(x, bin);\n'.format(indent_str(depth)))
+        depth -= 1
+        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        depth -= 1
+        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+    else:
+        args.cpp_file.write('{0}to_bin(value.{1}, bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
+
+def define_cpp_to_bin_impl(decl_data, depth, map_fields):
+    args.cpp_file.write('''
+{0}{1}
+{0}{{
+'''.format(indent_str(depth), make_decl(decl_data, 'to+bin+cpp')))
+    descriptor_proto = decl_data['descriptor_proto']
+    depth += 1
+    for field_descriptor_proto in descriptor_proto.field:
+        define_cpp_to_bin_impl_field(field_descriptor_proto, depth, map_fields)
+    depth -= 1
+    args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+
+def define_cpp_from_bin_impl_field(field_descriptor_proto, depth, map_fields):
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
+    proto_ns = '::'.join(protobuf_namespace)
+    if repeated(field_descriptor_proto):
+        args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
+        depth += 1
+        if leaf_type not in map_fields:
+            args.cpp_file.write('''{0}retval.{1}.resize(msg.{1}_size());
+{0}auto it = retval.{1}.begin();
+'''.format(indent_str(depth), field_descriptor_proto.name))
+        args.cpp_file.write('{0}for (const auto& x : msg.{1}()) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
+        depth += 1
+        if leaf_type in map_fields:
+            value_field = map_fields[leaf_type].field[1]
+            if value_field.type is value_field.TYPE_MESSAGE:
+                args.cpp_file.write('{0}retval.{1}[x.first] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
+            elif value_field.type is value_field.TYPE_ENUM:
+                value_type = field_type(value_field, 'cpp')
+                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast<{2}>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
+            else:
+                args.cpp_file.write('{0}retval.{1}[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+            args.cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+            value_type = field_type(field_descriptor_proto, 'cpp')
+            args.cpp_file.write('{0}*it++ = static_cast<{1}>(x);\n'.format(indent_str(depth), to_cpp_namespace(leaf_type)))
+        else:
+            args.cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
+        depth -= 1
+        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        depth -= 1
+        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+    else:
+        if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+            args.cpp_file.write('{0}retval.{1} = from_protobuf(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+            args.cpp_file.write('{0}retval.{1} = static_cast< {2} >(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
+        else:
+            args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
+
+def define_cpp_from_bin_impl(decl_data, depth, map_fields):
+    args.cpp_file.write('''
+{0}{1}
+{0}{{
+'''.format(indent_str(depth), make_decl(decl_data, 'from+bin+cpp')))
+    descriptor_proto = decl_data['descriptor_proto']
+    depth += 1
+    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+bin+cpp')))
+    for field_descriptor_proto in descriptor_proto.field:
+        define_cpp_from_bin_impl_field(field_descriptor_proto, depth, map_fields)
+    args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
+    depth -= 1
+    args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+
+
+
+
+
+
+
+
+################################################################################
+
+
+
+
+
+
+
+
+
+
 
 def define_csharp_bin_size_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -574,10 +708,10 @@ public class convert
     private static int int_from_bin(byte[] bin, ref int offset)
     {
         int retval =
-            bin[offset + 0] << 24 +
-            bin[offset + 1] << 16 +
-            bin[offset + 2] <<  8 +
-            bin[offset + 3] <<  0;
+            (bin[offset + 0] << 24) +
+            (bin[offset + 1] << 16) +
+            (bin[offset + 2] <<  8) +
+            (bin[offset + 3] <<  0);
         offset += 4;
         return retval;
     }
@@ -650,13 +784,116 @@ public class convert
 
 ''')
 
+    args.cpp_file.write('''
+namespace {
+
+    bool bool_from_bin (unsigned char*& bin)
+    {
+        bool retval = static_cast<bool>(*bin);
+        bin += 1;
+        return retval;
+    }
+
+    int int_from_bin (unsigned char*& bin)
+    {
+        int retval =
+            (bin[0] << 24) +
+            (bin[1] << 16) +
+            (bin[2] <<  8) +
+            (bin[3] <<  0);
+        bin += 4;
+        return retval;
+    }
+
+    float float_from_bin (unsigned char*& bin)
+    {
+        float retval;
+        memcpy(&retval, bin, sizeof(float));
+        bin += sizeof(float);
+        return retval;
+    }
+
+    double double_from_bin (unsigned char*& bin)
+    {
+        double retval;
+        memcpy(&retval, bin, sizeof(double));
+        bin += sizeof(double);
+        return retval;
+    }
+
+    template <typename T>
+    T enum_from_bin (unsigned char*& bin)
+    {
+        int i = int_from_bin(bin);
+        return static_cast<T>(i);
+    }
+
+    std::string string_from_bin (unsigned char*& bin)
+    {
+        std::size_t length = int_from_bin(bin);
+        std::string retval((const char*)bin, length);
+        bin += length;
+        return retval;
+    }
+
+    void to_bin (bool b, std::vector<unsigned char>& bin)
+    {
+        bin.push_back(static_cast<unsigned char>(b));
+    }
+
+    void to_bin (int i, std::vector<unsigned char>& bin)
+    {
+        bin.push_back(static_cast<unsigned char>((i >> 24) & 0xff));
+        bin.push_back(static_cast<unsigned char>((i >> 16) & 0xff));
+        bin.push_back(static_cast<unsigned char>((i >>  8) & 0xff));
+        bin.push_back(static_cast<unsigned char>((i >>  0) & 0xff));
+    }
+
+    void to_bin (float f, std::vector<unsigned char>& bin)
+    {
+        bin.resize(bin.size() + sizeof(float));
+        memcpy(&bin[bin.size() - sizeof(float)], &f, sizeof(float));
+    }
+
+    void to_bin (double d, std::vector<unsigned char>& bin)
+    {
+        bin.resize(bin.size() + sizeof(double));
+        memcpy(&bin[bin.size() - sizeof(double)], &d, sizeof(double));
+    }
+
+    template <typename T>
+    void to_bin (T e, std::vector<unsigned char>& bin)
+    {
+        int i = static_cast<int>(e);
+        to_bin(i, bin);
+    }
+
+    void to_bin (const std::string s, std::vector<unsigned char>& bin)
+    {
+        int length = static_cast<int>(s.size());
+        to_bin(length, bin);
+        bin.resize(bin.size() + length);
+        std::copy(s.begin(), s.end(), bin.end() - length);
+    }
+
+}
+
+''')
+
     for i in range(len(all_decl_data)):
         args.hpp_file.write('''
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+pb+cpp'), make_decl(all_decl_data[i], 'from+pb+cpp')))
+        args.hpp_file.write('''
+{0}{1};
+{0}{2};
+'''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+bin+cpp'), make_decl(all_decl_data[i], 'from+bin+cpp')))
+
         define_cpp_to_pb_impl(all_decl_data[i], depth, map_fields)
         define_cpp_from_pb_impl(all_decl_data[i], depth, map_fields)
+        define_cpp_to_bin_impl(all_decl_data[i], depth, map_fields)
+        #define_cpp_from_bin_impl(all_decl_data[i], depth, map_fields)
 
         if args.cs_file:
             define_csharp_bin_size(all_decl_data[i], 1, map_fields)
@@ -664,6 +901,6 @@ public class convert
             define_csharp_to(all_decl_data[i], 1, map_fields)
 
     close_namespace(user_namespace)
-    
+
     if args.cs_file:
         args.cs_file.write('};\n\n}\n')
