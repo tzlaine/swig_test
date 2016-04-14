@@ -126,14 +126,14 @@ if (PYTHON_EXECUTABLE)
 
     add_custom_command(
         OUTPUT
-            ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+            ${CMAKE_SOURCE_DIR}/include/model_data.hpp
             ${CMAKE_SOURCE_DIR}/src/model_data.cpp
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 --site-packages ${protobuf_python_pth_dir}
                 --proto-file ${CMAKE_SOURCE_DIR}/proto/model.proto
                 --desc-file ${CMAKE_CURRENT_BINARY_DIR}/model.desc
-                --hpp-file ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+                --hpp-file ${CMAKE_SOURCE_DIR}/include/model_data.hpp
                 --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
                 --cs-file ${CMAKE_SOURCE_DIR}/unity_project/Assets/plugins/model_data.cs
                 --cs-namespace model_data
@@ -147,12 +147,12 @@ if (PYTHON_EXECUTABLE)
     add_custom_target(
         model_data_target
         DEPENDS
-            ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+            ${CMAKE_SOURCE_DIR}/include/model_data.hpp
             ${CMAKE_SOURCE_DIR}/src/model_data.cpp
     )
 
     set_source_files_properties(
-        ${CMAKE_SOURCE_DIR}/src/model_data.hpp
+        ${CMAKE_SOURCE_DIR}/include/model_data.hpp
         ${CMAKE_SOURCE_DIR}/src/model_data.cpp
         PROPERTIES
             GENERATED true

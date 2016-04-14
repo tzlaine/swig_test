@@ -592,20 +592,20 @@ void fill_in_nation_ids (nations_t& nations)
     }
 }
 
-std::string g_message_buffer;
+std::vector<unsigned char> g_message_buffer;
 
 template <typename T>
 bool encode_into_buffer (const T& obj)
 {
-    auto const pb_obj = to_protobuf(obj);
-    pb2json(pb_obj, g_message_buffer, map_encoding_t::verbose, whitespace_t::minified);
+    g_message_buffer.clear();
+    to_bin(obj, g_message_buffer);
     return true;
 }
 
 template <typename T>
 bool decode_into_object (void* bytes, int size, T& obj)
 {
-#if 0 // Change to expect JSON
+#if 0 // Change to expect binary blob.
     decltype(to_protobuf(std::declval<T>())) pb_obj;
     if (!pb_obj.ParseFromArray(bytes, size))
         return false;
