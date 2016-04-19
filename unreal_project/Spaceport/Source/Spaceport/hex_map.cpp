@@ -37,10 +37,14 @@ void Ahex_map::spawn_hexes()
 
 Ahex* Ahex_map::spawn_hex (int x, int y, UWorld* const world)
 {
+    float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
+
     FVector location;
-    location.X = x * 100.0f;
-    location.Y = y * 100.0f;
-    location.Z = 0.0f;
+    location.X = x * 1.5 * meters;
+    location.Y = (height - 1 - y) * 2 * sin_60 * meters;
+    if ((x + 1000) % 2 == 1)
+        location.Y -= sin_60 * meters;
+    location.Z = 0 * meters;
 
     FRotator rotation;
 
