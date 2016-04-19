@@ -6,7 +6,6 @@
 #include "utility.hpp"
 
 
-
 Ahex_map::Ahex_map () :
     width(5),
     height(5)
