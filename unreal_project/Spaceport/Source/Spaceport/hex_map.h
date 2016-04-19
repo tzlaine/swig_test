@@ -15,10 +15,11 @@ public:
 
     virtual void BeginPlay () override;
 
-    virtual void Tick (float DeltaSeconds) override;
-
 protected:
-    void SpawnHex (int x, int y);
+    void spawn_hexes ();
+    class Ahex* spawn_hex (int x, int y, UWorld* const world);
+
+    FTimerHandle spawn_timer;
 
     UPROPERTY(EditAnywhere, Category = "Hex")
     TSubclassOf<class Ahex> hex;
