@@ -15,5 +15,12 @@ unity_project/Temp/
 unity_project/unity_project-csharp.sln
 unity_project/unity_project.sln
 unity_project/unity_project.userprefs
+unreal_project/Spaceport/.vs/
+unreal_project/Spaceport/Binaries/
+unreal_project/Spaceport/Intermediate/
+unreal_project/Spaceport/Saved/
+unreal_project/Spaceport/Spaceport.VC.VC.opendb
+unreal_project/Spaceport/Spaceport.VC.db
+unreal_project/Spaceport/Spaceport.sln
 build
 *~
