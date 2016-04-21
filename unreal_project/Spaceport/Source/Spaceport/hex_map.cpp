@@ -46,7 +46,7 @@ Ahex* Ahex_map::spawn_hex (int x, int y, UWorld* const world)
         location.Y -= sin_60 * meters;
     location.Z = 0 * meters;
 
-    FRotator rotation;
+    FRotator rotation = {0.0f, 0.0f, 0.0f};
 
     FActorSpawnParameters spawn_params;
     spawn_params.Owner = this;
