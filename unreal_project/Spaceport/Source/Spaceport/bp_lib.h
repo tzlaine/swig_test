@@ -14,11 +14,17 @@ class SPACEPORT_API Ubp_lib : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "zoom")
+	static void start_zoom (APlayerController* pc);
+
+	UFUNCTION(BlueprintPure, Category = "zoom")
+	static FVector zoom_map_offset (APlayerController* pc);
+
 	UFUNCTION(BlueprintCallable, Category = "map_drag")
 	static void start_map_drag (APlayerController* pc);
 
 	UFUNCTION(BlueprintPure, Category = "map_drag")
-    static FVector map_drag_offset (APlayerController* pc);
+	static FVector map_drag_offset (APlayerController* pc);
 
 private:
 	static FVector prev_map_drag_intersection_;

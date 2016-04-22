@@ -13,6 +13,17 @@ namespace {
 FVector Ubp_lib::prev_map_drag_intersection_ = bad_intersection;
 bool Ubp_lib::map_drag_viable_ = false;
 
+void Ubp_lib::start_zoom(APlayerController* pc)
+{
+
+}
+
+FVector Ubp_lib::zoom_map_offset(APlayerController* pc)
+{
+	FVector retval = { 0, 0, 0 };
+	return retval;
+}
+
 void Ubp_lib::start_map_drag (APlayerController* pc)
 {
 	FVector origin, direction;
