@@ -8,11 +8,11 @@
 #ifdef _MSC_VER
 #include <fstream>
 
-const char* nations_json_string = nullptr;
-const char* map_json_string = nullptr;
-const char* oob_json_string = nullptr;
-const char* units_json_string = nullptr;
-const char* scenario_json_string = nullptr;
+std::string nations_json_string;
+std::string map_json_string;
+std::string oob_json_string;
+std::string units_json_string;
+std::string scenario_json_string;
 
 std::string file_slurp (const char* filename)
 {
@@ -27,94 +27,39 @@ std::string file_slurp (const char* filename)
 
 TEST(init_model_ops, test_init_nations)
 {
-    EXPECT_TRUE(init_nations(nations_json_string));
-    EXPECT_TRUE(init_nations(nations_json_string));
-
-    EXPECT_TRUE(reset_model());
+    start_data_t start_data;
+    start_data.init_nations(nations_json_string);
 }
 
 TEST(init_model_ops, test_init_units)
 {
-    EXPECT_TRUE(init_unit_defs(units_json_string));
-    EXPECT_TRUE(init_unit_defs(units_json_string));
-
-    EXPECT_TRUE(reset_model());
+    start_data_t start_data;
+    start_data.init_unit_defs(units_json_string);
 }
 
 TEST(init_model_ops, test_init_scenario)
 {
-    EXPECT_ANY_THROW(init_scenario(scenario_json_string));
+    start_data_t start_data;
 
-    EXPECT_TRUE(init_nations(nations_json_string));
-    EXPECT_TRUE(init_scenario(scenario_json_string));
+    auto get_map_str = []() { return map_json_string; };
+    auto get_oob_str = []() { return oob_json_string; };
 
-    EXPECT_TRUE(init_scenario(scenario_json_string));
-
-    EXPECT_TRUE(reset_model());
-}
-
-TEST(init_model_ops, test_init_model)
-{
-    EXPECT_ANY_THROW(init_model(map_json_string, oob_json_string));
-
-    EXPECT_TRUE(init_unit_defs(units_json_string));
-
-    EXPECT_ANY_THROW(init_model(map_json_string, oob_json_string));
-
-    EXPECT_TRUE(init_nations(nations_json_string));
-
-    EXPECT_ANY_THROW(init_model(map_json_string, oob_json_string));
-
-    EXPECT_TRUE(init_scenario(scenario_json_string));
-    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
-
-    EXPECT_TRUE(reset_model());
-}
-
-TEST(init_model_ops, test_null_string_init)
-{
-    EXPECT_ANY_THROW(init_nations(nullptr));
-    EXPECT_ANY_THROW(init_unit_defs(nullptr));
-
-    EXPECT_TRUE(init_nations(nations_json_string));
-
-    EXPECT_ANY_THROW(init_scenario(nullptr));
-    EXPECT_TRUE(init_scenario(scenario_json_string));
-
-    EXPECT_TRUE(init_unit_defs(units_json_string));
-
-    EXPECT_ANY_THROW(init_model(nullptr, oob_json_string));
-    EXPECT_ANY_THROW(init_model(map_json_string, nullptr));
-
-    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
-
-    EXPECT_TRUE(reset_model());
+    start_data.init_unit_defs(units_json_string);
+    start_data.init_nations(nations_json_string);
+    start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 }
 
 TEST(init_model_ops, test_empty_string_init)
 {
-    EXPECT_ANY_THROW(init_nations(""));
-    EXPECT_ANY_THROW(init_unit_defs(""));
-
-    EXPECT_TRUE(init_nations(nations_json_string));
-
-    EXPECT_ANY_THROW(init_scenario(""));
-    EXPECT_TRUE(init_scenario(scenario_json_string));
-
-    EXPECT_TRUE(init_unit_defs(units_json_string));
-
-    EXPECT_ANY_THROW(init_model("", oob_json_string));
-    EXPECT_ANY_THROW(init_model(map_json_string, ""));
-
-    EXPECT_TRUE(init_model(map_json_string, oob_json_string));
-
-    EXPECT_TRUE(reset_model());
+    start_data_t start_data;
+    EXPECT_DEATH(start_data.init_nations(""), ".*");
+    EXPECT_DEATH(start_data.init_unit_defs(""), ".*");
 }
 
 TEST(init_model_ops, test_nations_bin_encoding)
 {
     message::nations_t nations_msg;
-    json2pb(nations_msg, nations_json_string, strlen(nations_json_string), map_encoding_t::compact);
+    json2pb(nations_msg, nations_json_string, map_encoding_t::compact);
     nations_t from_string = from_protobuf(nations_msg);
 
     std::vector<unsigned char> encoded_bytes;
@@ -170,32 +115,20 @@ TEST(init_model_ops, test_nations_bin_encoding)
 int main(int argc, char **argv)
 {
 #ifdef _MSC_VER
-    std::string nations_json_string_;
-    std::string map_json_string_;
-    std::string oob_json_string_;
-    std::string units_json_string_;
-    std::string scenario_json_string_;
+    if (1 < argc)
+        nations_json_string = file_slurp(argv[1]);
 
-    if (1 < argc) {
-        nations_json_string_ = file_slurp(argv[1]);
-	nations_json_string = nations_json_string_.c_str();
-    }
-    if (2 < argc) {
-        map_json_string_ = file_slurp(argv[2]);
-	map_json_string = map_json_string_.c_str();
-    }
-    if (3 < argc) {
-        oob_json_string_ = file_slurp(argv[3]);
-	oob_json_string = oob_json_string_.c_str();
-    }
-    if (4 < argc) {
-        units_json_string_ = file_slurp(argv[4]);
-	units_json_string = units_json_string_.c_str();
-    }
-    if (5 < argc) {
-        scenario_json_string_ = file_slurp(argv[5]);
-	scenario_json_string = scenario_json_string_.c_str();
-    }
+    if (2 < argc)
+        map_json_string = file_slurp(argv[2]);
+
+    if (3 < argc)
+        oob_json_string = file_slurp(argv[3]);
+
+    if (4 < argc)
+        units_json_string = file_slurp(argv[4]);
+
+    if (5 < argc)
+        scenario_json_string = file_slurp(argv[5]);
 #endif
 
     ::testing::InitGoogleTest(&argc, argv);

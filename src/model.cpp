@@ -585,163 +585,78 @@ void fill_in_nation_ids (nations_t& nations)
     }
 }
 
-struct loaded_nations_t
+void start_data_t::init_nations (std::string const & nations_str)
 {
-    loaded_nations_t () : initialized (false) {}
-
-    bool initialized;
-    nations_t nations;
-};
-loaded_nations_t g_loaded_nations;
-
-struct loaded_unit_defs_t
-{
-    loaded_unit_defs_t () : initialized (false) {}
-
-    bool initialized;
-    unit_defs_t unit_defs;
-};
-loaded_unit_defs_t g_loaded_unit_defs;
-
-struct loaded_scenario_t
-{
-    loaded_scenario_t () : initialized (false) {}
-
-    bool initialized;
-    scenario_t scenario;
-};
-loaded_scenario_t g_loaded_scenario;
-
-struct model_state_t
-{
-    model_state_t () : initialized (false) {}
-
-    bool initialized;
-    map_t m;
-    orders_of_battle_t oob;
-    graph::graph g;
-    graph::hex_id_property_map hex_id_property_map;
-    graph::EdgeWeightPropertyMap edge_weight_map;
-};
-model_state_t g_model_state;
-
-int init_nations (const char* nations_str)
-{
-    if (nations_str == nullptr)
-        throw std::runtime_error("init_model() was passed a null nations data string.");
-
-    const std::string empty_str;
-    if (nations_str == empty_str)
-        throw std::runtime_error("init_model() was passed an empty nations data string.");
-
-    if (g_loaded_nations.initialized)
-        return 1;
+    assert(nations_str != "");
 
     {
         message::nations_t nations_msg;
-        json2pb(nations_msg, nations_str, strlen(nations_str), map_encoding_t::compact);
-        g_loaded_nations.nations = from_protobuf(nations_msg);
-        validate_nations(g_loaded_nations.nations);
-        fill_in_nation_ids(g_loaded_nations.nations);
+        json2pb(nations_msg, nations_str, map_encoding_t::compact);
+        nations_ = from_protobuf(nations_msg);
+        validate_nations(nations_);
+        fill_in_nation_ids(nations_);
     }
 
-    g_loaded_nations.initialized = true;
-
-    return 1;
+    nations_initialized_ = true;
 }
 
-int init_unit_defs (const char* unit_defs_str)
+void start_data_t::init_unit_defs (std::string const & unit_defs_str)
 {
-    if (unit_defs_str == nullptr)
-        throw std::runtime_error("init_unit_defs() was passed a null units data string.");
-
-    const std::string empty_str;
-    if (unit_defs_str == empty_str)
-        throw std::runtime_error("init_unit_defs() was passed an empty units data string.");
-
-    if (g_loaded_unit_defs.initialized)
-        return 1;
+    assert(unit_defs_str != "");
 
     {
         message::unit_defs_t unit_defs_msg;
-        json2pb(unit_defs_msg, unit_defs_str, strlen(unit_defs_str), map_encoding_t::compact);
-        g_loaded_unit_defs.unit_defs = from_protobuf(unit_defs_msg);
-        validate_unit_defs(g_loaded_unit_defs.unit_defs);
+        json2pb(unit_defs_msg, unit_defs_str, map_encoding_t::compact);
+        unit_defs_ = from_protobuf(unit_defs_msg);
+        validate_unit_defs(unit_defs_);
     }
 
-    g_loaded_unit_defs.initialized = true;
-
-    return 1;
+    unit_defs_initialized_ = true;
 }
 
-int init_scenario (const char* scenario_str)
+void start_data_t::init_map (std::string const & map_str)
 {
-    if (scenario_str == nullptr)
-        throw std::runtime_error("init_scenario() was passed a null scenario data string.");
-
-    const std::string empty_str;
-    if (scenario_str == empty_str)
-        throw std::runtime_error("init_scenario() was passed an empty scenario data string.");
-
-    if (!g_loaded_nations.initialized)
-        throw std::runtime_error("init_scenario() was called without loaded nations data available.");
-
-    if (g_loaded_scenario.initialized)
-        return 1;
-
-    {
-        message::scenario_t scenario_msg;
-        json2pb(scenario_msg, scenario_str, strlen(scenario_str), map_encoding_t::compact);
-        g_loaded_scenario.scenario = from_protobuf(scenario_msg);
-        validate_scenario(g_loaded_scenario.scenario, g_loaded_nations.nations);
-    }
-
-    g_loaded_scenario.initialized = true;
-
-    return 1;
-}
-
-int init_model (const char* map_str, const char* oob_str)
-{
-    if (map_str == nullptr)
-        throw std::runtime_error("init_model() was passed a null map data string.");
-    if (oob_str == nullptr)
-        throw std::runtime_error("init_model() was passed a null OOB data string.");
-
-    const std::string empty_str;
-    if (map_str == empty_str)
-        throw std::runtime_error("init_model() was passed an empty map data string.");
-    if (oob_str == empty_str)
-        throw std::runtime_error("init_model() was passed an empty OOB data string.");
-
-    if (!g_loaded_unit_defs.initialized)
-        throw std::runtime_error("init_model() was called without loaded unit_defs data available.");
-    if (!g_loaded_nations.initialized)
-        throw std::runtime_error("init_model() was called without loaded nations data available.");
-    if (!g_loaded_scenario.initialized)
-        throw std::runtime_error("init_model() was called without loaded scenario data available.");
-
-    if (g_model_state.initialized)
-        throw std::runtime_error("Attempted to duplicate-initialize model");
+    assert(map_str != "");
 
     {
         message::map_t map_msg;
-        json2pb(map_msg, map_str, strlen(map_str), map_encoding_t::compact);
-        g_model_state.m = from_protobuf(map_msg);
-        validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
+        json2pb(map_msg, map_str, map_encoding_t::compact);
+        map_ = from_protobuf(map_msg);
+        validate_and_fill_in_map_hexes(map_, nations_);
     }
+}
+
+void start_data_t::init_oob (std::string const & oob_str)
+{
+    assert(oob_str != "");
 
     {
         message::orders_of_battle_t oob_msg;
-        json2pb(oob_msg, oob_str, strlen(oob_str), map_encoding_t::compact);
-        g_model_state.oob = from_protobuf(oob_msg);
-        validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations, g_loaded_unit_defs.unit_defs);
+        json2pb(oob_msg, oob_str, map_encoding_t::compact);
+        oob_ = from_protobuf(oob_msg);
+        validate_and_fill_in_unit_times(oob_, map_, nations_, unit_defs_);
+    }
+}
+
+void start_data_t::init_scenario_impl (std::string const & scenario_str)
+{
+    assert(unit_defs_initialized_);
+    assert(nations_initialized_);
+    assert(scenario_str != "");
+
+    {
+        message::scenario_t scenario_msg;
+        json2pb(scenario_msg, scenario_str, map_encoding_t::compact);
+        scenario_ = from_protobuf(scenario_msg);
+        validate_scenario(scenario_, nations_);
     }
 
-    validate_hex_coords(g_loaded_nations.nations, g_model_state.m.width, g_model_state.m.height);
+    validate_hex_coords(nations_, map_.width, map_.height);
 
-    validate_scenario_with_map_and_oob(g_loaded_scenario.scenario, g_model_state.m, g_model_state.oob);
+    validate_scenario_with_map_and_oob(scenario_, map_, oob_);
 
+    scenario_initialized_ = true;
+#if 0
     init_graph(
         g_model_state.g,
         g_model_state.hex_id_property_map,
@@ -753,20 +668,10 @@ int init_model (const char* map_str, const char* oob_str)
     );
 
     g_model_state.initialized = true;
-
-    return 1;
+#endif
 }
 
-int reset_model ()
-{
-    g_loaded_unit_defs = loaded_unit_defs_t();
-    g_loaded_nations = loaded_nations_t();
-    g_loaded_scenario = loaded_scenario_t();
-    g_model_state = model_state_t();
-    return 1;
-
-}
-
+#if 0
 int save_model (const char* filename)
 {
     if (!g_model_state.initialized)
@@ -826,8 +731,8 @@ int load_model (const char* filename)
     g_model_state.initialized = true;
 
     return 1;
-
 }
+#endif
 
 #if 0
 // Returns an int for each hex, containing a grid ID in the first 8 bits

@@ -25,6 +25,10 @@ enum class whitespace_t {
 };
 
 void json2pb(google::protobuf::Message &msg,
+             const std::string &str,
+             map_encoding_t map_encoding);
+
+void json2pb(google::protobuf::Message &msg,
              const char *buf,
              size_t size,
              map_encoding_t map_encoding);

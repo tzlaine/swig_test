@@ -299,6 +299,13 @@ static void _json2pb(Message& msg, json_t *root)
 	}
 }
 
+void json2pb(google::protobuf::Message &msg,
+             const std::string &str,
+             map_encoding_t map_encoding)
+{
+	json2pb(msg, str.c_str(), str.size(), map_encoding);
+}
+
 void json2pb(Message &msg, const char *buf, size_t size, map_encoding_t map_encoding)
 {
 	json_t *root;
