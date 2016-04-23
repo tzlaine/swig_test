@@ -12,17 +12,11 @@ include_directories(
     ${CMAKE_HOME_DIRECTORY}/googletest/googletest/include
 )
 
-add_executable(
-    model_tests
-    ${CMAKE_HOME_DIRECTORY}/src/model.cpp
-    ${CMAKE_HOME_DIRECTORY}/json2pb/json2pb.cc
-    ${CMAKE_HOME_DIRECTORY}/src/model_data.cpp
-    ${CMAKE_BINARY_DIR}/model.pb.cc
-    model_tests.cpp
-)
+add_executable(model_tests model_tests.cpp)
 
 target_link_libraries(
     model_tests
+    model
     libprotobuf
     jansson
     gtest
@@ -38,9 +32,6 @@ set_target_properties(
 )
 
 add_dependencies(model_tests data_header_target model_test_message_target)
-if (PYTHON_EXECUTABLE)
-    add_dependencies(model_tests model_data_target)
-endif ()
 
 set(model_test_args)
 if (MSVC)
