@@ -13,18 +13,18 @@ namespace {
     std::string load_text_file(char const* name)
     {
         std::string retval;
-	    auto& platform_file = FPlatformFileManager::Get().GetPlatformFile();
-	    FString map_filename = FPaths::GameDir() + name;
-	    std::unique_ptr<IFileHandle> file_handle(platform_file.OpenRead(*map_filename));
-	    if (file_handle) {
-		    auto const size = file_handle->Size();
-		    retval = std::string(size, '\0');
-		    file_handle->Read((uint8*)&retval[0], size);
-	    } else {
-		    auto const error = "Unable to load text file resource '" + map_filename + "'.";
-		    GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::White, *error);
-	    }
-	    return retval;
+        auto& platform_file = FPlatformFileManager::Get().GetPlatformFile();
+        FString map_filename = FPaths::GameDir() + name;
+        std::unique_ptr<IFileHandle> file_handle(platform_file.OpenRead(*map_filename));
+        if (file_handle) {
+            auto const size = file_handle->Size();
+            retval = std::string(size, '\0');
+            file_handle->Read((uint8*)&retval[0], size);
+        } else {
+            auto const error = "Unable to load text file resource '" + map_filename + "'.";
+            GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::White, *error);
+        }
+        return retval;
     }
 
 }
@@ -51,9 +51,9 @@ void Ahex_map::spawn_hexes()
         return;
     }
 
-	// TODO: Move the map loading code to a more apporpriate location.
-	std::string const nations_contents = load_text_file("nations.json");
-	std::string const default_map_contents = load_text_file("default_map.json");
+    // TODO: Move the map loading code to a more apporpriate location.
+    std::string const nations_contents = load_text_file("nations.json");
+    std::string const default_map_contents = load_text_file("default_map.json");
 
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {

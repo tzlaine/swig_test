@@ -9,7 +9,7 @@ UCLASS()
 class SPACEPORT_API Ahex : public AActor
 {
     GENERATED_BODY()
-public:	
+public: 
     Ahex();
 
     inline class UStaticMeshComponent* mesh() const

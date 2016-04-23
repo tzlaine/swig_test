@@ -11,9 +11,9 @@
 UCLASS()
 class SPACEPORT_API ASpaceportGameMode : public AGameMode
 {
-	GENERATED_BODY()
-	
-	
-	
-	
+    GENERATED_BODY()
+    
+    
+    
+    
 };
