@@ -49,13 +49,6 @@ TEST(init_model_ops, test_init_scenario)
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 }
 
-TEST(init_model_ops, test_empty_string_init)
-{
-    start_data_t start_data;
-    EXPECT_DEATH(start_data.init_nations(""), ".*");
-    EXPECT_DEATH(start_data.init_unit_defs(""), ".*");
-}
-
 TEST(init_model_ops, test_nations_bin_encoding)
 {
     message::nations_t nations_msg;
