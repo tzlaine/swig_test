@@ -1,5 +1,3 @@
-#define LOG 1
-
 #include <model.hpp>
 #include "validation.hpp"
 #include "hex_operations.hpp"
@@ -41,13 +39,6 @@ const hex_direction_t all_hex_directions[6] = {
     hex_direction_t::below_right
 };
 
-
-#define CATCH_AND_RETURN(value)                         \
-    catch (std::exception const & e) {                  \
-        /* TODO: Send up to Unity app? */               \
-        std::cerr << boost::diagnostic_information(e);  \
-        return value;                                   \
-    }
 
 namespace pb = google::protobuf;
 
@@ -260,6 +251,7 @@ void init_graph (graph::graph& g,
     }
 }
 
+#if 0
 struct supply_data
 {
     std::vector<int> supply;
@@ -583,6 +575,7 @@ int next_supply_source (int source,
     }
     return source;
 }
+#endif
 
 void fill_in_nation_ids (nations_t& nations)
 {
@@ -590,40 +583,6 @@ void fill_in_nation_ids (nations_t& nations)
     for (auto& n : nations.nations) {
         n.second.nation_id = ++id;
     }
-}
-
-std::vector<unsigned char> g_message_buffer;
-
-template <typename T>
-bool encode_into_buffer (const T& obj)
-{
-    g_message_buffer.clear();
-    to_bin(obj, g_message_buffer);
-    return true;
-}
-
-template <typename T>
-bool decode_into_object (void* bytes, int size, T& obj)
-{
-#if 0 // Change to expect binary blob.
-    decltype(to_protobuf(std::declval<T>())) pb_obj;
-    if (!pb_obj.ParseFromArray(bytes, size))
-        return false;
-    obj = from_protobuf(pb_obj);
-    return true;
-#endif
-    return false;
-}
-
-template <typename T>
-int get_impl (const T& obj, void** bytes, int* size)
-{
-    if (encode_into_buffer(obj)) {
-        *bytes = &g_message_buffer[0];
-        *size = static_cast<int>(g_message_buffer.size());
-        return 1;
-    }
-    return 0;
 }
 
 struct loaded_nations_t
@@ -666,443 +625,392 @@ struct model_state_t
 };
 model_state_t g_model_state;
 
-extern "C" {
+int init_nations (const char* nations_str)
+{
+    if (nations_str == nullptr)
+        throw std::runtime_error("init_model() was passed a null nations data string.");
 
-    MODEL_API
-    int test (int i) try
+    const std::string empty_str;
+    if (nations_str == empty_str)
+        throw std::runtime_error("init_model() was passed an empty nations data string.");
+
+    if (g_loaded_nations.initialized)
+        return 1;
+
     {
-        return i + 42;
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    float test_2 (int n, float floats[]) try
-    {
-        return 6;
-
-    } CATCH_AND_RETURN(0.0f);
-
-    MODEL_API
-    float test_3 (int n, ga_hex_t* hexes) try
-    {
-        float retval = 0;
-        for (int i = 0; i < n; ++i) {
-            retval += hexes[i].a + hexes[i].b;
-        }
-        return retval;
-
-    } CATCH_AND_RETURN(0.0f);
-
-    MODEL_API
-    int get_nations (void** bytes, int* size)
-    {
-        return get_impl(g_loaded_nations.nations, bytes, size);
+        message::nations_t nations_msg;
+        json2pb(nations_msg, nations_str, strlen(nations_str), map_encoding_t::compact);
+        g_loaded_nations.nations = from_protobuf(nations_msg);
+        validate_nations(g_loaded_nations.nations);
+        fill_in_nation_ids(g_loaded_nations.nations);
     }
 
-    MODEL_API
-    int get_map (void** bytes, int* size)
+    g_loaded_nations.initialized = true;
+
+    return 1;
+}
+
+int init_unit_defs (const char* unit_defs_str)
+{
+    if (unit_defs_str == nullptr)
+        throw std::runtime_error("init_unit_defs() was passed a null units data string.");
+
+    const std::string empty_str;
+    if (unit_defs_str == empty_str)
+        throw std::runtime_error("init_unit_defs() was passed an empty units data string.");
+
+    if (g_loaded_unit_defs.initialized)
+        return 1;
+
     {
-        return get_impl(g_model_state.m, bytes, size);
+        message::unit_defs_t unit_defs_msg;
+        json2pb(unit_defs_msg, unit_defs_str, strlen(unit_defs_str), map_encoding_t::compact);
+        g_loaded_unit_defs.unit_defs = from_protobuf(unit_defs_msg);
+        validate_unit_defs(g_loaded_unit_defs.unit_defs);
     }
 
-    MODEL_API
-    int get_oob (void** bytes, int* size)
+    g_loaded_unit_defs.initialized = true;
+
+    return 1;
+}
+
+int init_scenario (const char* scenario_str)
+{
+    if (scenario_str == nullptr)
+        throw std::runtime_error("init_scenario() was passed a null scenario data string.");
+
+    const std::string empty_str;
+    if (scenario_str == empty_str)
+        throw std::runtime_error("init_scenario() was passed an empty scenario data string.");
+
+    if (!g_loaded_nations.initialized)
+        throw std::runtime_error("init_scenario() was called without loaded nations data available.");
+
+    if (g_loaded_scenario.initialized)
+        return 1;
+
     {
-        return get_impl(g_model_state.oob, bytes, size);
+        message::scenario_t scenario_msg;
+        json2pb(scenario_msg, scenario_str, strlen(scenario_str), map_encoding_t::compact);
+        g_loaded_scenario.scenario = from_protobuf(scenario_msg);
+        validate_scenario(g_loaded_scenario.scenario, g_loaded_nations.nations);
     }
 
-    MODEL_API
-    int init_nations (const char* nations_str) try
+    g_loaded_scenario.initialized = true;
+
+    return 1;
+}
+
+int init_model (const char* map_str, const char* oob_str)
+{
+    if (map_str == nullptr)
+        throw std::runtime_error("init_model() was passed a null map data string.");
+    if (oob_str == nullptr)
+        throw std::runtime_error("init_model() was passed a null OOB data string.");
+
+    const std::string empty_str;
+    if (map_str == empty_str)
+        throw std::runtime_error("init_model() was passed an empty map data string.");
+    if (oob_str == empty_str)
+        throw std::runtime_error("init_model() was passed an empty OOB data string.");
+
+    if (!g_loaded_unit_defs.initialized)
+        throw std::runtime_error("init_model() was called without loaded unit_defs data available.");
+    if (!g_loaded_nations.initialized)
+        throw std::runtime_error("init_model() was called without loaded nations data available.");
+    if (!g_loaded_scenario.initialized)
+        throw std::runtime_error("init_model() was called without loaded scenario data available.");
+
+    if (g_model_state.initialized)
+        throw std::runtime_error("Attempted to duplicate-initialize model");
+
     {
-        if (nations_str == nullptr)
-            throw std::runtime_error("init_model() was passed a null nations data string.");
+        message::map_t map_msg;
+        json2pb(map_msg, map_str, strlen(map_str), map_encoding_t::compact);
+        g_model_state.m = from_protobuf(map_msg);
+        validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
+    }
 
-        const std::string empty_str;
-        if (nations_str == empty_str)
-            throw std::runtime_error("init_model() was passed an empty nations data string.");
+    {
+        message::orders_of_battle_t oob_msg;
+        json2pb(oob_msg, oob_str, strlen(oob_str), map_encoding_t::compact);
+        g_model_state.oob = from_protobuf(oob_msg);
+        validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations, g_loaded_unit_defs.unit_defs);
+    }
 
-        if (g_loaded_nations.initialized)
-            return 1;
+    validate_hex_coords(g_loaded_nations.nations, g_model_state.m.width, g_model_state.m.height);
 
-        {
-            message::nations_t nations_msg;
-            json2pb(nations_msg, nations_str, strlen(nations_str), map_encoding_t::compact);
-            g_loaded_nations.nations = from_protobuf(nations_msg);
-            validate_nations(g_loaded_nations.nations);
-            fill_in_nation_ids(g_loaded_nations.nations);
+    validate_scenario_with_map_and_oob(g_loaded_scenario.scenario, g_model_state.m, g_model_state.oob);
+
+    init_graph(
+        g_model_state.g,
+        g_model_state.hex_id_property_map,
+        g_model_state.edge_weight_map,
+        g_model_state.m.width,
+        g_model_state.m.height,
+        [] (int id1, int id2) {return true;},
+        [] (int id1, int id2) {return 1.0;}
+    );
+
+    g_model_state.initialized = true;
+
+    return 1;
+}
+
+int reset_model ()
+{
+    g_loaded_unit_defs = loaded_unit_defs_t();
+    g_loaded_nations = loaded_nations_t();
+    g_loaded_scenario = loaded_scenario_t();
+    g_model_state = model_state_t();
+    return 1;
+
+}
+
+int save_model (const char* filename)
+{
+    if (!g_model_state.initialized)
+        throw std::runtime_error("Attempted to save an uninitialized model");
+
+    std::ofstream ofs(filename);
+    if (!ofs)
+        return 0;
+
+    message::model_t model;
+
+    *model.mutable_nations() = to_protobuf(g_loaded_nations.nations);
+    *model.mutable_map() = to_protobuf(g_model_state.m);
+
+    pb::io::OstreamOutputStream os(&ofs);
+    return static_cast<int>(pb::TextFormat::Print(model, &os));
+
+}
+
+int load_model (const char* filename)
+{
+    if (g_model_state.initialized)
+        throw std::runtime_error("Attempted to load over an initialized model");
+
+    std::ifstream ifs(filename);
+    if (!ifs)
+        return 0;
+
+    message::model_t model;
+    pb::io::IstreamInputStream is(&ifs);
+    if (!pb::TextFormat::Parse(&is, &model))
+        return 0;
+
+    {
+        if (!model.has_nations())
+            throw std::runtime_error("Missing saved nations data");
+        g_loaded_nations.nations = from_protobuf(model.nations());
+    }
+
+    {
+        if (!model.has_map())
+            throw std::runtime_error("Missing saved map data");
+        g_model_state.m = from_protobuf(model.map());
+    }
+
+    init_graph(
+        g_model_state.g,
+        g_model_state.hex_id_property_map,
+        g_model_state.edge_weight_map,
+        g_model_state.m.width,
+        g_model_state.m.height,
+        [] (int id1, int id2) {return true;},
+        [] (int id1, int id2) {return 1.0;}
+    );
+
+    g_loaded_nations.initialized = true;
+    g_model_state.initialized = true;
+
+    return 1;
+
+}
+
+#if 0
+// Returns an int for each hex, containing a grid ID in the first 8 bits
+// (0 is no grid, 1 is main capital grid, 2 is main offmap grid, anything
+// else is a partial grid).  Bits 8-23 contain the nations supplying this
+// hex (a '1' in bit N indicates that the nation with ID N-8 is supplying
+// it).  Bit 24 contains a flag indicating supplies must be paid for by
+// the hex's owner to supply ships in this hex (meaning the hex is in a
+// partial supply grid, and does not include a free-supply feature like a
+// SB, BATS, or planet).
+int* determine_supply (
+    int w, int h,
+    supply_check_hex_t hexes[],
+    int neutral_zone_id,
+    int nations,
+    int nation_team_membership[],
+    int capitals[],
+    int max_offmap_border_hexes,
+    int offmap_border_hexes[])
+{
+    g_supply_data.supply.resize(w * h);
+
+    graph::graph g;
+
+    std::size_t n = w * h;
+    for (int i = 0; i < nations; ++i) {
+        if (offmap_border_hexes[i * max_offmap_border_hexes] != -1)
+            ++n;
+    }
+
+    std::vector<graph::vertex_color> colors;
+    std::vector<float> distances;
+    std::vector<int> predecessors;
+
+    graph::bfs_init(n, colors, distances, predecessors);
+
+    boost::unordered_map<int, int> vertex_id_to_hex_id;
+    boost::unordered_map<int, int> hex_id_to_vertex_id;
+
+    auto find_grid = [&] (
+        int nation,
+        int grid,
+        int hex_id,
+        bool& visited_offmap
+    ) {
+        int n = add_vertex(g, hex_id, vertex_id_to_hex_id, hex_id_to_vertex_id);
+
+        supply_visitor visitor(nation,
+                               nations,
+                               nation_team_membership,
+                               grid,
+                               w,
+                               h,
+                               hexes,
+                               neutral_zone_id,
+                               max_offmap_border_hexes,
+                               offmap_border_hexes,
+                               &g_supply_data.supply[0],
+                               vertex_id_to_hex_id,
+                               hex_id_to_vertex_id,
+                               visited_offmap);
+        graph::bfs_(g, colors, distances, predecessors, n, visitor);
+    };
+
+#if LOG
+    {
+        std::ofstream ofs("model_log.txt");
+        boost::property_tree::ptree pt;
+
+        pt.put("w", w);
+        pt.put("h", h);
+
+        for (int i = 0; i < w * h; ++i) {
+            const std::string hex = "hexes." + boost::lexical_cast<std::string>(i);
+            pt.put(hex + ".owner_id", hexes[i].owner_id);
+            pt.put(hex + ".ship", hexes[i].ship);
+            pt.put(hex + ".nonship_unit", hexes[i].nonship_unit);
+            pt.put(hex + ".base_with_fighters", hexes[i].base_with_fighters);
+            pt.put(hex + ".planet", hexes[i].planet);
+            pt.put(hex + ".SB", hexes[i].SB);
+            pt.put(hex + ".BATS", hexes[i].BATS);
+            pt.put(hex + ".MB", hexes[i].MB);
+            pt.put(hex + ".convoy", hexes[i].convoy);
+            pt.put(hex + ".supply_tug", hexes[i].supply_tug);
         }
 
-        g_loaded_nations.initialized = true;
+        pt.put("neutral_zone_id", neutral_zone_id);
+        pt.put("nations", nations);
 
-        return 1;
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    int init_unit_defs (const char* unit_defs_str) try
-    {
-        if (unit_defs_str == nullptr)
-            throw std::runtime_error("init_unit_defs() was passed a null units data string.");
-
-        const std::string empty_str;
-        if (unit_defs_str == empty_str)
-            throw std::runtime_error("init_unit_defs() was passed an empty units data string.");
-
-        if (g_loaded_unit_defs.initialized)
-            return 1;
-
-        {
-            message::unit_defs_t unit_defs_msg;
-            json2pb(unit_defs_msg, unit_defs_str, strlen(unit_defs_str), map_encoding_t::compact);
-            g_loaded_unit_defs.unit_defs = from_protobuf(unit_defs_msg);
-            validate_unit_defs(g_loaded_unit_defs.unit_defs);
-        }
-
-        g_loaded_unit_defs.initialized = true;
-
-        return 1;
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    int init_scenario (const char* scenario_str) try
-    {
-        if (scenario_str == nullptr)
-            throw std::runtime_error("init_scenario() was passed a null scenario data string.");
-
-        const std::string empty_str;
-        if (scenario_str == empty_str)
-            throw std::runtime_error("init_scenario() was passed an empty scenario data string.");
-
-        if (!g_loaded_nations.initialized)
-            throw std::runtime_error("init_scenario() was called without loaded nations data available.");
-
-        if (g_loaded_scenario.initialized)
-            return 1;
-
-        {
-            message::scenario_t scenario_msg;
-            json2pb(scenario_msg, scenario_str, strlen(scenario_str), map_encoding_t::compact);
-            g_loaded_scenario.scenario = from_protobuf(scenario_msg);
-            validate_scenario(g_loaded_scenario.scenario, g_loaded_nations.nations);
-        }
-
-        g_loaded_scenario.initialized = true;
-
-        return 1;
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    int init_model (const char* map_str, const char* oob_str) try
-    {
-        if (map_str == nullptr)
-            throw std::runtime_error("init_model() was passed a null map data string.");
-        if (oob_str == nullptr)
-            throw std::runtime_error("init_model() was passed a null OOB data string.");
-
-        const std::string empty_str;
-        if (map_str == empty_str)
-            throw std::runtime_error("init_model() was passed an empty map data string.");
-        if (oob_str == empty_str)
-            throw std::runtime_error("init_model() was passed an empty OOB data string.");
-
-        if (!g_loaded_unit_defs.initialized)
-            throw std::runtime_error("init_model() was called without loaded unit_defs data available.");
-        if (!g_loaded_nations.initialized)
-            throw std::runtime_error("init_model() was called without loaded nations data available.");
-        if (!g_loaded_scenario.initialized)
-            throw std::runtime_error("init_model() was called without loaded scenario data available.");
-
-        if (g_model_state.initialized)
-            throw std::runtime_error("Attempted to duplicate-initialize model");
-
-        {
-            message::map_t map_msg;
-            json2pb(map_msg, map_str, strlen(map_str), map_encoding_t::compact);
-            g_model_state.m = from_protobuf(map_msg);
-            validate_and_fill_in_map_hexes(g_model_state.m, g_loaded_nations.nations);
-        }
-
-        {
-            message::orders_of_battle_t oob_msg;
-            json2pb(oob_msg, oob_str, strlen(oob_str), map_encoding_t::compact);
-            g_model_state.oob = from_protobuf(oob_msg);
-            validate_and_fill_in_unit_times(g_model_state.oob, g_model_state.m, g_loaded_nations.nations, g_loaded_unit_defs.unit_defs);
-        }
-
-        validate_hex_coords(g_loaded_nations.nations, g_model_state.m.width, g_model_state.m.height);
-
-        validate_scenario_with_map_and_oob(g_loaded_scenario.scenario, g_model_state.m, g_model_state.oob);
-
-        init_graph(
-            g_model_state.g,
-            g_model_state.hex_id_property_map,
-            g_model_state.edge_weight_map,
-            g_model_state.m.width,
-            g_model_state.m.height,
-            [] (int id1, int id2) {return true;},
-            [] (int id1, int id2) {return 1.0;}
-        );
-
-        g_model_state.initialized = true;
-
-        return 1;
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    int reset_model () try
-    {
-        g_loaded_unit_defs = loaded_unit_defs_t();
-        g_loaded_nations = loaded_nations_t();
-        g_loaded_scenario = loaded_scenario_t();
-        g_model_state = model_state_t();
-        return 1;
-
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    int save_model (const char* filename) try
-    {
-        if (!g_model_state.initialized)
-            throw std::runtime_error("Attempted to save an uninitialized model");
-
-        std::ofstream ofs(filename);
-        if (!ofs)
-            return 0;
-
-        message::model_t model;
-
-        *model.mutable_nations() = to_protobuf(g_loaded_nations.nations);
-        *model.mutable_map() = to_protobuf(g_model_state.m);
-
-        pb::io::OstreamOutputStream os(&ofs);
-        return static_cast<int>(pb::TextFormat::Print(model, &os));
-
-    } CATCH_AND_RETURN(0);
-
-    MODEL_API
-    int load_model (const char* filename) try
-    {
-        if (g_model_state.initialized)
-            throw std::runtime_error("Attempted to load over an initialized model");
-
-        std::ifstream ifs(filename);
-        if (!ifs)
-            return 0;
-
-        message::model_t model;
-        pb::io::IstreamInputStream is(&ifs);
-        if (!pb::TextFormat::Parse(&is, &model))
-            return 0;
-
-        {
-            if (!model.has_nations())
-                throw std::runtime_error("Missing saved nations data");
-            g_loaded_nations.nations = from_protobuf(model.nations());
-        }
-
-        {
-            if (!model.has_map())
-                throw std::runtime_error("Missing saved map data");
-            g_model_state.m = from_protobuf(model.map());
-        }
-
-        init_graph(
-            g_model_state.g,
-            g_model_state.hex_id_property_map,
-            g_model_state.edge_weight_map,
-            g_model_state.m.width,
-            g_model_state.m.height,
-            [] (int id1, int id2) {return true;},
-            [] (int id1, int id2) {return 1.0;}
-        );
-
-        g_loaded_nations.initialized = true;
-        g_model_state.initialized = true;
-
-        return 1;
-
-    } CATCH_AND_RETURN(0);
-
-    // Returns an int for each hex, containing a grid ID in the first 8 bits
-    // (0 is no grid, 1 is main capital grid, 2 is main offmap grid, anything
-    // else is a partial grid).  Bits 8-23 contain the nations supplying this
-    // hex (a '1' in bit N indicates that the nation with ID N-8 is supplying
-    // it).  Bit 24 contains a flag indicating supplies must be paid for by
-    // the hex's owner to supply ships in this hex (meaning the hex is in a
-    // partial supply grid, and does not include a free-supply feature like a
-    // SB, BATS, or planet).
-    MODEL_API
-    int* determine_supply (int w, int h,
-                           supply_check_hex_t hexes[],
-                           int neutral_zone_id,
-                           int nations,
-                           int nation_team_membership[],
-                           int capitals[],
-                           int max_offmap_border_hexes,
-                           int offmap_border_hexes[]) try
-    {
-        g_supply_data.supply.resize(w * h);
-
-        graph::graph g;
-
-        std::size_t n = w * h;
         for (int i = 0; i < nations; ++i) {
-            if (offmap_border_hexes[i * max_offmap_border_hexes] != -1)
-                ++n;
+            pt.put("nation_team_membership." + boost::lexical_cast<std::string>(i),
+                   nation_team_membership[i]);
         }
 
-        std::vector<graph::vertex_color> colors;
-        std::vector<float> distances;
-        std::vector<int> predecessors;
-
-        graph::bfs_init(n, colors, distances, predecessors);
-
-        boost::unordered_map<int, int> vertex_id_to_hex_id;
-        boost::unordered_map<int, int> hex_id_to_vertex_id;
-
-        auto find_grid = [&] (
-            int nation,
-            int grid,
-            int hex_id,
-            bool& visited_offmap
-        ) {
-            int n = add_vertex(g, hex_id, vertex_id_to_hex_id, hex_id_to_vertex_id);
-
-            supply_visitor visitor(nation,
-                                   nations,
-                                   nation_team_membership,
-                                   grid,
-                                   w,
-                                   h,
-                                   hexes,
-                                   neutral_zone_id,
-                                   max_offmap_border_hexes,
-                                   offmap_border_hexes,
-                                   &g_supply_data.supply[0],
-                                   vertex_id_to_hex_id,
-                                   hex_id_to_vertex_id,
-                                   visited_offmap);
-            graph::bfs_(g, colors, distances, predecessors, n, visitor);
-        };
-
-#if LOG
-        {
-            std::ofstream ofs("model_log.txt");
-            boost::property_tree::ptree pt;
-
-            pt.put("w", w);
-            pt.put("h", h);
-
-            for (int i = 0; i < w * h; ++i) {
-                const std::string hex = "hexes." + boost::lexical_cast<std::string>(i);
-                pt.put(hex + ".owner_id", hexes[i].owner_id);
-                pt.put(hex + ".ship", hexes[i].ship);
-                pt.put(hex + ".nonship_unit", hexes[i].nonship_unit);
-                pt.put(hex + ".base_with_fighters", hexes[i].base_with_fighters);
-                pt.put(hex + ".planet", hexes[i].planet);
-                pt.put(hex + ".SB", hexes[i].SB);
-                pt.put(hex + ".BATS", hexes[i].BATS);
-                pt.put(hex + ".MB", hexes[i].MB);
-                pt.put(hex + ".convoy", hexes[i].convoy);
-                pt.put(hex + ".supply_tug", hexes[i].supply_tug);
-            }
-
-            pt.put("neutral_zone_id", neutral_zone_id);
-            pt.put("nations", nations);
-
-            for (int i = 0; i < nations; ++i) {
-                pt.put("nation_team_membership." + boost::lexical_cast<std::string>(i),
-                       nation_team_membership[i]);
-            }
-
-            for (int i = 0; i < nations; ++i) {
-                pt.put("capitals." + boost::lexical_cast<std::string>(i),
-                       capitals[i]);
-            }
-
-            pt.put("max_offmap_border_hexes", max_offmap_border_hexes);
-
-            for (int i = 0; i < nations * max_offmap_border_hexes; ++i) {
-                pt.put("offmap_border_hexes." + boost::lexical_cast<std::string>(i),
-                       offmap_border_hexes[i]);
-            }
-
-            boost::property_tree::json_parser::write_json(ofs, pt);
+        for (int i = 0; i < nations; ++i) {
+            pt.put("capitals." + boost::lexical_cast<std::string>(i),
+                   capitals[i]);
         }
+
+        pt.put("max_offmap_border_hexes", max_offmap_border_hexes);
+
+        for (int i = 0; i < nations * max_offmap_border_hexes; ++i) {
+            pt.put("offmap_border_hexes." + boost::lexical_cast<std::string>(i),
+                   offmap_border_hexes[i]);
+        }
+
+        boost::property_tree::json_parser::write_json(ofs, pt);
+    }
 #endif
 
-        for (int nation = 0; nation < nations; ++nation) {
-            if (capitals[nation] == -1)
-                continue;
+    for (int nation = 0; nation < nations; ++nation) {
+        if (capitals[nation] == -1)
+            continue;
 
 #if LOG
-            std::cerr << "\n"
-                      << "****************************************\n"
-                      << "* Nation " << nation << ":\n"
-                      << "****************************************\n\n";
+        std::cerr << "\n"
+                  << "****************************************\n"
+                  << "* Nation " << nation << ":\n"
+                  << "****************************************\n\n";
 #endif
 
-            bool visited_offmap = false; // TODO: Remove.
+        bool visited_offmap = false; // TODO: Remove.
+        find_grid(
+            nation,
+            1,
+            capitals[nation],
+            visited_offmap
+        );
+
+        if (!hex_id_to_vertex_id.count(-nation - 1)) {
             find_grid(
                 nation,
-                1,
-                capitals[nation],
+                2,
+                -nation - 1,
                 visited_offmap
             );
-
-            if (!hex_id_to_vertex_id.count(-nation - 1)) {
-                find_grid(
-                    nation,
-                    2,
-                    -nation - 1,
-                    visited_offmap
-                );
-            }
         }
+    }
 
-        int source = next_supply_source(
-            0,
+    int source = next_supply_source(
+        0,
+        w * h,
+        &g_supply_data.supply[0],
+        hexes
+    );
+
+#if LOG
+    std::cerr << "\n"
+              << "next_supply_source()=" << source << "\n";
+#endif
+
+    std::vector<int> grid_ids(nations, 2);
+    while (source < w * h) {
+#if LOG
+        std::cerr << "\n"
+                  << "****************************************\n"
+                  << "* Nation " << hexes[source].owner_id << " (possible supplemental grid):\n"
+                  << "****************************************\n\n";
+#endif
+
+        // TODO: This seems to be producing some weird grids.  They're all
+        // single-hex and do not appear to be in a valid range in the
+        // y-dimension.
+        bool dont_care = false;
+        find_grid(
+            hexes[source].owner_id,
+            ++grid_ids[hexes[source].owner_id],
+            source,
+            dont_care
+        );
+
+        source = next_supply_source(
+            source + 1,
             w * h,
             &g_supply_data.supply[0],
             hexes
         );
+    }
 
-#if LOG
-        std::cerr << "\n"
-                  << "next_supply_source()=" << source << "\n";
-#endif
-
-        std::vector<int> grid_ids(nations, 2);
-        while (source < w * h) {
-#if LOG
-            std::cerr << "\n"
-                      << "****************************************\n"
-                      << "* Nation " << hexes[source].owner_id << " (possible supplemental grid):\n"
-                      << "****************************************\n\n";
-#endif
-
-            // TODO: This seems to be producing some weird grids.  They're all
-            // single-hex and do not appear to be in a valid range in the
-            // y-dimension.
-            bool dont_care = false;
-            find_grid(
-                hexes[source].owner_id,
-                ++grid_ids[hexes[source].owner_id],
-                source,
-                dont_care
-            );
-
-            source = next_supply_source(
-                source + 1,
-                w * h,
-                &g_supply_data.supply[0],
-                hexes
-            );
-        }
-
-        return &g_supply_data.supply[0];
-
-    } CATCH_AND_RETURN(nullptr);
+    return &g_supply_data.supply[0];
 
 }
+#endif
 
 #if 0
 void test_determine_supply ()
