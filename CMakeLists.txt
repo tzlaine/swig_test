@@ -14,6 +14,8 @@ if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif ()
 
+set(unreal_3rd_party_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/ThirdParty)
+
 set(protobuf_dir protobuf-v3.0.0-beta-2)
 add_subdirectory(${protobuf_dir}/cmake)
 
@@ -161,7 +163,7 @@ endif ()
 
 include_directories(
     include
-    ${CMAKE_HOME_DIRECTORY}/${protobuf_dir}/src
+    ${unreal_3rd_party_root}/Protobuf/Includes
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 

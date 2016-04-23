@@ -148,4 +148,15 @@ if (protobuf_BUILD_TESTS)
 #  include(tests.cmake)
 endif (protobuf_BUILD_TESTS)
 
-#include(install.cmake)
+if (false)
+
+include(install.cmake)
+
+else ()
+
+install(
+    TARGETS libprotobuf
+    DESTINATION ${unreal_3rd_party_root}/Protobuf/Libraries
+)
+
+endif ()

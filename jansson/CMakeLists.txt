@@ -694,4 +694,11 @@ install(EXPORT JanssonTargets
 # For use when simply using add_library from a parent project to build jansson.
 set(JANSSON_LIBRARIES jansson CACHE STRING "Jansson libraries")
 
+else ()
+
+install(
+    TARGETS jansson
+    DESTINATION ${unreal_3rd_party_root}/Jansson/Libraries
+)
+
 endif ()
