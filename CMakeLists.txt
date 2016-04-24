@@ -14,7 +14,9 @@ if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif ()
 
-set(unreal_3rd_party_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/ThirdParty)
+set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport)
+set(unreal_src_dir ${unreal_root}/Source/Spaceport)
+set(unreal_3rd_party_root ${unreal_root}/ThirdParty)
 
 set(protobuf_dir protobuf-v3.0.0-beta-2)
 add_subdirectory(${protobuf_dir}/cmake)
@@ -33,19 +35,19 @@ add_custom_command(
         test_data.hpp
     COMMAND
         ${CMAKE_COMMAND}
-            -Dnations_file=${CMAKE_HOME_DIRECTORY}/nations.json
-            -Dmap_file=${CMAKE_HOME_DIRECTORY}/default_map.json
-            -Doob_file=${CMAKE_HOME_DIRECTORY}/default_oob.json
-            -Dunits_file=${CMAKE_HOME_DIRECTORY}/units.json
-            -Dscenario_file=${CMAKE_HOME_DIRECTORY}/scenarios/the_wind.json
+            -Dnations_file=${unreal_root}/nations.json
+            -Dmap_file=${unreal_root}/default_map.json
+            -Doob_file=${unreal_root}/default_oob.json
+            -Dunits_file=${unreal_root}/units.json
+            -Dscenario_file=${unreal_root}/scenarios/the_wind.json
             -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     DEPENDS
-        ${CMAKE_HOME_DIRECTORY}/nations.json
-        ${CMAKE_HOME_DIRECTORY}/default_map.json
-        ${CMAKE_HOME_DIRECTORY}/default_oob.json
-        ${CMAKE_HOME_DIRECTORY}/units.json
-        ${CMAKE_HOME_DIRECTORY}/scenarios/the_wind.json
+        ${unreal_root}/nations.json
+        ${unreal_root}/default_map.json
+        ${unreal_root}/default_oob.json
+        ${unreal_root}/units.json
+        ${unreal_root}/scenarios/the_wind.json
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     COMMENT "Create JSON data header."
@@ -81,8 +83,6 @@ macro(generate_protobuf file_root target)
             GENERATED true
     )
 endmacro()
-
-set(unreal_src_dir ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/Source/Spaceport)
 
 find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
