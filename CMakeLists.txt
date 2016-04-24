@@ -56,12 +56,12 @@ add_custom_target(data_header_target DEPENDS test_data.hpp)
 macro(generate_protobuf file_root target)
     add_custom_command(
         OUTPUT
-            ${CMAKE_BINARY_DIR}/${file_root}.pb.cc
-            ${CMAKE_BINARY_DIR}/${file_root}.pb.h
+            ${unreal_src_dir}/${file_root}.pb.cc
+            ${unreal_src_dir}/${file_root}.pb.h
         COMMAND
             protoc
                 --proto_path=${CMAKE_SOURCE_DIR}/proto
-                --cpp_out=${CMAKE_BINARY_DIR}
+                --cpp_out=${unreal_src_dir}
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
         DEPENDS
             ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
@@ -71,16 +71,18 @@ macro(generate_protobuf file_root target)
     add_custom_target(
         ${target}
         DEPENDS
-        ${CMAKE_BINARY_DIR}/model.pb.h
-        ${CMAKE_BINARY_DIR}/model.pb.cc
+        ${unreal_src_dir}/model.pb.h
+        ${unreal_src_dir}/model.pb.cc
     )
     set_source_files_properties(
-        ${CMAKE_BINARY_DIR}/model.pb.h
-        ${CMAKE_BINARY_DIR}/model.pb.cc
+        ${unreal_src_dir}/model.pb.h
+        ${unreal_src_dir}/model.pb.cc
         PROPERTIES
             GENERATED true
     )
 endmacro()
+
+set(unreal_src_dir ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/Source/Spaceport)
 
 find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
@@ -127,17 +129,15 @@ if (PYTHON_EXECUTABLE)
 
     add_custom_command(
         OUTPUT
-            ${CMAKE_SOURCE_DIR}/include/model_data.hpp
-            ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+            ${unreal_src_dir}/model_data.hpp
+            ${unreal_src_dir}/model_data.cpp
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 --site-packages ${protobuf_python_pth_dir}
                 --proto-file ${CMAKE_SOURCE_DIR}/proto/model.proto
                 --desc-file ${CMAKE_CURRENT_BINARY_DIR}/model.desc
-                --hpp-file ${CMAKE_SOURCE_DIR}/include/model_data.hpp
-                --cpp-file ${CMAKE_SOURCE_DIR}/src/model_data.cpp
-                --cs-file ${CMAKE_SOURCE_DIR}/unity_project/Assets/plugins/model_data.cs
-                --cs-namespace model_data
+                --hpp-file ${unreal_src_dir}/model_data.hpp
+                --cpp-file ${unreal_src_dir}/model_data.cpp
         DEPENDS
             ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
             ${CMAKE_SOURCE_DIR}/proto/model.proto
@@ -148,21 +148,20 @@ if (PYTHON_EXECUTABLE)
     add_custom_target(
         model_data_target
         DEPENDS
-            ${CMAKE_SOURCE_DIR}/include/model_data.hpp
-            ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+            ${unreal_src_dir}/model_data.hpp
+            ${unreal_src_dir}/model_data.cpp
     )
 
     set_source_files_properties(
-        ${CMAKE_SOURCE_DIR}/include/model_data.hpp
-        ${CMAKE_SOURCE_DIR}/src/model_data.cpp
+        ${unreal_src_dir}/model_data.hpp
+        ${unreal_src_dir}/model_data.cpp
         PROPERTIES
             GENERATED true
     )
 endif ()
 
 include_directories(
-    include
-    ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/Source/Spaceport
+    ${unreal_src_dir}
     ${unreal_3rd_party_root}/Protobuf/Includes
     ${CMAKE_CURRENT_BINARY_DIR}
 )

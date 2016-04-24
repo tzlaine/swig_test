@@ -15,7 +15,7 @@ parser.add_argument('--cpp-file', required=True, type=argparse.FileType('w'),
                     help='Output .cpp file')
 parser.add_argument('--hpp-file', required=True, type=argparse.FileType('w'),
                     help='Output .hpp file')
-parser.add_argument('--cs-file', required=True, type=argparse.FileType('w'),
+parser.add_argument('--cs-file', type=argparse.FileType('w'),
                     help='Output .cs file')
 parser.add_argument('--cs-namespace', type=str,
                     help='C# namespace into which to place generated code (e.g. foo.bar).')
@@ -93,6 +93,10 @@ def newline():
 def add_header_comment_and_includes(proto_source, syntax):
     args.cpp_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
+
+#ifndef BUILD_FOR_TEST
+#include "Spaceport.h"
+#endif
 
 #include "{}"
 

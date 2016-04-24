@@ -1,6 +1,10 @@
 // WARNING: Generated code.
 // This file was generated from model.proto (proto3)
 
+#ifndef BUILD_FOR_TEST
+#include "Spaceport.h"
+#endif
+
 #include "model_data.hpp"
 
 

@@ -1,3 +1,7 @@
+#ifndef BUILD_FOR_TEST
+#include "Spaceport.h"
+#endif
+
 #include <model.hpp>
 #include "validation.hpp"
 #include "hex_operations.hpp"

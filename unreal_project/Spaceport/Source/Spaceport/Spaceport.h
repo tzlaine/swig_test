@@ -4,3 +4,7 @@
 
 #include "Engine.h"
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4125)
+#pragma warning(disable: 4800)
+#endif

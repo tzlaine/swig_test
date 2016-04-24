@@ -12,13 +12,15 @@ if (NOT MSVC)
     add_definitions(-Wall)
 endif ()
 
+add_definitions(-DBUILD_FOR_TEST)
+
 add_library(
     model
     STATIC
-    model.cpp
-    ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/Source/Spaceport/json2pb.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/model_data.cpp
-    ${CMAKE_BINARY_DIR}/model.pb.cc
+    ${unreal_src_dir}/model.cpp
+    ${unreal_src_dir}/json2pb.cc
+    ${unreal_src_dir}/model_data.cpp
+    ${unreal_src_dir}/model.pb.cc
 )
 
 target_link_libraries(
