@@ -74,13 +74,13 @@
 // function.  The inline function should be equivalent for C++ users.
 inline BOOL GetMessage_Win32(
     LPMSG lpMsg, HWND hWnd,
-    UINT wMsgFilterMin, UINT wMsgFilterMax) {
+    ::UINT wMsgFilterMin, ::UINT wMsgFilterMax) {
   return GetMessage(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax);
 }
 #undef GetMessage
 inline BOOL GetMessage(
     LPMSG lpMsg, HWND hWnd,
-    UINT wMsgFilterMin, UINT wMsgFilterMax) {
+    ::UINT wMsgFilterMin, ::UINT wMsgFilterMax) {
   return GetMessage_Win32(lpMsg, hWnd, wMsgFilterMin, wMsgFilterMax);
 }
 #endif
