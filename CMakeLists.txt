@@ -27,7 +27,6 @@ endif ()
 
 add_subdirectory(jansson)
 include_directories(${CMAKE_BINARY_DIR}/jansson/include)
-include_directories(${CMAKE_HOME_DIRECTORY}/json2pb)
 
 add_custom_command(
     OUTPUT
@@ -163,6 +162,7 @@ endif ()
 
 include_directories(
     include
+    ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport/Source/Spaceport
     ${unreal_3rd_party_root}/Protobuf/Includes
     ${CMAKE_CURRENT_BINARY_DIR}
 )
