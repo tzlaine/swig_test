@@ -60,19 +60,19 @@ void Ahex_map::spawn_hexes()
     auto map = start_data.map();
     for (int x = 0; x < map.width; ++x) {
         for (int y = 0; y < map.height; ++y) {
-            Ahex* new_hex = spawn_hex(x, y, map.height, world);
+            Ahex* new_hex = spawn_hex(x, y, map.width, map.height, world);
             // TODO: Assign values to the hex.
         }
     }
 }
 
-Ahex* Ahex_map::spawn_hex (int x, int y, int height, UWorld* const world)
+Ahex* Ahex_map::spawn_hex (int x, int y, int map_width, int map_height, UWorld* const world)
 {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
 
     FVector location;
     location.X = x * 1.5 * meters;
-    location.Y = (height - 1 - y) * 2 * sin_60 * meters;
+    location.Y = (map_height - 1 - y) * 2 * sin_60 * meters;
     if ((x + 1000) % 2 == 1)
         location.Y -= sin_60 * meters;
     location.Z = 0 * meters;
@@ -83,5 +83,15 @@ Ahex* Ahex_map::spawn_hex (int x, int y, int height, UWorld* const world)
     spawn_params.Owner = this;
     spawn_params.Instigator = Instigator;
 
-    return world->SpawnActor<Ahex>(hex, location, rotation, spawn_params);
+    Ahex* retval = world->SpawnActor<Ahex>(hex, location, rotation, spawn_params);
+
+    TArray<UStaticMeshComponent*> components;
+    retval->GetComponents<UStaticMeshComponent>(components);
+    assert(components.Num() == 1);
+    UStaticMeshComponent* static_mesh_component = components[0];
+    static_mesh_component->SetCastShadow(
+        x == 0 || x == map_width - 1 || y == 0 || y == map_height - 1
+    );
+    retval->set_position(x, y);
+    return retval;
 }

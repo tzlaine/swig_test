@@ -17,7 +17,7 @@ public:
 
 protected:
     void spawn_hexes ();
-    class Ahex* spawn_hex (int x, int y, int height, UWorld* const world);
+    class Ahex* spawn_hex (int x, int y, int map_width, int map_height, UWorld* const world);
 
     FTimerHandle spawn_timer;
 

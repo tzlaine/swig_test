@@ -15,7 +15,19 @@ public:
     inline class UStaticMeshComponent* mesh() const
     { return mesh_; }
 
+    inline void set_position(int x, int y)
+    {
+        x_ = x;
+        y_ = y;
+    }
+
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hex", meta = (AllowPrivateAccess = "true"))
     class UStaticMeshComponent* mesh_;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hex", meta = (AllowPrivateAccess = "true"))
+    int x_;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hex", meta = (AllowPrivateAccess = "true"))
+    int y_;
 };
