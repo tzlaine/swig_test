@@ -919,17 +919,17 @@ namespace std{ using ::type_info; }
 // Helper macros BOOST_NOEXCEPT, BOOST_NOEXCEPT_IF, BOOST_NOEXCEPT_EXPR
 // These aid the transition to C++11 while still supporting C++03 compilers
 //
-#ifdef BOOST_NO_CXX11_NOEXCEPT
+//#ifdef BOOST_NO_CXX11_NOEXCEPT
 #  define BOOST_NOEXCEPT
 #  define BOOST_NOEXCEPT_OR_NOTHROW throw()
 #  define BOOST_NOEXCEPT_IF(Predicate)
 #  define BOOST_NOEXCEPT_EXPR(Expression) false
-#else
-#  define BOOST_NOEXCEPT noexcept
-#  define BOOST_NOEXCEPT_OR_NOTHROW noexcept
-#  define BOOST_NOEXCEPT_IF(Predicate) noexcept((Predicate))
-#  define BOOST_NOEXCEPT_EXPR(Expression) noexcept((Expression))
-#endif
+//#else
+//#  define BOOST_NOEXCEPT noexcept
+//#  define BOOST_NOEXCEPT_OR_NOTHROW noexcept
+//#  define BOOST_NOEXCEPT_IF(Predicate) noexcept((Predicate))
+//#  define BOOST_NOEXCEPT_EXPR(Expression) noexcept((Expression))
+//#endif
 //
 // Helper macro BOOST_FALLTHROUGH
 // Fallback definition of BOOST_FALLTHROUGH macro used to mark intended
