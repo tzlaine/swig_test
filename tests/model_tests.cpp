@@ -41,8 +41,8 @@ TEST(init_model_ops, test_init_scenario)
 {
     start_data_t start_data;
 
-    auto get_map_str = []() { return map_json_string; };
-    auto get_oob_str = []() { return oob_json_string; };
+    auto get_map_str = [](std::string const &) { return map_json_string; };
+    auto get_oob_str = [](std::string const &) { return oob_json_string; };
 
     start_data.init_unit_defs(units_json_string);
     start_data.init_nations(nations_json_string);

@@ -26,8 +26,8 @@
     "Coalition",
     "Alliance"
   ],
-  "map": "../default_map.json",
-  "order_of_battle": "../default_oob.json",
+  "map": "default_map.json",
+  "order_of_battle": "default_oob.json",
   "setup_order": [
     "LYR",
     "KZI",

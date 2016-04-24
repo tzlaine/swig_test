@@ -4,17 +4,18 @@
 #include "hex_map.h"
 #include "hex.h"
 #include "utility.hpp"
+#include "model.hpp"
 #include <memory>
 #include <string>
 
 
 namespace {
 
-    std::string load_text_file(char const* name)
+    std::string load_text_file(const std::string & name)
     {
         std::string retval;
         auto& platform_file = FPlatformFileManager::Get().GetPlatformFile();
-        FString map_filename = FPaths::GameDir() + name;
+        FString map_filename = FPaths::GameDir() + name.c_str();
         std::unique_ptr<IFileHandle> file_handle(platform_file.OpenRead(*map_filename));
         if (file_handle) {
             auto const size = file_handle->Size();
@@ -52,8 +53,11 @@ void Ahex_map::spawn_hexes()
     }
 
     // TODO: Move the map loading code to a more apporpriate location.
-    std::string const nations_contents = load_text_file("nations.json");
-    std::string const default_map_contents = load_text_file("default_map.json");
+    start_data_t start_data;
+    start_data.init_nations(load_text_file("nations.json"));
+    start_data.init_unit_defs(load_text_file("units.json"));
+    auto load = [](const std::string & filename) { return load_text_file(filename); };
+    start_data.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
 
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {

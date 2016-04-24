@@ -618,6 +618,16 @@ void start_data_t::init_unit_defs (std::string const & unit_defs_str)
     unit_defs_initialized_ = true;
 }
 
+void start_data_t::parse_scenario_message (std::string const & scenario_str)
+{
+    assert(scenario_str != "");
+
+    message::scenario_t scenario_msg;
+    json2pb(scenario_msg, scenario_str, map_encoding_t::compact);
+    scenario_ = from_protobuf(scenario_msg);
+    validate_scenario(scenario_, nations_);
+}
+
 void start_data_t::init_map (std::string const & map_str)
 {
     assert(map_str != "");
@@ -642,18 +652,10 @@ void start_data_t::init_oob (std::string const & oob_str)
     }
 }
 
-void start_data_t::init_scenario_impl (std::string const & scenario_str)
+void start_data_t::init_scenario_impl ()
 {
     assert(unit_defs_initialized_);
     assert(nations_initialized_);
-    assert(scenario_str != "");
-
-    {
-        message::scenario_t scenario_msg;
-        json2pb(scenario_msg, scenario_str, map_encoding_t::compact);
-        scenario_ = from_protobuf(scenario_msg);
-        validate_scenario(scenario_, nations_);
-    }
 
     validate_hex_coords(nations_, map_.width, map_.height);
 
