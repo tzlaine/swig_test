@@ -17,16 +17,10 @@ public:
 
 protected:
     void spawn_hexes ();
-    class Ahex* spawn_hex (int x, int y, UWorld* const world);
+    class Ahex* spawn_hex (int x, int y, int height, UWorld* const world);
 
     FTimerHandle spawn_timer;
 
     UPROPERTY(EditAnywhere, Category = "Hex")
     TSubclassOf<class Ahex> hex;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
-    int width;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
-    int height;
 };

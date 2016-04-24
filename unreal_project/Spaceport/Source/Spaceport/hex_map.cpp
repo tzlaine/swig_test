@@ -31,9 +31,7 @@ namespace {
 }
 
 
-Ahex_map::Ahex_map () :
-    width(5),
-    height(5)
+Ahex_map::Ahex_map ()
 {
     PrimaryActorTick.bCanEverTick = false;
 }
@@ -59,15 +57,16 @@ void Ahex_map::spawn_hexes()
     auto load = [](const std::string & filename) { return load_text_file(filename); };
     start_data.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
 
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
-            Ahex* new_hex = spawn_hex(x, y, world);
+    auto map = start_data.map();
+    for (int x = 0; x < map.width; ++x) {
+        for (int y = 0; y < map.height; ++y) {
+            Ahex* new_hex = spawn_hex(x, y, map.height, world);
             // TODO: Assign values to the hex.
         }
     }
 }
 
-Ahex* Ahex_map::spawn_hex (int x, int y, UWorld* const world)
+Ahex* Ahex_map::spawn_hex (int x, int y, int height, UWorld* const world)
 {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
 
