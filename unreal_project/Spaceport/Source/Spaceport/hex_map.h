@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <vector>
 #include "GameFramework/Actor.h"
 #include "hex_map.generated.h"
 
@@ -17,10 +18,14 @@ public:
 
 protected:
     void spawn_hexes ();
-    class Ahex* spawn_hex (int x, int y, int map_width, int map_height, UWorld* const world);
+    class Ahex* spawn_hex (struct hex_t const & map_hex, int map_width, int map_height, UWorld* const world);
 
     FTimerHandle spawn_timer;
 
     UPROPERTY(EditAnywhere, Category = "Hex")
     TSubclassOf<class Ahex> hex;
+
+private:
+    std::vector<FLinearColor> nation_id_primary_colors_;
+    std::vector<FLinearColor> nation_id_secondary_colors_;
 };

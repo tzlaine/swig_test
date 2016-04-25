@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model_data.hpp"
+#include <boost/utility.hpp>
 
 
 struct start_data_t
@@ -25,6 +26,15 @@ struct start_data_t
 
     orders_of_battle_t const & oob () const
     { assert(scenario_initialized_); return oob_; }
+
+    std::string const & nation_key (int i) const
+    { return boost::next(nations_.nations.begin(), i)->first; }
+
+    nation_t const & nation (int i) const
+    { return boost::next(nations_.nations.begin(), i)->second; }
+
+    nation_t const & nation (std::string const & key) const
+    { return nations_.nations.find(key)->second; }
 
     void init_nations (std::string const & nations_str);
     void init_unit_defs (std::string const & unit_defs_str);
