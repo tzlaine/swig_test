@@ -585,7 +585,7 @@ void fill_in_nation_ids (nations_t& nations)
 {
     int id = 0;
     for (auto& n : nations.nations) {
-        n.second.nation_id = ++id;
+        n.second.nation_id = id++;
     }
 }
 

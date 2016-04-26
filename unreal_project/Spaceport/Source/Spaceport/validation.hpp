@@ -121,6 +121,8 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
     const hex_t uninitialized_hex = { invalid_hex_coord, -1 };
     map.hexes.resize(map.width * map.height, uninitialized_hex);
 
+    auto nz_nation_id = nations.nations.find("NZ")->second.nation_id;
+
     // Add NZ hexes.
     for (auto hex_id : map.nz_hexes) {
         require_hex_coord(hex_id, map.width, map.height, "nz_hexes hex");
@@ -134,7 +136,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
         }
 
         hex.coord = hc;
-        hex.owner = 0;
+        hex.owner = nz_nation_id;
     }
 
     // Add NZ planets.
@@ -145,7 +147,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
         const int i = hex_index(hc, map.width);
         hex_t& hex = map.hexes[i];
 
-        if (hex.owner != 0) {
+        if (hex.owner != nz_nation_id) {
             throw std::runtime_error(
                 "Cannot place NX planet in " + std::to_string(hex_id) +
                 ", because that is not a NZ hex.");
