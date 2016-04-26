@@ -6,23 +6,20 @@
 #include <boost/container/flat_set.hpp>
 #endif
 #include <boost/exception/diagnostic_information.hpp>
-#include <boost/lexical_cast.hpp>
 
 
 template <typename Cont>
 inline void require_nonempty (const Cont& c, const std::string& name)
 {
     if (c.empty())
-        boost::throw_exception(std::runtime_error(name + " must be provided and must not be empty"));
+        throw std::runtime_error(name + " must be provided and must not be empty");
 }
 
 template <typename T>
 inline void require_positive (T t, const std::string& name)
 {
     if (t <= 0) {
-        boost::throw_exception(
-            std::runtime_error(name + " (=" + std::to_string(t) + ") must be positive (> 0)")
-        );
+        throw std::runtime_error(name + " (=" + std::to_string(t) + ") must be positive (> 0)");
     }
 }
 
@@ -30,9 +27,7 @@ template <typename T>
 inline void require_nonnegative (T t, const std::string& name)
 {
     if (t < 0) {
-        boost::throw_exception(
-            std::runtime_error(name + " (=" + std::to_string(t) + ") must be nonnegative (>= 0)")
-        );
+        throw std::runtime_error(name + " (=" + std::to_string(t) + ") must be nonnegative (>= 0)");
     }
 }
 
@@ -40,11 +35,9 @@ template <typename T>
 inline void require_within (T t, T low, T high, const std::string& name)
 {
     if (t < low || high < t) {
-        boost::throw_exception(
-            std::runtime_error(
-                name + " (=" + std::to_string(t) + ") must be between " + std::to_string(low) +
-                " and " + std::to_string(high) + " inclusive"
-            )
+        throw std::runtime_error(
+            name + " (=" + std::to_string(t) + ") must be between " + std::to_string(low) +
+            " and " + std::to_string(high) + " inclusive"
         );
     }
 }
@@ -53,15 +46,10 @@ inline void require_hex_coord (int i, int width, int height, const std::string& 
 {
     const auto hc = to_hex_coord(i);
     if (!on_map(hc, width, height)) {
-        boost::throw_exception(
-            std::runtime_error(
-                name + " (=" + std::to_string(i) + ") " +
-#if LOG
-                "(->" + boost::lexical_cast<std::string>(hc) + ") "
-#endif
-                "must be a valid hex coordinate within the map (map width=" +
-                std::to_string(width) + " and height=" + std::to_string(height) + ")"
-            )
+        throw std::runtime_error(
+            name + " (=" + std::to_string(i) + ") " +
+            "must be a valid hex coordinate within the map (map width=" +
+            std::to_string(width) + " and height=" + std::to_string(height) + ")"
         );
     }
 }
@@ -69,9 +57,7 @@ inline void require_hex_coord (int i, int width, int height, const std::string& 
 inline void require_nation (const std::string& str, const nations_t& nations)
 {
     if (nations.nations.count(str) == 0) {
-        boost::throw_exception(
-            std::runtime_error("Nation '" + str + "' is not found in the nation definitions")
-        );
+        throw std::runtime_error("Nation '" + str + "' is not found in the nation definitions");
     }
 }
 
@@ -107,7 +93,7 @@ inline void validate_nation (const nation_t& nation)
     require_within(nation.capital_star_points, 5, 10, "capital_star_points");
     validate_offmap_possesions(nation.offmap_possesions);
     if (nation.nation_id != 0)
-        boost::throw_exception(std::runtime_error("Starting nations must not define a nation_id"));
+        throw std::runtime_error("Starting nations must not define a nation_id");
 }
 
 inline void validate_nations (const nations_t& nations)
@@ -144,9 +130,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
         hex_t& hex = map.hexes[i];
 
         if (hex.coord != invalid_hex_coord) {
-            boost::throw_exception(
-                std::runtime_error("Duplicate definition of NZ hex " + std::to_string(hex_id))
-            );
+            throw std::runtime_error("Duplicate definition of NZ hex " + std::to_string(hex_id));
         }
 
         hex.coord = hc;
@@ -162,11 +146,9 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
         hex_t& hex = map.hexes[i];
 
         if (hex.owner != 0) {
-            boost::throw_exception(
-                std::runtime_error(
-                    "Cannot place NX planet in " + std::to_string(hex_id) +
-                    ", because that is not a NZ hex.")
-            );
+            throw std::runtime_error(
+                "Cannot place NX planet in " + std::to_string(hex_id) +
+                ", because that is not a NZ hex.");
         }
 
         hex.feature = feature_t::min;
@@ -176,9 +158,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
     for (const auto& holdings : map.starting_national_holdings) {
         auto nations_it = nations.nations.find(holdings.first);
         if (nations_it == nations.nations.end()) {
-            boost::throw_exception(
-                std::runtime_error("Unknown owner nation '" + holdings.first + "' encountered in map data")
-            );
+            throw std::runtime_error("Unknown owner nation '" + holdings.first + "' encountered in map data");
         }
         const int nation_id = nations_it->second.nation_id;
 
@@ -194,9 +174,7 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
                 hex_t& hex = map.hexes[i];
 
                 if (hex.coord != invalid_hex_coord) {
-                    boost::throw_exception(
-                        std::runtime_error("Duplicate definition of hex " + std::to_string(hex_id))
-                    );
+                    throw std::runtime_error("Duplicate definition of hex " + std::to_string(hex_id));
                 }
 
                 hex.coord = hc;
@@ -210,11 +188,11 @@ inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations
         if (map.hexes[i].coord == invalid_hex_coord) {
             int hex_x = i % map.width + 1;
             int hex_y = i / map.width + 1;
-            std::string hex_str = boost::lexical_cast<std::string>(hex_x * 100 + hex_y);
+            std::string hex_str = std::to_string(hex_x * 100 + hex_y);
             while (hex_str.size() < 4u) {
                 hex_str = '0' + hex_str;
             }
-            boost::throw_exception(std::runtime_error("Hex " + hex_str + " not defined in map.json"));
+            throw std::runtime_error("Hex " + hex_str + " not defined in map.json");
         }
     }
 }
@@ -271,7 +249,7 @@ inline void validate_and_fill_in_unit_times (orders_of_battle_t& oobs,
             static std::string msg;
             msg = "Cannot validate the OOB for " + oob.first +
                 " because there are no units defined for that nation.";
-            boost::throw_exception(std::runtime_error(msg.c_str()));
+            throw std::runtime_error(msg.c_str());
         }
         const auto& unit_defs =
             unit_defs_.nation_units.find(oob.first)->second;
@@ -381,9 +359,8 @@ inline void validate_scenario_condition (const scenario_condition_t& scenario_co
         auto it = std::find(team.nations.begin(), team.nations.end(), name);
         if (it != team.nations.end()) {
             static std::string msg;
-            msg =
-                "A release or war entry condition cannot be based on the actions of fellow team member " + name;
-            boost::throw_exception(std::runtime_error(msg.c_str()));
+            msg = "A release or war entry condition cannot be based on the actions of fellow team member " + name;
+            throw std::runtime_error(msg.c_str());
         }
     };
 
@@ -406,19 +383,15 @@ inline void validate_scenario_condition (const scenario_condition_t& scenario_co
     switch (scenario_condition.action) {
     case scenario_condition_t::action_t::occupies:
         if (find_sb() != scenario_condition.one_of.end()) {
-            boost::throw_exception(
-                std::runtime_error(
-                    "scenario_condition_t.action_t 'occupies' is incompatible with object_type_t 'sb'"
-                )
+            throw std::runtime_error(
+                "scenario_condition_t.action_t 'occupies' is incompatible with object_type_t 'sb'"
             );
         }
         break;
     case scenario_condition_t::action_t::destroys:
         if (find_sb() == scenario_condition.one_of.end()) {
-            boost::throw_exception(
-                std::runtime_error(
-                    "scenario_condition_t.action_t 'destroys' is only compatible with object_type_t 'sb'"
-                )
+            throw std::runtime_error(
+                "scenario_condition_t.action_t 'destroys' is only compatible with object_type_t 'sb'"
             );
         }
         break;
@@ -429,11 +402,9 @@ inline void validate_scenario_condition (const scenario_condition_t& scenario_co
         case scenario_condition_t::object_type_t::hexes: // fallthrough
         case scenario_condition_t::object_type_t::sb:
             if (!object.names.empty() && !any_sb(object)) {
-                boost::throw_exception(
-                    std::runtime_error(
-                        "You cannot define object_t.names when object_t.type is 'hexes' or 'sb', "
-                        "except that you can say 'any' with 'sb'"
-                    )
+                throw std::runtime_error(
+                    "You cannot define object_t.names when object_t.type is 'hexes' or 'sb', "
+                    "except that you can say 'any' with 'sb'"
                 );
             }
 #if 0 // TODO: Do after the map is loaded.
@@ -485,7 +456,7 @@ inline void validate_scenario_nation (const scenario_t::nation_t& nation,
             msg =
                 "A nation cannot be at war with or a future belligerent of " + name +
                 " and on the same team with " + name;
-            boost::throw_exception(std::runtime_error(msg.c_str()));
+            throw std::runtime_error(msg.c_str());
         }
     };
 
@@ -546,18 +517,16 @@ inline void validate_scenario (const scenario_t& scenario, const nations_t& nati
 
     std::sort(team_names.begin(), team_names.end());
     if (std::unique(team_names.begin(), team_names.end()) != team_names.end())
-        boost::throw_exception(std::runtime_error("Each team name in a scenario must be unique"));
+        throw std::runtime_error("Each team name in a scenario must be unique");
 
     std::sort(team_member_names.begin(), team_member_names.end());
     if (std::unique(team_member_names.begin(), team_member_names.end()) != team_member_names.end())
-        boost::throw_exception(std::runtime_error("Each nation in a scenario can belong to at most one team"));
+        throw std::runtime_error("Each nation in a scenario can belong to at most one team");
 
     auto team_turn_order = scenario.team_turn_order;
     std::sort(team_turn_order.begin(), team_turn_order.end());
     if (!std::equal(team_turn_order.begin(), team_turn_order.end(), team_names.begin())) {
-        boost::throw_exception(
-            std::runtime_error("Every team in a scenario must be listed in the turn order (with no extras)")
-        );
+        throw std::runtime_error("Every team in a scenario must be listed in the turn order (with no extras)");
     }
 
     require_nonempty(scenario.map, "scenario.map");
@@ -566,9 +535,7 @@ inline void validate_scenario (const scenario_t& scenario, const nations_t& nati
     auto setup_order = scenario.setup_order;
     std::sort(setup_order.begin(), setup_order.end());
     if (!std::equal(setup_order.begin(), setup_order.end(), team_member_names.begin())) {
-        boost::throw_exception(
-            std::runtime_error("Every nation in a scenario must be listed in the setup order (with no extras)")
-        );
+        throw std::runtime_error("Every nation in a scenario must be listed in the setup order (with no extras)");
     }
 
     for (const auto& nation : scenario.nations) {
@@ -584,7 +551,7 @@ inline void validate_scenario (const scenario_t& scenario, const nations_t& nati
         if (it == scenario.teams.end()) {
             static std::string msg;
             msg = "Unable to find the team to which nation " + nation.first + " belongs.";
-            boost::throw_exception(std::runtime_error(msg.c_str()));
+            throw std::runtime_error(msg.c_str());
         }
 
         validate_scenario_nation(nation.second, *it, nations);
