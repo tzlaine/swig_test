@@ -43,7 +43,7 @@ namespace {
             retval["KLI"] = FLinearColor(0, 0, 0);
             retval["KZI"] = FLinearColor(1, 1, 1);
             retval["LDR"] = FLinearColor(89 / 255.0f, 89 / 255.0f, 89 / 255.0f);
-            retval["LYR"] = FLinearColor(241 / 255.0f, 241 / 255.0f, 241 / 255.0f);
+            retval["LYR"] = FLinearColor(241 / 255.0f, 241 / 255.0f, 76 / 255.0f);
             retval["NZ"] =  FLinearColor(136 / 255.0f, 136 / 255.0f, 136 / 255.0f);
             retval["ORI"] = FLinearColor(89 / 255.0f, 89 / 255.0f, 89 / 255.0f);
             retval["ROM"] = FLinearColor(221 / 255.0f, 0 ,0);
