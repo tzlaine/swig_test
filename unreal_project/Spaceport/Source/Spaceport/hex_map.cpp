@@ -4,7 +4,6 @@
 #include "hex_map.h"
 #include "hex.h"
 #include "utility.hpp"
-#include "model.hpp"
 #include "hex_operations.hpp"
 
 #include <algorithm>
@@ -14,7 +13,7 @@
 
 namespace {
 
-    std::string load_text_file(const std::string & name)
+    std::string load_text_file (const std::string & name)
     {
         std::string retval;
         auto & platform_file = FPlatformFileManager::Get().GetPlatformFile();
@@ -32,7 +31,7 @@ namespace {
     }
 
     // Move to editable CSV.
-    std::map<std::string, FLinearColor> const & primary_colors()
+    std::map<std::string, FLinearColor> const & primary_colors ()
     {
         static std::map<std::string, FLinearColor> retval;
         if (retval.empty()) {
@@ -54,7 +53,7 @@ namespace {
     }
 
     // Move to editable CSV.
-    std::map<std::string, FLinearColor> const & secondary_colors()
+    std::map<std::string, FLinearColor> const & secondary_colors ()
     {
         static std::map<std::string, FLinearColor> retval;
         if (retval.empty()) {
@@ -81,61 +80,79 @@ namespace {
 Ahex_map::Ahex_map ()
 {
     PrimaryActorTick.bCanEverTick = false;
+
+    static_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("static_"));
+    static_->SetVisibility(false);
+    static_->AttachTo(RootComponent);
+
+    // TODO: Move the start-data loading code to a more appropriate location.
+    start_data_.init_nations(load_text_file("nations.json"));
+    start_data_.init_unit_defs(load_text_file("units.json"));
+    auto load = [](const std::string & filename) { return load_text_file(filename); };
+    start_data_.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
+
+    instanced_hexes_.resize(primary_colors().size());
+    for (auto const & pair : primary_colors()) {
+        auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(pair.first.c_str());
+        instanced->AttachTo(RootComponent);
+        instanced_hexes_[start_data_.nation(pair.first).nation_id] = instanced;
+    }
 }
 
 void Ahex_map::BeginPlay ()
 {
     Super::BeginPlay();
-    call_real_soon(spawn_timer, this, &Ahex_map::spawn_hexes);
+    call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
 }
 
 void Ahex_map::spawn_hexes()
 {
     UWorld * const world = GetWorld();
-    if (!hex || !world) {
-        call_real_soon(spawn_timer, this, &Ahex_map::spawn_hexes);
+    if (!world || !static_->StaticMesh) {
+        call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
         return;
     }
 
-    // TODO: Move the start-data loading code to a more appropriate location.
-    start_data_t start_data;
-    start_data.init_nations(load_text_file("nations.json"));
-    start_data.init_unit_defs(load_text_file("units.json"));
-    auto load = [](const std::string & filename) { return load_text_file(filename); };
-    start_data.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
+    for (auto instanced : instanced_hexes_) {
+        instanced->SetStaticMesh(static_->StaticMesh);
+    }
 
     // TODO: Probably this mapping should exist somewhere else as well.
     nation_id_primary_colors_.resize(primary_colors().size());
     for (auto const & pair : primary_colors()) {
-        if (pair.first == "NZ")
-            nation_id_primary_colors_[0] = pair.second;
-        else
-            nation_id_primary_colors_[start_data.nation(pair.first).nation_id] = pair.second;
+        auto nation_id = start_data_.nation(pair.first).nation_id;
+        nation_id_primary_colors_[nation_id] = pair.second;
+        auto instanced = instanced_hexes_[nation_id];
+        UMaterialInstanceDynamic * material =
+            instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(
+                0,
+                instanced->GetMaterial(0u)
+            );
+        material->SetVectorParameterValue("color", pair.second);
     }
     nation_id_secondary_colors_.resize(secondary_colors().size());
     for (auto const & pair : secondary_colors()) {
-        if (pair.first == "NZ")
-            nation_id_secondary_colors_[0] = pair.second;
-        else
-            nation_id_secondary_colors_[start_data.nation(pair.first).nation_id] = pair.second;
+        nation_id_secondary_colors_[start_data_.nation(pair.first).nation_id] = pair.second;
     }
 
-    auto const & map = start_data.map();
+    auto const & map = start_data_.map();
     for (int x = 0; x < map.width; ++x) {
         for (int y = 0; y < map.height; ++y) {
             hex_coord_t const hc = {x, y};
             hex_t const & map_hex = map.hexes[hex_index(hc, map.width)];
-            Ahex * new_hex = spawn_hex(map_hex, map.width, map.height, world);
+            spawn_hex(map_hex, map.width, map.height, world);
         }
     }
 }
 
-Ahex * Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, UWorld * const world)
+void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, UWorld * const world)
 {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
 
     int const x = map_hex.coord.x;
     int const y = map_hex.coord.y;
+
+    FRotator const rotation = {0.0f, 0.0f, 0.0f};
 
     FVector location;
     location.X = x * 1.5 * meters;
@@ -144,31 +161,5 @@ Ahex * Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height
         location.Y -= sin_60 * meters;
     location.Z = 0 * meters;
 
-    FRotator rotation = {0.0f, 0.0f, 0.0f};
-
-    FActorSpawnParameters spawn_params;
-    spawn_params.Owner = this;
-    spawn_params.Instigator = Instigator;
-
-    Ahex * retval = world->SpawnActor<Ahex>(hex, location, rotation, spawn_params);
-
-    TArray<UStaticMeshComponent *> components;
-    retval->GetComponents<UStaticMeshComponent>(components);
-    assert(components.Num() == 1);
-    UStaticMeshComponent * static_mesh_component = components[0];
-    static_mesh_component->SetCastShadow(
-        x == 0 || x == map_width - 1 || y == 0 || y == map_height - 1
-    );
-
-    UMaterialInstanceDynamic * material =
-        static_mesh_component->CreateAndSetMaterialInstanceDynamicFromMaterial(
-            0,
-            static_mesh_component->GetMaterial(0u)
-        );
-    FLinearColor color = nation_id_primary_colors_[map_hex.owner];
-    material->SetVectorParameterValue("color", color);
-
-    retval->set_position(x, y);
-
-    return retval;
+    instanced_hexes_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
 }
