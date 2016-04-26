@@ -25,12 +25,12 @@ template<template<class...> class F, class... T>
 struct mp_valid_impl
 {
     template<template<class...> class G, class = G<T...>>
-    static boost::true_type check(int);
+    static boost::true_type check_(int);
 
     template<template<class...> class>
-    static boost::false_type check(...);
+    static boost::false_type check_(...);
 
-    using type = decltype(check<F>(0));
+    using type = decltype(check_<F>(0));
 };
 
 template<template<class...> class F, class... T>
