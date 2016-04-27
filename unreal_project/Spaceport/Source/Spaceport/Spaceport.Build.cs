@@ -47,21 +47,11 @@ public class Spaceport : ModuleRules
         string protobuf_lib;
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
-            protobuf_lib = "libprotobufd.lib";
-            if (Target.Configuration == UnrealTargetConfiguration.Development ||
-                Target.Configuration == UnrealTargetConfiguration.Shipping ||
-                Target.Configuration == UnrealTargetConfiguration.Test) {
-                protobuf_lib = "libprotobuf.lib";
-            }
+            protobuf_lib = "libprotobuf.lib";
         }
         else // TODO: Untested!
         {
-            protobuf_lib = "libprotobufd.a";
-            if (Target.Configuration == UnrealTargetConfiguration.Development ||
-                Target.Configuration == UnrealTargetConfiguration.Shipping ||
-                Target.Configuration == UnrealTargetConfiguration.Test) {
-                protobuf_lib = "libprotobuf.a";
-            }
+            protobuf_lib = "libprotobuf.a";
         }
 
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, protobuf_lib));
@@ -78,21 +68,11 @@ public class Spaceport : ModuleRules
         string jansson_lib;
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
-            jansson_lib = "jansson_d.lib";
-            if (Target.Configuration == UnrealTargetConfiguration.Development ||
-                Target.Configuration == UnrealTargetConfiguration.Shipping ||
-                Target.Configuration == UnrealTargetConfiguration.Test) {
-                jansson_lib = "jansson.lib";
-            }
+            jansson_lib = "jansson.lib";
         }
         else // TODO: Untested!
         {
-            jansson_lib = "libjansson_d.a";
-            if (Target.Configuration == UnrealTargetConfiguration.Development ||
-                Target.Configuration == UnrealTargetConfiguration.Shipping ||
-                Target.Configuration == UnrealTargetConfiguration.Test) {
-                jansson_lib = "libjansson.a";
-            }
+            jansson_lib = "libjansson.a";
         }
 
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, jansson_lib));
