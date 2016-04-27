@@ -261,12 +261,12 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
     location.Y = (map.height - 1 - y) * 2 * sin_60 * meters;
     if ((x + 1000) % 2 == 1)
         location.Y -= sin_60 * meters;
-    location.Z = 0 * meters;
+    location.Z = 0.5f * meters;
 
     instanced_hexes_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
 
     rotation.Roll = 180.0f;
-    location.Z = -50.0f;
+    location.Z = 0 * meters;
 
     instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
     rotation.Yaw += 60.0f;
