@@ -36,6 +36,8 @@ struct start_data_t
     nation_t const & nation (std::string const & key) const
     { return nations_.nations.find(key)->second; }
 
+    char const * hex_string (hex_coord_t hc) const;
+
     void init_nations (std::string const & nations_str);
     void init_unit_defs (std::string const & unit_defs_str);
 
@@ -67,4 +69,6 @@ private:
     map_t map_;
     orders_of_battle_t oob_;
     bool scenario_initialized_;
+
+    std::vector<std::string> hex_strings_;
 };

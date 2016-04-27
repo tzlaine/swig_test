@@ -589,6 +589,9 @@ void fill_in_nation_ids (nations_t& nations)
     }
 }
 
+char const * start_data_t::hex_string (hex_coord_t hc) const
+{ return hex_strings_[hex_index(hc, map_.width)].c_str(); }
+
 void start_data_t::init_nations (std::string const & nations_str)
 {
     assert(nations_str != "");
@@ -637,6 +640,14 @@ void start_data_t::init_map (std::string const & map_str)
         json2pb(map_msg, map_str, map_encoding_t::compact);
         map_ = from_protobuf(map_msg);
         validate_and_fill_in_map_hexes(map_, nations_);
+    }
+
+    hex_strings_.resize(map_.width * map_.height);
+    for (int i = 0; i < map_.width; ++i) {
+        for (int j = 0; j < map_.height; ++j) {
+            hex_coord_t const hc = {i, j};
+            hex_strings_[hex_index(hc, map_.width)] = ::hex_string(hc);
+        }
     }
 }
 
