@@ -25,7 +25,14 @@ public:
     void hex_under_cursor (int & x, int & y) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
-    class UStaticMeshComponent * static_;
+    class UStaticMesh * hex_mesh_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UMaterial * hex_mat_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UStaticMesh * hex_border_mesh_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UMaterial * hex_border_mat_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class APlayerController * player_controller_;
@@ -37,7 +44,8 @@ private:
     start_data_t start_data_;
     std::vector<FLinearColor> nation_id_primary_colors_;
     std::vector<FLinearColor> nation_id_secondary_colors_;
-    std::vector<class UInstancedStaticMeshComponent *> instanced_hexes_;
+    std::vector<class UInstancedStaticMeshComponent *> instanced_hexes_; // indexed by nation_id
+    std::vector<class UInstancedStaticMeshComponent *> instanced_borders_; // TODO
     FTimerHandle spawn_timer_;
-    bool hexes_spawned;
+    bool hexes_spawned_;
 };

@@ -81,13 +81,14 @@ namespace {
 
 
 Ahex_map::Ahex_map () :
-    hexes_spawned (false)
+    hex_mesh_ (nullptr),
+    hex_mat_ (nullptr),
+    hex_border_mat_ (nullptr),
+    hex_border_mesh_ (nullptr),
+    player_controller_ (nullptr),
+    hexes_spawned_ (false)
 {
     PrimaryActorTick.bCanEverTick = true;
-
-    static_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("static_"));
-    static_->SetVisibility(false);
-    static_->AttachTo(RootComponent);
 
     // TODO: Move the start-data loading code to a more appropriate location.
     start_data_.init_nations(load_text_file("nations.json"));
@@ -96,10 +97,23 @@ Ahex_map::Ahex_map () :
     start_data_.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
 
     instanced_hexes_.resize(primary_colors().size());
+    instanced_borders_.resize(primary_colors().size()); // TODO
     for (auto const & pair : primary_colors()) {
-        auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(pair.first.c_str());
-        instanced->AttachTo(RootComponent);
-        instanced_hexes_[start_data_.nation(pair.first).nation_id] = instanced;
+        auto const nation_id = start_data_.nation(pair.first).nation_id;
+
+        {
+            auto name = pair.first + "_hexes";
+            auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
+            instanced->AttachTo(RootComponent);
+            instanced_hexes_[nation_id] = instanced;
+        }
+
+        {
+            auto name = pair.first + "_borders"; // TODO
+            auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
+            instanced->AttachTo(RootComponent);
+            instanced_borders_[nation_id] = instanced;
+        }
     }
 }
 
@@ -123,7 +137,7 @@ hex_coord_t Ahex_map::hex_under_cursor () const
 {
     hex_coord_t retval = invalid_hex_coord;
 
-    if (!player_controller_ || !hexes_spawned)
+    if (!player_controller_ || !hexes_spawned_)
         return retval;
 
     FVector origin, direction;
@@ -171,11 +185,8 @@ hex_coord_t Ahex_map::hex_under_cursor () const
 
     retval = hc;
 
-    if (!on_map(hc, start_data_.map())) {
+    if (!on_map(hc, start_data_.map()))
         retval = invalid_hex_coord;
-        GEngine->AddOnScreenDebugMessage(4, 10.0f, FColor::White, "out of bounds");
-    }
-    else GEngine->AddOnScreenDebugMessage(4, 10.0f, FColor::White, "in bounds");
 
     return retval;
 }
@@ -190,13 +201,17 @@ void Ahex_map::hex_under_cursor (int & x, int & y) const
 void Ahex_map::spawn_hexes ()
 {
     UWorld * const world = GetWorld();
-    if (!world || !static_->StaticMesh) {
+    if (!world || !hex_mesh_ || !hex_border_mesh_ || !hex_mat_ || !hex_border_mat_) {
         call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
         return;
     }
 
     for (auto instanced : instanced_hexes_) {
-        instanced->SetStaticMesh(static_->StaticMesh);
+        instanced->SetStaticMesh(hex_mesh_);
+    }
+
+    for (auto instanced : instanced_borders_) { // TODO
+        instanced->SetStaticMesh(hex_border_mesh_);
     }
 
     // TODO: Probably this mapping should exist somewhere else as well.
@@ -206,15 +221,18 @@ void Ahex_map::spawn_hexes ()
         nation_id_primary_colors_[nation_id] = pair.second;
         auto instanced = instanced_hexes_[nation_id];
         UMaterialInstanceDynamic * material =
-            instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(
-                0,
-                instanced->GetMaterial(0u)
-            );
+            instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_mat_);
         material->SetVectorParameterValue("color", pair.second);
     }
     nation_id_secondary_colors_.resize(secondary_colors().size());
     for (auto const & pair : secondary_colors()) {
-        nation_id_secondary_colors_[start_data_.nation(pair.first).nation_id] = pair.second;
+        auto nation_id = start_data_.nation(pair.first).nation_id;
+        nation_id_secondary_colors_[nation_id] = pair.second;
+        auto instanced = instanced_borders_[nation_id]; // TODO: These are really the thin borders....
+        UMaterialInstanceDynamic * material =
+            instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_border_mat_);
+        material->SetVectorParameterValue("color", pair.second);
+        material->SetScalarParameterValue("exponent", 4.0f);
     }
 
     auto const & map = start_data_.map();
@@ -222,11 +240,11 @@ void Ahex_map::spawn_hexes ()
         for (int y = 0; y < map.height; ++y) {
             hex_coord_t const hc = {x, y};
             hex_t const & map_hex = map.hexes[hex_index(hc, map.width)];
-            spawn_hex(map_hex, map.width, map.height, world);
+            spawn_hex(map_hex, map.width, map.height, world); // TODO
         }
     }
 
-    hexes_spawned = true;
+    hexes_spawned_ = true;
 }
 
 void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, UWorld * const world)
@@ -236,7 +254,7 @@ void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, 
     int const x = map_hex.coord.x;
     int const y = map_hex.coord.y;
 
-    FRotator const rotation = {0.0f, 0.0f, 0.0f};
+    FRotator rotation = {0.0f, 0.0f, 0.0f};
 
     FVector location;
     location.X = x * 1.5 * meters;
@@ -246,4 +264,19 @@ void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, 
     location.Z = 0 * meters;
 
     instanced_hexes_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+
+    rotation.Roll = 180.0f;
+    location.Z = -50.0f;
+
+    instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    rotation.Yaw += 60.0f;
+    instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    rotation.Yaw += 60.0f;
+    instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    rotation.Yaw += 60.0f;
+    instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    rotation.Yaw += 60.0f;
+    instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    rotation.Yaw += 60.0f;
+    instanced_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
 }
