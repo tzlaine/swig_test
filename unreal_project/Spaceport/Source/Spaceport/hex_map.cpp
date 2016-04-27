@@ -228,11 +228,10 @@ void Ahex_map::spawn_hexes ()
     for (auto const & pair : secondary_colors()) {
         auto nation_id = start_data_.nation(pair.first).nation_id;
         nation_id_secondary_colors_[nation_id] = pair.second;
-        auto instanced = instanced_borders_[nation_id]; // TODO: These are really the thin borders....
+        auto instanced = instanced_borders_[nation_id]; // TODO: These are really the thick borders....
         UMaterialInstanceDynamic * material =
             instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_border_mat_);
         material->SetVectorParameterValue("color", pair.second);
-        material->SetScalarParameterValue("exponent", 4.0f);
     }
 
     auto const & map = start_data_.map();
