@@ -6,6 +6,8 @@
 #include "utility.hpp"
 #include "hex_operations.hpp"
 
+#include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
+
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -74,12 +76,14 @@ namespace {
         return retval;
     }
 
+    float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
 }
 
 
-Ahex_map::Ahex_map ()
+Ahex_map::Ahex_map () :
+    hexes_spawned (false)
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 
     static_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("static_"));
     static_->SetVisibility(false);
@@ -105,7 +109,85 @@ void Ahex_map::BeginPlay ()
     call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
 }
 
-void Ahex_map::spawn_hexes()
+void Ahex_map::Tick (float delta_seconds)
+{
+    // TODO: Remove.
+    hex_coord_t const hc = hex_under_cursor();
+    if (hc != invalid_hex_coord) {
+        GEngine->AddOnScreenDebugMessage(0, 10.0f, FColor::White, start_data_.hex_string(hc));
+    }
+    else GEngine->AddOnScreenDebugMessage(0, 10.0f, FColor::White, "-1,-1");
+}
+
+hex_coord_t Ahex_map::hex_under_cursor () const
+{
+    hex_coord_t retval = invalid_hex_coord;
+
+    if (!player_controller_ || !hexes_spawned)
+        return retval;
+
+    FVector origin, direction;
+    player_controller_->DeprojectMousePositionToWorld(origin, direction);
+
+    FVector const terminus = origin + direction * 100000.0f;
+
+    float t;
+    FVector intersection;
+    if (!UKismetMathLibrary::LinePlaneIntersection(
+        origin,
+        terminus,
+        FPlane(FVector(0, 0, 0), FVector(0, 0, 1)),
+        t,
+        intersection)) {
+        return retval;
+    }
+
+    intersection /= 100.0f;
+
+    intersection.X += 1.0;
+    intersection.Y += sin_60;
+
+    // "Loose" because the point may fall above the upper-left edge or
+    // below the lower-left edge.
+    int const loose_column = FMath::FloorToInt(intersection.X / 1.5);
+
+    if (loose_column % 2 == 1)
+        intersection.Y += sin_60;
+
+    int const loose_row = FMath::FloorToInt(intersection.Y / (2.0f * sin_60));
+
+    hex_coord_t hc = {loose_column, start_data_.map().height - 1 - loose_row};
+    if (FMath::Fmod(intersection.X, 1.5) < 0.5) {
+        FVector2D left_corner(0, sin_60);
+        FVector2D left_corner_to_point =
+            FVector2D(intersection.X - loose_column * 1.5, intersection.Y - loose_row * 2 * sin_60) -
+            left_corner;
+        left_corner_to_point.Normalize();
+        float const angle = FMath::Acos(FVector2D::DotProduct(FVector2D(1, 0), left_corner_to_point));
+        if (FMath::DegreesToRadians(60.0f) < angle) {
+            hc = 0 < left_corner_to_point.Y ? hex_above_left(hc) : hex_below_left(hc);
+        }
+    }
+
+    retval = hc;
+
+    if (!on_map(hc, start_data_.map())) {
+        retval = invalid_hex_coord;
+        GEngine->AddOnScreenDebugMessage(4, 10.0f, FColor::White, "out of bounds");
+    }
+    else GEngine->AddOnScreenDebugMessage(4, 10.0f, FColor::White, "in bounds");
+
+    return retval;
+}
+
+void Ahex_map::hex_under_cursor (int & x, int & y) const
+{
+    hex_coord_t hc = hex_under_cursor();
+    x = hc.x;
+    y = hc.y;
+}
+
+void Ahex_map::spawn_hexes ()
 {
     UWorld * const world = GetWorld();
     if (!world || !static_->StaticMesh) {
@@ -143,6 +225,8 @@ void Ahex_map::spawn_hexes()
             spawn_hex(map_hex, map.width, map.height, world);
         }
     }
+
+    hexes_spawned = true;
 }
 
 void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, UWorld * const world)
