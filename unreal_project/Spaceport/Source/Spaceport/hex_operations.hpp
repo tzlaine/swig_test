@@ -9,6 +9,7 @@
 #endif
 
 #include <cassert>
+#include <string>
 
 
 enum class hex_direction_t {
@@ -40,6 +41,18 @@ inline bool operator== (hex_coord_t lhs, hex_coord_t rhs)
 inline bool operator!= (hex_coord_t lhs, hex_coord_t rhs)
 { return !(lhs == rhs); }
 
+
+inline std::string hex_string(hex_coord_t hc)
+{
+    std::string retval;
+    if (hc.x + 1 < 10)
+        retval += "0";
+    retval += std::to_string(hc.x + 1);
+    if (hc.y + 1 < 10)
+        retval += "0";
+    retval += std::to_string(hc.y + 1);
+    return retval;
+}
 
 #if LOG
 std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
