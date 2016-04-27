@@ -39,7 +39,7 @@ public:
 
 private:
     void spawn_hexes ();
-    void spawn_hex (struct hex_t const & map_hex, int map_width, int map_height, UWorld* const world);
+    void spawn_hex (hex_coord_t hc);
 
     start_data_t start_data_;
     std::vector<FLinearColor> nation_id_primary_colors_;

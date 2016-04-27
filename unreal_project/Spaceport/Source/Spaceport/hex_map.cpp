@@ -200,8 +200,7 @@ void Ahex_map::hex_under_cursor (int & x, int & y) const
 
 void Ahex_map::spawn_hexes ()
 {
-    UWorld * const world = GetWorld();
-    if (!world || !hex_mesh_ || !hex_border_mesh_ || !hex_mat_ || !hex_border_mat_) {
+    if (!hex_mesh_ || !hex_border_mesh_ || !hex_mat_ || !hex_border_mat_) {
         call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
         return;
     }
@@ -238,17 +237,19 @@ void Ahex_map::spawn_hexes ()
     for (int x = 0; x < map.width; ++x) {
         for (int y = 0; y < map.height; ++y) {
             hex_coord_t const hc = {x, y};
-            hex_t const & map_hex = map.hexes[hex_index(hc, map.width)];
-            spawn_hex(map_hex, map.width, map.height, world); // TODO
+            spawn_hex(hc);
         }
     }
 
     hexes_spawned_ = true;
 }
 
-void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, UWorld * const world)
+void Ahex_map::spawn_hex (hex_coord_t hc)
 {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
+
+    auto const & map = start_data_.map();
+    hex_t const & map_hex = map.hexes[hex_index(hc, map.width)];
 
     int const x = map_hex.coord.x;
     int const y = map_hex.coord.y;
@@ -257,7 +258,7 @@ void Ahex_map::spawn_hex (hex_t const & map_hex, int map_width, int map_height, 
 
     FVector location;
     location.X = x * 1.5 * meters;
-    location.Y = (map_height - 1 - y) * 2 * sin_60 * meters;
+    location.Y = (map.height - 1 - y) * 2 * sin_60 * meters;
     if ((x + 1000) % 2 == 1)
         location.Y -= sin_60 * meters;
     location.Z = 0 * meters;
