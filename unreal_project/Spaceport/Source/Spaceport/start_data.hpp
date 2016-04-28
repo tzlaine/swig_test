@@ -2,7 +2,7 @@
 // This file was generated from model (proto3)
 #pragma once
 
-#include <model.pb.h>
+#include <start_data.pb.h>
 #include <string>
 #include <vector>
 #include <boost/container/flat_map.hpp>

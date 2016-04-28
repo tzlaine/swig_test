@@ -5,18 +5,16 @@ include(CTest)
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR})
 
-generate_protobuf(model model_test_message_target)
-
 include_directories(
     ${CMAKE_BINARY_DIR}
     ${CMAKE_HOME_DIRECTORY}/googletest/googletest/include
 )
 
-add_executable(model_tests model_tests.cpp)
+add_executable(start_data_tests start_data_tests.cpp)
 
 target_link_libraries(
-    model_tests
-    model
+    start_data_tests
+    start_data
     libprotobuf
     jansson
     gtest
@@ -24,18 +22,18 @@ target_link_libraries(
 )
 
 set_target_properties(
-    model_tests
+    start_data_tests
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     LIBARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-add_dependencies(model_tests data_header_target model_test_message_target)
+add_dependencies(start_data_tests data_header_target)
 
-set(model_test_args)
+set(start_data_test_args)
 if (MSVC)
-    set(model_test_args
+    set(start_data_test_args
 	${unreal_root}/nations.json
 	${unreal_root}/default_map.json
 	${unreal_root}/default_oob.json
@@ -43,4 +41,4 @@ if (MSVC)
 	${unreal_root}/scenarios/the_wind.json
     )
 endif ()
-add_test(model_tests ${CMAKE_BINARY_DIR}/model_tests ${model_test_args} --gtest_catch_exceptions=0)
+add_test(start_data_tests ${CMAKE_BINARY_DIR}/start_data_tests ${start_data_test_args} --gtest_catch_exceptions=0)

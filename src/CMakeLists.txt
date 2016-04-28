@@ -1,12 +1,7 @@
 ########################################
 # Model library
 ########################################
-set(
-    model_plugin_path
-    ${CMAKE_HOME_DIRECTORY}/unity_project/Assets/plugins
-)
-
-generate_protobuf(model model_message_target)
+generate_protobuf(start_data start_data_message_target)
 
 if (NOT MSVC)
     add_definitions(-Wall)
@@ -15,21 +10,21 @@ endif ()
 add_definitions(-DBUILD_FOR_TEST)
 
 add_library(
-    model
+    start_data
     STATIC
     ${unreal_src_dir}/model.cpp
     ${unreal_src_dir}/json2pb.cc
-    ${unreal_src_dir}/model_data.cpp
-    ${unreal_src_dir}/model.pb.cc
+    ${unreal_src_dir}/start_data.cpp
+    ${unreal_src_dir}/start_data.pb.cc
 )
 
 target_link_libraries(
-    model
+    start_data
     libprotobuf
     jansson
 )
 
-add_dependencies(model model_message_target)
+add_dependencies(start_data start_data_message_target)
 if (PYTHON_EXECUTABLE)
-    add_dependencies(model model_data_target)
+    add_dependencies(start_data start_data_target)
 endif ()

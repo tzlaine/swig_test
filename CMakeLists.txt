@@ -73,12 +73,12 @@ macro(generate_protobuf file_root target)
     add_custom_target(
         ${target}
         DEPENDS
-        ${unreal_src_dir}/model.pb.h
-        ${unreal_src_dir}/model.pb.cc
+        ${unreal_src_dir}/${file_root}.pb.h
+        ${unreal_src_dir}/${file_root}.pb.cc
     )
     set_source_files_properties(
-        ${unreal_src_dir}/model.pb.h
-        ${unreal_src_dir}/model.pb.cc
+        ${unreal_src_dir}/${file_root}.pb.h
+        ${unreal_src_dir}/${file_root}.pb.cc
         PROPERTIES
             GENERATED true
     )
@@ -113,47 +113,53 @@ if (PYTHON_EXECUTABLE)
         VERBATIM
     )
 
-    add_custom_target(
-        make_desc_file
-        COMMAND
-            protoc
-                --proto_path=${CMAKE_HOME_DIRECTORY}/proto
-                --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/model.desc
-                ${CMAKE_HOME_DIRECTORY}/proto/model.proto
-        DEPENDS
-            ${protobuf_python_pth_dir}/setuptools.pth
-            ${CMAKE_SOURCE_DIR}/proto/model.proto
-        COMMENT "Make model.desc from model.proto."
-        VERBATIM
-    )
+    macro(python_generate_sources file_root)
+        add_custom_target(
+            make_desc_file_${file_root}
+            COMMAND
+                protoc
+                    --proto_path=${CMAKE_HOME_DIRECTORY}/proto
+                    --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
+                    ${CMAKE_HOME_DIRECTORY}/proto/${file_root}.proto
+            DEPENDS
+                ${protobuf_python_pth_dir}/setuptools.pth
+                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
+            COMMENT "Make ${file_root}.desc from ${file_root}.proto."
+            VERBATIM
+        )
+    
+        set(generated_sources
+            ${unreal_src_dir}/${file_root}.hpp
+            ${unreal_src_dir}/${file_root}.cpp
+        )
+        set(python_generated_sources ${python_generated_sources} ${generated_sources})
+    
+        add_custom_command(
+            OUTPUT
+                ${python_generated_sources}
+            COMMAND
+                ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
+                    --site-packages ${protobuf_python_pth_dir}
+                    --proto-file ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
+                    --desc-file ${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
+                    --hpp-file ${unreal_src_dir}/${file_root}.hpp
+                    --cpp-file ${unreal_src_dir}/${file_root}.cpp
+            DEPENDS
+                ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
+                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
+                make_desc_file_${file_root}
+            COMMENT "Create ${file_root}.{h,c}pp."
+            VERBATIM
+        )
+        add_custom_target(
+            ${file_root}_target
+            DEPENDS
+                ${python_generated_sources}
+        )
+    endmacro()
 
-    set(python_generated_sources
-        ${unreal_src_dir}/model_data.hpp
-        ${unreal_src_dir}/model_data.cpp
-    )
-
-    add_custom_command(
-        OUTPUT
-            ${python_generated_sources}
-        COMMAND
-            ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
-                --site-packages ${protobuf_python_pth_dir}
-                --proto-file ${CMAKE_SOURCE_DIR}/proto/model.proto
-                --desc-file ${CMAKE_CURRENT_BINARY_DIR}/model.desc
-                --hpp-file ${unreal_src_dir}/model_data.hpp
-                --cpp-file ${unreal_src_dir}/model_data.cpp
-        DEPENDS
-            ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
-            ${CMAKE_SOURCE_DIR}/proto/model.proto
-            make_desc_file
-        COMMENT "Create model_data.{h,c}pp."
-        VERBATIM
-    )
-    add_custom_target(
-        model_data_target
-        DEPENDS
-            ${python_generated_sources}
-    )
+    set(python_generated_sources)
+    python_generate_sources(start_data)
 
     set_source_files_properties(
         ${python_generated_sources}
