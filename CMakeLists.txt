@@ -127,10 +127,14 @@ if (PYTHON_EXECUTABLE)
         VERBATIM
     )
 
+    set(python_generated_sources
+        ${unreal_src_dir}/model_data.hpp
+        ${unreal_src_dir}/model_data.cpp
+    )
+
     add_custom_command(
         OUTPUT
-            ${unreal_src_dir}/model_data.hpp
-            ${unreal_src_dir}/model_data.cpp
+            ${python_generated_sources}
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 --site-packages ${protobuf_python_pth_dir}
@@ -148,13 +152,11 @@ if (PYTHON_EXECUTABLE)
     add_custom_target(
         model_data_target
         DEPENDS
-            ${unreal_src_dir}/model_data.hpp
-            ${unreal_src_dir}/model_data.cpp
+            ${python_generated_sources}
     )
 
     set_source_files_properties(
-        ${unreal_src_dir}/model_data.hpp
-        ${unreal_src_dir}/model_data.cpp
+        ${python_generated_sources}
         PROPERTIES
             GENERATED true
     )
