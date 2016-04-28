@@ -303,15 +303,17 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
     rotation.Roll = 180.0f;
     location.Z = 0 * meters;
 
-    instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
-    rotation.Yaw += 60.0f;
-    instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
-    rotation.Yaw += 60.0f;
-    instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
-    rotation.Yaw += 60.0f;
-    instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
-    rotation.Yaw += 60.0f;
-    instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
-    rotation.Yaw += 60.0f;
-    instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    for (auto d : all_hex_directions) {
+        auto other_hc = adjacent_hex_coord(hc, d);
+        if (!on_map(other_hc, map)) {
+            instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+        } else {
+            auto const & other_hex = map.hexes[hex_index(other_hc, map.width)];
+            if (other_hex.owner != map_hex.owner)
+                instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+            else
+                instanced_hex_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location)); // TODO: Provinces, too!
+        }
+        rotation.Yaw += 60.0f;
+    }
 }
