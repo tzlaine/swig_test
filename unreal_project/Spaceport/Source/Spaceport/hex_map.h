@@ -2,6 +2,8 @@
 
 #pragma once
 
+class UInstancedStaticMeshComponent;
+
 #include "model.hpp"
 #include <vector>
 #include "GameFramework/Actor.h"
@@ -38,14 +40,19 @@ public:
     class APlayerController * player_controller_;
 
 private:
+    using national_instances_t = std::vector<UInstancedStaticMeshComponent *>; // indexed by nation_id
+
+    void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness);
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
 
     start_data_t start_data_;
     std::vector<FLinearColor> nation_id_primary_colors_;
     std::vector<FLinearColor> nation_id_secondary_colors_;
-    std::vector<class UInstancedStaticMeshComponent *> instanced_hexes_; // indexed by nation_id
-    std::vector<class UInstancedStaticMeshComponent *> instanced_borders_; // TODO
+    national_instances_t instanced_hexes_;
+    national_instances_t instanced_national_borders_;
+    national_instances_t instanced_province_borders_;
+    national_instances_t instanced_hex_borders_;
     FTimerHandle spawn_timer_;
     bool hexes_spawned_;
 };
