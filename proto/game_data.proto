@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+import "start_data.proto";
+
+package message.game_data;
+
+
+message unit_t
+{
+    int32 unit_id = 1; // TODO: Define this type for real.
+    int32 owner = 2;
+    int32 original_owner = 3;
+};
+
+message fleet_t
+{
+    repeated unit_t units = 1;
+}
+
+message fleets_t
+{
+    map<int32, fleet_t> fleets = 1;
+}
+
+message planet_t
+{
+    // TODO: Turns owned by captor.
+    int32 owner = 1; // TODO: Define this type for real.
+    int32 original_owner = 2;
+};
+
+message hex_zone_fixture_t
+{
+    enum type_t {
+        base = 0;
+        planet = 1;
+    }
+
+    type_t type = 1;
+    unit_t base = 2;
+    planet_t planet = 3;
+}
+
+message hex_zone_t
+{
+    string name = 1; // Only defined in capital hexes zones.
+    repeated hex_zone_fixture_t fixtures = 2;
+}
+
+message hex_t
+{
+    hex_coord_t coord = 1;
+    int32 province_id = 2;
+    repeated hex_zone_t hex_zones = 4;
+    fleets_t fleets = 5;
+}
+
+message province_t
+{
+    // TODO: Turns owned by captor.
+    int32 owner = 1;
+    int32 original_owner = 2;
+    repeated hex_coord_t hexes = 3;
+};
+
+message map_t
+{
+    int32 width = 1;
+    int32 height = 2;
+    repeated hex_t hexes = 3;
+}
+
+message offmap_area_t
+{
+    int32 owner = 1;
+    fleets_t fleets = 2;
+}
+
+message offmap_areas_t
+{
+    map<int32, offmap_area_t> areas = 1;
+}

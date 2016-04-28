@@ -3,6 +3,8 @@
 #pragma once
 
 #include <start_data.pb.h>
+#include <base_types.hpp>
+
 #include <string>
 #include <vector>
 #include <boost/container/flat_map.hpp>
@@ -17,63 +19,6 @@ namespace start_data {
         min = 3,
         maj = 4,
         capital = 5,
-    };
-
-    enum class season_t {
-        spring = 0,
-        fall = 1,
-    };
-
-    enum class tug_mission_t {
-        A = 0,
-        B = 1,
-        C = 2,
-        D = 3,
-        E = 4,
-        F = 5,
-        G = 6,
-        H = 7,
-        I = 8,
-        J1 = 9,
-        J2 = 10,
-        K1 = 11,
-        K2 = 12,
-        L = 13,
-        M = 14,
-        N = 15,
-        O = 16,
-    };
-
-    enum class carrier_type_t {
-        not_a_carrier = 0,
-        single_ship_carrier = 1,
-        light_carrier = 2,
-        medium_carrier = 3,
-        heavy_carrier = 4,
-    };
-
-    enum class escort_type_t {
-        not_an_escort = 0,
-        light_escort = 1,
-        heavy_escort = 2,
-    };
-
-    enum class war_footing_t {
-        war = 0,
-        limited_war = 1,
-        peace = 2,
-    };
-
-    struct turn_t
-    {
-        int year;
-        season_t season;
-    };
-
-    struct hex_coord_t
-    {
-        int x;
-        int y;
     };
 
     struct capital_hex_zone_t
@@ -358,17 +303,7 @@ namespace start_data {
         std::vector<scenario_turn_t> turns;
     };
 
-    message::turn_t to_protobuf (const start_data::turn_t& value);
-    start_data::turn_t from_protobuf (const message::turn_t& msg);
-
-    void to_bin (const start_data::turn_t& value, std::vector<unsigned char>& bin);
-    start_data::turn_t turn_t_from_bin (unsigned char*& bin);
-
-    message::hex_coord_t to_protobuf (const start_data::hex_coord_t& value);
-    start_data::hex_coord_t from_protobuf (const message::hex_coord_t& msg);
-
-    void to_bin (const start_data::hex_coord_t& value, std::vector<unsigned char>& bin);
-    start_data::hex_coord_t hex_coord_t_from_bin (unsigned char*& bin);
+} 
 
     message::capital_hex_zone_t to_protobuf (const start_data::capital_hex_zone_t& value);
     start_data::capital_hex_zone_t from_protobuf (const message::capital_hex_zone_t& msg);
@@ -579,5 +514,3 @@ namespace start_data {
 
     void to_bin (const start_data::scenario_t& value, std::vector<unsigned char>& bin);
     start_data::scenario_t scenario_t_from_bin (unsigned char*& bin);
-
-} 

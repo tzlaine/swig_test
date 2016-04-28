@@ -35,7 +35,7 @@
 
 using namespace start_data;
 
-const ::hex_coord_t invalid_hex_coord{1000, 1000};
+const hex_coord_t invalid_hex_coord{1000, 1000};
 const hex_direction_t all_hex_directions[6] = {
     hex_direction_t::above_right,
     hex_direction_t::above,
@@ -591,7 +591,7 @@ void fill_in_nation_ids (nations_t& nations)
     }
 }
 
-char const * start_data_t::hex_string (::hex_coord_t hc) const
+char const * start_data_t::hex_string (hex_coord_t hc) const
 { return hex_strings_[hex_index(hc, map_.width)].c_str(); }
 
 void start_data_t::init_nations (std::string const & nations_str)

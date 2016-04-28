@@ -12,8 +12,6 @@
 #include <string>
 
 
-using hex_coord_t = start_data::hex_coord_t;
-
 enum class hex_direction_t {
     above_right,
     above,

@@ -133,10 +133,15 @@ if (PYTHON_EXECUTABLE)
             ${unreal_src_dir}/${file_root}.cpp
         )
         set(python_generated_sources ${python_generated_sources} ${generated_sources})
+
+        set(ns_arg --namespace ${namespace})
+        if (${namespace} STREQUAL GLOBAL)
+            set(ns_arg)
+        endif ()
     
         add_custom_command(
             OUTPUT
-                ${python_generated_sources}
+                ${generated_sources}
             COMMAND
                 ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                     --site-packages ${protobuf_python_pth_dir}
@@ -144,7 +149,7 @@ if (PYTHON_EXECUTABLE)
                     --desc-file ${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
                     --hpp-file ${unreal_src_dir}/${file_root}.hpp
                     --cpp-file ${unreal_src_dir}/${file_root}.cpp
-                    --namespace ${namespace}
+                    ${ns_arg}
             DEPENDS
                 ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
@@ -155,11 +160,12 @@ if (PYTHON_EXECUTABLE)
         add_custom_target(
             ${file_root}_target
             DEPENDS
-                ${python_generated_sources}
+                ${generated_sources}
         )
     endmacro()
 
     set(python_generated_sources)
+    python_generate_sources(base_types GLOBAL)
     python_generate_sources(start_data start_data)
 
     set_source_files_properties(

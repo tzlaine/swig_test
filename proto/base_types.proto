@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package message;
+
+
+enum season_t {
+    spring = 0;
+    fall = 1;
+}
+
+enum tug_mission_t {
+    A = 0;
+    B = 1;
+    C = 2;
+    D = 3;
+    E = 4;
+    F = 5;
+    G = 6;
+    H = 7;
+    I = 8;
+    J1 = 9;
+    J2 = 10;
+    K1 = 11;
+    K2 = 12;
+    L = 13;
+    M = 14;
+    N = 15;
+    O = 16;
+}
+
+enum carrier_type_t {
+    not_a_carrier = 0;
+    single_ship_carrier = 1;
+    light_carrier = 2;
+    medium_carrier = 3;
+    heavy_carrier = 4;
+}
+
+enum escort_type_t {
+    not_an_escort = 0;
+    light_escort = 1;
+    heavy_escort = 2;
+}
+
+enum war_footing_t {
+    war = 0;
+    limited_war = 1;
+    peace = 2;
+}
+
+message turn_t
+{
+    int32 year = 1;
+    season_t season = 2;
+}
+
+message hex_coord_t
+{
+    int32 x = 1;
+    int32 y = 2;
+}

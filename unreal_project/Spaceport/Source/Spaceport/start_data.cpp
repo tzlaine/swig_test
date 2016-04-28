@@ -6,9 +6,12 @@
 #endif
 
 #include "start_data.hpp"
+#include <base_types.hpp>
 
 
 namespace start_data { 
+
+} 
 
 namespace {
 
@@ -104,66 +107,6 @@ namespace {
 }
 
 
-    message::turn_t to_protobuf (const start_data::turn_t& value)
-    {
-        message::turn_t retval;
-        retval.set_year(value.year);
-        retval.set_season(static_cast< message::season_t >(value.season));
-        return retval;
-    }
-
-    start_data::turn_t from_protobuf (const message::turn_t& msg)
-    {
-        start_data::turn_t retval;
-        retval.year = msg.year();
-        retval.season = static_cast< season_t >(msg.season());
-        return retval;
-    }
-
-    void to_bin (const start_data::turn_t& value, std::vector<unsigned char>& bin)
-    {
-        to_bin(value.year, bin);
-        to_bin(value.season, bin);
-    }
-
-    start_data::turn_t turn_t_from_bin (unsigned char*& bin)
-    {
-        start_data::turn_t retval;
-        retval.year = int_from_bin(bin);
-        retval.season = enum_from_bin< season_t >(bin);
-        return retval;
-    }
-
-    message::hex_coord_t to_protobuf (const start_data::hex_coord_t& value)
-    {
-        message::hex_coord_t retval;
-        retval.set_x(value.x);
-        retval.set_y(value.y);
-        return retval;
-    }
-
-    start_data::hex_coord_t from_protobuf (const message::hex_coord_t& msg)
-    {
-        start_data::hex_coord_t retval;
-        retval.x = msg.x();
-        retval.y = msg.y();
-        return retval;
-    }
-
-    void to_bin (const start_data::hex_coord_t& value, std::vector<unsigned char>& bin)
-    {
-        to_bin(value.x, bin);
-        to_bin(value.y, bin);
-    }
-
-    start_data::hex_coord_t hex_coord_t_from_bin (unsigned char*& bin)
-    {
-        start_data::hex_coord_t retval;
-        retval.x = int_from_bin(bin);
-        retval.y = int_from_bin(bin);
-        return retval;
-    }
-
     message::capital_hex_zone_t to_protobuf (const start_data::capital_hex_zone_t& value)
     {
         message::capital_hex_zone_t retval;
@@ -182,7 +125,7 @@ namespace {
             retval.features.resize(msg.features_size());
             auto it = retval.features.begin();
             for (const auto& x : msg.features()) {
-                *it++ = static_cast< feature_t >(x);
+                *it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);
             }
         }
         return retval;
@@ -208,7 +151,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.features.resize(length);
             for (int i = 0; i < length; ++i) {
-                feature_t x = enum_from_bin< feature_t >(bin);
+                auto x = enum_from_bin<std::remove_reference<decltype(retval.features[i])>::type>(bin);
                 retval.features[i] = x;
             }
         }
@@ -259,7 +202,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.zones.resize(length);
             for (int i = 0; i < length; ++i) {
-                capital_hex_zone_t x = capital_hex_zone_t_from_bin(bin);
+                auto x = capital_hex_zone_t_from_bin(bin);
                 retval.zones[i] = x;
             }
         }
@@ -306,7 +249,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                capital_hex_t x = capital_hex_t_from_bin(bin);
+                auto x = capital_hex_t_from_bin(bin);
                 retval.hexes[i] = x;
             }
         }
@@ -447,8 +390,8 @@ namespace {
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                nation_t value = nation_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = nation_t_from_bin(bin);
                 retval.nations[key] = value;
             }
         }
@@ -472,7 +415,7 @@ namespace {
         start_data::hex_t retval;
         retval.coord = from_protobuf(msg.coord());
         retval.owner = msg.owner();
-        retval.feature = static_cast< feature_t >(msg.feature());
+        retval.feature = static_cast<std::remove_reference<decltype(retval.feature)>::type>(msg.feature());
         {
             retval.neutral_zone_bordering.resize(msg.neutral_zone_bordering_size());
             auto it = retval.neutral_zone_bordering.begin();
@@ -502,12 +445,12 @@ namespace {
         start_data::hex_t retval;
         retval.coord = hex_coord_t_from_bin(bin);
         retval.owner = int_from_bin(bin);
-        retval.feature = enum_from_bin< feature_t >(bin);
+        retval.feature = enum_from_bin<std::remove_reference<decltype(retval.feature)>::type>(bin);
         {
             int length = int_from_bin(bin);
             retval.neutral_zone_bordering.resize(length);
             for (int i = 0; i < length; ++i) {
-                int x = int_from_bin(bin);
+                auto x = int_from_bin(bin);
                 retval.neutral_zone_bordering[i] = x;
             }
         }
@@ -526,7 +469,7 @@ namespace {
     {
         start_data::province_hex_t retval;
         retval.hex = msg.hex();
-        retval.feature = static_cast< feature_t >(msg.feature());
+        retval.feature = static_cast<std::remove_reference<decltype(retval.feature)>::type>(msg.feature());
         return retval;
     }
 
@@ -540,7 +483,7 @@ namespace {
     {
         start_data::province_hex_t retval;
         retval.hex = int_from_bin(bin);
-        retval.feature = enum_from_bin< feature_t >(bin);
+        retval.feature = enum_from_bin<std::remove_reference<decltype(retval.feature)>::type>(bin);
         return retval;
     }
 
@@ -584,7 +527,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                province_hex_t x = province_hex_t_from_bin(bin);
+                auto x = province_hex_t_from_bin(bin);
                 retval.hexes[i] = x;
             }
         }
@@ -613,7 +556,7 @@ namespace {
             retval.features.resize(msg.features_size());
             auto it = retval.features.begin();
             for (const auto& x : msg.features()) {
-                *it++ = static_cast< feature_t >(x);
+                *it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);
             }
         }
         retval.counter_hex = msg.counter_hex();
@@ -655,7 +598,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.features.resize(length);
             for (int i = 0; i < length; ++i) {
-                feature_t x = enum_from_bin< feature_t >(bin);
+                auto x = enum_from_bin<std::remove_reference<decltype(retval.features[i])>::type>(bin);
                 retval.features[i] = x;
             }
         }
@@ -664,7 +607,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.adjacent_hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                int x = int_from_bin(bin);
+                auto x = int_from_bin(bin);
                 retval.adjacent_hexes[i] = x;
             }
         }
@@ -714,7 +657,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.provinces.resize(length);
             for (int i = 0; i < length; ++i) {
-                province_t x = province_t_from_bin(bin);
+                auto x = province_t_from_bin(bin);
                 retval.provinces[i] = x;
             }
         }
@@ -820,7 +763,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.nz_planets.resize(length);
             for (int i = 0; i < length; ++i) {
-                int x = int_from_bin(bin);
+                auto x = int_from_bin(bin);
                 retval.nz_planets[i] = x;
             }
         }
@@ -828,15 +771,15 @@ namespace {
             int length = int_from_bin(bin);
             retval.nz_hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                int x = int_from_bin(bin);
+                auto x = int_from_bin(bin);
                 retval.nz_hexes[i] = x;
             }
         }
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                starting_national_holdings_t value = starting_national_holdings_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = starting_national_holdings_t_from_bin(bin);
                 retval.starting_national_holdings[key] = value;
             }
         }
@@ -844,7 +787,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                hex_t x = hex_t_from_bin(bin);
+                auto x = hex_t_from_bin(bin);
                 retval.hexes[i] = x;
             }
         }
@@ -926,7 +869,7 @@ namespace {
     {
         start_data::production_element_t retval;
         retval.year = msg.year();
-        retval.season = static_cast< season_t >(msg.season());
+        retval.season = static_cast<std::remove_reference<decltype(retval.season)>::type>(msg.season());
         {
             retval.units.resize(msg.units_size());
             auto it = retval.units.begin();
@@ -954,12 +897,12 @@ namespace {
     {
         start_data::production_element_t retval;
         retval.year = int_from_bin(bin);
-        retval.season = enum_from_bin< season_t >(bin);
+        retval.season = enum_from_bin<std::remove_reference<decltype(retval.season)>::type>(bin);
         {
             int length = int_from_bin(bin);
             retval.units.resize(length);
             for (int i = 0; i < length; ++i) {
-                oob_unit_t x = oob_unit_t_from_bin(bin);
+                auto x = oob_unit_t_from_bin(bin);
                 retval.units[i] = x;
             }
         }
@@ -1013,7 +956,7 @@ namespace {
             }
         }
         retval.strategic_move_arrival_year = msg.strategic_move_arrival_year();
-        retval.strategic_move_arrival_season = static_cast< season_t >(msg.strategic_move_arrival_season());
+        retval.strategic_move_arrival_season = static_cast<std::remove_reference<decltype(retval.strategic_move_arrival_season)>::type>(msg.strategic_move_arrival_season());
         {
             for (const auto& x : msg.hex_placement_limits()) {
                 retval.hex_placement_limits[x.first] = x.second;
@@ -1065,7 +1008,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                int x = int_from_bin(bin);
+                auto x = int_from_bin(bin);
                 retval.hexes[i] = x;
             }
         }
@@ -1073,7 +1016,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.units.resize(length);
             for (int i = 0; i < length; ++i) {
-                oob_unit_t x = oob_unit_t_from_bin(bin);
+                auto x = oob_unit_t_from_bin(bin);
                 retval.units[i] = x;
             }
         }
@@ -1082,17 +1025,17 @@ namespace {
             int length = int_from_bin(bin);
             retval.prewar_construction.resize(length);
             for (int i = 0; i < length; ++i) {
-                production_element_t x = production_element_t_from_bin(bin);
+                auto x = production_element_t_from_bin(bin);
                 retval.prewar_construction[i] = x;
             }
         }
         retval.strategic_move_arrival_year = int_from_bin(bin);
-        retval.strategic_move_arrival_season = enum_from_bin< season_t >(bin);
+        retval.strategic_move_arrival_season = enum_from_bin<std::remove_reference<decltype(retval.strategic_move_arrival_season)>::type>(bin);
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                int key = int_from_bin(bin);
-                int value = int_from_bin(bin);
+                auto key = int_from_bin(bin);
+                auto value = int_from_bin(bin);
                 retval.hex_placement_limits[key] = value;
             }
         }
@@ -1173,7 +1116,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.units.resize(length);
             for (int i = 0; i < length; ++i) {
-                oob_unit_t x = oob_unit_t_from_bin(bin);
+                auto x = oob_unit_t_from_bin(bin);
                 retval.units[i] = x;
             }
         }
@@ -1181,7 +1124,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.war_release.resize(length);
             for (int i = 0; i < length; ++i) {
-                oob_unit_t x = oob_unit_t_from_bin(bin);
+                auto x = oob_unit_t_from_bin(bin);
                 retval.war_release[i] = x;
             }
         }
@@ -1189,7 +1132,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.limited_war_release.resize(length);
             for (int i = 0; i < length; ++i) {
-                oob_unit_t x = oob_unit_t_from_bin(bin);
+                auto x = oob_unit_t_from_bin(bin);
                 retval.limited_war_release[i] = x;
             }
         }
@@ -1254,8 +1197,8 @@ namespace {
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                starting_fleet_t value = starting_fleet_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = starting_fleet_t_from_bin(bin);
                 retval.starting_fleets[key] = value;
             }
         }
@@ -1264,7 +1207,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.production.resize(length);
             for (int i = 0; i < length; ++i) {
-                production_element_t x = production_element_t_from_bin(bin);
+                auto x = production_element_t_from_bin(bin);
                 retval.production[i] = x;
             }
         }
@@ -1309,8 +1252,8 @@ namespace {
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                order_of_battle_t value = order_of_battle_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = order_of_battle_t_from_bin(bin);
                 retval.oobs[key] = value;
             }
         }
@@ -1349,7 +1292,7 @@ namespace {
             retval.tug_missions.resize(msg.tug_missions_size());
             auto it = retval.tug_missions.begin();
             for (const auto& x : msg.tug_missions()) {
-                *it++ = static_cast< tug_mission_t >(x);
+                *it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);
             }
         }
         return retval;
@@ -1389,7 +1332,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.tug_missions.resize(length);
             for (int i = 0; i < length; ++i) {
-                tug_mission_t x = enum_from_bin< tug_mission_t >(bin);
+                auto x = enum_from_bin<std::remove_reference<decltype(retval.tug_missions[i])>::type>(bin);
                 retval.tug_missions[i] = x;
             }
         }
@@ -1490,7 +1433,7 @@ namespace {
         retval.cmd = msg.cmd();
         retval.uncrippled = from_protobuf(msg.uncrippled());
         retval.crippled = from_protobuf(msg.crippled());
-        retval.escort_type = static_cast< escort_type_t >(msg.escort_type());
+        retval.escort_type = static_cast<std::remove_reference<decltype(retval.escort_type)>::type>(msg.escort_type());
         retval.available = from_protobuf(msg.available());
         retval.pod = msg.pod();
         retval.max_in_service = msg.max_in_service();
@@ -1506,7 +1449,7 @@ namespace {
             }
         }
         retval.move = msg.move();
-        retval.carrier_type = static_cast< carrier_type_t >(msg.carrier_type());
+        retval.carrier_type = static_cast<std::remove_reference<decltype(retval.carrier_type)>::type>(msg.carrier_type());
         retval.not_spaceworthy = msg.not_spaceworthy();
         retval.towable = from_protobuf(msg.towable());
         retval.salvage = msg.salvage();
@@ -1556,7 +1499,7 @@ namespace {
         retval.cmd = int_from_bin(bin);
         retval.uncrippled = unit_def_side_t_from_bin(bin);
         retval.crippled = unit_def_side_t_from_bin(bin);
-        retval.escort_type = enum_from_bin< escort_type_t >(bin);
+        retval.escort_type = enum_from_bin<std::remove_reference<decltype(retval.escort_type)>::type>(bin);
         retval.available = turn_t_from_bin(bin);
         retval.pod = bool_from_bin(bin);
         retval.max_in_service = int_from_bin(bin);
@@ -1564,21 +1507,21 @@ namespace {
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                production_cost_t value = production_cost_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = production_cost_t_from_bin(bin);
                 retval.substitutions[key] = value;
             }
         }
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                production_cost_t value = production_cost_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = production_cost_t_from_bin(bin);
                 retval.conversions[key] = value;
             }
         }
         retval.move = int_from_bin(bin);
-        retval.carrier_type = enum_from_bin< carrier_type_t >(bin);
+        retval.carrier_type = enum_from_bin<std::remove_reference<decltype(retval.carrier_type)>::type>(bin);
         retval.not_spaceworthy = bool_from_bin(bin);
         retval.towable = towable_t_from_bin(bin);
         retval.salvage = int_from_bin(bin);
@@ -1626,7 +1569,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.units.resize(length);
             for (int i = 0; i < length; ++i) {
-                unit_def_t x = unit_def_t_from_bin(bin);
+                auto x = unit_def_t_from_bin(bin);
                 retval.units[i] = x;
             }
         }
@@ -1671,8 +1614,8 @@ namespace {
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                nation_unit_defs_t value = nation_unit_defs_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = nation_unit_defs_t_from_bin(bin);
                 retval.nation_units[key] = value;
             }
         }
@@ -1723,7 +1666,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.nations.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.nations[i] = x;
             }
         }
@@ -1746,7 +1689,7 @@ namespace {
     start_data::scenario_condition_t::object_t from_protobuf (const message::scenario_condition_t::object_t& msg)
     {
         start_data::scenario_condition_t::object_t retval;
-        retval.type = static_cast< scenario_condition_t::object_type_t >(msg.type());
+        retval.type = static_cast<std::remove_reference<decltype(retval.type)>::type>(msg.type());
         {
             retval.names.resize(msg.names_size());
             auto it = retval.names.begin();
@@ -1786,12 +1729,12 @@ namespace {
     start_data::scenario_condition_t::object_t scenario_condition_t_object_t_from_bin (unsigned char*& bin)
     {
         start_data::scenario_condition_t::object_t retval;
-        retval.type = enum_from_bin< scenario_condition_t::object_type_t >(bin);
+        retval.type = enum_from_bin<std::remove_reference<decltype(retval.type)>::type>(bin);
         {
             int length = int_from_bin(bin);
             retval.names.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.names[i] = x;
             }
         }
@@ -1799,7 +1742,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.hexes.resize(length);
             for (int i = 0; i < length; ++i) {
-                int x = int_from_bin(bin);
+                auto x = int_from_bin(bin);
                 retval.hexes[i] = x;
             }
         }
@@ -1829,7 +1772,7 @@ namespace {
                 *it++ = x;
             }
         }
-        retval.action = static_cast< scenario_condition_t::action_t >(msg.action());
+        retval.action = static_cast<std::remove_reference<decltype(retval.action)>::type>(msg.action());
         {
             retval.one_of.resize(msg.one_of_size());
             auto it = retval.one_of.begin();
@@ -1866,16 +1809,16 @@ namespace {
             int length = int_from_bin(bin);
             retval.actors.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.actors[i] = x;
             }
         }
-        retval.action = enum_from_bin< scenario_condition_t::action_t >(bin);
+        retval.action = enum_from_bin<std::remove_reference<decltype(retval.action)>::type>(bin);
         {
             int length = int_from_bin(bin);
             retval.one_of.resize(length);
             for (int i = 0; i < length; ++i) {
-                scenario_condition_t::object_t x = scenario_condition_t_object_t_from_bin(bin);
+                auto x = scenario_condition_t_object_t_from_bin(bin);
                 retval.one_of[i] = x;
             }
         }
@@ -1923,7 +1866,7 @@ namespace {
     start_data::war_entry_condition_t from_protobuf (const message::war_entry_condition_t& msg)
     {
         start_data::war_entry_condition_t retval;
-        retval.economy = static_cast< war_footing_t >(msg.economy());
+        retval.economy = static_cast<std::remove_reference<decltype(retval.economy)>::type>(msg.economy());
         retval.condition = from_protobuf(msg.condition());
         return retval;
     }
@@ -1937,7 +1880,7 @@ namespace {
     start_data::war_entry_condition_t war_entry_condition_t_from_bin (unsigned char*& bin)
     {
         start_data::war_entry_condition_t retval;
-        retval.economy = enum_from_bin< war_footing_t >(bin);
+        retval.economy = enum_from_bin<std::remove_reference<decltype(retval.economy)>::type>(bin);
         retval.condition = scenario_condition_t_from_bin(bin);
         return retval;
     }
@@ -1955,7 +1898,7 @@ namespace {
     start_data::scenario_turn_t::national_action_t::action_t from_protobuf (const message::scenario_turn_t::national_action_t::action_t& msg)
     {
         start_data::scenario_turn_t::national_action_t::action_t retval;
-        retval.type = static_cast< scenario_turn_t::national_action_t::action_type_t >(msg.type());
+        retval.type = static_cast<std::remove_reference<decltype(retval.type)>::type>(msg.type());
         {
             retval.names.resize(msg.names_size());
             auto it = retval.names.begin();
@@ -1981,12 +1924,12 @@ namespace {
     start_data::scenario_turn_t::national_action_t::action_t scenario_turn_t_national_action_t_action_t_from_bin (unsigned char*& bin)
     {
         start_data::scenario_turn_t::national_action_t::action_t retval;
-        retval.type = enum_from_bin< scenario_turn_t::national_action_t::action_type_t >(bin);
+        retval.type = enum_from_bin<std::remove_reference<decltype(retval.type)>::type>(bin);
         {
             int length = int_from_bin(bin);
             retval.names.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.names[i] = x;
             }
         }
@@ -2033,7 +1976,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.actions.resize(length);
             for (int i = 0; i < length; ++i) {
-                scenario_turn_t::national_action_t::action_t x = scenario_turn_t_national_action_t_action_t_from_bin(bin);
+                auto x = scenario_turn_t_national_action_t_action_t_from_bin(bin);
                 retval.actions[i] = x;
             }
         }
@@ -2082,8 +2025,8 @@ namespace {
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                scenario_turn_t::national_action_t value = scenario_turn_t_national_action_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = scenario_turn_t_national_action_t_from_bin(bin);
                 retval.national_actions[key] = value;
             }
         }
@@ -2128,7 +2071,7 @@ namespace {
                 *it++ = x;
             }
         }
-        retval.economy = static_cast< war_footing_t >(msg.economy());
+        retval.economy = static_cast<std::remove_reference<decltype(retval.economy)>::type>(msg.economy());
         retval.exhaustion_turns = msg.exhaustion_turns();
         retval.accumulate_exhaustion_at_peace = msg.accumulate_exhaustion_at_peace();
         {
@@ -2190,7 +2133,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.at_war_with.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.at_war_with[i] = x;
             }
         }
@@ -2198,18 +2141,18 @@ namespace {
             int length = int_from_bin(bin);
             retval.future_belligerents.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.future_belligerents[i] = x;
             }
         }
-        retval.economy = enum_from_bin< war_footing_t >(bin);
+        retval.economy = enum_from_bin<std::remove_reference<decltype(retval.economy)>::type>(bin);
         retval.exhaustion_turns = int_from_bin(bin);
         retval.accumulate_exhaustion_at_peace = bool_from_bin(bin);
         {
             int length = int_from_bin(bin);
             retval.release_conditions.resize(length);
             for (int i = 0; i < length; ++i) {
-                fleet_release_condition_t x = fleet_release_condition_t_from_bin(bin);
+                auto x = fleet_release_condition_t_from_bin(bin);
                 retval.release_conditions[i] = x;
             }
         }
@@ -2217,7 +2160,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.war_entry_conditions.resize(length);
             for (int i = 0; i < length; ++i) {
-                war_entry_condition_t x = war_entry_condition_t_from_bin(bin);
+                auto x = war_entry_condition_t_from_bin(bin);
                 retval.war_entry_conditions[i] = x;
             }
         }
@@ -2349,7 +2292,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.teams.resize(length);
             for (int i = 0; i < length; ++i) {
-                team_t x = team_t_from_bin(bin);
+                auto x = team_t_from_bin(bin);
                 retval.teams[i] = x;
             }
         }
@@ -2357,7 +2300,7 @@ namespace {
             int length = int_from_bin(bin);
             retval.team_turn_order.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.team_turn_order[i] = x;
             }
         }
@@ -2367,15 +2310,15 @@ namespace {
             int length = int_from_bin(bin);
             retval.setup_order.resize(length);
             for (int i = 0; i < length; ++i) {
-                std::string x = string_from_bin(bin);
+                auto x = string_from_bin(bin);
                 retval.setup_order[i] = x;
             }
         }
         {
             int length = int_from_bin(bin);
             for (int i = 0; i < length; ++i) {
-                std::string key = string_from_bin(bin);
-                scenario_t::nation_t value = scenario_t_nation_t_from_bin(bin);
+                auto key = string_from_bin(bin);
+                auto value = scenario_t_nation_t_from_bin(bin);
                 retval.nations[key] = value;
             }
         }
@@ -2383,11 +2326,9 @@ namespace {
             int length = int_from_bin(bin);
             retval.turns.resize(length);
             for (int i = 0; i < length; ++i) {
-                scenario_turn_t x = scenario_turn_t_from_bin(bin);
+                auto x = scenario_turn_t_from_bin(bin);
                 retval.turns[i] = x;
             }
         }
         return retval;
     }
-
-} 
