@@ -12,6 +12,8 @@
 #include <string>
 
 
+using hex_coord_t = start_data::hex_coord_t;
+
 enum class hex_direction_t {
     above_right,
     above,
@@ -101,7 +103,7 @@ inline hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 inline bool on_map (hex_coord_t hc, int width, int height)
 { return 0 <= hc.x && hc.x < width && 0 <= hc.y && hc.y < height; }
 
-inline bool on_map (hex_coord_t hc, const map_t& m)
+inline bool on_map (hex_coord_t hc, const start_data::map_t& m)
 { return on_map(hc, m.width, m.height); }
 
 
@@ -116,7 +118,7 @@ inline int hex_id (hex_coord_t hc)
 // Static container for hex ids within R=2 of a central hex.
 typedef boost::container::static_vector<hex_coord_t, 19> neighbors_t;
 
-inline neighbors_t adjacent_hex_coords (hex_coord_t hc, const map_t& m, int r = 1)
+inline neighbors_t adjacent_hex_coords (hex_coord_t hc, const start_data::map_t& m, int r = 1)
 {
     assert(r == 1 || r == 2);
     neighbors_t retval;

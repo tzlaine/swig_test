@@ -1,5 +1,5 @@
 ########################################
-# Model library
+# start_data library
 ########################################
 generate_protobuf(start_data start_data_message_target)
 
@@ -12,7 +12,7 @@ add_definitions(-DBUILD_FOR_TEST)
 add_library(
     start_data
     STATIC
-    ${unreal_src_dir}/model.cpp
+    ${unreal_src_dir}/start_data_t.cpp
     ${unreal_src_dir}/json2pb.cc
     ${unreal_src_dir}/start_data.cpp
     ${unreal_src_dir}/start_data.pb.cc

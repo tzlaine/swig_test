@@ -1,5 +1,4 @@
-#include <model.hpp>
-#include <start_data.hpp>
+#include <start_data_t.hpp>
 #include <json2pb.h>
 #include <gtest/gtest.h>
 
@@ -27,19 +26,19 @@ std::string file_slurp (const char* filename)
 
 TEST(init_model_ops, test_init_nations)
 {
-    start_data_t start_data;
+    start_data::start_data_t start_data;
     start_data.init_nations(nations_json_string);
 }
 
 TEST(init_model_ops, test_init_units)
 {
-    start_data_t start_data;
+    start_data::start_data_t start_data;
     start_data.init_unit_defs(units_json_string);
 }
 
 TEST(init_model_ops, test_init_scenario)
 {
-    start_data_t start_data;
+    start_data::start_data_t start_data;
 
     auto get_map_str = [](std::string const &) { return map_json_string; };
     auto get_oob_str = [](std::string const &) { return oob_json_string; };
@@ -51,6 +50,8 @@ TEST(init_model_ops, test_init_scenario)
 
 TEST(init_model_ops, test_nations_bin_encoding)
 {
+    using namespace start_data;
+
     message::nations_t nations_msg;
     json2pb(nations_msg, nations_json_string, map_encoding_t::compact);
     nations_t from_string = from_protobuf(nations_msg);

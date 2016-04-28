@@ -4,7 +4,7 @@
 
 class UInstancedStaticMeshComponent;
 
-#include "model.hpp"
+#include "start_data_t.hpp"
 #include <vector>
 #include "GameFramework/Actor.h"
 #include "hex_map.generated.h"

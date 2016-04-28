@@ -113,7 +113,7 @@ if (PYTHON_EXECUTABLE)
         VERBATIM
     )
 
-    macro(python_generate_sources file_root)
+    macro(python_generate_sources file_root namespace)
         add_custom_target(
             make_desc_file_${file_root}
             COMMAND
@@ -144,6 +144,7 @@ if (PYTHON_EXECUTABLE)
                     --desc-file ${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
                     --hpp-file ${unreal_src_dir}/${file_root}.hpp
                     --cpp-file ${unreal_src_dir}/${file_root}.cpp
+                    --namespace ${namespace}
             DEPENDS
                 ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
@@ -159,7 +160,7 @@ if (PYTHON_EXECUTABLE)
     endmacro()
 
     set(python_generated_sources)
-    python_generate_sources(start_data)
+    python_generate_sources(start_data start_data)
 
     set_source_files_properties(
         ${python_generated_sources}

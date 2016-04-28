@@ -2,7 +2,7 @@
 #include "Spaceport.h"
 #endif
 
-#include <model.hpp>
+#include "start_data_t.hpp"
 #include "validation.hpp"
 #include "hex_operations.hpp"
 
@@ -32,6 +32,8 @@
 #include <queue>
 #include <string>
 
+
+using namespace start_data;
 
 const hex_coord_t invalid_hex_coord{1000, 1000};
 const hex_direction_t all_hex_directions[6] = {
