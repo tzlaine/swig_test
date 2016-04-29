@@ -27,12 +27,14 @@ message planet_t
     enum type_t {
         minor = 0;
         major = 1;
+        capital = 2;
     }
 
-    // TODO: Turns owned by captor.
-    int32 owner = 1; // TODO: Define this type for real.
+    // TODO: Turns owned by captor, etc.
+    int32 owner = 1;
     int32 original_owner = 2;
     type_t type = 3;
+    fleets_t units = 4;
 }
 
 message hex_zone_fixture_t
@@ -63,7 +65,7 @@ message hex_t
 
 message province_t
 {
-    // TODO: Turns owned by captor.
+    // TODO: Turns owned by captor, etc.
     int32 id = 1;
     int32 owner = 2;
     int32 original_owner = 3;

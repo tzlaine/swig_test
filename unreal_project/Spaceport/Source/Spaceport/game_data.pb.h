@@ -56,12 +56,13 @@ class unit_t;
 enum planet_t_type_t {
   planet_t_type_t_minor = 0,
   planet_t_type_t_major = 1,
+  planet_t_type_t_capital = 2,
   planet_t_type_t_planet_t_type_t_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   planet_t_type_t_planet_t_type_t_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool planet_t_type_t_IsValid(int value);
 const planet_t_type_t planet_t_type_t_type_t_MIN = planet_t_type_t_minor;
-const planet_t_type_t planet_t_type_t_type_t_MAX = planet_t_type_t_major;
+const planet_t_type_t planet_t_type_t_type_t_MAX = planet_t_type_t_capital;
 const int planet_t_type_t_type_t_ARRAYSIZE = planet_t_type_t_type_t_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* planet_t_type_t_descriptor();
@@ -422,6 +423,7 @@ class planet_t : public ::google::protobuf::Message {
   typedef planet_t_type_t type_t;
   static const type_t minor = planet_t_type_t_minor;
   static const type_t major = planet_t_type_t_major;
+  static const type_t capital = planet_t_type_t_capital;
   static inline bool type_t_IsValid(int value) {
     return planet_t_type_t_IsValid(value);
   }
@@ -463,6 +465,15 @@ class planet_t : public ::google::protobuf::Message {
   ::message::game_data::planet_t_type_t type() const;
   void set_type(::message::game_data::planet_t_type_t value);
 
+  // optional .message.game_data.fleets_t units = 4;
+  bool has_units() const;
+  void clear_units();
+  static const int kUnitsFieldNumber = 4;
+  const ::message::game_data::fleets_t& units() const;
+  ::message::game_data::fleets_t* mutable_units();
+  ::message::game_data::fleets_t* release_units();
+  void set_allocated_units(::message::game_data::fleets_t* units);
+
   // @@protoc_insertion_point(class_scope:message.game_data.planet_t)
  private:
 
@@ -470,6 +481,7 @@ class planet_t : public ::google::protobuf::Message {
   bool _is_default_instance_;
   ::google::protobuf::int32 owner_;
   ::google::protobuf::int32 original_owner_;
+  ::message::game_data::fleets_t* units_;
   int type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
@@ -1341,6 +1353,43 @@ inline void planet_t::set_type(::message::game_data::planet_t_type_t value) {
   
   type_ = value;
   // @@protoc_insertion_point(field_set:message.game_data.planet_t.type)
+}
+
+// optional .message.game_data.fleets_t units = 4;
+inline bool planet_t::has_units() const {
+  return !_is_default_instance_ && units_ != NULL;
+}
+inline void planet_t::clear_units() {
+  if (GetArenaNoVirtual() == NULL && units_ != NULL) delete units_;
+  units_ = NULL;
+}
+inline const ::message::game_data::fleets_t& planet_t::units() const {
+  // @@protoc_insertion_point(field_get:message.game_data.planet_t.units)
+  return units_ != NULL ? *units_ : *default_instance_->units_;
+}
+inline ::message::game_data::fleets_t* planet_t::mutable_units() {
+  
+  if (units_ == NULL) {
+    units_ = new ::message::game_data::fleets_t;
+  }
+  // @@protoc_insertion_point(field_mutable:message.game_data.planet_t.units)
+  return units_;
+}
+inline ::message::game_data::fleets_t* planet_t::release_units() {
+  
+  ::message::game_data::fleets_t* temp = units_;
+  units_ = NULL;
+  return temp;
+}
+inline void planet_t::set_allocated_units(::message::game_data::fleets_t* units) {
+  delete units_;
+  units_ = units;
+  if (units) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:message.game_data.planet_t.units)
 }
 
 // -------------------------------------------------------------------

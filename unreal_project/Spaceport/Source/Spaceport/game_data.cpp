@@ -79,6 +79,7 @@ message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_owner(value.owner);
     retval.set_original_owner(value.original_owner);
     retval.set_type(static_cast< message::game_data::planet_t::type_t >(value.type));
+    retval.mutable_units()->CopyFrom(to_protobuf(value.units));
     return retval;
 }
 
@@ -88,6 +89,7 @@ message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.owner = msg.owner();
     retval.original_owner = msg.original_owner();
     retval.type = static_cast<std::remove_reference<decltype(retval.type)>::type>(msg.type());
+    retval.units = from_protobuf(msg.units());
     return retval;
 }
 

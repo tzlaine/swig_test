@@ -118,10 +118,11 @@ void protobuf_AssignDesc_game_5fdata_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(fleets_t, _is_default_instance_));
   fleets_t_FleetsEntry_descriptor_ = fleets_t_descriptor_->nested_type(0);
   planet_t_descriptor_ = file->message_type(3);
-  static const int planet_t_offsets_[3] = {
+  static const int planet_t_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(planet_t, owner_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(planet_t, original_owner_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(planet_t, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(planet_t, units_),
   };
   planet_t_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -350,33 +351,35 @@ void protobuf_AddDesc_game_5fdata_2eproto() {
     "e_data.unit_t\"\216\001\n\010fleets_t\0227\n\006fleets\030\001 \003"
     "(\0132\'.message.game_data.fleets_t.FleetsEn"
     "try\032I\n\013FleetsEntry\022\013\n\003key\030\001 \001(\005\022)\n\005value"
-    "\030\002 \001(\0132\032.message.game_data.fleet_t:\0028\001\"\203"
+    "\030\002 \001(\0132\032.message.game_data.fleet_t:\0028\001\"\274"
     "\001\n\010planet_t\022\r\n\005owner\030\001 \001(\005\022\026\n\016original_o"
     "wner\030\002 \001(\005\0220\n\004type\030\003 \001(\0162\".message.game_"
-    "data.planet_t.type_t\"\036\n\006type_t\022\t\n\005minor\020"
-    "\000\022\t\n\005major\020\001\"\320\001\n\022hex_zone_fixture_t\022:\n\004t"
-    "ype\030\001 \001(\0162,.message.game_data.hex_zone_f"
-    "ixture_t.type_t\022\'\n\004base\030\002 \001(\0132\031.message."
-    "game_data.unit_t\022+\n\006planet\030\003 \001(\0132\033.messa"
-    "ge.game_data.planet_t\"(\n\006type_t\022\r\n\ttype_"
-    "base\020\000\022\017\n\013type_planet\020\001\"S\n\nhex_zone_t\022\014\n"
-    "\004name\030\001 \001(\t\0227\n\010fixtures\030\002 \003(\0132%.message."
-    "game_data.hex_zone_fixture_t\"\234\001\n\005hex_t\022#"
-    "\n\005coord\030\001 \001(\0132\024.message.hex_coord_t\022\023\n\013p"
-    "rovince_id\030\002 \001(\005\022,\n\005zones\030\004 \003(\0132\035.messag"
-    "e.game_data.hex_zone_t\022+\n\006fleets\030\005 \001(\0132\033"
-    ".message.game_data.fleets_t\"\?\n\nprovince_"
-    "t\022\n\n\002id\030\001 \001(\005\022\r\n\005owner\030\002 \001(\005\022\026\n\016original"
-    "_owner\030\003 \001(\005\"\201\001\n\005map_t\022\r\n\005width\030\001 \001(\005\022\016\n"
-    "\006height\030\002 \001(\005\022\'\n\005hexes\030\003 \003(\0132\030.message.g"
-    "ame_data.hex_t\0220\n\tprovinces\030\004 \003(\0132\035.mess"
-    "age.game_data.province_t\"K\n\roffmap_area_"
-    "t\022\r\n\005owner\030\001 \001(\005\022+\n\006fleets\030\002 \001(\0132\033.messa"
-    "ge.game_data.fleets_t\"\235\001\n\016offmap_areas_t"
-    "\022;\n\005areas\030\001 \003(\0132,.message.game_data.offm"
-    "ap_areas_t.AreasEntry\032N\n\nAreasEntry\022\013\n\003k"
-    "ey\030\001 \001(\005\022/\n\005value\030\002 \001(\0132 .message.game_d"
-    "ata.offmap_area_t:\0028\001b\006proto3", 1349);
+    "data.planet_t.type_t\022*\n\005units\030\004 \001(\0132\033.me"
+    "ssage.game_data.fleets_t\"+\n\006type_t\022\t\n\005mi"
+    "nor\020\000\022\t\n\005major\020\001\022\013\n\007capital\020\002\"\320\001\n\022hex_zo"
+    "ne_fixture_t\022:\n\004type\030\001 \001(\0162,.message.gam"
+    "e_data.hex_zone_fixture_t.type_t\022\'\n\004base"
+    "\030\002 \001(\0132\031.message.game_data.unit_t\022+\n\006pla"
+    "net\030\003 \001(\0132\033.message.game_data.planet_t\"("
+    "\n\006type_t\022\r\n\ttype_base\020\000\022\017\n\013type_planet\020\001"
+    "\"S\n\nhex_zone_t\022\014\n\004name\030\001 \001(\t\0227\n\010fixtures"
+    "\030\002 \003(\0132%.message.game_data.hex_zone_fixt"
+    "ure_t\"\234\001\n\005hex_t\022#\n\005coord\030\001 \001(\0132\024.message"
+    ".hex_coord_t\022\023\n\013province_id\030\002 \001(\005\022,\n\005zon"
+    "es\030\004 \003(\0132\035.message.game_data.hex_zone_t\022"
+    "+\n\006fleets\030\005 \001(\0132\033.message.game_data.flee"
+    "ts_t\"\?\n\nprovince_t\022\n\n\002id\030\001 \001(\005\022\r\n\005owner\030"
+    "\002 \001(\005\022\026\n\016original_owner\030\003 \001(\005\"\201\001\n\005map_t\022"
+    "\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022\'\n\005hexes\030"
+    "\003 \003(\0132\030.message.game_data.hex_t\0220\n\tprovi"
+    "nces\030\004 \003(\0132\035.message.game_data.province_"
+    "t\"K\n\roffmap_area_t\022\r\n\005owner\030\001 \001(\005\022+\n\006fle"
+    "ets\030\002 \001(\0132\033.message.game_data.fleets_t\"\235"
+    "\001\n\016offmap_areas_t\022;\n\005areas\030\001 \003(\0132,.messa"
+    "ge.game_data.offmap_areas_t.AreasEntry\032N"
+    "\n\nAreasEntry\022\013\n\003key\030\001 \001(\005\022/\n\005value\030\002 \001(\013"
+    "2 .message.game_data.offmap_area_t:\0028\001b\006"
+    "proto3", 1406);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game_data.proto", &protobuf_RegisterTypes);
   unit_t::default_instance_ = new unit_t();
@@ -1274,6 +1277,7 @@ bool planet_t_type_t_IsValid(int value) {
   switch(value) {
     case 0:
     case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -1283,6 +1287,7 @@ bool planet_t_type_t_IsValid(int value) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const planet_t_type_t planet_t::minor;
 const planet_t_type_t planet_t::major;
+const planet_t_type_t planet_t::capital;
 const planet_t_type_t planet_t::type_t_MIN;
 const planet_t_type_t planet_t::type_t_MAX;
 const int planet_t::type_t_ARRAYSIZE;
@@ -1291,6 +1296,7 @@ const int planet_t::type_t_ARRAYSIZE;
 const int planet_t::kOwnerFieldNumber;
 const int planet_t::kOriginalOwnerFieldNumber;
 const int planet_t::kTypeFieldNumber;
+const int planet_t::kUnitsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 planet_t::planet_t()
@@ -1301,6 +1307,7 @@ planet_t::planet_t()
 
 void planet_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
+  units_ = const_cast< ::message::game_data::fleets_t*>(&::message::game_data::fleets_t::default_instance());
 }
 
 planet_t::planet_t(const planet_t& from)
@@ -1317,6 +1324,7 @@ void planet_t::SharedCtor() {
   owner_ = 0;
   original_owner_ = 0;
   type_ = 0;
+  units_ = NULL;
 }
 
 planet_t::~planet_t() {
@@ -1326,6 +1334,7 @@ planet_t::~planet_t() {
 
 void planet_t::SharedDtor() {
   if (this != default_instance_) {
+    delete units_;
   }
 }
 
@@ -1363,7 +1372,10 @@ void planet_t::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(owner_, type_);
+  ZR_(owner_, original_owner_);
+  type_ = 0;
+  if (GetArenaNoVirtual() == NULL && units_ != NULL) delete units_;
+  units_ = NULL;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1421,6 +1433,19 @@ bool planet_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(34)) goto parse_units;
+        break;
+      }
+
+      // optional .message.game_data.fleets_t units = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_units:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_units()));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1465,6 +1490,12 @@ void planet_t::SerializeWithCachedSizes(
       3, this->type(), output);
   }
 
+  // optional .message.game_data.fleets_t units = 4;
+  if (this->has_units()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, *this->units_, output);
+  }
+
   // @@protoc_insertion_point(serialize_end:message.game_data.planet_t)
 }
 
@@ -1485,6 +1516,13 @@ void planet_t::SerializeWithCachedSizes(
   if (this->type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->type(), target);
+  }
+
+  // optional .message.game_data.fleets_t units = 4;
+  if (this->has_units()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, *this->units_, target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:message.game_data.planet_t)
@@ -1512,6 +1550,13 @@ int planet_t::ByteSize() const {
   if (this->type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+  }
+
+  // optional .message.game_data.fleets_t units = 4;
+  if (this->has_units()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->units_);
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1543,6 +1588,9 @@ void planet_t::MergeFrom(const planet_t& from) {
   if (from.type() != 0) {
     set_type(from.type());
   }
+  if (from.has_units()) {
+    mutable_units()->::message::game_data::fleets_t::MergeFrom(from.units());
+  }
 }
 
 void planet_t::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1570,6 +1618,7 @@ void planet_t::InternalSwap(planet_t* other) {
   std::swap(owner_, other->owner_);
   std::swap(original_owner_, other->original_owner_);
   std::swap(type_, other->type_);
+  std::swap(units_, other->units_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1625,6 +1674,43 @@ void planet_t::clear_type() {
   
   type_ = value;
   // @@protoc_insertion_point(field_set:message.game_data.planet_t.type)
+}
+
+// optional .message.game_data.fleets_t units = 4;
+bool planet_t::has_units() const {
+  return !_is_default_instance_ && units_ != NULL;
+}
+void planet_t::clear_units() {
+  if (GetArenaNoVirtual() == NULL && units_ != NULL) delete units_;
+  units_ = NULL;
+}
+const ::message::game_data::fleets_t& planet_t::units() const {
+  // @@protoc_insertion_point(field_get:message.game_data.planet_t.units)
+  return units_ != NULL ? *units_ : *default_instance_->units_;
+}
+::message::game_data::fleets_t* planet_t::mutable_units() {
+  
+  if (units_ == NULL) {
+    units_ = new ::message::game_data::fleets_t;
+  }
+  // @@protoc_insertion_point(field_mutable:message.game_data.planet_t.units)
+  return units_;
+}
+::message::game_data::fleets_t* planet_t::release_units() {
+  
+  ::message::game_data::fleets_t* temp = units_;
+  units_ = NULL;
+  return temp;
+}
+void planet_t::set_allocated_units(::message::game_data::fleets_t* units) {
+  delete units_;
+  units_ = units;
+  if (units) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:message.game_data.planet_t.units)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

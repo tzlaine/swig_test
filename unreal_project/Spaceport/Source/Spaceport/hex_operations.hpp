@@ -111,7 +111,7 @@ inline int hex_index (hex_coord_t hc, int width)
 
 
 inline int hex_id (hex_coord_t hc)
-{ return hc.x * 100 + hc.y; }
+{ return (hc.x + 1) * 100 + hc.y + 1; }
 
 
 // Static container for hex ids within R=2 of a central hex.

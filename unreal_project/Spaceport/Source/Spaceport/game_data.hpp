@@ -35,10 +35,12 @@ struct planet_t
     enum class type_t {
         minor = 0,
         major = 1,
+        capital = 2,
     };
     int owner;
     int original_owner;
     planet_t::type_t type;
+    fleets_t units;
 };
 
 struct hex_zone_fixture_t
