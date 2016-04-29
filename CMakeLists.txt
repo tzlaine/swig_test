@@ -169,8 +169,6 @@ if (PYTHON_EXECUTABLE)
     python_generate_sources(start_data start_data)
     python_generate_sources(game_data GLOBAL)
 
-    message(${python_generated_sources})
-
     set_source_files_properties(
         ${python_generated_sources}
         PROPERTIES
