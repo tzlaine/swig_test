@@ -98,6 +98,7 @@ Ahex_map::Ahex_map () :
     start_data_.init_unit_defs(load_text_file("units.json"));
     auto load = [](const std::string & filename) { return load_text_file(filename); };
     start_data_.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
+    game_data_ = game_data_t(start_data_);
 
     instanced_hexes_.resize(primary_colors().size());
     instanced_national_borders_.resize(primary_colors().size());
@@ -201,7 +202,7 @@ hex_coord_t Ahex_map::hex_under_cursor () const
 
     int const loose_row = FMath::FloorToInt(intersection.Y / (2.0f * sin_60));
 
-    hex_coord_t hc = {loose_column, start_data_.map().height - 1 - loose_row};
+    hex_coord_t hc = {loose_column, game_data_.map().height - 1 - loose_row};
     if (FMath::Fmod(intersection.X, 1.5) < 0.5) {
         FVector2D left_corner(0, sin_60);
         FVector2D left_corner_to_point =
@@ -216,7 +217,7 @@ hex_coord_t Ahex_map::hex_under_cursor () const
 
     retval = hc;
 
-    if (!on_map(hc, start_data_.map()))
+    if (!on_map(hc, game_data_.map()))
         retval = invalid_hex_coord;
 
     return retval;
@@ -280,7 +281,7 @@ void Ahex_map::spawn_hexes ()
         initialize_border_instanced_mesh(instanced_hex_borders_, nation_id, hex_border_thickness, thin_hex_border_mat_);
     }
 
-    auto const & map = start_data_.map();
+    auto const & map = game_data_.map();
     for (int x = 0; x < map.width; ++x) {
         for (int y = 0; y < map.height; ++y) {
             hex_coord_t const hc = {x, y};
@@ -295,8 +296,9 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
 {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
 
-    auto const & map = start_data_.map();
-    auto const & map_hex = map.hexes[hex_index(hc, map.width)];
+    auto const & map = game_data_.map();
+    auto const & map_hex = game_data_.hex(hc);
+    auto const & province = game_data_.province(map_hex.province_id);
 
     int const x = map_hex.coord.x;
     int const y = map_hex.coord.y;
@@ -310,7 +312,7 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
         location.Y -= sin_60 * meters;
     location.Z = 0.5f * meters;
 
-    instanced_hexes_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    instanced_hexes_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
 
     rotation.Roll = 180.0f;
     location.Z = 0 * meters;
@@ -318,13 +320,14 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
     for (auto d : all_hex_directions) {
         auto other_hc = adjacent_hex_coord(hc, d);
         if (!on_map(other_hc, map)) {
-            instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+            instanced_national_borders_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
         } else {
-            auto const & other_hex = map.hexes[hex_index(other_hc, map.width)];
-            if (other_hex.owner != map_hex.owner)
-                instanced_national_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+            auto const & other_hex = game_data_.hex(other_hc);
+            auto const & other_province = game_data_.province(other_hex.province_id);
+            if (other_province.owner != province.owner)
+                instanced_national_borders_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
             else
-                instanced_hex_borders_[map_hex.owner]->AddInstanceWorldSpace(FTransform(rotation, location)); // TODO: Provinces, too!
+                instanced_hex_borders_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location)); // TODO: Provinces, too!
         }
         rotation.Yaw += 60.0f;
     }

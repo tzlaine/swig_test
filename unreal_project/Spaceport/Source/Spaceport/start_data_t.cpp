@@ -674,15 +674,19 @@ void start_data_t::init_scenario_impl ()
 
     validate_scenario_with_map_and_oob(scenario_, map_, oob_);
 
-    int province_id = 0;
     for (auto const & pair : map_.starting_national_holdings) {
         for (auto const & province : pair.second.provinces) {
             for (auto const & province_hex : province.hexes) {
                 auto const hc = to_hex_coord(province_hex.hex);
-                provinces_.insert(std::make_pair(hc, province_id));
-                province_hexes_.insert(std::make_pair(province_id, hc));
+                auto const inserted = provinces_.insert(std::make_pair(hc, num_provinces_)).second;
+                if (!inserted) {
+                    throw std::runtime_error(
+                        std::string("Hex ") + hex_string(hc) + " cannot be associated with two provinces."
+                    );
+                }
+                province_hexes_.insert(std::make_pair(num_provinces_, hc));
             }
-            ++province_id;
+            ++num_provinces_;
         }
     }
 

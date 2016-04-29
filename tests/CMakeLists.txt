@@ -15,6 +15,7 @@ add_executable(start_data_tests start_data_tests.cpp)
 target_link_libraries(
     start_data_tests
     start_data
+    game_data
     libprotobuf
     jansson
     gtest

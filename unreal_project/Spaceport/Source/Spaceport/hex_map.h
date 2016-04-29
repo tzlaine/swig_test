@@ -5,6 +5,7 @@
 class UInstancedStaticMeshComponent;
 
 #include "start_data_t.hpp"
+#include "game_data_t.hpp"
 #include <vector>
 #include "GameFramework/Actor.h"
 #include "hex_map.generated.h"
@@ -64,6 +65,7 @@ private:
     }
 
     start_data::start_data_t start_data_;
+    game_data_t game_data_;
 
     std::vector<FLinearColor> nation_id_primary_colors_;
     std::vector<FLinearColor> nation_id_secondary_colors_;
