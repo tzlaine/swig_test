@@ -1,6 +1,7 @@
 #pragma once
 
 #include "start_data.hpp"
+#include "hex_operations.hpp"
 #include <boost/utility.hpp>
 
 namespace start_data {
@@ -38,7 +39,32 @@ namespace start_data {
         { return nations_.nations.find(key)->second; }
     
         char const * hex_string (hex_coord_t hc) const;
-    
+        
+        int num_provinces() const
+        { province_hexes_.size(); }
+
+        struct const_province_hex_range
+        {
+            using iterator = boost::container::flat_multimap<int, hex_coord_t>::const_iterator;
+            iterator begin () const { return first; }
+            iterator end() const { return last; }
+            iterator first, last;
+        };
+
+        const_province_hex_range province_hexes (int province_id) const
+        {
+            auto const pair = province_hexes_.equal_range(province_id);
+            return const_province_hex_range{pair.first, pair.second};
+        }
+
+        int hex_province (hex_coord_t hc) const
+        {
+            auto const it = provinces_.find(hc);
+            if (it == provinces_.end())
+                return -1;
+            return it->second;
+        }
+
         void init_nations (std::string const & nations_str);
         void init_unit_defs (std::string const & unit_defs_str);
     
@@ -72,6 +98,9 @@ namespace start_data {
         bool scenario_initialized_;
     
         std::vector<std::string> hex_strings_;
+
+        boost::container::flat_multimap<int, hex_coord_t> province_hexes_;
+        boost::container::flat_map<hex_coord_t, int> provinces_;
     };
 
 }
