@@ -109,28 +109,40 @@ Ahex_map::Ahex_map () :
 
         {
             auto name = pair.first + "_hexes";
-            auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
+            auto & instanced = instanced_hexes_by_color_[pair.second];
+            if (!instanced)
+                instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
             instanced->AttachTo(RootComponent);
             instanced_hexes_[nation_id] = instanced;
         }
+    }
+
+    for (auto const & pair : secondary_colors()) {
+        auto const nation_id = start_data_.nation(pair.first).nation_id;
 
         {
             auto name = pair.first + "_national_borders";
-            auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
+            auto & instanced = instanced_national_borders_by_color_[pair.second];
+            if (!instanced)
+                instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
             instanced->AttachTo(RootComponent);
             instanced_national_borders_[nation_id] = instanced;
         }
 
         {
             auto name = pair.first + "_province_borders";
-            auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
+            auto & instanced = instanced_province_borders_by_color_[pair.second];
+            if (!instanced)
+                instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
             instanced->AttachTo(RootComponent);
             instanced_province_borders_[nation_id] = instanced;
         }
 
         {
             auto name = pair.first + "_hex_borders";
-            auto instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
+            auto & instanced = instanced_hex_borders_by_color_[pair.second];
+            if (!instanced)
+                instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
             instanced->AttachTo(RootComponent);
             instanced_hex_borders_[nation_id] = instanced;
         }
