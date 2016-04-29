@@ -777,7 +777,8 @@ public class convert
 
     close_namespace(user_namespace)
 
-    args.cpp_file.write('''
+    if False:
+        args.cpp_file.write('''
 namespace {
 
     bool bool_from_bin (unsigned char*& bin)
@@ -878,15 +879,17 @@ namespace {
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+pb+cpp'), make_decl(all_decl_data[i], 'from+pb+cpp')))
-        args.hpp_file.write('''
+        if False:
+            args.hpp_file.write('''
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+bin+cpp'), make_decl(all_decl_data[i], 'from+bin+cpp')))
 
         define_cpp_to_pb_impl(all_decl_data[i], depth, map_fields)
         define_cpp_from_pb_impl(all_decl_data[i], depth, map_fields)
-        define_cpp_to_bin_impl(all_decl_data[i], depth, map_fields)
-        define_cpp_from_bin_impl(all_decl_data[i], depth, map_fields)
+        if False:
+            define_cpp_to_bin_impl(all_decl_data[i], depth, map_fields)
+            define_cpp_from_bin_impl(all_decl_data[i], depth, map_fields)
 
         if args.cs_file:
             define_csharp_bin_size(all_decl_data[i], 1, map_fields)

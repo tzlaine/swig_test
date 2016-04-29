@@ -48,6 +48,7 @@ TEST(init_model_ops, test_init_scenario)
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 }
 
+#if 0
 TEST(init_model_ops, test_nations_bin_encoding)
 {
     using namespace start_data;
@@ -105,6 +106,7 @@ TEST(init_model_ops, test_nations_bin_encoding)
         EXPECT_EQ(nation_from_encoding.nation_id, nation_from_string.nation_id);
     }
 }
+#endif
 
 int main(int argc, char **argv)
 {
