@@ -88,6 +88,7 @@ Ahex_map::Ahex_map () :
     hex_mat_ (nullptr),
     hex_border_mat_ (nullptr),
     hex_border_mesh_ (nullptr),
+    thin_hex_border_mat_ (nullptr),
     player_controller_ (nullptr),
     hexes_spawned_ (false)
 {
@@ -217,11 +218,11 @@ void Ahex_map::hex_under_cursor (int & x, int & y) const
     y = hc.y;
 }
 
-void Ahex_map::initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness)
+void Ahex_map::initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness, UMaterial * mat)
 {
     auto instanced = instanced_meshes[nation_id];
     UMaterialInstanceDynamic * material =
-        instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_border_mat_);
+        instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, mat);
     auto const color = nation_id_secondary_colors_[nation_id];
     material->SetVectorParameterValue("color", color);
     material->SetScalarParameterValue("thickness", thickness);
@@ -263,9 +264,9 @@ void Ahex_map::spawn_hexes ()
     for (auto const & pair : secondary_colors()) {
         auto nation_id = start_data_.nation(pair.first).nation_id;
         nation_id_secondary_colors_[nation_id] = pair.second;
-        initialize_border_instanced_mesh(instanced_national_borders_, nation_id, national_border_thickness);
-        initialize_border_instanced_mesh(instanced_province_borders_, nation_id, province_border_thickness);
-        initialize_border_instanced_mesh(instanced_hex_borders_, nation_id, hex_border_thickness);
+        initialize_border_instanced_mesh(instanced_national_borders_, nation_id, national_border_thickness, hex_border_mat_);
+        initialize_border_instanced_mesh(instanced_province_borders_, nation_id, province_border_thickness, hex_border_mat_);
+        initialize_border_instanced_mesh(instanced_hex_borders_, nation_id, hex_border_thickness, thin_hex_border_mat_);
     }
 
     auto const & map = start_data_.map();

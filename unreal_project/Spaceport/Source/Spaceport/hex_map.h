@@ -35,6 +35,8 @@ public:
     class UStaticMesh * hex_border_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class UMaterial * hex_border_mat_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UMaterial * thin_hex_border_mat_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class APlayerController * player_controller_;
@@ -42,7 +44,7 @@ public:
 private:
     using national_instances_t = std::vector<UInstancedStaticMeshComponent *>; // indexed by nation_id
 
-    void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness);
+    void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness, UMaterial * mat);
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
 
