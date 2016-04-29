@@ -64,7 +64,6 @@ message hex_t
     hex_coord_t coord = 1;
     int32 owner = 2;
     feature_t feature = 3;
-    repeated int32 neutral_zone_bordering = 4 [packed=true];
 }
 
 message province_hex_t

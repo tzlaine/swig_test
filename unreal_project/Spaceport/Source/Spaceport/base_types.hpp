@@ -74,11 +74,5 @@ struct hex_coord_t
 message::turn_t to_protobuf (const ::turn_t& value);
 ::turn_t from_protobuf (const message::turn_t& msg);
 
-void to_bin (const ::turn_t& value, std::vector<unsigned char>& bin);
-::turn_t turn_t_from_bin (unsigned char*& bin);
-
 message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
 ::hex_coord_t from_protobuf (const message::hex_coord_t& msg);
-
-void to_bin (const ::hex_coord_t& value, std::vector<unsigned char>& bin);
-::hex_coord_t hex_coord_t_from_bin (unsigned char*& bin);

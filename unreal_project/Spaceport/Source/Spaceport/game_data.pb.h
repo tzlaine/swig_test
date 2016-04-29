@@ -53,6 +53,27 @@ class planet_t;
 class province_t;
 class unit_t;
 
+enum planet_t_type_t {
+  planet_t_type_t_minor = 0,
+  planet_t_type_t_major = 1,
+  planet_t_type_t_planet_t_type_t_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  planet_t_type_t_planet_t_type_t_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool planet_t_type_t_IsValid(int value);
+const planet_t_type_t planet_t_type_t_type_t_MIN = planet_t_type_t_minor;
+const planet_t_type_t planet_t_type_t_type_t_MAX = planet_t_type_t_major;
+const int planet_t_type_t_type_t_ARRAYSIZE = planet_t_type_t_type_t_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* planet_t_type_t_descriptor();
+inline const ::std::string& planet_t_type_t_Name(planet_t_type_t value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    planet_t_type_t_descriptor(), value);
+}
+inline bool planet_t_type_t_Parse(
+    const ::std::string& name, planet_t_type_t* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<planet_t_type_t>(
+    planet_t_type_t_descriptor(), name, value);
+}
 enum hex_zone_fixture_t_type_t {
   hex_zone_fixture_t_type_t_type_base = 0,
   hex_zone_fixture_t_type_t_type_planet = 1,
@@ -398,6 +419,30 @@ class planet_t : public ::google::protobuf::Message {
 
   // nested types ----------------------------------------------------
 
+  typedef planet_t_type_t type_t;
+  static const type_t minor = planet_t_type_t_minor;
+  static const type_t major = planet_t_type_t_major;
+  static inline bool type_t_IsValid(int value) {
+    return planet_t_type_t_IsValid(value);
+  }
+  static const type_t type_t_MIN =
+    planet_t_type_t_type_t_MIN;
+  static const type_t type_t_MAX =
+    planet_t_type_t_type_t_MAX;
+  static const int type_t_ARRAYSIZE =
+    planet_t_type_t_type_t_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  type_t_descriptor() {
+    return planet_t_type_t_descriptor();
+  }
+  static inline const ::std::string& type_t_Name(type_t value) {
+    return planet_t_type_t_Name(value);
+  }
+  static inline bool type_t_Parse(const ::std::string& name,
+      type_t* value) {
+    return planet_t_type_t_Parse(name, value);
+  }
+
   // accessors -------------------------------------------------------
 
   // optional int32 owner = 1;
@@ -412,6 +457,12 @@ class planet_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 original_owner() const;
   void set_original_owner(::google::protobuf::int32 value);
 
+  // optional .message.game_data.planet_t.type_t type = 3;
+  void clear_type();
+  static const int kTypeFieldNumber = 3;
+  ::message::game_data::planet_t_type_t type() const;
+  void set_type(::message::game_data::planet_t_type_t value);
+
   // @@protoc_insertion_point(class_scope:message.game_data.planet_t)
  private:
 
@@ -419,6 +470,7 @@ class planet_t : public ::google::protobuf::Message {
   bool _is_default_instance_;
   ::google::protobuf::int32 owner_;
   ::google::protobuf::int32 original_owner_;
+  int type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -718,17 +770,17 @@ class hex_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 province_id() const;
   void set_province_id(::google::protobuf::int32 value);
 
-  // repeated .message.game_data.hex_zone_t hex_zones = 4;
-  int hex_zones_size() const;
-  void clear_hex_zones();
-  static const int kHexZonesFieldNumber = 4;
-  const ::message::game_data::hex_zone_t& hex_zones(int index) const;
-  ::message::game_data::hex_zone_t* mutable_hex_zones(int index);
-  ::message::game_data::hex_zone_t* add_hex_zones();
+  // repeated .message.game_data.hex_zone_t zones = 4;
+  int zones_size() const;
+  void clear_zones();
+  static const int kZonesFieldNumber = 4;
+  const ::message::game_data::hex_zone_t& zones(int index) const;
+  ::message::game_data::hex_zone_t* mutable_zones(int index);
+  ::message::game_data::hex_zone_t* add_zones();
   ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >*
-      mutable_hex_zones();
+      mutable_zones();
   const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >&
-      hex_zones() const;
+      zones() const;
 
   // optional .message.game_data.fleets_t fleets = 5;
   bool has_fleets() const;
@@ -745,7 +797,7 @@ class hex_t : public ::google::protobuf::Message {
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::message::hex_coord_t* coord_;
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t > hex_zones_;
+  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t > zones_;
   ::message::game_data::fleets_t* fleets_;
   ::google::protobuf::int32 province_id_;
   mutable int _cached_size_;
@@ -814,38 +866,32 @@ class province_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional int32 owner = 1;
+  // optional int32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::int32 id() const;
+  void set_id(::google::protobuf::int32 value);
+
+  // optional int32 owner = 2;
   void clear_owner();
-  static const int kOwnerFieldNumber = 1;
+  static const int kOwnerFieldNumber = 2;
   ::google::protobuf::int32 owner() const;
   void set_owner(::google::protobuf::int32 value);
 
-  // optional int32 original_owner = 2;
+  // optional int32 original_owner = 3;
   void clear_original_owner();
-  static const int kOriginalOwnerFieldNumber = 2;
+  static const int kOriginalOwnerFieldNumber = 3;
   ::google::protobuf::int32 original_owner() const;
   void set_original_owner(::google::protobuf::int32 value);
-
-  // repeated .message.hex_coord_t hexes = 3;
-  int hexes_size() const;
-  void clear_hexes();
-  static const int kHexesFieldNumber = 3;
-  const ::message::hex_coord_t& hexes(int index) const;
-  ::message::hex_coord_t* mutable_hexes(int index);
-  ::message::hex_coord_t* add_hexes();
-  ::google::protobuf::RepeatedPtrField< ::message::hex_coord_t >*
-      mutable_hexes();
-  const ::google::protobuf::RepeatedPtrField< ::message::hex_coord_t >&
-      hexes() const;
 
   // @@protoc_insertion_point(class_scope:message.game_data.province_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
+  ::google::protobuf::int32 id_;
   ::google::protobuf::int32 owner_;
   ::google::protobuf::int32 original_owner_;
-  ::google::protobuf::RepeatedPtrField< ::message::hex_coord_t > hexes_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -936,6 +982,18 @@ class map_t : public ::google::protobuf::Message {
   const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >&
       hexes() const;
 
+  // repeated .message.game_data.province_t provinces = 4;
+  int provinces_size() const;
+  void clear_provinces();
+  static const int kProvincesFieldNumber = 4;
+  const ::message::game_data::province_t& provinces(int index) const;
+  ::message::game_data::province_t* mutable_provinces(int index);
+  ::message::game_data::province_t* add_provinces();
+  ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >*
+      mutable_provinces();
+  const ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >&
+      provinces() const;
+
   // @@protoc_insertion_point(class_scope:message.game_data.map_t)
  private:
 
@@ -944,6 +1002,7 @@ class map_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 width_;
   ::google::protobuf::int32 height_;
   ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t > hexes_;
+  ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t > provinces_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -1270,6 +1329,20 @@ inline void planet_t::set_original_owner(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:message.game_data.planet_t.original_owner)
 }
 
+// optional .message.game_data.planet_t.type_t type = 3;
+inline void planet_t::clear_type() {
+  type_ = 0;
+}
+inline ::message::game_data::planet_t_type_t planet_t::type() const {
+  // @@protoc_insertion_point(field_get:message.game_data.planet_t.type)
+  return static_cast< ::message::game_data::planet_t_type_t >(type_);
+}
+inline void planet_t::set_type(::message::game_data::planet_t_type_t value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:message.game_data.planet_t.type)
+}
+
 // -------------------------------------------------------------------
 
 // hex_zone_fixture_t
@@ -1494,34 +1567,34 @@ inline void hex_t::set_province_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:message.game_data.hex_t.province_id)
 }
 
-// repeated .message.game_data.hex_zone_t hex_zones = 4;
-inline int hex_t::hex_zones_size() const {
-  return hex_zones_.size();
+// repeated .message.game_data.hex_zone_t zones = 4;
+inline int hex_t::zones_size() const {
+  return zones_.size();
 }
-inline void hex_t::clear_hex_zones() {
-  hex_zones_.Clear();
+inline void hex_t::clear_zones() {
+  zones_.Clear();
 }
-inline const ::message::game_data::hex_zone_t& hex_t::hex_zones(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.hex_zones)
-  return hex_zones_.Get(index);
+inline const ::message::game_data::hex_zone_t& hex_t::zones(int index) const {
+  // @@protoc_insertion_point(field_get:message.game_data.hex_t.zones)
+  return zones_.Get(index);
 }
-inline ::message::game_data::hex_zone_t* hex_t::mutable_hex_zones(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.hex_zones)
-  return hex_zones_.Mutable(index);
+inline ::message::game_data::hex_zone_t* hex_t::mutable_zones(int index) {
+  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.zones)
+  return zones_.Mutable(index);
 }
-inline ::message::game_data::hex_zone_t* hex_t::add_hex_zones() {
-  // @@protoc_insertion_point(field_add:message.game_data.hex_t.hex_zones)
-  return hex_zones_.Add();
+inline ::message::game_data::hex_zone_t* hex_t::add_zones() {
+  // @@protoc_insertion_point(field_add:message.game_data.hex_t.zones)
+  return zones_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >*
-hex_t::mutable_hex_zones() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.hex_t.hex_zones)
-  return &hex_zones_;
+hex_t::mutable_zones() {
+  // @@protoc_insertion_point(field_mutable_list:message.game_data.hex_t.zones)
+  return &zones_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >&
-hex_t::hex_zones() const {
-  // @@protoc_insertion_point(field_list:message.game_data.hex_t.hex_zones)
-  return hex_zones_;
+hex_t::zones() const {
+  // @@protoc_insertion_point(field_list:message.game_data.hex_t.zones)
+  return zones_;
 }
 
 // optional .message.game_data.fleets_t fleets = 5;
@@ -1565,7 +1638,21 @@ inline void hex_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) 
 
 // province_t
 
-// optional int32 owner = 1;
+// optional int32 id = 1;
+inline void province_t::clear_id() {
+  id_ = 0;
+}
+inline ::google::protobuf::int32 province_t::id() const {
+  // @@protoc_insertion_point(field_get:message.game_data.province_t.id)
+  return id_;
+}
+inline void province_t::set_id(::google::protobuf::int32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:message.game_data.province_t.id)
+}
+
+// optional int32 owner = 2;
 inline void province_t::clear_owner() {
   owner_ = 0;
 }
@@ -1579,7 +1666,7 @@ inline void province_t::set_owner(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:message.game_data.province_t.owner)
 }
 
-// optional int32 original_owner = 2;
+// optional int32 original_owner = 3;
 inline void province_t::clear_original_owner() {
   original_owner_ = 0;
 }
@@ -1591,36 +1678,6 @@ inline void province_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
   // @@protoc_insertion_point(field_set:message.game_data.province_t.original_owner)
-}
-
-// repeated .message.hex_coord_t hexes = 3;
-inline int province_t::hexes_size() const {
-  return hexes_.size();
-}
-inline void province_t::clear_hexes() {
-  hexes_.Clear();
-}
-inline const ::message::hex_coord_t& province_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.hexes)
-  return hexes_.Get(index);
-}
-inline ::message::hex_coord_t* province_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.province_t.hexes)
-  return hexes_.Mutable(index);
-}
-inline ::message::hex_coord_t* province_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.game_data.province_t.hexes)
-  return hexes_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::message::hex_coord_t >*
-province_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.province_t.hexes)
-  return &hexes_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::message::hex_coord_t >&
-province_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.game_data.province_t.hexes)
-  return hexes_;
 }
 
 // -------------------------------------------------------------------
@@ -1683,6 +1740,36 @@ inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >
 map_t::hexes() const {
   // @@protoc_insertion_point(field_list:message.game_data.map_t.hexes)
   return hexes_;
+}
+
+// repeated .message.game_data.province_t provinces = 4;
+inline int map_t::provinces_size() const {
+  return provinces_.size();
+}
+inline void map_t::clear_provinces() {
+  provinces_.Clear();
+}
+inline const ::message::game_data::province_t& map_t::provinces(int index) const {
+  // @@protoc_insertion_point(field_get:message.game_data.map_t.provinces)
+  return provinces_.Get(index);
+}
+inline ::message::game_data::province_t* map_t::mutable_provinces(int index) {
+  // @@protoc_insertion_point(field_mutable:message.game_data.map_t.provinces)
+  return provinces_.Mutable(index);
+}
+inline ::message::game_data::province_t* map_t::add_provinces() {
+  // @@protoc_insertion_point(field_add:message.game_data.map_t.provinces)
+  return provinces_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >*
+map_t::mutable_provinces() {
+  // @@protoc_insertion_point(field_mutable_list:message.game_data.map_t.provinces)
+  return &provinces_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >&
+map_t::provinces() const {
+  // @@protoc_insertion_point(field_list:message.game_data.map_t.provinces)
+  return provinces_;
 }
 
 // -------------------------------------------------------------------
@@ -1793,6 +1880,11 @@ offmap_areas_t::mutable_areas() {
 namespace google {
 namespace protobuf {
 
+template <> struct is_proto_enum< ::message::game_data::planet_t_type_t> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::message::game_data::planet_t_type_t>() {
+  return ::message::game_data::planet_t_type_t_descriptor();
+}
 template <> struct is_proto_enum< ::message::game_data::hex_zone_fixture_t_type_t> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::message::game_data::hex_zone_fixture_t_type_t>() {

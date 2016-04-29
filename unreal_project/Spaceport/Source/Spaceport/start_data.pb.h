@@ -856,18 +856,6 @@ class hex_t : public ::google::protobuf::Message {
   ::message::feature_t feature() const;
   void set_feature(::message::feature_t value);
 
-  // repeated int32 neutral_zone_bordering = 4 [packed = true];
-  int neutral_zone_bordering_size() const;
-  void clear_neutral_zone_bordering();
-  static const int kNeutralZoneBorderingFieldNumber = 4;
-  ::google::protobuf::int32 neutral_zone_bordering(int index) const;
-  void set_neutral_zone_bordering(int index, ::google::protobuf::int32 value);
-  void add_neutral_zone_bordering(::google::protobuf::int32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      neutral_zone_bordering() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_neutral_zone_bordering();
-
   // @@protoc_insertion_point(class_scope:message.hex_t)
  private:
 
@@ -876,8 +864,6 @@ class hex_t : public ::google::protobuf::Message {
   ::message::hex_coord_t* coord_;
   ::google::protobuf::int32 owner_;
   int feature_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > neutral_zone_bordering_;
-  mutable int _neutral_zone_bordering_cached_byte_size_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -4652,36 +4638,6 @@ inline void hex_t::set_feature(::message::feature_t value) {
   
   feature_ = value;
   // @@protoc_insertion_point(field_set:message.hex_t.feature)
-}
-
-// repeated int32 neutral_zone_bordering = 4 [packed = true];
-inline int hex_t::neutral_zone_bordering_size() const {
-  return neutral_zone_bordering_.size();
-}
-inline void hex_t::clear_neutral_zone_bordering() {
-  neutral_zone_bordering_.Clear();
-}
-inline ::google::protobuf::int32 hex_t::neutral_zone_bordering(int index) const {
-  // @@protoc_insertion_point(field_get:message.hex_t.neutral_zone_bordering)
-  return neutral_zone_bordering_.Get(index);
-}
-inline void hex_t::set_neutral_zone_bordering(int index, ::google::protobuf::int32 value) {
-  neutral_zone_bordering_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.hex_t.neutral_zone_bordering)
-}
-inline void hex_t::add_neutral_zone_bordering(::google::protobuf::int32 value) {
-  neutral_zone_bordering_.Add(value);
-  // @@protoc_insertion_point(field_add:message.hex_t.neutral_zone_bordering)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-hex_t::neutral_zone_bordering() const {
-  // @@protoc_insertion_point(field_list:message.hex_t.neutral_zone_bordering)
-  return neutral_zone_bordering_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-hex_t::mutable_neutral_zone_bordering() {
-  // @@protoc_insertion_point(field_mutable_list:message.hex_t.neutral_zone_bordering)
-  return &neutral_zone_bordering_;
 }
 
 // -------------------------------------------------------------------

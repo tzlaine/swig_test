@@ -43,7 +43,7 @@ endif ()
 add_library(
     game_data
     STATIC
-    # TODO ${unreal_src_dir}/game_data_t.cpp
+    ${unreal_src_dir}/game_data_t.cpp
     ${unreal_src_dir}/json2pb.cc
     ${unreal_src_dir}/base_types.cpp
     ${unreal_src_dir}/game_data.cpp
