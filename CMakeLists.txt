@@ -113,6 +113,12 @@ if (PYTHON_EXECUTABLE)
         VERBATIM
     )
 
+    add_custom_target(
+        install_python_protobuf
+        DEPENDS
+            ${protobuf_python_pth_dir}/setuptools.pth
+    )
+
     macro(python_generate_sources file_root namespace)
         add_custom_target(
             make_desc_file_${file_root}
@@ -122,7 +128,7 @@ if (PYTHON_EXECUTABLE)
                     --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
                     ${CMAKE_HOME_DIRECTORY}/proto/${file_root}.proto
             DEPENDS
-                ${protobuf_python_pth_dir}/setuptools.pth
+                install_python_protobuf
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
             COMMENT "Make ${file_root}.desc from ${file_root}.proto."
             VERBATIM
