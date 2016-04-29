@@ -46,7 +46,7 @@ private:
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
 
-    start_data_t start_data_;
+    start_data::start_data_t start_data_;
     std::vector<FLinearColor> nation_id_primary_colors_;
     std::vector<FLinearColor> nation_id_secondary_colors_;
     national_instances_t instanced_hexes_;

@@ -1,3 +1,7 @@
+#ifndef BUILD_FOR_TEST
+#include "Spaceport.h"
+#endif
+
 #include "game_data_t.hpp"
 
 #include "start_data_t.hpp"
