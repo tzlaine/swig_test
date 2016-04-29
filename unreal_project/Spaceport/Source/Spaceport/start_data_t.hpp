@@ -39,6 +39,9 @@ namespace start_data {
         nation_t const & nation (std::string const & key) const
         { return nations_.nations.find(key)->second; }
 
+        int neutral_zone_id () const
+        { return nation("NZ").nation_id; }
+
         char const * hex_string (hex_coord_t hc) const;
 
         int num_provinces() const

@@ -18,10 +18,11 @@ struct game_data_t
         return map_.hexes[i];
     }
 
-    province_t const & province (int province_id) const
+    province_t const * province (int province_id) const
     {
-        assert(province_id < map_.provinces.size());
-        return map_.provinces[province_id];
+        if (province_id < 0 || map_.provinces.size() < province_id)
+            return nullptr;
+        return &map_.provinces[province_id];
     }
 
     map_t const & map () const

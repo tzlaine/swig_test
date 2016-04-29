@@ -75,6 +75,15 @@ namespace {
         return retval;
     }
 
+    // TODO: Put this in a utility header or something.
+    int owner (hex_coord_t hc, start_data::start_data_t const & start_data, game_data_t const & game_data)
+    {
+        int const province_id = start_data.hex_province(hc);
+        if (province_id == -1)
+            return start_data.neutral_zone_id();
+        return game_data.province(province_id)->owner;
+    }
+
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.5f;
@@ -298,7 +307,8 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
 
     auto const & map = game_data_.map();
     auto const & map_hex = game_data_.hex(hc);
-    auto const & province = game_data_.province(map_hex.province_id);
+    auto const * province = game_data_.province(map_hex.province_id);
+    auto const owner_id = owner(hc, start_data_, game_data_);
 
     int const x = map_hex.coord.x;
     int const y = map_hex.coord.y;
@@ -312,7 +322,7 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
         location.Y -= sin_60 * meters;
     location.Z = 0.5f * meters;
 
-    instanced_hexes_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+    instanced_hexes_[owner_id]->AddInstanceWorldSpace(FTransform(rotation, location));
 
     rotation.Roll = 180.0f;
     location.Z = 0 * meters;
@@ -320,14 +330,17 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
     for (auto d : all_hex_directions) {
         auto other_hc = adjacent_hex_coord(hc, d);
         if (!on_map(other_hc, map)) {
-            instanced_national_borders_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+            instanced_national_borders_[owner_id]->AddInstanceWorldSpace(FTransform(rotation, location));
         } else {
             auto const & other_hex = game_data_.hex(other_hc);
-            auto const & other_province = game_data_.province(other_hex.province_id);
-            if (other_province.owner != province.owner)
-                instanced_national_borders_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location));
+            auto const * other_province = game_data_.province(other_hex.province_id);
+            auto const other_owner_id = owner(other_hc, start_data_, game_data_);
+            if (other_owner_id != owner_id)
+                instanced_national_borders_[owner_id]->AddInstanceWorldSpace(FTransform(rotation, location));
+            else if (other_hex.province_id != map_hex.province_id)
+                instanced_province_borders_[owner_id]->AddInstanceWorldSpace(FTransform(rotation, location));
             else
-                instanced_hex_borders_[province.owner]->AddInstanceWorldSpace(FTransform(rotation, location)); // TODO: Provinces, too!
+                instanced_hex_borders_[owner_id]->AddInstanceWorldSpace(FTransform(rotation, location));
         }
         rotation.Yaw += 60.0f;
     }
