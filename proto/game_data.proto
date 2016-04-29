@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import "start_data.proto";
+import "base_types.proto";
 
 package message.game_data;
 
@@ -27,13 +27,13 @@ message planet_t
     // TODO: Turns owned by captor.
     int32 owner = 1; // TODO: Define this type for real.
     int32 original_owner = 2;
-};
+}
 
 message hex_zone_fixture_t
 {
     enum type_t {
-        base = 0;
-        planet = 1;
+        type_base = 0;
+        type_planet = 1;
     }
 
     type_t type = 1;
@@ -61,7 +61,7 @@ message province_t
     int32 owner = 1;
     int32 original_owner = 2;
     repeated hex_coord_t hexes = 3;
-};
+}
 
 message map_t
 {
