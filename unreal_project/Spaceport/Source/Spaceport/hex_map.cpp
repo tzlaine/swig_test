@@ -2,7 +2,6 @@
 
 #include "Spaceport.h"
 #include "hex_map.h"
-#include "hex.h"
 #include "utility.hpp"
 #include "hex_operations.hpp"
 
