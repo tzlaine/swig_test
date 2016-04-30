@@ -86,8 +86,7 @@ namespace {
 
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
-    float const province_border_thickness = 0.5f;
-    float const hex_border_thickness = 0.2f;
+    float const province_border_thickness = 0.65f;
 }
 
 
@@ -287,7 +286,7 @@ void Ahex_map::spawn_hexes ()
         nation_id_secondary_colors_[nation_id] = pair.second;
         initialize_border_instanced_mesh(instanced_national_borders_, nation_id, national_border_thickness, hex_border_mat_);
         initialize_border_instanced_mesh(instanced_province_borders_, nation_id, province_border_thickness, hex_border_mat_);
-        initialize_border_instanced_mesh(instanced_hex_borders_, nation_id, hex_border_thickness, thin_hex_border_mat_);
+        initialize_border_instanced_mesh(instanced_hex_borders_, nation_id, 1.0f, thin_hex_border_mat_);
     }
 
     auto const & map = game_data_.map();
