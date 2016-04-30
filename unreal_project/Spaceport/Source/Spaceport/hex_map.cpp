@@ -32,45 +32,45 @@ namespace {
     }
 
     // Move to editable CSV.
-    std::map<std::string, FLinearColor> const & primary_colors ()
+    std::map<std::string, FColor> const & primary_colors ()
     {
-        static std::map<std::string, FLinearColor> retval;
+        static std::map<std::string, FColor> retval;
         if (retval.empty()) {
-            retval["FED"] = FLinearColor(57 / 255.0f, 142 / 255.0f, 230 / 255.0f);
-            retval["GOR"] = FLinearColor(1, 1, 1);
-            retval["HYD"] = FLinearColor(59 / 255.0f, 137 / 255.0f, 92 / 255.0f);
-            retval["ISC"] = FLinearColor(89 / 255.0f, 89 / 255.0f, 89 / 255.0f);
-            retval["KLI"] = FLinearColor(0, 0, 0);
-            retval["KZI"] = FLinearColor(1, 1, 1);
-            retval["LDR"] = FLinearColor(89 / 255.0f, 89 / 255.0f, 89 / 255.0f);
-            retval["LYR"] = FLinearColor(241 / 255.0f, 241 / 255.0f, 76 / 255.0f);
-            retval["NZ"] =  FLinearColor(136 / 255.0f, 136 / 255.0f, 136 / 255.0f);
-            retval["ORI"] = FLinearColor(89 / 255.0f, 89 / 255.0f, 89 / 255.0f);
-            retval["ROM"] = FLinearColor(221 / 255.0f, 0 ,0);
-            retval["THO"] = FLinearColor(221 / 255.0f, 0 ,0);
-            retval["WYN"] = FLinearColor(89 / 255.0f, 89 / 255.0f, 89 / 255.0f);
+            retval["FED"] = FColor(57, 142, 230);
+            retval["GOR"] = FColor(255, 255, 255);
+            retval["HYD"] = FColor(59, 137, 92);
+            retval["ISC"] = FColor(89, 89, 89);
+            retval["KLI"] = FColor(0, 0, 0);
+            retval["KZI"] = FColor(255, 255, 255);
+            retval["LDR"] = FColor(89, 89, 89);
+            retval["LYR"] = FColor(241, 241, 76);
+            retval["NZ"] =  FColor(136, 136, 136);
+            retval["ORI"] = FColor(89, 89, 89);
+            retval["ROM"] = FColor(221, 0 ,0);
+            retval["THO"] = FColor(221, 0 ,0);
+            retval["WYN"] = FColor(89, 89, 89);
         }
         return retval;
     }
 
     // Move to editable CSV.
-    std::map<std::string, FLinearColor> const & secondary_colors ()
+    std::map<std::string, FColor> const & secondary_colors ()
     {
-        static std::map<std::string, FLinearColor> retval;
+        static std::map<std::string, FColor> retval;
         if (retval.empty()) {
-            retval["FED"] = FLinearColor(0, 0, 0);
-            retval["GOR"] = FLinearColor(221 / 255.0f, 0 ,0);
-            retval["HYD"] = FLinearColor(1, 1, 1);
-            retval["ISC"] = FLinearColor(0, 0, 0);
-            retval["KLI"] = FLinearColor(1, 1, 1);
-            retval["KZI"] = FLinearColor(0, 0, 0);
-            retval["LDR"] = FLinearColor(0, 0, 0);
-            retval["LYR"] = FLinearColor(58 / 255.0f, 138 / 255.0f, 45 / 255.0f);
-            retval["NZ"] =  FLinearColor(0, 0, 0);
-            retval["ORI"] = FLinearColor(0, 0, 0);
-            retval["ROM"] = FLinearColor(0, 0, 0);
-            retval["THO"] = FLinearColor(1, 1, 1);
-            retval["WYN"] = FLinearColor(0, 0, 0);
+            retval["FED"] = FColor(0, 0, 0);
+            retval["GOR"] = FColor(221, 0 ,0);
+            retval["HYD"] = FColor(255, 255, 255);
+            retval["ISC"] = FColor(0, 0, 0);
+            retval["KLI"] = FColor(255, 255, 255);
+            retval["KZI"] = FColor(0, 0, 0);
+            retval["LDR"] = FColor(0, 0, 0);
+            retval["LYR"] = FColor(58, 138, 45);
+            retval["NZ"] =  FColor(0, 0, 0);
+            retval["ORI"] = FColor(0, 0, 0);
+            retval["ROM"] = FColor(0, 0, 0);
+            retval["THO"] = FColor(255, 255, 255);
+            retval["WYN"] = FColor(0, 0, 0);
         }
         return retval;
     }
@@ -245,7 +245,7 @@ void Ahex_map::initialize_border_instanced_mesh (national_instances_t & instance
     UMaterialInstanceDynamic * material =
         instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, mat);
     auto const color = nation_id_secondary_colors_[nation_id];
-    material->SetVectorParameterValue("color", color);
+    material->SetVectorParameterValue("color", color.ReinterpretAsLinear());
     material->SetScalarParameterValue("thickness", thickness);
 }
 
@@ -278,7 +278,7 @@ void Ahex_map::spawn_hexes ()
         auto instanced = instanced_hexes_[nation_id];
         UMaterialInstanceDynamic * material =
             instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_mat_);
-        material->SetVectorParameterValue("color", pair.second);
+        material->SetVectorParameterValue("color", pair.second.ReinterpretAsLinear());
     }
 
     nation_id_secondary_colors_.resize(secondary_colors().size());

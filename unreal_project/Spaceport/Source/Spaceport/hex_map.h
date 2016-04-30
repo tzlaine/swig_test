@@ -44,31 +44,20 @@ public:
 
 private:
     using national_instances_t = std::vector<UInstancedStaticMeshComponent *>; // indexed by nation_id
-    using color_instances_t = boost::container::flat_map<FLinearColor, UInstancedStaticMeshComponent *>;
+    using color_instances_t = boost::container::flat_map<FColor, UInstancedStaticMeshComponent *>;
 
     void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness, UMaterial * mat);
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
 
-    friend bool operator< (FLinearColor lhs, FLinearColor rhs)
-    {
-        if (lhs.R < rhs.R) return true;
-        if (rhs.R < lhs.R) return false;
-
-        if (lhs.G < rhs.G) return true;
-        if (rhs.G < lhs.G) return false;
-
-        if (lhs.B < rhs.B) return true;
-        if (rhs.B < lhs.B) return false;
-
-        return lhs.A < rhs.A;
-    }
+    friend bool operator< (FColor lhs, FColor rhs)
+    { return lhs.DWColor() < rhs.DWColor(); }
 
     start_data::start_data_t start_data_;
     game_data_t game_data_;
 
-    std::vector<FLinearColor> nation_id_primary_colors_;
-    std::vector<FLinearColor> nation_id_secondary_colors_;
+    std::vector<FColor> nation_id_primary_colors_;
+    std::vector<FColor> nation_id_secondary_colors_;
 
     national_instances_t instanced_hexes_;
     national_instances_t instanced_national_borders_;
