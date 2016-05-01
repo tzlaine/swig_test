@@ -47,6 +47,7 @@ private:
     using color_instances_t = boost::container::flat_map<FColor, UInstancedStaticMeshComponent *>;
 
     void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness, UMaterial * mat);
+    void use_solid_color (UInstancedStaticMeshComponent * instanced, FColor color);
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
 
@@ -58,6 +59,8 @@ private:
 
     std::vector<FColor> nation_id_primary_colors_;
     std::vector<FColor> nation_id_secondary_colors_;
+
+    boost::container::flat_map<FColor, UMaterialInstanceDynamic *> solid_color_materials_;
 
     national_instances_t instanced_hexes_;
     national_instances_t instanced_national_borders_;

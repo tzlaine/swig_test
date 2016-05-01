@@ -248,6 +248,18 @@ void Ahex_map::initialize_border_instanced_mesh (national_instances_t & instance
     material->SetScalarParameterValue("thickness", thickness);
 }
 
+void Ahex_map::use_solid_color(UInstancedStaticMeshComponent * instanced, FColor color)
+{
+    auto & material = solid_color_materials_[color];
+    if (material) {
+        instanced->SetMaterial(0, material);
+    } else {
+        material = instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_mat_);
+        auto const linear_color = color.ReinterpretAsLinear();
+        material->SetVectorParameterValue("color", linear_color);
+    }
+}
+
 void Ahex_map::spawn_hexes ()
 {
     if (!hex_mesh_ || !hex_border_mesh_ || !hex_mat_ || !hex_border_mat_) {
@@ -275,9 +287,7 @@ void Ahex_map::spawn_hexes ()
         auto nation_id = start_data_.nation(pair.first).nation_id;
         nation_id_primary_colors_[nation_id] = pair.second;
         auto instanced = instanced_hexes_[nation_id];
-        UMaterialInstanceDynamic * material =
-            instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, hex_mat_);
-        material->SetVectorParameterValue("color", pair.second.ReinterpretAsLinear());
+        use_solid_color(instanced, pair.second);
     }
 
     nation_id_secondary_colors_.resize(secondary_colors().size());
