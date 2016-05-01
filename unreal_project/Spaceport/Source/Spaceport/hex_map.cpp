@@ -82,7 +82,7 @@ namespace {
     float const indicator_move_time = 0.09; // Should be <= the tick interval for Ahex_map.
     float const planet_star_z_scale = 0.20;
     float const minor_planet_scale = 0.2;
-    float const major_planet_scale = 0.4;
+    float const major_planet_scale = 0.3;
     float const star_scale = 0.5;
     float const mb_scale = 0.125;
     float const bats_scale = 0.125;
