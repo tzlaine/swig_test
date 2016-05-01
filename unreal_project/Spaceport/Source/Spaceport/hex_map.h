@@ -36,13 +36,13 @@ public:
     class UStaticMesh * edge_hex_mesh_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * planet_;
+    class UStaticMesh * planet_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * star_5_;
+    class UStaticMesh * star5_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * star_6_;
+    class UStaticMesh * star6_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * star_8_;
+    class UStaticMesh * star8_mesh_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * solid_color_mat_;
@@ -96,9 +96,14 @@ private:
 
     instances_t interior_hexes_;
     instances_t edge_hexes_;
+
     instances_t national_borders_;
     instances_t province_borders_;
     instances_t hex_borders_;
+    instances_t planets_;
+    instances_t star5s_;
+    instances_t star6s_;
+    instances_t star8s_;
 
     FTimerHandle spawn_timer_;
     bool hexes_spawned_;
