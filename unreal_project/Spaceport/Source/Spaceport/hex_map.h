@@ -24,38 +24,43 @@ public:
 
     hex_coord_t hex_under_cursor () const;
 
-    UFUNCTION(BlueprintCallable, Category = "Hex")
+    UFUNCTION(BlueprintCallable, Category = "hex_map")
     void hex_under_cursor (int & x, int & y) const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * hover_indicator_mesh_;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * interior_hex_mesh_;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * edge_hex_mesh_;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * planet_;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * star_5_;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * star_6_;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * star_8_;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * solid_color_mat_;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * hex_border_mesh_;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * hex_border_mat_;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * thin_hex_border_mat_;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class APlayerController * player_controller_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    UCurveFloat* unit_curve_;
+    UFUNCTION()
+    void cursor_indicator_move_callback (float x);
 
 private:
     using national_instances_t = std::vector<UInstancedStaticMeshComponent *>; // indexed by nation_id
@@ -93,4 +98,9 @@ private:
 
     FTimerHandle spawn_timer_;
     bool hexes_spawned_;
+
+    UTimelineComponent* cursor_indicator_move_timeline_;
+    FOnTimelineFloat cursor_indicator_move_fn;
+    FVector hover_indicator_from_;
+    FVector hover_indicator_to_;
 };

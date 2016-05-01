@@ -87,19 +87,19 @@ namespace {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.65f;
+    float const indicator_move_time = 0.05; // Should be <= the tick interval for Ahex_map.
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {
-        FVector location;
-        location.X = hc.x * 1.5 * meters;
-        location.Y = (map.height - 1 - hc.y) * 2 * sin_60 * meters;
+        FVector retval;
+        retval.X = hc.x * 1.5 * meters;
+        retval.Y = (map.height - 1 - hc.y) * 2 * sin_60 * meters;
         if ((hc.x + 1000) % 2 == 1)
-            location.Y -= sin_60 * meters;
-        return location;
+            retval.Y -= sin_60 * meters;
+        return retval;
     }
 
 }
-
 
 Ahex_map::Ahex_map () :
     hover_indicator_mesh_ (nullptr),
@@ -115,7 +115,10 @@ Ahex_map::Ahex_map () :
     thin_hex_border_mat_ (nullptr),
     player_controller_ (nullptr),
     hover_indicator_ (nullptr),
-    hexes_spawned_ (false)
+    hexes_spawned_ (false),
+    cursor_indicator_move_timeline_ (nullptr),
+    unit_curve_ (nullptr),
+    cursor_indicator_move_fn ()
 {
     PrimaryActorTick.bCanEverTick = true;
 
@@ -186,11 +189,27 @@ Ahex_map::Ahex_map () :
             instanced_hex_borders_[nation_id] = instanced;
         }
     }
+
+    cursor_indicator_move_timeline_ =
+        CreateDefaultSubobject<UTimelineComponent>("cursor_indicator_move_timeline_");
+    cursor_indicator_move_timeline_->SetTimelineLength(1.0);
+    cursor_indicator_move_timeline_->SetLooping(false);
+    cursor_indicator_move_fn.BindUFunction(this, "cursor_indicator_move_callback");
+}
+
+void Ahex_map::cursor_indicator_move_callback (float x)
+{
+    float const alpha = FMath::Clamp(x / indicator_move_time, 0.0f, 1.0f);
+    FVector const new_location = hover_indicator_from_ * (1.0f - alpha) + hover_indicator_to_ * alpha;
+    hover_indicator_->SetWorldLocation(new_location);
+    if (x <= alpha)
+        GEngine->AddOnScreenDebugMessage(0, 10.0f, FColor::White, std::to_string(alpha).c_str());
 }
 
 void Ahex_map::BeginPlay ()
 {
     Super::BeginPlay();
+    cursor_indicator_move_timeline_->AddInterpFloat(unit_curve_, cursor_indicator_move_fn, "float");
     call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
 }
 
@@ -198,15 +217,22 @@ void Ahex_map::Tick (float delta_seconds)
 {
     hex_coord_t const hc = hex_under_cursor();
     if (hc != invalid_hex_coord) {
+        auto const old_location = hover_indicator_->GetComponentLocation();
         auto location = hex_location(hc, game_data_.map());
         location.Z = -0.05 * meters;
-        hover_indicator_->SetWorldTransform(FTransform(FRotator(0, 0, 0), location));
+
+        if (!hover_indicator_->bVisible) {
+            hover_indicator_->SetWorldLocation(location);
+            hover_indicator_->SetVisibility(true);
+        } else if (!old_location.Equals(location, 1.0f)) {
+            hover_indicator_from_ = old_location;
+            hover_indicator_to_ = location;
+            cursor_indicator_move_timeline_->PlayFromStart();
+        }
 
         auto const owner_id = owner(hc, start_data_, game_data_);
         auto const color = nation_id_secondary_colors_[owner_id];
         use_solid_color(hover_indicator_, color);
-
-        hover_indicator_->SetVisibility(true);
     } else {
         hover_indicator_->SetVisibility(false);
     }
