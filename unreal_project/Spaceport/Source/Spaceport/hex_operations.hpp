@@ -106,11 +106,11 @@ inline bool on_map (hex_coord_t hc, const map_t& m)
 { return on_map(hc, m.width, m.height); }
 
 
-inline int hex_index (hex_coord_t hc, int width)
+inline int to_hex_index (hex_coord_t hc, int width)
 { return hc.x + hc.y * width; }
 
 
-inline int hex_id (hex_coord_t hc)
+inline int to_hex_id (hex_coord_t hc)
 { return (hc.x + 1) * 100 + hc.y + 1; }
 
 

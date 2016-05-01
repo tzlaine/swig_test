@@ -592,7 +592,7 @@ void fill_in_nation_ids (nations_t& nations)
 }
 
 char const * start_data_t::hex_string (hex_coord_t hc) const
-{ return hex_strings_[hex_index(hc, map_.width)].c_str(); }
+{ return hex_strings_[to_hex_index(hc, map_.width)].c_str(); }
 
 void start_data_t::init_nations (std::string const & nations_str)
 {
@@ -648,7 +648,7 @@ void start_data_t::init_map (std::string const & map_str)
     for (int i = 0; i < map_.width; ++i) {
         for (int j = 0; j < map_.height; ++j) {
             hex_coord_t const hc = {i, j};
-            hex_strings_[hex_index(hc, map_.width)] = ::hex_string(hc);
+            hex_strings_[to_hex_index(hc, map_.width)] = ::hex_string(hc);
         }
     }
 }

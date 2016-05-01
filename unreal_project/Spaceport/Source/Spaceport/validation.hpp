@@ -128,7 +128,7 @@ namespace start_data {
             require_hex_coord(hex_id, map.width, map.height, "nz_hexes hex");
     
             const hex_coord_t hc = to_hex_coord(hex_id);
-            const int i = hex_index(hc, map.width);
+            const int i = to_hex_index(hc, map.width);
             hex_t& hex = map.hexes[i];
     
             if (hex.coord != invalid_hex_coord) {
@@ -144,7 +144,7 @@ namespace start_data {
             require_hex_coord(hex_id, map.width, map.height, "nz_planets hex");
     
             const hex_coord_t hc = to_hex_coord(hex_id);
-            const int i = hex_index(hc, map.width);
+            const int i = to_hex_index(hc, map.width);
             hex_t& hex = map.hexes[i];
     
             if (hex.owner != nz_nation_id) {
@@ -172,7 +172,7 @@ namespace start_data {
                     require_hex_coord(hex_id, map.width, map.height, "starting province hex");
     
                     const hex_coord_t hc = to_hex_coord(hex_id);
-                    const int i = hex_index(hc, map.width);
+                    const int i = to_hex_index(hc, map.width);
                     hex_t& hex = map.hexes[i];
     
                     if (hex.coord != invalid_hex_coord) {

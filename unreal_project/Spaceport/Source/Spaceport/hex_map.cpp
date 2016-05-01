@@ -437,7 +437,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
     int star_points = 5;
     {
         auto const & nation = start_data_.nation(owner_id);
-        auto const id = hex_id(map_hex.coord);
+        auto const id = to_hex_id(map_hex.coord);
         capital_hex = std::count_if(
             nation.capital.hexes.begin(), nation.capital.hexes.end(),
             [=](start_data::capital_hex_t const & capital_hex) { return capital_hex.coord == id; }

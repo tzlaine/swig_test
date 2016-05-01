@@ -13,7 +13,7 @@ struct game_data_t
 
     hex_t const & hex (hex_coord_t hc) const
     {
-        auto const i = hex_index(hc, map_.width);
+        auto const i = to_hex_index(hc, map_.width);
         assert(i < map_.hexes.size());
         return map_.hexes[i];
     }
