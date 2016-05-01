@@ -87,7 +87,7 @@ namespace {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.65f;
-    float const indicator_move_time = 0.05; // Should be <= the tick interval for Ahex_map.
+    float const indicator_move_time = 0.09; // Should be <= the tick interval for Ahex_map.
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {
@@ -202,8 +202,6 @@ void Ahex_map::cursor_indicator_move_callback (float x)
     float const alpha = FMath::Clamp(x / indicator_move_time, 0.0f, 1.0f);
     FVector const new_location = hover_indicator_from_ * (1.0f - alpha) + hover_indicator_to_ * alpha;
     hover_indicator_->SetWorldLocation(new_location);
-    if (x <= alpha)
-        GEngine->AddOnScreenDebugMessage(0, 10.0f, FColor::White, std::to_string(alpha).c_str());
 }
 
 void Ahex_map::BeginPlay ()
