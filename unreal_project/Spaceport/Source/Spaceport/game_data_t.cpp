@@ -61,15 +61,15 @@ namespace {
             break;
         case start_data::feature_t::min:
             retval.planet.type = planet_t::type_t::minor;
-            // TODO: PDUs
+            retval.planet.units.fleets[owner].units.resize(2, pdu);
             break;
         case start_data::feature_t::maj:
             retval.planet.type = planet_t::type_t::major;
-            // TODO: PDUs
+            retval.planet.units.fleets[owner].units.resize(4, pdu);
             break;
         case start_data::feature_t::capital:
             retval.planet.type = planet_t::type_t::capital;
-            // TODO: PDUs
+            retval.planet.units.fleets[owner].units.resize(8, pdu);
             break;
         }
 
