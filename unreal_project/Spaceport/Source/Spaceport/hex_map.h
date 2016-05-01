@@ -66,7 +66,17 @@ private:
     using national_instances_t = std::vector<UInstancedStaticMeshComponent *>; // indexed by nation_id
     using color_instances_t = boost::container::flat_map<FColor, UInstancedStaticMeshComponent *>;
 
-    void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness, UMaterial * mat);
+    struct instances_t
+    {
+        void use (UStaticMesh * mesh);
+        void add (int nation_id, FTransform transform);
+
+        national_instances_t instances_;
+        color_instances_t by_color_;
+    };
+
+    void initialize (instances_t & instances, int nation_id, FColor color, std::string const & name);
+    void initialize_border_instanced_mesh (instances_t & instances, FColor color, float thickness, UMaterial * mat);
     void use_solid_color (UStaticMeshComponent * instanced, FColor color);
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
@@ -84,17 +94,11 @@ private:
 
     UStaticMeshComponent * hover_indicator_;
 
-    national_instances_t instanced_interior_hexes_;
-    national_instances_t instanced_edge_hexes_;
-    national_instances_t instanced_national_borders_;
-    national_instances_t instanced_province_borders_;
-    national_instances_t instanced_hex_borders_;
-
-    color_instances_t instanced_interior_hexes_by_color_;
-    color_instances_t instanced_edge_hexes_by_color_;
-    color_instances_t instanced_national_borders_by_color_;
-    color_instances_t instanced_province_borders_by_color_;
-    color_instances_t instanced_hex_borders_by_color_;
+    instances_t interior_hexes_;
+    instances_t edge_hexes_;
+    instances_t national_borders_;
+    instances_t province_borders_;
+    instances_t hex_borders_;
 
     FTimerHandle spawn_timer_;
     bool hexes_spawned_;
