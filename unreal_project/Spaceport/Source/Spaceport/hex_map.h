@@ -28,9 +28,12 @@ public:
     void hex_under_cursor (int & x, int & y) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
-    class UStaticMesh * hex_mesh_;
+    class UStaticMesh * interior_hex_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
-    class UMaterial * hex_mat_;
+    class UStaticMesh * edge_hex_mesh_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UMaterial * solid_color_mat_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class UStaticMesh * hex_border_mesh_;
@@ -62,12 +65,14 @@ private:
 
     boost::container::flat_map<FColor, UMaterialInstanceDynamic *> solid_color_materials_;
 
-    national_instances_t instanced_hexes_;
+    national_instances_t instanced_interior_hexes_;
+    national_instances_t instanced_edge_hexes_;
     national_instances_t instanced_national_borders_;
     national_instances_t instanced_province_borders_;
     national_instances_t instanced_hex_borders_;
 
-    color_instances_t instanced_hexes_by_color_;
+    color_instances_t instanced_interior_hexes_by_color_;
+    color_instances_t instanced_edge_hexes_by_color_;
     color_instances_t instanced_national_borders_by_color_;
     color_instances_t instanced_province_borders_by_color_;
     color_instances_t instanced_hex_borders_by_color_;
