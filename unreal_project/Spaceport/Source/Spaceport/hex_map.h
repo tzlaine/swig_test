@@ -28,9 +28,21 @@ public:
     void hex_under_cursor (int & x, int & y) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UStaticMesh * hover_indicator_mesh_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class UStaticMesh * interior_hex_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class UStaticMesh * edge_hex_mesh_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UStaticMesh * planet_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UStaticMesh * star_5_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UStaticMesh * star_6_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
+    class UStaticMesh * star_8_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hex")
     class UMaterial * solid_color_mat_;
@@ -50,7 +62,7 @@ private:
     using color_instances_t = boost::container::flat_map<FColor, UInstancedStaticMeshComponent *>;
 
     void initialize_border_instanced_mesh (national_instances_t & instanced_meshes, int nation_id, float thickness, UMaterial * mat);
-    void use_solid_color (UInstancedStaticMeshComponent * instanced, FColor color);
+    void use_solid_color (UStaticMeshComponent * instanced, FColor color);
     void spawn_hexes ();
     void spawn_hex (hex_coord_t hc);
 
@@ -64,6 +76,8 @@ private:
     std::vector<FColor> nation_id_secondary_colors_;
 
     boost::container::flat_map<FColor, UMaterialInstanceDynamic *> solid_color_materials_;
+
+    UStaticMeshComponent * hover_indicator_;
 
     national_instances_t instanced_interior_hexes_;
     national_instances_t instanced_edge_hexes_;

@@ -87,17 +87,34 @@ namespace {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.65f;
+
+    FVector hex_location (hex_coord_t hc, map_t const & map)
+    {
+        FVector location;
+        location.X = hc.x * 1.5 * meters;
+        location.Y = (map.height - 1 - hc.y) * 2 * sin_60 * meters;
+        if ((hc.x + 1000) % 2 == 1)
+            location.Y -= sin_60 * meters;
+        return location;
+    }
+
 }
 
 
 Ahex_map::Ahex_map () :
+    hover_indicator_mesh_ (nullptr),
     interior_hex_mesh_ (nullptr),
     edge_hex_mesh_ (nullptr),
+    planet_ (nullptr),
+    star_5_ (nullptr),
+    star_6_ (nullptr),
+    star_8_ (nullptr),
     solid_color_mat_ (nullptr),
     hex_border_mat_ (nullptr),
     hex_border_mesh_ (nullptr),
     thin_hex_border_mat_ (nullptr),
     player_controller_ (nullptr),
+    hover_indicator_ (nullptr),
     hexes_spawned_ (false)
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -108,6 +125,9 @@ Ahex_map::Ahex_map () :
     auto load = [](const std::string & filename) { return load_text_file(filename); };
     start_data_.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
     game_data_ = game_data_t(start_data_);
+
+    hover_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>("hover_indicator");
+    hover_indicator_->AttachTo(RootComponent);
 
     instanced_interior_hexes_.resize(primary_colors().size());
     instanced_edge_hexes_.resize(primary_colors().size());
@@ -176,12 +196,20 @@ void Ahex_map::BeginPlay ()
 
 void Ahex_map::Tick (float delta_seconds)
 {
-    // TODO: Remove.
     hex_coord_t const hc = hex_under_cursor();
     if (hc != invalid_hex_coord) {
-        GEngine->AddOnScreenDebugMessage(0, 10.0f, FColor::White, start_data_.hex_string(hc));
+        auto location = hex_location(hc, game_data_.map());
+        location.Z = -0.05 * meters;
+        hover_indicator_->SetWorldTransform(FTransform(FRotator(0, 0, 0), location));
+
+        auto const owner_id = owner(hc, start_data_, game_data_);
+        auto const color = nation_id_secondary_colors_[owner_id];
+        use_solid_color(hover_indicator_, color);
+
+        hover_indicator_->SetVisibility(true);
+    } else {
+        hover_indicator_->SetVisibility(false);
     }
-    else GEngine->AddOnScreenDebugMessage(0, 10.0f, FColor::White, "-1,-1");
 }
 
 hex_coord_t Ahex_map::hex_under_cursor () const
@@ -259,7 +287,7 @@ void Ahex_map::initialize_border_instanced_mesh (national_instances_t & instance
     material->SetScalarParameterValue("thickness", thickness);
 }
 
-void Ahex_map::use_solid_color(UInstancedStaticMeshComponent * instanced, FColor color)
+void Ahex_map::use_solid_color(UStaticMeshComponent * instanced, FColor color)
 {
     auto & material = solid_color_materials_[color];
     if (material) {
@@ -273,10 +301,23 @@ void Ahex_map::use_solid_color(UInstancedStaticMeshComponent * instanced, FColor
 
 void Ahex_map::spawn_hexes ()
 {
-    if (!interior_hex_mesh_ || !edge_hex_mesh_ || !hex_border_mesh_ || !solid_color_mat_ || !hex_border_mat_) {
+    if (!hover_indicator_mesh_ ||
+        !interior_hex_mesh_ ||
+        !edge_hex_mesh_ ||
+        !planet_ ||
+        !star_5_ ||
+        !star_6_ ||
+        !star_8_ ||
+        !solid_color_mat_ ||
+        !hex_border_mesh_ ||
+        !hex_border_mat_ ||
+        !thin_hex_border_mat_) {
         call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
         return;
     }
+
+    hover_indicator_->SetStaticMesh(hover_indicator_mesh_);
+    hover_indicator_->SetVisibility(false);
 
     for (auto instanced : instanced_interior_hexes_) {
         instanced->SetStaticMesh(interior_hex_mesh_);
@@ -326,8 +367,6 @@ void Ahex_map::spawn_hexes ()
 
 void Ahex_map::spawn_hex (hex_coord_t hc)
 {
-    float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60));
-
     auto const & map = game_data_.map();
     auto const & map_hex = game_data_.hex(hc);
     auto const * province = game_data_.province(map_hex.province_id);
@@ -338,11 +377,7 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
 
     FRotator rotation = {0.0f, 0.0f, 0.0f};
 
-    FVector location;
-    location.X = x * 1.5 * meters;
-    location.Y = (map.height - 1 - y) * 2 * sin_60 * meters;
-    if ((x + 1000) % 2 == 1)
-        location.Y -= sin_60 * meters;
+    FVector location = hex_location(map_hex.coord, map);
     location.Z = 0.5f * meters;
 
     if (x == 0 || y == 0 || x == map.width - 1 || y == map.height - 1)
