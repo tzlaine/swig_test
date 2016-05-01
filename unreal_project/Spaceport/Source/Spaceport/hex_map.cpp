@@ -3,6 +3,7 @@
 #include "Spaceport.h"
 #include "hex_map.h"
 #include "utility.hpp"
+#include "data_utility.hpp"
 #include "hex_operations.hpp"
 
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
@@ -75,15 +76,6 @@ namespace {
         return retval;
     }
 
-    // TODO: Put this in a utility header or something.
-    int owner (hex_coord_t hc, start_data::start_data_t const & start_data, game_data_t const & game_data)
-    {
-        int const province_id = start_data.hex_province(hc);
-        if (province_id == -1)
-            return start_data.neutral_zone_id();
-        return game_data.province(province_id)->owner;
-    }
-
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.65f;
@@ -92,6 +84,9 @@ namespace {
     float const minor_planet_scale = 0.2;
     float const major_planet_scale = 0.4;
     float const star_scale = 0.5;
+    float const mb_scale = 0.125;
+    float const bats_scale = 0.125;
+    float const sb_scale = 0.125;
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {
@@ -148,6 +143,10 @@ Ahex_map::Ahex_map () :
     star6s_.instances_.resize(primary_colors().size());
     star8s_.instances_.resize(primary_colors().size());
 
+    mobile_bases_.instances_.resize(primary_colors().size());
+    battlestations_.instances_.resize(primary_colors().size());
+    starbases_.instances_.resize(primary_colors().size());
+
     for (auto const & pair : primary_colors()) {
         auto const nation_id = start_data_.nation(pair.first).nation_id;
 
@@ -166,6 +165,10 @@ Ahex_map::Ahex_map () :
         initialize(star5s_, nation_id, pair.second, pair.first + "_star5s");
         initialize(star6s_, nation_id, pair.second, pair.first + "_star6s");
         initialize(star8s_, nation_id, pair.second, pair.first + "_star8s");
+
+        initialize(mobile_bases_, nation_id, pair.second, pair.first + "_mobile_bases");
+        initialize(battlestations_, nation_id, pair.second, pair.first + "_battlestations");
+        initialize(starbases_, nation_id, pair.second, pair.first + "_starbases");
     }
 
     cursor_indicator_move_timeline_ =
@@ -318,6 +321,9 @@ void Ahex_map::spawn_hexes ()
         !star5_mesh_ ||
         !star6_mesh_ ||
         !star8_mesh_ ||
+        !mobile_base_mesh_ ||
+        !battlestation_mesh_ ||
+        !starbase_mesh_ ||
         !solid_color_mat_ ||
         !hex_border_mesh_ ||
         !hex_border_mat_ ||
@@ -341,6 +347,10 @@ void Ahex_map::spawn_hexes ()
     star6s_.use(star6_mesh_);
     star8s_.use(star8_mesh_);
 
+    mobile_bases_.use(mobile_base_mesh_);
+    battlestations_.use(battlestation_mesh_);
+    starbases_.use(starbase_mesh_);
+
     // TODO: Probably this mapping should exist somewhere else as well.
     nation_id_primary_colors_.resize(primary_colors().size());
     for (auto const & pair : primary_colors()) {
@@ -362,6 +372,10 @@ void Ahex_map::spawn_hexes ()
         use_solid_color(star5s_.instances_[nation_id], pair.second);
         use_solid_color(star6s_.instances_[nation_id], pair.second);
         use_solid_color(star8s_.instances_[nation_id], pair.second);
+
+        use_solid_color(mobile_bases_.instances_[nation_id], pair.second);
+        use_solid_color(battlestations_.instances_[nation_id], pair.second);
+        use_solid_color(starbases_.instances_[nation_id], pair.second);
     }
 
     auto const & map = game_data_.map();
@@ -418,7 +432,7 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
         rotation.Yaw += 60.0f;
     }
 
-    // planet and captial markers
+    // station, planet, and captial markers
     bool capital_hex = false;
     int star_points = 5;
     {
@@ -439,29 +453,50 @@ void Ahex_map::spawn_hex (hex_coord_t hc)
         case 6: star6s_.add(owner_id, transform); break;
         case 8: star8s_.add(owner_id, transform); break;
         }
-    } else {
-        bool planet_hex = false;
-        planet_t::type_t planet_type = planet_t::type_t::minor;
-        for (auto const & zone : map_hex.zones) {
-            for (auto const & fixture : zone.fixtures) {
-                if (fixture.type == hex_zone_fixture_t::type_t::type_planet) {
-                    planet_hex = true;
-                    planet_type = fixture.planet.type;
-                    break;
-                }
-            }
-            if (planet_hex)
-                break;
-        }
+        return; // For capital hexes, don't show anything else.
+    }
 
-        if (planet_hex) {
-            FTransform transform;
-            if (planet_type == planet_t::type_t::minor)
-                transform = FTransform(rotation, location, FVector(minor_planet_scale, minor_planet_scale, planet_star_z_scale));
-            else
-                transform = FTransform(rotation, location, FVector(major_planet_scale, major_planet_scale, planet_star_z_scale));
-            planets_.add(owner_id, transform);
+    bool planet_hex = false;
+    planet_t::type_t planet_type = planet_t::type_t::minor;
+    int sbs = 0;
+    int batss = 0;
+    int mbs = 0;
+    for (auto const & zone : map_hex.zones) {
+        for (auto const & fixture : zone.fixtures) {
+            if (fixture.type == hex_zone_fixture_t::type_t::type_planet) {
+                planet_hex = true;
+                planet_type = fixture.planet.type;
+            } else if (fixture.type == hex_zone_fixture_t::type_t::type_base) {
+                if (is_sb(fixture.base))
+                    ++sbs;
+                else if (is_bats(fixture.base))
+                    ++batss;
+                else if (is_mb(fixture.base))
+                    ++mbs;
+            }
         }
+    }
+
+    if (planet_hex) {
+        FTransform transform;
+        if (planet_type == planet_t::type_t::minor)
+            transform = FTransform(rotation, location, FVector(minor_planet_scale, minor_planet_scale, planet_star_z_scale));
+        else
+            transform = FTransform(rotation, location, FVector(major_planet_scale, major_planet_scale, planet_star_z_scale));
+        // TODO: Adjust for the presence of sb, bats, or mb?
+        planets_.add(owner_id, transform);
+    } else if (0 < sbs) {
+        FTransform const transform(rotation, location, FVector(sb_scale, sb_scale, planet_star_z_scale));
+        // TODO: Adjust for the presence of other sb, bats, or mb?
+        starbases_.add(owner_id, transform);
+    } else if (0 < batss) {
+        FTransform const transform(rotation, location, FVector(bats_scale, bats_scale, planet_star_z_scale));
+        // TODO: Adjust for the presence of other sb, bats, or mb?
+        battlestations_.add(owner_id, transform);
+    } else if (0 < mbs) {
+        FTransform const transform(rotation, location, FVector(mb_scale, mb_scale, planet_star_z_scale));
+        // TODO: Adjust for the presence of other sb, bats, or mb?
+        mobile_bases_.add(owner_id, transform);
     }
 }
 

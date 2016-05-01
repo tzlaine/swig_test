@@ -2,9 +2,7 @@
 #include "Spaceport.h"
 #endif
 
-#include "game_data_t.hpp"
-
-#include "start_data_t.hpp"
+#include "data_utility.hpp"
 
 
 namespace {
@@ -43,7 +41,7 @@ namespace {
         }
 
         unit_t pdu;
-        pdu.unit_id = 1;
+        pdu.unit_id = early_pdu_unit_id();
         pdu.owner = owner;
         pdu.original_owner = owner;
 
@@ -54,22 +52,22 @@ namespace {
             break;
 
         case start_data::feature_t::bats:
-            retval.base.unit_id = 0;
+            retval.base.unit_id = early_bats_unit_id();
             break;
         case start_data::feature_t::sb:
-            retval.base.unit_id = 2;
+            retval.base.unit_id = early_sb_unit_id();
             break;
         case start_data::feature_t::min:
             retval.planet.type = planet_t::type_t::minor;
-            retval.planet.units.fleets[owner].units.resize(2, pdu);
+            retval.planet.units.fleets[owner].units.resize(minor_planet_starting_pdus(), pdu);
             break;
         case start_data::feature_t::maj:
             retval.planet.type = planet_t::type_t::major;
-            retval.planet.units.fleets[owner].units.resize(4, pdu);
+            retval.planet.units.fleets[owner].units.resize(major_planet_starting_pdus(), pdu);
             break;
         case start_data::feature_t::capital:
             retval.planet.type = planet_t::type_t::capital;
-            retval.planet.units.fleets[owner].units.resize(8, pdu);
+            retval.planet.units.fleets[owner].units.resize(capital_planet_starting_pdus(), pdu);
             break;
         }
 

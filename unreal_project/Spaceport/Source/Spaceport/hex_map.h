@@ -38,11 +38,18 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * planet_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * star5_mesh_;
+        class UStaticMesh * star5_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * star6_mesh_;
+        class UStaticMesh * star6_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-    class UStaticMesh * star8_mesh_;
+        class UStaticMesh * star8_mesh_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    class UStaticMesh * mobile_base_mesh_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    class UStaticMesh * battlestation_mesh_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    class UStaticMesh * starbase_mesh_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * solid_color_mat_;
@@ -104,6 +111,10 @@ private:
     instances_t star5s_;
     instances_t star6s_;
     instances_t star8s_;
+
+    instances_t mobile_bases_;
+    instances_t battlestations_;
+    instances_t starbases_;
 
     FTimerHandle spawn_timer_;
     bool hexes_spawned_;
