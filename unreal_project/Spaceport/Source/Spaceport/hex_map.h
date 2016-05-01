@@ -85,8 +85,8 @@ private:
     void initialize (instances_t & instances, int nation_id, FColor color, std::string const & name);
     void initialize_border_instanced_mesh (instances_t & instances, FColor color, float thickness, UMaterial * mat);
     void use_solid_color (UStaticMeshComponent * instanced, FColor color);
-    void spawn_hexes ();
-    void spawn_hex (hex_coord_t hc);
+    void instantiate_hexes ();
+    void instantiate_hex (hex_coord_t hc);
 
     friend bool operator< (FColor lhs, FColor rhs)
     { return lhs.DWColor() < rhs.DWColor(); }
@@ -116,8 +116,8 @@ private:
     instances_t battlestations_;
     instances_t starbases_;
 
-    FTimerHandle spawn_timer_;
-    bool hexes_spawned_;
+    FTimerHandle instantiation_timer_;
+    bool hexes_instantiated_;
 
     UTimelineComponent* cursor_indicator_move_timeline_;
     FOnTimelineFloat cursor_indicator_move_fn;

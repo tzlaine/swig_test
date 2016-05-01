@@ -114,7 +114,7 @@ Ahex_map::Ahex_map () :
     thin_hex_border_mat_ (nullptr),
     player_controller_ (nullptr),
     hover_indicator_ (nullptr),
-    hexes_spawned_ (false),
+    hexes_instantiated_ (false),
     cursor_indicator_move_timeline_ (nullptr),
     unit_curve_ (nullptr),
     cursor_indicator_move_fn ()
@@ -189,7 +189,7 @@ void Ahex_map::BeginPlay ()
 {
     Super::BeginPlay();
     cursor_indicator_move_timeline_->AddInterpFloat(unit_curve_, cursor_indicator_move_fn, "float");
-    call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
+    call_real_soon(instantiation_timer_, this, &Ahex_map::instantiate_hexes);
 }
 
 void Ahex_map::Tick (float delta_seconds)
@@ -221,7 +221,7 @@ hex_coord_t Ahex_map::hex_under_cursor () const
 {
     hex_coord_t retval = invalid_hex_coord;
 
-    if (!player_controller_ || !hexes_spawned_)
+    if (!player_controller_ || !hexes_instantiated_)
         return retval;
 
     FVector origin, direction;
@@ -312,7 +312,7 @@ void Ahex_map::use_solid_color(UStaticMeshComponent * instanced, FColor color)
     }
 }
 
-void Ahex_map::spawn_hexes ()
+void Ahex_map::instantiate_hexes ()
 {
     if (!hover_indicator_mesh_ ||
         !interior_hex_mesh_ ||
@@ -328,7 +328,7 @@ void Ahex_map::spawn_hexes ()
         !hex_border_mesh_ ||
         !hex_border_mat_ ||
         !thin_hex_border_mat_) {
-        call_real_soon(spawn_timer_, this, &Ahex_map::spawn_hexes);
+        call_real_soon(instantiation_timer_, this, &Ahex_map::instantiate_hexes);
         return;
     }
 
@@ -382,14 +382,14 @@ void Ahex_map::spawn_hexes ()
     for (int x = 0; x < map.width; ++x) {
         for (int y = 0; y < map.height; ++y) {
             hex_coord_t const hc = {x, y};
-            spawn_hex(hc);
+            instantiate_hex(hc);
         }
     }
 
-    hexes_spawned_ = true;
+    hexes_instantiated_ = true;
 }
 
-void Ahex_map::spawn_hex (hex_coord_t hc)
+void Ahex_map::instantiate_hex (hex_coord_t hc)
 {
     auto const & map = game_data_.map();
     auto const & map_hex = game_data_.hex(hc);
