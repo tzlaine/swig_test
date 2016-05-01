@@ -62,7 +62,8 @@ namespace start_data {
     
     inline void validate_turn (const turn_t& turn)
     {
-        require_within(turn.year, 50, 185, "turn.year"); // TODO: Use the right year range!
+        if (turn.year != 1000)
+            require_within(turn.year, 50, 185, "turn.year"); // TODO: Use the right year range!
     }
     
     inline void validate_capital (const capital_t& capital)

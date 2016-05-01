@@ -42,4 +42,4 @@ if (MSVC)
 	${unreal_root}/scenarios/the_wind.json
     )
 endif ()
-add_test(start_data_tests ${CMAKE_BINARY_DIR}/start_data_tests ${start_data_test_args} --gtest_catch_exceptions=0)
+add_test(start_data_tests ${CMAKE_BINARY_DIR}/start_data_tests ${start_data_test_args} --gtest_catch_exceptions=1)
