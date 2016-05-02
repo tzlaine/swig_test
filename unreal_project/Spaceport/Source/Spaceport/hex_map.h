@@ -88,9 +88,6 @@ private:
     void instantiate_hexes ();
     void instantiate_hex (hex_coord_t hc);
 
-    friend bool operator< (FColor lhs, FColor rhs)
-    { return lhs.DWColor() < rhs.DWColor(); }
-
     start_data::start_data_t start_data_;
     game_data_t game_data_;
 
