@@ -10,7 +10,7 @@ message unit_t
     int32 unit_id = 1; // TODO: Define this type for real.
     int32 owner = 2;
     int32 original_owner = 3;
-};
+}
 
 message fleet_t
 {
