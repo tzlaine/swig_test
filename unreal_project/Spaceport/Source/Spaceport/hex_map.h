@@ -38,11 +38,11 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * planet_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-        class UStaticMesh * star5_mesh_;
+    class UStaticMesh * star5_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-        class UStaticMesh * star6_mesh_;
+    class UStaticMesh * star6_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
-        class UStaticMesh * star8_mesh_;
+    class UStaticMesh * star8_mesh_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * mobile_base_mesh_;
@@ -50,6 +50,11 @@ public:
     class UStaticMesh * battlestation_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * starbase_mesh_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    class UStaticMesh * unit_square_mesh_;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    class UStaticMesh * unit_cube_mesh_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * solid_color_mat_;
@@ -85,6 +90,7 @@ private:
     void initialize (instances_t & instances, int nation_id, FColor color, std::string const & name);
     void initialize_border_instanced_mesh (instances_t & instances, FColor color, float thickness, UMaterial * mat);
     void use_solid_color (UStaticMeshComponent * instanced, FColor color);
+    void create_offmap_areas ();
     void instantiate_hexes ();
     void instantiate_hex (hex_coord_t hc);
 
@@ -112,6 +118,9 @@ private:
     instances_t mobile_bases_;
     instances_t battlestations_;
     instances_t starbases_;
+
+    instances_t offmap_panels_;
+    instances_t offmap_borders_;
 
     FTimerHandle instantiation_timer_;
     bool hexes_instantiated_;

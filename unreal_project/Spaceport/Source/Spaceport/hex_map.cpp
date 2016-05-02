@@ -79,14 +79,15 @@ namespace {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.65f;
-    float const indicator_move_time = 0.09; // Should be <= the tick interval for Ahex_map.
-    float const planet_star_z_scale = 0.20;
-    float const minor_planet_scale = 0.2;
-    float const major_planet_scale = 0.3;
-    float const star_scale = 0.5;
-    float const mb_scale = 0.125;
-    float const bats_scale = 0.125;
-    float const sb_scale = 0.125;
+    float const indicator_move_time = 0.09f; // Should be <= the tick interval for Ahex_map.
+    float const planet_star_z_scale = 0.2f;
+    float const minor_planet_scale = 0.2f;
+    float const major_planet_scale = 0.3f;
+    float const star_scale = 0.5f;
+    float const mb_scale = 0.125f;
+    float const bats_scale = 0.125f;
+	float const sb_scale = 0.125f;
+	float const offmap_z = 0.25f;
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {
@@ -108,6 +109,11 @@ Ahex_map::Ahex_map () :
     star5_mesh_ (nullptr),
     star6_mesh_ (nullptr),
     star8_mesh_ (nullptr),
+    mobile_base_mesh_ (nullptr),
+    battlestation_mesh_ (nullptr),
+    starbase_mesh_ (nullptr),
+    unit_square_mesh_ (nullptr),
+    unit_cube_mesh_ (nullptr),
     solid_color_mat_ (nullptr),
     hex_border_mat_ (nullptr),
     hex_border_mesh_ (nullptr),
@@ -147,11 +153,16 @@ Ahex_map::Ahex_map () :
     battlestations_.instances_.resize(primary_colors().size());
     starbases_.instances_.resize(primary_colors().size());
 
+    offmap_panels_.instances_.resize(primary_colors().size());
+    offmap_borders_.instances_.resize(primary_colors().size());
+
     for (auto const & pair : primary_colors()) {
         auto const nation_id = start_data_.nation(pair.first).nation_id;
 
         initialize(interior_hexes_, nation_id, pair.second, pair.first + "_interior_hexes");
         initialize(edge_hexes_, nation_id, pair.second, pair.first + "_edge_hexes");
+
+        initialize(offmap_panels_, nation_id, pair.second, pair.first + "_offmap_panels");
     }
 
     for (auto const & pair : secondary_colors()) {
@@ -169,6 +180,8 @@ Ahex_map::Ahex_map () :
         initialize(mobile_bases_, nation_id, pair.second, pair.first + "_mobile_bases");
         initialize(battlestations_, nation_id, pair.second, pair.first + "_battlestations");
         initialize(starbases_, nation_id, pair.second, pair.first + "_starbases");
+
+        initialize(offmap_borders_, nation_id, pair.second, pair.first + "_offmap_borders");
     }
 
     cursor_indicator_move_timeline_ =
@@ -387,6 +400,93 @@ void Ahex_map::instantiate_hexes ()
     }
 
     hexes_instantiated_ = true;
+    call_real_soon(instantiation_timer_, this, &Ahex_map::create_offmap_areas);
+}
+
+void Ahex_map::create_offmap_areas ()
+{
+    if (!unit_square_mesh_ ||
+        !unit_cube_mesh_ ||
+        !hexes_instantiated_) {
+        call_real_soon(instantiation_timer_, this, &Ahex_map::create_offmap_areas);
+        return;
+    }
+
+    offmap_panels_.use(unit_square_mesh_);
+    offmap_borders_.use(unit_cube_mesh_);
+
+    for (auto const & pair : primary_colors()) {
+        auto nation_id = start_data_.nation(pair.first).nation_id;
+        use_solid_color(offmap_panels_.instances_[nation_id], pair.second);
+    }
+
+    nation_id_secondary_colors_.resize(secondary_colors().size());
+    for (auto const & pair : secondary_colors()) {
+        auto nation_id = start_data_.nation(pair.first).nation_id;
+        use_solid_color(offmap_borders_.instances_[nation_id], pair.second);
+    }
+
+    auto const & map = game_data_.map();
+
+    std::vector<hex_coord_t> adjacent_hexes;
+    for (auto const & pair : start_data_.map().starting_national_holdings) {
+        auto const & nation = start_data_.nation(pair.first);
+        auto const & offmap_area = pair.second.offmap_area;
+
+        adjacent_hexes.resize(offmap_area.adjacent_hexes.size());
+        std::transform(
+            offmap_area.adjacent_hexes.begin(), offmap_area.adjacent_hexes.end(),
+            adjacent_hexes.begin(),
+            [](int hex_id) { return to_hex_coord(hex_id); }
+        );
+        std::sort(adjacent_hexes.begin(), adjacent_hexes.end());
+
+        auto const first_location = hex_location(adjacent_hexes.front(), map);
+        auto const last_location = hex_location(adjacent_hexes.back(), map);
+        auto lower_left = first_location;
+        auto upper_right = last_location;
+        if (adjacent_hexes[0].x == 0 || adjacent_hexes[0].x == map.width - 1) {
+            // vertical offmap area
+			lower_left = last_location;
+			upper_right = first_location;
+			
+			if (adjacent_hexes[0].x == 0)
+                lower_left.X -= 2.25f * meters;
+            else
+                upper_right.X += 2.25f * meters;
+            lower_left.Y -= sin_60 * meters;
+            upper_right.Y += sin_60 * meters;
+        } else {
+            // horizontal offmap area
+            if (adjacent_hexes[0].y == 0) {
+                hex_coord_t const top_plus_one = { 0, -1 };
+                auto const new_y = hex_location(top_plus_one, map).Y;
+                upper_right.Y = new_y + sin_60 * meters;
+            } else {
+                hex_coord_t const bottom_minus_one = { 1, map.height };
+                auto const new_y = hex_location(bottom_minus_one, map).Y;
+                lower_left.Y = new_y - sin_60 * meters;
+            }
+            lower_left.X -= 0.5f * meters;
+			upper_right.X += 0.5f * meters;
+        }
+        lower_left.Z = offmap_z * meters;
+        upper_right.Z = offmap_z * meters;
+
+        if (!offmap_area.features.empty()) {
+			// TODO: For now, only SBs may appear as features....
+			auto const hc = to_hex_coord(offmap_area.counter_hex);
+            auto location = hex_location(hc, map);
+            location.Z = offmap_z * meters;
+            FTransform const transform(FRotator(0, 0, 0), location, FVector(sb_scale, sb_scale, planet_star_z_scale));
+            starbases_.add(nation.nation_id, transform);
+        }
+
+		auto const position = (upper_right + lower_left) / 2.0f;
+		auto const delta = upper_right - lower_left;
+		FVector const scale(delta.X / 2.0f / meters, delta.Y / 2.0f / meters, 1.0);
+		offmap_panels_.add(nation.nation_id, FTransform(FRotator(180, 0, 0), position, scale));
+    }
 }
 
 void Ahex_map::instantiate_hex (hex_coord_t hc)
