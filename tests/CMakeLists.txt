@@ -40,6 +40,7 @@ if (MSVC)
 	${unreal_root}/default_oob.json
 	${unreal_root}/units.json
 	${unreal_root}/scenarios/the_wind.json
+	${unreal_root}/visual_config.json
     )
 endif ()
 add_test(start_data_tests ${CMAKE_BINARY_DIR}/start_data_tests ${start_data_test_args} --gtest_catch_exceptions=1)

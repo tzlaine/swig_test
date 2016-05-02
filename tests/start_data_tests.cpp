@@ -1,5 +1,7 @@
 #include <start_data_t.hpp>
 #include <game_data_t.hpp>
+#include <visual_config.hpp>
+#include <validation.hpp>
 #include <json2pb.h>
 #include <gtest/gtest.h>
 
@@ -13,6 +15,7 @@ std::string map_json_string;
 std::string oob_json_string;
 std::string units_json_string;
 std::string scenario_json_string;
+std::string visual_config_json_string;
 
 std::string file_slurp (const char* filename)
 {
@@ -111,6 +114,25 @@ TEST(init_model_ops, test_nations_bin_encoding)
 }
 #endif
 
+TEST(visual_config_tests, validate_visual_config)
+{
+    start_data::start_data_t start_data;
+    start_data.init_nations(nations_json_string);
+
+    visual_config::hex_map_t hex_map;
+
+    std::string const visual_config_str = visual_config_json_string;
+    assert(visual_config_str != "");
+
+    {
+        message::visual_config::hex_map_t hex_map_msg;
+        json2pb(hex_map_msg, visual_config_str, map_encoding_t::compact);
+        hex_map = from_protobuf(hex_map_msg);
+    }
+
+    visual_config::validate_hex_map(hex_map, start_data.nations());
+}
+
 int main(int argc, char **argv)
 {
 #ifdef _MSC_VER
@@ -128,6 +150,9 @@ int main(int argc, char **argv)
 
     if (5 < argc)
         scenario_json_string = file_slurp(argv[5]);
+
+    if (6 < argc)
+        visual_config_json_string = file_slurp(argv[6]);
 #endif
 
     ::testing::InitGoogleTest(&argc, argv);

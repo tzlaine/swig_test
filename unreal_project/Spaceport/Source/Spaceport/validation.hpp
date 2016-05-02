@@ -565,9 +565,9 @@ namespace start_data {
         }
     }
 
-    void validate_scenario_with_map_and_oob (const scenario_t& scenario,
-                                             const map_t& map,
-                                             const orders_of_battle_t& oobs)
+    inline void validate_scenario_with_map_and_oob (const scenario_t& scenario,
+                                                    const map_t& map,
+                                                    const orders_of_battle_t& oobs)
     {
         // TODO
     }

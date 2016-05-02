@@ -1,0 +1,17 @@
+{
+    "primary_colors": {
+        "FED": { "r": 0, "g": 0, "b": 0 }
+    },
+    "secondary_colors": {
+        "FED": { "r": 0, "g": 0, "b": 0 }
+    },
+    "national_border_thickness": 0,
+    "province_border_thickness": 0,
+    "planet_star_thickness": 0,
+    "minor_planet_scale": 0,
+    "major_planet_scale": 0,
+    "star_scale": 0,
+    "mb_scale": 0,
+    "bats_scale": 0,
+    "sb_scale": 0
+}
