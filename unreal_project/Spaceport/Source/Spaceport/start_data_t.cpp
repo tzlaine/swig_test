@@ -244,7 +244,7 @@ void init_graph (graph::graph& g,
                 for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
                     const hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
                     if (on_map(adjacent_coord, width, height)) {
-                        const int index = hex_index(adjacent_coord, width);
+                        const int index = to_hex_index(adjacent_coord, width);
                         if (!make_edge(i, index))
                             continue;
                         std::pair<graph::edge_descriptor, bool> add_edge_result =
@@ -343,7 +343,7 @@ bool supply_blocked (
     int neutral_zone_id
 ) {
     bool retval = true;
-    int hex_index_ = hex_index(hc, width);
+    int hex_index_ = to_hex_index(hc, width);
     supply_check_hex_t hex = hexes[hex_index_];
 
     bool friendly_ships = false;
@@ -382,7 +382,7 @@ bool supply_blocked (
         for (hex_direction_t d : all_hex_directions) {
             hex_coord_t adjacent_coord = adjacent_hex_coord(hc, d);
             if (on_map(adjacent_coord, width, height)) {
-                supply_check_hex_t hex = hexes[hex_index(adjacent_coord, width)];
+                supply_check_hex_t hex = hexes[to_hex_index(adjacent_coord, width)];
                 bool friendly_ships = false;
                 bool friendly_units = false;
                 bool friendly_base = false;
@@ -562,7 +562,7 @@ public:
                 retval.first = 0;
             } else {
                 hex_coord_t hc{hex_id / 100, hex_id % 100};
-                if (supply_source(m_hexes[hex_index(hc, m_width)], m_nation))
+                if (supply_source(m_hexes[to_hex_index(hc, m_width)], m_nation))
                     retval.first = 0;
             }
             retval.second = retval.first < 6.0 + epsilon;
