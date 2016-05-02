@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package message.visual_config;
+
+
+message color_t
+{
+    int32 r = 1;
+    int32 g = 2;
+    int32 b = 3;
+}
+
+message hex_map_t
+{
+    map<string, color_t> primary_colors = 1;
+    map<string, color_t> secondary_colors = 2;
+    float national_border_thickness = 3;
+    float province_border_thickness = 4;
+    float planet_star_thickness = 5;
+    float minor_planet_scale = 6;
+    float major_planet_scale = 7;
+    float star_scale = 8;
+    float mb_scale = 9;
+    float bats_scale = 10;
+    float sb_scale = 11;
+}

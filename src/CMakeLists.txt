@@ -4,6 +4,7 @@
 generate_protobuf(base_types base_types_message_target)
 generate_protobuf(start_data start_data_message_target)
 generate_protobuf(game_data game_data_message_target)
+generate_protobuf(visual_config visual_config_message_target)
 
 if (NOT MSVC)
     add_definitions(-Wall)
@@ -21,8 +22,10 @@ add_library(
     ${unreal_src_dir}/json2pb.cc
     ${unreal_src_dir}/base_types.cpp
     ${unreal_src_dir}/start_data.cpp
+    ${unreal_src_dir}/visual_config.cpp
     ${unreal_src_dir}/base_types.pb.cc
     ${unreal_src_dir}/start_data.pb.cc
+    ${unreal_src_dir}/visual_config.pb.cc
 )
 
 target_link_libraries(
@@ -31,9 +34,9 @@ target_link_libraries(
     jansson
 )
 
-add_dependencies(start_data base_types_message_target start_data_message_target)
+add_dependencies(start_data base_types_message_target start_data_message_target visual_config_message_target)
 if (PYTHON_EXECUTABLE)
-    add_dependencies(start_data base_types_target start_data_target)
+    add_dependencies(start_data base_types_target start_data_target visual_config_target)
 endif ()
 
 
