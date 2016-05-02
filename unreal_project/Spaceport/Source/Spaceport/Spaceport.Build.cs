@@ -57,6 +57,7 @@ public class Spaceport : ModuleRules
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, protobuf_lib));
         PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Protobuf", "Includes"));
         //Definitions.Add(string.Format("USE_PROTOBUF=1"));
+        Definitions.Add("GOOGLE_PROTOBUF_NO_RTTI");
 
         return true;
     }
