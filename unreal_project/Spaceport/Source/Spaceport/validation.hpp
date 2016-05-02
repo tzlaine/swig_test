@@ -8,6 +8,13 @@
 
 namespace start_data {
 
+    template <typename T>
+    inline void require_equal (T lhs, T rhs, const std::string& lhs_name, const std::string& rhs_name)
+    {
+        if (lhs != rhs)
+            throw std::runtime_error(lhs_name + " and " + rhs_name + " must be equal");
+    }
+
     template <typename Cont>
     inline void require_nonempty (const Cont& c, const std::string& name)
     {
@@ -592,6 +599,21 @@ namespace visual_config {
         for (auto const & pair: hex_map.secondary_colors) {
             start_data::require_nation(pair.first, nations);
             validate_color(pair.second);
+        }
+
+        start_data::require_equal(
+            hex_map.primary_colors.size(), hex_map.secondary_colors.size(),
+            "hex_map.primary_colors.size()", "hex_map.secondary_colors.size()"
+        );
+
+        using pair_t = boost::container::flat_map<std::string, color_t>::value_type;
+        if (!std::equal(
+                hex_map.primary_colors.begin(), hex_map.primary_colors.end(),
+                hex_map.secondary_colors.begin(),
+                [](pair_t const & pair_1, pair_t const & pair_2) {
+                    return pair_1.first == pair_2.first;
+                })) {
+            throw std::runtime_error("Every nation listed in primary_colors must also be listed in secondary_colors (with no extras)");
         }
 
         start_data::require_within(hex_map.national_border_thickness, 0.0f, 1.0f, "national_border_thickness");
