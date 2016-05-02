@@ -229,7 +229,7 @@ void init_graph (graph::graph& g,
         int i = 0;
         for (int x = 0; x < width; ++x) {
             for (int y = 0; y < height; ++y, ++i) {
-                int id = hex_id(hex_coord_t{x, y});
+                int id = to_hex_id(hex_coord_t{x, y});
                 boost::add_vertex(g);
                 hex_id_property_map[i] = id;
             }
