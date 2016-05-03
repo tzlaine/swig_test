@@ -88,6 +88,7 @@ namespace {
     float const bats_scale = 0.125f;
 	float const sb_scale = 0.125f;
 	float const offmap_z = 0.25f;
+	float const offmap_border_thickness = 0.05f;
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {
@@ -209,6 +210,7 @@ void Ahex_map::Tick (float delta_seconds)
 {
     hex_coord_t const hc = hex_under_cursor();
     if (hc != invalid_hex_coord) {
+		// TODO: Offmap area hit test.
         auto const old_location = hover_indicator_->GetComponentLocation();
         auto location = hex_location(hc, game_data_.map());
         location.Z = -0.05 * meters;
@@ -433,6 +435,9 @@ void Ahex_map::create_offmap_areas ()
         auto const & nation = start_data_.nation(pair.first);
         auto const & offmap_area = pair.second.offmap_area;
 
+		if (offmap_area.adjacent_hexes.empty())
+			continue;
+
         adjacent_hexes.resize(offmap_area.adjacent_hexes.size());
         std::transform(
             offmap_area.adjacent_hexes.begin(), offmap_area.adjacent_hexes.end(),
@@ -441,16 +446,21 @@ void Ahex_map::create_offmap_areas ()
         );
         std::sort(adjacent_hexes.begin(), adjacent_hexes.end());
 
+		auto const left = adjacent_hexes[0].x == 0;
+		auto const right = adjacent_hexes[0].x == map.width - 1;
+		auto const top = adjacent_hexes[0].y == 0;
+		auto const bottom = adjacent_hexes[0].y == map.height - 1;
+
         auto const first_location = hex_location(adjacent_hexes.front(), map);
         auto const last_location = hex_location(adjacent_hexes.back(), map);
         auto lower_left = first_location;
         auto upper_right = last_location;
-        if (adjacent_hexes[0].x == 0 || adjacent_hexes[0].x == map.width - 1) {
+        if (left || right) {
             // vertical offmap area
 			lower_left = last_location;
 			upper_right = first_location;
 			
-			if (adjacent_hexes[0].x == 0)
+			if (left)
                 lower_left.X -= 2.25f * meters;
             else
                 upper_right.X += 2.25f * meters;
@@ -458,7 +468,7 @@ void Ahex_map::create_offmap_areas ()
             upper_right.Y += sin_60 * meters;
         } else {
             // horizontal offmap area
-            if (adjacent_hexes[0].y == 0) {
+            if (top) {
                 hex_coord_t const top_plus_one = { 0, -1 };
                 auto const new_y = hex_location(top_plus_one, map).Y;
                 upper_right.Y = new_y + sin_60 * meters;
@@ -482,10 +492,58 @@ void Ahex_map::create_offmap_areas ()
             starbases_.add(nation.nation_id, transform);
         }
 
-		auto const position = (upper_right + lower_left) / 2.0f;
-		auto const delta = upper_right - lower_left;
-		FVector const scale(delta.X / 2.0f / meters, delta.Y / 2.0f / meters, 1.0);
-		offmap_panels_.add(nation.nation_id, FTransform(FRotator(180, 0, 0), position, scale));
+		auto const panel_position = (upper_right + lower_left) / 2.0f;
+		auto const panel_delta = upper_right - lower_left;
+		FVector const panel_scale(panel_delta.X / 2.0f / meters, panel_delta.Y / 2.0f / meters, 1.0);
+		offmap_panels_.add(nation.nation_id, FTransform(FRotator(180, 0, 0), panel_position, panel_scale));
+
+		if (left || right) {
+			auto side_bar_position = panel_position;
+			if (left)
+				side_bar_position.X -= panel_delta.X / 2.0f;
+			else
+				side_bar_position.X += panel_delta.X / 2.0f;
+			FVector const side_bar_scale(
+				offmap_border_thickness,
+				panel_scale.Y - offmap_border_thickness,
+				offmap_border_thickness
+			);
+			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+
+			FVector const top_bottom_bar_scale(
+				panel_scale.X + offmap_border_thickness,
+				offmap_border_thickness,
+				offmap_border_thickness
+			);
+			auto top_bottom_bar_position = panel_position;
+			top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
+			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+			top_bottom_bar_position.Y -= panel_delta.Y;
+			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+		} else {
+			auto top_bottom_bar_position = panel_position;
+			if (top)
+				top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
+			else
+				top_bottom_bar_position.Y -= panel_delta.Y / 2.0f;
+			FVector const top_bottom_bar_scale(
+				panel_scale.X - offmap_border_thickness,
+				offmap_border_thickness,
+				offmap_border_thickness
+			);
+			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+
+			FVector const side_bar_scale(
+				offmap_border_thickness,
+				panel_scale.Y + offmap_border_thickness,
+				offmap_border_thickness
+			);
+			auto side_bar_position = panel_position;
+			side_bar_position.X += panel_delta.X / 2.0f;
+			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+			side_bar_position.X -= panel_delta.X;
+			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+		}
     }
 }
 
