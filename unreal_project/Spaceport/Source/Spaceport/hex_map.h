@@ -60,6 +60,9 @@ public:
     class UMaterial * solid_color_mat_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    class UMaterial * text_mat_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * hex_border_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UMaterial * hex_border_mat_;
@@ -121,6 +124,7 @@ private:
 
     instances_t offmap_panels_;
     instances_t offmap_borders_;
+    boost::container::flat_map<int, UTextRenderComponent *> offmap_labels_;
 
     FTimerHandle instantiation_timer_;
     bool hexes_instantiated_;

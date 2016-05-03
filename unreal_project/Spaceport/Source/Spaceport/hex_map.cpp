@@ -86,9 +86,12 @@ namespace {
     float const star_scale = 0.5f;
     float const mb_scale = 0.125f;
     float const bats_scale = 0.125f;
-	float const sb_scale = 0.125f;
-	float const offmap_z = 0.25f;
-	float const offmap_border_thickness = 0.05f;
+    float const sb_scale = 0.125f;
+    float const offmap_z = 0.25f;
+    float const offmap_border_thickness = 0.05f;
+    float const offmap_label_size = 60.0f;
+    float const offmap_left_right_thickness = 2.25f;
+    float const offmap_top_bottom_thickness = sin_60;
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {
@@ -116,6 +119,7 @@ Ahex_map::Ahex_map () :
     unit_square_mesh_ (nullptr),
     unit_cube_mesh_ (nullptr),
     solid_color_mat_ (nullptr),
+    text_mat_ (nullptr),
     hex_border_mat_ (nullptr),
     hex_border_mesh_ (nullptr),
     thin_hex_border_mat_ (nullptr),
@@ -185,6 +189,17 @@ Ahex_map::Ahex_map () :
         initialize(offmap_borders_, nation_id, pair.second, pair.first + "_offmap_borders");
     }
 
+    for (auto const & pair : start_data_.map().starting_national_holdings) {
+        auto const & nation = start_data_.nation(pair.first);
+        auto const & offmap_area = pair.second.offmap_area;
+
+        if (offmap_area.adjacent_hexes.empty())
+            continue;
+
+        auto text_render_component = CreateDefaultSubobject<UTextRenderComponent>((pair.first + "_offmap_label").c_str());
+        offmap_labels_[nation.nation_id] = text_render_component;
+    }
+
     cursor_indicator_move_timeline_ =
         CreateDefaultSubobject<UTimelineComponent>("cursor_indicator_move_timeline_");
     cursor_indicator_move_timeline_->SetTimelineLength(1.0);
@@ -210,7 +225,7 @@ void Ahex_map::Tick (float delta_seconds)
 {
     hex_coord_t const hc = hex_under_cursor();
     if (hc != invalid_hex_coord) {
-		// TODO: Offmap area hit test.
+        // TODO: Offmap area hit test.
         auto const old_location = hover_indicator_->GetComponentLocation();
         auto location = hex_location(hc, game_data_.map());
         location.Z = -0.05 * meters;
@@ -409,6 +424,7 @@ void Ahex_map::create_offmap_areas ()
 {
     if (!unit_square_mesh_ ||
         !unit_cube_mesh_ ||
+        !text_mat_ ||
         !hexes_instantiated_) {
         call_real_soon(instantiation_timer_, this, &Ahex_map::create_offmap_areas);
         return;
@@ -430,13 +446,16 @@ void Ahex_map::create_offmap_areas ()
 
     auto const & map = game_data_.map();
 
+    float const offmap_left_right_gap = (offmap_left_right_thickness - 0.5) * meters;
+    float const offmap_top_bottom_gap = (offmap_top_bottom_thickness + sin_60) * meters;
+
     std::vector<hex_coord_t> adjacent_hexes;
     for (auto const & pair : start_data_.map().starting_national_holdings) {
         auto const & nation = start_data_.nation(pair.first);
         auto const & offmap_area = pair.second.offmap_area;
 
-		if (offmap_area.adjacent_hexes.empty())
-			continue;
+        if (offmap_area.adjacent_hexes.empty())
+            continue;
 
         adjacent_hexes.resize(offmap_area.adjacent_hexes.size());
         std::transform(
@@ -446,10 +465,14 @@ void Ahex_map::create_offmap_areas ()
         );
         std::sort(adjacent_hexes.begin(), adjacent_hexes.end());
 
-		auto const left = adjacent_hexes[0].x == 0;
-		auto const right = adjacent_hexes[0].x == map.width - 1;
-		auto const top = adjacent_hexes[0].y == 0;
-		auto const bottom = adjacent_hexes[0].y == map.height - 1;
+        auto const left =
+            adjacent_hexes.front().x == 0 && adjacent_hexes.back().x == 0;
+        auto const right =
+            adjacent_hexes.front().x == map.width - 1 && adjacent_hexes.back().x == map.width - 1;
+        auto const top =
+            adjacent_hexes.front().y == 0 && adjacent_hexes.back().y == 0;
+        auto const bottom =
+            adjacent_hexes.front().y == map.height - 1 && adjacent_hexes.back().y == map.height - 1;
 
         auto const first_location = hex_location(adjacent_hexes.front(), map);
         auto const last_location = hex_location(adjacent_hexes.back(), map);
@@ -457,13 +480,13 @@ void Ahex_map::create_offmap_areas ()
         auto upper_right = last_location;
         if (left || right) {
             // vertical offmap area
-			lower_left = last_location;
-			upper_right = first_location;
-			
-			if (left)
-                lower_left.X -= 2.25f * meters;
+            lower_left = last_location;
+            upper_right = first_location;
+
+            if (left)
+                lower_left.X -= offmap_left_right_thickness * meters;
             else
-                upper_right.X += 2.25f * meters;
+                upper_right.X += offmap_left_right_thickness * meters;
             lower_left.Y -= sin_60 * meters;
             upper_right.Y += sin_60 * meters;
         } else {
@@ -471,79 +494,113 @@ void Ahex_map::create_offmap_areas ()
             if (top) {
                 hex_coord_t const top_plus_one = { 0, -1 };
                 auto const new_y = hex_location(top_plus_one, map).Y;
-                upper_right.Y = new_y + sin_60 * meters;
+                upper_right.Y = new_y + offmap_top_bottom_thickness * meters;
             } else {
                 hex_coord_t const bottom_minus_one = { 1, map.height };
                 auto const new_y = hex_location(bottom_minus_one, map).Y;
-                lower_left.Y = new_y - sin_60 * meters;
+                lower_left.Y = new_y - offmap_top_bottom_thickness * meters;
             }
             lower_left.X -= 0.5f * meters;
-			upper_right.X += 0.5f * meters;
+            upper_right.X += 0.5f * meters;
         }
         lower_left.Z = offmap_z * meters;
         upper_right.Z = offmap_z * meters;
 
         if (!offmap_area.features.empty()) {
-			// TODO: For now, only SBs may appear as features....
-			auto const hc = to_hex_coord(offmap_area.counter_hex);
+            // TODO: For now, only SBs may appear as features....
+            auto const hc = to_hex_coord(offmap_area.counter_hex);
             auto location = hex_location(hc, map);
             location.Z = offmap_z * meters;
             FTransform const transform(FRotator(0, 0, 0), location, FVector(sb_scale, sb_scale, planet_star_z_scale));
             starbases_.add(nation.nation_id, transform);
         }
 
-		auto const panel_position = (upper_right + lower_left) / 2.0f;
-		auto const panel_delta = upper_right - lower_left;
-		FVector const panel_scale(panel_delta.X / 2.0f / meters, panel_delta.Y / 2.0f / meters, 1.0);
-		offmap_panels_.add(nation.nation_id, FTransform(FRotator(180, 0, 0), panel_position, panel_scale));
+        auto const panel_position = (upper_right + lower_left) / 2.0f;
+        auto const panel_delta = upper_right - lower_left;
+        FVector const panel_scale(panel_delta.X / 2.0f / meters, panel_delta.Y / 2.0f / meters, 1.0);
+        offmap_panels_.add(nation.nation_id, FTransform(FRotator(180, 0, 0), panel_position, panel_scale));
 
-		if (left || right) {
-			auto side_bar_position = panel_position;
-			if (left)
-				side_bar_position.X -= panel_delta.X / 2.0f;
-			else
-				side_bar_position.X += panel_delta.X / 2.0f;
-			FVector const side_bar_scale(
-				offmap_border_thickness,
-				panel_scale.Y - offmap_border_thickness,
-				offmap_border_thickness
-			);
-			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+        if (left || right) {
+            auto side_bar_position = panel_position;
+            if (left)
+                side_bar_position.X -= panel_delta.X / 2.0f;
+            else
+                side_bar_position.X += panel_delta.X / 2.0f;
+            FVector const side_bar_scale(
+                offmap_border_thickness,
+                panel_scale.Y - offmap_border_thickness,
+                offmap_border_thickness
+            );
+            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
 
-			FVector const top_bottom_bar_scale(
-				panel_scale.X + offmap_border_thickness,
-				offmap_border_thickness,
-				offmap_border_thickness
-			);
-			auto top_bottom_bar_position = panel_position;
-			top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
-			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
-			top_bottom_bar_position.Y -= panel_delta.Y;
-			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
-		} else {
-			auto top_bottom_bar_position = panel_position;
-			if (top)
-				top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
-			else
-				top_bottom_bar_position.Y -= panel_delta.Y / 2.0f;
-			FVector const top_bottom_bar_scale(
-				panel_scale.X - offmap_border_thickness,
-				offmap_border_thickness,
-				offmap_border_thickness
-			);
-			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+            FVector const top_bottom_bar_scale(
+                panel_scale.X + offmap_border_thickness,
+                offmap_border_thickness,
+                offmap_border_thickness
+            );
+            auto top_bottom_bar_position = panel_position;
+            top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
+            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+            top_bottom_bar_position.Y -= panel_delta.Y;
+            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+        } else {
+            auto top_bottom_bar_position = panel_position;
+            if (top)
+                top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
+            else
+                top_bottom_bar_position.Y -= panel_delta.Y / 2.0f;
+            FVector const top_bottom_bar_scale(
+                panel_scale.X - offmap_border_thickness,
+                offmap_border_thickness,
+                offmap_border_thickness
+            );
+            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
 
-			FVector const side_bar_scale(
-				offmap_border_thickness,
-				panel_scale.Y + offmap_border_thickness,
-				offmap_border_thickness
-			);
-			auto side_bar_position = panel_position;
-			side_bar_position.X += panel_delta.X / 2.0f;
-			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
-			side_bar_position.X -= panel_delta.X;
-			offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
-		}
+            FVector const side_bar_scale(
+                offmap_border_thickness,
+                panel_scale.Y + offmap_border_thickness,
+                offmap_border_thickness
+            );
+            auto side_bar_position = panel_position;
+            side_bar_position.X += panel_delta.X / 2.0f;
+            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+            side_bar_position.X -= panel_delta.X;
+            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+        }
+
+        if (auto & text_render_component = offmap_labels_[nation.nation_id]) {
+            text_render_component->SetVisibility(true);
+            text_render_component->SetText(offmap_area.name.c_str());
+            text_render_component->VerticalAlignment = EVerticalTextAligment::EVRTA_TextCenter;
+            text_render_component->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
+            text_render_component->SetWorldSize(offmap_label_size);
+            text_render_component->SetTextMaterial(text_mat_);
+
+            auto text_position = panel_position;
+            text_position.Z = offmap_z * meters;
+            auto const local_size = text_render_component->GetTextWorldSize();
+            auto const text_height = local_size.Z;
+            if (top) {
+                text_position.Y = upper_right.Y - FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
+            } else if (bottom) {
+                text_position.Y = lower_left.Y + FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
+            } else if (left) {
+                text_position.X = lower_left.X + FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
+            } else if (right) {
+                text_position.X = upper_right.X - FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
+            }
+
+            float z_rotation = 0.0f;
+            if (left)
+                z_rotation = 180.0f;
+            else if (top || bottom)
+                z_rotation = 90.0f;
+
+            text_render_component->SetWorldLocationAndRotation(text_position, FRotator(-90, 0, z_rotation));
+
+            FColor const color = secondary_colors().find(pair.first)->second;
+            text_render_component->SetTextRenderColor(color);
+        }
     }
 }
 
