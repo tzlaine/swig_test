@@ -32,66 +32,7 @@ namespace {
         return retval;
     }
 
-    // Move to editable CSV.
-    std::map<std::string, FColor> const & primary_colors ()
-    {
-        static std::map<std::string, FColor> retval;
-        if (retval.empty()) {
-            retval["FED"] = FColor(57, 142, 230);
-            retval["GOR"] = FColor(255, 255, 255);
-            retval["HYD"] = FColor(59, 137, 92);
-            retval["ISC"] = FColor(89, 89, 89);
-            retval["KLI"] = FColor(0, 0, 0);
-            retval["KZI"] = FColor(255, 255, 255);
-            retval["LDR"] = FColor(89, 89, 89);
-            retval["LYR"] = FColor(241, 241, 76);
-            retval["NZ"] =  FColor(136, 136, 136);
-            retval["ORI"] = FColor(89, 89, 89);
-            retval["ROM"] = FColor(221, 0 ,0);
-            retval["THO"] = FColor(221, 0 ,0);
-            retval["WYN"] = FColor(89, 89, 89);
-        }
-        return retval;
-    }
-
-    // Move to editable CSV.
-    std::map<std::string, FColor> const & secondary_colors ()
-    {
-        static std::map<std::string, FColor> retval;
-        if (retval.empty()) {
-            retval["FED"] = FColor(0, 0, 0);
-            retval["GOR"] = FColor(221, 0 ,0);
-            retval["HYD"] = FColor(255, 255, 255);
-            retval["ISC"] = FColor(0, 0, 0);
-            retval["KLI"] = FColor(255, 255, 255);
-            retval["KZI"] = FColor(0, 0, 0);
-            retval["LDR"] = FColor(0, 0, 0);
-            retval["LYR"] = FColor(58, 138, 45);
-            retval["NZ"] =  FColor(0, 0, 0);
-            retval["ORI"] = FColor(0, 0, 0);
-            retval["ROM"] = FColor(0, 0, 0);
-            retval["THO"] = FColor(255, 255, 255);
-            retval["WYN"] = FColor(0, 0, 0);
-        }
-        return retval;
-    }
-
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
-    float const national_border_thickness = 1.0f;
-    float const province_border_thickness = 0.65f;
-    float const planet_star_z_scale = 0.2f;
-    float const minor_planet_scale = 0.2f;
-    float const major_planet_scale = 0.3f;
-    float const star_scale = 0.5f;
-    float const mb_scale = 0.125f;
-    float const bats_scale = 0.125f;
-    float const sb_scale = 0.125f;
-    float const offmap_z = 0.25f;
-    float const offmap_border_thickness = 0.05f;
-    float const offmap_label_size = 60.0f;
-    float const offmap_left_right_thickness = 2.25f;
-    float const offmap_top_bottom_thickness = sin_60;
-
     float const indicator_move_time = 0.09f; // Should be <= the tick interval for Ahex_map.
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
@@ -103,6 +44,9 @@ namespace {
             retval.Y -= sin_60 * meters;
         return retval;
     }
+
+    FColor to_fcolor (visual_config::color_t color)
+    { return FColor(color.r, color.g, color.b); }
 
 }
 
@@ -140,54 +84,61 @@ Ahex_map::Ahex_map () :
     start_data_.init_scenario(load_text_file("scenarios/the_wind.json"), load, load);
     game_data_ = game_data_t(start_data_);
 
+    // TODO: Move this somewhere else?
+    visual_config_.init_hex_map(load_text_file("hex_map_config.json"), start_data_);
+
     hover_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>("hover_indicator");
     hover_indicator_->AttachTo(RootComponent);
 
-    interior_hexes_.instances_.resize(primary_colors().size());
-    edge_hexes_.instances_.resize(primary_colors().size());
+    auto const num_primary_colors = visual_config_.hex_map().primary_colors.size();
 
-    national_borders_.instances_.resize(primary_colors().size());
-    province_borders_.instances_.resize(primary_colors().size());
-    hex_borders_.instances_.resize(primary_colors().size());
+    interior_hexes_.instances_.resize(num_primary_colors);
+    edge_hexes_.instances_.resize(num_primary_colors);
 
-    planets_.instances_.resize(primary_colors().size());
-    star5s_.instances_.resize(primary_colors().size());
-    star6s_.instances_.resize(primary_colors().size());
-    star8s_.instances_.resize(primary_colors().size());
+    national_borders_.instances_.resize(num_primary_colors);
+    province_borders_.instances_.resize(num_primary_colors);
+    hex_borders_.instances_.resize(num_primary_colors);
 
-    mobile_bases_.instances_.resize(primary_colors().size());
-    battlestations_.instances_.resize(primary_colors().size());
-    starbases_.instances_.resize(primary_colors().size());
+    planets_.instances_.resize(num_primary_colors);
+    star5s_.instances_.resize(num_primary_colors);
+    star6s_.instances_.resize(num_primary_colors);
+    star8s_.instances_.resize(num_primary_colors);
 
-    offmap_panels_.instances_.resize(primary_colors().size());
-    offmap_borders_.instances_.resize(primary_colors().size());
+    mobile_bases_.instances_.resize(num_primary_colors);
+    battlestations_.instances_.resize(num_primary_colors);
+    starbases_.instances_.resize(num_primary_colors);
 
-    for (auto const & pair : primary_colors()) {
+    offmap_panels_.instances_.resize(num_primary_colors);
+    offmap_borders_.instances_.resize(num_primary_colors);
+
+    for (auto const & pair : visual_config_.hex_map().primary_colors) {
         auto const nation_id = start_data_.nation(pair.first).nation_id;
+        FColor const color = to_fcolor(pair.second);
 
-        initialize(interior_hexes_, nation_id, pair.second, pair.first + "_interior_hexes");
-        initialize(edge_hexes_, nation_id, pair.second, pair.first + "_edge_hexes");
+        initialize(interior_hexes_, nation_id, color, pair.first + "_interior_hexes");
+        initialize(edge_hexes_, nation_id, color, pair.first + "_edge_hexes");
 
-        initialize(offmap_panels_, nation_id, pair.second, pair.first + "_offmap_panels");
+        initialize(offmap_panels_, nation_id, color, pair.first + "_offmap_panels");
     }
 
-    for (auto const & pair : secondary_colors()) {
+    for (auto const & pair : visual_config_.hex_map().secondary_colors) {
         auto const nation_id = start_data_.nation(pair.first).nation_id;
+        FColor const color = to_fcolor(pair.second);
 
-        initialize(national_borders_, nation_id, pair.second, pair.first + "_national_borders");
-        initialize(province_borders_, nation_id, pair.second, pair.first + "_province_borders");
-        initialize(hex_borders_, nation_id, pair.second, pair.first + "_hex_borders");
+        initialize(national_borders_, nation_id, color, pair.first + "_national_borders");
+        initialize(province_borders_, nation_id, color, pair.first + "_province_borders");
+        initialize(hex_borders_, nation_id, color, pair.first + "_hex_borders");
 
-        initialize(planets_, nation_id, pair.second, pair.first + "_planets");
-        initialize(star5s_, nation_id, pair.second, pair.first + "_star5s");
-        initialize(star6s_, nation_id, pair.second, pair.first + "_star6s");
-        initialize(star8s_, nation_id, pair.second, pair.first + "_star8s");
+        initialize(planets_, nation_id, color, pair.first + "_planets");
+        initialize(star5s_, nation_id, color, pair.first + "_star5s");
+        initialize(star6s_, nation_id, color, pair.first + "_star6s");
+        initialize(star8s_, nation_id, color, pair.first + "_star8s");
 
-        initialize(mobile_bases_, nation_id, pair.second, pair.first + "_mobile_bases");
-        initialize(battlestations_, nation_id, pair.second, pair.first + "_battlestations");
-        initialize(starbases_, nation_id, pair.second, pair.first + "_starbases");
+        initialize(mobile_bases_, nation_id, color, pair.first + "_mobile_bases");
+        initialize(battlestations_, nation_id, color, pair.first + "_battlestations");
+        initialize(starbases_, nation_id, color, pair.first + "_starbases");
 
-        initialize(offmap_borders_, nation_id, pair.second, pair.first + "_offmap_borders");
+        initialize(offmap_borders_, nation_id, color, pair.first + "_offmap_borders");
     }
 
     for (auto const & pair : start_data_.map().starting_national_holdings) {
@@ -197,7 +148,8 @@ Ahex_map::Ahex_map () :
         if (offmap_area.adjacent_hexes.empty())
             continue;
 
-        auto text_render_component = CreateDefaultSubobject<UTextRenderComponent>((pair.first + "_offmap_label").c_str());
+        auto text_render_component =
+            CreateDefaultSubobject<UTextRenderComponent>((pair.first + "_offmap_label").c_str());
         offmap_labels_[nation.nation_id] = text_render_component;
     }
 
@@ -322,8 +274,12 @@ void Ahex_map::initialize (instances_t & instances, int nation_id, FColor color,
     instances.instances_[nation_id] = instanced;
 }
 
-void Ahex_map::initialize_border_instanced_mesh (instances_t & instances, FColor color, float thickness, UMaterial * mat)
-{
+void Ahex_map::initialize_border_instanced_mesh (
+    instances_t & instances,
+    FColor color,
+    float thickness,
+    UMaterial * mat
+) {
     auto instanced = instances.by_color_[color];
     UMaterialInstanceDynamic * material =
         instanced->CreateAndSetMaterialInstanceDynamicFromMaterial(0, mat);
@@ -382,31 +338,45 @@ void Ahex_map::instantiate_hexes ()
     battlestations_.use(battlestation_mesh_);
     starbases_.use(starbase_mesh_);
 
+    auto const & hex_map_config = visual_config_.hex_map();
+
     // TODO: Probably this mapping should exist somewhere else as well.
-    nation_id_primary_colors_.resize(primary_colors().size());
-    for (auto const & pair : primary_colors()) {
+    nation_id_primary_colors_.resize(hex_map_config.primary_colors.size());
+    for (auto const & pair : hex_map_config.primary_colors) {
         auto nation_id = start_data_.nation(pair.first).nation_id;
-        nation_id_primary_colors_[nation_id] = pair.second;
-        use_solid_color(interior_hexes_.instances_[nation_id], pair.second);
-        use_solid_color(edge_hexes_.instances_[nation_id], pair.second);
+        FColor const color = to_fcolor(pair.second);
+        nation_id_primary_colors_[nation_id] = color;
+        use_solid_color(interior_hexes_.instances_[nation_id], color);
+        use_solid_color(edge_hexes_.instances_[nation_id], color);
     }
 
-    nation_id_secondary_colors_.resize(secondary_colors().size());
-    for (auto const & pair : secondary_colors()) {
+    nation_id_secondary_colors_.resize(hex_map_config.secondary_colors.size());
+    for (auto const & pair : hex_map_config.secondary_colors) {
         auto nation_id = start_data_.nation(pair.first).nation_id;
-        nation_id_secondary_colors_[nation_id] = pair.second;
-        initialize_border_instanced_mesh(national_borders_, pair.second, national_border_thickness, hex_border_mat_);
-        initialize_border_instanced_mesh(province_borders_, pair.second, province_border_thickness, hex_border_mat_);
-        initialize_border_instanced_mesh(hex_borders_, pair.second, 1.0f, thin_hex_border_mat_);
+        FColor const color = to_fcolor(pair.second);
+        nation_id_secondary_colors_[nation_id] = color;
+        initialize_border_instanced_mesh(
+            national_borders_,
+            color,
+            hex_map_config.national_border_thickness,
+            hex_border_mat_
+        );
+        initialize_border_instanced_mesh(
+            province_borders_,
+            color,
+            hex_map_config.province_border_thickness,
+            hex_border_mat_
+        );
+        initialize_border_instanced_mesh(hex_borders_, color, 1.0f, thin_hex_border_mat_);
 
-        use_solid_color(planets_.instances_[nation_id], pair.second);
-        use_solid_color(star5s_.instances_[nation_id], pair.second);
-        use_solid_color(star6s_.instances_[nation_id], pair.second);
-        use_solid_color(star8s_.instances_[nation_id], pair.second);
+        use_solid_color(planets_.instances_[nation_id], color);
+        use_solid_color(star5s_.instances_[nation_id], color);
+        use_solid_color(star6s_.instances_[nation_id], color);
+        use_solid_color(star8s_.instances_[nation_id], color);
 
-        use_solid_color(mobile_bases_.instances_[nation_id], pair.second);
-        use_solid_color(battlestations_.instances_[nation_id], pair.second);
-        use_solid_color(starbases_.instances_[nation_id], pair.second);
+        use_solid_color(mobile_bases_.instances_[nation_id], color);
+        use_solid_color(battlestations_.instances_[nation_id], color);
+        use_solid_color(starbases_.instances_[nation_id], color);
     }
 
     auto const & map = game_data_.map();
@@ -434,21 +404,25 @@ void Ahex_map::create_offmap_areas ()
     offmap_panels_.use(unit_square_mesh_);
     offmap_borders_.use(unit_cube_mesh_);
 
-    for (auto const & pair : primary_colors()) {
+    auto const & hex_map_config = visual_config_.hex_map();
+
+    for (auto const & pair : hex_map_config.primary_colors) {
         auto nation_id = start_data_.nation(pair.first).nation_id;
-        use_solid_color(offmap_panels_.instances_[nation_id], pair.second);
+        FColor const color = to_fcolor(pair.second);
+        use_solid_color(offmap_panels_.instances_[nation_id], color);
     }
 
-    nation_id_secondary_colors_.resize(secondary_colors().size());
-    for (auto const & pair : secondary_colors()) {
+    nation_id_secondary_colors_.resize(hex_map_config.secondary_colors.size());
+    for (auto const & pair : hex_map_config.secondary_colors) {
         auto nation_id = start_data_.nation(pair.first).nation_id;
-        use_solid_color(offmap_borders_.instances_[nation_id], pair.second);
+        FColor const color = to_fcolor(pair.second);
+        use_solid_color(offmap_borders_.instances_[nation_id], color);
     }
 
     auto const & map = game_data_.map();
 
-    float const offmap_left_right_gap = (offmap_left_right_thickness - 0.5) * meters;
-    float const offmap_top_bottom_gap = (offmap_top_bottom_thickness + sin_60) * meters;
+    float const offmap_left_right_gap = (hex_map_config.offmap_left_right_thickness - 0.5) * meters;
+    float const offmap_top_bottom_gap = (hex_map_config.offmap_top_bottom_thickness + sin_60) * meters;
 
     std::vector<hex_coord_t> adjacent_hexes;
     for (auto const & pair : start_data_.map().starting_national_holdings) {
@@ -485,9 +459,9 @@ void Ahex_map::create_offmap_areas ()
             upper_right = first_location;
 
             if (left)
-                lower_left.X -= offmap_left_right_thickness * meters;
+                lower_left.X -= hex_map_config.offmap_left_right_thickness * meters;
             else
-                upper_right.X += offmap_left_right_thickness * meters;
+                upper_right.X += hex_map_config.offmap_left_right_thickness * meters;
             lower_left.Y -= sin_60 * meters;
             upper_right.Y += sin_60 * meters;
         } else {
@@ -495,24 +469,32 @@ void Ahex_map::create_offmap_areas ()
             if (top) {
                 hex_coord_t const top_plus_one = { 0, -1 };
                 auto const new_y = hex_location(top_plus_one, map).Y;
-                upper_right.Y = new_y + offmap_top_bottom_thickness * meters;
+                upper_right.Y = new_y + hex_map_config.offmap_top_bottom_thickness * meters;
             } else {
                 hex_coord_t const bottom_minus_one = { 1, map.height };
                 auto const new_y = hex_location(bottom_minus_one, map).Y;
-                lower_left.Y = new_y - offmap_top_bottom_thickness * meters;
+                lower_left.Y = new_y - hex_map_config.offmap_top_bottom_thickness * meters;
             }
             lower_left.X -= 0.5f * meters;
             upper_right.X += 0.5f * meters;
         }
-        lower_left.Z = offmap_z * meters;
-        upper_right.Z = offmap_z * meters;
+        lower_left.Z = hex_map_config.offmap_z * meters;
+        upper_right.Z = hex_map_config.offmap_z * meters;
 
         if (!offmap_area.features.empty()) {
             // TODO: For now, only SBs may appear as features....
             auto const hc = to_hex_coord(offmap_area.counter_hex);
             auto location = hex_location(hc, map);
-            location.Z = offmap_z * meters;
-            FTransform const transform(FRotator(0, 0, 0), location, FVector(sb_scale, sb_scale, planet_star_z_scale));
+            location.Z = hex_map_config.offmap_z * meters;
+            FTransform const transform(
+                FRotator(0, 0, 0),
+                location,
+                FVector(
+                    hex_map_config.sb_scale,
+                    hex_map_config.sb_scale,
+                    hex_map_config.planet_star_thickness
+                )
+            );
             starbases_.add(nation.nation_id, transform);
         }
 
@@ -528,22 +510,31 @@ void Ahex_map::create_offmap_areas ()
             else
                 side_bar_position.X += panel_delta.X / 2.0f;
             FVector const side_bar_scale(
-                offmap_border_thickness,
-                panel_scale.Y - offmap_border_thickness,
-                offmap_border_thickness
+                hex_map_config.offmap_border_thickness,
+                panel_scale.Y - hex_map_config.offmap_border_thickness,
+                hex_map_config.offmap_border_thickness
             );
-            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+            offmap_borders_.add(
+                nation.nation_id,
+                FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale)
+            );
 
             FVector const top_bottom_bar_scale(
-                panel_scale.X + offmap_border_thickness,
-                offmap_border_thickness,
-                offmap_border_thickness
+                panel_scale.X + hex_map_config.offmap_border_thickness,
+                hex_map_config.offmap_border_thickness,
+                hex_map_config.offmap_border_thickness
             );
             auto top_bottom_bar_position = panel_position;
             top_bottom_bar_position.Y += panel_delta.Y / 2.0f;
-            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+            offmap_borders_.add(
+                nation.nation_id,
+                FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale)
+            );
             top_bottom_bar_position.Y -= panel_delta.Y;
-            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+            offmap_borders_.add(
+                nation.nation_id,
+                FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale)
+            );
         } else {
             auto top_bottom_bar_position = panel_position;
             if (top)
@@ -551,22 +542,31 @@ void Ahex_map::create_offmap_areas ()
             else
                 top_bottom_bar_position.Y -= panel_delta.Y / 2.0f;
             FVector const top_bottom_bar_scale(
-                panel_scale.X - offmap_border_thickness,
-                offmap_border_thickness,
-                offmap_border_thickness
+                panel_scale.X - hex_map_config.offmap_border_thickness,
+                hex_map_config.offmap_border_thickness,
+                hex_map_config.offmap_border_thickness
             );
-            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale));
+            offmap_borders_.add(
+                nation.nation_id,
+                FTransform(FRotator(0, 0, 0), top_bottom_bar_position, top_bottom_bar_scale)
+            );
 
             FVector const side_bar_scale(
-                offmap_border_thickness,
-                panel_scale.Y + offmap_border_thickness,
-                offmap_border_thickness
+                hex_map_config.offmap_border_thickness,
+                panel_scale.Y + hex_map_config.offmap_border_thickness,
+                hex_map_config.offmap_border_thickness
             );
             auto side_bar_position = panel_position;
             side_bar_position.X += panel_delta.X / 2.0f;
-            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+            offmap_borders_.add(
+                nation.nation_id,
+                FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale)
+            );
             side_bar_position.X -= panel_delta.X;
-            offmap_borders_.add(nation.nation_id, FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale));
+            offmap_borders_.add(
+                nation.nation_id,
+                FTransform(FRotator(0, 0, 0), side_bar_position, side_bar_scale)
+            );
         }
 
         if (auto & text_render_component = offmap_labels_[nation.nation_id]) {
@@ -574,21 +574,29 @@ void Ahex_map::create_offmap_areas ()
             text_render_component->SetText(offmap_area.name.c_str());
             text_render_component->VerticalAlignment = EVerticalTextAligment::EVRTA_TextCenter;
             text_render_component->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
-            text_render_component->SetWorldSize(offmap_label_size);
+            text_render_component->SetWorldSize(hex_map_config.offmap_label_size);
             text_render_component->SetTextMaterial(text_mat_);
 
             auto text_position = panel_position;
-            text_position.Z = offmap_z * meters;
+            text_position.Z = hex_map_config.offmap_z * meters;
             auto const local_size = text_render_component->GetTextWorldSize();
             auto const text_height = local_size.Z;
             if (top) {
-                text_position.Y = upper_right.Y - FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
+                text_position.Y =
+                    upper_right.Y -
+                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
             } else if (bottom) {
-                text_position.Y = lower_left.Y + FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
+                text_position.Y =
+                    lower_left.Y +
+                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
             } else if (left) {
-                text_position.X = lower_left.X + FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
+                text_position.X =
+                    lower_left.X +
+                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
             } else if (right) {
-                text_position.X = upper_right.X - FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
+                text_position.X =
+                    upper_right.X -
+                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
             }
 
             float z_rotation = 0.0f;
@@ -599,7 +607,7 @@ void Ahex_map::create_offmap_areas ()
 
             text_render_component->SetWorldLocationAndRotation(text_position, FRotator(-90, 0, z_rotation));
 
-            FColor const color = secondary_colors().find(pair.first)->second;
+            FColor const color = to_fcolor(hex_map_config.secondary_colors.find(pair.first)->second);
             text_render_component->SetTextRenderColor(color);
         }
     }
@@ -661,8 +669,18 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         star_points = nation.capital_star_points;
     }
 
+    auto const & hex_map_config = visual_config_.hex_map();
+
     if (capital_hex) {
-        FTransform const transform(rotation, location, FVector(star_scale, star_scale, planet_star_z_scale));
+        FTransform const transform(
+            rotation,
+            location,
+            FVector(
+                hex_map_config.star_scale,
+                hex_map_config.star_scale,
+                hex_map_config.planet_star_thickness
+            )
+        );
         switch (star_points) {
         default:
         case 5: star5s_.add(owner_id, transform); break;
@@ -695,22 +713,63 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
 
     if (planet_hex) {
         FTransform transform;
-        if (planet_type == planet_t::type_t::minor)
-            transform = FTransform(rotation, location, FVector(minor_planet_scale, minor_planet_scale, planet_star_z_scale));
-        else
-            transform = FTransform(rotation, location, FVector(major_planet_scale, major_planet_scale, planet_star_z_scale));
+        if (planet_type == planet_t::type_t::minor) {
+            transform = FTransform(
+                rotation,
+                location,
+                FVector(
+                    hex_map_config.minor_planet_scale,
+                    hex_map_config.minor_planet_scale,
+                    hex_map_config.planet_star_thickness
+                )
+            );
+        } else {
+            transform = FTransform(
+                rotation,
+                location,
+                FVector(
+                    hex_map_config.major_planet_scale,
+                    hex_map_config.major_planet_scale,
+                    hex_map_config.planet_star_thickness
+                )
+            );
+        }
         // TODO: Adjust for the presence of sb, bats, or mb?
         planets_.add(owner_id, transform);
     } else if (0 < sbs) {
-        FTransform const transform(rotation, location, FVector(sb_scale, sb_scale, planet_star_z_scale));
+        FTransform const transform(
+            rotation,
+            location,
+            FVector(
+                hex_map_config.sb_scale,
+                hex_map_config.sb_scale,
+                hex_map_config.planet_star_thickness
+            )
+        );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         starbases_.add(owner_id, transform);
     } else if (0 < batss) {
-        FTransform const transform(rotation, location, FVector(bats_scale, bats_scale, planet_star_z_scale));
+        FTransform const transform(
+            rotation,
+            location,
+            FVector(
+                hex_map_config.bats_scale,
+                hex_map_config.bats_scale,
+                hex_map_config.planet_star_thickness
+            )
+        );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         battlestations_.add(owner_id, transform);
     } else if (0 < mbs) {
-        FTransform const transform(rotation, location, FVector(mb_scale, mb_scale, planet_star_z_scale));
+        FTransform const transform(
+            rotation,
+            location,
+            FVector(
+                hex_map_config.mb_scale,
+                hex_map_config.mb_scale,
+                hex_map_config.planet_star_thickness
+            )
+        );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         mobile_bases_.add(owner_id, transform);
     }

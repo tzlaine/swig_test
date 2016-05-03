@@ -4,6 +4,7 @@
 
 class UInstancedStaticMeshComponent;
 
+#include "visual_config_t.hpp"
 #include "start_data_t.hpp"
 #include "game_data_t.hpp"
 #include <vector>
@@ -97,6 +98,7 @@ private:
     void instantiate_hexes ();
     void instantiate_hex (hex_coord_t hc);
 
+    visual_config::visual_config_t visual_config_;
     start_data::start_data_t start_data_;
     game_data_t game_data_;
 
