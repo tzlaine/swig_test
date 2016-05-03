@@ -306,7 +306,7 @@ void protobuf_AssignDesc_start_5fdata_2eproto() {
   static const int offmap_area_t_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_area_t, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_area_t, features_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_area_t, counter_hex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_area_t, feature_hexes_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_area_t, adjacent_hexes_),
   };
   offmap_area_t_reflection_ =
@@ -1059,128 +1059,128 @@ void protobuf_AddDesc_start_5fdata_2eproto() {
     "e.feature_t\"B\n\016province_hex_t\022\013\n\003hex\030\001 \001"
     "(\005\022#\n\007feature\030\002 \001(\0162\022.message.feature_t\""
     "4\n\nprovince_t\022&\n\005hexes\030\001 \003(\0132\027.message.p"
-    "rovince_hex_t\"x\n\roffmap_area_t\022\014\n\004name\030\001"
+    "rovince_hex_t\"~\n\roffmap_area_t\022\014\n\004name\030\001"
     " \001(\t\022(\n\010features\030\002 \003(\0162\022.message.feature"
-    "_tB\002\020\001\022\023\n\013counter_hex\030\003 \001(\005\022\032\n\016adjacent_"
-    "hexes\030\004 \003(\005B\002\020\001\"s\n\034starting_national_hol"
-    "dings_t\022&\n\tprovinces\030\001 \003(\0132\023.message.pro"
-    "vince_t\022+\n\013offmap_area\030\002 \001(\0132\026.message.o"
-    "ffmap_area_t\"\255\002\n\005map_t\022\r\n\005width\030\001 \001(\005\022\016\n"
-    "\006height\030\002 \001(\005\022\026\n\nnz_planets\030\003 \003(\005B\002\020\001\022\024\n"
-    "\010nz_hexes\030\004 \003(\005B\002\020\001\022P\n\032starting_national"
-    "_holdings\030\005 \003(\0132,.message.map_t.Starting"
-    "NationalHoldingsEntry\022\035\n\005hexes\030\006 \003(\0132\016.m"
-    "essage.hex_t\032f\n\035StartingNationalHoldings"
-    "Entry\022\013\n\003key\030\001 \001(\t\0224\n\005value\030\002 \001(\0132%.mess"
-    "age.starting_national_holdings_t:\0028\001\"K\n\007"
-    "model_t\022#\n\007nations\030\001 \001(\0132\022.message.natio"
-    "ns_t\022\033\n\003map\030\002 \001(\0132\016.message.map_t\")\n\noob"
-    "_unit_t\022\014\n\004unit\030\001 \001(\t\022\r\n\005times\030\002 \001(\005\"k\n\024"
-    "production_element_t\022\014\n\004year\030\001 \001(\005\022!\n\006se"
-    "ason\030\002 \001(\0162\021.message.season_t\022\"\n\005units\030\003"
-    " \003(\0132\023.message.oob_unit_t\"\201\003\n\020starting_f"
-    "leet_t\022\021\n\005hexes\030\001 \003(\005B\002\020\001\022\"\n\005units\030\002 \003(\013"
-    "2\023.message.oob_unit_t\022\017\n\007reserve\030\003 \001(\010\022:"
-    "\n\023prewar_construction\030\004 \003(\0132\035.message.pr"
-    "oduction_element_t\022#\n\033strategic_move_arr"
-    "ival_year\030\005 \001(\005\0228\n\035strategic_move_arriva"
-    "l_season\030\006 \001(\0162\021.message.season_t\022O\n\024hex"
-    "_placement_limits\030\007 \003(\01321.message.starti"
-    "ng_fleet_t.HexPlacementLimitsEntry\0329\n\027He"
-    "xPlacementLimitsEntry\022\013\n\003key\030\001 \001(\005\022\r\n\005va"
-    "lue\030\002 \001(\005:\0028\001\"\224\001\n\022mothball_reserve_t\022\"\n\005"
-    "units\030\001 \003(\0132\023.message.oob_unit_t\022(\n\013war_"
-    "release\030\002 \003(\0132\023.message.oob_unit_t\0220\n\023li"
-    "mited_war_release\030\003 \003(\0132\023.message.oob_un"
-    "it_t\"\230\002\n\021order_of_battle_t\022G\n\017starting_f"
-    "leets\030\001 \003(\0132..message.order_of_battle_t."
-    "StartingFleetsEntry\0225\n\020mothball_reserve\030"
-    "\002 \001(\0132\033.message.mothball_reserve_t\0221\n\npr"
-    "oduction\030\003 \003(\0132\035.message.production_elem"
-    "ent_t\032P\n\023StartingFleetsEntry\022\013\n\003key\030\001 \001("
-    "\t\022(\n\005value\030\002 \001(\0132\031.message.starting_flee"
-    "t_t:\0028\001\"\222\001\n\022orders_of_battle_t\0223\n\004oobs\030\001"
-    " \003(\0132%.message.orders_of_battle_t.OobsEn"
-    "try\032G\n\tOobsEntry\022\013\n\003key\030\001 \001(\t\022)\n\005value\030\002"
-    " \001(\0132\032.message.order_of_battle_t:\0028\001\"\304\001\n"
-    "\017unit_def_side_t\022\013\n\003att\030\001 \001(\002\022\013\n\003def\030\002 \001"
-    "(\002\022\r\n\005scout\030\003 \001(\010\022\020\n\010fighters\030\004 \001(\002\022\033\n\023h"
-    "eavy_fighter_bonus\030\005 \001(\002\022\013\n\003pfs\030\006 \001(\005\022\016\n"
-    "\006drones\030\007 \001(\005\022\016\n\006mauler\030\010 \001(\010\022,\n\014tug_mis"
-    "sions\030\t \003(\0162\026.message.tug_mission_t\"8\n\tt"
-    "owable_t\022\021\n\tmove_cost\030\001 \001(\005\022\030\n\020strat_mov"
-    "e_limit\030\002 \001(\005\"7\n\021production_cost_t\022\014\n\004co"
-    "st\030\001 \001(\005\022\024\n\014fighter_cost\030\002 \001(\005\"\340\005\n\nunit_"
-    "def_t\022\014\n\004name\030\001 \001(\t\022\013\n\003cmd\030\002 \001(\005\022,\n\nuncr"
-    "ippled\030\003 \001(\0132\030.message.unit_def_side_t\022*"
-    "\n\010crippled\030\004 \001(\0132\030.message.unit_def_side"
-    "_t\022+\n\013escort_type\030\005 \001(\0162\026.message.escort"
-    "_type_t\022\"\n\tavailable\030\006 \001(\0132\017.message.tur"
-    "n_t\022\013\n\003pod\030\007 \001(\010\022\026\n\016max_in_service\030\010 \001(\005"
-    "\0220\n\014construction\030\t \001(\0132\032.message.product"
-    "ion_cost_t\022=\n\rsubstitutions\030\n \003(\0132&.mess"
-    "age.unit_def_t.SubstitutionsEntry\0229\n\013con"
-    "versions\030\013 \003(\0132$.message.unit_def_t.Conv"
-    "ersionsEntry\022\014\n\004move\030\014 \001(\005\022-\n\014carrier_ty"
-    "pe\030\r \001(\0162\027.message.carrier_type_t\022\027\n\017not"
-    "_spaceworthy\030\016 \001(\010\022#\n\007towable\030\017 \001(\0132\022.me"
-    "ssage.towable_t\022\017\n\007salvage\030\020 \001(\005\022\r\n\005note"
-    "s\030\021 \001(\t\032P\n\022SubstitutionsEntry\022\013\n\003key\030\001 \001"
-    "(\t\022)\n\005value\030\002 \001(\0132\032.message.production_c"
-    "ost_t:\0028\001\032N\n\020ConversionsEntry\022\013\n\003key\030\001 \001"
-    "(\t\022)\n\005value\030\002 \001(\0132\032.message.production_c"
-    "ost_t:\0028\001\"8\n\022nation_unit_defs_t\022\"\n\005units"
-    "\030\001 \003(\0132\023.message.unit_def_t\"\233\001\n\013unit_def"
-    "s_t\022;\n\014nation_units\030\001 \003(\0132%.message.unit"
-    "_defs_t.NationUnitsEntry\032O\n\020NationUnitsE"
-    "ntry\022\013\n\003key\030\001 \001(\t\022*\n\005value\030\002 \001(\0132\033.messa"
-    "ge.nation_unit_defs_t:\0028\001\"\'\n\006team_t\022\014\n\004n"
-    "ame\030\001 \001(\t\022\017\n\007nations\030\002 \003(\t\"\343\002\n\024scenario_"
-    "condition_t\022\016\n\006actors\030\001 \003(\t\0226\n\006action\030\002 "
-    "\001(\0162&.message.scenario_condition_t.actio"
-    "n_t\0226\n\006one_of\030\003 \003(\0132&.message.scenario_c"
-    "ondition_t.object_t\032c\n\010object_t\0229\n\004type\030"
-    "\001 \001(\0162+.message.scenario_condition_t.obj"
-    "ect_type_t\022\r\n\005names\030\002 \003(\t\022\r\n\005hexes\030\003 \003(\005"
-    "\"&\n\010action_t\022\014\n\010occupies\020\000\022\014\n\010destroys\020\001"
-    "\">\n\robject_type_t\022\t\n\005hexes\020\000\022\006\n\002sb\020\001\022\016\n\n"
-    "fleet_area\020\002\022\n\n\006nation\020\003\"\\\n\031fleet_releas"
-    "e_condition_t\022\r\n\005fleet\030\001 \001(\t\0220\n\tconditio"
-    "n\030\002 \001(\0132\035.message.scenario_condition_t\"r"
-    "\n\025war_entry_condition_t\022\'\n\007economy\030\003 \001(\016"
-    "2\026.message.war_footing_t\0220\n\tcondition\030\002 "
-    "\001(\0132\035.message.scenario_condition_t\"\301\003\n\017s"
-    "cenario_turn_t\022\014\n\004turn\030\001 \001(\005\022G\n\020national"
-    "_actions\030\002 \003(\0132-.message.scenario_turn_t"
-    ".NationalActionsEntry\032\362\001\n\021national_actio"
-    "n_t\022D\n\007actions\030\001 \003(\01323.message.scenario_"
-    "turn_t.national_action_t.action_t\032a\n\010act"
-    "ion_t\022F\n\004type\030\001 \001(\01628.message.scenario_t"
-    "urn_t.national_action_t.action_type_t\022\r\n"
-    "\005names\030\002 \003(\t\"4\n\raction_type_t\022\022\n\016release"
-    "_fleets\020\000\022\017\n\013declare_war\020\001\032b\n\024NationalAc"
-    "tionsEntry\022\013\n\003key\030\001 \001(\t\0229\n\005value\030\002 \001(\0132*"
-    ".message.scenario_turn_t.national_action"
-    "_t:\0028\001\"\232\005\n\nscenario_t\022\014\n\004name\030\001 \001(\t\022\023\n\013d"
-    "escription\030\002 \001(\t\022#\n\nstart_turn\030\003 \001(\0132\017.m"
-    "essage.turn_t\022\036\n\005teams\030\004 \003(\0132\017.message.t"
-    "eam_t\022\027\n\017team_turn_order\030\005 \003(\t\022\013\n\003map\030\006 "
-    "\001(\t\022\027\n\017order_of_battle\030\007 \001(\t\022\023\n\013setup_or"
-    "der\030\010 \003(\t\0221\n\007nations\030\t \003(\0132 .message.sce"
-    "nario_t.NationsEntry\022\'\n\005turns\030\n \003(\0132\030.me"
-    "ssage.scenario_turn_t\032\245\002\n\010nation_t\022\023\n\013at"
-    "_war_with\030\001 \003(\t\022\033\n\023future_belligerents\030\002"
-    " \003(\t\022\'\n\007economy\030\003 \001(\0162\026.message.war_foot"
-    "ing_t\022\030\n\020exhaustion_turns\030\004 \001(\005\022&\n\036accum"
-    "ulate_exhaustion_at_peace\030\005 \001(\010\022>\n\022relea"
-    "se_conditions\030\006 \003(\0132\".message.fleet_rele"
-    "ase_condition_t\022<\n\024war_entry_conditions\030"
-    "\007 \003(\0132\036.message.war_entry_condition_t\032L\n"
-    "\014NationsEntry\022\013\n\003key\030\001 \001(\t\022+\n\005value\030\002 \001("
-    "\0132\034.message.scenario_t.nation_t:\0028\001*L\n\tf"
-    "eature_t\022\016\n\nno_feature\020\000\022\010\n\004bats\020\001\022\006\n\002sb"
-    "\020\002\022\007\n\003min\020\003\022\007\n\003maj\020\004\022\013\n\007capital\020\005b\006proto"
-    "3", 5801);
+    "_tB\002\020\001\022\031\n\rfeature_hexes\030\003 \003(\005B\002\020\001\022\032\n\016adj"
+    "acent_hexes\030\004 \003(\005B\002\020\001\"s\n\034starting_nation"
+    "al_holdings_t\022&\n\tprovinces\030\001 \003(\0132\023.messa"
+    "ge.province_t\022+\n\013offmap_area\030\002 \001(\0132\026.mes"
+    "sage.offmap_area_t\"\255\002\n\005map_t\022\r\n\005width\030\001 "
+    "\001(\005\022\016\n\006height\030\002 \001(\005\022\026\n\nnz_planets\030\003 \003(\005B"
+    "\002\020\001\022\024\n\010nz_hexes\030\004 \003(\005B\002\020\001\022P\n\032starting_na"
+    "tional_holdings\030\005 \003(\0132,.message.map_t.St"
+    "artingNationalHoldingsEntry\022\035\n\005hexes\030\006 \003"
+    "(\0132\016.message.hex_t\032f\n\035StartingNationalHo"
+    "ldingsEntry\022\013\n\003key\030\001 \001(\t\0224\n\005value\030\002 \001(\0132"
+    "%.message.starting_national_holdings_t:\002"
+    "8\001\"K\n\007model_t\022#\n\007nations\030\001 \001(\0132\022.message"
+    ".nations_t\022\033\n\003map\030\002 \001(\0132\016.message.map_t\""
+    ")\n\noob_unit_t\022\014\n\004unit\030\001 \001(\t\022\r\n\005times\030\002 \001"
+    "(\005\"k\n\024production_element_t\022\014\n\004year\030\001 \001(\005"
+    "\022!\n\006season\030\002 \001(\0162\021.message.season_t\022\"\n\005u"
+    "nits\030\003 \003(\0132\023.message.oob_unit_t\"\201\003\n\020star"
+    "ting_fleet_t\022\021\n\005hexes\030\001 \003(\005B\002\020\001\022\"\n\005units"
+    "\030\002 \003(\0132\023.message.oob_unit_t\022\017\n\007reserve\030\003"
+    " \001(\010\022:\n\023prewar_construction\030\004 \003(\0132\035.mess"
+    "age.production_element_t\022#\n\033strategic_mo"
+    "ve_arrival_year\030\005 \001(\005\0228\n\035strategic_move_"
+    "arrival_season\030\006 \001(\0162\021.message.season_t\022"
+    "O\n\024hex_placement_limits\030\007 \003(\01321.message."
+    "starting_fleet_t.HexPlacementLimitsEntry"
+    "\0329\n\027HexPlacementLimitsEntry\022\013\n\003key\030\001 \001(\005"
+    "\022\r\n\005value\030\002 \001(\005:\0028\001\"\224\001\n\022mothball_reserve"
+    "_t\022\"\n\005units\030\001 \003(\0132\023.message.oob_unit_t\022("
+    "\n\013war_release\030\002 \003(\0132\023.message.oob_unit_t"
+    "\0220\n\023limited_war_release\030\003 \003(\0132\023.message."
+    "oob_unit_t\"\230\002\n\021order_of_battle_t\022G\n\017star"
+    "ting_fleets\030\001 \003(\0132..message.order_of_bat"
+    "tle_t.StartingFleetsEntry\0225\n\020mothball_re"
+    "serve\030\002 \001(\0132\033.message.mothball_reserve_t"
+    "\0221\n\nproduction\030\003 \003(\0132\035.message.productio"
+    "n_element_t\032P\n\023StartingFleetsEntry\022\013\n\003ke"
+    "y\030\001 \001(\t\022(\n\005value\030\002 \001(\0132\031.message.startin"
+    "g_fleet_t:\0028\001\"\222\001\n\022orders_of_battle_t\0223\n\004"
+    "oobs\030\001 \003(\0132%.message.orders_of_battle_t."
+    "OobsEntry\032G\n\tOobsEntry\022\013\n\003key\030\001 \001(\t\022)\n\005v"
+    "alue\030\002 \001(\0132\032.message.order_of_battle_t:\002"
+    "8\001\"\304\001\n\017unit_def_side_t\022\013\n\003att\030\001 \001(\002\022\013\n\003d"
+    "ef\030\002 \001(\002\022\r\n\005scout\030\003 \001(\010\022\020\n\010fighters\030\004 \001("
+    "\002\022\033\n\023heavy_fighter_bonus\030\005 \001(\002\022\013\n\003pfs\030\006 "
+    "\001(\005\022\016\n\006drones\030\007 \001(\005\022\016\n\006mauler\030\010 \001(\010\022,\n\014t"
+    "ug_missions\030\t \003(\0162\026.message.tug_mission_"
+    "t\"8\n\ttowable_t\022\021\n\tmove_cost\030\001 \001(\005\022\030\n\020str"
+    "at_move_limit\030\002 \001(\005\"7\n\021production_cost_t"
+    "\022\014\n\004cost\030\001 \001(\005\022\024\n\014fighter_cost\030\002 \001(\005\"\340\005\n"
+    "\nunit_def_t\022\014\n\004name\030\001 \001(\t\022\013\n\003cmd\030\002 \001(\005\022,"
+    "\n\nuncrippled\030\003 \001(\0132\030.message.unit_def_si"
+    "de_t\022*\n\010crippled\030\004 \001(\0132\030.message.unit_de"
+    "f_side_t\022+\n\013escort_type\030\005 \001(\0162\026.message."
+    "escort_type_t\022\"\n\tavailable\030\006 \001(\0132\017.messa"
+    "ge.turn_t\022\013\n\003pod\030\007 \001(\010\022\026\n\016max_in_service"
+    "\030\010 \001(\005\0220\n\014construction\030\t \001(\0132\032.message.p"
+    "roduction_cost_t\022=\n\rsubstitutions\030\n \003(\0132"
+    "&.message.unit_def_t.SubstitutionsEntry\022"
+    "9\n\013conversions\030\013 \003(\0132$.message.unit_def_"
+    "t.ConversionsEntry\022\014\n\004move\030\014 \001(\005\022-\n\014carr"
+    "ier_type\030\r \001(\0162\027.message.carrier_type_t\022"
+    "\027\n\017not_spaceworthy\030\016 \001(\010\022#\n\007towable\030\017 \001("
+    "\0132\022.message.towable_t\022\017\n\007salvage\030\020 \001(\005\022\r"
+    "\n\005notes\030\021 \001(\t\032P\n\022SubstitutionsEntry\022\013\n\003k"
+    "ey\030\001 \001(\t\022)\n\005value\030\002 \001(\0132\032.message.produc"
+    "tion_cost_t:\0028\001\032N\n\020ConversionsEntry\022\013\n\003k"
+    "ey\030\001 \001(\t\022)\n\005value\030\002 \001(\0132\032.message.produc"
+    "tion_cost_t:\0028\001\"8\n\022nation_unit_defs_t\022\"\n"
+    "\005units\030\001 \003(\0132\023.message.unit_def_t\"\233\001\n\013un"
+    "it_defs_t\022;\n\014nation_units\030\001 \003(\0132%.messag"
+    "e.unit_defs_t.NationUnitsEntry\032O\n\020Nation"
+    "UnitsEntry\022\013\n\003key\030\001 \001(\t\022*\n\005value\030\002 \001(\0132\033"
+    ".message.nation_unit_defs_t:\0028\001\"\'\n\006team_"
+    "t\022\014\n\004name\030\001 \001(\t\022\017\n\007nations\030\002 \003(\t\"\343\002\n\024sce"
+    "nario_condition_t\022\016\n\006actors\030\001 \003(\t\0226\n\006act"
+    "ion\030\002 \001(\0162&.message.scenario_condition_t"
+    ".action_t\0226\n\006one_of\030\003 \003(\0132&.message.scen"
+    "ario_condition_t.object_t\032c\n\010object_t\0229\n"
+    "\004type\030\001 \001(\0162+.message.scenario_condition"
+    "_t.object_type_t\022\r\n\005names\030\002 \003(\t\022\r\n\005hexes"
+    "\030\003 \003(\005\"&\n\010action_t\022\014\n\010occupies\020\000\022\014\n\010dest"
+    "roys\020\001\">\n\robject_type_t\022\t\n\005hexes\020\000\022\006\n\002sb"
+    "\020\001\022\016\n\nfleet_area\020\002\022\n\n\006nation\020\003\"\\\n\031fleet_"
+    "release_condition_t\022\r\n\005fleet\030\001 \001(\t\0220\n\tco"
+    "ndition\030\002 \001(\0132\035.message.scenario_conditi"
+    "on_t\"r\n\025war_entry_condition_t\022\'\n\007economy"
+    "\030\003 \001(\0162\026.message.war_footing_t\0220\n\tcondit"
+    "ion\030\002 \001(\0132\035.message.scenario_condition_t"
+    "\"\301\003\n\017scenario_turn_t\022\014\n\004turn\030\001 \001(\005\022G\n\020na"
+    "tional_actions\030\002 \003(\0132-.message.scenario_"
+    "turn_t.NationalActionsEntry\032\362\001\n\021national"
+    "_action_t\022D\n\007actions\030\001 \003(\01323.message.sce"
+    "nario_turn_t.national_action_t.action_t\032"
+    "a\n\010action_t\022F\n\004type\030\001 \001(\01628.message.scen"
+    "ario_turn_t.national_action_t.action_typ"
+    "e_t\022\r\n\005names\030\002 \003(\t\"4\n\raction_type_t\022\022\n\016r"
+    "elease_fleets\020\000\022\017\n\013declare_war\020\001\032b\n\024Nati"
+    "onalActionsEntry\022\013\n\003key\030\001 \001(\t\0229\n\005value\030\002"
+    " \001(\0132*.message.scenario_turn_t.national_"
+    "action_t:\0028\001\"\232\005\n\nscenario_t\022\014\n\004name\030\001 \001("
+    "\t\022\023\n\013description\030\002 \001(\t\022#\n\nstart_turn\030\003 \001"
+    "(\0132\017.message.turn_t\022\036\n\005teams\030\004 \003(\0132\017.mes"
+    "sage.team_t\022\027\n\017team_turn_order\030\005 \003(\t\022\013\n\003"
+    "map\030\006 \001(\t\022\027\n\017order_of_battle\030\007 \001(\t\022\023\n\013se"
+    "tup_order\030\010 \003(\t\0221\n\007nations\030\t \003(\0132 .messa"
+    "ge.scenario_t.NationsEntry\022\'\n\005turns\030\n \003("
+    "\0132\030.message.scenario_turn_t\032\245\002\n\010nation_t"
+    "\022\023\n\013at_war_with\030\001 \003(\t\022\033\n\023future_belliger"
+    "ents\030\002 \003(\t\022\'\n\007economy\030\003 \001(\0162\026.message.wa"
+    "r_footing_t\022\030\n\020exhaustion_turns\030\004 \001(\005\022&\n"
+    "\036accumulate_exhaustion_at_peace\030\005 \001(\010\022>\n"
+    "\022release_conditions\030\006 \003(\0132\".message.flee"
+    "t_release_condition_t\022<\n\024war_entry_condi"
+    "tions\030\007 \003(\0132\036.message.war_entry_conditio"
+    "n_t\032L\n\014NationsEntry\022\013\n\003key\030\001 \001(\t\022+\n\005valu"
+    "e\030\002 \001(\0132\034.message.scenario_t.nation_t:\0028"
+    "\001*L\n\tfeature_t\022\016\n\nno_feature\020\000\022\010\n\004bats\020\001"
+    "\022\006\n\002sb\020\002\022\007\n\003min\020\003\022\007\n\003maj\020\004\022\013\n\007capital\020\005b"
+    "\006proto3", 5807);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "start_data.proto", &protobuf_RegisterTypes);
   capital_hex_zone_t::default_instance_ = new capital_hex_zone_t();
@@ -4584,7 +4584,7 @@ province_t::hexes() const {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int offmap_area_t::kNameFieldNumber;
 const int offmap_area_t::kFeaturesFieldNumber;
-const int offmap_area_t::kCounterHexFieldNumber;
+const int offmap_area_t::kFeatureHexesFieldNumber;
 const int offmap_area_t::kAdjacentHexesFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -4611,7 +4611,6 @@ void offmap_area_t::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  counter_hex_ = 0;
 }
 
 offmap_area_t::~offmap_area_t() {
@@ -4652,8 +4651,8 @@ offmap_area_t* offmap_area_t::New(::google::protobuf::Arena* arena) const {
 
 void offmap_area_t::Clear() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  counter_hex_ = 0;
   features_.Clear();
+  feature_hexes_.Clear();
   adjacent_hexes_.Clear();
 }
 
@@ -4707,18 +4706,21 @@ bool offmap_area_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_counter_hex;
+        if (input->ExpectTag(26)) goto parse_feature_hexes;
         break;
       }
 
-      // optional int32 counter_hex = 3;
+      // repeated int32 feature_hexes = 3 [packed = true];
       case 3: {
-        if (tag == 24) {
-         parse_counter_hex:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+        if (tag == 26) {
+         parse_feature_hexes:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &counter_hex_)));
-
+                 input, this->mutable_feature_hexes())));
+        } else if (tag == 24) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 26, input, this->mutable_feature_hexes())));
         } else {
           goto handle_unusual;
         }
@@ -4791,9 +4793,14 @@ void offmap_area_t::SerializeWithCachedSizes(
       this->features(i), output);
   }
 
-  // optional int32 counter_hex = 3;
-  if (this->counter_hex() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->counter_hex(), output);
+  // repeated int32 feature_hexes = 3 [packed = true];
+  if (this->feature_hexes_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_feature_hexes_cached_byte_size_);
+  }
+  for (int i = 0; i < this->feature_hexes_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->feature_hexes(i), output);
   }
 
   // repeated int32 adjacent_hexes = 4 [packed = true];
@@ -4836,9 +4843,18 @@ void offmap_area_t::SerializeWithCachedSizes(
       this->features(i), target);
   }
 
-  // optional int32 counter_hex = 3;
-  if (this->counter_hex() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->counter_hex(), target);
+  // repeated int32 feature_hexes = 3 [packed = true];
+  if (this->feature_hexes_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      3,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _feature_hexes_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->feature_hexes_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt32NoTagToArray(this->feature_hexes(i), target);
   }
 
   // repeated int32 adjacent_hexes = 4 [packed = true];
@@ -4869,13 +4885,6 @@ int offmap_area_t::ByteSize() const {
         this->name());
   }
 
-  // optional int32 counter_hex = 3;
-  if (this->counter_hex() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->counter_hex());
-  }
-
   // repeated .message.feature_t features = 2 [packed = true];
   {
     int data_size = 0;
@@ -4889,6 +4898,23 @@ int offmap_area_t::ByteSize() const {
     }
     GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
     _features_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated int32 feature_hexes = 3 [packed = true];
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->feature_hexes_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->feature_hexes(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _feature_hexes_cached_byte_size_ = data_size;
     GOOGLE_SAFE_CONCURRENT_WRITES_END();
     total_size += data_size;
   }
@@ -4931,13 +4957,11 @@ void offmap_area_t::MergeFrom(const ::google::protobuf::Message& from) {
 void offmap_area_t::MergeFrom(const offmap_area_t& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   features_.MergeFrom(from.features_);
+  feature_hexes_.MergeFrom(from.feature_hexes_);
   adjacent_hexes_.MergeFrom(from.adjacent_hexes_);
   if (from.name().size() > 0) {
 
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
-  }
-  if (from.counter_hex() != 0) {
-    set_counter_hex(from.counter_hex());
   }
 }
 
@@ -4965,7 +4989,7 @@ void offmap_area_t::Swap(offmap_area_t* other) {
 void offmap_area_t::InternalSwap(offmap_area_t* other) {
   name_.Swap(&other->name_);
   features_.UnsafeArenaSwap(&other->features_);
-  std::swap(counter_hex_, other->counter_hex_);
+  feature_hexes_.UnsafeArenaSwap(&other->feature_hexes_);
   adjacent_hexes_.UnsafeArenaSwap(&other->adjacent_hexes_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -5055,18 +5079,34 @@ offmap_area_t::mutable_features() {
   return &features_;
 }
 
-// optional int32 counter_hex = 3;
-void offmap_area_t::clear_counter_hex() {
-  counter_hex_ = 0;
+// repeated int32 feature_hexes = 3 [packed = true];
+int offmap_area_t::feature_hexes_size() const {
+  return feature_hexes_.size();
 }
- ::google::protobuf::int32 offmap_area_t::counter_hex() const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.counter_hex)
-  return counter_hex_;
+void offmap_area_t::clear_feature_hexes() {
+  feature_hexes_.Clear();
 }
- void offmap_area_t::set_counter_hex(::google::protobuf::int32 value) {
-  
-  counter_hex_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.counter_hex)
+ ::google::protobuf::int32 offmap_area_t::feature_hexes(int index) const {
+  // @@protoc_insertion_point(field_get:message.offmap_area_t.feature_hexes)
+  return feature_hexes_.Get(index);
+}
+ void offmap_area_t::set_feature_hexes(int index, ::google::protobuf::int32 value) {
+  feature_hexes_.Set(index, value);
+  // @@protoc_insertion_point(field_set:message.offmap_area_t.feature_hexes)
+}
+ void offmap_area_t::add_feature_hexes(::google::protobuf::int32 value) {
+  feature_hexes_.Add(value);
+  // @@protoc_insertion_point(field_add:message.offmap_area_t.feature_hexes)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+offmap_area_t::feature_hexes() const {
+  // @@protoc_insertion_point(field_list:message.offmap_area_t.feature_hexes)
+  return feature_hexes_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+offmap_area_t::mutable_feature_hexes() {
+  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.feature_hexes)
+  return &feature_hexes_;
 }
 
 // repeated int32 adjacent_hexes = 4 [packed = true];

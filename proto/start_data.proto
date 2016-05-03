@@ -82,7 +82,7 @@ message offmap_area_t
 {
     string name = 1;
     repeated feature_t features = 2 [packed=true];
-    int32 counter_hex = 3; // Where the SB counter is chown, if any.
+    repeated int32 feature_hexes = 3 [packed=true]; // Where the feature counters are shown, if any.
     repeated int32 adjacent_hexes = 4 [packed=true];
 }
 

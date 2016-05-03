@@ -1120,11 +1120,17 @@ class offmap_area_t : public ::google::protobuf::Message {
   const ::google::protobuf::RepeatedField<int>& features() const;
   ::google::protobuf::RepeatedField<int>* mutable_features();
 
-  // optional int32 counter_hex = 3;
-  void clear_counter_hex();
-  static const int kCounterHexFieldNumber = 3;
-  ::google::protobuf::int32 counter_hex() const;
-  void set_counter_hex(::google::protobuf::int32 value);
+  // repeated int32 feature_hexes = 3 [packed = true];
+  int feature_hexes_size() const;
+  void clear_feature_hexes();
+  static const int kFeatureHexesFieldNumber = 3;
+  ::google::protobuf::int32 feature_hexes(int index) const;
+  void set_feature_hexes(int index, ::google::protobuf::int32 value);
+  void add_feature_hexes(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      feature_hexes() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_feature_hexes();
 
   // repeated int32 adjacent_hexes = 4 [packed = true];
   int adjacent_hexes_size() const;
@@ -1146,9 +1152,10 @@ class offmap_area_t : public ::google::protobuf::Message {
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::RepeatedField<int> features_;
   mutable int _features_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > feature_hexes_;
+  mutable int _feature_hexes_cached_byte_size_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > adjacent_hexes_;
   mutable int _adjacent_hexes_cached_byte_size_;
-  ::google::protobuf::int32 counter_hex_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -4783,18 +4790,34 @@ offmap_area_t::mutable_features() {
   return &features_;
 }
 
-// optional int32 counter_hex = 3;
-inline void offmap_area_t::clear_counter_hex() {
-  counter_hex_ = 0;
+// repeated int32 feature_hexes = 3 [packed = true];
+inline int offmap_area_t::feature_hexes_size() const {
+  return feature_hexes_.size();
 }
-inline ::google::protobuf::int32 offmap_area_t::counter_hex() const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.counter_hex)
-  return counter_hex_;
+inline void offmap_area_t::clear_feature_hexes() {
+  feature_hexes_.Clear();
 }
-inline void offmap_area_t::set_counter_hex(::google::protobuf::int32 value) {
-  
-  counter_hex_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.counter_hex)
+inline ::google::protobuf::int32 offmap_area_t::feature_hexes(int index) const {
+  // @@protoc_insertion_point(field_get:message.offmap_area_t.feature_hexes)
+  return feature_hexes_.Get(index);
+}
+inline void offmap_area_t::set_feature_hexes(int index, ::google::protobuf::int32 value) {
+  feature_hexes_.Set(index, value);
+  // @@protoc_insertion_point(field_set:message.offmap_area_t.feature_hexes)
+}
+inline void offmap_area_t::add_feature_hexes(::google::protobuf::int32 value) {
+  feature_hexes_.Add(value);
+  // @@protoc_insertion_point(field_add:message.offmap_area_t.feature_hexes)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+offmap_area_t::feature_hexes() const {
+  // @@protoc_insertion_point(field_list:message.offmap_area_t.feature_hexes)
+  return feature_hexes_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+offmap_area_t::mutable_feature_hexes() {
+  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.feature_hexes)
+  return &feature_hexes_;
 }
 
 // repeated int32 adjacent_hexes = 4 [packed = true];

@@ -86,7 +86,7 @@ namespace start_data {
     {
         std::string name;
         std::vector<feature_t> features;
-        int counter_hex;
+        std::vector<int> feature_hexes;
         std::vector<int> adjacent_hexes;
     };
 

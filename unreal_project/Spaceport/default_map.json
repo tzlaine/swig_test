@@ -1216,7 +1216,9 @@
         "features": [
           "sb"
         ],
-        "counter_hex": 3000,
+        "feature_hexes": [
+          3000
+        ],
         "adjacent_hexes": [
           2701,
           2801,
@@ -1633,7 +1635,9 @@
         "features": [
           "sb"
         ],
-        "counter_hex": 4400,
+        "feature_hexes": [
+          4400
+        ],
         "adjacent_hexes": [
           4101,
           4201,
@@ -1906,7 +1910,9 @@
         "features": [
           "sb"
         ],
-        "counter_hex": 18,
+        "feature_hexes": [
+          18
+        ],
         "adjacent_hexes": [
           117,
           118,
@@ -2396,7 +2402,10 @@
           "sb",
           "sb"
         ],
-        "counter_hex": 6210,
+        "feature_hexes": [
+          6210,          
+          6211
+        ],
         "adjacent_hexes": [
           6104,
           6105,
@@ -3210,7 +3219,9 @@
         "features": [
           "sb"
         ],
-        "counter_hex": 1400,
+        "feature_hexes": [
+          1400
+        ],
         "adjacent_hexes": [
           1101,
           1201,
@@ -3576,7 +3587,9 @@
         "features": [
           "sb"
         ],
-        "counter_hex": 2,
+        "feature_hexes": [
+          2
+        ],
         "adjacent_hexes": [
           101,
           102,
@@ -4270,7 +4283,6 @@
       ],
       "offmap_area": {
         "name": "Romulan\nOff-map",
-        "counter_hex": 6218,
         "adjacent_hexes": [
           6118,
           6119

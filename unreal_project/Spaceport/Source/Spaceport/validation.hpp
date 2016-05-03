@@ -11,8 +11,12 @@ namespace start_data {
     template <typename T>
     inline void require_equal (T lhs, T rhs, const std::string& lhs_name, const std::string& rhs_name)
     {
-        if (lhs != rhs)
-            throw std::runtime_error(lhs_name + " and " + rhs_name + " must be equal");
+        if (lhs != rhs) {
+            throw std::runtime_error(
+                lhs_name + " (=" + std::to_string(lhs) + ") and " +
+                rhs_name + " (=" + std::to_string(rhs) + ") must be equal"
+            );
+        }
     }
 
     template <typename Cont>
@@ -121,6 +125,63 @@ namespace start_data {
         }
     }
 
+    inline void validate_offmap_area (const offmap_area_t& offmap_area, const map_t& map)
+    {
+        if (offmap_area.adjacent_hexes.empty())
+            return;
+
+        require_nonempty(offmap_area.name, "offmap_area_t.name");
+        require_equal(
+            offmap_area.features.size(), offmap_area.feature_hexes.size(),
+            "offmap_area_t.features.size()", "offmap_area_t.feature_hexes.size()"
+        );
+
+        for (auto hex_id : offmap_area.feature_hexes) {
+            const auto hc = to_hex_coord(hex_id);
+            if (hc.x != -1 && hc.x != map.width && hc.y != -1 && hc.y != map.height) {
+                throw std::runtime_error(
+                    "offmap_area_t.feature_hexes (=" + std::to_string(hex_id) + ") " +
+                    "must be a hex coordinate one tile outside the map (map width=" +
+                    std::to_string(map.width) + " and height=" + std::to_string(map.height) + ")"
+                );
+            }
+        }
+
+        require_within(
+            offmap_area.adjacent_hexes.size(), std::size_t(2), std::size_t(1000),
+            "offmap_area_t.adjacent_hexes.size()"
+        );
+        for (auto hex_id : offmap_area.adjacent_hexes) {
+            const auto hc = to_hex_coord(hex_id);
+            if (hc.x != 0 && hc.x != map.width - 1 && hc.y != 0 && hc.y != map.height - 1) {
+                throw std::runtime_error(
+                    "offmap_area_t.adjacent_hexes (=" + std::to_string(hex_id) + ") " +
+                    "must be a hex coordinate on the edge of the map (map width=" +
+                    std::to_string(map.width) + " and height=" + std::to_string(map.height) + ")"
+                );
+            }
+        }
+        auto const first_hc = to_hex_coord(offmap_area.adjacent_hexes[0]);
+        auto const same_x = std::all_of(
+            offmap_area.adjacent_hexes.begin(),
+            offmap_area.adjacent_hexes.end(),
+            [=](int hex_id) {
+                auto const hc = to_hex_coord(hex_id);
+                return hc.x == first_hc.x;
+            }
+        );
+        auto const same_y = std::all_of(
+            offmap_area.adjacent_hexes.begin(),
+            offmap_area.adjacent_hexes.end(),
+            [=](int hex_id) {
+                auto const hc = to_hex_coord(hex_id);
+                return hc.y == first_hc.y;
+            }
+        );
+        if (!same_x && !same_y)
+            throw std::runtime_error("offmap_area_t.adjacent_hexes must all have the same row or column");
+    }
+
     inline void validate_and_fill_in_map_hexes (map_t& map, const nations_t& nations)
     {
         require_nonnegative(map.width, "map_t.width");
@@ -171,6 +232,8 @@ namespace start_data {
                 throw std::runtime_error("Unknown owner nation '" + holdings.first + "' encountered in map data");
             }
             const int nation_id = nations_it->second.nation_id;
+
+            validate_offmap_area(holdings.second.offmap_area, map);
 
             require_nonempty(holdings.second.provinces, "starting_national_holdings_t.provinces");
             for (const auto& province : holdings.second.provinces) {

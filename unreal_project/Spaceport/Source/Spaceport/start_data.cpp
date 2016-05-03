@@ -216,7 +216,9 @@ namespace start_data {
         for (const auto& x : value.features) {
             retval.add_features(static_cast< message::feature_t >(x));
         }
-        retval.set_counter_hex(value.counter_hex);
+        for (const auto& x : value.feature_hexes) {
+            retval.add_feature_hexes(x);
+        }
         for (const auto& x : value.adjacent_hexes) {
             retval.add_adjacent_hexes(x);
         }
@@ -234,7 +236,13 @@ namespace start_data {
                 *it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);
             }
         }
-        retval.counter_hex = msg.counter_hex();
+        {
+            retval.feature_hexes.resize(msg.feature_hexes_size());
+            auto it = retval.feature_hexes.begin();
+            for (const auto& x : msg.feature_hexes()) {
+                *it++ = x;
+            }
+        }
         {
             retval.adjacent_hexes.resize(msg.adjacent_hexes_size());
             auto it = retval.adjacent_hexes.begin();

@@ -481,10 +481,13 @@ void Ahex_map::create_offmap_areas ()
         lower_left.Z = hex_map_config.offmap_z * meters;
         upper_right.Z = hex_map_config.offmap_z * meters;
 
-        if (!offmap_area.features.empty()) {
+        std::vector<FVector> feature_locations;
+        auto feature_hex_it = offmap_area.feature_hexes.begin();
+        for (auto const feature : offmap_area.features) {
             // TODO: For now, only SBs may appear as features....
-            auto const hc = to_hex_coord(offmap_area.counter_hex);
+            auto const hc = to_hex_coord(*feature_hex_it++);
             auto location = hex_location(hc, map);
+            feature_locations.push_back(location);
             location.Z = hex_map_config.offmap_z * meters;
             FTransform const transform(
                 FRotator(0, 0, 0),
