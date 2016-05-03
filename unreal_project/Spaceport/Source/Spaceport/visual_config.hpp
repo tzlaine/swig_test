@@ -32,6 +32,11 @@ namespace visual_config {
         float mb_scale;
         float bats_scale;
         float sb_scale;
+        float offmap_z;
+        float offmap_border_thickness;
+        float offmap_label_size;
+        float offmap_left_right_thickness;
+        float offmap_top_bottom_thickness;
     };
 
 } 

@@ -625,6 +625,11 @@ namespace visual_config {
         start_data::require_within(hex_map.mb_scale, 0.0f, 1.0f, "mb_scale");
         start_data::require_within(hex_map.bats_scale, 0.0f, 1.0f, "bats_scale");
         start_data::require_within(hex_map.sb_scale, 0.0f, 1.0f, "sb_scale");
+        start_data::require_within(hex_map.offmap_z, 0.0f, 1.0f, "offmap_z");
+        start_data::require_within(hex_map.offmap_border_thickness, 0.0f, 1.0f, "offmap_border_thickness");
+        start_data::require_within(hex_map.offmap_label_size, 0.0f, 500.0f, "offmap_label_size");
+        start_data::require_within(hex_map.offmap_left_right_thickness, 0.0f, 20.0f, "offmap_left_right_thickness");
+        start_data::require_within(hex_map.offmap_top_bottom_thickness, 0.0f, 20.0f, "offmap_top_bottom_thickness");
     }
 
 }

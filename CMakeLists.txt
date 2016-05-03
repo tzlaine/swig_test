@@ -41,7 +41,7 @@ add_custom_command(
             -Doob_file=${unreal_root}/default_oob.json
             -Dunits_file=${unreal_root}/units.json
             -Dscenario_file=${unreal_root}/scenarios/the_wind.json
-            -Dvisual_config_file=${unreal_root}/visual_config.json
+            -Dhex_map_config_file=${unreal_root}/hex_map_config.json
             -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     DEPENDS
@@ -50,7 +50,7 @@ add_custom_command(
         ${unreal_root}/default_oob.json
         ${unreal_root}/units.json
         ${unreal_root}/scenarios/the_wind.json
-        ${unreal_root}/visual_config.json
+        ${unreal_root}/hex_map_config.json
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
         ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
     COMMENT "Create JSON data header."

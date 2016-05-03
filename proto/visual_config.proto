@@ -23,4 +23,9 @@ message hex_map_t
     float mb_scale = 9;
     float bats_scale = 10;
     float sb_scale = 11;
+    float offmap_z = 12;
+    float offmap_border_thickness = 13;
+    float offmap_label_size = 14;
+    float offmap_left_right_thickness = 15;
+    float offmap_top_bottom_thickness = 16;
 }

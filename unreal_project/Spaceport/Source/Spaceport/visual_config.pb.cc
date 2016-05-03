@@ -58,7 +58,7 @@ void protobuf_AssignDesc_visual_5fconfig_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(color_t, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(color_t, _is_default_instance_));
   hex_map_t_descriptor_ = file->message_type(1);
-  static const int hex_map_t_offsets_[11] = {
+  static const int hex_map_t_offsets_[16] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, primary_colors_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, secondary_colors_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, national_border_thickness_),
@@ -70,6 +70,11 @@ void protobuf_AssignDesc_visual_5fconfig_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, mb_scale_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, bats_scale_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, sb_scale_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, offmap_z_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, offmap_border_thickness_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, offmap_label_size_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, offmap_left_right_thickness_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(hex_map_t, offmap_top_bottom_thickness_),
   };
   hex_map_t_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -138,7 +143,7 @@ void protobuf_AddDesc_visual_5fconfig_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\023visual_config.proto\022\025message.visual_co"
     "nfig\"*\n\007color_t\022\t\n\001r\030\001 \001(\005\022\t\n\001g\030\002 \001(\005\022\t\n"
-    "\001b\030\003 \001(\005\"\300\004\n\thex_map_t\022K\n\016primary_colors"
+    "\001b\030\003 \001(\005\"\330\005\n\thex_map_t\022K\n\016primary_colors"
     "\030\001 \003(\01323.message.visual_config.hex_map_t"
     ".PrimaryColorsEntry\022O\n\020secondary_colors\030"
     "\002 \003(\01325.message.visual_config.hex_map_t."
@@ -148,11 +153,15 @@ void protobuf_AddDesc_visual_5fconfig_2eproto() {
     "\002\022\032\n\022minor_planet_scale\030\006 \001(\002\022\032\n\022major_p"
     "lanet_scale\030\007 \001(\002\022\022\n\nstar_scale\030\010 \001(\002\022\020\n"
     "\010mb_scale\030\t \001(\002\022\022\n\nbats_scale\030\n \001(\002\022\020\n\010s"
-    "b_scale\030\013 \001(\002\032T\n\022PrimaryColorsEntry\022\013\n\003k"
+    "b_scale\030\013 \001(\002\022\020\n\010offmap_z\030\014 \001(\002\022\037\n\027offma"
+    "p_border_thickness\030\r \001(\002\022\031\n\021offmap_label"
+    "_size\030\016 \001(\002\022#\n\033offmap_left_right_thickne"
+    "ss\030\017 \001(\002\022#\n\033offmap_top_bottom_thickness\030"
+    "\020 \001(\002\032T\n\022PrimaryColorsEntry\022\013\n\003key\030\001 \001(\t"
+    "\022-\n\005value\030\002 \001(\0132\036.message.visual_config."
+    "color_t:\0028\001\032V\n\024SecondaryColorsEntry\022\013\n\003k"
     "ey\030\001 \001(\t\022-\n\005value\030\002 \001(\0132\036.message.visual"
-    "_config.color_t:\0028\001\032V\n\024SecondaryColorsEn"
-    "try\022\013\n\003key\030\001 \001(\t\022-\n\005value\030\002 \001(\0132\036.messag"
-    "e.visual_config.color_t:\0028\001b\006proto3", 675);
+    "_config.color_t:\0028\001b\006proto3", 827);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "visual_config.proto", &protobuf_RegisterTypes);
   color_t::default_instance_ = new color_t();
@@ -535,6 +544,11 @@ const int hex_map_t::kStarScaleFieldNumber;
 const int hex_map_t::kMbScaleFieldNumber;
 const int hex_map_t::kBatsScaleFieldNumber;
 const int hex_map_t::kSbScaleFieldNumber;
+const int hex_map_t::kOffmapZFieldNumber;
+const int hex_map_t::kOffmapBorderThicknessFieldNumber;
+const int hex_map_t::kOffmapLabelSizeFieldNumber;
+const int hex_map_t::kOffmapLeftRightThicknessFieldNumber;
+const int hex_map_t::kOffmapTopBottomThicknessFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 hex_map_t::hex_map_t()
@@ -575,6 +589,11 @@ void hex_map_t::SharedCtor() {
   mb_scale_ = 0;
   bats_scale_ = 0;
   sb_scale_ = 0;
+  offmap_z_ = 0;
+  offmap_border_thickness_ = 0;
+  offmap_label_size_ = 0;
+  offmap_left_right_thickness_ = 0;
+  offmap_top_bottom_thickness_ = 0;
 }
 
 hex_map_t::~hex_map_t() {
@@ -622,7 +641,7 @@ void hex_map_t::Clear() {
 } while (0)
 
   ZR_(national_border_thickness_, star_scale_);
-  ZR_(mb_scale_, sb_scale_);
+  ZR_(mb_scale_, offmap_top_bottom_thickness_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -637,7 +656,7 @@ bool hex_map_t::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:message.visual_config.hex_map_t)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -816,6 +835,81 @@ bool hex_map_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(101)) goto parse_offmap_z;
+        break;
+      }
+
+      // optional float offmap_z = 12;
+      case 12: {
+        if (tag == 101) {
+         parse_offmap_z:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &offmap_z_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(109)) goto parse_offmap_border_thickness;
+        break;
+      }
+
+      // optional float offmap_border_thickness = 13;
+      case 13: {
+        if (tag == 109) {
+         parse_offmap_border_thickness:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &offmap_border_thickness_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(117)) goto parse_offmap_label_size;
+        break;
+      }
+
+      // optional float offmap_label_size = 14;
+      case 14: {
+        if (tag == 117) {
+         parse_offmap_label_size:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &offmap_label_size_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(125)) goto parse_offmap_left_right_thickness;
+        break;
+      }
+
+      // optional float offmap_left_right_thickness = 15;
+      case 15: {
+        if (tag == 125) {
+         parse_offmap_left_right_thickness:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &offmap_left_right_thickness_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(133)) goto parse_offmap_top_bottom_thickness;
+        break;
+      }
+
+      // optional float offmap_top_bottom_thickness = 16;
+      case 16: {
+        if (tag == 133) {
+         parse_offmap_top_bottom_thickness:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, &offmap_top_bottom_thickness_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -921,6 +1015,31 @@ void hex_map_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(11, this->sb_scale(), output);
   }
 
+  // optional float offmap_z = 12;
+  if (this->offmap_z() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(12, this->offmap_z(), output);
+  }
+
+  // optional float offmap_border_thickness = 13;
+  if (this->offmap_border_thickness() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(13, this->offmap_border_thickness(), output);
+  }
+
+  // optional float offmap_label_size = 14;
+  if (this->offmap_label_size() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(14, this->offmap_label_size(), output);
+  }
+
+  // optional float offmap_left_right_thickness = 15;
+  if (this->offmap_left_right_thickness() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(15, this->offmap_left_right_thickness(), output);
+  }
+
+  // optional float offmap_top_bottom_thickness = 16;
+  if (this->offmap_top_bottom_thickness() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(16, this->offmap_top_bottom_thickness(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:message.visual_config.hex_map_t)
 }
 
@@ -1006,6 +1125,31 @@ void hex_map_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(11, this->sb_scale(), target);
   }
 
+  // optional float offmap_z = 12;
+  if (this->offmap_z() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(12, this->offmap_z(), target);
+  }
+
+  // optional float offmap_border_thickness = 13;
+  if (this->offmap_border_thickness() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(13, this->offmap_border_thickness(), target);
+  }
+
+  // optional float offmap_label_size = 14;
+  if (this->offmap_label_size() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(14, this->offmap_label_size(), target);
+  }
+
+  // optional float offmap_left_right_thickness = 15;
+  if (this->offmap_left_right_thickness() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(15, this->offmap_left_right_thickness(), target);
+  }
+
+  // optional float offmap_top_bottom_thickness = 16;
+  if (this->offmap_top_bottom_thickness() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(16, this->offmap_top_bottom_thickness(), target);
+  }
+
   // @@protoc_insertion_point(serialize_to_array_end:message.visual_config.hex_map_t)
   return target;
 }
@@ -1056,6 +1200,31 @@ int hex_map_t::ByteSize() const {
   // optional float sb_scale = 11;
   if (this->sb_scale() != 0) {
     total_size += 1 + 4;
+  }
+
+  // optional float offmap_z = 12;
+  if (this->offmap_z() != 0) {
+    total_size += 1 + 4;
+  }
+
+  // optional float offmap_border_thickness = 13;
+  if (this->offmap_border_thickness() != 0) {
+    total_size += 1 + 4;
+  }
+
+  // optional float offmap_label_size = 14;
+  if (this->offmap_label_size() != 0) {
+    total_size += 1 + 4;
+  }
+
+  // optional float offmap_left_right_thickness = 15;
+  if (this->offmap_left_right_thickness() != 0) {
+    total_size += 1 + 4;
+  }
+
+  // optional float offmap_top_bottom_thickness = 16;
+  if (this->offmap_top_bottom_thickness() != 0) {
+    total_size += 2 + 4;
   }
 
   // map<string, .message.visual_config.color_t> primary_colors = 1;
@@ -1133,6 +1302,21 @@ void hex_map_t::MergeFrom(const hex_map_t& from) {
   if (from.sb_scale() != 0) {
     set_sb_scale(from.sb_scale());
   }
+  if (from.offmap_z() != 0) {
+    set_offmap_z(from.offmap_z());
+  }
+  if (from.offmap_border_thickness() != 0) {
+    set_offmap_border_thickness(from.offmap_border_thickness());
+  }
+  if (from.offmap_label_size() != 0) {
+    set_offmap_label_size(from.offmap_label_size());
+  }
+  if (from.offmap_left_right_thickness() != 0) {
+    set_offmap_left_right_thickness(from.offmap_left_right_thickness());
+  }
+  if (from.offmap_top_bottom_thickness() != 0) {
+    set_offmap_top_bottom_thickness(from.offmap_top_bottom_thickness());
+  }
 }
 
 void hex_map_t::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1168,6 +1352,11 @@ void hex_map_t::InternalSwap(hex_map_t* other) {
   std::swap(mb_scale_, other->mb_scale_);
   std::swap(bats_scale_, other->bats_scale_);
   std::swap(sb_scale_, other->sb_scale_);
+  std::swap(offmap_z_, other->offmap_z_);
+  std::swap(offmap_border_thickness_, other->offmap_border_thickness_);
+  std::swap(offmap_label_size_, other->offmap_label_size_);
+  std::swap(offmap_left_right_thickness_, other->offmap_left_right_thickness_);
+  std::swap(offmap_top_bottom_thickness_, other->offmap_top_bottom_thickness_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1343,6 +1532,76 @@ void hex_map_t::clear_sb_scale() {
   
   sb_scale_ = value;
   // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.sb_scale)
+}
+
+// optional float offmap_z = 12;
+void hex_map_t::clear_offmap_z() {
+  offmap_z_ = 0;
+}
+ float hex_map_t::offmap_z() const {
+  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_z)
+  return offmap_z_;
+}
+ void hex_map_t::set_offmap_z(float value) {
+  
+  offmap_z_ = value;
+  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_z)
+}
+
+// optional float offmap_border_thickness = 13;
+void hex_map_t::clear_offmap_border_thickness() {
+  offmap_border_thickness_ = 0;
+}
+ float hex_map_t::offmap_border_thickness() const {
+  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_border_thickness)
+  return offmap_border_thickness_;
+}
+ void hex_map_t::set_offmap_border_thickness(float value) {
+  
+  offmap_border_thickness_ = value;
+  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_border_thickness)
+}
+
+// optional float offmap_label_size = 14;
+void hex_map_t::clear_offmap_label_size() {
+  offmap_label_size_ = 0;
+}
+ float hex_map_t::offmap_label_size() const {
+  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_label_size)
+  return offmap_label_size_;
+}
+ void hex_map_t::set_offmap_label_size(float value) {
+  
+  offmap_label_size_ = value;
+  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_label_size)
+}
+
+// optional float offmap_left_right_thickness = 15;
+void hex_map_t::clear_offmap_left_right_thickness() {
+  offmap_left_right_thickness_ = 0;
+}
+ float hex_map_t::offmap_left_right_thickness() const {
+  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_left_right_thickness)
+  return offmap_left_right_thickness_;
+}
+ void hex_map_t::set_offmap_left_right_thickness(float value) {
+  
+  offmap_left_right_thickness_ = value;
+  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_left_right_thickness)
+}
+
+// optional float offmap_top_bottom_thickness = 16;
+void hex_map_t::clear_offmap_top_bottom_thickness() {
+  offmap_top_bottom_thickness_ = 0;
+}
+ float hex_map_t::offmap_top_bottom_thickness() const {
+  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_top_bottom_thickness)
+  return offmap_top_bottom_thickness_;
+}
+ void hex_map_t::set_offmap_top_bottom_thickness(float value) {
+  
+  offmap_top_bottom_thickness_ = value;
+  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_top_bottom_thickness)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

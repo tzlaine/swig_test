@@ -49,6 +49,11 @@ namespace visual_config {
         retval.set_mb_scale(value.mb_scale);
         retval.set_bats_scale(value.bats_scale);
         retval.set_sb_scale(value.sb_scale);
+        retval.set_offmap_z(value.offmap_z);
+        retval.set_offmap_border_thickness(value.offmap_border_thickness);
+        retval.set_offmap_label_size(value.offmap_label_size);
+        retval.set_offmap_left_right_thickness(value.offmap_left_right_thickness);
+        retval.set_offmap_top_bottom_thickness(value.offmap_top_bottom_thickness);
         return retval;
     }
 
@@ -74,5 +79,10 @@ namespace visual_config {
         retval.mb_scale = msg.mb_scale();
         retval.bats_scale = msg.bats_scale();
         retval.sb_scale = msg.sb_scale();
+        retval.offmap_z = msg.offmap_z();
+        retval.offmap_border_thickness = msg.offmap_border_thickness();
+        retval.offmap_label_size = msg.offmap_label_size();
+        retval.offmap_left_right_thickness = msg.offmap_left_right_thickness();
+        retval.offmap_top_bottom_thickness = msg.offmap_top_bottom_thickness();
         return retval;
     }

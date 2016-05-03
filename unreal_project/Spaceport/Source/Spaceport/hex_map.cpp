@@ -79,7 +79,6 @@ namespace {
     float const sin_60 = FMath::Sin(FMath::DegreesToRadians(60.0f));
     float const national_border_thickness = 1.0f;
     float const province_border_thickness = 0.65f;
-    float const indicator_move_time = 0.09f; // Should be <= the tick interval for Ahex_map.
     float const planet_star_z_scale = 0.2f;
     float const minor_planet_scale = 0.2f;
     float const major_planet_scale = 0.3f;
@@ -92,6 +91,8 @@ namespace {
     float const offmap_label_size = 60.0f;
     float const offmap_left_right_thickness = 2.25f;
     float const offmap_top_bottom_thickness = sin_60;
+
+    float const indicator_move_time = 0.09f; // Should be <= the tick interval for Ahex_map.
 
     FVector hex_location (hex_coord_t hc, map_t const & map)
     {

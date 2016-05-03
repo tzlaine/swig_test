@@ -20,5 +20,5 @@ const char* scenario_json_string = R"inline_json(
 @scenario_contents@)inline_json";
 
 
-const char* visual_config_json_string = R"inline_json(
-@visual_config_contents@)inline_json";
+const char* hex_map_config_json_string = R"inline_json(
+@hex_map_config_contents@)inline_json";

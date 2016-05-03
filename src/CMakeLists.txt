@@ -64,3 +64,27 @@ add_dependencies(game_data base_types_message_target game_data_message_target)
 if (PYTHON_EXECUTABLE)
     add_dependencies(game_data base_types_target game_data_target)
 endif ()
+
+
+########################################
+# visual_config
+########################################
+add_library(
+    visual_config
+    STATIC
+    ${unreal_src_dir}/visual_config_t.cpp
+    ${unreal_src_dir}/json2pb.cc
+    ${unreal_src_dir}/visual_config.cpp
+    ${unreal_src_dir}/visual_config.pb.cc
+)
+
+target_link_libraries(
+    visual_config
+    libprotobuf
+    jansson
+)
+
+add_dependencies(visual_config base_types_message_target visual_config_message_target)
+if (PYTHON_EXECUTABLE)
+    add_dependencies(visual_config base_types_target visual_config_target)
+endif ()
