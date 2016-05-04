@@ -114,53 +114,6 @@ inline int to_hex_id (hex_coord_t hc)
 { return (hc.x + 1) * 100 + hc.y + 1; }
 
 
-#if 0
-// Offsets derived from:
-
-inline neighbors_t adjacent_hex_coords (hex_coord_t hc, int width, int height, int r = 1)
-{
-    neighbors_t retval;
-
-    assert(on_map(hc, width, height));
-    retval.push_back(hc);
-
-    hex_coord_t current = hc;
-    for (int i = 0; i < r; ++i) {
-        current = adjacent_hex_coord(current, hex_direction_t::below);
-        for (hex_direction_t const d : all_hex_directions) {
-            for (int j = 0; j <= i; ++j) {
-                current = adjacent_hex_coord(current, d);
-                if (on_map(current, width, height))
-                    retval.push_back(current);
-            }
-        }
-    }
-
-    return retval;
-}
-
-{
-    hex_coord_t const hc = {10, 10};
-    neighbors_t neighbors = adjacent_hex_coords(hc, 50, 50, 6);
-    std::cout << "{\n";
-    for (auto const n : neighbors) {
-        std::cout << "    { " << (n.x - hc.x) << ", " << (n.y - hc.y) << " }\n";
-    }
-    std::cout << "}\n";
-}
-
-{
-    hex_coord_t const hc = {11, 10};
-    neighbors_t neighbors = adjacent_hex_coords(hc, 50, 50, 6);
-    std::cout << "{\n";
-    for (auto const n : neighbors) {
-        std::cout << "    { " << (n.x - hc.x) << ", " << (n.y - hc.y) << " }\n";
-    }
-    std::cout << "}\n";
-}
-
-#endif
-
 constexpr int const max_useful_hex_distance = 6;
 
 constexpr int const max_hexes_at_radius[max_useful_hex_distance + 1] = {
