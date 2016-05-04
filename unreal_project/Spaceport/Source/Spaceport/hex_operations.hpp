@@ -114,36 +114,348 @@ inline int to_hex_id (hex_coord_t hc)
 { return (hc.x + 1) * 100 + hc.y + 1; }
 
 
-// Static container for hex ids within R=2 of a central hex.
-typedef boost::container::static_vector<hex_coord_t, 19> neighbors_t;
+#if 0
+// Offsets derived from:
 
-inline neighbors_t adjacent_hex_coords (hex_coord_t hc, const map_t& m, int r = 1)
+inline neighbors_t adjacent_hex_coords (hex_coord_t hc, int width, int height, int r = 1)
 {
-    assert(r == 1 || r == 2);
     neighbors_t retval;
-    if (on_map(hc, m)) {
-        retval.push_back(hc);
-        for (hex_direction_t d : all_hex_directions) {
-            hex_coord_t r1 = adjacent_hex_coord(hc, d);
-            if (on_map(r1, m)) {
-                retval.push_back(r1);
 
-                {
-                    hex_coord_t r2 = adjacent_hex_coord(r1, d);
-                    if (on_map(r2, m))
-                        retval.push_back(r2);
-                }
+    assert(on_map(hc, width, height));
+    retval.push_back(hc);
 
-                {
-                    auto d2 = d;
-                    ++d2;
-                    hex_coord_t r2 = adjacent_hex_coord(r1, d2);
-                    if (on_map(r2, m))
-                        retval.push_back(r2);
-                }
+    hex_coord_t current = hc;
+    for (int i = 0; i < r; ++i) {
+        current = adjacent_hex_coord(current, hex_direction_t::below);
+        for (hex_direction_t const d : all_hex_directions) {
+            for (int j = 0; j <= i; ++j) {
+                current = adjacent_hex_coord(current, d);
+                if (on_map(current, width, height))
+                    retval.push_back(current);
             }
         }
     }
+
+    return retval;
+}
+
+{
+    hex_coord_t const hc = {10, 10};
+    neighbors_t neighbors = adjacent_hex_coords(hc, 50, 50, 6);
+    std::cout << "{\n";
+    for (auto const n : neighbors) {
+        std::cout << "    { " << (n.x - hc.x) << ", " << (n.y - hc.y) << " }\n";
+    }
+    std::cout << "}\n";
+}
+
+{
+    hex_coord_t const hc = {11, 10};
+    neighbors_t neighbors = adjacent_hex_coords(hc, 50, 50, 6);
+    std::cout << "{\n";
+    for (auto const n : neighbors) {
+        std::cout << "    { " << (n.x - hc.x) << ", " << (n.y - hc.y) << " }\n";
+    }
+    std::cout << "}\n";
+}
+
+#endif
+
+constexpr int const max_useful_hex_distance = 6;
+
+constexpr int const max_hexes_at_radius[max_useful_hex_distance + 1] = {
+    1 + 0 * 6,
+    1 + 1 * 6,
+    1 + 3 * 6,
+    1 + 6 * 6,
+    1 + 10 * 6,
+    1 + 15 * 6,
+    1 + 21 * 6
+};
+
+constexpr int const max_neighbors = max_hexes_at_radius[max_useful_hex_distance];
+
+// Static container for hex ids within R=6 of a central hex.  Note that max_neighbors ==
+// 1 + 1*6 + 2*6 + ... + 6*MAX_USEFUL_HEX_DISTANCE.
+typedef boost::container::static_vector<hex_coord_t, max_neighbors> neighbors_t;
+
+hex_coord_t const even_offsets[max_neighbors] = {
+    { 0, 0 },
+    { 1, 0 },
+    { 1, -1 },
+    { 0, -1 },
+    { -1, -1 },
+    { -1, 0 },
+    { 0, 1 },
+    { 1, 1 },
+    { 2, 1 },
+    { 2, 0 },
+    { 2, -1 },
+    { 1, -2 },
+    { 0, -2 },
+    { -1, -2 },
+    { -2, -1 },
+    { -2, 0 },
+    { -2, 1 },
+    { -1, 1 },
+    { 0, 2 },
+    { 1, 2 },
+    { 2, 2 },
+    { 3, 1 },
+    { 3, 0 },
+    { 3, -1 },
+    { 3, -2 },
+    { 2, -2 },
+    { 1, -3 },
+    { 0, -3 },
+    { -1, -3 },
+    { -2, -2 },
+    { -3, -2 },
+    { -3, -1 },
+    { -3, 0 },
+    { -3, 1 },
+    { -2, 2 },
+    { -1, 2 },
+    { 0, 3 },
+    { 1, 3 },
+    { 2, 3 },
+    { 3, 2 },
+    { 4, 2 },
+    { 4, 1 },
+    { 4, 0 },
+    { 4, -1 },
+    { 4, -2 },
+    { 3, -3 },
+    { 2, -3 },
+    { 1, -4 },
+    { 0, -4 },
+    { -1, -4 },
+    { -2, -3 },
+    { -3, -3 },
+    { -4, -2 },
+    { -4, -1 },
+    { -4, 0 },
+    { -4, 1 },
+    { -4, 2 },
+    { -3, 2 },
+    { -2, 3 },
+    { -1, 3 },
+    { 0, 4 },
+    { 1, 4 },
+    { 2, 4 },
+    { 3, 3 },
+    { 4, 3 },
+    { 5, 2 },
+    { 5, 1 },
+    { 5, 0 },
+    { 5, -1 },
+    { 5, -2 },
+    { 5, -3 },
+    { 4, -3 },
+    { 3, -4 },
+    { 2, -4 },
+    { 1, -5 },
+    { 0, -5 },
+    { -1, -5 },
+    { -2, -4 },
+    { -3, -4 },
+    { -4, -3 },
+    { -5, -3 },
+    { -5, -2 },
+    { -5, -1 },
+    { -5, 0 },
+    { -5, 1 },
+    { -5, 2 },
+    { -4, 3 },
+    { -3, 3 },
+    { -2, 4 },
+    { -1, 4 },
+    { 0, 5 },
+    { 1, 5 },
+    { 2, 5 },
+    { 3, 4 },
+    { 4, 4 },
+    { 5, 3 },
+    { 6, 3 },
+    { 6, 2 },
+    { 6, 1 },
+    { 6, 0 },
+    { 6, -1 },
+    { 6, -2 },
+    { 6, -3 },
+    { 5, -4 },
+    { 4, -4 },
+    { 3, -5 },
+    { 2, -5 },
+    { 1, -6 },
+    { 0, -6 },
+    { -1, -6 },
+    { -2, -5 },
+    { -3, -5 },
+    { -4, -4 },
+    { -5, -4 },
+    { -6, -3 },
+    { -6, -2 },
+    { -6, -1 },
+    { -6, 0 },
+    { -6, 1 },
+    { -6, 2 },
+    { -6, 3 },
+    { -5, 3 },
+    { -4, 4 },
+    { -3, 4 },
+    { -2, 5 },
+    { -1, 5 },
+    { 0, 6 }
+};
+
+hex_coord_t const odd_offsets[max_neighbors] = {
+    { 0, 0 },
+    { 1, 1 },
+    { 1, 0 },
+    { 0, -1 },
+    { -1, 0 },
+    { -1, 1 },
+    { 0, 1 },
+    { 1, 2 },
+    { 2, 1 },
+    { 2, 0 },
+    { 2, -1 },
+    { 1, -1 },
+    { 0, -2 },
+    { -1, -1 },
+    { -2, -1 },
+    { -2, 0 },
+    { -2, 1 },
+    { -1, 2 },
+    { 0, 2 },
+    { 1, 3 },
+    { 2, 2 },
+    { 3, 2 },
+    { 3, 1 },
+    { 3, 0 },
+    { 3, -1 },
+    { 2, -2 },
+    { 1, -2 },
+    { 0, -3 },
+    { -1, -2 },
+    { -2, -2 },
+    { -3, -1 },
+    { -3, 0 },
+    { -3, 1 },
+    { -3, 2 },
+    { -2, 2 },
+    { -1, 3 },
+    { 0, 3 },
+    { 1, 4 },
+    { 2, 3 },
+    { 3, 3 },
+    { 4, 2 },
+    { 4, 1 },
+    { 4, 0 },
+    { 4, -1 },
+    { 4, -2 },
+    { 3, -2 },
+    { 2, -3 },
+    { 1, -3 },
+    { 0, -4 },
+    { -1, -3 },
+    { -2, -3 },
+    { -3, -2 },
+    { -4, -2 },
+    { -4, -1 },
+    { -4, 0 },
+    { -4, 1 },
+    { -4, 2 },
+    { -3, 3 },
+    { -2, 3 },
+    { -1, 4 },
+    { 0, 4 },
+    { 1, 5 },
+    { 2, 4 },
+    { 3, 4 },
+    { 4, 3 },
+    { 5, 3 },
+    { 5, 2 },
+    { 5, 1 },
+    { 5, 0 },
+    { 5, -1 },
+    { 5, -2 },
+    { 4, -3 },
+    { 3, -3 },
+    { 2, -4 },
+    { 1, -4 },
+    { 0, -5 },
+    { -1, -4 },
+    { -2, -4 },
+    { -3, -3 },
+    { -4, -3 },
+    { -5, -2 },
+    { -5, -1 },
+    { -5, 0 },
+    { -5, 1 },
+    { -5, 2 },
+    { -5, 3 },
+    { -4, 3 },
+    { -3, 4 },
+    { -2, 4 },
+    { -1, 5 },
+    { 0, 5 },
+    { 1, 6 },
+    { 2, 5 },
+    { 3, 5 },
+    { 4, 4 },
+    { 5, 4 },
+    { 6, 3 },
+    { 6, 2 },
+    { 6, 1 },
+    { 6, 0 },
+    { 6, -1 },
+    { 6, -2 },
+    { 6, -3 },
+    { 5, -3 },
+    { 4, -4 },
+    { 3, -4 },
+    { 2, -5 },
+    { 1, -5 },
+    { 0, -6 },
+    { -1, -5 },
+    { -2, -5 },
+    { -3, -4 },
+    { -4, -4 },
+    { -5, -3 },
+    { -6, -3 },
+    { -6, -2 },
+    { -6, -1 },
+    { -6, 0 },
+    { -6, 1 },
+    { -6, 2 },
+    { -6, 3 },
+    { -5, 4 },
+    { -4, 4 },
+    { -3, 5 },
+    { -2, 5 },
+    { -1, 6 },
+    { 0, 6 }
+};
+
+inline neighbors_t adjacent_hex_coords (hex_coord_t hc, int width, int height, int r = 1)
+{
+    neighbors_t retval;
+
+    assert(0 < r && r <= 6);
+    assert(on_map(hc, width, height));
+
+    int const n = max_hexes_at_radius[r];
+    hex_coord_t const * const offsets = hc.x % 2 == 0 ? even_offsets : odd_offsets;
+
+    for (int i = 0; i < n; ++i) {
+        hex_coord_t const offset = offsets[i];
+        hex_coord_t const hc_i = { hc.x + offset.x, hc.y + offset.y };
+        if (on_map(hc_i, width, height))
+            retval.push_back(hc_i);
+    }
+
     return retval;
 }
 
