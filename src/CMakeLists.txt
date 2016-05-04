@@ -67,6 +67,29 @@ endif ()
 
 
 ########################################
+# graph
+########################################
+add_library(
+    graph
+    STATIC
+    ${unreal_src_dir}/graph.cpp
+    ${unreal_src_dir}/base_types.cpp
+    ${unreal_src_dir}/base_types.pb.cc
+)
+
+target_link_libraries(
+    graph
+)
+
+if (false)
+add_dependencies(graph base_types_message_target graph_message_target)
+if (PYTHON_EXECUTABLE)
+    add_dependencies(graph base_types_target graph_target)
+endif ()
+endif ()
+
+
+########################################
 # visual_config
 ########################################
 add_library(
