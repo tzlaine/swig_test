@@ -41,6 +41,6 @@
     "offmap_z": 0.25,
     "offmap_border_thickness": 0.05,
     "offmap_label_size": 60.0,
-    "offmap_left_right_thickness": 2.25,
-    "offmap_top_bottom_thickness": 1.0471975511965976
+    "offmap_left_right_thickness": 3.5,
+    "offmap_top_bottom_thickness": 1.5471975511965976
 }

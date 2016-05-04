@@ -421,7 +421,7 @@ void Ahex_map::create_offmap_areas ()
 
     auto const & map = game_data_.map();
 
-    float const offmap_left_right_gap = (hex_map_config.offmap_left_right_thickness - 0.5) * meters;
+    float const offmap_left_right_gap = (hex_map_config.offmap_left_right_thickness - 1.5) * meters;
     float const offmap_top_bottom_gap = (hex_map_config.offmap_top_bottom_thickness + sin_60) * meters;
 
     std::vector<hex_coord_t> adjacent_hexes;
@@ -481,13 +481,11 @@ void Ahex_map::create_offmap_areas ()
         lower_left.Z = hex_map_config.offmap_z * meters;
         upper_right.Z = hex_map_config.offmap_z * meters;
 
-        std::vector<FVector> feature_locations;
         auto feature_hex_it = offmap_area.feature_hexes.begin();
         for (auto const feature : offmap_area.features) {
             // TODO: For now, only SBs may appear as features....
             auto const hc = to_hex_coord(*feature_hex_it++);
             auto location = hex_location(hc, map);
-            feature_locations.push_back(location);
             location.Z = hex_map_config.offmap_z * meters;
             FTransform const transform(
                 FRotator(0, 0, 0),
@@ -582,25 +580,14 @@ void Ahex_map::create_offmap_areas ()
 
             auto text_position = panel_position;
             text_position.Z = hex_map_config.offmap_z * meters;
-            auto const local_size = text_render_component->GetTextWorldSize();
-            auto const text_height = local_size.Z;
-            if (top) {
-                text_position.Y =
-                    upper_right.Y -
-                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
-            } else if (bottom) {
-                text_position.Y =
-                    lower_left.Y +
-                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_top_bottom_gap - text_height) / 2.0f);
-            } else if (left) {
-                text_position.X =
-                    lower_left.X +
-                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
-            } else if (right) {
-                text_position.X =
-                    upper_right.X -
-                    FMath::Max(text_height / 2.0f + 0.3f, (offmap_left_right_gap - text_height) / 2.0f);
-            }
+            if (top)
+                text_position.Y = upper_right.Y - offmap_top_bottom_gap / 2.0f;
+            else if (bottom)
+                text_position.Y = lower_left.Y + offmap_top_bottom_gap / 2.0f;
+            else if (left)
+                text_position.X = lower_left.X + offmap_left_right_gap / 2.0f;
+            else if (right)
+                text_position.X = upper_right.X - offmap_left_right_gap / 2.0f;
 
             float z_rotation = 0.0f;
             if (left)
