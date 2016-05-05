@@ -133,9 +133,9 @@ TEST(graph_tests, construct)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    graph::graph g;
-    graph::hex_id_property_map hex_id_property_map;
-    graph::edge_weight_property_map edge_weight_map;
+    graph::graph_t g;
+    graph::hex_id_property_map_t hex_id_property_map;
+    graph::edge_weight_property_map_t edge_weight_map;
     init_graph(
         g,
         hex_id_property_map,

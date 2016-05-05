@@ -7,14 +7,17 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/filtered_graph.hpp>
 #include <boost/graph/johnson_all_pairs_shortest.hpp>
+#include <boost/container/static_vector.hpp>
 
 #include <queue>
 
 
-namespace detail {
+namespace graph {
+
+    struct edge_container_tag_t {};
 
     template <class Key, class Value>
-    struct constant_property
+    struct constant_property_t
     { Value m_value; };
 
 }
@@ -22,7 +25,7 @@ namespace detail {
 namespace boost {
 
     template <class Key, class Value>
-    struct property_traits< ::detail::constant_property<Key, Value> >
+    struct property_traits< ::graph::constant_property_t<Key, Value> >
     {
         typedef Value value_type;
         typedef Key key_type;
@@ -30,9 +33,35 @@ namespace boost {
     };
 
     template <class Key, class Value>
-    Value const & get(const ::detail::constant_property<Key, Value>& pmap, Key const &)
+    Value const & get( ::graph::constant_property_t<Key, Value> const & pmap, Key const &)
     { return pmap.m_value; }
 
+    // Specializations for custom out-edge containers.
+    template <class ValueType>
+    struct container_gen< ::graph::edge_container_tag_t, ValueType>
+    {
+        typedef boost::container::static_vector<ValueType, 6> type;
+    };
+
+    template <class ValueType>
+    std::pair<typename boost::container::static_vector<ValueType, 6>::iterator, bool>
+    push (boost::container::static_vector<ValueType, 6> & c, ValueType const & v)
+    {
+        c.push_back(v);
+        return std::make_pair(boost::prior(c.end()), true);
+    }
+
+    template <class ValueType>
+    void erase (boost::container::static_vector<ValueType, 6> & c, ValueType const & x)
+    {
+        c.erase(std::remove(c.begin(), c.end(), x), c.end());
+    }
+
+    template <>
+    struct parallel_edge_traits< ::graph::edge_container_tag_t>
+    {
+        typedef allow_parallel_edge_tag type;
+    };
 }
 
 
@@ -52,23 +81,23 @@ namespace graph {
     > edge_property_t;
 
     typedef boost::adjacency_list<
-        boost::vecS,
+        edge_container_tag_t,
         boost::vecS,
         boost::undirectedS,
         vertex_property_t,
         edge_property_t
-    > graph;
+    > graph_t;
 
-    typedef boost::property_map<graph, vertex_hex_id_tag_t>::const_type const_hex_id_property_map;
-    typedef boost::property_map<graph, vertex_hex_id_tag_t>::type hex_id_property_map;
+    typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::const_type const_hex_id_property_map_t;
+    typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::type hex_id_property_map_t;
 
-    typedef boost::property_map<graph, boost::edge_weight_t>::const_type const_edge_weight_property_map; // todo
-    typedef boost::property_map<graph, boost::edge_weight_t>::type edge_weight_property_map;
+    typedef boost::property_map<graph_t, boost::edge_weight_t>::const_type const_edge_weight_property_map_T; // todo
+    typedef boost::property_map<graph_t, boost::edge_weight_t>::type edge_weight_property_map_t;
 
-    typedef boost::graph_traits<graph>::edge_descriptor edge_descriptor;
+    typedef boost::graph_traits<graph_t>::edge_descriptor edge_descriptor_t;
 
-    struct found_destination {}; 
-    struct reached_depth_limit {};
+    struct found_destination_t {};
+    struct reached_depth_limit_t {};
 
     template <class Graph, class Visitor>
     bool bfs (Graph g, Visitor v, int start_hex_id)
@@ -77,10 +106,10 @@ namespace graph {
             boost::queue<int> buf;
             std::vector<int> colors(boost::num_vertices(g));
             boost::breadth_first_search(g, start_hex_id, buf, v, &colors[0]);
-        } catch (reached_depth_limit const &) {
+        } catch (reached_depth_limit_t const &) {
             // The algorithm didn't find hex2_id before reaching max_dist.
             return false;
-        } catch (found_destination const &) {
+        } catch (found_destination_t const &) {
             // hex2_id was found and we exited early by throwing.
         }
         return true;
@@ -174,9 +203,9 @@ namespace graph {
         }
     }
 
-    inline void init_graph (graph& g,
-                            hex_id_property_map& hex_id_property_map,
-                            edge_weight_property_map& edge_weight_map,
+    inline void init_graph (graph_t & g,
+                            hex_id_property_map_t & hex_id_property_map,
+                            edge_weight_property_map_t & edge_weight_map,
                             int width,
                             int height)
     {
@@ -203,7 +232,7 @@ namespace graph {
                         hex_coord_t const adjacent_hc = adjacent_hex_coord(hc, d);
                         if (on_map(adjacent_hc, width, height)) {
                             int const index = to_hex_index(adjacent_hc, width);
-                            std::pair<edge_descriptor, bool> const add_edge_result =
+                            std::pair<edge_descriptor_t, bool> const add_edge_result =
                                 boost::add_edge(i, index, g);
                             edge_weight_map[add_edge_result.first] = 1.0f;
                         }

@@ -22,6 +22,7 @@
 #include <set>
 #include <boost/unordered_set.hpp>
 #include <boost/unordered_map.hpp>
+#include <boost/container/static_vector.hpp>
 
 #if !defined BOOST_NO_SLIST
 #  ifdef BOOST_SLIST_HEADER
@@ -125,6 +126,25 @@ namespace boost { namespace graph_detail {
   struct container_traits< std::vector<T,Alloc> > {
     typedef vector_tag category;
     typedef unstable_tag iterator_stability;
+  };
+
+  // boost::container::static_vector
+  struct static_vector_tag :
+    virtual public random_access_container_tag,
+    virtual public back_insertion_sequence_tag { };
+
+  template <class T, std::size_t N>
+  static_vector_tag container_category (boost::container::static_vector<T, N> const &)
+  { return static_vector_tag(); }
+
+  template <class T, std::size_t N>
+  stable_tag iterator_stability (boost::container::static_vector<T, N> const &)
+  { return stable_tag(); }
+
+  template <class T, std::size_t N>
+  struct container_traits< boost::container::static_vector<T, N> > {
+    typedef static_vector_tag category;
+    typedef stable_tag iterator_stability;
   };
 
   // std::list
