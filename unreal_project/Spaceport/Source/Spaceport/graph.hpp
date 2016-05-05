@@ -85,13 +85,14 @@ namespace graph {
         boost::vecS,
         boost::undirectedS,
         vertex_property_t,
-        edge_property_t
+        edge_property_t,
+        boost::vecS
     > graph_t;
 
     typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::const_type const_hex_id_property_map_t;
     typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::type hex_id_property_map_t;
 
-    typedef boost::property_map<graph_t, boost::edge_weight_t>::const_type const_edge_weight_property_map_T; // todo
+    typedef boost::property_map<graph_t, boost::edge_weight_t>::const_type const_edge_weight_property_map_t; // todo
     typedef boost::property_map<graph_t, boost::edge_weight_t>::type edge_weight_property_map_t;
 
     typedef boost::graph_traits<graph_t>::edge_descriptor edge_descriptor_t;
