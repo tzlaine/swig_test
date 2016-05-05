@@ -38,10 +38,10 @@ namespace boost {
 
 namespace graph {
 
-    struct vertex_hex_id_t {typedef boost::vertex_property_tag kind;};
+    struct vertex_hex_id_tag_t { typedef boost::vertex_property_tag kind; };
 
     typedef boost::property<
-        vertex_hex_id_t,
+        vertex_hex_id_tag_t,
         int,
         boost::property<boost::vertex_index_t, int>
     > vertex_property_t;
@@ -59,8 +59,8 @@ namespace graph {
         edge_property_t
     > graph;
 
-    typedef boost::property_map<graph, vertex_hex_id_t>::const_type const_hex_id_property_map;
-    typedef boost::property_map<graph, vertex_hex_id_t>::type hex_id_property_map;
+    typedef boost::property_map<graph, vertex_hex_id_tag_t>::const_type const_hex_id_property_map;
+    typedef boost::property_map<graph, vertex_hex_id_tag_t>::type hex_id_property_map;
 
     typedef boost::property_map<graph, boost::edge_weight_t>::const_type const_edge_weight_property_map; // todo
     typedef boost::property_map<graph, boost::edge_weight_t>::type edge_weight_property_map;
@@ -180,7 +180,7 @@ namespace graph {
                             int width,
                             int height)
     {
-        hex_id_property_map = boost::get(vertex_hex_id_t(), g);
+        hex_id_property_map = boost::get(vertex_hex_id_tag_t(), g);
         edge_weight_map = boost::get(boost::edge_weight, g);
 
         {
