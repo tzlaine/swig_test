@@ -30,7 +30,7 @@ namespace boost {
     };
 
     template <class Key, class Value>
-    const Value& get(const ::detail::constant_property<Key, Value>& pmap, const Key&)
+    Value const & get(const ::detail::constant_property<Key, Value>& pmap, Key const &)
     { return pmap.m_value; }
 
 }
@@ -62,8 +62,8 @@ namespace graph {
     typedef boost::property_map<graph, vertex_hex_id_t>::const_type const_hex_id_property_map;
     typedef boost::property_map<graph, vertex_hex_id_t>::type hex_id_property_map;
 
-    typedef boost::property_map<graph, boost::edge_weight_t>::const_type ConstEdgeWeightPropertyMap; // TODO
-    typedef boost::property_map<graph, boost::edge_weight_t>::type EdgeWeightPropertyMap;
+    typedef boost::property_map<graph, boost::edge_weight_t>::const_type const_edge_weight_property_map; // todo
+    typedef boost::property_map<graph, boost::edge_weight_t>::type edge_weight_property_map;
 
     typedef boost::graph_traits<graph>::edge_descriptor edge_descriptor;
 
@@ -77,10 +77,10 @@ namespace graph {
             boost::queue<int> buf;
             std::vector<int> colors(boost::num_vertices(g));
             boost::breadth_first_search(g, start_hex_id, buf, v, &colors[0]);
-        } catch (const reached_depth_limit&) {
+        } catch (reached_depth_limit const &) {
             // The algorithm didn't find hex2_id before reaching max_dist.
             return false;
-        } catch (const found_destination&) {
+        } catch (found_destination const &) {
             // hex2_id was found and we exited early by throwing.
         }
         return true;
@@ -171,6 +171,50 @@ namespace graph {
                 }
             }
             color[u] = black;
+        }
+    }
+
+    template <typename EdgeFn, typename WeightFn>
+    void init_graph (graph& g,
+                     hex_id_property_map& hex_id_property_map,
+                     edge_weight_property_map& edge_weight_map,
+                     int width,
+                     int height,
+                     EdgeFn make_edge,
+                     WeightFn weight)
+    {
+        hex_id_property_map = boost::get(vertex_hex_id_t(), g);
+        edge_weight_map = boost::get(boost::edge_weight, g);
+
+        {
+            int i = 0;
+            for (int x = 0; x < width; ++x) {
+                for (int y = 0; y < height; ++y, ++i) {
+                    int id = to_hex_id(hex_coord_t{x, y});
+                    boost::add_vertex(g);
+                    hex_id_property_map[i] = id;
+                }
+            }
+        }
+
+        {
+            int i = 0;
+            for (int x = 0; x < width; ++x) {
+                for (int y = 0; y < height; ++y, ++i) {
+                    hex_coord_t const hc{x, y};
+                    for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
+                        hex_coord_t const adjacent_hc = adjacent_hex_coord(hc, d);
+                        if (on_map(adjacent_hc, width, height)) {
+                            int const index = to_hex_index(adjacent_hc, width);
+                            if (!make_edge(i, index))
+                                continue;
+                            std::pair<edge_descriptor, bool> add_edge_result =
+                                boost::add_edge(i, index, g);
+                            edge_weight_map[add_edge_result.first] = weight(i, index);
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -1,50 +1,6 @@
 #include "graph.hpp"
 
 
-template <typename EdgeFn, typename WeightFn>
-void init_graph (graph::graph& g,
-                 graph::hex_id_property_map& hex_id_property_map,
-                 graph::EdgeWeightPropertyMap& edge_weight_map,
-                 int width,
-                 int height,
-                 EdgeFn make_edge,
-                 WeightFn weight)
-{
-    hex_id_property_map = boost::get(graph::vertex_hex_id_t(), g);
-    edge_weight_map = boost::get(boost::edge_weight, g);
-
-    {
-        int i = 0;
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y, ++i) {
-                int id = to_hex_id(hex_coord_t{x, y});
-                boost::add_vertex(g);
-                hex_id_property_map[i] = id;
-            }
-        }
-    }
-
-    {
-        int i = 0;
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y, ++i) {
-                const hex_coord_t coord{x, y};
-                for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
-                    const hex_coord_t adjacent_coord = adjacent_hex_coord(coord, d);
-                    if (on_map(adjacent_coord, width, height)) {
-                        const int index = to_hex_index(adjacent_coord, width);
-                        if (!make_edge(i, index))
-                            continue;
-                        std::pair<graph::edge_descriptor, bool> add_edge_result =
-                            boost::add_edge(i, index, g);
-                        edge_weight_map[add_edge_result.first] = weight(i, index);
-                    }
-                }
-            }
-        }
-    }
-}
-
 #if 0
 struct supply_data
 {

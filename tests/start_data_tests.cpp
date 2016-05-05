@@ -2,6 +2,7 @@
 #include <game_data_t.hpp>
 #include <visual_config_t.hpp>
 #include <json2pb.h>
+#include <graph.hpp>
 #include <gtest/gtest.h>
 
 // This horrible business works around the fact that the MS compiler
@@ -120,6 +121,30 @@ TEST(visual_config_tests, validate_visual_config)
 
     visual_config::visual_config_t visual_config;
     visual_config.init_hex_map(hex_map_config_json_string, start_data);
+}
+
+TEST(graph_tests, construct)
+{
+    auto get_map_str = [](std::string const &) { return map_json_string; };
+    auto get_oob_str = [](std::string const &) { return oob_json_string; };
+
+    start_data::start_data_t start_data;
+    start_data.init_unit_defs(units_json_string);
+    start_data.init_nations(nations_json_string);
+    start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
+
+    graph::graph g;
+    graph::hex_id_property_map hex_id_property_map;
+    graph::edge_weight_property_map edge_weight_map;
+    init_graph(
+        g,
+        hex_id_property_map,
+        edge_weight_map,
+        start_data.map().width,
+        start_data.map().height,
+        [] (int id1, int id2) {return true;},
+        [] (int id1, int id2) {return 1.0;}
+    );
 }
 
 int main(int argc, char **argv)
