@@ -48,7 +48,7 @@ namespace graph {
 
     typedef boost::property<
         boost::edge_weight_t,
-        double
+        float
     > edge_property_t;
 
     typedef boost::adjacency_list<
@@ -174,14 +174,11 @@ namespace graph {
         }
     }
 
-    template <typename EdgeFn, typename WeightFn>
-    void init_graph (graph& g,
-                     hex_id_property_map& hex_id_property_map,
-                     edge_weight_property_map& edge_weight_map,
-                     int width,
-                     int height,
-                     EdgeFn make_edge,
-                     WeightFn weight)
+    inline void init_graph (graph& g,
+                            hex_id_property_map& hex_id_property_map,
+                            edge_weight_property_map& edge_weight_map,
+                            int width,
+                            int height)
     {
         hex_id_property_map = boost::get(vertex_hex_id_t(), g);
         edge_weight_map = boost::get(boost::edge_weight, g);
@@ -206,11 +203,9 @@ namespace graph {
                         hex_coord_t const adjacent_hc = adjacent_hex_coord(hc, d);
                         if (on_map(adjacent_hc, width, height)) {
                             int const index = to_hex_index(adjacent_hc, width);
-                            if (!make_edge(i, index))
-                                continue;
-                            std::pair<edge_descriptor, bool> add_edge_result =
+                            std::pair<edge_descriptor, bool> const add_edge_result =
                                 boost::add_edge(i, index, g);
-                            edge_weight_map[add_edge_result.first] = weight(i, index);
+                            edge_weight_map[add_edge_result.first] = 1.0f;
                         }
                     }
                 }

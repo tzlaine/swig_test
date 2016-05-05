@@ -141,9 +141,7 @@ TEST(graph_tests, construct)
         hex_id_property_map,
         edge_weight_map,
         start_data.map().width,
-        start_data.map().height,
-        [] (int id1, int id2) {return true;},
-        [] (int id1, int id2) {return 1.0;}
+        start_data.map().height
     );
 }
 
