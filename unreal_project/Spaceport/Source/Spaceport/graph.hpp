@@ -98,12 +98,13 @@ namespace graph {
     typedef boost::graph_traits<graph_t>::edge_descriptor edge_descriptor_t;
 
 
-    inline void init_graph (graph_t & g,
-                            hex_id_property_map_t & hex_id_property_map,
-                            edge_weight_property_map_t & edge_weight_map,
-                            int width,
-                            int height)
-    {
+    inline void init_graph (
+        graph_t & g,
+        hex_id_property_map_t & hex_id_property_map,
+        edge_weight_property_map_t & edge_weight_map,
+        int width,
+        int height
+    ) {
         hex_id_property_map = boost::get(vertex_hex_id_tag_t(), g);
         edge_weight_map = boost::get(boost::edge_weight, g);
 

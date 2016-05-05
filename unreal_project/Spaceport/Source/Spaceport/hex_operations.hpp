@@ -22,7 +22,7 @@ enum class hex_direction_t {
     hex_directions
 };
 
-inline hex_direction_t& operator++(hex_direction_t& d)
+inline hex_direction_t& operator++ (hex_direction_t& d)
 {
     assert(d != hex_direction_t::hex_directions);
     const int n = static_cast<int>(hex_direction_t::hex_directions);
@@ -43,7 +43,7 @@ inline bool operator!= (hex_coord_t lhs, hex_coord_t rhs)
 inline bool operator< (hex_coord_t lhs, hex_coord_t rhs)
 { return lhs.x < rhs.x || lhs.x == rhs.x && lhs.y < rhs.y; }
 
-inline std::string hex_string(hex_coord_t hc)
+inline std::string hex_string (hex_coord_t hc)
 {
     std::string retval;
     if (hc.x + 1 < 10)
