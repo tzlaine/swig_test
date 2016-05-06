@@ -121,11 +121,14 @@ namespace graph {
 
     typedef boost::graph_traits<graph_t>::edge_descriptor edge_descriptor_t;
 
-    inline void init_graph (
+    template <typename ValidFn, typename WeightFn>
+    void init_graph (
         graph_t & g,
         hex_id_property_map_t & hex_id_property_map,
         edge_weight_property_map_t & edge_weight_map,
         hex_coord_t hc,
+        ValidFn valid,
+        WeightFn weight,
         int width,
         int height,
         int radius = max_useful_hex_distance
@@ -144,7 +147,8 @@ namespace graph {
         {
             int i = 0;
             for (auto const neighbor : neighbors) {
-                offset_indices[to_hex_index(neighbor, width)] = i++;
+                if (valid(hc))
+                    offset_indices[to_hex_index(neighbor, width)] = i++;
             }
         }
 
@@ -165,7 +169,7 @@ namespace graph {
                 assert(other_vertex != -1);
                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                     boost::add_edge(0, other_vertex, g);
-                edge_weight_map[add_edge_result.first] = 1.0f;
+                edge_weight_map[add_edge_result.first] = weight(hc, adjacent_hc);
             }
 
             int i = 1;
@@ -188,7 +192,7 @@ namespace graph {
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);
-                                edge_weight_map[add_edge_result.first] = 1.0f;
+                                edge_weight_map[add_edge_result.first] = weight(current, adjacent_hc);
                             }
                         }
 
@@ -199,7 +203,7 @@ namespace graph {
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);
-                                edge_weight_map[add_edge_result.first] = 1.0f;
+                                edge_weight_map[add_edge_result.first] = weight(current, adjacent_hc);
                             }
                         }
 
@@ -210,19 +214,18 @@ namespace graph {
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);
-                                edge_weight_map[add_edge_result.first] = 1.0f;
+                                edge_weight_map[add_edge_result.first] = weight(current, adjacent_hc);
                             }
                         }
 
                         if (k == 0) {
                             adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
-                            {
-                                auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
-                                if (other_vertex != -1) {
-                                    std::pair<edge_descriptor_t, bool> const add_edge_result =
-                                        boost::add_edge(i, other_vertex, g);
-                                    edge_weight_map[add_edge_result.first] = 1.0f;
-                                }
+
+                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            if (other_vertex != -1) {
+                                std::pair<edge_descriptor_t, bool> const add_edge_result =
+                                    boost::add_edge(i, other_vertex, g);
+                                edge_weight_map[add_edge_result.first] = weight(current, adjacent_hc);
                             }
                         }
                     }

@@ -141,6 +141,8 @@ TEST(graph_tests, construct)
         hex_id_property_map,
         edge_weight_map,
         to_hex_coord(1411),
+        [](hex_coord_t hc) { return true; },
+        [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
         start_data.map().width,
         start_data.map().height
     );
