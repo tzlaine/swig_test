@@ -94,7 +94,7 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
         hex.province_id = start_data.hex_province(h.coord);
 
         if (hex.province_id != -1) {
-            assert(hex.province_id < map_.provinces.size());
+            assert(hex.province_id < (int)map_.provinces.size());
             auto & province = map_.provinces[hex.province_id];
             if (province.id == -1) {
                 province.id = hex.province_id;
@@ -147,5 +147,73 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
                 "No province " + std::to_string(i) + " could be defined from the list of national hexes."
             );
         ++i;
+    }
+
+    auto const & scenario = start_data.scenario();
+    for (auto const & t : scenario.teams) {
+        auto & team = teams_[t.name];
+
+        team.nations.resize(t.nations.size());
+        std::transform(
+            t.nations.begin(), t.nations.end(),
+            team.nations.begin(),
+            [&](std::string const & nation_name) {
+                return start_data.nation(nation_name).nation_id;
+            }
+        );
+
+        std::sort(team.nations.begin(), team.nations.end());
+
+        for (auto const nation_id : team.nations) {
+            nation_teams_[nation_id] = t.name;
+        }
+    }
+
+    for (auto const & pair : scenario.nations) {
+        auto const & nation = pair.second;
+        for (auto const & enemy_nation_key : nation.at_war_with) {
+            auto const nation_id = start_data.nation(pair.first).nation_id;
+            auto const enemy_nation_id = start_data.nation(enemy_nation_key).nation_id;
+            declare_war(nation_id, enemy_nation_id, start_data);
+        }
+    }
+}
+
+void game_data_t::declare_war (
+    int nation_id,
+    int enemy_nation_id,
+    start_data::start_data_t const & start_data
+) {
+    auto const it = nation_teams_.find(enemy_nation_id);
+    if (it != nation_teams_.end()) {
+        auto const & enemy_team_name = it->second;
+        reusable_elem_.team_ = enemy_team_name;
+        reusable_elem_.nation_ = nation_id;
+        team_and_nation_at_war_.insert(reusable_elem_);
+    }
+
+    nations_at_war_.insert(nations_at_war_elem_t(nation_id, enemy_nation_id));
+}
+
+void game_data_t::leave_war (int nation_id, start_data::start_data_t const & start_data)
+{
+    {
+        auto const new_end_it = std::remove_if(
+            team_and_nation_at_war_.begin(), team_and_nation_at_war_.end(),
+            [=](team_and_nation_at_war_elem_t elem) {
+                return elem.nation_ == nation_id;
+            }
+        );
+        team_and_nation_at_war_.erase(new_end_it, team_and_nation_at_war_.end());
+    }
+
+    {
+        auto const new_end_it = std::remove_if(
+            nations_at_war_.begin(), nations_at_war_.end(),
+            [=](nations_at_war_elem_t elem) {
+                return elem.lhs_ == nation_id || elem.rhs_ == nation_id;
+            }
+        );
+        nations_at_war_.erase(new_end_it, nations_at_war_.end());
     }
 }

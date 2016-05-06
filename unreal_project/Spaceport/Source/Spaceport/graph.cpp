@@ -54,6 +54,62 @@ namespace {
         return false;
     }
 
+    struct blocking_contents_t
+    {
+        int friendly_ships;
+        int friendly_units;
+        int friendly_bases;
+        int enemy_ships;
+        int enemy_units;
+        int enemy_bases;
+    };
+
+    blocking_contents_t blocking_contents (hex_t const & hex, team_t const & team)
+    {
+        blocking_contents_t retval = {0};
+
+        for (auto const & zone : hex.zones) {
+            for (auto const & fixture : zone.fixtures) {
+                if (fixture.type == hex_zone_fixture_t::type_t::type_base) {
+                    // TODO: Must this be a certain number of fighters or PFs to count?
+                    if (fixture.base.fighters != 0 || fixture.base.pfs != 0) {
+                        // TODO: if allied, increment friendly
+                        ++retval.friendly_bases;
+                        // TODO: if enemy, increment enemy
+                    }
+                }
+            }
+        }
+
+        for (auto const nation_id : team.nations) {
+            auto it = hex.fleets.fleets.find(nation_id);
+            if (it == hex.fleets.fleets.end())
+                continue;
+
+            auto const & fleet = it->second;
+            for (auto const & unit : fleet.units) {
+                // TODO
+            }
+        }
+
+#if 0
+        for (int n = 0; n < nations; ++n) {
+            const int flag = 1 << n;
+            if (nation_team_membership[n] == team) {
+                friendly_ships |= bool(hex.ship & flag);
+                friendly_units |= friendly_ships || hex.nonship_unit & flag;
+                friendly_base |= bool(hex.base_with_fighters & flag);
+            } else {
+                enemy_ships |= bool(hex.ship & flag);
+                enemy_units |= friendly_ships || hex.nonship_unit & flag;
+                enemy_base |= bool(hex.base_with_fighters & flag);
+            }
+        }
+#endif
+
+        return retval;
+    }
+
 }
 
 #if 0

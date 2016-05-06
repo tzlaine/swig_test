@@ -17,6 +17,8 @@ struct unit_t
     int unit_id;
     int owner;
     int original_owner;
+    int fighters;
+    int pfs;
     tug_mission_t tug_mission;
 };
 
@@ -96,6 +98,12 @@ struct offmap_areas_t
     boost::container::flat_map<int, offmap_area_t> areas;
 };
 
+struct team_t
+{
+    std::string name;
+    std::vector<int> nations;
+};
+
 
 
 pb_message::game_data::unit_t to_protobuf (const ::unit_t& value);
@@ -130,3 +138,6 @@ pb_message::game_data::offmap_area_t to_protobuf (const ::offmap_area_t& value);
 
 pb_message::game_data::offmap_areas_t to_protobuf (const ::offmap_areas_t& value);
 ::offmap_areas_t from_protobuf (const pb_message::game_data::offmap_areas_t& msg);
+
+pb_message::game_data::team_t to_protobuf (const ::team_t& value);
+::team_t from_protobuf (const pb_message::game_data::team_t& msg);

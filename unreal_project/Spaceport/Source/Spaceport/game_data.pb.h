@@ -51,6 +51,7 @@ class offmap_area_t;
 class offmap_areas_t;
 class planet_t;
 class province_t;
+class team_t;
 class unit_t;
 
 enum planet_t_type_t {
@@ -172,9 +173,21 @@ class unit_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 original_owner() const;
   void set_original_owner(::google::protobuf::int32 value);
 
-  // optional .pb_message.tug_mission_t tug_mission = 4;
+  // optional int32 fighters = 4;
+  void clear_fighters();
+  static const int kFightersFieldNumber = 4;
+  ::google::protobuf::int32 fighters() const;
+  void set_fighters(::google::protobuf::int32 value);
+
+  // optional int32 pfs = 5;
+  void clear_pfs();
+  static const int kPfsFieldNumber = 5;
+  ::google::protobuf::int32 pfs() const;
+  void set_pfs(::google::protobuf::int32 value);
+
+  // optional .pb_message.tug_mission_t tug_mission = 6;
   void clear_tug_mission();
-  static const int kTugMissionFieldNumber = 4;
+  static const int kTugMissionFieldNumber = 6;
   ::pb_message::tug_mission_t tug_mission() const;
   void set_tug_mission(::pb_message::tug_mission_t value);
 
@@ -186,6 +199,8 @@ class unit_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 unit_id_;
   ::google::protobuf::int32 owner_;
   ::google::protobuf::int32 original_owner_;
+  ::google::protobuf::int32 fighters_;
+  ::google::protobuf::int32 pfs_;
   int tug_mission_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
@@ -1210,6 +1225,103 @@ class offmap_areas_t : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static offmap_areas_t* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class team_t : public ::google::protobuf::Message {
+ public:
+  team_t();
+  virtual ~team_t();
+
+  team_t(const team_t& from);
+
+  inline team_t& operator=(const team_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const team_t& default_instance();
+
+  void Swap(team_t* other);
+
+  // implements Message ----------------------------------------------
+
+  inline team_t* New() const { return New(NULL); }
+
+  team_t* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const team_t& from);
+  void MergeFrom(const team_t& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(team_t* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string name = 1;
+  void clear_name();
+  static const int kNameFieldNumber = 1;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // repeated int32 nations = 2;
+  int nations_size() const;
+  void clear_nations();
+  static const int kNationsFieldNumber = 2;
+  ::google::protobuf::int32 nations(int index) const;
+  void set_nations(int index, ::google::protobuf::int32 value);
+  void add_nations(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      nations() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_nations();
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.team_t)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > nations_;
+  mutable int _nations_cached_byte_size_;
+  mutable int _cached_size_;
+  friend void  protobuf_AddDesc_game_5fdata_2eproto();
+  friend void protobuf_AssignDesc_game_5fdata_2eproto();
+  friend void protobuf_ShutdownFile_game_5fdata_2eproto();
+
+  void InitAsDefaultInstance();
+  static team_t* default_instance_;
+};
 // ===================================================================
 
 
@@ -1260,7 +1372,35 @@ inline void unit_t::set_original_owner(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.original_owner)
 }
 
-// optional .pb_message.tug_mission_t tug_mission = 4;
+// optional int32 fighters = 4;
+inline void unit_t::clear_fighters() {
+  fighters_ = 0;
+}
+inline ::google::protobuf::int32 unit_t::fighters() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.fighters)
+  return fighters_;
+}
+inline void unit_t::set_fighters(::google::protobuf::int32 value) {
+  
+  fighters_ = value;
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.fighters)
+}
+
+// optional int32 pfs = 5;
+inline void unit_t::clear_pfs() {
+  pfs_ = 0;
+}
+inline ::google::protobuf::int32 unit_t::pfs() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.pfs)
+  return pfs_;
+}
+inline void unit_t::set_pfs(::google::protobuf::int32 value) {
+  
+  pfs_ = value;
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.pfs)
+}
+
+// optional .pb_message.tug_mission_t tug_mission = 6;
 inline void unit_t::clear_tug_mission() {
   tug_mission_ = 0;
 }
@@ -1919,7 +2059,86 @@ offmap_areas_t::mutable_areas() {
   return areas_.MutableMap();
 }
 
+// -------------------------------------------------------------------
+
+// team_t
+
+// optional string name = 1;
+inline void team_t::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& team_t::name() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.team_t.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void team_t::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.team_t.name)
+}
+inline void team_t::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:pb_message.game_data.team_t.name)
+}
+inline void team_t::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:pb_message.game_data.team_t.name)
+}
+inline ::std::string* team_t::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.team_t.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* team_t::release_name() {
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void team_t::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.team_t.name)
+}
+
+// repeated int32 nations = 2;
+inline int team_t::nations_size() const {
+  return nations_.size();
+}
+inline void team_t::clear_nations() {
+  nations_.Clear();
+}
+inline ::google::protobuf::int32 team_t::nations(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.team_t.nations)
+  return nations_.Get(index);
+}
+inline void team_t::set_nations(int index, ::google::protobuf::int32 value) {
+  nations_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.team_t.nations)
+}
+inline void team_t::add_nations(::google::protobuf::int32 value) {
+  nations_.Add(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.team_t.nations)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+team_t::nations() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.team_t.nations)
+  return nations_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+team_t::mutable_nations() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.team_t.nations)
+  return &nations_;
+}
+
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

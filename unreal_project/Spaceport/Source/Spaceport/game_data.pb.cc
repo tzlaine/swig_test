@@ -59,6 +59,9 @@ const ::google::protobuf::Descriptor* offmap_areas_t_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   offmap_areas_t_reflection_ = NULL;
 const ::google::protobuf::Descriptor* offmap_areas_t_AreasEntry_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* team_t_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  team_t_reflection_ = NULL;
 
 }  // namespace
 
@@ -70,10 +73,12 @@ void protobuf_AssignDesc_game_5fdata_2eproto() {
       "game_data.proto");
   GOOGLE_CHECK(file != NULL);
   unit_t_descriptor_ = file->message_type(0);
-  static const int unit_t_offsets_[4] = {
+  static const int unit_t_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, unit_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, owner_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, original_owner_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, fighters_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, pfs_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, tug_mission_),
   };
   unit_t_reflection_ =
@@ -256,6 +261,22 @@ void protobuf_AssignDesc_game_5fdata_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_areas_t, _internal_metadata_),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(offmap_areas_t, _is_default_instance_));
   offmap_areas_t_AreasEntry_descriptor_ = offmap_areas_t_descriptor_->nested_type(0);
+  team_t_descriptor_ = file->message_type(11);
+  static const int team_t_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(team_t, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(team_t, nations_),
+  };
+  team_t_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      team_t_descriptor_,
+      team_t::default_instance_,
+      team_t_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(team_t),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(team_t, _internal_metadata_),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(team_t, _is_default_instance_));
 }
 
 namespace {
@@ -308,6 +329,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
                 offmap_areas_t_AreasEntry_descriptor_));
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      team_t_descriptor_, &team_t::default_instance());
 }
 
 }  // namespace
@@ -335,6 +358,8 @@ void protobuf_ShutdownFile_game_5fdata_2eproto() {
   delete offmap_area_t_reflection_;
   delete offmap_areas_t::default_instance_;
   delete offmap_areas_t_reflection_;
+  delete team_t::default_instance_;
+  delete team_t_reflection_;
 }
 
 void protobuf_AddDesc_game_5fdata_2eproto() {
@@ -346,43 +371,45 @@ void protobuf_AddDesc_game_5fdata_2eproto() {
   ::pb_message::protobuf_AddDesc_base_5ftypes_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\017game_data.proto\022\024pb_message.game_data\032"
-    "\020base_types.proto\"p\n\006unit_t\022\017\n\007unit_id\030\001"
-    " \001(\005\022\r\n\005owner\030\002 \001(\005\022\026\n\016original_owner\030\003 "
-    "\001(\005\022.\n\013tug_mission\030\004 \001(\0162\031.pb_message.tu"
-    "g_mission_t\"6\n\007fleet_t\022+\n\005units\030\001 \003(\0132\034."
-    "pb_message.game_data.unit_t\"\224\001\n\010fleets_t"
-    "\022:\n\006fleets\030\001 \003(\0132*.pb_message.game_data."
-    "fleets_t.FleetsEntry\032L\n\013FleetsEntry\022\013\n\003k"
-    "ey\030\001 \001(\005\022,\n\005value\030\002 \001(\0132\035.pb_message.gam"
-    "e_data.fleet_t:\0028\001\"\302\001\n\010planet_t\022\r\n\005owner"
-    "\030\001 \001(\005\022\026\n\016original_owner\030\002 \001(\005\0223\n\004type\030\003"
-    " \001(\0162%.pb_message.game_data.planet_t.typ"
-    "e_t\022-\n\005units\030\004 \001(\0132\036.pb_message.game_dat"
-    "a.fleets_t\"+\n\006type_t\022\t\n\005minor\020\000\022\t\n\005major"
-    "\020\001\022\013\n\007capital\020\002\"\331\001\n\022hex_zone_fixture_t\022="
-    "\n\004type\030\001 \001(\0162/.pb_message.game_data.hex_"
-    "zone_fixture_t.type_t\022*\n\004base\030\002 \001(\0132\034.pb"
-    "_message.game_data.unit_t\022.\n\006planet\030\003 \001("
-    "\0132\036.pb_message.game_data.planet_t\"(\n\006typ"
-    "e_t\022\r\n\ttype_base\020\000\022\017\n\013type_planet\020\001\"V\n\nh"
-    "ex_zone_t\022\014\n\004name\030\001 \001(\t\022:\n\010fixtures\030\002 \003("
-    "\0132(.pb_message.game_data.hex_zone_fixtur"
-    "e_t\"\245\001\n\005hex_t\022&\n\005coord\030\001 \001(\0132\027.pb_messag"
-    "e.hex_coord_t\022\023\n\013province_id\030\002 \001(\005\022/\n\005zo"
-    "nes\030\004 \003(\0132 .pb_message.game_data.hex_zon"
-    "e_t\022.\n\006fleets\030\005 \001(\0132\036.pb_message.game_da"
-    "ta.fleets_t\"\?\n\nprovince_t\022\n\n\002id\030\001 \001(\005\022\r\n"
-    "\005owner\030\002 \001(\005\022\026\n\016original_owner\030\003 \001(\005\"\207\001\n"
-    "\005map_t\022\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022*\n"
-    "\005hexes\030\003 \003(\0132\033.pb_message.game_data.hex_"
-    "t\0223\n\tprovinces\030\004 \003(\0132 .pb_message.game_d"
-    "ata.province_t\"N\n\roffmap_area_t\022\r\n\005owner"
-    "\030\001 \001(\005\022.\n\006fleets\030\002 \001(\0132\036.pb_message.game"
-    "_data.fleets_t\"\243\001\n\016offmap_areas_t\022>\n\005are"
-    "as\030\001 \003(\0132/.pb_message.game_data.offmap_a"
-    "reas_t.AreasEntry\032Q\n\nAreasEntry\022\013\n\003key\030\001"
-    " \001(\005\0222\n\005value\030\002 \001(\0132#.pb_message.game_da"
-    "ta.offmap_area_t:\0028\001b\006proto3", 1508);
+    "\020base_types.proto\"\217\001\n\006unit_t\022\017\n\007unit_id\030"
+    "\001 \001(\005\022\r\n\005owner\030\002 \001(\005\022\026\n\016original_owner\030\003"
+    " \001(\005\022\020\n\010fighters\030\004 \001(\005\022\013\n\003pfs\030\005 \001(\005\022.\n\013t"
+    "ug_mission\030\006 \001(\0162\031.pb_message.tug_missio"
+    "n_t\"6\n\007fleet_t\022+\n\005units\030\001 \003(\0132\034.pb_messa"
+    "ge.game_data.unit_t\"\224\001\n\010fleets_t\022:\n\006flee"
+    "ts\030\001 \003(\0132*.pb_message.game_data.fleets_t"
+    ".FleetsEntry\032L\n\013FleetsEntry\022\013\n\003key\030\001 \001(\005"
+    "\022,\n\005value\030\002 \001(\0132\035.pb_message.game_data.f"
+    "leet_t:\0028\001\"\302\001\n\010planet_t\022\r\n\005owner\030\001 \001(\005\022\026"
+    "\n\016original_owner\030\002 \001(\005\0223\n\004type\030\003 \001(\0162%.p"
+    "b_message.game_data.planet_t.type_t\022-\n\005u"
+    "nits\030\004 \001(\0132\036.pb_message.game_data.fleets"
+    "_t\"+\n\006type_t\022\t\n\005minor\020\000\022\t\n\005major\020\001\022\013\n\007ca"
+    "pital\020\002\"\331\001\n\022hex_zone_fixture_t\022=\n\004type\030\001"
+    " \001(\0162/.pb_message.game_data.hex_zone_fix"
+    "ture_t.type_t\022*\n\004base\030\002 \001(\0132\034.pb_message"
+    ".game_data.unit_t\022.\n\006planet\030\003 \001(\0132\036.pb_m"
+    "essage.game_data.planet_t\"(\n\006type_t\022\r\n\tt"
+    "ype_base\020\000\022\017\n\013type_planet\020\001\"V\n\nhex_zone_"
+    "t\022\014\n\004name\030\001 \001(\t\022:\n\010fixtures\030\002 \003(\0132(.pb_m"
+    "essage.game_data.hex_zone_fixture_t\"\245\001\n\005"
+    "hex_t\022&\n\005coord\030\001 \001(\0132\027.pb_message.hex_co"
+    "ord_t\022\023\n\013province_id\030\002 \001(\005\022/\n\005zones\030\004 \003("
+    "\0132 .pb_message.game_data.hex_zone_t\022.\n\006f"
+    "leets\030\005 \001(\0132\036.pb_message.game_data.fleet"
+    "s_t\"\?\n\nprovince_t\022\n\n\002id\030\001 \001(\005\022\r\n\005owner\030\002"
+    " \001(\005\022\026\n\016original_owner\030\003 \001(\005\"\207\001\n\005map_t\022\r"
+    "\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022*\n\005hexes\030\003"
+    " \003(\0132\033.pb_message.game_data.hex_t\0223\n\tpro"
+    "vinces\030\004 \003(\0132 .pb_message.game_data.prov"
+    "ince_t\"N\n\roffmap_area_t\022\r\n\005owner\030\001 \001(\005\022."
+    "\n\006fleets\030\002 \001(\0132\036.pb_message.game_data.fl"
+    "eets_t\"\243\001\n\016offmap_areas_t\022>\n\005areas\030\001 \003(\013"
+    "2/.pb_message.game_data.offmap_areas_t.A"
+    "reasEntry\032Q\n\nAreasEntry\022\013\n\003key\030\001 \001(\005\0222\n\005"
+    "value\030\002 \001(\0132#.pb_message.game_data.offma"
+    "p_area_t:\0028\001\"\'\n\006team_t\022\014\n\004name\030\001 \001(\t\022\017\n\007"
+    "nations\030\002 \003(\005b\006proto3", 1581);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game_data.proto", &protobuf_RegisterTypes);
   unit_t::default_instance_ = new unit_t();
@@ -396,6 +423,7 @@ void protobuf_AddDesc_game_5fdata_2eproto() {
   map_t::default_instance_ = new map_t();
   offmap_area_t::default_instance_ = new offmap_area_t();
   offmap_areas_t::default_instance_ = new offmap_areas_t();
+  team_t::default_instance_ = new team_t();
   unit_t::default_instance_->InitAsDefaultInstance();
   fleet_t::default_instance_->InitAsDefaultInstance();
   fleets_t::default_instance_->InitAsDefaultInstance();
@@ -407,6 +435,7 @@ void protobuf_AddDesc_game_5fdata_2eproto() {
   map_t::default_instance_->InitAsDefaultInstance();
   offmap_area_t::default_instance_->InitAsDefaultInstance();
   offmap_areas_t::default_instance_->InitAsDefaultInstance();
+  team_t::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_game_5fdata_2eproto);
 }
 
@@ -433,6 +462,8 @@ static void MergeFromFail(int line) {
 const int unit_t::kUnitIdFieldNumber;
 const int unit_t::kOwnerFieldNumber;
 const int unit_t::kOriginalOwnerFieldNumber;
+const int unit_t::kFightersFieldNumber;
+const int unit_t::kPfsFieldNumber;
 const int unit_t::kTugMissionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -460,6 +491,8 @@ void unit_t::SharedCtor() {
   unit_id_ = 0;
   owner_ = 0;
   original_owner_ = 0;
+  fighters_ = 0;
+  pfs_ = 0;
   tug_mission_ = 0;
 }
 
@@ -564,13 +597,43 @@ bool unit_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_tug_mission;
+        if (input->ExpectTag(32)) goto parse_fighters;
         break;
       }
 
-      // optional .pb_message.tug_mission_t tug_mission = 4;
+      // optional int32 fighters = 4;
       case 4: {
         if (tag == 32) {
+         parse_fighters:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &fighters_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_pfs;
+        break;
+      }
+
+      // optional int32 pfs = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_pfs:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &pfs_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_tug_mission;
+        break;
+      }
+
+      // optional .pb_message.tug_mission_t tug_mission = 6;
+      case 6: {
+        if (tag == 48) {
          parse_tug_mission:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -623,10 +686,20 @@ void unit_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->original_owner(), output);
   }
 
-  // optional .pb_message.tug_mission_t tug_mission = 4;
+  // optional int32 fighters = 4;
+  if (this->fighters() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->fighters(), output);
+  }
+
+  // optional int32 pfs = 5;
+  if (this->pfs() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->pfs(), output);
+  }
+
+  // optional .pb_message.tug_mission_t tug_mission = 6;
   if (this->tug_mission() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->tug_mission(), output);
+      6, this->tug_mission(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:pb_message.game_data.unit_t)
@@ -650,10 +723,20 @@ void unit_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->original_owner(), target);
   }
 
-  // optional .pb_message.tug_mission_t tug_mission = 4;
+  // optional int32 fighters = 4;
+  if (this->fighters() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->fighters(), target);
+  }
+
+  // optional int32 pfs = 5;
+  if (this->pfs() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->pfs(), target);
+  }
+
+  // optional .pb_message.tug_mission_t tug_mission = 6;
   if (this->tug_mission() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      4, this->tug_mission(), target);
+      6, this->tug_mission(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.unit_t)
@@ -684,7 +767,21 @@ int unit_t::ByteSize() const {
         this->original_owner());
   }
 
-  // optional .pb_message.tug_mission_t tug_mission = 4;
+  // optional int32 fighters = 4;
+  if (this->fighters() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->fighters());
+  }
+
+  // optional int32 pfs = 5;
+  if (this->pfs() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->pfs());
+  }
+
+  // optional .pb_message.tug_mission_t tug_mission = 6;
   if (this->tug_mission() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->tug_mission());
@@ -719,6 +816,12 @@ void unit_t::MergeFrom(const unit_t& from) {
   if (from.original_owner() != 0) {
     set_original_owner(from.original_owner());
   }
+  if (from.fighters() != 0) {
+    set_fighters(from.fighters());
+  }
+  if (from.pfs() != 0) {
+    set_pfs(from.pfs());
+  }
   if (from.tug_mission() != 0) {
     set_tug_mission(from.tug_mission());
   }
@@ -749,6 +852,8 @@ void unit_t::InternalSwap(unit_t* other) {
   std::swap(unit_id_, other->unit_id_);
   std::swap(owner_, other->owner_);
   std::swap(original_owner_, other->original_owner_);
+  std::swap(fighters_, other->fighters_);
+  std::swap(pfs_, other->pfs_);
   std::swap(tug_mission_, other->tug_mission_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -807,7 +912,35 @@ void unit_t::clear_original_owner() {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.original_owner)
 }
 
-// optional .pb_message.tug_mission_t tug_mission = 4;
+// optional int32 fighters = 4;
+void unit_t::clear_fighters() {
+  fighters_ = 0;
+}
+ ::google::protobuf::int32 unit_t::fighters() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.fighters)
+  return fighters_;
+}
+ void unit_t::set_fighters(::google::protobuf::int32 value) {
+  
+  fighters_ = value;
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.fighters)
+}
+
+// optional int32 pfs = 5;
+void unit_t::clear_pfs() {
+  pfs_ = 0;
+}
+ ::google::protobuf::int32 unit_t::pfs() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.pfs)
+  return pfs_;
+}
+ void unit_t::set_pfs(::google::protobuf::int32 value) {
+  
+  pfs_ = value;
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.pfs)
+}
+
+// optional .pb_message.tug_mission_t tug_mission = 6;
 void unit_t::clear_tug_mission() {
   tug_mission_ = 0;
 }
@@ -4315,6 +4448,370 @@ offmap_areas_t::areas() const {
 offmap_areas_t::mutable_areas() {
   // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.offmap_areas_t.areas)
   return areas_.MutableMap();
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int team_t::kNameFieldNumber;
+const int team_t::kNationsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+team_t::team_t()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:pb_message.game_data.team_t)
+}
+
+void team_t::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+team_t::team_t(const team_t& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.team_t)
+}
+
+void team_t::SharedCtor() {
+    _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+team_t::~team_t() {
+  // @@protoc_insertion_point(destructor:pb_message.game_data.team_t)
+  SharedDtor();
+}
+
+void team_t::SharedDtor() {
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != default_instance_) {
+  }
+}
+
+void team_t::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* team_t::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return team_t_descriptor_;
+}
+
+const team_t& team_t::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_game_5fdata_2eproto();
+  return *default_instance_;
+}
+
+team_t* team_t::default_instance_ = NULL;
+
+team_t* team_t::New(::google::protobuf::Arena* arena) const {
+  team_t* n = new team_t;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void team_t::Clear() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  nations_.Clear();
+}
+
+bool team_t::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.team_t)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string name = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->name().data(), this->name().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "pb_message.game_data.team_t.name"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_nations;
+        break;
+      }
+
+      // repeated int32 nations = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_nations:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_nations())));
+        } else if (tag == 16) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 18, input, this->mutable_nations())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.team_t)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.team_t)
+  return false;
+#undef DO_
+}
+
+void team_t::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.team_t)
+  // optional string name = 1;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "pb_message.game_data.team_t.name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->name(), output);
+  }
+
+  // repeated int32 nations = 2;
+  if (this->nations_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_nations_cached_byte_size_);
+  }
+  for (int i = 0; i < this->nations_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->nations(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.team_t)
+}
+
+::google::protobuf::uint8* team_t::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.team_t)
+  // optional string name = 1;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "pb_message.game_data.team_t.name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->name(), target);
+  }
+
+  // repeated int32 nations = 2;
+  if (this->nations_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      2,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _nations_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->nations_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteInt32NoTagToArray(this->nations(i), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.team_t)
+  return target;
+}
+
+int team_t::ByteSize() const {
+  int total_size = 0;
+
+  // optional string name = 1;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  // repeated int32 nations = 2;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->nations_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->nations(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _nations_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void team_t::MergeFrom(const ::google::protobuf::Message& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const team_t* source = 
+      ::google::protobuf::internal::DynamicCastToGenerated<const team_t>(
+          &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void team_t::MergeFrom(const team_t& from) {
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  nations_.MergeFrom(from.nations_);
+  if (from.name().size() > 0) {
+
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+}
+
+void team_t::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void team_t::CopyFrom(const team_t& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool team_t::IsInitialized() const {
+
+  return true;
+}
+
+void team_t::Swap(team_t* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void team_t::InternalSwap(team_t* other) {
+  name_.Swap(&other->name_);
+  nations_.UnsafeArenaSwap(&other->nations_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata team_t::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = team_t_descriptor_;
+  metadata.reflection = team_t_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// team_t
+
+// optional string name = 1;
+void team_t::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ const ::std::string& team_t::name() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.team_t.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void team_t::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.team_t.name)
+}
+ void team_t::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:pb_message.game_data.team_t.name)
+}
+ void team_t::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:pb_message.game_data.team_t.name)
+}
+ ::std::string* team_t::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.team_t.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* team_t::release_name() {
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void team_t::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.team_t.name)
+}
+
+// repeated int32 nations = 2;
+int team_t::nations_size() const {
+  return nations_.size();
+}
+void team_t::clear_nations() {
+  nations_.Clear();
+}
+ ::google::protobuf::int32 team_t::nations(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.team_t.nations)
+  return nations_.Get(index);
+}
+ void team_t::set_nations(int index, ::google::protobuf::int32 value) {
+  nations_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.team_t.nations)
+}
+ void team_t::add_nations(::google::protobuf::int32 value) {
+  nations_.Add(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.team_t.nations)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+team_t::nations() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.team_t.nations)
+  return nations_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+team_t::mutable_nations() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.team_t.nations)
+  return &nations_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

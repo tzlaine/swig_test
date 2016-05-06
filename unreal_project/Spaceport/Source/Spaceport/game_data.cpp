@@ -19,6 +19,8 @@ pb_message::game_data::unit_t to_protobuf (const ::unit_t& value)
     retval.set_unit_id(value.unit_id);
     retval.set_owner(value.owner);
     retval.set_original_owner(value.original_owner);
+    retval.set_fighters(value.fighters);
+    retval.set_pfs(value.pfs);
     retval.set_tug_mission(static_cast< pb_message::tug_mission_t >(value.tug_mission));
     return retval;
 }
@@ -29,6 +31,8 @@ pb_message::game_data::unit_t to_protobuf (const ::unit_t& value)
     retval.unit_id = msg.unit_id();
     retval.owner = msg.owner();
     retval.original_owner = msg.original_owner();
+    retval.fighters = msg.fighters();
+    retval.pfs = msg.pfs();
     retval.tug_mission = static_cast<std::remove_reference<decltype(retval.tug_mission)>::type>(msg.tug_mission());
     return retval;
 }
@@ -250,6 +254,30 @@ pb_message::game_data::offmap_areas_t to_protobuf (const ::offmap_areas_t& value
     {
         for (const auto& x : msg.areas()) {
             retval.areas[x.first] = from_protobuf(x.second);
+        }
+    }
+    return retval;
+}
+
+pb_message::game_data::team_t to_protobuf (const ::team_t& value)
+{
+    pb_message::game_data::team_t retval;
+    retval.set_name(value.name);
+    for (const auto& x : value.nations) {
+        retval.add_nations(x);
+    }
+    return retval;
+}
+
+::team_t from_protobuf (const pb_message::game_data::team_t& msg)
+{
+    ::team_t retval;
+    retval.name = msg.name();
+    {
+        retval.nations.resize(msg.nations_size());
+        auto it = retval.nations.begin();
+        for (const auto& x : msg.nations()) {
+            *it++ = x;
         }
     }
     return retval;

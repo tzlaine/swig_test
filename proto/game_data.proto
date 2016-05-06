@@ -10,7 +10,9 @@ message unit_t
     int32 unit_id = 1; // TODO: Define this type for real.
     int32 owner = 2;
     int32 original_owner = 3;
-    pb_message.tug_mission_t tug_mission = 4;
+    int32 fighters = 4;
+    int32 pfs = 5;
+    pb_message.tug_mission_t tug_mission = 6;
 }
 
 message fleet_t
@@ -89,4 +91,10 @@ message offmap_area_t
 message offmap_areas_t
 {
     map<int32, offmap_area_t> areas = 1;
+}
+
+message team_t
+{
+    string name = 1;
+    repeated int32 nations = 2;
 }
