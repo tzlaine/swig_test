@@ -127,12 +127,19 @@ namespace graph {
         edge_weight_property_map_t & edge_weight_map,
         hex_coord_t hc,
         int width,
-        int height
+        int height,
+        int radius = max_useful_hex_distance
     ) {
+        assert(on_map(hc, width, height));
+        assert(0 < width);
+        assert(0 < height);
+        assert(0 < radius);
+        assert(radius <= max_useful_hex_distance);
+
         hex_id_property_map = boost::get(vertex_hex_id_tag_t(), g);
         edge_weight_map = boost::get(boost::edge_weight, g);
 
-        auto const neighbors = adjacent_hex_coords(hc, width, height, max_useful_hex_distance);
+        auto const neighbors = adjacent_hex_coords(hc, width, height, radius);
         std::vector<int> offset_indices(width * height, -1); // TODO: calloc()?
         {
             int i = 0;
@@ -152,7 +159,6 @@ namespace graph {
 
         {
             // connect hc to r=1 hexes
-            assert(0 < max_useful_hex_distance);
             for (hex_direction_t const d : all_hex_directions) {
                 auto const adjacent_hc = adjacent_hex_coord(hc, d);
                 auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
@@ -167,7 +173,7 @@ namespace graph {
             // Each outermost loop iteration J connects each hex at r=J to the
             // other hexes at r=J, and to all adjacent ones at r=J+1.  At
             // r=N-1, we skip connecting to the next row.
-            for (int j = 0; j < max_useful_hex_distance; ++j) {
+            for (int j = 0; j < radius; ++j) {
                 current = adjacent_hex_coord(current, hex_direction_t::below);
                 for (hex_direction_t const d : all_hex_directions) {
                     for (int k = 0; k <= j; ++k, ++i) {
