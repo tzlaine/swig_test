@@ -22,12 +22,22 @@ enum class hex_direction_t {
     hex_directions
 };
 
-inline hex_direction_t& operator++ (hex_direction_t& d)
+inline hex_direction_t & operator++ (hex_direction_t & d)
 {
     assert(d != hex_direction_t::hex_directions);
     const int n = static_cast<int>(hex_direction_t::hex_directions);
     int d_int = static_cast<int>(d);
     d_int = (d_int + 1) % n;
+    d = hex_direction_t(d_int);
+    return d;
+}
+
+inline hex_direction_t & operator-- (hex_direction_t & d)
+{
+    assert(d != hex_direction_t::hex_directions);
+    const int n = static_cast<int>(hex_direction_t::hex_directions);
+    int d_int = static_cast<int>(d);
+    d_int = (d_int + n - 1) % n;
     d = hex_direction_t(d_int);
     return d;
 }

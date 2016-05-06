@@ -97,40 +97,103 @@ namespace graph {
 
     typedef boost::graph_traits<graph_t>::edge_descriptor edge_descriptor_t;
 
-
     inline void init_graph (
         graph_t & g,
         hex_id_property_map_t & hex_id_property_map,
         edge_weight_property_map_t & edge_weight_map,
+        hex_coord_t hc,
         int width,
         int height
     ) {
         hex_id_property_map = boost::get(vertex_hex_id_tag_t(), g);
         edge_weight_map = boost::get(boost::edge_weight, g);
 
+        auto const neighbors = adjacent_hex_coords(hc, width, height, max_useful_hex_distance);
+        std::vector<int> offset_indices(width * height, -1); // TODO: calloc()?
         {
             int i = 0;
-            for (int x = 0; x < width; ++x) {
-                for (int y = 0; y < height; ++y, ++i) {
-                    int id = to_hex_id(hex_coord_t{x, y});
-                    boost::add_vertex(g);
-                    hex_id_property_map[i] = id;
-                }
+            for (auto const neighbor : neighbors) {
+                offset_indices[to_hex_index(neighbor, width)] = i++;
             }
         }
 
         {
             int i = 0;
-            for (int x = 0; x < width; ++x) {
-                for (int y = 0; y < height; ++y, ++i) {
-                    hex_coord_t const hc{x, y};
-                    for (hex_direction_t d = hex_direction_t::above; d < hex_direction_t::below; ++d) {
-                        hex_coord_t const adjacent_hc = adjacent_hex_coord(hc, d);
-                        if (on_map(adjacent_hc, width, height)) {
-                            int const index = to_hex_index(adjacent_hc, width);
-                            std::pair<edge_descriptor_t, bool> const add_edge_result =
-                                boost::add_edge(i, index, g);
-                            edge_weight_map[add_edge_result.first] = 1.0f;
+            for (auto const neighbor : neighbors) {
+                int id = to_hex_id(neighbor);
+                boost::add_vertex(g);
+                hex_id_property_map[i] = id;
+            }
+        }
+
+        {
+            // connect hc to r=1 hexes
+            assert(0 < max_useful_hex_distance);
+            for (hex_direction_t const d : all_hex_directions) {
+                auto const adjacent_hc = adjacent_hex_coord(hc, d);
+                auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                assert(other_vertex != -1);
+                std::pair<edge_descriptor_t, bool> const add_edge_result =
+                    boost::add_edge(0, other_vertex, g);
+                edge_weight_map[add_edge_result.first] = 1.0f;
+            }
+
+            int i = 1;
+            auto current = hc;
+            // Each outermost loop iteration J connects each hex at r=J to the
+            // other hexes at r=J, and to all adjacent ones at r=J+1.  At
+            // r=N-1, we skip connecting to the next row.
+            for (int j = 0; j < max_useful_hex_distance; ++j) {
+                current = adjacent_hex_coord(current, hex_direction_t::below);
+                for (hex_direction_t const d : all_hex_directions) {
+                    for (int k = 0; k <= j; ++k, ++i) {
+                        // Step forward.
+                        current = adjacent_hex_coord(current, d);
+
+                        // Connect to the hex directly ahead.
+                        auto adjacent_d = d;
+                        auto adjacent_hc = adjacent_hex_coord(current, adjacent_d);
+                        {
+                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            if (other_vertex != -1) {
+                                std::pair<edge_descriptor_t, bool> const add_edge_result =
+                                    boost::add_edge(i, other_vertex, g);
+                                edge_weight_map[add_edge_result.first] = 1.0f;
+                            }
+                        }
+
+                        // Connect to the next CW hex.
+                        adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
+                        {
+                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            if (other_vertex != -1) {
+                                std::pair<edge_descriptor_t, bool> const add_edge_result =
+                                    boost::add_edge(i, other_vertex, g);
+                                edge_weight_map[add_edge_result.first] = 1.0f;
+                            }
+                        }
+
+                        // Connect to the next CW hex.
+                        adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
+                        {
+                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            if (other_vertex != -1) {
+                                std::pair<edge_descriptor_t, bool> const add_edge_result =
+                                    boost::add_edge(i, other_vertex, g);
+                                edge_weight_map[add_edge_result.first] = 1.0f;
+                            }
+                        }
+
+                        if (k == 0) {
+                            adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
+                            {
+                                auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                                if (other_vertex != -1) {
+                                    std::pair<edge_descriptor_t, bool> const add_edge_result =
+                                        boost::add_edge(i, other_vertex, g);
+                                    edge_weight_map[add_edge_result.first] = 1.0f;
+                                }
+                            }
                         }
                     }
                 }
