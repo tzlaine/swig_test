@@ -14,7 +14,8 @@
 
 namespace graph {
 
-    struct edge_container_tag_t {};
+    struct out_edge_container_tag_t {};
+    struct edge_list_container_tag_t {};
 
     template <class Key, class Value>
     struct constant_property_t
@@ -38,7 +39,7 @@ namespace boost {
 
     // Specializations for custom out-edge containers.
     template <class ValueType>
-    struct container_gen< ::graph::edge_container_tag_t, ValueType>
+    struct container_gen< ::graph::out_edge_container_tag_t, ValueType>
     {
         typedef boost::container::static_vector<ValueType, 6> type;
     };
@@ -58,10 +59,33 @@ namespace boost {
     }
 
     template <>
-    struct parallel_edge_traits< ::graph::edge_container_tag_t>
+    struct parallel_edge_traits< ::graph::out_edge_container_tag_t>
     {
         typedef allow_parallel_edge_tag type;
     };
+
+
+    // Specializations for custom vertex containers.
+    template <class ValueType>
+    struct container_gen< ::graph::edge_list_container_tag_t, ValueType>
+    {
+        typedef boost::container::static_vector<ValueType, max_neighbors * 6> type;
+    };
+
+    template <class ValueType>
+    std::pair<typename boost::container::static_vector<ValueType, max_neighbors * 6>::iterator, bool>
+    push (boost::container::static_vector<ValueType, max_neighbors * 6> & c, ValueType const & v)
+    {
+        c.push_back(v);
+        return std::make_pair(boost::prior(c.end()), true);
+    }
+
+    template <class ValueType>
+    void erase (boost::container::static_vector<ValueType, max_neighbors * 6> & c, ValueType const & x)
+    {
+        c.erase(std::remove(c.begin(), c.end(), x), c.end());
+    }
+
 }
 
 
@@ -81,12 +105,12 @@ namespace graph {
     > edge_property_t;
 
     typedef boost::adjacency_list<
-        edge_container_tag_t,
+        out_edge_container_tag_t,
         boost::vecS,
         boost::undirectedS,
         vertex_property_t,
         edge_property_t,
-        boost::vecS
+        edge_list_container_tag_t
     > graph_t;
 
     typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::const_type const_hex_id_property_map_t;
