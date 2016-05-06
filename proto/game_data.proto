@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "base_types.proto";
 
-package message.game_data;
+package pb_message.game_data;
 
 
 message unit_t
@@ -10,6 +10,7 @@ message unit_t
     int32 unit_id = 1; // TODO: Define this type for real.
     int32 owner = 2;
     int32 original_owner = 3;
+    pb_message.tug_mission_t tug_mission = 4;
 }
 
 message fleet_t

@@ -17,6 +17,7 @@ struct unit_t
     int unit_id;
     int owner;
     int original_owner;
+    tug_mission_t tug_mission;
 };
 
 struct fleet_t
@@ -97,35 +98,35 @@ struct offmap_areas_t
 
 
 
-message::game_data::unit_t to_protobuf (const ::unit_t& value);
-::unit_t from_protobuf (const message::game_data::unit_t& msg);
+pb_message::game_data::unit_t to_protobuf (const ::unit_t& value);
+::unit_t from_protobuf (const pb_message::game_data::unit_t& msg);
 
-message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
-::fleet_t from_protobuf (const message::game_data::fleet_t& msg);
+pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
+::fleet_t from_protobuf (const pb_message::game_data::fleet_t& msg);
 
-message::game_data::fleets_t to_protobuf (const ::fleets_t& value);
-::fleets_t from_protobuf (const message::game_data::fleets_t& msg);
+pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value);
+::fleets_t from_protobuf (const pb_message::game_data::fleets_t& msg);
 
-message::game_data::planet_t to_protobuf (const ::planet_t& value);
-::planet_t from_protobuf (const message::game_data::planet_t& msg);
+pb_message::game_data::planet_t to_protobuf (const ::planet_t& value);
+::planet_t from_protobuf (const pb_message::game_data::planet_t& msg);
 
-message::game_data::hex_zone_fixture_t to_protobuf (const ::hex_zone_fixture_t& value);
-::hex_zone_fixture_t from_protobuf (const message::game_data::hex_zone_fixture_t& msg);
+pb_message::game_data::hex_zone_fixture_t to_protobuf (const ::hex_zone_fixture_t& value);
+::hex_zone_fixture_t from_protobuf (const pb_message::game_data::hex_zone_fixture_t& msg);
 
-message::game_data::hex_zone_t to_protobuf (const ::hex_zone_t& value);
-::hex_zone_t from_protobuf (const message::game_data::hex_zone_t& msg);
+pb_message::game_data::hex_zone_t to_protobuf (const ::hex_zone_t& value);
+::hex_zone_t from_protobuf (const pb_message::game_data::hex_zone_t& msg);
 
-message::game_data::hex_t to_protobuf (const ::hex_t& value);
-::hex_t from_protobuf (const message::game_data::hex_t& msg);
+pb_message::game_data::hex_t to_protobuf (const ::hex_t& value);
+::hex_t from_protobuf (const pb_message::game_data::hex_t& msg);
 
-message::game_data::province_t to_protobuf (const ::province_t& value);
-::province_t from_protobuf (const message::game_data::province_t& msg);
+pb_message::game_data::province_t to_protobuf (const ::province_t& value);
+::province_t from_protobuf (const pb_message::game_data::province_t& msg);
 
-message::game_data::map_t to_protobuf (const ::map_t& value);
-::map_t from_protobuf (const message::game_data::map_t& msg);
+pb_message::game_data::map_t to_protobuf (const ::map_t& value);
+::map_t from_protobuf (const pb_message::game_data::map_t& msg);
 
-message::game_data::offmap_area_t to_protobuf (const ::offmap_area_t& value);
-::offmap_area_t from_protobuf (const message::game_data::offmap_area_t& msg);
+pb_message::game_data::offmap_area_t to_protobuf (const ::offmap_area_t& value);
+::offmap_area_t from_protobuf (const pb_message::game_data::offmap_area_t& msg);
 
-message::game_data::offmap_areas_t to_protobuf (const ::offmap_areas_t& value);
-::offmap_areas_t from_protobuf (const message::game_data::offmap_areas_t& msg);
+pb_message::game_data::offmap_areas_t to_protobuf (const ::offmap_areas_t& value);
+::offmap_areas_t from_protobuf (const pb_message::game_data::offmap_areas_t& msg);

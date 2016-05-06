@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "base_types.proto";
 
-package message;
+package pb_message;
 
 
 enum feature_t {

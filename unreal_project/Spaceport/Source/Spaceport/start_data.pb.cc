@@ -17,7 +17,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 
 namespace {
 
@@ -806,7 +806,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         nations_t_NationsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::nation_t,
+            ::pb_message::nation_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -827,7 +827,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         map_t_StartingNationalHoldingsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::starting_national_holdings_t,
+            ::pb_message::starting_national_holdings_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -857,7 +857,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         order_of_battle_t_StartingFleetsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::starting_fleet_t,
+            ::pb_message::starting_fleet_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -868,7 +868,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         orders_of_battle_t_OobsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::order_of_battle_t,
+            ::pb_message::order_of_battle_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -885,7 +885,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         unit_def_t_SubstitutionsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::production_cost_t,
+            ::pb_message::production_cost_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -894,7 +894,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         unit_def_t_ConversionsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::production_cost_t,
+            ::pb_message::production_cost_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -907,7 +907,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         unit_defs_t_NationUnitsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::nation_unit_defs_t,
+            ::pb_message::nation_unit_defs_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -932,7 +932,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         scenario_turn_t_NationalActionsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::scenario_turn_t_national_action_t,
+            ::pb_message::scenario_turn_t_national_action_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -945,7 +945,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         scenario_t_NationsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::std::string,
-            ::message::scenario_t_nation_t,
+            ::pb_message::scenario_t_nation_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -1033,154 +1033,159 @@ void protobuf_AddDesc_start_5fdata_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::message::protobuf_AddDesc_base_5ftypes_2eproto();
+  ::pb_message::protobuf_AddDesc_base_5ftypes_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\020start_data.proto\022\007message\032\020base_types."
-    "proto\"L\n\022capital_hex_zone_t\022\014\n\004name\030\001 \001("
-    "\t\022(\n\010features\030\002 \003(\0162\022.message.feature_tB"
-    "\002\020\001\"J\n\rcapital_hex_t\022\r\n\005coord\030\001 \001(\005\022*\n\005z"
-    "ones\030\002 \003(\0132\033.message.capital_hex_zone_t\""
-    "2\n\tcapital_t\022%\n\005hexes\030\001 \003(\0132\026.message.ca"
-    "pital_hex_t\"\225\001\n\023offmap_possesions_t\022\021\n\tp"
-    "rovinces\030\001 \001(\005\022\014\n\004mins\030\002 \001(\005\022\014\n\004majs\030\003 \001"
-    "(\005\022\024\n\014survey_ships\030\004 \001(\005\022#\n\033cannot_build"
-    "_offmap_capital\030\005 \001(\010\022\024\n\014old_shipyard\030\006 "
-    "\001(\010\"\330\001\n\010nation_t\022\014\n\004name\030\001 \001(\t\022\022\n\nshort_"
-    "name\030\002 \001(\t\022#\n\007capital\030\003 \001(\0132\022.message.ca"
-    "pital_t\022\034\n\024free_strategic_moves\030\004 \001(\005\022\033\n"
-    "\023capital_star_points\030\005 \001(\005\0227\n\021offmap_pos"
-    "sesions\030\006 \001(\0132\034.message.offmap_possesion"
-    "s_t\022\021\n\tnation_id\030\007 \001(\005\"\200\001\n\tnations_t\0220\n\007"
-    "nations\030\001 \003(\0132\037.message.nations_t.Nation"
-    "sEntry\032A\n\014NationsEntry\022\013\n\003key\030\001 \001(\t\022 \n\005v"
-    "alue\030\002 \001(\0132\021.message.nation_t:\0028\001\"`\n\005hex"
-    "_t\022#\n\005coord\030\001 \001(\0132\024.message.hex_coord_t\022"
-    "\r\n\005owner\030\002 \001(\005\022#\n\007feature\030\003 \001(\0162\022.messag"
-    "e.feature_t\"B\n\016province_hex_t\022\013\n\003hex\030\001 \001"
-    "(\005\022#\n\007feature\030\002 \001(\0162\022.message.feature_t\""
-    "4\n\nprovince_t\022&\n\005hexes\030\001 \003(\0132\027.message.p"
-    "rovince_hex_t\"~\n\roffmap_area_t\022\014\n\004name\030\001"
-    " \001(\t\022(\n\010features\030\002 \003(\0162\022.message.feature"
+    "\n\020start_data.proto\022\npb_message\032\020base_typ"
+    "es.proto\"O\n\022capital_hex_zone_t\022\014\n\004name\030\001"
+    " \001(\t\022+\n\010features\030\002 \003(\0162\025.pb_message.feat"
+    "ure_tB\002\020\001\"M\n\rcapital_hex_t\022\r\n\005coord\030\001 \001("
+    "\005\022-\n\005zones\030\002 \003(\0132\036.pb_message.capital_he"
+    "x_zone_t\"5\n\tcapital_t\022(\n\005hexes\030\001 \003(\0132\031.p"
+    "b_message.capital_hex_t\"\225\001\n\023offmap_posse"
+    "sions_t\022\021\n\tprovinces\030\001 \001(\005\022\014\n\004mins\030\002 \001(\005"
+    "\022\014\n\004majs\030\003 \001(\005\022\024\n\014survey_ships\030\004 \001(\005\022#\n\033"
+    "cannot_build_offmap_capital\030\005 \001(\010\022\024\n\014old"
+    "_shipyard\030\006 \001(\010\"\336\001\n\010nation_t\022\014\n\004name\030\001 \001"
+    "(\t\022\022\n\nshort_name\030\002 \001(\t\022&\n\007capital\030\003 \001(\0132"
+    "\025.pb_message.capital_t\022\034\n\024free_strategic"
+    "_moves\030\004 \001(\005\022\033\n\023capital_star_points\030\005 \001("
+    "\005\022:\n\021offmap_possesions\030\006 \001(\0132\037.pb_messag"
+    "e.offmap_possesions_t\022\021\n\tnation_id\030\007 \001(\005"
+    "\"\206\001\n\tnations_t\0223\n\007nations\030\001 \003(\0132\".pb_mes"
+    "sage.nations_t.NationsEntry\032D\n\014NationsEn"
+    "try\022\013\n\003key\030\001 \001(\t\022#\n\005value\030\002 \001(\0132\024.pb_mes"
+    "sage.nation_t:\0028\001\"f\n\005hex_t\022&\n\005coord\030\001 \001("
+    "\0132\027.pb_message.hex_coord_t\022\r\n\005owner\030\002 \001("
+    "\005\022&\n\007feature\030\003 \001(\0162\025.pb_message.feature_"
+    "t\"E\n\016province_hex_t\022\013\n\003hex\030\001 \001(\005\022&\n\007feat"
+    "ure\030\002 \001(\0162\025.pb_message.feature_t\"7\n\nprov"
+    "ince_t\022)\n\005hexes\030\001 \003(\0132\032.pb_message.provi"
+    "nce_hex_t\"\201\001\n\roffmap_area_t\022\014\n\004name\030\001 \001("
+    "\t\022+\n\010features\030\002 \003(\0162\025.pb_message.feature"
     "_tB\002\020\001\022\031\n\rfeature_hexes\030\003 \003(\005B\002\020\001\022\032\n\016adj"
-    "acent_hexes\030\004 \003(\005B\002\020\001\"s\n\034starting_nation"
-    "al_holdings_t\022&\n\tprovinces\030\001 \003(\0132\023.messa"
-    "ge.province_t\022+\n\013offmap_area\030\002 \001(\0132\026.mes"
-    "sage.offmap_area_t\"\255\002\n\005map_t\022\r\n\005width\030\001 "
-    "\001(\005\022\016\n\006height\030\002 \001(\005\022\026\n\nnz_planets\030\003 \003(\005B"
-    "\002\020\001\022\024\n\010nz_hexes\030\004 \003(\005B\002\020\001\022P\n\032starting_na"
-    "tional_holdings\030\005 \003(\0132,.message.map_t.St"
-    "artingNationalHoldingsEntry\022\035\n\005hexes\030\006 \003"
-    "(\0132\016.message.hex_t\032f\n\035StartingNationalHo"
-    "ldingsEntry\022\013\n\003key\030\001 \001(\t\0224\n\005value\030\002 \001(\0132"
-    "%.message.starting_national_holdings_t:\002"
-    "8\001\"K\n\007model_t\022#\n\007nations\030\001 \001(\0132\022.message"
-    ".nations_t\022\033\n\003map\030\002 \001(\0132\016.message.map_t\""
-    ")\n\noob_unit_t\022\014\n\004unit\030\001 \001(\t\022\r\n\005times\030\002 \001"
-    "(\005\"k\n\024production_element_t\022\014\n\004year\030\001 \001(\005"
-    "\022!\n\006season\030\002 \001(\0162\021.message.season_t\022\"\n\005u"
-    "nits\030\003 \003(\0132\023.message.oob_unit_t\"\201\003\n\020star"
-    "ting_fleet_t\022\021\n\005hexes\030\001 \003(\005B\002\020\001\022\"\n\005units"
-    "\030\002 \003(\0132\023.message.oob_unit_t\022\017\n\007reserve\030\003"
-    " \001(\010\022:\n\023prewar_construction\030\004 \003(\0132\035.mess"
-    "age.production_element_t\022#\n\033strategic_mo"
-    "ve_arrival_year\030\005 \001(\005\0228\n\035strategic_move_"
-    "arrival_season\030\006 \001(\0162\021.message.season_t\022"
-    "O\n\024hex_placement_limits\030\007 \003(\01321.message."
-    "starting_fleet_t.HexPlacementLimitsEntry"
-    "\0329\n\027HexPlacementLimitsEntry\022\013\n\003key\030\001 \001(\005"
-    "\022\r\n\005value\030\002 \001(\005:\0028\001\"\224\001\n\022mothball_reserve"
-    "_t\022\"\n\005units\030\001 \003(\0132\023.message.oob_unit_t\022("
-    "\n\013war_release\030\002 \003(\0132\023.message.oob_unit_t"
-    "\0220\n\023limited_war_release\030\003 \003(\0132\023.message."
-    "oob_unit_t\"\230\002\n\021order_of_battle_t\022G\n\017star"
-    "ting_fleets\030\001 \003(\0132..message.order_of_bat"
-    "tle_t.StartingFleetsEntry\0225\n\020mothball_re"
-    "serve\030\002 \001(\0132\033.message.mothball_reserve_t"
-    "\0221\n\nproduction\030\003 \003(\0132\035.message.productio"
-    "n_element_t\032P\n\023StartingFleetsEntry\022\013\n\003ke"
-    "y\030\001 \001(\t\022(\n\005value\030\002 \001(\0132\031.message.startin"
-    "g_fleet_t:\0028\001\"\222\001\n\022orders_of_battle_t\0223\n\004"
-    "oobs\030\001 \003(\0132%.message.orders_of_battle_t."
-    "OobsEntry\032G\n\tOobsEntry\022\013\n\003key\030\001 \001(\t\022)\n\005v"
-    "alue\030\002 \001(\0132\032.message.order_of_battle_t:\002"
-    "8\001\"\304\001\n\017unit_def_side_t\022\013\n\003att\030\001 \001(\002\022\013\n\003d"
-    "ef\030\002 \001(\002\022\r\n\005scout\030\003 \001(\010\022\020\n\010fighters\030\004 \001("
-    "\002\022\033\n\023heavy_fighter_bonus\030\005 \001(\002\022\013\n\003pfs\030\006 "
-    "\001(\005\022\016\n\006drones\030\007 \001(\005\022\016\n\006mauler\030\010 \001(\010\022,\n\014t"
-    "ug_missions\030\t \003(\0162\026.message.tug_mission_"
-    "t\"8\n\ttowable_t\022\021\n\tmove_cost\030\001 \001(\005\022\030\n\020str"
-    "at_move_limit\030\002 \001(\005\"7\n\021production_cost_t"
-    "\022\014\n\004cost\030\001 \001(\005\022\024\n\014fighter_cost\030\002 \001(\005\"\340\005\n"
-    "\nunit_def_t\022\014\n\004name\030\001 \001(\t\022\013\n\003cmd\030\002 \001(\005\022,"
-    "\n\nuncrippled\030\003 \001(\0132\030.message.unit_def_si"
-    "de_t\022*\n\010crippled\030\004 \001(\0132\030.message.unit_de"
-    "f_side_t\022+\n\013escort_type\030\005 \001(\0162\026.message."
-    "escort_type_t\022\"\n\tavailable\030\006 \001(\0132\017.messa"
-    "ge.turn_t\022\013\n\003pod\030\007 \001(\010\022\026\n\016max_in_service"
-    "\030\010 \001(\005\0220\n\014construction\030\t \001(\0132\032.message.p"
-    "roduction_cost_t\022=\n\rsubstitutions\030\n \003(\0132"
-    "&.message.unit_def_t.SubstitutionsEntry\022"
-    "9\n\013conversions\030\013 \003(\0132$.message.unit_def_"
-    "t.ConversionsEntry\022\014\n\004move\030\014 \001(\005\022-\n\014carr"
-    "ier_type\030\r \001(\0162\027.message.carrier_type_t\022"
-    "\027\n\017not_spaceworthy\030\016 \001(\010\022#\n\007towable\030\017 \001("
-    "\0132\022.message.towable_t\022\017\n\007salvage\030\020 \001(\005\022\r"
-    "\n\005notes\030\021 \001(\t\032P\n\022SubstitutionsEntry\022\013\n\003k"
-    "ey\030\001 \001(\t\022)\n\005value\030\002 \001(\0132\032.message.produc"
-    "tion_cost_t:\0028\001\032N\n\020ConversionsEntry\022\013\n\003k"
-    "ey\030\001 \001(\t\022)\n\005value\030\002 \001(\0132\032.message.produc"
-    "tion_cost_t:\0028\001\"8\n\022nation_unit_defs_t\022\"\n"
-    "\005units\030\001 \003(\0132\023.message.unit_def_t\"\233\001\n\013un"
-    "it_defs_t\022;\n\014nation_units\030\001 \003(\0132%.messag"
-    "e.unit_defs_t.NationUnitsEntry\032O\n\020Nation"
-    "UnitsEntry\022\013\n\003key\030\001 \001(\t\022*\n\005value\030\002 \001(\0132\033"
-    ".message.nation_unit_defs_t:\0028\001\"\'\n\006team_"
-    "t\022\014\n\004name\030\001 \001(\t\022\017\n\007nations\030\002 \003(\t\"\343\002\n\024sce"
-    "nario_condition_t\022\016\n\006actors\030\001 \003(\t\0226\n\006act"
-    "ion\030\002 \001(\0162&.message.scenario_condition_t"
-    ".action_t\0226\n\006one_of\030\003 \003(\0132&.message.scen"
-    "ario_condition_t.object_t\032c\n\010object_t\0229\n"
-    "\004type\030\001 \001(\0162+.message.scenario_condition"
+    "acent_hexes\030\004 \003(\005B\002\020\001\"y\n\034starting_nation"
+    "al_holdings_t\022)\n\tprovinces\030\001 \003(\0132\026.pb_me"
+    "ssage.province_t\022.\n\013offmap_area\030\002 \001(\0132\031."
+    "pb_message.offmap_area_t\"\266\002\n\005map_t\022\r\n\005wi"
+    "dth\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022\026\n\nnz_planets\030"
+    "\003 \003(\005B\002\020\001\022\024\n\010nz_hexes\030\004 \003(\005B\002\020\001\022S\n\032start"
+    "ing_national_holdings\030\005 \003(\0132/.pb_message"
+    ".map_t.StartingNationalHoldingsEntry\022 \n\005"
+    "hexes\030\006 \003(\0132\021.pb_message.hex_t\032i\n\035Starti"
+    "ngNationalHoldingsEntry\022\013\n\003key\030\001 \001(\t\0227\n\005"
+    "value\030\002 \001(\0132(.pb_message.starting_nation"
+    "al_holdings_t:\0028\001\"Q\n\007model_t\022&\n\007nations\030"
+    "\001 \001(\0132\025.pb_message.nations_t\022\036\n\003map\030\002 \001("
+    "\0132\021.pb_message.map_t\")\n\noob_unit_t\022\014\n\004un"
+    "it\030\001 \001(\t\022\r\n\005times\030\002 \001(\005\"q\n\024production_el"
+    "ement_t\022\014\n\004year\030\001 \001(\005\022$\n\006season\030\002 \001(\0162\024."
+    "pb_message.season_t\022%\n\005units\030\003 \003(\0132\026.pb_"
+    "message.oob_unit_t\"\215\003\n\020starting_fleet_t\022"
+    "\021\n\005hexes\030\001 \003(\005B\002\020\001\022%\n\005units\030\002 \003(\0132\026.pb_m"
+    "essage.oob_unit_t\022\017\n\007reserve\030\003 \001(\010\022=\n\023pr"
+    "ewar_construction\030\004 \003(\0132 .pb_message.pro"
+    "duction_element_t\022#\n\033strategic_move_arri"
+    "val_year\030\005 \001(\005\022;\n\035strategic_move_arrival"
+    "_season\030\006 \001(\0162\024.pb_message.season_t\022R\n\024h"
+    "ex_placement_limits\030\007 \003(\01324.pb_message.s"
+    "tarting_fleet_t.HexPlacementLimitsEntry\032"
+    "9\n\027HexPlacementLimitsEntry\022\013\n\003key\030\001 \001(\005\022"
+    "\r\n\005value\030\002 \001(\005:\0028\001\"\235\001\n\022mothball_reserve_"
+    "t\022%\n\005units\030\001 \003(\0132\026.pb_message.oob_unit_t"
+    "\022+\n\013war_release\030\002 \003(\0132\026.pb_message.oob_u"
+    "nit_t\0223\n\023limited_war_release\030\003 \003(\0132\026.pb_"
+    "message.oob_unit_t\"\244\002\n\021order_of_battle_t"
+    "\022J\n\017starting_fleets\030\001 \003(\01321.pb_message.o"
+    "rder_of_battle_t.StartingFleetsEntry\0228\n\020"
+    "mothball_reserve\030\002 \001(\0132\036.pb_message.moth"
+    "ball_reserve_t\0224\n\nproduction\030\003 \003(\0132 .pb_"
+    "message.production_element_t\032S\n\023Starting"
+    "FleetsEntry\022\013\n\003key\030\001 \001(\t\022+\n\005value\030\002 \001(\0132"
+    "\034.pb_message.starting_fleet_t:\0028\001\"\230\001\n\022or"
+    "ders_of_battle_t\0226\n\004oobs\030\001 \003(\0132(.pb_mess"
+    "age.orders_of_battle_t.OobsEntry\032J\n\tOobs"
+    "Entry\022\013\n\003key\030\001 \001(\t\022,\n\005value\030\002 \001(\0132\035.pb_m"
+    "essage.order_of_battle_t:\0028\001\"\307\001\n\017unit_de"
+    "f_side_t\022\013\n\003att\030\001 \001(\002\022\013\n\003def\030\002 \001(\002\022\r\n\005sc"
+    "out\030\003 \001(\010\022\020\n\010fighters\030\004 \001(\002\022\033\n\023heavy_fig"
+    "hter_bonus\030\005 \001(\002\022\013\n\003pfs\030\006 \001(\005\022\016\n\006drones\030"
+    "\007 \001(\005\022\016\n\006mauler\030\010 \001(\010\022/\n\014tug_missions\030\t "
+    "\003(\0162\031.pb_message.tug_mission_t\"8\n\ttowabl"
+    "e_t\022\021\n\tmove_cost\030\001 \001(\005\022\030\n\020strat_move_lim"
+    "it\030\002 \001(\005\"7\n\021production_cost_t\022\014\n\004cost\030\001 "
+    "\001(\005\022\024\n\014fighter_cost\030\002 \001(\005\"\201\006\n\nunit_def_t"
+    "\022\014\n\004name\030\001 \001(\t\022\013\n\003cmd\030\002 \001(\005\022/\n\nuncripple"
+    "d\030\003 \001(\0132\033.pb_message.unit_def_side_t\022-\n\010"
+    "crippled\030\004 \001(\0132\033.pb_message.unit_def_sid"
+    "e_t\022.\n\013escort_type\030\005 \001(\0162\031.pb_message.es"
+    "cort_type_t\022%\n\tavailable\030\006 \001(\0132\022.pb_mess"
+    "age.turn_t\022\013\n\003pod\030\007 \001(\010\022\026\n\016max_in_servic"
+    "e\030\010 \001(\005\0223\n\014construction\030\t \001(\0132\035.pb_messa"
+    "ge.production_cost_t\022@\n\rsubstitutions\030\n "
+    "\003(\0132).pb_message.unit_def_t.Substitution"
+    "sEntry\022<\n\013conversions\030\013 \003(\0132\'.pb_message"
+    ".unit_def_t.ConversionsEntry\022\014\n\004move\030\014 \001"
+    "(\005\0220\n\014carrier_type\030\r \001(\0162\032.pb_message.ca"
+    "rrier_type_t\022\027\n\017not_spaceworthy\030\016 \001(\010\022&\n"
+    "\007towable\030\017 \001(\0132\025.pb_message.towable_t\022\017\n"
+    "\007salvage\030\020 \001(\005\022\r\n\005notes\030\021 \001(\t\032S\n\022Substit"
+    "utionsEntry\022\013\n\003key\030\001 \001(\t\022,\n\005value\030\002 \001(\0132"
+    "\035.pb_message.production_cost_t:\0028\001\032Q\n\020Co"
+    "nversionsEntry\022\013\n\003key\030\001 \001(\t\022,\n\005value\030\002 \001"
+    "(\0132\035.pb_message.production_cost_t:\0028\001\";\n"
+    "\022nation_unit_defs_t\022%\n\005units\030\001 \003(\0132\026.pb_"
+    "message.unit_def_t\"\241\001\n\013unit_defs_t\022>\n\014na"
+    "tion_units\030\001 \003(\0132(.pb_message.unit_defs_"
+    "t.NationUnitsEntry\032R\n\020NationUnitsEntry\022\013"
+    "\n\003key\030\001 \001(\t\022-\n\005value\030\002 \001(\0132\036.pb_message."
+    "nation_unit_defs_t:\0028\001\"\'\n\006team_t\022\014\n\004name"
+    "\030\001 \001(\t\022\017\n\007nations\030\002 \003(\t\"\354\002\n\024scenario_con"
+    "dition_t\022\016\n\006actors\030\001 \003(\t\0229\n\006action\030\002 \001(\016"
+    "2).pb_message.scenario_condition_t.actio"
+    "n_t\0229\n\006one_of\030\003 \003(\0132).pb_message.scenari"
+    "o_condition_t.object_t\032f\n\010object_t\022<\n\004ty"
+    "pe\030\001 \001(\0162..pb_message.scenario_condition"
     "_t.object_type_t\022\r\n\005names\030\002 \003(\t\022\r\n\005hexes"
     "\030\003 \003(\005\"&\n\010action_t\022\014\n\010occupies\020\000\022\014\n\010dest"
     "roys\020\001\">\n\robject_type_t\022\t\n\005hexes\020\000\022\006\n\002sb"
-    "\020\001\022\016\n\nfleet_area\020\002\022\n\n\006nation\020\003\"\\\n\031fleet_"
-    "release_condition_t\022\r\n\005fleet\030\001 \001(\t\0220\n\tco"
-    "ndition\030\002 \001(\0132\035.message.scenario_conditi"
-    "on_t\"r\n\025war_entry_condition_t\022\'\n\007economy"
-    "\030\003 \001(\0162\026.message.war_footing_t\0220\n\tcondit"
-    "ion\030\002 \001(\0132\035.message.scenario_condition_t"
-    "\"\301\003\n\017scenario_turn_t\022\014\n\004turn\030\001 \001(\005\022G\n\020na"
-    "tional_actions\030\002 \003(\0132-.message.scenario_"
-    "turn_t.NationalActionsEntry\032\362\001\n\021national"
-    "_action_t\022D\n\007actions\030\001 \003(\01323.message.sce"
-    "nario_turn_t.national_action_t.action_t\032"
-    "a\n\010action_t\022F\n\004type\030\001 \001(\01628.message.scen"
-    "ario_turn_t.national_action_t.action_typ"
-    "e_t\022\r\n\005names\030\002 \003(\t\"4\n\raction_type_t\022\022\n\016r"
-    "elease_fleets\020\000\022\017\n\013declare_war\020\001\032b\n\024Nati"
-    "onalActionsEntry\022\013\n\003key\030\001 \001(\t\0229\n\005value\030\002"
-    " \001(\0132*.message.scenario_turn_t.national_"
-    "action_t:\0028\001\"\232\005\n\nscenario_t\022\014\n\004name\030\001 \001("
-    "\t\022\023\n\013description\030\002 \001(\t\022#\n\nstart_turn\030\003 \001"
-    "(\0132\017.message.turn_t\022\036\n\005teams\030\004 \003(\0132\017.mes"
-    "sage.team_t\022\027\n\017team_turn_order\030\005 \003(\t\022\013\n\003"
-    "map\030\006 \001(\t\022\027\n\017order_of_battle\030\007 \001(\t\022\023\n\013se"
-    "tup_order\030\010 \003(\t\0221\n\007nations\030\t \003(\0132 .messa"
-    "ge.scenario_t.NationsEntry\022\'\n\005turns\030\n \003("
-    "\0132\030.message.scenario_turn_t\032\245\002\n\010nation_t"
-    "\022\023\n\013at_war_with\030\001 \003(\t\022\033\n\023future_belliger"
-    "ents\030\002 \003(\t\022\'\n\007economy\030\003 \001(\0162\026.message.wa"
-    "r_footing_t\022\030\n\020exhaustion_turns\030\004 \001(\005\022&\n"
-    "\036accumulate_exhaustion_at_peace\030\005 \001(\010\022>\n"
-    "\022release_conditions\030\006 \003(\0132\".message.flee"
-    "t_release_condition_t\022<\n\024war_entry_condi"
-    "tions\030\007 \003(\0132\036.message.war_entry_conditio"
-    "n_t\032L\n\014NationsEntry\022\013\n\003key\030\001 \001(\t\022+\n\005valu"
-    "e\030\002 \001(\0132\034.message.scenario_t.nation_t:\0028"
-    "\001*L\n\tfeature_t\022\016\n\nno_feature\020\000\022\010\n\004bats\020\001"
-    "\022\006\n\002sb\020\002\022\007\n\003min\020\003\022\007\n\003maj\020\004\022\013\n\007capital\020\005b"
-    "\006proto3", 5807);
+    "\020\001\022\016\n\nfleet_area\020\002\022\n\n\006nation\020\003\"_\n\031fleet_"
+    "release_condition_t\022\r\n\005fleet\030\001 \001(\t\0223\n\tco"
+    "ndition\030\002 \001(\0132 .pb_message.scenario_cond"
+    "ition_t\"x\n\025war_entry_condition_t\022*\n\007econ"
+    "omy\030\003 \001(\0162\031.pb_message.war_footing_t\0223\n\t"
+    "condition\030\002 \001(\0132 .pb_message.scenario_co"
+    "ndition_t\"\315\003\n\017scenario_turn_t\022\014\n\004turn\030\001 "
+    "\001(\005\022J\n\020national_actions\030\002 \003(\01320.pb_messa"
+    "ge.scenario_turn_t.NationalActionsEntry\032"
+    "\370\001\n\021national_action_t\022G\n\007actions\030\001 \003(\01326"
+    ".pb_message.scenario_turn_t.national_act"
+    "ion_t.action_t\032d\n\010action_t\022I\n\004type\030\001 \001(\016"
+    "2;.pb_message.scenario_turn_t.national_a"
+    "ction_t.action_type_t\022\r\n\005names\030\002 \003(\t\"4\n\r"
+    "action_type_t\022\022\n\016release_fleets\020\000\022\017\n\013dec"
+    "lare_war\020\001\032e\n\024NationalActionsEntry\022\013\n\003ke"
+    "y\030\001 \001(\t\022<\n\005value\030\002 \001(\0132-.pb_message.scen"
+    "ario_turn_t.national_action_t:\0028\001\"\262\005\n\nsc"
+    "enario_t\022\014\n\004name\030\001 \001(\t\022\023\n\013description\030\002 "
+    "\001(\t\022&\n\nstart_turn\030\003 \001(\0132\022.pb_message.tur"
+    "n_t\022!\n\005teams\030\004 \003(\0132\022.pb_message.team_t\022\027"
+    "\n\017team_turn_order\030\005 \003(\t\022\013\n\003map\030\006 \001(\t\022\027\n\017"
+    "order_of_battle\030\007 \001(\t\022\023\n\013setup_order\030\010 \003"
+    "(\t\0224\n\007nations\030\t \003(\0132#.pb_message.scenari"
+    "o_t.NationsEntry\022*\n\005turns\030\n \003(\0132\033.pb_mes"
+    "sage.scenario_turn_t\032\256\002\n\010nation_t\022\023\n\013at_"
+    "war_with\030\001 \003(\t\022\033\n\023future_belligerents\030\002 "
+    "\003(\t\022*\n\007economy\030\003 \001(\0162\031.pb_message.war_fo"
+    "oting_t\022\030\n\020exhaustion_turns\030\004 \001(\005\022&\n\036acc"
+    "umulate_exhaustion_at_peace\030\005 \001(\010\022A\n\022rel"
+    "ease_conditions\030\006 \003(\0132%.pb_message.fleet"
+    "_release_condition_t\022\?\n\024war_entry_condit"
+    "ions\030\007 \003(\0132!.pb_message.war_entry_condit"
+    "ion_t\032O\n\014NationsEntry\022\013\n\003key\030\001 \001(\t\022.\n\005va"
+    "lue\030\002 \001(\0132\037.pb_message.scenario_t.nation"
+    "_t:\0028\001*L\n\tfeature_t\022\016\n\nno_feature\020\000\022\010\n\004b"
+    "ats\020\001\022\006\n\002sb\020\002\022\007\n\003min\020\003\022\007\n\003maj\020\004\022\013\n\007capit"
+    "al\020\005b\006proto3", 6012);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "start_data.proto", &protobuf_RegisterTypes);
   capital_hex_zone_t::default_instance_ = new capital_hex_zone_t();
@@ -1301,7 +1306,7 @@ const int capital_hex_zone_t::kFeaturesFieldNumber;
 capital_hex_zone_t::capital_hex_zone_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(constructor:pb_message.capital_hex_zone_t)
 }
 
 void capital_hex_zone_t::InitAsDefaultInstance() {
@@ -1313,7 +1318,7 @@ capital_hex_zone_t::capital_hex_zone_t(const capital_hex_zone_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.capital_hex_zone_t)
 }
 
 void capital_hex_zone_t::SharedCtor() {
@@ -1324,7 +1329,7 @@ void capital_hex_zone_t::SharedCtor() {
 }
 
 capital_hex_zone_t::~capital_hex_zone_t() {
-  // @@protoc_insertion_point(destructor:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(destructor:pb_message.capital_hex_zone_t)
   SharedDtor();
 }
 
@@ -1368,7 +1373,7 @@ bool capital_hex_zone_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(parse_start:pb_message.capital_hex_zone_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1382,7 +1387,7 @@ bool capital_hex_zone_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.capital_hex_zone_t.name"));
+            "pb_message.capital_hex_zone_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -1390,7 +1395,7 @@ bool capital_hex_zone_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.feature_t features = 2 [packed = true];
+      // repeated .pb_message.feature_t features = 2 [packed = true];
       case 2: {
         if (tag == 18) {
          parse_features:
@@ -1402,7 +1407,7 @@ bool capital_hex_zone_t::MergePartialFromCodedStream(
             DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-            add_features(static_cast< ::message::feature_t >(value));
+            add_features(static_cast< ::pb_message::feature_t >(value));
           }
           input->PopLimit(limit);
         } else if (tag == 16) {
@@ -1410,7 +1415,7 @@ bool capital_hex_zone_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          add_features(static_cast< ::message::feature_t >(value));
+          add_features(static_cast< ::pb_message::feature_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -1431,28 +1436,28 @@ bool capital_hex_zone_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(parse_success:pb_message.capital_hex_zone_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.capital_hex_zone_t)
   return false;
 #undef DO_
 }
 
 void capital_hex_zone_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.capital_hex_zone_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.capital_hex_zone_t.name");
+      "pb_message.capital_hex_zone_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   if (this->features_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(
       2,
@@ -1465,24 +1470,24 @@ void capital_hex_zone_t::SerializeWithCachedSizes(
       this->features(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.capital_hex_zone_t)
 }
 
 ::google::protobuf::uint8* capital_hex_zone_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.capital_hex_zone_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.capital_hex_zone_t.name");
+      "pb_message.capital_hex_zone_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
   }
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   if (this->features_size() > 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
       2,
@@ -1495,7 +1500,7 @@ void capital_hex_zone_t::SerializeWithCachedSizes(
       this->features(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.capital_hex_zone_t)
   return target;
 }
 
@@ -1509,7 +1514,7 @@ int capital_hex_zone_t::ByteSize() const {
         this->name());
   }
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   {
     int data_size = 0;
     for (int i = 0; i < this->features_size(); i++) {
@@ -1597,28 +1602,28 @@ void capital_hex_zone_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& capital_hex_zone_t::name() const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_zone_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void capital_hex_zone_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.capital_hex_zone_t.name)
 }
  void capital_hex_zone_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.capital_hex_zone_t.name)
 }
  void capital_hex_zone_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.capital_hex_zone_t.name)
 }
  ::std::string* capital_hex_zone_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.capital_hex_zone_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* capital_hex_zone_t::release_name() {
@@ -1632,36 +1637,36 @@ void capital_hex_zone_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.capital_hex_zone_t.name)
 }
 
-// repeated .message.feature_t features = 2 [packed = true];
+// repeated .pb_message.feature_t features = 2 [packed = true];
 int capital_hex_zone_t::features_size() const {
   return features_.size();
 }
 void capital_hex_zone_t::clear_features() {
   features_.Clear();
 }
- ::message::feature_t capital_hex_zone_t::features(int index) const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_zone_t.features)
-  return static_cast< ::message::feature_t >(features_.Get(index));
+ ::pb_message::feature_t capital_hex_zone_t::features(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_zone_t.features)
+  return static_cast< ::pb_message::feature_t >(features_.Get(index));
 }
- void capital_hex_zone_t::set_features(int index, ::message::feature_t value) {
+ void capital_hex_zone_t::set_features(int index, ::pb_message::feature_t value) {
   features_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_set:pb_message.capital_hex_zone_t.features)
 }
- void capital_hex_zone_t::add_features(::message::feature_t value) {
+ void capital_hex_zone_t::add_features(::pb_message::feature_t value) {
   features_.Add(value);
-  // @@protoc_insertion_point(field_add:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_add:pb_message.capital_hex_zone_t.features)
 }
  const ::google::protobuf::RepeatedField<int>&
 capital_hex_zone_t::features() const {
-  // @@protoc_insertion_point(field_list:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_list:pb_message.capital_hex_zone_t.features)
   return features_;
 }
  ::google::protobuf::RepeatedField<int>*
 capital_hex_zone_t::mutable_features() {
-  // @@protoc_insertion_point(field_mutable_list:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.capital_hex_zone_t.features)
   return &features_;
 }
 
@@ -1677,7 +1682,7 @@ const int capital_hex_t::kZonesFieldNumber;
 capital_hex_t::capital_hex_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.capital_hex_t)
+  // @@protoc_insertion_point(constructor:pb_message.capital_hex_t)
 }
 
 void capital_hex_t::InitAsDefaultInstance() {
@@ -1689,7 +1694,7 @@ capital_hex_t::capital_hex_t(const capital_hex_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.capital_hex_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.capital_hex_t)
 }
 
 void capital_hex_t::SharedCtor() {
@@ -1699,7 +1704,7 @@ void capital_hex_t::SharedCtor() {
 }
 
 capital_hex_t::~capital_hex_t() {
-  // @@protoc_insertion_point(destructor:message.capital_hex_t)
+  // @@protoc_insertion_point(destructor:pb_message.capital_hex_t)
   SharedDtor();
 }
 
@@ -1742,7 +1747,7 @@ bool capital_hex_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.capital_hex_t)
+  // @@protoc_insertion_point(parse_start:pb_message.capital_hex_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1762,7 +1767,7 @@ bool capital_hex_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.capital_hex_zone_t zones = 2;
+      // repeated .pb_message.capital_hex_zone_t zones = 2;
       case 2: {
         if (tag == 18) {
          parse_zones:
@@ -1792,47 +1797,47 @@ bool capital_hex_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.capital_hex_t)
+  // @@protoc_insertion_point(parse_success:pb_message.capital_hex_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.capital_hex_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.capital_hex_t)
   return false;
 #undef DO_
 }
 
 void capital_hex_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.capital_hex_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.capital_hex_t)
   // optional int32 coord = 1;
   if (this->coord() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->coord(), output);
   }
 
-  // repeated .message.capital_hex_zone_t zones = 2;
+  // repeated .pb_message.capital_hex_zone_t zones = 2;
   for (unsigned int i = 0, n = this->zones_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->zones(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.capital_hex_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.capital_hex_t)
 }
 
 ::google::protobuf::uint8* capital_hex_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.capital_hex_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.capital_hex_t)
   // optional int32 coord = 1;
   if (this->coord() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->coord(), target);
   }
 
-  // repeated .message.capital_hex_zone_t zones = 2;
+  // repeated .pb_message.capital_hex_zone_t zones = 2;
   for (unsigned int i = 0, n = this->zones_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->zones(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.capital_hex_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.capital_hex_t)
   return target;
 }
 
@@ -1846,7 +1851,7 @@ int capital_hex_t::ByteSize() const {
         this->coord());
   }
 
-  // repeated .message.capital_hex_zone_t zones = 2;
+  // repeated .pb_message.capital_hex_zone_t zones = 2;
   total_size += 1 * this->zones_size();
   for (int i = 0; i < this->zones_size(); i++) {
     total_size +=
@@ -1924,42 +1929,42 @@ void capital_hex_t::clear_coord() {
   coord_ = 0;
 }
  ::google::protobuf::int32 capital_hex_t::coord() const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_t.coord)
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_t.coord)
   return coord_;
 }
  void capital_hex_t::set_coord(::google::protobuf::int32 value) {
   
   coord_ = value;
-  // @@protoc_insertion_point(field_set:message.capital_hex_t.coord)
+  // @@protoc_insertion_point(field_set:pb_message.capital_hex_t.coord)
 }
 
-// repeated .message.capital_hex_zone_t zones = 2;
+// repeated .pb_message.capital_hex_zone_t zones = 2;
 int capital_hex_t::zones_size() const {
   return zones_.size();
 }
 void capital_hex_t::clear_zones() {
   zones_.Clear();
 }
-const ::message::capital_hex_zone_t& capital_hex_t::zones(int index) const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_t.zones)
+const ::pb_message::capital_hex_zone_t& capital_hex_t::zones(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_t.zones)
   return zones_.Get(index);
 }
-::message::capital_hex_zone_t* capital_hex_t::mutable_zones(int index) {
-  // @@protoc_insertion_point(field_mutable:message.capital_hex_t.zones)
+::pb_message::capital_hex_zone_t* capital_hex_t::mutable_zones(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.capital_hex_t.zones)
   return zones_.Mutable(index);
 }
-::message::capital_hex_zone_t* capital_hex_t::add_zones() {
-  // @@protoc_insertion_point(field_add:message.capital_hex_t.zones)
+::pb_message::capital_hex_zone_t* capital_hex_t::add_zones() {
+  // @@protoc_insertion_point(field_add:pb_message.capital_hex_t.zones)
   return zones_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t >*
 capital_hex_t::mutable_zones() {
-  // @@protoc_insertion_point(field_mutable_list:message.capital_hex_t.zones)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.capital_hex_t.zones)
   return &zones_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t >&
 capital_hex_t::zones() const {
-  // @@protoc_insertion_point(field_list:message.capital_hex_t.zones)
+  // @@protoc_insertion_point(field_list:pb_message.capital_hex_t.zones)
   return zones_;
 }
 
@@ -1974,7 +1979,7 @@ const int capital_t::kHexesFieldNumber;
 capital_t::capital_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.capital_t)
+  // @@protoc_insertion_point(constructor:pb_message.capital_t)
 }
 
 void capital_t::InitAsDefaultInstance() {
@@ -1986,7 +1991,7 @@ capital_t::capital_t(const capital_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.capital_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.capital_t)
 }
 
 void capital_t::SharedCtor() {
@@ -1995,7 +2000,7 @@ void capital_t::SharedCtor() {
 }
 
 capital_t::~capital_t() {
-  // @@protoc_insertion_point(destructor:message.capital_t)
+  // @@protoc_insertion_point(destructor:pb_message.capital_t)
   SharedDtor();
 }
 
@@ -2037,13 +2042,13 @@ bool capital_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.capital_t)
+  // @@protoc_insertion_point(parse_start:pb_message.capital_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.capital_hex_t hexes = 1;
+      // repeated .pb_message.capital_hex_t hexes = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -2072,44 +2077,44 @@ bool capital_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.capital_t)
+  // @@protoc_insertion_point(parse_success:pb_message.capital_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.capital_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.capital_t)
   return false;
 #undef DO_
 }
 
 void capital_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.capital_t)
-  // repeated .message.capital_hex_t hexes = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.capital_t)
+  // repeated .pb_message.capital_hex_t hexes = 1;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->hexes(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.capital_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.capital_t)
 }
 
 ::google::protobuf::uint8* capital_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.capital_t)
-  // repeated .message.capital_hex_t hexes = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.capital_t)
+  // repeated .pb_message.capital_hex_t hexes = 1;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->hexes(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.capital_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.capital_t)
   return target;
 }
 
 int capital_t::ByteSize() const {
   int total_size = 0;
 
-  // repeated .message.capital_hex_t hexes = 1;
+  // repeated .pb_message.capital_hex_t hexes = 1;
   total_size += 1 * this->hexes_size();
   for (int i = 0; i < this->hexes_size(); i++) {
     total_size +=
@@ -2178,33 +2183,33 @@ void capital_t::InternalSwap(capital_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // capital_t
 
-// repeated .message.capital_hex_t hexes = 1;
+// repeated .pb_message.capital_hex_t hexes = 1;
 int capital_t::hexes_size() const {
   return hexes_.size();
 }
 void capital_t::clear_hexes() {
   hexes_.Clear();
 }
-const ::message::capital_hex_t& capital_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.capital_t.hexes)
+const ::pb_message::capital_hex_t& capital_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.capital_t.hexes)
   return hexes_.Get(index);
 }
-::message::capital_hex_t* capital_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.capital_t.hexes)
+::pb_message::capital_hex_t* capital_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.capital_t.hexes)
   return hexes_.Mutable(index);
 }
-::message::capital_hex_t* capital_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.capital_t.hexes)
+::pb_message::capital_hex_t* capital_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.capital_t.hexes)
   return hexes_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::capital_hex_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t >*
 capital_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.capital_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.capital_t.hexes)
   return &hexes_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::capital_hex_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t >&
 capital_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.capital_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.capital_t.hexes)
   return hexes_;
 }
 
@@ -2224,7 +2229,7 @@ const int offmap_possesions_t::kOldShipyardFieldNumber;
 offmap_possesions_t::offmap_possesions_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.offmap_possesions_t)
+  // @@protoc_insertion_point(constructor:pb_message.offmap_possesions_t)
 }
 
 void offmap_possesions_t::InitAsDefaultInstance() {
@@ -2236,7 +2241,7 @@ offmap_possesions_t::offmap_possesions_t(const offmap_possesions_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.offmap_possesions_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.offmap_possesions_t)
 }
 
 void offmap_possesions_t::SharedCtor() {
@@ -2251,7 +2256,7 @@ void offmap_possesions_t::SharedCtor() {
 }
 
 offmap_possesions_t::~offmap_possesions_t() {
-  // @@protoc_insertion_point(destructor:message.offmap_possesions_t)
+  // @@protoc_insertion_point(destructor:pb_message.offmap_possesions_t)
   SharedDtor();
 }
 
@@ -2305,7 +2310,7 @@ bool offmap_possesions_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.offmap_possesions_t)
+  // @@protoc_insertion_point(parse_start:pb_message.offmap_possesions_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2413,17 +2418,17 @@ bool offmap_possesions_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.offmap_possesions_t)
+  // @@protoc_insertion_point(parse_success:pb_message.offmap_possesions_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.offmap_possesions_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.offmap_possesions_t)
   return false;
 #undef DO_
 }
 
 void offmap_possesions_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.offmap_possesions_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.offmap_possesions_t)
   // optional int32 provinces = 1;
   if (this->provinces() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->provinces(), output);
@@ -2454,12 +2459,12 @@ void offmap_possesions_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(6, this->old_shipyard(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.offmap_possesions_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.offmap_possesions_t)
 }
 
 ::google::protobuf::uint8* offmap_possesions_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.offmap_possesions_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.offmap_possesions_t)
   // optional int32 provinces = 1;
   if (this->provinces() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->provinces(), target);
@@ -2490,7 +2495,7 @@ void offmap_possesions_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(6, this->old_shipyard(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.offmap_possesions_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.offmap_possesions_t)
   return target;
 }
 
@@ -2623,13 +2628,13 @@ void offmap_possesions_t::clear_provinces() {
   provinces_ = 0;
 }
  ::google::protobuf::int32 offmap_possesions_t::provinces() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.provinces)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.provinces)
   return provinces_;
 }
  void offmap_possesions_t::set_provinces(::google::protobuf::int32 value) {
   
   provinces_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.provinces)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.provinces)
 }
 
 // optional int32 mins = 2;
@@ -2637,13 +2642,13 @@ void offmap_possesions_t::clear_mins() {
   mins_ = 0;
 }
  ::google::protobuf::int32 offmap_possesions_t::mins() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.mins)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.mins)
   return mins_;
 }
  void offmap_possesions_t::set_mins(::google::protobuf::int32 value) {
   
   mins_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.mins)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.mins)
 }
 
 // optional int32 majs = 3;
@@ -2651,13 +2656,13 @@ void offmap_possesions_t::clear_majs() {
   majs_ = 0;
 }
  ::google::protobuf::int32 offmap_possesions_t::majs() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.majs)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.majs)
   return majs_;
 }
  void offmap_possesions_t::set_majs(::google::protobuf::int32 value) {
   
   majs_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.majs)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.majs)
 }
 
 // optional int32 survey_ships = 4;
@@ -2665,13 +2670,13 @@ void offmap_possesions_t::clear_survey_ships() {
   survey_ships_ = 0;
 }
  ::google::protobuf::int32 offmap_possesions_t::survey_ships() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.survey_ships)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.survey_ships)
   return survey_ships_;
 }
  void offmap_possesions_t::set_survey_ships(::google::protobuf::int32 value) {
   
   survey_ships_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.survey_ships)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.survey_ships)
 }
 
 // optional bool cannot_build_offmap_capital = 5;
@@ -2679,13 +2684,13 @@ void offmap_possesions_t::clear_cannot_build_offmap_capital() {
   cannot_build_offmap_capital_ = false;
 }
  bool offmap_possesions_t::cannot_build_offmap_capital() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.cannot_build_offmap_capital)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.cannot_build_offmap_capital)
   return cannot_build_offmap_capital_;
 }
  void offmap_possesions_t::set_cannot_build_offmap_capital(bool value) {
   
   cannot_build_offmap_capital_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.cannot_build_offmap_capital)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.cannot_build_offmap_capital)
 }
 
 // optional bool old_shipyard = 6;
@@ -2693,13 +2698,13 @@ void offmap_possesions_t::clear_old_shipyard() {
   old_shipyard_ = false;
 }
  bool offmap_possesions_t::old_shipyard() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.old_shipyard)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.old_shipyard)
   return old_shipyard_;
 }
  void offmap_possesions_t::set_old_shipyard(bool value) {
   
   old_shipyard_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.old_shipyard)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.old_shipyard)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2719,13 +2724,13 @@ const int nation_t::kNationIdFieldNumber;
 nation_t::nation_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.nation_t)
+  // @@protoc_insertion_point(constructor:pb_message.nation_t)
 }
 
 void nation_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  capital_ = const_cast< ::message::capital_t*>(&::message::capital_t::default_instance());
-  offmap_possesions_ = const_cast< ::message::offmap_possesions_t*>(&::message::offmap_possesions_t::default_instance());
+  capital_ = const_cast< ::pb_message::capital_t*>(&::pb_message::capital_t::default_instance());
+  offmap_possesions_ = const_cast< ::pb_message::offmap_possesions_t*>(&::pb_message::offmap_possesions_t::default_instance());
 }
 
 nation_t::nation_t(const nation_t& from)
@@ -2733,7 +2738,7 @@ nation_t::nation_t(const nation_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.nation_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.nation_t)
 }
 
 void nation_t::SharedCtor() {
@@ -2750,7 +2755,7 @@ void nation_t::SharedCtor() {
 }
 
 nation_t::~nation_t() {
-  // @@protoc_insertion_point(destructor:message.nation_t)
+  // @@protoc_insertion_point(destructor:pb_message.nation_t)
   SharedDtor();
 }
 
@@ -2815,7 +2820,7 @@ bool nation_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.nation_t)
+  // @@protoc_insertion_point(parse_start:pb_message.nation_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2829,7 +2834,7 @@ bool nation_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.nation_t.name"));
+            "pb_message.nation_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -2846,7 +2851,7 @@ bool nation_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->short_name().data(), this->short_name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.nation_t.short_name"));
+            "pb_message.nation_t.short_name"));
         } else {
           goto handle_unusual;
         }
@@ -2854,7 +2859,7 @@ bool nation_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.capital_t capital = 3;
+      // optional .pb_message.capital_t capital = 3;
       case 3: {
         if (tag == 26) {
          parse_capital:
@@ -2897,7 +2902,7 @@ bool nation_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.offmap_possesions_t offmap_possesions = 6;
+      // optional .pb_message.offmap_possesions_t offmap_possesions = 6;
       case 6: {
         if (tag == 50) {
          parse_offmap_possesions:
@@ -2938,23 +2943,23 @@ bool nation_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.nation_t)
+  // @@protoc_insertion_point(parse_success:pb_message.nation_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.nation_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.nation_t)
   return false;
 #undef DO_
 }
 
 void nation_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.nation_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.nation_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.nation_t.name");
+      "pb_message.nation_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -2964,12 +2969,12 @@ void nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->short_name().data(), this->short_name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.nation_t.short_name");
+      "pb_message.nation_t.short_name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->short_name(), output);
   }
 
-  // optional .message.capital_t capital = 3;
+  // optional .pb_message.capital_t capital = 3;
   if (this->has_capital()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, *this->capital_, output);
@@ -2985,7 +2990,7 @@ void nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->capital_star_points(), output);
   }
 
-  // optional .message.offmap_possesions_t offmap_possesions = 6;
+  // optional .pb_message.offmap_possesions_t offmap_possesions = 6;
   if (this->has_offmap_possesions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       6, *this->offmap_possesions_, output);
@@ -2996,18 +3001,18 @@ void nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->nation_id(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.nation_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.nation_t)
 }
 
 ::google::protobuf::uint8* nation_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.nation_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.nation_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.nation_t.name");
+      "pb_message.nation_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -3018,13 +3023,13 @@ void nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->short_name().data(), this->short_name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.nation_t.short_name");
+      "pb_message.nation_t.short_name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->short_name(), target);
   }
 
-  // optional .message.capital_t capital = 3;
+  // optional .pb_message.capital_t capital = 3;
   if (this->has_capital()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -3041,7 +3046,7 @@ void nation_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->capital_star_points(), target);
   }
 
-  // optional .message.offmap_possesions_t offmap_possesions = 6;
+  // optional .pb_message.offmap_possesions_t offmap_possesions = 6;
   if (this->has_offmap_possesions()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -3053,7 +3058,7 @@ void nation_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->nation_id(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.nation_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.nation_t)
   return target;
 }
 
@@ -3074,7 +3079,7 @@ int nation_t::ByteSize() const {
         this->short_name());
   }
 
-  // optional .message.capital_t capital = 3;
+  // optional .pb_message.capital_t capital = 3;
   if (this->has_capital()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3095,7 +3100,7 @@ int nation_t::ByteSize() const {
         this->capital_star_points());
   }
 
-  // optional .message.offmap_possesions_t offmap_possesions = 6;
+  // optional .pb_message.offmap_possesions_t offmap_possesions = 6;
   if (this->has_offmap_possesions()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3138,7 +3143,7 @@ void nation_t::MergeFrom(const nation_t& from) {
     short_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.short_name_);
   }
   if (from.has_capital()) {
-    mutable_capital()->::message::capital_t::MergeFrom(from.capital());
+    mutable_capital()->::pb_message::capital_t::MergeFrom(from.capital());
   }
   if (from.free_strategic_moves() != 0) {
     set_free_strategic_moves(from.free_strategic_moves());
@@ -3147,7 +3152,7 @@ void nation_t::MergeFrom(const nation_t& from) {
     set_capital_star_points(from.capital_star_points());
   }
   if (from.has_offmap_possesions()) {
-    mutable_offmap_possesions()->::message::offmap_possesions_t::MergeFrom(from.offmap_possesions());
+    mutable_offmap_possesions()->::pb_message::offmap_possesions_t::MergeFrom(from.offmap_possesions());
   }
   if (from.nation_id() != 0) {
     set_nation_id(from.nation_id());
@@ -3203,28 +3208,28 @@ void nation_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& nation_t::name() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void nation_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.nation_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.name)
 }
  void nation_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.nation_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.nation_t.name)
 }
  void nation_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.nation_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.nation_t.name)
 }
  ::std::string* nation_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.nation_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* nation_t::release_name() {
@@ -3238,7 +3243,7 @@ void nation_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.name)
 }
 
 // optional string short_name = 2;
@@ -3246,28 +3251,28 @@ void nation_t::clear_short_name() {
   short_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& nation_t::short_name() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.short_name)
   return short_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void nation_t::set_short_name(const ::std::string& value) {
   
   short_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.short_name)
 }
  void nation_t::set_short_name(const char* value) {
   
   short_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set_char:pb_message.nation_t.short_name)
 }
  void nation_t::set_short_name(const char* value, size_t size) {
   
   short_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.nation_t.short_name)
 }
  ::std::string* nation_t::mutable_short_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.short_name)
   return short_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* nation_t::release_short_name() {
@@ -3281,10 +3286,10 @@ void nation_t::clear_short_name() {
     
   }
   short_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), short_name);
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.short_name)
 }
 
-// optional .message.capital_t capital = 3;
+// optional .pb_message.capital_t capital = 3;
 bool nation_t::has_capital() const {
   return !_is_default_instance_ && capital_ != NULL;
 }
@@ -3292,25 +3297,25 @@ void nation_t::clear_capital() {
   if (GetArenaNoVirtual() == NULL && capital_ != NULL) delete capital_;
   capital_ = NULL;
 }
-const ::message::capital_t& nation_t::capital() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.capital)
+const ::pb_message::capital_t& nation_t::capital() const {
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.capital)
   return capital_ != NULL ? *capital_ : *default_instance_->capital_;
 }
-::message::capital_t* nation_t::mutable_capital() {
+::pb_message::capital_t* nation_t::mutable_capital() {
   
   if (capital_ == NULL) {
-    capital_ = new ::message::capital_t;
+    capital_ = new ::pb_message::capital_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.nation_t.capital)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.capital)
   return capital_;
 }
-::message::capital_t* nation_t::release_capital() {
+::pb_message::capital_t* nation_t::release_capital() {
   
-  ::message::capital_t* temp = capital_;
+  ::pb_message::capital_t* temp = capital_;
   capital_ = NULL;
   return temp;
 }
-void nation_t::set_allocated_capital(::message::capital_t* capital) {
+void nation_t::set_allocated_capital(::pb_message::capital_t* capital) {
   delete capital_;
   capital_ = capital;
   if (capital) {
@@ -3318,7 +3323,7 @@ void nation_t::set_allocated_capital(::message::capital_t* capital) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.capital)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.capital)
 }
 
 // optional int32 free_strategic_moves = 4;
@@ -3326,13 +3331,13 @@ void nation_t::clear_free_strategic_moves() {
   free_strategic_moves_ = 0;
 }
  ::google::protobuf::int32 nation_t::free_strategic_moves() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.free_strategic_moves)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.free_strategic_moves)
   return free_strategic_moves_;
 }
  void nation_t::set_free_strategic_moves(::google::protobuf::int32 value) {
   
   free_strategic_moves_ = value;
-  // @@protoc_insertion_point(field_set:message.nation_t.free_strategic_moves)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.free_strategic_moves)
 }
 
 // optional int32 capital_star_points = 5;
@@ -3340,16 +3345,16 @@ void nation_t::clear_capital_star_points() {
   capital_star_points_ = 0;
 }
  ::google::protobuf::int32 nation_t::capital_star_points() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.capital_star_points)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.capital_star_points)
   return capital_star_points_;
 }
  void nation_t::set_capital_star_points(::google::protobuf::int32 value) {
   
   capital_star_points_ = value;
-  // @@protoc_insertion_point(field_set:message.nation_t.capital_star_points)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.capital_star_points)
 }
 
-// optional .message.offmap_possesions_t offmap_possesions = 6;
+// optional .pb_message.offmap_possesions_t offmap_possesions = 6;
 bool nation_t::has_offmap_possesions() const {
   return !_is_default_instance_ && offmap_possesions_ != NULL;
 }
@@ -3357,25 +3362,25 @@ void nation_t::clear_offmap_possesions() {
   if (GetArenaNoVirtual() == NULL && offmap_possesions_ != NULL) delete offmap_possesions_;
   offmap_possesions_ = NULL;
 }
-const ::message::offmap_possesions_t& nation_t::offmap_possesions() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.offmap_possesions)
+const ::pb_message::offmap_possesions_t& nation_t::offmap_possesions() const {
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.offmap_possesions)
   return offmap_possesions_ != NULL ? *offmap_possesions_ : *default_instance_->offmap_possesions_;
 }
-::message::offmap_possesions_t* nation_t::mutable_offmap_possesions() {
+::pb_message::offmap_possesions_t* nation_t::mutable_offmap_possesions() {
   
   if (offmap_possesions_ == NULL) {
-    offmap_possesions_ = new ::message::offmap_possesions_t;
+    offmap_possesions_ = new ::pb_message::offmap_possesions_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.nation_t.offmap_possesions)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.offmap_possesions)
   return offmap_possesions_;
 }
-::message::offmap_possesions_t* nation_t::release_offmap_possesions() {
+::pb_message::offmap_possesions_t* nation_t::release_offmap_possesions() {
   
-  ::message::offmap_possesions_t* temp = offmap_possesions_;
+  ::pb_message::offmap_possesions_t* temp = offmap_possesions_;
   offmap_possesions_ = NULL;
   return temp;
 }
-void nation_t::set_allocated_offmap_possesions(::message::offmap_possesions_t* offmap_possesions) {
+void nation_t::set_allocated_offmap_possesions(::pb_message::offmap_possesions_t* offmap_possesions) {
   delete offmap_possesions_;
   offmap_possesions_ = offmap_possesions;
   if (offmap_possesions) {
@@ -3383,7 +3388,7 @@ void nation_t::set_allocated_offmap_possesions(::message::offmap_possesions_t* o
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.offmap_possesions)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.offmap_possesions)
 }
 
 // optional int32 nation_id = 7;
@@ -3391,13 +3396,13 @@ void nation_t::clear_nation_id() {
   nation_id_ = 0;
 }
  ::google::protobuf::int32 nation_t::nation_id() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.nation_id)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.nation_id)
   return nation_id_;
 }
  void nation_t::set_nation_id(::google::protobuf::int32 value) {
   
   nation_id_ = value;
-  // @@protoc_insertion_point(field_set:message.nation_t.nation_id)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.nation_id)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -3411,7 +3416,7 @@ const int nations_t::kNationsFieldNumber;
 nations_t::nations_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.nations_t)
+  // @@protoc_insertion_point(constructor:pb_message.nations_t)
 }
 
 void nations_t::InitAsDefaultInstance() {
@@ -3423,7 +3428,7 @@ nations_t::nations_t(const nations_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.nations_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.nations_t)
 }
 
 void nations_t::SharedCtor() {
@@ -3432,11 +3437,11 @@ void nations_t::SharedCtor() {
   nations_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   nations_.SetEntryDescriptor(
-      &::message::nations_t_NationsEntry_descriptor_);
+      &::pb_message::nations_t_NationsEntry_descriptor_);
 }
 
 nations_t::~nations_t() {
-  // @@protoc_insertion_point(destructor:message.nations_t)
+  // @@protoc_insertion_point(destructor:pb_message.nations_t)
   SharedDtor();
 }
 
@@ -3478,13 +3483,13 @@ bool nations_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.nations_t)
+  // @@protoc_insertion_point(parse_start:pb_message.nations_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<string, .message.nation_t> nations = 1;
+      // map<string, .pb_message.nation_t> nations = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -3496,7 +3501,7 @@ bool nations_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.nations_t.NationsEntry.key"));
+            "pb_message.nations_t.NationsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -3519,21 +3524,21 @@ bool nations_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.nations_t)
+  // @@protoc_insertion_point(parse_success:pb_message.nations_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.nations_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.nations_t)
   return false;
 #undef DO_
 }
 
 void nations_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.nations_t)
-  // map<string, .message.nation_t> nations = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.nations_t)
+  // map<string, .pb_message.nation_t> nations = 1;
   {
     ::google::protobuf::scoped_ptr<nations_t_NationsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::nation_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::nation_t >::const_iterator
         it = this->nations().begin();
         it != this->nations().end(); ++it) {
       entry.reset(nations_.NewEntryWrapper(it->first, it->second));
@@ -3542,20 +3547,20 @@ void nations_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.nations_t.NationsEntry.key");
+        "pb_message.nations_t.NationsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.nations_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.nations_t)
 }
 
 ::google::protobuf::uint8* nations_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.nations_t)
-  // map<string, .message.nation_t> nations = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.nations_t)
+  // map<string, .pb_message.nation_t> nations = 1;
   {
     ::google::protobuf::scoped_ptr<nations_t_NationsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::nation_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::nation_t >::const_iterator
         it = this->nations().begin();
         it != this->nations().end(); ++it) {
       entry.reset(nations_.NewEntryWrapper(it->first, it->second));
@@ -3565,22 +3570,22 @@ void nations_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.nations_t.NationsEntry.key");
+        "pb_message.nations_t.NationsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.nations_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.nations_t)
   return target;
 }
 
 int nations_t::ByteSize() const {
   int total_size = 0;
 
-  // map<string, .message.nation_t> nations = 1;
+  // map<string, .pb_message.nation_t> nations = 1;
   total_size += 1 * this->nations_size();
   {
     ::google::protobuf::scoped_ptr<nations_t_NationsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::nation_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::nation_t >::const_iterator
         it = this->nations().begin();
         it != this->nations().end(); ++it) {
       entry.reset(nations_.NewEntryWrapper(it->first, it->second));
@@ -3650,21 +3655,21 @@ void nations_t::InternalSwap(nations_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // nations_t
 
-// map<string, .message.nation_t> nations = 1;
+// map<string, .pb_message.nation_t> nations = 1;
 int nations_t::nations_size() const {
   return nations_.size();
 }
 void nations_t::clear_nations() {
   nations_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::nation_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::nation_t >&
 nations_t::nations() const {
-  // @@protoc_insertion_point(field_map:message.nations_t.nations)
+  // @@protoc_insertion_point(field_map:pb_message.nations_t.nations)
   return nations_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::nation_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::nation_t >*
 nations_t::mutable_nations() {
-  // @@protoc_insertion_point(field_mutable_map:message.nations_t.nations)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.nations_t.nations)
   return nations_.MutableMap();
 }
 
@@ -3681,12 +3686,12 @@ const int hex_t::kFeatureFieldNumber;
 hex_t::hex_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.hex_t)
+  // @@protoc_insertion_point(constructor:pb_message.hex_t)
 }
 
 void hex_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  coord_ = const_cast< ::message::hex_coord_t*>(&::message::hex_coord_t::default_instance());
+  coord_ = const_cast< ::pb_message::hex_coord_t*>(&::pb_message::hex_coord_t::default_instance());
 }
 
 hex_t::hex_t(const hex_t& from)
@@ -3694,7 +3699,7 @@ hex_t::hex_t(const hex_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.hex_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.hex_t)
 }
 
 void hex_t::SharedCtor() {
@@ -3706,7 +3711,7 @@ void hex_t::SharedCtor() {
 }
 
 hex_t::~hex_t() {
-  // @@protoc_insertion_point(destructor:message.hex_t)
+  // @@protoc_insertion_point(destructor:pb_message.hex_t)
   SharedDtor();
 }
 
@@ -3763,13 +3768,13 @@ bool hex_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.hex_t)
+  // @@protoc_insertion_point(parse_start:pb_message.hex_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.hex_coord_t coord = 1;
+      // optional .pb_message.hex_coord_t coord = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -3796,7 +3801,7 @@ bool hex_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.feature_t feature = 3;
+      // optional .pb_message.feature_t feature = 3;
       case 3: {
         if (tag == 24) {
          parse_feature:
@@ -3804,7 +3809,7 @@ bool hex_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_feature(static_cast< ::message::feature_t >(value));
+          set_feature(static_cast< ::pb_message::feature_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -3825,18 +3830,18 @@ bool hex_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.hex_t)
+  // @@protoc_insertion_point(parse_success:pb_message.hex_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.hex_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.hex_t)
   return false;
 #undef DO_
 }
 
 void hex_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.hex_t)
-  // optional .message.hex_coord_t coord = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.hex_t)
+  // optional .pb_message.hex_coord_t coord = 1;
   if (this->has_coord()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, *this->coord_, output);
@@ -3847,19 +3852,19 @@ void hex_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->owner(), output);
   }
 
-  // optional .message.feature_t feature = 3;
+  // optional .pb_message.feature_t feature = 3;
   if (this->feature() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->feature(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.hex_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.hex_t)
 }
 
 ::google::protobuf::uint8* hex_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.hex_t)
-  // optional .message.hex_coord_t coord = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.hex_t)
+  // optional .pb_message.hex_coord_t coord = 1;
   if (this->has_coord()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -3871,20 +3876,20 @@ void hex_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->owner(), target);
   }
 
-  // optional .message.feature_t feature = 3;
+  // optional .pb_message.feature_t feature = 3;
   if (this->feature() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->feature(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.hex_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.hex_t)
   return target;
 }
 
 int hex_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.hex_coord_t coord = 1;
+  // optional .pb_message.hex_coord_t coord = 1;
   if (this->has_coord()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3898,7 +3903,7 @@ int hex_t::ByteSize() const {
         this->owner());
   }
 
-  // optional .message.feature_t feature = 3;
+  // optional .pb_message.feature_t feature = 3;
   if (this->feature() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->feature());
@@ -3925,7 +3930,7 @@ void hex_t::MergeFrom(const ::google::protobuf::Message& from) {
 void hex_t::MergeFrom(const hex_t& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from.has_coord()) {
-    mutable_coord()->::message::hex_coord_t::MergeFrom(from.coord());
+    mutable_coord()->::pb_message::hex_coord_t::MergeFrom(from.coord());
   }
   if (from.owner() != 0) {
     set_owner(from.owner());
@@ -3975,7 +3980,7 @@ void hex_t::InternalSwap(hex_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // hex_t
 
-// optional .message.hex_coord_t coord = 1;
+// optional .pb_message.hex_coord_t coord = 1;
 bool hex_t::has_coord() const {
   return !_is_default_instance_ && coord_ != NULL;
 }
@@ -3983,25 +3988,25 @@ void hex_t::clear_coord() {
   if (GetArenaNoVirtual() == NULL && coord_ != NULL) delete coord_;
   coord_ = NULL;
 }
-const ::message::hex_coord_t& hex_t::coord() const {
-  // @@protoc_insertion_point(field_get:message.hex_t.coord)
+const ::pb_message::hex_coord_t& hex_t::coord() const {
+  // @@protoc_insertion_point(field_get:pb_message.hex_t.coord)
   return coord_ != NULL ? *coord_ : *default_instance_->coord_;
 }
-::message::hex_coord_t* hex_t::mutable_coord() {
+::pb_message::hex_coord_t* hex_t::mutable_coord() {
   
   if (coord_ == NULL) {
-    coord_ = new ::message::hex_coord_t;
+    coord_ = new ::pb_message::hex_coord_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.hex_t.coord)
+  // @@protoc_insertion_point(field_mutable:pb_message.hex_t.coord)
   return coord_;
 }
-::message::hex_coord_t* hex_t::release_coord() {
+::pb_message::hex_coord_t* hex_t::release_coord() {
   
-  ::message::hex_coord_t* temp = coord_;
+  ::pb_message::hex_coord_t* temp = coord_;
   coord_ = NULL;
   return temp;
 }
-void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
+void hex_t::set_allocated_coord(::pb_message::hex_coord_t* coord) {
   delete coord_;
   coord_ = coord;
   if (coord) {
@@ -4009,7 +4014,7 @@ void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.hex_t.coord)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.hex_t.coord)
 }
 
 // optional int32 owner = 2;
@@ -4017,27 +4022,27 @@ void hex_t::clear_owner() {
   owner_ = 0;
 }
  ::google::protobuf::int32 hex_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.hex_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.hex_t.owner)
   return owner_;
 }
  void hex_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.hex_t.owner)
 }
 
-// optional .message.feature_t feature = 3;
+// optional .pb_message.feature_t feature = 3;
 void hex_t::clear_feature() {
   feature_ = 0;
 }
- ::message::feature_t hex_t::feature() const {
-  // @@protoc_insertion_point(field_get:message.hex_t.feature)
-  return static_cast< ::message::feature_t >(feature_);
+ ::pb_message::feature_t hex_t::feature() const {
+  // @@protoc_insertion_point(field_get:pb_message.hex_t.feature)
+  return static_cast< ::pb_message::feature_t >(feature_);
 }
- void hex_t::set_feature(::message::feature_t value) {
+ void hex_t::set_feature(::pb_message::feature_t value) {
   
   feature_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_t.feature)
+  // @@protoc_insertion_point(field_set:pb_message.hex_t.feature)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -4052,7 +4057,7 @@ const int province_hex_t::kFeatureFieldNumber;
 province_hex_t::province_hex_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.province_hex_t)
+  // @@protoc_insertion_point(constructor:pb_message.province_hex_t)
 }
 
 void province_hex_t::InitAsDefaultInstance() {
@@ -4064,7 +4069,7 @@ province_hex_t::province_hex_t(const province_hex_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.province_hex_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.province_hex_t)
 }
 
 void province_hex_t::SharedCtor() {
@@ -4075,7 +4080,7 @@ void province_hex_t::SharedCtor() {
 }
 
 province_hex_t::~province_hex_t() {
-  // @@protoc_insertion_point(destructor:message.province_hex_t)
+  // @@protoc_insertion_point(destructor:pb_message.province_hex_t)
   SharedDtor();
 }
 
@@ -4129,7 +4134,7 @@ bool province_hex_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.province_hex_t)
+  // @@protoc_insertion_point(parse_start:pb_message.province_hex_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -4149,7 +4154,7 @@ bool province_hex_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.feature_t feature = 2;
+      // optional .pb_message.feature_t feature = 2;
       case 2: {
         if (tag == 16) {
          parse_feature:
@@ -4157,7 +4162,7 @@ bool province_hex_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_feature(static_cast< ::message::feature_t >(value));
+          set_feature(static_cast< ::pb_message::feature_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -4178,46 +4183,46 @@ bool province_hex_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.province_hex_t)
+  // @@protoc_insertion_point(parse_success:pb_message.province_hex_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.province_hex_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.province_hex_t)
   return false;
 #undef DO_
 }
 
 void province_hex_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.province_hex_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.province_hex_t)
   // optional int32 hex = 1;
   if (this->hex() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->hex(), output);
   }
 
-  // optional .message.feature_t feature = 2;
+  // optional .pb_message.feature_t feature = 2;
   if (this->feature() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->feature(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.province_hex_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.province_hex_t)
 }
 
 ::google::protobuf::uint8* province_hex_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.province_hex_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.province_hex_t)
   // optional int32 hex = 1;
   if (this->hex() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->hex(), target);
   }
 
-  // optional .message.feature_t feature = 2;
+  // optional .pb_message.feature_t feature = 2;
   if (this->feature() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->feature(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.province_hex_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.province_hex_t)
   return target;
 }
 
@@ -4231,7 +4236,7 @@ int province_hex_t::ByteSize() const {
         this->hex());
   }
 
-  // optional .message.feature_t feature = 2;
+  // optional .pb_message.feature_t feature = 2;
   if (this->feature() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->feature());
@@ -4309,27 +4314,27 @@ void province_hex_t::clear_hex() {
   hex_ = 0;
 }
  ::google::protobuf::int32 province_hex_t::hex() const {
-  // @@protoc_insertion_point(field_get:message.province_hex_t.hex)
+  // @@protoc_insertion_point(field_get:pb_message.province_hex_t.hex)
   return hex_;
 }
  void province_hex_t::set_hex(::google::protobuf::int32 value) {
   
   hex_ = value;
-  // @@protoc_insertion_point(field_set:message.province_hex_t.hex)
+  // @@protoc_insertion_point(field_set:pb_message.province_hex_t.hex)
 }
 
-// optional .message.feature_t feature = 2;
+// optional .pb_message.feature_t feature = 2;
 void province_hex_t::clear_feature() {
   feature_ = 0;
 }
- ::message::feature_t province_hex_t::feature() const {
-  // @@protoc_insertion_point(field_get:message.province_hex_t.feature)
-  return static_cast< ::message::feature_t >(feature_);
+ ::pb_message::feature_t province_hex_t::feature() const {
+  // @@protoc_insertion_point(field_get:pb_message.province_hex_t.feature)
+  return static_cast< ::pb_message::feature_t >(feature_);
 }
- void province_hex_t::set_feature(::message::feature_t value) {
+ void province_hex_t::set_feature(::pb_message::feature_t value) {
   
   feature_ = value;
-  // @@protoc_insertion_point(field_set:message.province_hex_t.feature)
+  // @@protoc_insertion_point(field_set:pb_message.province_hex_t.feature)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -4343,7 +4348,7 @@ const int province_t::kHexesFieldNumber;
 province_t::province_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.province_t)
+  // @@protoc_insertion_point(constructor:pb_message.province_t)
 }
 
 void province_t::InitAsDefaultInstance() {
@@ -4355,7 +4360,7 @@ province_t::province_t(const province_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.province_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.province_t)
 }
 
 void province_t::SharedCtor() {
@@ -4364,7 +4369,7 @@ void province_t::SharedCtor() {
 }
 
 province_t::~province_t() {
-  // @@protoc_insertion_point(destructor:message.province_t)
+  // @@protoc_insertion_point(destructor:pb_message.province_t)
   SharedDtor();
 }
 
@@ -4406,13 +4411,13 @@ bool province_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.province_t)
+  // @@protoc_insertion_point(parse_start:pb_message.province_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.province_hex_t hexes = 1;
+      // repeated .pb_message.province_hex_t hexes = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -4441,44 +4446,44 @@ bool province_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.province_t)
+  // @@protoc_insertion_point(parse_success:pb_message.province_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.province_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.province_t)
   return false;
 #undef DO_
 }
 
 void province_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.province_t)
-  // repeated .message.province_hex_t hexes = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.province_t)
+  // repeated .pb_message.province_hex_t hexes = 1;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->hexes(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.province_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.province_t)
 }
 
 ::google::protobuf::uint8* province_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.province_t)
-  // repeated .message.province_hex_t hexes = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.province_t)
+  // repeated .pb_message.province_hex_t hexes = 1;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->hexes(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.province_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.province_t)
   return target;
 }
 
 int province_t::ByteSize() const {
   int total_size = 0;
 
-  // repeated .message.province_hex_t hexes = 1;
+  // repeated .pb_message.province_hex_t hexes = 1;
   total_size += 1 * this->hexes_size();
   for (int i = 0; i < this->hexes_size(); i++) {
     total_size +=
@@ -4547,33 +4552,33 @@ void province_t::InternalSwap(province_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // province_t
 
-// repeated .message.province_hex_t hexes = 1;
+// repeated .pb_message.province_hex_t hexes = 1;
 int province_t::hexes_size() const {
   return hexes_.size();
 }
 void province_t::clear_hexes() {
   hexes_.Clear();
 }
-const ::message::province_hex_t& province_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.province_t.hexes)
+const ::pb_message::province_hex_t& province_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.province_t.hexes)
   return hexes_.Get(index);
 }
-::message::province_hex_t* province_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.province_t.hexes)
+::pb_message::province_hex_t* province_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.province_t.hexes)
   return hexes_.Mutable(index);
 }
-::message::province_hex_t* province_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.province_t.hexes)
+::pb_message::province_hex_t* province_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.province_t.hexes)
   return hexes_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::province_hex_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t >*
 province_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.province_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.province_t.hexes)
   return &hexes_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::province_hex_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t >&
 province_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.province_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.province_t.hexes)
   return hexes_;
 }
 
@@ -4591,7 +4596,7 @@ const int offmap_area_t::kAdjacentHexesFieldNumber;
 offmap_area_t::offmap_area_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.offmap_area_t)
+  // @@protoc_insertion_point(constructor:pb_message.offmap_area_t)
 }
 
 void offmap_area_t::InitAsDefaultInstance() {
@@ -4603,7 +4608,7 @@ offmap_area_t::offmap_area_t(const offmap_area_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.offmap_area_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.offmap_area_t)
 }
 
 void offmap_area_t::SharedCtor() {
@@ -4614,7 +4619,7 @@ void offmap_area_t::SharedCtor() {
 }
 
 offmap_area_t::~offmap_area_t() {
-  // @@protoc_insertion_point(destructor:message.offmap_area_t)
+  // @@protoc_insertion_point(destructor:pb_message.offmap_area_t)
   SharedDtor();
 }
 
@@ -4660,7 +4665,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.offmap_area_t)
+  // @@protoc_insertion_point(parse_start:pb_message.offmap_area_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -4674,7 +4679,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.offmap_area_t.name"));
+            "pb_message.offmap_area_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -4682,7 +4687,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.feature_t features = 2 [packed = true];
+      // repeated .pb_message.feature_t features = 2 [packed = true];
       case 2: {
         if (tag == 18) {
          parse_features:
@@ -4694,7 +4699,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
             DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-            add_features(static_cast< ::message::feature_t >(value));
+            add_features(static_cast< ::pb_message::feature_t >(value));
           }
           input->PopLimit(limit);
         } else if (tag == 16) {
@@ -4702,7 +4707,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          add_features(static_cast< ::message::feature_t >(value));
+          add_features(static_cast< ::pb_message::feature_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -4759,28 +4764,28 @@ bool offmap_area_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.offmap_area_t)
+  // @@protoc_insertion_point(parse_success:pb_message.offmap_area_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.offmap_area_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.offmap_area_t)
   return false;
 #undef DO_
 }
 
 void offmap_area_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.offmap_area_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.offmap_area_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.offmap_area_t.name");
+      "pb_message.offmap_area_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   if (this->features_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(
       2,
@@ -4813,24 +4818,24 @@ void offmap_area_t::SerializeWithCachedSizes(
       this->adjacent_hexes(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.offmap_area_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.offmap_area_t)
 }
 
 ::google::protobuf::uint8* offmap_area_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.offmap_area_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.offmap_area_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.offmap_area_t.name");
+      "pb_message.offmap_area_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
   }
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   if (this->features_size() > 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
       2,
@@ -4871,7 +4876,7 @@ void offmap_area_t::SerializeWithCachedSizes(
       WriteInt32NoTagToArray(this->adjacent_hexes(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.offmap_area_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.offmap_area_t)
   return target;
 }
 
@@ -4885,7 +4890,7 @@ int offmap_area_t::ByteSize() const {
         this->name());
   }
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   {
     int data_size = 0;
     for (int i = 0; i < this->features_size(); i++) {
@@ -5011,28 +5016,28 @@ void offmap_area_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& offmap_area_t::name() const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void offmap_area_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.name)
 }
  void offmap_area_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.offmap_area_t.name)
 }
  void offmap_area_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.offmap_area_t.name)
 }
  ::std::string* offmap_area_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.offmap_area_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* offmap_area_t::release_name() {
@@ -5046,36 +5051,36 @@ void offmap_area_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.offmap_area_t.name)
 }
 
-// repeated .message.feature_t features = 2 [packed = true];
+// repeated .pb_message.feature_t features = 2 [packed = true];
 int offmap_area_t::features_size() const {
   return features_.size();
 }
 void offmap_area_t::clear_features() {
   features_.Clear();
 }
- ::message::feature_t offmap_area_t::features(int index) const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.features)
-  return static_cast< ::message::feature_t >(features_.Get(index));
+ ::pb_message::feature_t offmap_area_t::features(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.features)
+  return static_cast< ::pb_message::feature_t >(features_.Get(index));
 }
- void offmap_area_t::set_features(int index, ::message::feature_t value) {
+ void offmap_area_t::set_features(int index, ::pb_message::feature_t value) {
   features_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.features)
 }
- void offmap_area_t::add_features(::message::feature_t value) {
+ void offmap_area_t::add_features(::pb_message::feature_t value) {
   features_.Add(value);
-  // @@protoc_insertion_point(field_add:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_add:pb_message.offmap_area_t.features)
 }
  const ::google::protobuf::RepeatedField<int>&
 offmap_area_t::features() const {
-  // @@protoc_insertion_point(field_list:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_list:pb_message.offmap_area_t.features)
   return features_;
 }
  ::google::protobuf::RepeatedField<int>*
 offmap_area_t::mutable_features() {
-  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.offmap_area_t.features)
   return &features_;
 }
 
@@ -5087,25 +5092,25 @@ void offmap_area_t::clear_feature_hexes() {
   feature_hexes_.Clear();
 }
  ::google::protobuf::int32 offmap_area_t::feature_hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.feature_hexes)
   return feature_hexes_.Get(index);
 }
  void offmap_area_t::set_feature_hexes(int index, ::google::protobuf::int32 value) {
   feature_hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.feature_hexes)
 }
  void offmap_area_t::add_feature_hexes(::google::protobuf::int32 value) {
   feature_hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_add:pb_message.offmap_area_t.feature_hexes)
 }
  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 offmap_area_t::feature_hexes() const {
-  // @@protoc_insertion_point(field_list:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_list:pb_message.offmap_area_t.feature_hexes)
   return feature_hexes_;
 }
  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 offmap_area_t::mutable_feature_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.offmap_area_t.feature_hexes)
   return &feature_hexes_;
 }
 
@@ -5117,25 +5122,25 @@ void offmap_area_t::clear_adjacent_hexes() {
   adjacent_hexes_.Clear();
 }
  ::google::protobuf::int32 offmap_area_t::adjacent_hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.adjacent_hexes)
   return adjacent_hexes_.Get(index);
 }
  void offmap_area_t::set_adjacent_hexes(int index, ::google::protobuf::int32 value) {
   adjacent_hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.adjacent_hexes)
 }
  void offmap_area_t::add_adjacent_hexes(::google::protobuf::int32 value) {
   adjacent_hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_add:pb_message.offmap_area_t.adjacent_hexes)
 }
  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 offmap_area_t::adjacent_hexes() const {
-  // @@protoc_insertion_point(field_list:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_list:pb_message.offmap_area_t.adjacent_hexes)
   return adjacent_hexes_;
 }
  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 offmap_area_t::mutable_adjacent_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.offmap_area_t.adjacent_hexes)
   return &adjacent_hexes_;
 }
 
@@ -5151,12 +5156,12 @@ const int starting_national_holdings_t::kOffmapAreaFieldNumber;
 starting_national_holdings_t::starting_national_holdings_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(constructor:pb_message.starting_national_holdings_t)
 }
 
 void starting_national_holdings_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  offmap_area_ = const_cast< ::message::offmap_area_t*>(&::message::offmap_area_t::default_instance());
+  offmap_area_ = const_cast< ::pb_message::offmap_area_t*>(&::pb_message::offmap_area_t::default_instance());
 }
 
 starting_national_holdings_t::starting_national_holdings_t(const starting_national_holdings_t& from)
@@ -5164,7 +5169,7 @@ starting_national_holdings_t::starting_national_holdings_t(const starting_nation
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.starting_national_holdings_t)
 }
 
 void starting_national_holdings_t::SharedCtor() {
@@ -5174,7 +5179,7 @@ void starting_national_holdings_t::SharedCtor() {
 }
 
 starting_national_holdings_t::~starting_national_holdings_t() {
-  // @@protoc_insertion_point(destructor:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(destructor:pb_message.starting_national_holdings_t)
   SharedDtor();
 }
 
@@ -5219,13 +5224,13 @@ bool starting_national_holdings_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(parse_start:pb_message.starting_national_holdings_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.province_t provinces = 1;
+      // repeated .pb_message.province_t provinces = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -5241,7 +5246,7 @@ bool starting_national_holdings_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.offmap_area_t offmap_area = 2;
+      // optional .pb_message.offmap_area_t offmap_area = 2;
       case 2: {
         if (tag == 18) {
          parse_offmap_area:
@@ -5267,64 +5272,64 @@ bool starting_national_holdings_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(parse_success:pb_message.starting_national_holdings_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.starting_national_holdings_t)
   return false;
 #undef DO_
 }
 
 void starting_national_holdings_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.starting_national_holdings_t)
-  // repeated .message.province_t provinces = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.starting_national_holdings_t)
+  // repeated .pb_message.province_t provinces = 1;
   for (unsigned int i = 0, n = this->provinces_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->provinces(i), output);
   }
 
-  // optional .message.offmap_area_t offmap_area = 2;
+  // optional .pb_message.offmap_area_t offmap_area = 2;
   if (this->has_offmap_area()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->offmap_area_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.starting_national_holdings_t)
 }
 
 ::google::protobuf::uint8* starting_national_holdings_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.starting_national_holdings_t)
-  // repeated .message.province_t provinces = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.starting_national_holdings_t)
+  // repeated .pb_message.province_t provinces = 1;
   for (unsigned int i = 0, n = this->provinces_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->provinces(i), target);
   }
 
-  // optional .message.offmap_area_t offmap_area = 2;
+  // optional .pb_message.offmap_area_t offmap_area = 2;
   if (this->has_offmap_area()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->offmap_area_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.starting_national_holdings_t)
   return target;
 }
 
 int starting_national_holdings_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.offmap_area_t offmap_area = 2;
+  // optional .pb_message.offmap_area_t offmap_area = 2;
   if (this->has_offmap_area()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->offmap_area_);
   }
 
-  // repeated .message.province_t provinces = 1;
+  // repeated .pb_message.province_t provinces = 1;
   total_size += 1 * this->provinces_size();
   for (int i = 0; i < this->provinces_size(); i++) {
     total_size +=
@@ -5354,7 +5359,7 @@ void starting_national_holdings_t::MergeFrom(const starting_national_holdings_t&
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   provinces_.MergeFrom(from.provinces_);
   if (from.has_offmap_area()) {
-    mutable_offmap_area()->::message::offmap_area_t::MergeFrom(from.offmap_area());
+    mutable_offmap_area()->::pb_message::offmap_area_t::MergeFrom(from.offmap_area());
   }
 }
 
@@ -5397,37 +5402,37 @@ void starting_national_holdings_t::InternalSwap(starting_national_holdings_t* ot
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // starting_national_holdings_t
 
-// repeated .message.province_t provinces = 1;
+// repeated .pb_message.province_t provinces = 1;
 int starting_national_holdings_t::provinces_size() const {
   return provinces_.size();
 }
 void starting_national_holdings_t::clear_provinces() {
   provinces_.Clear();
 }
-const ::message::province_t& starting_national_holdings_t::provinces(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_national_holdings_t.provinces)
+const ::pb_message::province_t& starting_national_holdings_t::provinces(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_national_holdings_t.provinces)
   return provinces_.Get(index);
 }
-::message::province_t* starting_national_holdings_t::mutable_provinces(int index) {
-  // @@protoc_insertion_point(field_mutable:message.starting_national_holdings_t.provinces)
+::pb_message::province_t* starting_national_holdings_t::mutable_provinces(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_national_holdings_t.provinces)
   return provinces_.Mutable(index);
 }
-::message::province_t* starting_national_holdings_t::add_provinces() {
-  // @@protoc_insertion_point(field_add:message.starting_national_holdings_t.provinces)
+::pb_message::province_t* starting_national_holdings_t::add_provinces() {
+  // @@protoc_insertion_point(field_add:pb_message.starting_national_holdings_t.provinces)
   return provinces_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::province_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::province_t >*
 starting_national_holdings_t::mutable_provinces() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_national_holdings_t.provinces)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_national_holdings_t.provinces)
   return &provinces_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::province_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::province_t >&
 starting_national_holdings_t::provinces() const {
-  // @@protoc_insertion_point(field_list:message.starting_national_holdings_t.provinces)
+  // @@protoc_insertion_point(field_list:pb_message.starting_national_holdings_t.provinces)
   return provinces_;
 }
 
-// optional .message.offmap_area_t offmap_area = 2;
+// optional .pb_message.offmap_area_t offmap_area = 2;
 bool starting_national_holdings_t::has_offmap_area() const {
   return !_is_default_instance_ && offmap_area_ != NULL;
 }
@@ -5435,25 +5440,25 @@ void starting_national_holdings_t::clear_offmap_area() {
   if (GetArenaNoVirtual() == NULL && offmap_area_ != NULL) delete offmap_area_;
   offmap_area_ = NULL;
 }
-const ::message::offmap_area_t& starting_national_holdings_t::offmap_area() const {
-  // @@protoc_insertion_point(field_get:message.starting_national_holdings_t.offmap_area)
+const ::pb_message::offmap_area_t& starting_national_holdings_t::offmap_area() const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_national_holdings_t.offmap_area)
   return offmap_area_ != NULL ? *offmap_area_ : *default_instance_->offmap_area_;
 }
-::message::offmap_area_t* starting_national_holdings_t::mutable_offmap_area() {
+::pb_message::offmap_area_t* starting_national_holdings_t::mutable_offmap_area() {
   
   if (offmap_area_ == NULL) {
-    offmap_area_ = new ::message::offmap_area_t;
+    offmap_area_ = new ::pb_message::offmap_area_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.starting_national_holdings_t.offmap_area)
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_national_holdings_t.offmap_area)
   return offmap_area_;
 }
-::message::offmap_area_t* starting_national_holdings_t::release_offmap_area() {
+::pb_message::offmap_area_t* starting_national_holdings_t::release_offmap_area() {
   
-  ::message::offmap_area_t* temp = offmap_area_;
+  ::pb_message::offmap_area_t* temp = offmap_area_;
   offmap_area_ = NULL;
   return temp;
 }
-void starting_national_holdings_t::set_allocated_offmap_area(::message::offmap_area_t* offmap_area) {
+void starting_national_holdings_t::set_allocated_offmap_area(::pb_message::offmap_area_t* offmap_area) {
   delete offmap_area_;
   offmap_area_ = offmap_area;
   if (offmap_area) {
@@ -5461,7 +5466,7 @@ void starting_national_holdings_t::set_allocated_offmap_area(::message::offmap_a
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.starting_national_holdings_t.offmap_area)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.starting_national_holdings_t.offmap_area)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -5480,7 +5485,7 @@ const int map_t::kHexesFieldNumber;
 map_t::map_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.map_t)
+  // @@protoc_insertion_point(constructor:pb_message.map_t)
 }
 
 void map_t::InitAsDefaultInstance() {
@@ -5492,7 +5497,7 @@ map_t::map_t(const map_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.map_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.map_t)
 }
 
 void map_t::SharedCtor() {
@@ -5503,11 +5508,11 @@ void map_t::SharedCtor() {
   starting_national_holdings_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   starting_national_holdings_.SetEntryDescriptor(
-      &::message::map_t_StartingNationalHoldingsEntry_descriptor_);
+      &::pb_message::map_t_StartingNationalHoldingsEntry_descriptor_);
 }
 
 map_t::~map_t() {
-  // @@protoc_insertion_point(destructor:message.map_t)
+  // @@protoc_insertion_point(destructor:pb_message.map_t)
   SharedDtor();
 }
 
@@ -5565,7 +5570,7 @@ bool map_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.map_t)
+  // @@protoc_insertion_point(parse_start:pb_message.map_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -5636,7 +5641,7 @@ bool map_t::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+      // map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
       case 5: {
         if (tag == 42) {
          parse_starting_national_holdings:
@@ -5649,7 +5654,7 @@ bool map_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.map_t.StartingNationalHoldingsEntry.key"));
+            "pb_message.map_t.StartingNationalHoldingsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -5659,7 +5664,7 @@ bool map_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.hex_t hexes = 6;
+      // repeated .pb_message.hex_t hexes = 6;
       case 6: {
         if (tag == 50) {
           DO_(input->IncrementRecursionDepth());
@@ -5688,17 +5693,17 @@ bool map_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.map_t)
+  // @@protoc_insertion_point(parse_success:pb_message.map_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.map_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.map_t)
   return false;
 #undef DO_
 }
 
 void map_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.map_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.map_t)
   // optional int32 width = 1;
   if (this->width() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->width(), output);
@@ -5729,10 +5734,10 @@ void map_t::SerializeWithCachedSizes(
       this->nz_hexes(i), output);
   }
 
-  // map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+  // map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
   {
     ::google::protobuf::scoped_ptr<map_t_StartingNationalHoldingsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >::const_iterator
         it = this->starting_national_holdings().begin();
         it != this->starting_national_holdings().end(); ++it) {
       entry.reset(starting_national_holdings_.NewEntryWrapper(it->first, it->second));
@@ -5741,22 +5746,22 @@ void map_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.map_t.StartingNationalHoldingsEntry.key");
+        "pb_message.map_t.StartingNationalHoldingsEntry.key");
     }
   }
 
-  // repeated .message.hex_t hexes = 6;
+  // repeated .pb_message.hex_t hexes = 6;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       6, this->hexes(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.map_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.map_t)
 }
 
 ::google::protobuf::uint8* map_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.map_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.map_t)
   // optional int32 width = 1;
   if (this->width() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->width(), target);
@@ -5795,10 +5800,10 @@ void map_t::SerializeWithCachedSizes(
       WriteInt32NoTagToArray(this->nz_hexes(i), target);
   }
 
-  // map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+  // map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
   {
     ::google::protobuf::scoped_ptr<map_t_StartingNationalHoldingsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >::const_iterator
         it = this->starting_national_holdings().begin();
         it != this->starting_national_holdings().end(); ++it) {
       entry.reset(starting_national_holdings_.NewEntryWrapper(it->first, it->second));
@@ -5808,18 +5813,18 @@ void map_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.map_t.StartingNationalHoldingsEntry.key");
+        "pb_message.map_t.StartingNationalHoldingsEntry.key");
     }
   }
 
-  // repeated .message.hex_t hexes = 6;
+  // repeated .pb_message.hex_t hexes = 6;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         6, this->hexes(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.map_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.map_t)
   return target;
 }
 
@@ -5874,11 +5879,11 @@ int map_t::ByteSize() const {
     total_size += data_size;
   }
 
-  // map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+  // map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
   total_size += 1 * this->starting_national_holdings_size();
   {
     ::google::protobuf::scoped_ptr<map_t_StartingNationalHoldingsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >::const_iterator
         it = this->starting_national_holdings().begin();
         it != this->starting_national_holdings().end(); ++it) {
       entry.reset(starting_national_holdings_.NewEntryWrapper(it->first, it->second));
@@ -5887,7 +5892,7 @@ int map_t::ByteSize() const {
     }
   }
 
-  // repeated .message.hex_t hexes = 6;
+  // repeated .pb_message.hex_t hexes = 6;
   total_size += 1 * this->hexes_size();
   for (int i = 0; i < this->hexes_size(); i++) {
     total_size +=
@@ -5975,13 +5980,13 @@ void map_t::clear_width() {
   width_ = 0;
 }
  ::google::protobuf::int32 map_t::width() const {
-  // @@protoc_insertion_point(field_get:message.map_t.width)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.width)
   return width_;
 }
  void map_t::set_width(::google::protobuf::int32 value) {
   
   width_ = value;
-  // @@protoc_insertion_point(field_set:message.map_t.width)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.width)
 }
 
 // optional int32 height = 2;
@@ -5989,13 +5994,13 @@ void map_t::clear_height() {
   height_ = 0;
 }
  ::google::protobuf::int32 map_t::height() const {
-  // @@protoc_insertion_point(field_get:message.map_t.height)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.height)
   return height_;
 }
  void map_t::set_height(::google::protobuf::int32 value) {
   
   height_ = value;
-  // @@protoc_insertion_point(field_set:message.map_t.height)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.height)
 }
 
 // repeated int32 nz_planets = 3 [packed = true];
@@ -6006,25 +6011,25 @@ void map_t::clear_nz_planets() {
   nz_planets_.Clear();
 }
  ::google::protobuf::int32 map_t::nz_planets(int index) const {
-  // @@protoc_insertion_point(field_get:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.nz_planets)
   return nz_planets_.Get(index);
 }
  void map_t::set_nz_planets(int index, ::google::protobuf::int32 value) {
   nz_planets_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.nz_planets)
 }
  void map_t::add_nz_planets(::google::protobuf::int32 value) {
   nz_planets_.Add(value);
-  // @@protoc_insertion_point(field_add:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_add:pb_message.map_t.nz_planets)
 }
  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 map_t::nz_planets() const {
-  // @@protoc_insertion_point(field_list:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_list:pb_message.map_t.nz_planets)
   return nz_planets_;
 }
  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 map_t::mutable_nz_planets() {
-  // @@protoc_insertion_point(field_mutable_list:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.map_t.nz_planets)
   return &nz_planets_;
 }
 
@@ -6036,73 +6041,73 @@ void map_t::clear_nz_hexes() {
   nz_hexes_.Clear();
 }
  ::google::protobuf::int32 map_t::nz_hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.nz_hexes)
   return nz_hexes_.Get(index);
 }
  void map_t::set_nz_hexes(int index, ::google::protobuf::int32 value) {
   nz_hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.nz_hexes)
 }
  void map_t::add_nz_hexes(::google::protobuf::int32 value) {
   nz_hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_add:pb_message.map_t.nz_hexes)
 }
  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 map_t::nz_hexes() const {
-  // @@protoc_insertion_point(field_list:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_list:pb_message.map_t.nz_hexes)
   return nz_hexes_;
 }
  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 map_t::mutable_nz_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.map_t.nz_hexes)
   return &nz_hexes_;
 }
 
-// map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+// map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
 int map_t::starting_national_holdings_size() const {
   return starting_national_holdings_.size();
 }
 void map_t::clear_starting_national_holdings() {
   starting_national_holdings_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >&
 map_t::starting_national_holdings() const {
-  // @@protoc_insertion_point(field_map:message.map_t.starting_national_holdings)
+  // @@protoc_insertion_point(field_map:pb_message.map_t.starting_national_holdings)
   return starting_national_holdings_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >*
 map_t::mutable_starting_national_holdings() {
-  // @@protoc_insertion_point(field_mutable_map:message.map_t.starting_national_holdings)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.map_t.starting_national_holdings)
   return starting_national_holdings_.MutableMap();
 }
 
-// repeated .message.hex_t hexes = 6;
+// repeated .pb_message.hex_t hexes = 6;
 int map_t::hexes_size() const {
   return hexes_.size();
 }
 void map_t::clear_hexes() {
   hexes_.Clear();
 }
-const ::message::hex_t& map_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.map_t.hexes)
+const ::pb_message::hex_t& map_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.map_t.hexes)
   return hexes_.Get(index);
 }
-::message::hex_t* map_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.map_t.hexes)
+::pb_message::hex_t* map_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.map_t.hexes)
   return hexes_.Mutable(index);
 }
-::message::hex_t* map_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.map_t.hexes)
+::pb_message::hex_t* map_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.map_t.hexes)
   return hexes_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::hex_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::hex_t >*
 map_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.map_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.map_t.hexes)
   return &hexes_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::hex_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::hex_t >&
 map_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.map_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.map_t.hexes)
   return hexes_;
 }
 
@@ -6118,13 +6123,13 @@ const int model_t::kMapFieldNumber;
 model_t::model_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.model_t)
+  // @@protoc_insertion_point(constructor:pb_message.model_t)
 }
 
 void model_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  nations_ = const_cast< ::message::nations_t*>(&::message::nations_t::default_instance());
-  map_ = const_cast< ::message::map_t*>(&::message::map_t::default_instance());
+  nations_ = const_cast< ::pb_message::nations_t*>(&::pb_message::nations_t::default_instance());
+  map_ = const_cast< ::pb_message::map_t*>(&::pb_message::map_t::default_instance());
 }
 
 model_t::model_t(const model_t& from)
@@ -6132,7 +6137,7 @@ model_t::model_t(const model_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.model_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.model_t)
 }
 
 void model_t::SharedCtor() {
@@ -6143,7 +6148,7 @@ void model_t::SharedCtor() {
 }
 
 model_t::~model_t() {
-  // @@protoc_insertion_point(destructor:message.model_t)
+  // @@protoc_insertion_point(destructor:pb_message.model_t)
   SharedDtor();
 }
 
@@ -6190,13 +6195,13 @@ bool model_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.model_t)
+  // @@protoc_insertion_point(parse_start:pb_message.model_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.nations_t nations = 1;
+      // optional .pb_message.nations_t nations = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -6208,7 +6213,7 @@ bool model_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.map_t map = 2;
+      // optional .pb_message.map_t map = 2;
       case 2: {
         if (tag == 18) {
          parse_map:
@@ -6234,64 +6239,64 @@ bool model_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.model_t)
+  // @@protoc_insertion_point(parse_success:pb_message.model_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.model_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.model_t)
   return false;
 #undef DO_
 }
 
 void model_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.model_t)
-  // optional .message.nations_t nations = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.model_t)
+  // optional .pb_message.nations_t nations = 1;
   if (this->has_nations()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, *this->nations_, output);
   }
 
-  // optional .message.map_t map = 2;
+  // optional .pb_message.map_t map = 2;
   if (this->has_map()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->map_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.model_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.model_t)
 }
 
 ::google::protobuf::uint8* model_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.model_t)
-  // optional .message.nations_t nations = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.model_t)
+  // optional .pb_message.nations_t nations = 1;
   if (this->has_nations()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, *this->nations_, target);
   }
 
-  // optional .message.map_t map = 2;
+  // optional .pb_message.map_t map = 2;
   if (this->has_map()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->map_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.model_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.model_t)
   return target;
 }
 
 int model_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.nations_t nations = 1;
+  // optional .pb_message.nations_t nations = 1;
   if (this->has_nations()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->nations_);
   }
 
-  // optional .message.map_t map = 2;
+  // optional .pb_message.map_t map = 2;
   if (this->has_map()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -6319,10 +6324,10 @@ void model_t::MergeFrom(const ::google::protobuf::Message& from) {
 void model_t::MergeFrom(const model_t& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   if (from.has_nations()) {
-    mutable_nations()->::message::nations_t::MergeFrom(from.nations());
+    mutable_nations()->::pb_message::nations_t::MergeFrom(from.nations());
   }
   if (from.has_map()) {
-    mutable_map()->::message::map_t::MergeFrom(from.map());
+    mutable_map()->::pb_message::map_t::MergeFrom(from.map());
   }
 }
 
@@ -6365,7 +6370,7 @@ void model_t::InternalSwap(model_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // model_t
 
-// optional .message.nations_t nations = 1;
+// optional .pb_message.nations_t nations = 1;
 bool model_t::has_nations() const {
   return !_is_default_instance_ && nations_ != NULL;
 }
@@ -6373,25 +6378,25 @@ void model_t::clear_nations() {
   if (GetArenaNoVirtual() == NULL && nations_ != NULL) delete nations_;
   nations_ = NULL;
 }
-const ::message::nations_t& model_t::nations() const {
-  // @@protoc_insertion_point(field_get:message.model_t.nations)
+const ::pb_message::nations_t& model_t::nations() const {
+  // @@protoc_insertion_point(field_get:pb_message.model_t.nations)
   return nations_ != NULL ? *nations_ : *default_instance_->nations_;
 }
-::message::nations_t* model_t::mutable_nations() {
+::pb_message::nations_t* model_t::mutable_nations() {
   
   if (nations_ == NULL) {
-    nations_ = new ::message::nations_t;
+    nations_ = new ::pb_message::nations_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.model_t.nations)
+  // @@protoc_insertion_point(field_mutable:pb_message.model_t.nations)
   return nations_;
 }
-::message::nations_t* model_t::release_nations() {
+::pb_message::nations_t* model_t::release_nations() {
   
-  ::message::nations_t* temp = nations_;
+  ::pb_message::nations_t* temp = nations_;
   nations_ = NULL;
   return temp;
 }
-void model_t::set_allocated_nations(::message::nations_t* nations) {
+void model_t::set_allocated_nations(::pb_message::nations_t* nations) {
   delete nations_;
   nations_ = nations;
   if (nations) {
@@ -6399,10 +6404,10 @@ void model_t::set_allocated_nations(::message::nations_t* nations) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.model_t.nations)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.model_t.nations)
 }
 
-// optional .message.map_t map = 2;
+// optional .pb_message.map_t map = 2;
 bool model_t::has_map() const {
   return !_is_default_instance_ && map_ != NULL;
 }
@@ -6410,25 +6415,25 @@ void model_t::clear_map() {
   if (GetArenaNoVirtual() == NULL && map_ != NULL) delete map_;
   map_ = NULL;
 }
-const ::message::map_t& model_t::map() const {
-  // @@protoc_insertion_point(field_get:message.model_t.map)
+const ::pb_message::map_t& model_t::map() const {
+  // @@protoc_insertion_point(field_get:pb_message.model_t.map)
   return map_ != NULL ? *map_ : *default_instance_->map_;
 }
-::message::map_t* model_t::mutable_map() {
+::pb_message::map_t* model_t::mutable_map() {
   
   if (map_ == NULL) {
-    map_ = new ::message::map_t;
+    map_ = new ::pb_message::map_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.model_t.map)
+  // @@protoc_insertion_point(field_mutable:pb_message.model_t.map)
   return map_;
 }
-::message::map_t* model_t::release_map() {
+::pb_message::map_t* model_t::release_map() {
   
-  ::message::map_t* temp = map_;
+  ::pb_message::map_t* temp = map_;
   map_ = NULL;
   return temp;
 }
-void model_t::set_allocated_map(::message::map_t* map) {
+void model_t::set_allocated_map(::pb_message::map_t* map) {
   delete map_;
   map_ = map;
   if (map) {
@@ -6436,7 +6441,7 @@ void model_t::set_allocated_map(::message::map_t* map) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.model_t.map)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.model_t.map)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -6451,7 +6456,7 @@ const int oob_unit_t::kTimesFieldNumber;
 oob_unit_t::oob_unit_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.oob_unit_t)
+  // @@protoc_insertion_point(constructor:pb_message.oob_unit_t)
 }
 
 void oob_unit_t::InitAsDefaultInstance() {
@@ -6463,7 +6468,7 @@ oob_unit_t::oob_unit_t(const oob_unit_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.oob_unit_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.oob_unit_t)
 }
 
 void oob_unit_t::SharedCtor() {
@@ -6475,7 +6480,7 @@ void oob_unit_t::SharedCtor() {
 }
 
 oob_unit_t::~oob_unit_t() {
-  // @@protoc_insertion_point(destructor:message.oob_unit_t)
+  // @@protoc_insertion_point(destructor:pb_message.oob_unit_t)
   SharedDtor();
 }
 
@@ -6519,7 +6524,7 @@ bool oob_unit_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.oob_unit_t)
+  // @@protoc_insertion_point(parse_start:pb_message.oob_unit_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -6533,7 +6538,7 @@ bool oob_unit_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->unit().data(), this->unit().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.oob_unit_t.unit"));
+            "pb_message.oob_unit_t.unit"));
         } else {
           goto handle_unusual;
         }
@@ -6569,23 +6574,23 @@ bool oob_unit_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.oob_unit_t)
+  // @@protoc_insertion_point(parse_success:pb_message.oob_unit_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.oob_unit_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.oob_unit_t)
   return false;
 #undef DO_
 }
 
 void oob_unit_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.oob_unit_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.oob_unit_t)
   // optional string unit = 1;
   if (this->unit().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unit().data(), this->unit().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.oob_unit_t.unit");
+      "pb_message.oob_unit_t.unit");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->unit(), output);
   }
@@ -6595,18 +6600,18 @@ void oob_unit_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->times(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.oob_unit_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.oob_unit_t)
 }
 
 ::google::protobuf::uint8* oob_unit_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.oob_unit_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.oob_unit_t)
   // optional string unit = 1;
   if (this->unit().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->unit().data(), this->unit().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.oob_unit_t.unit");
+      "pb_message.oob_unit_t.unit");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->unit(), target);
@@ -6617,7 +6622,7 @@ void oob_unit_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->times(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.oob_unit_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.oob_unit_t)
   return target;
 }
 
@@ -6711,28 +6716,28 @@ void oob_unit_t::clear_unit() {
   unit_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& oob_unit_t::unit() const {
-  // @@protoc_insertion_point(field_get:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_get:pb_message.oob_unit_t.unit)
   return unit_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void oob_unit_t::set_unit(const ::std::string& value) {
   
   unit_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set:pb_message.oob_unit_t.unit)
 }
  void oob_unit_t::set_unit(const char* value) {
   
   unit_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set_char:pb_message.oob_unit_t.unit)
 }
  void oob_unit_t::set_unit(const char* value, size_t size) {
   
   unit_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.oob_unit_t.unit)
 }
  ::std::string* oob_unit_t::mutable_unit() {
   
-  // @@protoc_insertion_point(field_mutable:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_mutable:pb_message.oob_unit_t.unit)
   return unit_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* oob_unit_t::release_unit() {
@@ -6746,7 +6751,7 @@ void oob_unit_t::clear_unit() {
     
   }
   unit_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unit);
-  // @@protoc_insertion_point(field_set_allocated:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.oob_unit_t.unit)
 }
 
 // optional int32 times = 2;
@@ -6754,13 +6759,13 @@ void oob_unit_t::clear_times() {
   times_ = 0;
 }
  ::google::protobuf::int32 oob_unit_t::times() const {
-  // @@protoc_insertion_point(field_get:message.oob_unit_t.times)
+  // @@protoc_insertion_point(field_get:pb_message.oob_unit_t.times)
   return times_;
 }
  void oob_unit_t::set_times(::google::protobuf::int32 value) {
   
   times_ = value;
-  // @@protoc_insertion_point(field_set:message.oob_unit_t.times)
+  // @@protoc_insertion_point(field_set:pb_message.oob_unit_t.times)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -6776,7 +6781,7 @@ const int production_element_t::kUnitsFieldNumber;
 production_element_t::production_element_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.production_element_t)
+  // @@protoc_insertion_point(constructor:pb_message.production_element_t)
 }
 
 void production_element_t::InitAsDefaultInstance() {
@@ -6788,7 +6793,7 @@ production_element_t::production_element_t(const production_element_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.production_element_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.production_element_t)
 }
 
 void production_element_t::SharedCtor() {
@@ -6799,7 +6804,7 @@ void production_element_t::SharedCtor() {
 }
 
 production_element_t::~production_element_t() {
-  // @@protoc_insertion_point(destructor:message.production_element_t)
+  // @@protoc_insertion_point(destructor:pb_message.production_element_t)
   SharedDtor();
 }
 
@@ -6854,7 +6859,7 @@ bool production_element_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.production_element_t)
+  // @@protoc_insertion_point(parse_start:pb_message.production_element_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -6874,7 +6879,7 @@ bool production_element_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.season_t season = 2;
+      // optional .pb_message.season_t season = 2;
       case 2: {
         if (tag == 16) {
          parse_season:
@@ -6882,7 +6887,7 @@ bool production_element_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_season(static_cast< ::message::season_t >(value));
+          set_season(static_cast< ::pb_message::season_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -6890,7 +6895,7 @@ bool production_element_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.oob_unit_t units = 3;
+      // repeated .pb_message.oob_unit_t units = 3;
       case 3: {
         if (tag == 26) {
          parse_units:
@@ -6920,59 +6925,59 @@ bool production_element_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.production_element_t)
+  // @@protoc_insertion_point(parse_success:pb_message.production_element_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.production_element_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.production_element_t)
   return false;
 #undef DO_
 }
 
 void production_element_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.production_element_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.production_element_t)
   // optional int32 year = 1;
   if (this->year() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->year(), output);
   }
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   if (this->season() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->season(), output);
   }
 
-  // repeated .message.oob_unit_t units = 3;
+  // repeated .pb_message.oob_unit_t units = 3;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->units(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.production_element_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.production_element_t)
 }
 
 ::google::protobuf::uint8* production_element_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.production_element_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.production_element_t)
   // optional int32 year = 1;
   if (this->year() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->year(), target);
   }
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   if (this->season() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->season(), target);
   }
 
-  // repeated .message.oob_unit_t units = 3;
+  // repeated .pb_message.oob_unit_t units = 3;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->units(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.production_element_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.production_element_t)
   return target;
 }
 
@@ -6986,13 +6991,13 @@ int production_element_t::ByteSize() const {
         this->year());
   }
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   if (this->season() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->season());
   }
 
-  // repeated .message.oob_unit_t units = 3;
+  // repeated .pb_message.oob_unit_t units = 3;
   total_size += 1 * this->units_size();
   for (int i = 0; i < this->units_size(); i++) {
     total_size +=
@@ -7074,56 +7079,56 @@ void production_element_t::clear_year() {
   year_ = 0;
 }
  ::google::protobuf::int32 production_element_t::year() const {
-  // @@protoc_insertion_point(field_get:message.production_element_t.year)
+  // @@protoc_insertion_point(field_get:pb_message.production_element_t.year)
   return year_;
 }
  void production_element_t::set_year(::google::protobuf::int32 value) {
   
   year_ = value;
-  // @@protoc_insertion_point(field_set:message.production_element_t.year)
+  // @@protoc_insertion_point(field_set:pb_message.production_element_t.year)
 }
 
-// optional .message.season_t season = 2;
+// optional .pb_message.season_t season = 2;
 void production_element_t::clear_season() {
   season_ = 0;
 }
- ::message::season_t production_element_t::season() const {
-  // @@protoc_insertion_point(field_get:message.production_element_t.season)
-  return static_cast< ::message::season_t >(season_);
+ ::pb_message::season_t production_element_t::season() const {
+  // @@protoc_insertion_point(field_get:pb_message.production_element_t.season)
+  return static_cast< ::pb_message::season_t >(season_);
 }
- void production_element_t::set_season(::message::season_t value) {
+ void production_element_t::set_season(::pb_message::season_t value) {
   
   season_ = value;
-  // @@protoc_insertion_point(field_set:message.production_element_t.season)
+  // @@protoc_insertion_point(field_set:pb_message.production_element_t.season)
 }
 
-// repeated .message.oob_unit_t units = 3;
+// repeated .pb_message.oob_unit_t units = 3;
 int production_element_t::units_size() const {
   return units_.size();
 }
 void production_element_t::clear_units() {
   units_.Clear();
 }
-const ::message::oob_unit_t& production_element_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.production_element_t.units)
+const ::pb_message::oob_unit_t& production_element_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.production_element_t.units)
   return units_.Get(index);
 }
-::message::oob_unit_t* production_element_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.production_element_t.units)
+::pb_message::oob_unit_t* production_element_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.production_element_t.units)
   return units_.Mutable(index);
 }
-::message::oob_unit_t* production_element_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.production_element_t.units)
+::pb_message::oob_unit_t* production_element_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.production_element_t.units)
   return units_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 production_element_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.production_element_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.production_element_t.units)
   return &units_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 production_element_t::units() const {
-  // @@protoc_insertion_point(field_list:message.production_element_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.production_element_t.units)
   return units_;
 }
 
@@ -7144,7 +7149,7 @@ const int starting_fleet_t::kHexPlacementLimitsFieldNumber;
 starting_fleet_t::starting_fleet_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.starting_fleet_t)
+  // @@protoc_insertion_point(constructor:pb_message.starting_fleet_t)
 }
 
 void starting_fleet_t::InitAsDefaultInstance() {
@@ -7156,7 +7161,7 @@ starting_fleet_t::starting_fleet_t(const starting_fleet_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.starting_fleet_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.starting_fleet_t)
 }
 
 void starting_fleet_t::SharedCtor() {
@@ -7168,11 +7173,11 @@ void starting_fleet_t::SharedCtor() {
   hex_placement_limits_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   hex_placement_limits_.SetEntryDescriptor(
-      &::message::starting_fleet_t_HexPlacementLimitsEntry_descriptor_);
+      &::pb_message::starting_fleet_t_HexPlacementLimitsEntry_descriptor_);
 }
 
 starting_fleet_t::~starting_fleet_t() {
-  // @@protoc_insertion_point(destructor:message.starting_fleet_t)
+  // @@protoc_insertion_point(destructor:pb_message.starting_fleet_t)
   SharedDtor();
 }
 
@@ -7231,7 +7236,7 @@ bool starting_fleet_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.starting_fleet_t)
+  // @@protoc_insertion_point(parse_start:pb_message.starting_fleet_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -7254,7 +7259,7 @@ bool starting_fleet_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.oob_unit_t units = 2;
+      // repeated .pb_message.oob_unit_t units = 2;
       case 2: {
         if (tag == 18) {
          parse_units:
@@ -7286,7 +7291,7 @@ bool starting_fleet_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.production_element_t prewar_construction = 4;
+      // repeated .pb_message.production_element_t prewar_construction = 4;
       case 4: {
         if (tag == 34) {
          parse_prewar_construction:
@@ -7318,7 +7323,7 @@ bool starting_fleet_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.season_t strategic_move_arrival_season = 6;
+      // optional .pb_message.season_t strategic_move_arrival_season = 6;
       case 6: {
         if (tag == 48) {
          parse_strategic_move_arrival_season:
@@ -7326,7 +7331,7 @@ bool starting_fleet_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_strategic_move_arrival_season(static_cast< ::message::season_t >(value));
+          set_strategic_move_arrival_season(static_cast< ::pb_message::season_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -7366,17 +7371,17 @@ bool starting_fleet_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.starting_fleet_t)
+  // @@protoc_insertion_point(parse_success:pb_message.starting_fleet_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.starting_fleet_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.starting_fleet_t)
   return false;
 #undef DO_
 }
 
 void starting_fleet_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.starting_fleet_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.starting_fleet_t)
   // repeated int32 hexes = 1 [packed = true];
   if (this->hexes_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
@@ -7387,7 +7392,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
       this->hexes(i), output);
   }
 
-  // repeated .message.oob_unit_t units = 2;
+  // repeated .pb_message.oob_unit_t units = 2;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->units(i), output);
@@ -7398,7 +7403,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->reserve(), output);
   }
 
-  // repeated .message.production_element_t prewar_construction = 4;
+  // repeated .pb_message.production_element_t prewar_construction = 4;
   for (unsigned int i = 0, n = this->prewar_construction_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->prewar_construction(i), output);
@@ -7409,7 +7414,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->strategic_move_arrival_year(), output);
   }
 
-  // optional .message.season_t strategic_move_arrival_season = 6;
+  // optional .pb_message.season_t strategic_move_arrival_season = 6;
   if (this->strategic_move_arrival_season() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       6, this->strategic_move_arrival_season(), output);
@@ -7427,12 +7432,12 @@ void starting_fleet_t::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.starting_fleet_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.starting_fleet_t)
 }
 
 ::google::protobuf::uint8* starting_fleet_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.starting_fleet_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.starting_fleet_t)
   // repeated int32 hexes = 1 [packed = true];
   if (this->hexes_size() > 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
@@ -7447,7 +7452,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
       WriteInt32NoTagToArray(this->hexes(i), target);
   }
 
-  // repeated .message.oob_unit_t units = 2;
+  // repeated .pb_message.oob_unit_t units = 2;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -7459,7 +7464,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->reserve(), target);
   }
 
-  // repeated .message.production_element_t prewar_construction = 4;
+  // repeated .pb_message.production_element_t prewar_construction = 4;
   for (unsigned int i = 0, n = this->prewar_construction_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -7471,7 +7476,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->strategic_move_arrival_year(), target);
   }
 
-  // optional .message.season_t strategic_move_arrival_season = 6;
+  // optional .pb_message.season_t strategic_move_arrival_season = 6;
   if (this->strategic_move_arrival_season() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       6, this->strategic_move_arrival_season(), target);
@@ -7490,7 +7495,7 @@ void starting_fleet_t::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.starting_fleet_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.starting_fleet_t)
   return target;
 }
 
@@ -7509,7 +7514,7 @@ int starting_fleet_t::ByteSize() const {
         this->strategic_move_arrival_year());
   }
 
-  // optional .message.season_t strategic_move_arrival_season = 6;
+  // optional .pb_message.season_t strategic_move_arrival_season = 6;
   if (this->strategic_move_arrival_season() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->strategic_move_arrival_season());
@@ -7532,7 +7537,7 @@ int starting_fleet_t::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated .message.oob_unit_t units = 2;
+  // repeated .pb_message.oob_unit_t units = 2;
   total_size += 1 * this->units_size();
   for (int i = 0; i < this->units_size(); i++) {
     total_size +=
@@ -7540,7 +7545,7 @@ int starting_fleet_t::ByteSize() const {
         this->units(i));
   }
 
-  // repeated .message.production_element_t prewar_construction = 4;
+  // repeated .pb_message.production_element_t prewar_construction = 4;
   total_size += 1 * this->prewar_construction_size();
   for (int i = 0; i < this->prewar_construction_size(); i++) {
     total_size +=
@@ -7648,55 +7653,55 @@ void starting_fleet_t::clear_hexes() {
   hexes_.Clear();
 }
  ::google::protobuf::int32 starting_fleet_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.hexes)
   return hexes_.Get(index);
 }
  void starting_fleet_t::set_hexes(int index, ::google::protobuf::int32 value) {
   hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.hexes)
 }
  void starting_fleet_t::add_hexes(::google::protobuf::int32 value) {
   hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_add:pb_message.starting_fleet_t.hexes)
 }
  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 starting_fleet_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.starting_fleet_t.hexes)
   return hexes_;
 }
  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 starting_fleet_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_fleet_t.hexes)
   return &hexes_;
 }
 
-// repeated .message.oob_unit_t units = 2;
+// repeated .pb_message.oob_unit_t units = 2;
 int starting_fleet_t::units_size() const {
   return units_.size();
 }
 void starting_fleet_t::clear_units() {
   units_.Clear();
 }
-const ::message::oob_unit_t& starting_fleet_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.units)
+const ::pb_message::oob_unit_t& starting_fleet_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.units)
   return units_.Get(index);
 }
-::message::oob_unit_t* starting_fleet_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.starting_fleet_t.units)
+::pb_message::oob_unit_t* starting_fleet_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_fleet_t.units)
   return units_.Mutable(index);
 }
-::message::oob_unit_t* starting_fleet_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.starting_fleet_t.units)
+::pb_message::oob_unit_t* starting_fleet_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.starting_fleet_t.units)
   return units_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 starting_fleet_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_fleet_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_fleet_t.units)
   return &units_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 starting_fleet_t::units() const {
-  // @@protoc_insertion_point(field_list:message.starting_fleet_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.starting_fleet_t.units)
   return units_;
 }
 
@@ -7705,42 +7710,42 @@ void starting_fleet_t::clear_reserve() {
   reserve_ = false;
 }
  bool starting_fleet_t::reserve() const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.reserve)
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.reserve)
   return reserve_;
 }
  void starting_fleet_t::set_reserve(bool value) {
   
   reserve_ = value;
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.reserve)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.reserve)
 }
 
-// repeated .message.production_element_t prewar_construction = 4;
+// repeated .pb_message.production_element_t prewar_construction = 4;
 int starting_fleet_t::prewar_construction_size() const {
   return prewar_construction_.size();
 }
 void starting_fleet_t::clear_prewar_construction() {
   prewar_construction_.Clear();
 }
-const ::message::production_element_t& starting_fleet_t::prewar_construction(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.prewar_construction)
+const ::pb_message::production_element_t& starting_fleet_t::prewar_construction(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_.Get(index);
 }
-::message::production_element_t* starting_fleet_t::mutable_prewar_construction(int index) {
-  // @@protoc_insertion_point(field_mutable:message.starting_fleet_t.prewar_construction)
+::pb_message::production_element_t* starting_fleet_t::mutable_prewar_construction(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_.Mutable(index);
 }
-::message::production_element_t* starting_fleet_t::add_prewar_construction() {
-  // @@protoc_insertion_point(field_add:message.starting_fleet_t.prewar_construction)
+::pb_message::production_element_t* starting_fleet_t::add_prewar_construction() {
+  // @@protoc_insertion_point(field_add:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::production_element_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >*
 starting_fleet_t::mutable_prewar_construction() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_fleet_t.prewar_construction)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_fleet_t.prewar_construction)
   return &prewar_construction_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::production_element_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >&
 starting_fleet_t::prewar_construction() const {
-  // @@protoc_insertion_point(field_list:message.starting_fleet_t.prewar_construction)
+  // @@protoc_insertion_point(field_list:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_;
 }
 
@@ -7749,27 +7754,27 @@ void starting_fleet_t::clear_strategic_move_arrival_year() {
   strategic_move_arrival_year_ = 0;
 }
  ::google::protobuf::int32 starting_fleet_t::strategic_move_arrival_year() const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.strategic_move_arrival_year)
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.strategic_move_arrival_year)
   return strategic_move_arrival_year_;
 }
  void starting_fleet_t::set_strategic_move_arrival_year(::google::protobuf::int32 value) {
   
   strategic_move_arrival_year_ = value;
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.strategic_move_arrival_year)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.strategic_move_arrival_year)
 }
 
-// optional .message.season_t strategic_move_arrival_season = 6;
+// optional .pb_message.season_t strategic_move_arrival_season = 6;
 void starting_fleet_t::clear_strategic_move_arrival_season() {
   strategic_move_arrival_season_ = 0;
 }
- ::message::season_t starting_fleet_t::strategic_move_arrival_season() const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.strategic_move_arrival_season)
-  return static_cast< ::message::season_t >(strategic_move_arrival_season_);
+ ::pb_message::season_t starting_fleet_t::strategic_move_arrival_season() const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.strategic_move_arrival_season)
+  return static_cast< ::pb_message::season_t >(strategic_move_arrival_season_);
 }
- void starting_fleet_t::set_strategic_move_arrival_season(::message::season_t value) {
+ void starting_fleet_t::set_strategic_move_arrival_season(::pb_message::season_t value) {
   
   strategic_move_arrival_season_ = value;
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.strategic_move_arrival_season)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.strategic_move_arrival_season)
 }
 
 // map<int32, int32> hex_placement_limits = 7;
@@ -7781,12 +7786,12 @@ void starting_fleet_t::clear_hex_placement_limits() {
 }
  const ::google::protobuf::Map< ::google::protobuf::int32, ::google::protobuf::int32 >&
 starting_fleet_t::hex_placement_limits() const {
-  // @@protoc_insertion_point(field_map:message.starting_fleet_t.hex_placement_limits)
+  // @@protoc_insertion_point(field_map:pb_message.starting_fleet_t.hex_placement_limits)
   return hex_placement_limits_.GetMap();
 }
  ::google::protobuf::Map< ::google::protobuf::int32, ::google::protobuf::int32 >*
 starting_fleet_t::mutable_hex_placement_limits() {
-  // @@protoc_insertion_point(field_mutable_map:message.starting_fleet_t.hex_placement_limits)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.starting_fleet_t.hex_placement_limits)
   return hex_placement_limits_.MutableMap();
 }
 
@@ -7803,7 +7808,7 @@ const int mothball_reserve_t::kLimitedWarReleaseFieldNumber;
 mothball_reserve_t::mothball_reserve_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.mothball_reserve_t)
+  // @@protoc_insertion_point(constructor:pb_message.mothball_reserve_t)
 }
 
 void mothball_reserve_t::InitAsDefaultInstance() {
@@ -7815,7 +7820,7 @@ mothball_reserve_t::mothball_reserve_t(const mothball_reserve_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.mothball_reserve_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.mothball_reserve_t)
 }
 
 void mothball_reserve_t::SharedCtor() {
@@ -7824,7 +7829,7 @@ void mothball_reserve_t::SharedCtor() {
 }
 
 mothball_reserve_t::~mothball_reserve_t() {
-  // @@protoc_insertion_point(destructor:message.mothball_reserve_t)
+  // @@protoc_insertion_point(destructor:pb_message.mothball_reserve_t)
   SharedDtor();
 }
 
@@ -7868,13 +7873,13 @@ bool mothball_reserve_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.mothball_reserve_t)
+  // @@protoc_insertion_point(parse_start:pb_message.mothball_reserve_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.oob_unit_t units = 1;
+      // repeated .pb_message.oob_unit_t units = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -7890,7 +7895,7 @@ bool mothball_reserve_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.oob_unit_t war_release = 2;
+      // repeated .pb_message.oob_unit_t war_release = 2;
       case 2: {
         if (tag == 18) {
           DO_(input->IncrementRecursionDepth());
@@ -7906,7 +7911,7 @@ bool mothball_reserve_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.oob_unit_t limited_war_release = 3;
+      // repeated .pb_message.oob_unit_t limited_war_release = 3;
       case 3: {
         if (tag == 26) {
           DO_(input->IncrementRecursionDepth());
@@ -7935,70 +7940,70 @@ bool mothball_reserve_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.mothball_reserve_t)
+  // @@protoc_insertion_point(parse_success:pb_message.mothball_reserve_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.mothball_reserve_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.mothball_reserve_t)
   return false;
 #undef DO_
 }
 
 void mothball_reserve_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.mothball_reserve_t)
-  // repeated .message.oob_unit_t units = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.mothball_reserve_t)
+  // repeated .pb_message.oob_unit_t units = 1;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->units(i), output);
   }
 
-  // repeated .message.oob_unit_t war_release = 2;
+  // repeated .pb_message.oob_unit_t war_release = 2;
   for (unsigned int i = 0, n = this->war_release_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->war_release(i), output);
   }
 
-  // repeated .message.oob_unit_t limited_war_release = 3;
+  // repeated .pb_message.oob_unit_t limited_war_release = 3;
   for (unsigned int i = 0, n = this->limited_war_release_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->limited_war_release(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.mothball_reserve_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.mothball_reserve_t)
 }
 
 ::google::protobuf::uint8* mothball_reserve_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.mothball_reserve_t)
-  // repeated .message.oob_unit_t units = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.mothball_reserve_t)
+  // repeated .pb_message.oob_unit_t units = 1;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->units(i), target);
   }
 
-  // repeated .message.oob_unit_t war_release = 2;
+  // repeated .pb_message.oob_unit_t war_release = 2;
   for (unsigned int i = 0, n = this->war_release_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->war_release(i), target);
   }
 
-  // repeated .message.oob_unit_t limited_war_release = 3;
+  // repeated .pb_message.oob_unit_t limited_war_release = 3;
   for (unsigned int i = 0, n = this->limited_war_release_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->limited_war_release(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.mothball_reserve_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.mothball_reserve_t)
   return target;
 }
 
 int mothball_reserve_t::ByteSize() const {
   int total_size = 0;
 
-  // repeated .message.oob_unit_t units = 1;
+  // repeated .pb_message.oob_unit_t units = 1;
   total_size += 1 * this->units_size();
   for (int i = 0; i < this->units_size(); i++) {
     total_size +=
@@ -8006,7 +8011,7 @@ int mothball_reserve_t::ByteSize() const {
         this->units(i));
   }
 
-  // repeated .message.oob_unit_t war_release = 2;
+  // repeated .pb_message.oob_unit_t war_release = 2;
   total_size += 1 * this->war_release_size();
   for (int i = 0; i < this->war_release_size(); i++) {
     total_size +=
@@ -8014,7 +8019,7 @@ int mothball_reserve_t::ByteSize() const {
         this->war_release(i));
   }
 
-  // repeated .message.oob_unit_t limited_war_release = 3;
+  // repeated .pb_message.oob_unit_t limited_war_release = 3;
   total_size += 1 * this->limited_war_release_size();
   for (int i = 0; i < this->limited_war_release_size(); i++) {
     total_size +=
@@ -8087,93 +8092,93 @@ void mothball_reserve_t::InternalSwap(mothball_reserve_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // mothball_reserve_t
 
-// repeated .message.oob_unit_t units = 1;
+// repeated .pb_message.oob_unit_t units = 1;
 int mothball_reserve_t::units_size() const {
   return units_.size();
 }
 void mothball_reserve_t::clear_units() {
   units_.Clear();
 }
-const ::message::oob_unit_t& mothball_reserve_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.mothball_reserve_t.units)
+const ::pb_message::oob_unit_t& mothball_reserve_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.mothball_reserve_t.units)
   return units_.Get(index);
 }
-::message::oob_unit_t* mothball_reserve_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.mothball_reserve_t.units)
+::pb_message::oob_unit_t* mothball_reserve_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.mothball_reserve_t.units)
   return units_.Mutable(index);
 }
-::message::oob_unit_t* mothball_reserve_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.mothball_reserve_t.units)
+::pb_message::oob_unit_t* mothball_reserve_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.mothball_reserve_t.units)
   return units_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 mothball_reserve_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.mothball_reserve_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.mothball_reserve_t.units)
   return &units_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 mothball_reserve_t::units() const {
-  // @@protoc_insertion_point(field_list:message.mothball_reserve_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.mothball_reserve_t.units)
   return units_;
 }
 
-// repeated .message.oob_unit_t war_release = 2;
+// repeated .pb_message.oob_unit_t war_release = 2;
 int mothball_reserve_t::war_release_size() const {
   return war_release_.size();
 }
 void mothball_reserve_t::clear_war_release() {
   war_release_.Clear();
 }
-const ::message::oob_unit_t& mothball_reserve_t::war_release(int index) const {
-  // @@protoc_insertion_point(field_get:message.mothball_reserve_t.war_release)
+const ::pb_message::oob_unit_t& mothball_reserve_t::war_release(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.mothball_reserve_t.war_release)
   return war_release_.Get(index);
 }
-::message::oob_unit_t* mothball_reserve_t::mutable_war_release(int index) {
-  // @@protoc_insertion_point(field_mutable:message.mothball_reserve_t.war_release)
+::pb_message::oob_unit_t* mothball_reserve_t::mutable_war_release(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.mothball_reserve_t.war_release)
   return war_release_.Mutable(index);
 }
-::message::oob_unit_t* mothball_reserve_t::add_war_release() {
-  // @@protoc_insertion_point(field_add:message.mothball_reserve_t.war_release)
+::pb_message::oob_unit_t* mothball_reserve_t::add_war_release() {
+  // @@protoc_insertion_point(field_add:pb_message.mothball_reserve_t.war_release)
   return war_release_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 mothball_reserve_t::mutable_war_release() {
-  // @@protoc_insertion_point(field_mutable_list:message.mothball_reserve_t.war_release)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.mothball_reserve_t.war_release)
   return &war_release_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 mothball_reserve_t::war_release() const {
-  // @@protoc_insertion_point(field_list:message.mothball_reserve_t.war_release)
+  // @@protoc_insertion_point(field_list:pb_message.mothball_reserve_t.war_release)
   return war_release_;
 }
 
-// repeated .message.oob_unit_t limited_war_release = 3;
+// repeated .pb_message.oob_unit_t limited_war_release = 3;
 int mothball_reserve_t::limited_war_release_size() const {
   return limited_war_release_.size();
 }
 void mothball_reserve_t::clear_limited_war_release() {
   limited_war_release_.Clear();
 }
-const ::message::oob_unit_t& mothball_reserve_t::limited_war_release(int index) const {
-  // @@protoc_insertion_point(field_get:message.mothball_reserve_t.limited_war_release)
+const ::pb_message::oob_unit_t& mothball_reserve_t::limited_war_release(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_.Get(index);
 }
-::message::oob_unit_t* mothball_reserve_t::mutable_limited_war_release(int index) {
-  // @@protoc_insertion_point(field_mutable:message.mothball_reserve_t.limited_war_release)
+::pb_message::oob_unit_t* mothball_reserve_t::mutable_limited_war_release(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_.Mutable(index);
 }
-::message::oob_unit_t* mothball_reserve_t::add_limited_war_release() {
-  // @@protoc_insertion_point(field_add:message.mothball_reserve_t.limited_war_release)
+::pb_message::oob_unit_t* mothball_reserve_t::add_limited_war_release() {
+  // @@protoc_insertion_point(field_add:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 mothball_reserve_t::mutable_limited_war_release() {
-  // @@protoc_insertion_point(field_mutable_list:message.mothball_reserve_t.limited_war_release)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.mothball_reserve_t.limited_war_release)
   return &limited_war_release_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 mothball_reserve_t::limited_war_release() const {
-  // @@protoc_insertion_point(field_list:message.mothball_reserve_t.limited_war_release)
+  // @@protoc_insertion_point(field_list:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_;
 }
 
@@ -8190,12 +8195,12 @@ const int order_of_battle_t::kProductionFieldNumber;
 order_of_battle_t::order_of_battle_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.order_of_battle_t)
+  // @@protoc_insertion_point(constructor:pb_message.order_of_battle_t)
 }
 
 void order_of_battle_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  mothball_reserve_ = const_cast< ::message::mothball_reserve_t*>(&::message::mothball_reserve_t::default_instance());
+  mothball_reserve_ = const_cast< ::pb_message::mothball_reserve_t*>(&::pb_message::mothball_reserve_t::default_instance());
 }
 
 order_of_battle_t::order_of_battle_t(const order_of_battle_t& from)
@@ -8203,7 +8208,7 @@ order_of_battle_t::order_of_battle_t(const order_of_battle_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.order_of_battle_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.order_of_battle_t)
 }
 
 void order_of_battle_t::SharedCtor() {
@@ -8212,12 +8217,12 @@ void order_of_battle_t::SharedCtor() {
   starting_fleets_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   starting_fleets_.SetEntryDescriptor(
-      &::message::order_of_battle_t_StartingFleetsEntry_descriptor_);
+      &::pb_message::order_of_battle_t_StartingFleetsEntry_descriptor_);
   mothball_reserve_ = NULL;
 }
 
 order_of_battle_t::~order_of_battle_t() {
-  // @@protoc_insertion_point(destructor:message.order_of_battle_t)
+  // @@protoc_insertion_point(destructor:pb_message.order_of_battle_t)
   SharedDtor();
 }
 
@@ -8263,13 +8268,13 @@ bool order_of_battle_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.order_of_battle_t)
+  // @@protoc_insertion_point(parse_start:pb_message.order_of_battle_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<string, .message.starting_fleet_t> starting_fleets = 1;
+      // map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -8281,7 +8286,7 @@ bool order_of_battle_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.order_of_battle_t.StartingFleetsEntry.key"));
+            "pb_message.order_of_battle_t.StartingFleetsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -8291,7 +8296,7 @@ bool order_of_battle_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.mothball_reserve_t mothball_reserve = 2;
+      // optional .pb_message.mothball_reserve_t mothball_reserve = 2;
       case 2: {
         if (tag == 18) {
          parse_mothball_reserve:
@@ -8304,7 +8309,7 @@ bool order_of_battle_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.production_element_t production = 3;
+      // repeated .pb_message.production_element_t production = 3;
       case 3: {
         if (tag == 26) {
          parse_production:
@@ -8334,21 +8339,21 @@ bool order_of_battle_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.order_of_battle_t)
+  // @@protoc_insertion_point(parse_success:pb_message.order_of_battle_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.order_of_battle_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.order_of_battle_t)
   return false;
 #undef DO_
 }
 
 void order_of_battle_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.order_of_battle_t)
-  // map<string, .message.starting_fleet_t> starting_fleets = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.order_of_battle_t)
+  // map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
   {
     ::google::protobuf::scoped_ptr<order_of_battle_t_StartingFleetsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >::const_iterator
         it = this->starting_fleets().begin();
         it != this->starting_fleets().end(); ++it) {
       entry.reset(starting_fleets_.NewEntryWrapper(it->first, it->second));
@@ -8357,32 +8362,32 @@ void order_of_battle_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.order_of_battle_t.StartingFleetsEntry.key");
+        "pb_message.order_of_battle_t.StartingFleetsEntry.key");
     }
   }
 
-  // optional .message.mothball_reserve_t mothball_reserve = 2;
+  // optional .pb_message.mothball_reserve_t mothball_reserve = 2;
   if (this->has_mothball_reserve()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->mothball_reserve_, output);
   }
 
-  // repeated .message.production_element_t production = 3;
+  // repeated .pb_message.production_element_t production = 3;
   for (unsigned int i = 0, n = this->production_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->production(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.order_of_battle_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.order_of_battle_t)
 }
 
 ::google::protobuf::uint8* order_of_battle_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.order_of_battle_t)
-  // map<string, .message.starting_fleet_t> starting_fleets = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.order_of_battle_t)
+  // map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
   {
     ::google::protobuf::scoped_ptr<order_of_battle_t_StartingFleetsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >::const_iterator
         it = this->starting_fleets().begin();
         it != this->starting_fleets().end(); ++it) {
       entry.reset(starting_fleets_.NewEntryWrapper(it->first, it->second));
@@ -8392,43 +8397,43 @@ void order_of_battle_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.order_of_battle_t.StartingFleetsEntry.key");
+        "pb_message.order_of_battle_t.StartingFleetsEntry.key");
     }
   }
 
-  // optional .message.mothball_reserve_t mothball_reserve = 2;
+  // optional .pb_message.mothball_reserve_t mothball_reserve = 2;
   if (this->has_mothball_reserve()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->mothball_reserve_, target);
   }
 
-  // repeated .message.production_element_t production = 3;
+  // repeated .pb_message.production_element_t production = 3;
   for (unsigned int i = 0, n = this->production_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->production(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.order_of_battle_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.order_of_battle_t)
   return target;
 }
 
 int order_of_battle_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.mothball_reserve_t mothball_reserve = 2;
+  // optional .pb_message.mothball_reserve_t mothball_reserve = 2;
   if (this->has_mothball_reserve()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->mothball_reserve_);
   }
 
-  // map<string, .message.starting_fleet_t> starting_fleets = 1;
+  // map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
   total_size += 1 * this->starting_fleets_size();
   {
     ::google::protobuf::scoped_ptr<order_of_battle_t_StartingFleetsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >::const_iterator
         it = this->starting_fleets().begin();
         it != this->starting_fleets().end(); ++it) {
       entry.reset(starting_fleets_.NewEntryWrapper(it->first, it->second));
@@ -8437,7 +8442,7 @@ int order_of_battle_t::ByteSize() const {
     }
   }
 
-  // repeated .message.production_element_t production = 3;
+  // repeated .pb_message.production_element_t production = 3;
   total_size += 1 * this->production_size();
   for (int i = 0; i < this->production_size(); i++) {
     total_size +=
@@ -8468,7 +8473,7 @@ void order_of_battle_t::MergeFrom(const order_of_battle_t& from) {
   starting_fleets_.MergeFrom(from.starting_fleets_);
   production_.MergeFrom(from.production_);
   if (from.has_mothball_reserve()) {
-    mutable_mothball_reserve()->::message::mothball_reserve_t::MergeFrom(from.mothball_reserve());
+    mutable_mothball_reserve()->::pb_message::mothball_reserve_t::MergeFrom(from.mothball_reserve());
   }
 }
 
@@ -8512,25 +8517,25 @@ void order_of_battle_t::InternalSwap(order_of_battle_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // order_of_battle_t
 
-// map<string, .message.starting_fleet_t> starting_fleets = 1;
+// map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
 int order_of_battle_t::starting_fleets_size() const {
   return starting_fleets_.size();
 }
 void order_of_battle_t::clear_starting_fleets() {
   starting_fleets_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >&
 order_of_battle_t::starting_fleets() const {
-  // @@protoc_insertion_point(field_map:message.order_of_battle_t.starting_fleets)
+  // @@protoc_insertion_point(field_map:pb_message.order_of_battle_t.starting_fleets)
   return starting_fleets_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >*
 order_of_battle_t::mutable_starting_fleets() {
-  // @@protoc_insertion_point(field_mutable_map:message.order_of_battle_t.starting_fleets)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.order_of_battle_t.starting_fleets)
   return starting_fleets_.MutableMap();
 }
 
-// optional .message.mothball_reserve_t mothball_reserve = 2;
+// optional .pb_message.mothball_reserve_t mothball_reserve = 2;
 bool order_of_battle_t::has_mothball_reserve() const {
   return !_is_default_instance_ && mothball_reserve_ != NULL;
 }
@@ -8538,25 +8543,25 @@ void order_of_battle_t::clear_mothball_reserve() {
   if (GetArenaNoVirtual() == NULL && mothball_reserve_ != NULL) delete mothball_reserve_;
   mothball_reserve_ = NULL;
 }
-const ::message::mothball_reserve_t& order_of_battle_t::mothball_reserve() const {
-  // @@protoc_insertion_point(field_get:message.order_of_battle_t.mothball_reserve)
+const ::pb_message::mothball_reserve_t& order_of_battle_t::mothball_reserve() const {
+  // @@protoc_insertion_point(field_get:pb_message.order_of_battle_t.mothball_reserve)
   return mothball_reserve_ != NULL ? *mothball_reserve_ : *default_instance_->mothball_reserve_;
 }
-::message::mothball_reserve_t* order_of_battle_t::mutable_mothball_reserve() {
+::pb_message::mothball_reserve_t* order_of_battle_t::mutable_mothball_reserve() {
   
   if (mothball_reserve_ == NULL) {
-    mothball_reserve_ = new ::message::mothball_reserve_t;
+    mothball_reserve_ = new ::pb_message::mothball_reserve_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.order_of_battle_t.mothball_reserve)
+  // @@protoc_insertion_point(field_mutable:pb_message.order_of_battle_t.mothball_reserve)
   return mothball_reserve_;
 }
-::message::mothball_reserve_t* order_of_battle_t::release_mothball_reserve() {
+::pb_message::mothball_reserve_t* order_of_battle_t::release_mothball_reserve() {
   
-  ::message::mothball_reserve_t* temp = mothball_reserve_;
+  ::pb_message::mothball_reserve_t* temp = mothball_reserve_;
   mothball_reserve_ = NULL;
   return temp;
 }
-void order_of_battle_t::set_allocated_mothball_reserve(::message::mothball_reserve_t* mothball_reserve) {
+void order_of_battle_t::set_allocated_mothball_reserve(::pb_message::mothball_reserve_t* mothball_reserve) {
   delete mothball_reserve_;
   mothball_reserve_ = mothball_reserve;
   if (mothball_reserve) {
@@ -8564,36 +8569,36 @@ void order_of_battle_t::set_allocated_mothball_reserve(::message::mothball_reser
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.order_of_battle_t.mothball_reserve)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.order_of_battle_t.mothball_reserve)
 }
 
-// repeated .message.production_element_t production = 3;
+// repeated .pb_message.production_element_t production = 3;
 int order_of_battle_t::production_size() const {
   return production_.size();
 }
 void order_of_battle_t::clear_production() {
   production_.Clear();
 }
-const ::message::production_element_t& order_of_battle_t::production(int index) const {
-  // @@protoc_insertion_point(field_get:message.order_of_battle_t.production)
+const ::pb_message::production_element_t& order_of_battle_t::production(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.order_of_battle_t.production)
   return production_.Get(index);
 }
-::message::production_element_t* order_of_battle_t::mutable_production(int index) {
-  // @@protoc_insertion_point(field_mutable:message.order_of_battle_t.production)
+::pb_message::production_element_t* order_of_battle_t::mutable_production(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.order_of_battle_t.production)
   return production_.Mutable(index);
 }
-::message::production_element_t* order_of_battle_t::add_production() {
-  // @@protoc_insertion_point(field_add:message.order_of_battle_t.production)
+::pb_message::production_element_t* order_of_battle_t::add_production() {
+  // @@protoc_insertion_point(field_add:pb_message.order_of_battle_t.production)
   return production_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::production_element_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >*
 order_of_battle_t::mutable_production() {
-  // @@protoc_insertion_point(field_mutable_list:message.order_of_battle_t.production)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.order_of_battle_t.production)
   return &production_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::production_element_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >&
 order_of_battle_t::production() const {
-  // @@protoc_insertion_point(field_list:message.order_of_battle_t.production)
+  // @@protoc_insertion_point(field_list:pb_message.order_of_battle_t.production)
   return production_;
 }
 
@@ -8608,7 +8613,7 @@ const int orders_of_battle_t::kOobsFieldNumber;
 orders_of_battle_t::orders_of_battle_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.orders_of_battle_t)
+  // @@protoc_insertion_point(constructor:pb_message.orders_of_battle_t)
 }
 
 void orders_of_battle_t::InitAsDefaultInstance() {
@@ -8620,7 +8625,7 @@ orders_of_battle_t::orders_of_battle_t(const orders_of_battle_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.orders_of_battle_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.orders_of_battle_t)
 }
 
 void orders_of_battle_t::SharedCtor() {
@@ -8629,11 +8634,11 @@ void orders_of_battle_t::SharedCtor() {
   oobs_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   oobs_.SetEntryDescriptor(
-      &::message::orders_of_battle_t_OobsEntry_descriptor_);
+      &::pb_message::orders_of_battle_t_OobsEntry_descriptor_);
 }
 
 orders_of_battle_t::~orders_of_battle_t() {
-  // @@protoc_insertion_point(destructor:message.orders_of_battle_t)
+  // @@protoc_insertion_point(destructor:pb_message.orders_of_battle_t)
   SharedDtor();
 }
 
@@ -8675,13 +8680,13 @@ bool orders_of_battle_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.orders_of_battle_t)
+  // @@protoc_insertion_point(parse_start:pb_message.orders_of_battle_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<string, .message.order_of_battle_t> oobs = 1;
+      // map<string, .pb_message.order_of_battle_t> oobs = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -8693,7 +8698,7 @@ bool orders_of_battle_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.orders_of_battle_t.OobsEntry.key"));
+            "pb_message.orders_of_battle_t.OobsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -8716,21 +8721,21 @@ bool orders_of_battle_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.orders_of_battle_t)
+  // @@protoc_insertion_point(parse_success:pb_message.orders_of_battle_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.orders_of_battle_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.orders_of_battle_t)
   return false;
 #undef DO_
 }
 
 void orders_of_battle_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.orders_of_battle_t)
-  // map<string, .message.order_of_battle_t> oobs = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.orders_of_battle_t)
+  // map<string, .pb_message.order_of_battle_t> oobs = 1;
   {
     ::google::protobuf::scoped_ptr<orders_of_battle_t_OobsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >::const_iterator
         it = this->oobs().begin();
         it != this->oobs().end(); ++it) {
       entry.reset(oobs_.NewEntryWrapper(it->first, it->second));
@@ -8739,20 +8744,20 @@ void orders_of_battle_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.orders_of_battle_t.OobsEntry.key");
+        "pb_message.orders_of_battle_t.OobsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.orders_of_battle_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.orders_of_battle_t)
 }
 
 ::google::protobuf::uint8* orders_of_battle_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.orders_of_battle_t)
-  // map<string, .message.order_of_battle_t> oobs = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.orders_of_battle_t)
+  // map<string, .pb_message.order_of_battle_t> oobs = 1;
   {
     ::google::protobuf::scoped_ptr<orders_of_battle_t_OobsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >::const_iterator
         it = this->oobs().begin();
         it != this->oobs().end(); ++it) {
       entry.reset(oobs_.NewEntryWrapper(it->first, it->second));
@@ -8762,22 +8767,22 @@ void orders_of_battle_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.orders_of_battle_t.OobsEntry.key");
+        "pb_message.orders_of_battle_t.OobsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.orders_of_battle_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.orders_of_battle_t)
   return target;
 }
 
 int orders_of_battle_t::ByteSize() const {
   int total_size = 0;
 
-  // map<string, .message.order_of_battle_t> oobs = 1;
+  // map<string, .pb_message.order_of_battle_t> oobs = 1;
   total_size += 1 * this->oobs_size();
   {
     ::google::protobuf::scoped_ptr<orders_of_battle_t_OobsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >::const_iterator
         it = this->oobs().begin();
         it != this->oobs().end(); ++it) {
       entry.reset(oobs_.NewEntryWrapper(it->first, it->second));
@@ -8847,21 +8852,21 @@ void orders_of_battle_t::InternalSwap(orders_of_battle_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // orders_of_battle_t
 
-// map<string, .message.order_of_battle_t> oobs = 1;
+// map<string, .pb_message.order_of_battle_t> oobs = 1;
 int orders_of_battle_t::oobs_size() const {
   return oobs_.size();
 }
 void orders_of_battle_t::clear_oobs() {
   oobs_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >&
 orders_of_battle_t::oobs() const {
-  // @@protoc_insertion_point(field_map:message.orders_of_battle_t.oobs)
+  // @@protoc_insertion_point(field_map:pb_message.orders_of_battle_t.oobs)
   return oobs_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >*
 orders_of_battle_t::mutable_oobs() {
-  // @@protoc_insertion_point(field_mutable_map:message.orders_of_battle_t.oobs)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.orders_of_battle_t.oobs)
   return oobs_.MutableMap();
 }
 
@@ -8884,7 +8889,7 @@ const int unit_def_side_t::kTugMissionsFieldNumber;
 unit_def_side_t::unit_def_side_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.unit_def_side_t)
+  // @@protoc_insertion_point(constructor:pb_message.unit_def_side_t)
 }
 
 void unit_def_side_t::InitAsDefaultInstance() {
@@ -8896,7 +8901,7 @@ unit_def_side_t::unit_def_side_t(const unit_def_side_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.unit_def_side_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.unit_def_side_t)
 }
 
 void unit_def_side_t::SharedCtor() {
@@ -8913,7 +8918,7 @@ void unit_def_side_t::SharedCtor() {
 }
 
 unit_def_side_t::~unit_def_side_t() {
-  // @@protoc_insertion_point(destructor:message.unit_def_side_t)
+  // @@protoc_insertion_point(destructor:pb_message.unit_def_side_t)
   SharedDtor();
 }
 
@@ -8969,7 +8974,7 @@ bool unit_def_side_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.unit_def_side_t)
+  // @@protoc_insertion_point(parse_start:pb_message.unit_def_side_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -9094,7 +9099,7 @@ bool unit_def_side_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.tug_mission_t tug_missions = 9;
+      // repeated .pb_message.tug_mission_t tug_missions = 9;
       case 9: {
         if (tag == 74) {
          parse_tug_missions:
@@ -9106,7 +9111,7 @@ bool unit_def_side_t::MergePartialFromCodedStream(
             DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-            add_tug_missions(static_cast< ::message::tug_mission_t >(value));
+            add_tug_missions(static_cast< ::pb_message::tug_mission_t >(value));
           }
           input->PopLimit(limit);
         } else if (tag == 72) {
@@ -9114,7 +9119,7 @@ bool unit_def_side_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          add_tug_missions(static_cast< ::message::tug_mission_t >(value));
+          add_tug_missions(static_cast< ::pb_message::tug_mission_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -9135,17 +9140,17 @@ bool unit_def_side_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.unit_def_side_t)
+  // @@protoc_insertion_point(parse_success:pb_message.unit_def_side_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.unit_def_side_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.unit_def_side_t)
   return false;
 #undef DO_
 }
 
 void unit_def_side_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.unit_def_side_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.unit_def_side_t)
   // optional float att = 1;
   if (this->att() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(1, this->att(), output);
@@ -9186,7 +9191,7 @@ void unit_def_side_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->mauler(), output);
   }
 
-  // repeated .message.tug_mission_t tug_missions = 9;
+  // repeated .pb_message.tug_mission_t tug_missions = 9;
   if (this->tug_missions_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(
       9,
@@ -9199,12 +9204,12 @@ void unit_def_side_t::SerializeWithCachedSizes(
       this->tug_missions(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.unit_def_side_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.unit_def_side_t)
 }
 
 ::google::protobuf::uint8* unit_def_side_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.unit_def_side_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.unit_def_side_t)
   // optional float att = 1;
   if (this->att() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->att(), target);
@@ -9245,7 +9250,7 @@ void unit_def_side_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->mauler(), target);
   }
 
-  // repeated .message.tug_mission_t tug_missions = 9;
+  // repeated .pb_message.tug_mission_t tug_missions = 9;
   if (this->tug_missions_size() > 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
       9,
@@ -9258,7 +9263,7 @@ void unit_def_side_t::SerializeWithCachedSizes(
       this->tug_missions(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.unit_def_side_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.unit_def_side_t)
   return target;
 }
 
@@ -9309,7 +9314,7 @@ int unit_def_side_t::ByteSize() const {
     total_size += 1 + 1;
   }
 
-  // repeated .message.tug_mission_t tug_missions = 9;
+  // repeated .pb_message.tug_mission_t tug_missions = 9;
   {
     int data_size = 0;
     for (int i = 0; i < this->tug_missions_size(); i++) {
@@ -9424,13 +9429,13 @@ void unit_def_side_t::clear_att() {
   att_ = 0;
 }
  float unit_def_side_t::att() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.att)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.att)
   return att_;
 }
  void unit_def_side_t::set_att(float value) {
   
   att_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.att)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.att)
 }
 
 // optional float def = 2;
@@ -9438,13 +9443,13 @@ void unit_def_side_t::clear_def() {
   def_ = 0;
 }
  float unit_def_side_t::def() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.def)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.def)
   return def_;
 }
  void unit_def_side_t::set_def(float value) {
   
   def_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.def)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.def)
 }
 
 // optional bool scout = 3;
@@ -9452,13 +9457,13 @@ void unit_def_side_t::clear_scout() {
   scout_ = false;
 }
  bool unit_def_side_t::scout() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.scout)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.scout)
   return scout_;
 }
  void unit_def_side_t::set_scout(bool value) {
   
   scout_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.scout)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.scout)
 }
 
 // optional float fighters = 4;
@@ -9466,13 +9471,13 @@ void unit_def_side_t::clear_fighters() {
   fighters_ = 0;
 }
  float unit_def_side_t::fighters() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.fighters)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.fighters)
   return fighters_;
 }
  void unit_def_side_t::set_fighters(float value) {
   
   fighters_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.fighters)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.fighters)
 }
 
 // optional float heavy_fighter_bonus = 5;
@@ -9480,13 +9485,13 @@ void unit_def_side_t::clear_heavy_fighter_bonus() {
   heavy_fighter_bonus_ = 0;
 }
  float unit_def_side_t::heavy_fighter_bonus() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.heavy_fighter_bonus)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.heavy_fighter_bonus)
   return heavy_fighter_bonus_;
 }
  void unit_def_side_t::set_heavy_fighter_bonus(float value) {
   
   heavy_fighter_bonus_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.heavy_fighter_bonus)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.heavy_fighter_bonus)
 }
 
 // optional int32 pfs = 6;
@@ -9494,13 +9499,13 @@ void unit_def_side_t::clear_pfs() {
   pfs_ = 0;
 }
  ::google::protobuf::int32 unit_def_side_t::pfs() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.pfs)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.pfs)
   return pfs_;
 }
  void unit_def_side_t::set_pfs(::google::protobuf::int32 value) {
   
   pfs_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.pfs)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.pfs)
 }
 
 // optional int32 drones = 7;
@@ -9508,13 +9513,13 @@ void unit_def_side_t::clear_drones() {
   drones_ = 0;
 }
  ::google::protobuf::int32 unit_def_side_t::drones() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.drones)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.drones)
   return drones_;
 }
  void unit_def_side_t::set_drones(::google::protobuf::int32 value) {
   
   drones_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.drones)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.drones)
 }
 
 // optional bool mauler = 8;
@@ -9522,42 +9527,42 @@ void unit_def_side_t::clear_mauler() {
   mauler_ = false;
 }
  bool unit_def_side_t::mauler() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.mauler)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.mauler)
   return mauler_;
 }
  void unit_def_side_t::set_mauler(bool value) {
   
   mauler_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.mauler)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.mauler)
 }
 
-// repeated .message.tug_mission_t tug_missions = 9;
+// repeated .pb_message.tug_mission_t tug_missions = 9;
 int unit_def_side_t::tug_missions_size() const {
   return tug_missions_.size();
 }
 void unit_def_side_t::clear_tug_missions() {
   tug_missions_.Clear();
 }
- ::message::tug_mission_t unit_def_side_t::tug_missions(int index) const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.tug_missions)
-  return static_cast< ::message::tug_mission_t >(tug_missions_.Get(index));
+ ::pb_message::tug_mission_t unit_def_side_t::tug_missions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.tug_missions)
+  return static_cast< ::pb_message::tug_mission_t >(tug_missions_.Get(index));
 }
- void unit_def_side_t::set_tug_missions(int index, ::message::tug_mission_t value) {
+ void unit_def_side_t::set_tug_missions(int index, ::pb_message::tug_mission_t value) {
   tug_missions_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.tug_missions)
 }
- void unit_def_side_t::add_tug_missions(::message::tug_mission_t value) {
+ void unit_def_side_t::add_tug_missions(::pb_message::tug_mission_t value) {
   tug_missions_.Add(value);
-  // @@protoc_insertion_point(field_add:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_add:pb_message.unit_def_side_t.tug_missions)
 }
  const ::google::protobuf::RepeatedField<int>&
 unit_def_side_t::tug_missions() const {
-  // @@protoc_insertion_point(field_list:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_list:pb_message.unit_def_side_t.tug_missions)
   return tug_missions_;
 }
  ::google::protobuf::RepeatedField<int>*
 unit_def_side_t::mutable_tug_missions() {
-  // @@protoc_insertion_point(field_mutable_list:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.unit_def_side_t.tug_missions)
   return &tug_missions_;
 }
 
@@ -9573,7 +9578,7 @@ const int towable_t::kStratMoveLimitFieldNumber;
 towable_t::towable_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.towable_t)
+  // @@protoc_insertion_point(constructor:pb_message.towable_t)
 }
 
 void towable_t::InitAsDefaultInstance() {
@@ -9585,7 +9590,7 @@ towable_t::towable_t(const towable_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.towable_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.towable_t)
 }
 
 void towable_t::SharedCtor() {
@@ -9596,7 +9601,7 @@ void towable_t::SharedCtor() {
 }
 
 towable_t::~towable_t() {
-  // @@protoc_insertion_point(destructor:message.towable_t)
+  // @@protoc_insertion_point(destructor:pb_message.towable_t)
   SharedDtor();
 }
 
@@ -9650,7 +9655,7 @@ bool towable_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.towable_t)
+  // @@protoc_insertion_point(parse_start:pb_message.towable_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -9698,17 +9703,17 @@ bool towable_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.towable_t)
+  // @@protoc_insertion_point(parse_success:pb_message.towable_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.towable_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.towable_t)
   return false;
 #undef DO_
 }
 
 void towable_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.towable_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.towable_t)
   // optional int32 move_cost = 1;
   if (this->move_cost() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->move_cost(), output);
@@ -9719,12 +9724,12 @@ void towable_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->strat_move_limit(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.towable_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.towable_t)
 }
 
 ::google::protobuf::uint8* towable_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.towable_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.towable_t)
   // optional int32 move_cost = 1;
   if (this->move_cost() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->move_cost(), target);
@@ -9735,7 +9740,7 @@ void towable_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->strat_move_limit(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.towable_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.towable_t)
   return target;
 }
 
@@ -9828,13 +9833,13 @@ void towable_t::clear_move_cost() {
   move_cost_ = 0;
 }
  ::google::protobuf::int32 towable_t::move_cost() const {
-  // @@protoc_insertion_point(field_get:message.towable_t.move_cost)
+  // @@protoc_insertion_point(field_get:pb_message.towable_t.move_cost)
   return move_cost_;
 }
  void towable_t::set_move_cost(::google::protobuf::int32 value) {
   
   move_cost_ = value;
-  // @@protoc_insertion_point(field_set:message.towable_t.move_cost)
+  // @@protoc_insertion_point(field_set:pb_message.towable_t.move_cost)
 }
 
 // optional int32 strat_move_limit = 2;
@@ -9842,13 +9847,13 @@ void towable_t::clear_strat_move_limit() {
   strat_move_limit_ = 0;
 }
  ::google::protobuf::int32 towable_t::strat_move_limit() const {
-  // @@protoc_insertion_point(field_get:message.towable_t.strat_move_limit)
+  // @@protoc_insertion_point(field_get:pb_message.towable_t.strat_move_limit)
   return strat_move_limit_;
 }
  void towable_t::set_strat_move_limit(::google::protobuf::int32 value) {
   
   strat_move_limit_ = value;
-  // @@protoc_insertion_point(field_set:message.towable_t.strat_move_limit)
+  // @@protoc_insertion_point(field_set:pb_message.towable_t.strat_move_limit)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -9863,7 +9868,7 @@ const int production_cost_t::kFighterCostFieldNumber;
 production_cost_t::production_cost_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.production_cost_t)
+  // @@protoc_insertion_point(constructor:pb_message.production_cost_t)
 }
 
 void production_cost_t::InitAsDefaultInstance() {
@@ -9875,7 +9880,7 @@ production_cost_t::production_cost_t(const production_cost_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.production_cost_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.production_cost_t)
 }
 
 void production_cost_t::SharedCtor() {
@@ -9886,7 +9891,7 @@ void production_cost_t::SharedCtor() {
 }
 
 production_cost_t::~production_cost_t() {
-  // @@protoc_insertion_point(destructor:message.production_cost_t)
+  // @@protoc_insertion_point(destructor:pb_message.production_cost_t)
   SharedDtor();
 }
 
@@ -9940,7 +9945,7 @@ bool production_cost_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.production_cost_t)
+  // @@protoc_insertion_point(parse_start:pb_message.production_cost_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -9988,17 +9993,17 @@ bool production_cost_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.production_cost_t)
+  // @@protoc_insertion_point(parse_success:pb_message.production_cost_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.production_cost_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.production_cost_t)
   return false;
 #undef DO_
 }
 
 void production_cost_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.production_cost_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.production_cost_t)
   // optional int32 cost = 1;
   if (this->cost() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->cost(), output);
@@ -10009,12 +10014,12 @@ void production_cost_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->fighter_cost(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.production_cost_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.production_cost_t)
 }
 
 ::google::protobuf::uint8* production_cost_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.production_cost_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.production_cost_t)
   // optional int32 cost = 1;
   if (this->cost() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->cost(), target);
@@ -10025,7 +10030,7 @@ void production_cost_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->fighter_cost(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.production_cost_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.production_cost_t)
   return target;
 }
 
@@ -10118,13 +10123,13 @@ void production_cost_t::clear_cost() {
   cost_ = 0;
 }
  ::google::protobuf::int32 production_cost_t::cost() const {
-  // @@protoc_insertion_point(field_get:message.production_cost_t.cost)
+  // @@protoc_insertion_point(field_get:pb_message.production_cost_t.cost)
   return cost_;
 }
  void production_cost_t::set_cost(::google::protobuf::int32 value) {
   
   cost_ = value;
-  // @@protoc_insertion_point(field_set:message.production_cost_t.cost)
+  // @@protoc_insertion_point(field_set:pb_message.production_cost_t.cost)
 }
 
 // optional int32 fighter_cost = 2;
@@ -10132,13 +10137,13 @@ void production_cost_t::clear_fighter_cost() {
   fighter_cost_ = 0;
 }
  ::google::protobuf::int32 production_cost_t::fighter_cost() const {
-  // @@protoc_insertion_point(field_get:message.production_cost_t.fighter_cost)
+  // @@protoc_insertion_point(field_get:pb_message.production_cost_t.fighter_cost)
   return fighter_cost_;
 }
  void production_cost_t::set_fighter_cost(::google::protobuf::int32 value) {
   
   fighter_cost_ = value;
-  // @@protoc_insertion_point(field_set:message.production_cost_t.fighter_cost)
+  // @@protoc_insertion_point(field_set:pb_message.production_cost_t.fighter_cost)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -10168,16 +10173,16 @@ const int unit_def_t::kNotesFieldNumber;
 unit_def_t::unit_def_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.unit_def_t)
+  // @@protoc_insertion_point(constructor:pb_message.unit_def_t)
 }
 
 void unit_def_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  uncrippled_ = const_cast< ::message::unit_def_side_t*>(&::message::unit_def_side_t::default_instance());
-  crippled_ = const_cast< ::message::unit_def_side_t*>(&::message::unit_def_side_t::default_instance());
-  available_ = const_cast< ::message::turn_t*>(&::message::turn_t::default_instance());
-  construction_ = const_cast< ::message::production_cost_t*>(&::message::production_cost_t::default_instance());
-  towable_ = const_cast< ::message::towable_t*>(&::message::towable_t::default_instance());
+  uncrippled_ = const_cast< ::pb_message::unit_def_side_t*>(&::pb_message::unit_def_side_t::default_instance());
+  crippled_ = const_cast< ::pb_message::unit_def_side_t*>(&::pb_message::unit_def_side_t::default_instance());
+  available_ = const_cast< ::pb_message::turn_t*>(&::pb_message::turn_t::default_instance());
+  construction_ = const_cast< ::pb_message::production_cost_t*>(&::pb_message::production_cost_t::default_instance());
+  towable_ = const_cast< ::pb_message::towable_t*>(&::pb_message::towable_t::default_instance());
 }
 
 unit_def_t::unit_def_t(const unit_def_t& from)
@@ -10185,7 +10190,7 @@ unit_def_t::unit_def_t(const unit_def_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.unit_def_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.unit_def_t)
 }
 
 void unit_def_t::SharedCtor() {
@@ -10204,11 +10209,11 @@ void unit_def_t::SharedCtor() {
   substitutions_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   substitutions_.SetEntryDescriptor(
-      &::message::unit_def_t_SubstitutionsEntry_descriptor_);
+      &::pb_message::unit_def_t_SubstitutionsEntry_descriptor_);
   conversions_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   conversions_.SetEntryDescriptor(
-      &::message::unit_def_t_ConversionsEntry_descriptor_);
+      &::pb_message::unit_def_t_ConversionsEntry_descriptor_);
   move_ = 0;
   carrier_type_ = 0;
   not_spaceworthy_ = false;
@@ -10218,7 +10223,7 @@ void unit_def_t::SharedCtor() {
 }
 
 unit_def_t::~unit_def_t() {
-  // @@protoc_insertion_point(destructor:message.unit_def_t)
+  // @@protoc_insertion_point(destructor:pb_message.unit_def_t)
   SharedDtor();
 }
 
@@ -10297,7 +10302,7 @@ bool unit_def_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.unit_def_t)
+  // @@protoc_insertion_point(parse_start:pb_message.unit_def_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(16383);
     tag = p.first;
@@ -10311,7 +10316,7 @@ bool unit_def_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.unit_def_t.name"));
+            "pb_message.unit_def_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -10334,7 +10339,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.unit_def_side_t uncrippled = 3;
+      // optional .pb_message.unit_def_side_t uncrippled = 3;
       case 3: {
         if (tag == 26) {
          parse_uncrippled:
@@ -10347,7 +10352,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.unit_def_side_t crippled = 4;
+      // optional .pb_message.unit_def_side_t crippled = 4;
       case 4: {
         if (tag == 34) {
          parse_crippled:
@@ -10360,7 +10365,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.escort_type_t escort_type = 5;
+      // optional .pb_message.escort_type_t escort_type = 5;
       case 5: {
         if (tag == 40) {
          parse_escort_type:
@@ -10368,7 +10373,7 @@ bool unit_def_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_escort_type(static_cast< ::message::escort_type_t >(value));
+          set_escort_type(static_cast< ::pb_message::escort_type_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -10376,7 +10381,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.turn_t available = 6;
+      // optional .pb_message.turn_t available = 6;
       case 6: {
         if (tag == 50) {
          parse_available:
@@ -10419,7 +10424,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.production_cost_t construction = 9;
+      // optional .pb_message.production_cost_t construction = 9;
       case 9: {
         if (tag == 74) {
          parse_construction:
@@ -10432,7 +10437,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .message.production_cost_t> substitutions = 10;
+      // map<string, .pb_message.production_cost_t> substitutions = 10;
       case 10: {
         if (tag == 82) {
          parse_substitutions:
@@ -10445,7 +10450,7 @@ bool unit_def_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.unit_def_t.SubstitutionsEntry.key"));
+            "pb_message.unit_def_t.SubstitutionsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -10455,7 +10460,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .message.production_cost_t> conversions = 11;
+      // map<string, .pb_message.production_cost_t> conversions = 11;
       case 11: {
         if (tag == 90) {
           DO_(input->IncrementRecursionDepth());
@@ -10467,7 +10472,7 @@ bool unit_def_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.unit_def_t.ConversionsEntry.key"));
+            "pb_message.unit_def_t.ConversionsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -10492,7 +10497,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.carrier_type_t carrier_type = 13;
+      // optional .pb_message.carrier_type_t carrier_type = 13;
       case 13: {
         if (tag == 104) {
          parse_carrier_type:
@@ -10500,7 +10505,7 @@ bool unit_def_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_carrier_type(static_cast< ::message::carrier_type_t >(value));
+          set_carrier_type(static_cast< ::pb_message::carrier_type_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -10523,7 +10528,7 @@ bool unit_def_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.towable_t towable = 15;
+      // optional .pb_message.towable_t towable = 15;
       case 15: {
         if (tag == 122) {
          parse_towable:
@@ -10560,7 +10565,7 @@ bool unit_def_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->notes().data(), this->notes().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.unit_def_t.notes"));
+            "pb_message.unit_def_t.notes"));
         } else {
           goto handle_unusual;
         }
@@ -10581,23 +10586,23 @@ bool unit_def_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.unit_def_t)
+  // @@protoc_insertion_point(parse_success:pb_message.unit_def_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.unit_def_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.unit_def_t)
   return false;
 #undef DO_
 }
 
 void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.unit_def_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.unit_def_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.unit_def_t.name");
+      "pb_message.unit_def_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -10607,25 +10612,25 @@ void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->cmd(), output);
   }
 
-  // optional .message.unit_def_side_t uncrippled = 3;
+  // optional .pb_message.unit_def_side_t uncrippled = 3;
   if (this->has_uncrippled()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, *this->uncrippled_, output);
   }
 
-  // optional .message.unit_def_side_t crippled = 4;
+  // optional .pb_message.unit_def_side_t crippled = 4;
   if (this->has_crippled()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, *this->crippled_, output);
   }
 
-  // optional .message.escort_type_t escort_type = 5;
+  // optional .pb_message.escort_type_t escort_type = 5;
   if (this->escort_type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       5, this->escort_type(), output);
   }
 
-  // optional .message.turn_t available = 6;
+  // optional .pb_message.turn_t available = 6;
   if (this->has_available()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       6, *this->available_, output);
@@ -10641,16 +10646,16 @@ void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->max_in_service(), output);
   }
 
-  // optional .message.production_cost_t construction = 9;
+  // optional .pb_message.production_cost_t construction = 9;
   if (this->has_construction()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       9, *this->construction_, output);
   }
 
-  // map<string, .message.production_cost_t> substitutions = 10;
+  // map<string, .pb_message.production_cost_t> substitutions = 10;
   {
     ::google::protobuf::scoped_ptr<unit_def_t_SubstitutionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::production_cost_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >::const_iterator
         it = this->substitutions().begin();
         it != this->substitutions().end(); ++it) {
       entry.reset(substitutions_.NewEntryWrapper(it->first, it->second));
@@ -10659,14 +10664,14 @@ void unit_def_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.unit_def_t.SubstitutionsEntry.key");
+        "pb_message.unit_def_t.SubstitutionsEntry.key");
     }
   }
 
-  // map<string, .message.production_cost_t> conversions = 11;
+  // map<string, .pb_message.production_cost_t> conversions = 11;
   {
     ::google::protobuf::scoped_ptr<unit_def_t_ConversionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::production_cost_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >::const_iterator
         it = this->conversions().begin();
         it != this->conversions().end(); ++it) {
       entry.reset(conversions_.NewEntryWrapper(it->first, it->second));
@@ -10675,7 +10680,7 @@ void unit_def_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.unit_def_t.ConversionsEntry.key");
+        "pb_message.unit_def_t.ConversionsEntry.key");
     }
   }
 
@@ -10684,7 +10689,7 @@ void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->move(), output);
   }
 
-  // optional .message.carrier_type_t carrier_type = 13;
+  // optional .pb_message.carrier_type_t carrier_type = 13;
   if (this->carrier_type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       13, this->carrier_type(), output);
@@ -10695,7 +10700,7 @@ void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(14, this->not_spaceworthy(), output);
   }
 
-  // optional .message.towable_t towable = 15;
+  // optional .pb_message.towable_t towable = 15;
   if (this->has_towable()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       15, *this->towable_, output);
@@ -10711,23 +10716,23 @@ void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->notes().data(), this->notes().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.unit_def_t.notes");
+      "pb_message.unit_def_t.notes");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       17, this->notes(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.unit_def_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.unit_def_t)
 }
 
 ::google::protobuf::uint8* unit_def_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.unit_def_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.unit_def_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.unit_def_t.name");
+      "pb_message.unit_def_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -10738,27 +10743,27 @@ void unit_def_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->cmd(), target);
   }
 
-  // optional .message.unit_def_side_t uncrippled = 3;
+  // optional .pb_message.unit_def_side_t uncrippled = 3;
   if (this->has_uncrippled()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, *this->uncrippled_, target);
   }
 
-  // optional .message.unit_def_side_t crippled = 4;
+  // optional .pb_message.unit_def_side_t crippled = 4;
   if (this->has_crippled()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, *this->crippled_, target);
   }
 
-  // optional .message.escort_type_t escort_type = 5;
+  // optional .pb_message.escort_type_t escort_type = 5;
   if (this->escort_type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       5, this->escort_type(), target);
   }
 
-  // optional .message.turn_t available = 6;
+  // optional .pb_message.turn_t available = 6;
   if (this->has_available()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -10775,17 +10780,17 @@ void unit_def_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->max_in_service(), target);
   }
 
-  // optional .message.production_cost_t construction = 9;
+  // optional .pb_message.production_cost_t construction = 9;
   if (this->has_construction()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         9, *this->construction_, target);
   }
 
-  // map<string, .message.production_cost_t> substitutions = 10;
+  // map<string, .pb_message.production_cost_t> substitutions = 10;
   {
     ::google::protobuf::scoped_ptr<unit_def_t_SubstitutionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::production_cost_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >::const_iterator
         it = this->substitutions().begin();
         it != this->substitutions().end(); ++it) {
       entry.reset(substitutions_.NewEntryWrapper(it->first, it->second));
@@ -10795,14 +10800,14 @@ void unit_def_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.unit_def_t.SubstitutionsEntry.key");
+        "pb_message.unit_def_t.SubstitutionsEntry.key");
     }
   }
 
-  // map<string, .message.production_cost_t> conversions = 11;
+  // map<string, .pb_message.production_cost_t> conversions = 11;
   {
     ::google::protobuf::scoped_ptr<unit_def_t_ConversionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::production_cost_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >::const_iterator
         it = this->conversions().begin();
         it != this->conversions().end(); ++it) {
       entry.reset(conversions_.NewEntryWrapper(it->first, it->second));
@@ -10812,7 +10817,7 @@ void unit_def_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.unit_def_t.ConversionsEntry.key");
+        "pb_message.unit_def_t.ConversionsEntry.key");
     }
   }
 
@@ -10821,7 +10826,7 @@ void unit_def_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->move(), target);
   }
 
-  // optional .message.carrier_type_t carrier_type = 13;
+  // optional .pb_message.carrier_type_t carrier_type = 13;
   if (this->carrier_type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       13, this->carrier_type(), target);
@@ -10832,7 +10837,7 @@ void unit_def_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(14, this->not_spaceworthy(), target);
   }
 
-  // optional .message.towable_t towable = 15;
+  // optional .pb_message.towable_t towable = 15;
   if (this->has_towable()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -10849,13 +10854,13 @@ void unit_def_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->notes().data(), this->notes().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.unit_def_t.notes");
+      "pb_message.unit_def_t.notes");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         17, this->notes(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.unit_def_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.unit_def_t)
   return target;
 }
 
@@ -10876,27 +10881,27 @@ int unit_def_t::ByteSize() const {
         this->cmd());
   }
 
-  // optional .message.unit_def_side_t uncrippled = 3;
+  // optional .pb_message.unit_def_side_t uncrippled = 3;
   if (this->has_uncrippled()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->uncrippled_);
   }
 
-  // optional .message.unit_def_side_t crippled = 4;
+  // optional .pb_message.unit_def_side_t crippled = 4;
   if (this->has_crippled()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->crippled_);
   }
 
-  // optional .message.escort_type_t escort_type = 5;
+  // optional .pb_message.escort_type_t escort_type = 5;
   if (this->escort_type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->escort_type());
   }
 
-  // optional .message.turn_t available = 6;
+  // optional .pb_message.turn_t available = 6;
   if (this->has_available()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -10915,7 +10920,7 @@ int unit_def_t::ByteSize() const {
         this->max_in_service());
   }
 
-  // optional .message.production_cost_t construction = 9;
+  // optional .pb_message.production_cost_t construction = 9;
   if (this->has_construction()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -10929,7 +10934,7 @@ int unit_def_t::ByteSize() const {
         this->move());
   }
 
-  // optional .message.carrier_type_t carrier_type = 13;
+  // optional .pb_message.carrier_type_t carrier_type = 13;
   if (this->carrier_type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->carrier_type());
@@ -10940,7 +10945,7 @@ int unit_def_t::ByteSize() const {
     total_size += 1 + 1;
   }
 
-  // optional .message.towable_t towable = 15;
+  // optional .pb_message.towable_t towable = 15;
   if (this->has_towable()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -10961,11 +10966,11 @@ int unit_def_t::ByteSize() const {
         this->notes());
   }
 
-  // map<string, .message.production_cost_t> substitutions = 10;
+  // map<string, .pb_message.production_cost_t> substitutions = 10;
   total_size += 1 * this->substitutions_size();
   {
     ::google::protobuf::scoped_ptr<unit_def_t_SubstitutionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::production_cost_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >::const_iterator
         it = this->substitutions().begin();
         it != this->substitutions().end(); ++it) {
       entry.reset(substitutions_.NewEntryWrapper(it->first, it->second));
@@ -10974,11 +10979,11 @@ int unit_def_t::ByteSize() const {
     }
   }
 
-  // map<string, .message.production_cost_t> conversions = 11;
+  // map<string, .pb_message.production_cost_t> conversions = 11;
   total_size += 1 * this->conversions_size();
   {
     ::google::protobuf::scoped_ptr<unit_def_t_ConversionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::production_cost_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >::const_iterator
         it = this->conversions().begin();
         it != this->conversions().end(); ++it) {
       entry.reset(conversions_.NewEntryWrapper(it->first, it->second));
@@ -11017,16 +11022,16 @@ void unit_def_t::MergeFrom(const unit_def_t& from) {
     set_cmd(from.cmd());
   }
   if (from.has_uncrippled()) {
-    mutable_uncrippled()->::message::unit_def_side_t::MergeFrom(from.uncrippled());
+    mutable_uncrippled()->::pb_message::unit_def_side_t::MergeFrom(from.uncrippled());
   }
   if (from.has_crippled()) {
-    mutable_crippled()->::message::unit_def_side_t::MergeFrom(from.crippled());
+    mutable_crippled()->::pb_message::unit_def_side_t::MergeFrom(from.crippled());
   }
   if (from.escort_type() != 0) {
     set_escort_type(from.escort_type());
   }
   if (from.has_available()) {
-    mutable_available()->::message::turn_t::MergeFrom(from.available());
+    mutable_available()->::pb_message::turn_t::MergeFrom(from.available());
   }
   if (from.pod() != 0) {
     set_pod(from.pod());
@@ -11035,7 +11040,7 @@ void unit_def_t::MergeFrom(const unit_def_t& from) {
     set_max_in_service(from.max_in_service());
   }
   if (from.has_construction()) {
-    mutable_construction()->::message::production_cost_t::MergeFrom(from.construction());
+    mutable_construction()->::pb_message::production_cost_t::MergeFrom(from.construction());
   }
   if (from.move() != 0) {
     set_move(from.move());
@@ -11047,7 +11052,7 @@ void unit_def_t::MergeFrom(const unit_def_t& from) {
     set_not_spaceworthy(from.not_spaceworthy());
   }
   if (from.has_towable()) {
-    mutable_towable()->::message::towable_t::MergeFrom(from.towable());
+    mutable_towable()->::pb_message::towable_t::MergeFrom(from.towable());
   }
   if (from.salvage() != 0) {
     set_salvage(from.salvage());
@@ -11117,28 +11122,28 @@ void unit_def_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& unit_def_t::name() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void unit_def_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.name)
 }
  void unit_def_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.unit_def_t.name)
 }
  void unit_def_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.unit_def_t.name)
 }
  ::std::string* unit_def_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* unit_def_t::release_name() {
@@ -11152,7 +11157,7 @@ void unit_def_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.name)
 }
 
 // optional int32 cmd = 2;
@@ -11160,16 +11165,16 @@ void unit_def_t::clear_cmd() {
   cmd_ = 0;
 }
  ::google::protobuf::int32 unit_def_t::cmd() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.cmd)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.cmd)
   return cmd_;
 }
  void unit_def_t::set_cmd(::google::protobuf::int32 value) {
   
   cmd_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.cmd)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.cmd)
 }
 
-// optional .message.unit_def_side_t uncrippled = 3;
+// optional .pb_message.unit_def_side_t uncrippled = 3;
 bool unit_def_t::has_uncrippled() const {
   return !_is_default_instance_ && uncrippled_ != NULL;
 }
@@ -11177,25 +11182,25 @@ void unit_def_t::clear_uncrippled() {
   if (GetArenaNoVirtual() == NULL && uncrippled_ != NULL) delete uncrippled_;
   uncrippled_ = NULL;
 }
-const ::message::unit_def_side_t& unit_def_t::uncrippled() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.uncrippled)
+const ::pb_message::unit_def_side_t& unit_def_t::uncrippled() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.uncrippled)
   return uncrippled_ != NULL ? *uncrippled_ : *default_instance_->uncrippled_;
 }
-::message::unit_def_side_t* unit_def_t::mutable_uncrippled() {
+::pb_message::unit_def_side_t* unit_def_t::mutable_uncrippled() {
   
   if (uncrippled_ == NULL) {
-    uncrippled_ = new ::message::unit_def_side_t;
+    uncrippled_ = new ::pb_message::unit_def_side_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.uncrippled)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.uncrippled)
   return uncrippled_;
 }
-::message::unit_def_side_t* unit_def_t::release_uncrippled() {
+::pb_message::unit_def_side_t* unit_def_t::release_uncrippled() {
   
-  ::message::unit_def_side_t* temp = uncrippled_;
+  ::pb_message::unit_def_side_t* temp = uncrippled_;
   uncrippled_ = NULL;
   return temp;
 }
-void unit_def_t::set_allocated_uncrippled(::message::unit_def_side_t* uncrippled) {
+void unit_def_t::set_allocated_uncrippled(::pb_message::unit_def_side_t* uncrippled) {
   delete uncrippled_;
   uncrippled_ = uncrippled;
   if (uncrippled) {
@@ -11203,10 +11208,10 @@ void unit_def_t::set_allocated_uncrippled(::message::unit_def_side_t* uncrippled
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.uncrippled)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.uncrippled)
 }
 
-// optional .message.unit_def_side_t crippled = 4;
+// optional .pb_message.unit_def_side_t crippled = 4;
 bool unit_def_t::has_crippled() const {
   return !_is_default_instance_ && crippled_ != NULL;
 }
@@ -11214,25 +11219,25 @@ void unit_def_t::clear_crippled() {
   if (GetArenaNoVirtual() == NULL && crippled_ != NULL) delete crippled_;
   crippled_ = NULL;
 }
-const ::message::unit_def_side_t& unit_def_t::crippled() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.crippled)
+const ::pb_message::unit_def_side_t& unit_def_t::crippled() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.crippled)
   return crippled_ != NULL ? *crippled_ : *default_instance_->crippled_;
 }
-::message::unit_def_side_t* unit_def_t::mutable_crippled() {
+::pb_message::unit_def_side_t* unit_def_t::mutable_crippled() {
   
   if (crippled_ == NULL) {
-    crippled_ = new ::message::unit_def_side_t;
+    crippled_ = new ::pb_message::unit_def_side_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.crippled)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.crippled)
   return crippled_;
 }
-::message::unit_def_side_t* unit_def_t::release_crippled() {
+::pb_message::unit_def_side_t* unit_def_t::release_crippled() {
   
-  ::message::unit_def_side_t* temp = crippled_;
+  ::pb_message::unit_def_side_t* temp = crippled_;
   crippled_ = NULL;
   return temp;
 }
-void unit_def_t::set_allocated_crippled(::message::unit_def_side_t* crippled) {
+void unit_def_t::set_allocated_crippled(::pb_message::unit_def_side_t* crippled) {
   delete crippled_;
   crippled_ = crippled;
   if (crippled) {
@@ -11240,24 +11245,24 @@ void unit_def_t::set_allocated_crippled(::message::unit_def_side_t* crippled) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.crippled)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.crippled)
 }
 
-// optional .message.escort_type_t escort_type = 5;
+// optional .pb_message.escort_type_t escort_type = 5;
 void unit_def_t::clear_escort_type() {
   escort_type_ = 0;
 }
- ::message::escort_type_t unit_def_t::escort_type() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.escort_type)
-  return static_cast< ::message::escort_type_t >(escort_type_);
+ ::pb_message::escort_type_t unit_def_t::escort_type() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.escort_type)
+  return static_cast< ::pb_message::escort_type_t >(escort_type_);
 }
- void unit_def_t::set_escort_type(::message::escort_type_t value) {
+ void unit_def_t::set_escort_type(::pb_message::escort_type_t value) {
   
   escort_type_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.escort_type)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.escort_type)
 }
 
-// optional .message.turn_t available = 6;
+// optional .pb_message.turn_t available = 6;
 bool unit_def_t::has_available() const {
   return !_is_default_instance_ && available_ != NULL;
 }
@@ -11265,25 +11270,25 @@ void unit_def_t::clear_available() {
   if (GetArenaNoVirtual() == NULL && available_ != NULL) delete available_;
   available_ = NULL;
 }
-const ::message::turn_t& unit_def_t::available() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.available)
+const ::pb_message::turn_t& unit_def_t::available() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.available)
   return available_ != NULL ? *available_ : *default_instance_->available_;
 }
-::message::turn_t* unit_def_t::mutable_available() {
+::pb_message::turn_t* unit_def_t::mutable_available() {
   
   if (available_ == NULL) {
-    available_ = new ::message::turn_t;
+    available_ = new ::pb_message::turn_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.available)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.available)
   return available_;
 }
-::message::turn_t* unit_def_t::release_available() {
+::pb_message::turn_t* unit_def_t::release_available() {
   
-  ::message::turn_t* temp = available_;
+  ::pb_message::turn_t* temp = available_;
   available_ = NULL;
   return temp;
 }
-void unit_def_t::set_allocated_available(::message::turn_t* available) {
+void unit_def_t::set_allocated_available(::pb_message::turn_t* available) {
   delete available_;
   available_ = available;
   if (available) {
@@ -11291,7 +11296,7 @@ void unit_def_t::set_allocated_available(::message::turn_t* available) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.available)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.available)
 }
 
 // optional bool pod = 7;
@@ -11299,13 +11304,13 @@ void unit_def_t::clear_pod() {
   pod_ = false;
 }
  bool unit_def_t::pod() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.pod)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.pod)
   return pod_;
 }
  void unit_def_t::set_pod(bool value) {
   
   pod_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.pod)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.pod)
 }
 
 // optional int32 max_in_service = 8;
@@ -11313,16 +11318,16 @@ void unit_def_t::clear_max_in_service() {
   max_in_service_ = 0;
 }
  ::google::protobuf::int32 unit_def_t::max_in_service() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.max_in_service)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.max_in_service)
   return max_in_service_;
 }
  void unit_def_t::set_max_in_service(::google::protobuf::int32 value) {
   
   max_in_service_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.max_in_service)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.max_in_service)
 }
 
-// optional .message.production_cost_t construction = 9;
+// optional .pb_message.production_cost_t construction = 9;
 bool unit_def_t::has_construction() const {
   return !_is_default_instance_ && construction_ != NULL;
 }
@@ -11330,25 +11335,25 @@ void unit_def_t::clear_construction() {
   if (GetArenaNoVirtual() == NULL && construction_ != NULL) delete construction_;
   construction_ = NULL;
 }
-const ::message::production_cost_t& unit_def_t::construction() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.construction)
+const ::pb_message::production_cost_t& unit_def_t::construction() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.construction)
   return construction_ != NULL ? *construction_ : *default_instance_->construction_;
 }
-::message::production_cost_t* unit_def_t::mutable_construction() {
+::pb_message::production_cost_t* unit_def_t::mutable_construction() {
   
   if (construction_ == NULL) {
-    construction_ = new ::message::production_cost_t;
+    construction_ = new ::pb_message::production_cost_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.construction)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.construction)
   return construction_;
 }
-::message::production_cost_t* unit_def_t::release_construction() {
+::pb_message::production_cost_t* unit_def_t::release_construction() {
   
-  ::message::production_cost_t* temp = construction_;
+  ::pb_message::production_cost_t* temp = construction_;
   construction_ = NULL;
   return temp;
 }
-void unit_def_t::set_allocated_construction(::message::production_cost_t* construction) {
+void unit_def_t::set_allocated_construction(::pb_message::production_cost_t* construction) {
   delete construction_;
   construction_ = construction;
   if (construction) {
@@ -11356,42 +11361,42 @@ void unit_def_t::set_allocated_construction(::message::production_cost_t* constr
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.construction)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.construction)
 }
 
-// map<string, .message.production_cost_t> substitutions = 10;
+// map<string, .pb_message.production_cost_t> substitutions = 10;
 int unit_def_t::substitutions_size() const {
   return substitutions_.size();
 }
 void unit_def_t::clear_substitutions() {
   substitutions_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::production_cost_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >&
 unit_def_t::substitutions() const {
-  // @@protoc_insertion_point(field_map:message.unit_def_t.substitutions)
+  // @@protoc_insertion_point(field_map:pb_message.unit_def_t.substitutions)
   return substitutions_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::production_cost_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >*
 unit_def_t::mutable_substitutions() {
-  // @@protoc_insertion_point(field_mutable_map:message.unit_def_t.substitutions)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.unit_def_t.substitutions)
   return substitutions_.MutableMap();
 }
 
-// map<string, .message.production_cost_t> conversions = 11;
+// map<string, .pb_message.production_cost_t> conversions = 11;
 int unit_def_t::conversions_size() const {
   return conversions_.size();
 }
 void unit_def_t::clear_conversions() {
   conversions_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::production_cost_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >&
 unit_def_t::conversions() const {
-  // @@protoc_insertion_point(field_map:message.unit_def_t.conversions)
+  // @@protoc_insertion_point(field_map:pb_message.unit_def_t.conversions)
   return conversions_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::production_cost_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >*
 unit_def_t::mutable_conversions() {
-  // @@protoc_insertion_point(field_mutable_map:message.unit_def_t.conversions)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.unit_def_t.conversions)
   return conversions_.MutableMap();
 }
 
@@ -11400,27 +11405,27 @@ void unit_def_t::clear_move() {
   move_ = 0;
 }
  ::google::protobuf::int32 unit_def_t::move() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.move)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.move)
   return move_;
 }
  void unit_def_t::set_move(::google::protobuf::int32 value) {
   
   move_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.move)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.move)
 }
 
-// optional .message.carrier_type_t carrier_type = 13;
+// optional .pb_message.carrier_type_t carrier_type = 13;
 void unit_def_t::clear_carrier_type() {
   carrier_type_ = 0;
 }
- ::message::carrier_type_t unit_def_t::carrier_type() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.carrier_type)
-  return static_cast< ::message::carrier_type_t >(carrier_type_);
+ ::pb_message::carrier_type_t unit_def_t::carrier_type() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.carrier_type)
+  return static_cast< ::pb_message::carrier_type_t >(carrier_type_);
 }
- void unit_def_t::set_carrier_type(::message::carrier_type_t value) {
+ void unit_def_t::set_carrier_type(::pb_message::carrier_type_t value) {
   
   carrier_type_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.carrier_type)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.carrier_type)
 }
 
 // optional bool not_spaceworthy = 14;
@@ -11428,16 +11433,16 @@ void unit_def_t::clear_not_spaceworthy() {
   not_spaceworthy_ = false;
 }
  bool unit_def_t::not_spaceworthy() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.not_spaceworthy)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.not_spaceworthy)
   return not_spaceworthy_;
 }
  void unit_def_t::set_not_spaceworthy(bool value) {
   
   not_spaceworthy_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.not_spaceworthy)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.not_spaceworthy)
 }
 
-// optional .message.towable_t towable = 15;
+// optional .pb_message.towable_t towable = 15;
 bool unit_def_t::has_towable() const {
   return !_is_default_instance_ && towable_ != NULL;
 }
@@ -11445,25 +11450,25 @@ void unit_def_t::clear_towable() {
   if (GetArenaNoVirtual() == NULL && towable_ != NULL) delete towable_;
   towable_ = NULL;
 }
-const ::message::towable_t& unit_def_t::towable() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.towable)
+const ::pb_message::towable_t& unit_def_t::towable() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.towable)
   return towable_ != NULL ? *towable_ : *default_instance_->towable_;
 }
-::message::towable_t* unit_def_t::mutable_towable() {
+::pb_message::towable_t* unit_def_t::mutable_towable() {
   
   if (towable_ == NULL) {
-    towable_ = new ::message::towable_t;
+    towable_ = new ::pb_message::towable_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.towable)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.towable)
   return towable_;
 }
-::message::towable_t* unit_def_t::release_towable() {
+::pb_message::towable_t* unit_def_t::release_towable() {
   
-  ::message::towable_t* temp = towable_;
+  ::pb_message::towable_t* temp = towable_;
   towable_ = NULL;
   return temp;
 }
-void unit_def_t::set_allocated_towable(::message::towable_t* towable) {
+void unit_def_t::set_allocated_towable(::pb_message::towable_t* towable) {
   delete towable_;
   towable_ = towable;
   if (towable) {
@@ -11471,7 +11476,7 @@ void unit_def_t::set_allocated_towable(::message::towable_t* towable) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.towable)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.towable)
 }
 
 // optional int32 salvage = 16;
@@ -11479,13 +11484,13 @@ void unit_def_t::clear_salvage() {
   salvage_ = 0;
 }
  ::google::protobuf::int32 unit_def_t::salvage() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.salvage)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.salvage)
   return salvage_;
 }
  void unit_def_t::set_salvage(::google::protobuf::int32 value) {
   
   salvage_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.salvage)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.salvage)
 }
 
 // optional string notes = 17;
@@ -11493,28 +11498,28 @@ void unit_def_t::clear_notes() {
   notes_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& unit_def_t::notes() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.notes)
   return notes_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void unit_def_t::set_notes(const ::std::string& value) {
   
   notes_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.notes)
 }
  void unit_def_t::set_notes(const char* value) {
   
   notes_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set_char:pb_message.unit_def_t.notes)
 }
  void unit_def_t::set_notes(const char* value, size_t size) {
   
   notes_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.unit_def_t.notes)
 }
  ::std::string* unit_def_t::mutable_notes() {
   
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.notes)
   return notes_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* unit_def_t::release_notes() {
@@ -11528,7 +11533,7 @@ void unit_def_t::clear_notes() {
     
   }
   notes_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), notes);
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.notes)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -11542,7 +11547,7 @@ const int nation_unit_defs_t::kUnitsFieldNumber;
 nation_unit_defs_t::nation_unit_defs_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(constructor:pb_message.nation_unit_defs_t)
 }
 
 void nation_unit_defs_t::InitAsDefaultInstance() {
@@ -11554,7 +11559,7 @@ nation_unit_defs_t::nation_unit_defs_t(const nation_unit_defs_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.nation_unit_defs_t)
 }
 
 void nation_unit_defs_t::SharedCtor() {
@@ -11563,7 +11568,7 @@ void nation_unit_defs_t::SharedCtor() {
 }
 
 nation_unit_defs_t::~nation_unit_defs_t() {
-  // @@protoc_insertion_point(destructor:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(destructor:pb_message.nation_unit_defs_t)
   SharedDtor();
 }
 
@@ -11605,13 +11610,13 @@ bool nation_unit_defs_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(parse_start:pb_message.nation_unit_defs_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.unit_def_t units = 1;
+      // repeated .pb_message.unit_def_t units = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -11640,44 +11645,44 @@ bool nation_unit_defs_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(parse_success:pb_message.nation_unit_defs_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.nation_unit_defs_t)
   return false;
 #undef DO_
 }
 
 void nation_unit_defs_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.nation_unit_defs_t)
-  // repeated .message.unit_def_t units = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.nation_unit_defs_t)
+  // repeated .pb_message.unit_def_t units = 1;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->units(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.nation_unit_defs_t)
 }
 
 ::google::protobuf::uint8* nation_unit_defs_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.nation_unit_defs_t)
-  // repeated .message.unit_def_t units = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.nation_unit_defs_t)
+  // repeated .pb_message.unit_def_t units = 1;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->units(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.nation_unit_defs_t)
   return target;
 }
 
 int nation_unit_defs_t::ByteSize() const {
   int total_size = 0;
 
-  // repeated .message.unit_def_t units = 1;
+  // repeated .pb_message.unit_def_t units = 1;
   total_size += 1 * this->units_size();
   for (int i = 0; i < this->units_size(); i++) {
     total_size +=
@@ -11746,33 +11751,33 @@ void nation_unit_defs_t::InternalSwap(nation_unit_defs_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // nation_unit_defs_t
 
-// repeated .message.unit_def_t units = 1;
+// repeated .pb_message.unit_def_t units = 1;
 int nation_unit_defs_t::units_size() const {
   return units_.size();
 }
 void nation_unit_defs_t::clear_units() {
   units_.Clear();
 }
-const ::message::unit_def_t& nation_unit_defs_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.nation_unit_defs_t.units)
+const ::pb_message::unit_def_t& nation_unit_defs_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.nation_unit_defs_t.units)
   return units_.Get(index);
 }
-::message::unit_def_t* nation_unit_defs_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.nation_unit_defs_t.units)
+::pb_message::unit_def_t* nation_unit_defs_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_unit_defs_t.units)
   return units_.Mutable(index);
 }
-::message::unit_def_t* nation_unit_defs_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.nation_unit_defs_t.units)
+::pb_message::unit_def_t* nation_unit_defs_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.nation_unit_defs_t.units)
   return units_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::unit_def_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t >*
 nation_unit_defs_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.nation_unit_defs_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.nation_unit_defs_t.units)
   return &units_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::unit_def_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t >&
 nation_unit_defs_t::units() const {
-  // @@protoc_insertion_point(field_list:message.nation_unit_defs_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.nation_unit_defs_t.units)
   return units_;
 }
 
@@ -11787,7 +11792,7 @@ const int unit_defs_t::kNationUnitsFieldNumber;
 unit_defs_t::unit_defs_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.unit_defs_t)
+  // @@protoc_insertion_point(constructor:pb_message.unit_defs_t)
 }
 
 void unit_defs_t::InitAsDefaultInstance() {
@@ -11799,7 +11804,7 @@ unit_defs_t::unit_defs_t(const unit_defs_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.unit_defs_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.unit_defs_t)
 }
 
 void unit_defs_t::SharedCtor() {
@@ -11808,11 +11813,11 @@ void unit_defs_t::SharedCtor() {
   nation_units_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   nation_units_.SetEntryDescriptor(
-      &::message::unit_defs_t_NationUnitsEntry_descriptor_);
+      &::pb_message::unit_defs_t_NationUnitsEntry_descriptor_);
 }
 
 unit_defs_t::~unit_defs_t() {
-  // @@protoc_insertion_point(destructor:message.unit_defs_t)
+  // @@protoc_insertion_point(destructor:pb_message.unit_defs_t)
   SharedDtor();
 }
 
@@ -11854,13 +11859,13 @@ bool unit_defs_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.unit_defs_t)
+  // @@protoc_insertion_point(parse_start:pb_message.unit_defs_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<string, .message.nation_unit_defs_t> nation_units = 1;
+      // map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -11872,7 +11877,7 @@ bool unit_defs_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.unit_defs_t.NationUnitsEntry.key"));
+            "pb_message.unit_defs_t.NationUnitsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -11895,21 +11900,21 @@ bool unit_defs_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.unit_defs_t)
+  // @@protoc_insertion_point(parse_success:pb_message.unit_defs_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.unit_defs_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.unit_defs_t)
   return false;
 #undef DO_
 }
 
 void unit_defs_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.unit_defs_t)
-  // map<string, .message.nation_unit_defs_t> nation_units = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.unit_defs_t)
+  // map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
   {
     ::google::protobuf::scoped_ptr<unit_defs_t_NationUnitsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >::const_iterator
         it = this->nation_units().begin();
         it != this->nation_units().end(); ++it) {
       entry.reset(nation_units_.NewEntryWrapper(it->first, it->second));
@@ -11918,20 +11923,20 @@ void unit_defs_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.unit_defs_t.NationUnitsEntry.key");
+        "pb_message.unit_defs_t.NationUnitsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.unit_defs_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.unit_defs_t)
 }
 
 ::google::protobuf::uint8* unit_defs_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.unit_defs_t)
-  // map<string, .message.nation_unit_defs_t> nation_units = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.unit_defs_t)
+  // map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
   {
     ::google::protobuf::scoped_ptr<unit_defs_t_NationUnitsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >::const_iterator
         it = this->nation_units().begin();
         it != this->nation_units().end(); ++it) {
       entry.reset(nation_units_.NewEntryWrapper(it->first, it->second));
@@ -11941,22 +11946,22 @@ void unit_defs_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.unit_defs_t.NationUnitsEntry.key");
+        "pb_message.unit_defs_t.NationUnitsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.unit_defs_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.unit_defs_t)
   return target;
 }
 
 int unit_defs_t::ByteSize() const {
   int total_size = 0;
 
-  // map<string, .message.nation_unit_defs_t> nation_units = 1;
+  // map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
   total_size += 1 * this->nation_units_size();
   {
     ::google::protobuf::scoped_ptr<unit_defs_t_NationUnitsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >::const_iterator
         it = this->nation_units().begin();
         it != this->nation_units().end(); ++it) {
       entry.reset(nation_units_.NewEntryWrapper(it->first, it->second));
@@ -12026,21 +12031,21 @@ void unit_defs_t::InternalSwap(unit_defs_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // unit_defs_t
 
-// map<string, .message.nation_unit_defs_t> nation_units = 1;
+// map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
 int unit_defs_t::nation_units_size() const {
   return nation_units_.size();
 }
 void unit_defs_t::clear_nation_units() {
   nation_units_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >&
 unit_defs_t::nation_units() const {
-  // @@protoc_insertion_point(field_map:message.unit_defs_t.nation_units)
+  // @@protoc_insertion_point(field_map:pb_message.unit_defs_t.nation_units)
   return nation_units_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >*
 unit_defs_t::mutable_nation_units() {
-  // @@protoc_insertion_point(field_mutable_map:message.unit_defs_t.nation_units)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.unit_defs_t.nation_units)
   return nation_units_.MutableMap();
 }
 
@@ -12056,7 +12061,7 @@ const int team_t::kNationsFieldNumber;
 team_t::team_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.team_t)
+  // @@protoc_insertion_point(constructor:pb_message.team_t)
 }
 
 void team_t::InitAsDefaultInstance() {
@@ -12068,7 +12073,7 @@ team_t::team_t(const team_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.team_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.team_t)
 }
 
 void team_t::SharedCtor() {
@@ -12079,7 +12084,7 @@ void team_t::SharedCtor() {
 }
 
 team_t::~team_t() {
-  // @@protoc_insertion_point(destructor:message.team_t)
+  // @@protoc_insertion_point(destructor:pb_message.team_t)
   SharedDtor();
 }
 
@@ -12123,7 +12128,7 @@ bool team_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.team_t)
+  // @@protoc_insertion_point(parse_start:pb_message.team_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -12137,7 +12142,7 @@ bool team_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.team_t.name"));
+            "pb_message.team_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -12155,7 +12160,7 @@ bool team_t::MergePartialFromCodedStream(
             this->nations(this->nations_size() - 1).data(),
             this->nations(this->nations_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.team_t.nations"));
+            "pb_message.team_t.nations"));
         } else {
           goto handle_unusual;
         }
@@ -12177,23 +12182,23 @@ bool team_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.team_t)
+  // @@protoc_insertion_point(parse_success:pb_message.team_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.team_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.team_t)
   return false;
 #undef DO_
 }
 
 void team_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.team_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.team_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.team_t.name");
+      "pb_message.team_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -12203,23 +12208,23 @@ void team_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->nations(i).data(), this->nations(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.team_t.nations");
+      "pb_message.team_t.nations");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->nations(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.team_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.team_t)
 }
 
 ::google::protobuf::uint8* team_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.team_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.team_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.team_t.name");
+      "pb_message.team_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -12230,12 +12235,12 @@ void team_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->nations(i).data(), this->nations(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.team_t.nations");
+      "pb_message.team_t.nations");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(2, this->nations(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.team_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.team_t)
   return target;
 }
 
@@ -12327,28 +12332,28 @@ void team_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& team_t::name() const {
-  // @@protoc_insertion_point(field_get:message.team_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.team_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void team_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.team_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.team_t.name)
 }
  void team_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.team_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.team_t.name)
 }
  void team_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.team_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.team_t.name)
 }
  ::std::string* team_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.team_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.team_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* team_t::release_name() {
@@ -12362,7 +12367,7 @@ void team_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.team_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.team_t.name)
 }
 
 // repeated string nations = 2;
@@ -12373,49 +12378,49 @@ void team_t::clear_nations() {
   nations_.Clear();
 }
  const ::std::string& team_t::nations(int index) const {
-  // @@protoc_insertion_point(field_get:message.team_t.nations)
+  // @@protoc_insertion_point(field_get:pb_message.team_t.nations)
   return nations_.Get(index);
 }
  ::std::string* team_t::mutable_nations(int index) {
-  // @@protoc_insertion_point(field_mutable:message.team_t.nations)
+  // @@protoc_insertion_point(field_mutable:pb_message.team_t.nations)
   return nations_.Mutable(index);
 }
  void team_t::set_nations(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.team_t.nations)
+  // @@protoc_insertion_point(field_set:pb_message.team_t.nations)
   nations_.Mutable(index)->assign(value);
 }
  void team_t::set_nations(int index, const char* value) {
   nations_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.team_t.nations)
+  // @@protoc_insertion_point(field_set_char:pb_message.team_t.nations)
 }
  void team_t::set_nations(int index, const char* value, size_t size) {
   nations_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.team_t.nations)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.team_t.nations)
 }
  ::std::string* team_t::add_nations() {
   return nations_.Add();
 }
  void team_t::add_nations(const ::std::string& value) {
   nations_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.team_t.nations)
+  // @@protoc_insertion_point(field_add:pb_message.team_t.nations)
 }
  void team_t::add_nations(const char* value) {
   nations_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.team_t.nations)
+  // @@protoc_insertion_point(field_add_char:pb_message.team_t.nations)
 }
  void team_t::add_nations(const char* value, size_t size) {
   nations_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.team_t.nations)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.team_t.nations)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 team_t::nations() const {
-  // @@protoc_insertion_point(field_list:message.team_t.nations)
+  // @@protoc_insertion_point(field_list:pb_message.team_t.nations)
   return nations_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 team_t::mutable_nations() {
-  // @@protoc_insertion_point(field_mutable_list:message.team_t.nations)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.team_t.nations)
   return &nations_;
 }
 
@@ -12478,7 +12483,7 @@ const int scenario_condition_t_object_t::kHexesFieldNumber;
 scenario_condition_t_object_t::scenario_condition_t_object_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_condition_t.object_t)
 }
 
 void scenario_condition_t_object_t::InitAsDefaultInstance() {
@@ -12490,7 +12495,7 @@ scenario_condition_t_object_t::scenario_condition_t_object_t(const scenario_cond
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_condition_t.object_t)
 }
 
 void scenario_condition_t_object_t::SharedCtor() {
@@ -12501,7 +12506,7 @@ void scenario_condition_t_object_t::SharedCtor() {
 }
 
 scenario_condition_t_object_t::~scenario_condition_t_object_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_condition_t.object_t)
   SharedDtor();
 }
 
@@ -12545,20 +12550,20 @@ bool scenario_condition_t_object_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_condition_t.object_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.scenario_condition_t.object_type_t type = 1;
+      // optional .pb_message.scenario_condition_t.object_type_t type = 1;
       case 1: {
         if (tag == 8) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_type(static_cast< ::message::scenario_condition_t_object_type_t >(value));
+          set_type(static_cast< ::pb_message::scenario_condition_t_object_type_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -12576,7 +12581,7 @@ bool scenario_condition_t_object_t::MergePartialFromCodedStream(
             this->names(this->names_size() - 1).data(),
             this->names(this->names_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_condition_t.object_t.names"));
+            "pb_message.scenario_condition_t.object_t.names"));
         } else {
           goto handle_unusual;
         }
@@ -12616,18 +12621,18 @@ bool scenario_condition_t_object_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_condition_t.object_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_condition_t.object_t)
   return false;
 #undef DO_
 }
 
 void scenario_condition_t_object_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_condition_t.object_t)
-  // optional .message.scenario_condition_t.object_type_t type = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_condition_t.object_t)
+  // optional .pb_message.scenario_condition_t.object_type_t type = 1;
   if (this->type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->type(), output);
@@ -12638,7 +12643,7 @@ void scenario_condition_t_object_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->names(i).data(), this->names(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_condition_t.object_t.names");
+      "pb_message.scenario_condition_t.object_t.names");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->names(i), output);
   }
@@ -12653,13 +12658,13 @@ void scenario_condition_t_object_t::SerializeWithCachedSizes(
       this->hexes(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_condition_t.object_t)
 }
 
 ::google::protobuf::uint8* scenario_condition_t_object_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_condition_t.object_t)
-  // optional .message.scenario_condition_t.object_type_t type = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_condition_t.object_t)
+  // optional .pb_message.scenario_condition_t.object_type_t type = 1;
   if (this->type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->type(), target);
@@ -12670,7 +12675,7 @@ void scenario_condition_t_object_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->names(i).data(), this->names(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_condition_t.object_t.names");
+      "pb_message.scenario_condition_t.object_t.names");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(2, this->names(i), target);
   }
@@ -12689,14 +12694,14 @@ void scenario_condition_t_object_t::SerializeWithCachedSizes(
       WriteInt32NoTagToArray(this->hexes(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_condition_t.object_t)
   return target;
 }
 
 int scenario_condition_t_object_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.scenario_condition_t.object_type_t type = 1;
+  // optional .pb_message.scenario_condition_t.object_type_t type = 1;
   if (this->type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -12802,7 +12807,7 @@ const int scenario_condition_t::kOneOfFieldNumber;
 scenario_condition_t::scenario_condition_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_condition_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_condition_t)
 }
 
 void scenario_condition_t::InitAsDefaultInstance() {
@@ -12814,7 +12819,7 @@ scenario_condition_t::scenario_condition_t(const scenario_condition_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_condition_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_condition_t)
 }
 
 void scenario_condition_t::SharedCtor() {
@@ -12825,7 +12830,7 @@ void scenario_condition_t::SharedCtor() {
 }
 
 scenario_condition_t::~scenario_condition_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_condition_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_condition_t)
   SharedDtor();
 }
 
@@ -12869,7 +12874,7 @@ bool scenario_condition_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_condition_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_condition_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -12885,7 +12890,7 @@ bool scenario_condition_t::MergePartialFromCodedStream(
             this->actors(this->actors_size() - 1).data(),
             this->actors(this->actors_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_condition_t.actors"));
+            "pb_message.scenario_condition_t.actors"));
         } else {
           goto handle_unusual;
         }
@@ -12894,7 +12899,7 @@ bool scenario_condition_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.scenario_condition_t.action_t action = 2;
+      // optional .pb_message.scenario_condition_t.action_t action = 2;
       case 2: {
         if (tag == 16) {
          parse_action:
@@ -12902,7 +12907,7 @@ bool scenario_condition_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_action(static_cast< ::message::scenario_condition_t_action_t >(value));
+          set_action(static_cast< ::pb_message::scenario_condition_t_action_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -12910,7 +12915,7 @@ bool scenario_condition_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.scenario_condition_t.object_t one_of = 3;
+      // repeated .pb_message.scenario_condition_t.object_t one_of = 3;
       case 3: {
         if (tag == 26) {
          parse_one_of:
@@ -12940,76 +12945,76 @@ bool scenario_condition_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_condition_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_condition_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_condition_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_condition_t)
   return false;
 #undef DO_
 }
 
 void scenario_condition_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_condition_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_condition_t)
   // repeated string actors = 1;
   for (int i = 0; i < this->actors_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->actors(i).data(), this->actors(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_condition_t.actors");
+      "pb_message.scenario_condition_t.actors");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->actors(i), output);
   }
 
-  // optional .message.scenario_condition_t.action_t action = 2;
+  // optional .pb_message.scenario_condition_t.action_t action = 2;
   if (this->action() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->action(), output);
   }
 
-  // repeated .message.scenario_condition_t.object_t one_of = 3;
+  // repeated .pb_message.scenario_condition_t.object_t one_of = 3;
   for (unsigned int i = 0, n = this->one_of_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->one_of(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_condition_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_condition_t)
 }
 
 ::google::protobuf::uint8* scenario_condition_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_condition_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_condition_t)
   // repeated string actors = 1;
   for (int i = 0; i < this->actors_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->actors(i).data(), this->actors(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_condition_t.actors");
+      "pb_message.scenario_condition_t.actors");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(1, this->actors(i), target);
   }
 
-  // optional .message.scenario_condition_t.action_t action = 2;
+  // optional .pb_message.scenario_condition_t.action_t action = 2;
   if (this->action() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->action(), target);
   }
 
-  // repeated .message.scenario_condition_t.object_t one_of = 3;
+  // repeated .pb_message.scenario_condition_t.object_t one_of = 3;
   for (unsigned int i = 0, n = this->one_of_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->one_of(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_condition_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_condition_t)
   return target;
 }
 
 int scenario_condition_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.scenario_condition_t.action_t action = 2;
+  // optional .pb_message.scenario_condition_t.action_t action = 2;
   if (this->action() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->action());
@@ -13022,7 +13027,7 @@ int scenario_condition_t::ByteSize() const {
       this->actors(i));
   }
 
-  // repeated .message.scenario_condition_t.object_t one_of = 3;
+  // repeated .pb_message.scenario_condition_t.object_t one_of = 3;
   total_size += 1 * this->one_of_size();
   for (int i = 0; i < this->one_of_size(); i++) {
     total_size +=
@@ -13097,18 +13102,18 @@ void scenario_condition_t::InternalSwap(scenario_condition_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // scenario_condition_t_object_t
 
-// optional .message.scenario_condition_t.object_type_t type = 1;
+// optional .pb_message.scenario_condition_t.object_type_t type = 1;
 void scenario_condition_t_object_t::clear_type() {
   type_ = 0;
 }
- ::message::scenario_condition_t_object_type_t scenario_condition_t_object_t::type() const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.object_t.type)
-  return static_cast< ::message::scenario_condition_t_object_type_t >(type_);
+ ::pb_message::scenario_condition_t_object_type_t scenario_condition_t_object_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.object_t.type)
+  return static_cast< ::pb_message::scenario_condition_t_object_type_t >(type_);
 }
- void scenario_condition_t_object_t::set_type(::message::scenario_condition_t_object_type_t value) {
+ void scenario_condition_t_object_t::set_type(::pb_message::scenario_condition_t_object_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.object_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.object_t.type)
 }
 
 // repeated string names = 2;
@@ -13119,49 +13124,49 @@ void scenario_condition_t_object_t::clear_names() {
   names_.Clear();
 }
  const ::std::string& scenario_condition_t_object_t::names(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.object_t.names)
   return names_.Get(index);
 }
  ::std::string* scenario_condition_t_object_t::mutable_names(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_condition_t.object_t.names)
   return names_.Mutable(index);
 }
  void scenario_condition_t_object_t::set_names(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.object_t.names)
   names_.Mutable(index)->assign(value);
 }
  void scenario_condition_t_object_t::set_names(int index, const char* value) {
   names_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_condition_t.object_t.names)
 }
  void scenario_condition_t_object_t::set_names(int index, const char* value, size_t size) {
   names_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_condition_t.object_t.names)
 }
  ::std::string* scenario_condition_t_object_t::add_names() {
   return names_.Add();
 }
  void scenario_condition_t_object_t::add_names(const ::std::string& value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.object_t.names)
 }
  void scenario_condition_t_object_t::add_names(const char* value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_condition_t.object_t.names)
 }
  void scenario_condition_t_object_t::add_names(const char* value, size_t size) {
   names_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_condition_t.object_t.names)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_condition_t_object_t::names() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.object_t.names)
   return names_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_condition_t_object_t::mutable_names() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.object_t.names)
   return &names_;
 }
 
@@ -13173,25 +13178,25 @@ void scenario_condition_t_object_t::clear_hexes() {
   hexes_.Clear();
 }
  ::google::protobuf::int32 scenario_condition_t_object_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.object_t.hexes)
   return hexes_.Get(index);
 }
  void scenario_condition_t_object_t::set_hexes(int index, ::google::protobuf::int32 value) {
   hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.object_t.hexes)
 }
  void scenario_condition_t_object_t::add_hexes(::google::protobuf::int32 value) {
   hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.object_t.hexes)
 }
  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 scenario_condition_t_object_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.object_t.hexes)
   return hexes_;
 }
  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 scenario_condition_t_object_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.object_t.hexes)
   return &hexes_;
 }
 
@@ -13207,93 +13212,93 @@ void scenario_condition_t::clear_actors() {
   actors_.Clear();
 }
  const ::std::string& scenario_condition_t::actors(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.actors)
   return actors_.Get(index);
 }
  ::std::string* scenario_condition_t::mutable_actors(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_condition_t.actors)
   return actors_.Mutable(index);
 }
  void scenario_condition_t::set_actors(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.actors)
   actors_.Mutable(index)->assign(value);
 }
  void scenario_condition_t::set_actors(int index, const char* value) {
   actors_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_condition_t.actors)
 }
  void scenario_condition_t::set_actors(int index, const char* value, size_t size) {
   actors_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_condition_t.actors)
 }
  ::std::string* scenario_condition_t::add_actors() {
   return actors_.Add();
 }
  void scenario_condition_t::add_actors(const ::std::string& value) {
   actors_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.actors)
 }
  void scenario_condition_t::add_actors(const char* value) {
   actors_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_condition_t.actors)
 }
  void scenario_condition_t::add_actors(const char* value, size_t size) {
   actors_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_condition_t.actors)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_condition_t::actors() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.actors)
   return actors_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_condition_t::mutable_actors() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.actors)
   return &actors_;
 }
 
-// optional .message.scenario_condition_t.action_t action = 2;
+// optional .pb_message.scenario_condition_t.action_t action = 2;
 void scenario_condition_t::clear_action() {
   action_ = 0;
 }
- ::message::scenario_condition_t_action_t scenario_condition_t::action() const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.action)
-  return static_cast< ::message::scenario_condition_t_action_t >(action_);
+ ::pb_message::scenario_condition_t_action_t scenario_condition_t::action() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.action)
+  return static_cast< ::pb_message::scenario_condition_t_action_t >(action_);
 }
- void scenario_condition_t::set_action(::message::scenario_condition_t_action_t value) {
+ void scenario_condition_t::set_action(::pb_message::scenario_condition_t_action_t value) {
   
   action_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.action)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.action)
 }
 
-// repeated .message.scenario_condition_t.object_t one_of = 3;
+// repeated .pb_message.scenario_condition_t.object_t one_of = 3;
 int scenario_condition_t::one_of_size() const {
   return one_of_.size();
 }
 void scenario_condition_t::clear_one_of() {
   one_of_.Clear();
 }
-const ::message::scenario_condition_t_object_t& scenario_condition_t::one_of(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.one_of)
+const ::pb_message::scenario_condition_t_object_t& scenario_condition_t::one_of(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.one_of)
   return one_of_.Get(index);
 }
-::message::scenario_condition_t_object_t* scenario_condition_t::mutable_one_of(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_condition_t.one_of)
+::pb_message::scenario_condition_t_object_t* scenario_condition_t::mutable_one_of(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_condition_t.one_of)
   return one_of_.Mutable(index);
 }
-::message::scenario_condition_t_object_t* scenario_condition_t::add_one_of() {
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.one_of)
+::pb_message::scenario_condition_t_object_t* scenario_condition_t::add_one_of() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.one_of)
   return one_of_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t >*
 scenario_condition_t::mutable_one_of() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.one_of)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.one_of)
   return &one_of_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t >&
 scenario_condition_t::one_of() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.one_of)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.one_of)
   return one_of_;
 }
 
@@ -13309,12 +13314,12 @@ const int fleet_release_condition_t::kConditionFieldNumber;
 fleet_release_condition_t::fleet_release_condition_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(constructor:pb_message.fleet_release_condition_t)
 }
 
 void fleet_release_condition_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  condition_ = const_cast< ::message::scenario_condition_t*>(&::message::scenario_condition_t::default_instance());
+  condition_ = const_cast< ::pb_message::scenario_condition_t*>(&::pb_message::scenario_condition_t::default_instance());
 }
 
 fleet_release_condition_t::fleet_release_condition_t(const fleet_release_condition_t& from)
@@ -13322,7 +13327,7 @@ fleet_release_condition_t::fleet_release_condition_t(const fleet_release_conditi
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.fleet_release_condition_t)
 }
 
 void fleet_release_condition_t::SharedCtor() {
@@ -13334,7 +13339,7 @@ void fleet_release_condition_t::SharedCtor() {
 }
 
 fleet_release_condition_t::~fleet_release_condition_t() {
-  // @@protoc_insertion_point(destructor:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(destructor:pb_message.fleet_release_condition_t)
   SharedDtor();
 }
 
@@ -13380,7 +13385,7 @@ bool fleet_release_condition_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(parse_start:pb_message.fleet_release_condition_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -13394,7 +13399,7 @@ bool fleet_release_condition_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->fleet().data(), this->fleet().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.fleet_release_condition_t.fleet"));
+            "pb_message.fleet_release_condition_t.fleet"));
         } else {
           goto handle_unusual;
         }
@@ -13402,7 +13407,7 @@ bool fleet_release_condition_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.scenario_condition_t condition = 2;
+      // optional .pb_message.scenario_condition_t condition = 2;
       case 2: {
         if (tag == 18) {
          parse_condition:
@@ -13428,58 +13433,58 @@ bool fleet_release_condition_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(parse_success:pb_message.fleet_release_condition_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.fleet_release_condition_t)
   return false;
 #undef DO_
 }
 
 void fleet_release_condition_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.fleet_release_condition_t)
   // optional string fleet = 1;
   if (this->fleet().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->fleet().data(), this->fleet().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.fleet_release_condition_t.fleet");
+      "pb_message.fleet_release_condition_t.fleet");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->fleet(), output);
   }
 
-  // optional .message.scenario_condition_t condition = 2;
+  // optional .pb_message.scenario_condition_t condition = 2;
   if (this->has_condition()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->condition_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.fleet_release_condition_t)
 }
 
 ::google::protobuf::uint8* fleet_release_condition_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.fleet_release_condition_t)
   // optional string fleet = 1;
   if (this->fleet().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->fleet().data(), this->fleet().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.fleet_release_condition_t.fleet");
+      "pb_message.fleet_release_condition_t.fleet");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->fleet(), target);
   }
 
-  // optional .message.scenario_condition_t condition = 2;
+  // optional .pb_message.scenario_condition_t condition = 2;
   if (this->has_condition()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->condition_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.fleet_release_condition_t)
   return target;
 }
 
@@ -13493,7 +13498,7 @@ int fleet_release_condition_t::ByteSize() const {
         this->fleet());
   }
 
-  // optional .message.scenario_condition_t condition = 2;
+  // optional .pb_message.scenario_condition_t condition = 2;
   if (this->has_condition()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -13525,7 +13530,7 @@ void fleet_release_condition_t::MergeFrom(const fleet_release_condition_t& from)
     fleet_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.fleet_);
   }
   if (from.has_condition()) {
-    mutable_condition()->::message::scenario_condition_t::MergeFrom(from.condition());
+    mutable_condition()->::pb_message::scenario_condition_t::MergeFrom(from.condition());
   }
 }
 
@@ -13573,28 +13578,28 @@ void fleet_release_condition_t::clear_fleet() {
   fleet_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& fleet_release_condition_t::fleet() const {
-  // @@protoc_insertion_point(field_get:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_get:pb_message.fleet_release_condition_t.fleet)
   return fleet_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void fleet_release_condition_t::set_fleet(const ::std::string& value) {
   
   fleet_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set:pb_message.fleet_release_condition_t.fleet)
 }
  void fleet_release_condition_t::set_fleet(const char* value) {
   
   fleet_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set_char:pb_message.fleet_release_condition_t.fleet)
 }
  void fleet_release_condition_t::set_fleet(const char* value, size_t size) {
   
   fleet_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.fleet_release_condition_t.fleet)
 }
  ::std::string* fleet_release_condition_t::mutable_fleet() {
   
-  // @@protoc_insertion_point(field_mutable:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_mutable:pb_message.fleet_release_condition_t.fleet)
   return fleet_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* fleet_release_condition_t::release_fleet() {
@@ -13608,10 +13613,10 @@ void fleet_release_condition_t::clear_fleet() {
     
   }
   fleet_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), fleet);
-  // @@protoc_insertion_point(field_set_allocated:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.fleet_release_condition_t.fleet)
 }
 
-// optional .message.scenario_condition_t condition = 2;
+// optional .pb_message.scenario_condition_t condition = 2;
 bool fleet_release_condition_t::has_condition() const {
   return !_is_default_instance_ && condition_ != NULL;
 }
@@ -13619,25 +13624,25 @@ void fleet_release_condition_t::clear_condition() {
   if (GetArenaNoVirtual() == NULL && condition_ != NULL) delete condition_;
   condition_ = NULL;
 }
-const ::message::scenario_condition_t& fleet_release_condition_t::condition() const {
-  // @@protoc_insertion_point(field_get:message.fleet_release_condition_t.condition)
+const ::pb_message::scenario_condition_t& fleet_release_condition_t::condition() const {
+  // @@protoc_insertion_point(field_get:pb_message.fleet_release_condition_t.condition)
   return condition_ != NULL ? *condition_ : *default_instance_->condition_;
 }
-::message::scenario_condition_t* fleet_release_condition_t::mutable_condition() {
+::pb_message::scenario_condition_t* fleet_release_condition_t::mutable_condition() {
   
   if (condition_ == NULL) {
-    condition_ = new ::message::scenario_condition_t;
+    condition_ = new ::pb_message::scenario_condition_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.fleet_release_condition_t.condition)
+  // @@protoc_insertion_point(field_mutable:pb_message.fleet_release_condition_t.condition)
   return condition_;
 }
-::message::scenario_condition_t* fleet_release_condition_t::release_condition() {
+::pb_message::scenario_condition_t* fleet_release_condition_t::release_condition() {
   
-  ::message::scenario_condition_t* temp = condition_;
+  ::pb_message::scenario_condition_t* temp = condition_;
   condition_ = NULL;
   return temp;
 }
-void fleet_release_condition_t::set_allocated_condition(::message::scenario_condition_t* condition) {
+void fleet_release_condition_t::set_allocated_condition(::pb_message::scenario_condition_t* condition) {
   delete condition_;
   condition_ = condition;
   if (condition) {
@@ -13645,7 +13650,7 @@ void fleet_release_condition_t::set_allocated_condition(::message::scenario_cond
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.fleet_release_condition_t.condition)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.fleet_release_condition_t.condition)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -13660,12 +13665,12 @@ const int war_entry_condition_t::kConditionFieldNumber;
 war_entry_condition_t::war_entry_condition_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.war_entry_condition_t)
+  // @@protoc_insertion_point(constructor:pb_message.war_entry_condition_t)
 }
 
 void war_entry_condition_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  condition_ = const_cast< ::message::scenario_condition_t*>(&::message::scenario_condition_t::default_instance());
+  condition_ = const_cast< ::pb_message::scenario_condition_t*>(&::pb_message::scenario_condition_t::default_instance());
 }
 
 war_entry_condition_t::war_entry_condition_t(const war_entry_condition_t& from)
@@ -13673,7 +13678,7 @@ war_entry_condition_t::war_entry_condition_t(const war_entry_condition_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.war_entry_condition_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.war_entry_condition_t)
 }
 
 void war_entry_condition_t::SharedCtor() {
@@ -13684,7 +13689,7 @@ void war_entry_condition_t::SharedCtor() {
 }
 
 war_entry_condition_t::~war_entry_condition_t() {
-  // @@protoc_insertion_point(destructor:message.war_entry_condition_t)
+  // @@protoc_insertion_point(destructor:pb_message.war_entry_condition_t)
   SharedDtor();
 }
 
@@ -13729,13 +13734,13 @@ bool war_entry_condition_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.war_entry_condition_t)
+  // @@protoc_insertion_point(parse_start:pb_message.war_entry_condition_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.scenario_condition_t condition = 2;
+      // optional .pb_message.scenario_condition_t condition = 2;
       case 2: {
         if (tag == 18) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -13747,7 +13752,7 @@ bool war_entry_condition_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.war_footing_t economy = 3;
+      // optional .pb_message.war_footing_t economy = 3;
       case 3: {
         if (tag == 24) {
          parse_economy:
@@ -13755,7 +13760,7 @@ bool war_entry_condition_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_economy(static_cast< ::message::war_footing_t >(value));
+          set_economy(static_cast< ::pb_message::war_footing_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -13776,62 +13781,62 @@ bool war_entry_condition_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.war_entry_condition_t)
+  // @@protoc_insertion_point(parse_success:pb_message.war_entry_condition_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.war_entry_condition_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.war_entry_condition_t)
   return false;
 #undef DO_
 }
 
 void war_entry_condition_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.war_entry_condition_t)
-  // optional .message.scenario_condition_t condition = 2;
+  // @@protoc_insertion_point(serialize_start:pb_message.war_entry_condition_t)
+  // optional .pb_message.scenario_condition_t condition = 2;
   if (this->has_condition()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->condition_, output);
   }
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   if (this->economy() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->economy(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.war_entry_condition_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.war_entry_condition_t)
 }
 
 ::google::protobuf::uint8* war_entry_condition_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.war_entry_condition_t)
-  // optional .message.scenario_condition_t condition = 2;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.war_entry_condition_t)
+  // optional .pb_message.scenario_condition_t condition = 2;
   if (this->has_condition()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->condition_, target);
   }
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   if (this->economy() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->economy(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.war_entry_condition_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.war_entry_condition_t)
   return target;
 }
 
 int war_entry_condition_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   if (this->economy() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->economy());
   }
 
-  // optional .message.scenario_condition_t condition = 2;
+  // optional .pb_message.scenario_condition_t condition = 2;
   if (this->has_condition()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -13862,7 +13867,7 @@ void war_entry_condition_t::MergeFrom(const war_entry_condition_t& from) {
     set_economy(from.economy());
   }
   if (from.has_condition()) {
-    mutable_condition()->::message::scenario_condition_t::MergeFrom(from.condition());
+    mutable_condition()->::pb_message::scenario_condition_t::MergeFrom(from.condition());
   }
 }
 
@@ -13905,21 +13910,21 @@ void war_entry_condition_t::InternalSwap(war_entry_condition_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // war_entry_condition_t
 
-// optional .message.war_footing_t economy = 3;
+// optional .pb_message.war_footing_t economy = 3;
 void war_entry_condition_t::clear_economy() {
   economy_ = 0;
 }
- ::message::war_footing_t war_entry_condition_t::economy() const {
-  // @@protoc_insertion_point(field_get:message.war_entry_condition_t.economy)
-  return static_cast< ::message::war_footing_t >(economy_);
+ ::pb_message::war_footing_t war_entry_condition_t::economy() const {
+  // @@protoc_insertion_point(field_get:pb_message.war_entry_condition_t.economy)
+  return static_cast< ::pb_message::war_footing_t >(economy_);
 }
- void war_entry_condition_t::set_economy(::message::war_footing_t value) {
+ void war_entry_condition_t::set_economy(::pb_message::war_footing_t value) {
   
   economy_ = value;
-  // @@protoc_insertion_point(field_set:message.war_entry_condition_t.economy)
+  // @@protoc_insertion_point(field_set:pb_message.war_entry_condition_t.economy)
 }
 
-// optional .message.scenario_condition_t condition = 2;
+// optional .pb_message.scenario_condition_t condition = 2;
 bool war_entry_condition_t::has_condition() const {
   return !_is_default_instance_ && condition_ != NULL;
 }
@@ -13927,25 +13932,25 @@ void war_entry_condition_t::clear_condition() {
   if (GetArenaNoVirtual() == NULL && condition_ != NULL) delete condition_;
   condition_ = NULL;
 }
-const ::message::scenario_condition_t& war_entry_condition_t::condition() const {
-  // @@protoc_insertion_point(field_get:message.war_entry_condition_t.condition)
+const ::pb_message::scenario_condition_t& war_entry_condition_t::condition() const {
+  // @@protoc_insertion_point(field_get:pb_message.war_entry_condition_t.condition)
   return condition_ != NULL ? *condition_ : *default_instance_->condition_;
 }
-::message::scenario_condition_t* war_entry_condition_t::mutable_condition() {
+::pb_message::scenario_condition_t* war_entry_condition_t::mutable_condition() {
   
   if (condition_ == NULL) {
-    condition_ = new ::message::scenario_condition_t;
+    condition_ = new ::pb_message::scenario_condition_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.war_entry_condition_t.condition)
+  // @@protoc_insertion_point(field_mutable:pb_message.war_entry_condition_t.condition)
   return condition_;
 }
-::message::scenario_condition_t* war_entry_condition_t::release_condition() {
+::pb_message::scenario_condition_t* war_entry_condition_t::release_condition() {
   
-  ::message::scenario_condition_t* temp = condition_;
+  ::pb_message::scenario_condition_t* temp = condition_;
   condition_ = NULL;
   return temp;
 }
-void war_entry_condition_t::set_allocated_condition(::message::scenario_condition_t* condition) {
+void war_entry_condition_t::set_allocated_condition(::pb_message::scenario_condition_t* condition) {
   delete condition_;
   condition_ = condition;
   if (condition) {
@@ -13953,7 +13958,7 @@ void war_entry_condition_t::set_allocated_condition(::message::scenario_conditio
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.war_entry_condition_t.condition)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.war_entry_condition_t.condition)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -13989,7 +13994,7 @@ const int scenario_turn_t_national_action_t_action_t::kNamesFieldNumber;
 scenario_turn_t_national_action_t_action_t::scenario_turn_t_national_action_t_action_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_turn_t.national_action_t.action_t)
 }
 
 void scenario_turn_t_national_action_t_action_t::InitAsDefaultInstance() {
@@ -14001,7 +14006,7 @@ scenario_turn_t_national_action_t_action_t::scenario_turn_t_national_action_t_ac
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_turn_t.national_action_t.action_t)
 }
 
 void scenario_turn_t_national_action_t_action_t::SharedCtor() {
@@ -14012,7 +14017,7 @@ void scenario_turn_t_national_action_t_action_t::SharedCtor() {
 }
 
 scenario_turn_t_national_action_t_action_t::~scenario_turn_t_national_action_t_action_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_turn_t.national_action_t.action_t)
   SharedDtor();
 }
 
@@ -14055,20 +14060,20 @@ bool scenario_turn_t_national_action_t_action_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_turn_t.national_action_t.action_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+      // optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
       case 1: {
         if (tag == 8) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_type(static_cast< ::message::scenario_turn_t_national_action_t_action_type_t >(value));
+          set_type(static_cast< ::pb_message::scenario_turn_t_national_action_t_action_type_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -14086,7 +14091,7 @@ bool scenario_turn_t_national_action_t_action_t::MergePartialFromCodedStream(
             this->names(this->names_size() - 1).data(),
             this->names(this->names_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_turn_t.national_action_t.action_t.names"));
+            "pb_message.scenario_turn_t.national_action_t.action_t.names"));
         } else {
           goto handle_unusual;
         }
@@ -14108,18 +14113,18 @@ bool scenario_turn_t_national_action_t_action_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_turn_t.national_action_t.action_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_turn_t.national_action_t.action_t)
   return false;
 #undef DO_
 }
 
 void scenario_turn_t_national_action_t_action_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_turn_t.national_action_t.action_t)
-  // optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_turn_t.national_action_t.action_t)
+  // optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
   if (this->type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->type(), output);
@@ -14130,18 +14135,18 @@ void scenario_turn_t_national_action_t_action_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->names(i).data(), this->names(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_turn_t.national_action_t.action_t.names");
+      "pb_message.scenario_turn_t.national_action_t.action_t.names");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->names(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_turn_t.national_action_t.action_t)
 }
 
 ::google::protobuf::uint8* scenario_turn_t_national_action_t_action_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_turn_t.national_action_t.action_t)
-  // optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_turn_t.national_action_t.action_t)
+  // optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
   if (this->type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->type(), target);
@@ -14152,19 +14157,19 @@ void scenario_turn_t_national_action_t_action_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->names(i).data(), this->names(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_turn_t.national_action_t.action_t.names");
+      "pb_message.scenario_turn_t.national_action_t.action_t.names");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(2, this->names(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_turn_t.national_action_t.action_t)
   return target;
 }
 
 int scenario_turn_t_national_action_t_action_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+  // optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
   if (this->type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
@@ -14249,7 +14254,7 @@ const int scenario_turn_t_national_action_t::kActionsFieldNumber;
 scenario_turn_t_national_action_t::scenario_turn_t_national_action_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_turn_t.national_action_t)
 }
 
 void scenario_turn_t_national_action_t::InitAsDefaultInstance() {
@@ -14261,7 +14266,7 @@ scenario_turn_t_national_action_t::scenario_turn_t_national_action_t(const scena
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_turn_t.national_action_t)
 }
 
 void scenario_turn_t_national_action_t::SharedCtor() {
@@ -14270,7 +14275,7 @@ void scenario_turn_t_national_action_t::SharedCtor() {
 }
 
 scenario_turn_t_national_action_t::~scenario_turn_t_national_action_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_turn_t.national_action_t)
   SharedDtor();
 }
 
@@ -14312,13 +14317,13 @@ bool scenario_turn_t_national_action_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_turn_t.national_action_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+      // repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -14347,44 +14352,44 @@ bool scenario_turn_t_national_action_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_turn_t.national_action_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_turn_t.national_action_t)
   return false;
 #undef DO_
 }
 
 void scenario_turn_t_national_action_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_turn_t.national_action_t)
-  // repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_turn_t.national_action_t)
+  // repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
   for (unsigned int i = 0, n = this->actions_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->actions(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_turn_t.national_action_t)
 }
 
 ::google::protobuf::uint8* scenario_turn_t_national_action_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_turn_t.national_action_t)
-  // repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_turn_t.national_action_t)
+  // repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
   for (unsigned int i = 0, n = this->actions_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->actions(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_turn_t.national_action_t)
   return target;
 }
 
 int scenario_turn_t_national_action_t::ByteSize() const {
   int total_size = 0;
 
-  // repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+  // repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
   total_size += 1 * this->actions_size();
   for (int i = 0; i < this->actions_size(); i++) {
     total_size +=
@@ -14461,7 +14466,7 @@ const int scenario_turn_t::kNationalActionsFieldNumber;
 scenario_turn_t::scenario_turn_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_turn_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_turn_t)
 }
 
 void scenario_turn_t::InitAsDefaultInstance() {
@@ -14473,7 +14478,7 @@ scenario_turn_t::scenario_turn_t(const scenario_turn_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_turn_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_turn_t)
 }
 
 void scenario_turn_t::SharedCtor() {
@@ -14483,11 +14488,11 @@ void scenario_turn_t::SharedCtor() {
   national_actions_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   national_actions_.SetEntryDescriptor(
-      &::message::scenario_turn_t_NationalActionsEntry_descriptor_);
+      &::pb_message::scenario_turn_t_NationalActionsEntry_descriptor_);
 }
 
 scenario_turn_t::~scenario_turn_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_turn_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_turn_t)
   SharedDtor();
 }
 
@@ -14530,7 +14535,7 @@ bool scenario_turn_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_turn_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_turn_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -14550,7 +14555,7 @@ bool scenario_turn_t::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+      // map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
       case 2: {
         if (tag == 18) {
          parse_national_actions:
@@ -14563,7 +14568,7 @@ bool scenario_turn_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_turn_t.NationalActionsEntry.key"));
+            "pb_message.scenario_turn_t.NationalActionsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -14586,26 +14591,26 @@ bool scenario_turn_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_turn_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_turn_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_turn_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_turn_t)
   return false;
 #undef DO_
 }
 
 void scenario_turn_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_turn_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_turn_t)
   // optional int32 turn = 1;
   if (this->turn() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->turn(), output);
   }
 
-  // map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+  // map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
   {
     ::google::protobuf::scoped_ptr<scenario_turn_t_NationalActionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >::const_iterator
         it = this->national_actions().begin();
         it != this->national_actions().end(); ++it) {
       entry.reset(national_actions_.NewEntryWrapper(it->first, it->second));
@@ -14614,25 +14619,25 @@ void scenario_turn_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.scenario_turn_t.NationalActionsEntry.key");
+        "pb_message.scenario_turn_t.NationalActionsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_turn_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_turn_t)
 }
 
 ::google::protobuf::uint8* scenario_turn_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_turn_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_turn_t)
   // optional int32 turn = 1;
   if (this->turn() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->turn(), target);
   }
 
-  // map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+  // map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
   {
     ::google::protobuf::scoped_ptr<scenario_turn_t_NationalActionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >::const_iterator
         it = this->national_actions().begin();
         it != this->national_actions().end(); ++it) {
       entry.reset(national_actions_.NewEntryWrapper(it->first, it->second));
@@ -14642,11 +14647,11 @@ void scenario_turn_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.scenario_turn_t.NationalActionsEntry.key");
+        "pb_message.scenario_turn_t.NationalActionsEntry.key");
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_turn_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_turn_t)
   return target;
 }
 
@@ -14660,11 +14665,11 @@ int scenario_turn_t::ByteSize() const {
         this->turn());
   }
 
-  // map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+  // map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
   total_size += 1 * this->national_actions_size();
   {
     ::google::protobuf::scoped_ptr<scenario_turn_t_NationalActionsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >::const_iterator
         it = this->national_actions().begin();
         it != this->national_actions().end(); ++it) {
       entry.reset(national_actions_.NewEntryWrapper(it->first, it->second));
@@ -14738,18 +14743,18 @@ void scenario_turn_t::InternalSwap(scenario_turn_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // scenario_turn_t_national_action_t_action_t
 
-// optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+// optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
 void scenario_turn_t_national_action_t_action_t::clear_type() {
   type_ = 0;
 }
- ::message::scenario_turn_t_national_action_t_action_type_t scenario_turn_t_national_action_t_action_t::type() const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.national_action_t.action_t.type)
-  return static_cast< ::message::scenario_turn_t_national_action_t_action_type_t >(type_);
+ ::pb_message::scenario_turn_t_national_action_t_action_type_t scenario_turn_t_national_action_t_action_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.national_action_t.action_t.type)
+  return static_cast< ::pb_message::scenario_turn_t_national_action_t_action_type_t >(type_);
 }
- void scenario_turn_t_national_action_t_action_t::set_type(::message::scenario_turn_t_national_action_t_action_type_t value) {
+ void scenario_turn_t_national_action_t_action_t::set_type(::pb_message::scenario_turn_t_national_action_t_action_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_turn_t.national_action_t.action_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_turn_t.national_action_t.action_t.type)
 }
 
 // repeated string names = 2;
@@ -14760,49 +14765,49 @@ void scenario_turn_t_national_action_t_action_t::clear_names() {
   names_.Clear();
 }
  const ::std::string& scenario_turn_t_national_action_t_action_t::names(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return names_.Get(index);
 }
  ::std::string* scenario_turn_t_national_action_t_action_t::mutable_names(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return names_.Mutable(index);
 }
  void scenario_turn_t_national_action_t_action_t::set_names(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_turn_t.national_action_t.action_t.names)
   names_.Mutable(index)->assign(value);
 }
  void scenario_turn_t_national_action_t_action_t::set_names(int index, const char* value) {
   names_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
  void scenario_turn_t_national_action_t_action_t::set_names(int index, const char* value, size_t size) {
   names_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
  ::std::string* scenario_turn_t_national_action_t_action_t::add_names() {
   return names_.Add();
 }
  void scenario_turn_t_national_action_t_action_t::add_names(const ::std::string& value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
  void scenario_turn_t_national_action_t_action_t::add_names(const char* value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
  void scenario_turn_t_national_action_t_action_t::add_names(const char* value, size_t size) {
   names_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_turn_t_national_action_t_action_t::names() const {
-  // @@protoc_insertion_point(field_list:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return names_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_turn_t_national_action_t_action_t::mutable_names() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return &names_;
 }
 
@@ -14810,33 +14815,33 @@ scenario_turn_t_national_action_t_action_t::mutable_names() {
 
 // scenario_turn_t_national_action_t
 
-// repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+// repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
 int scenario_turn_t_national_action_t::actions_size() const {
   return actions_.size();
 }
 void scenario_turn_t_national_action_t::clear_actions() {
   actions_.Clear();
 }
-const ::message::scenario_turn_t_national_action_t_action_t& scenario_turn_t_national_action_t::actions(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.national_action_t.actions)
+const ::pb_message::scenario_turn_t_national_action_t_action_t& scenario_turn_t_national_action_t::actions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_.Get(index);
 }
-::message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::mutable_actions(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_turn_t.national_action_t.actions)
+::pb_message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::mutable_actions(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_.Mutable(index);
 }
-::message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::add_actions() {
-  // @@protoc_insertion_point(field_add:message.scenario_turn_t.national_action_t.actions)
+::pb_message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::add_actions() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t >*
 scenario_turn_t_national_action_t::mutable_actions() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_turn_t.national_action_t.actions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_turn_t.national_action_t.actions)
   return &actions_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t >&
 scenario_turn_t_national_action_t::actions() const {
-  // @@protoc_insertion_point(field_list:message.scenario_turn_t.national_action_t.actions)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_;
 }
 
@@ -14849,30 +14854,30 @@ void scenario_turn_t::clear_turn() {
   turn_ = 0;
 }
  ::google::protobuf::int32 scenario_turn_t::turn() const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.turn)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.turn)
   return turn_;
 }
  void scenario_turn_t::set_turn(::google::protobuf::int32 value) {
   
   turn_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_turn_t.turn)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_turn_t.turn)
 }
 
-// map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+// map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
 int scenario_turn_t::national_actions_size() const {
   return national_actions_.size();
 }
 void scenario_turn_t::clear_national_actions() {
   national_actions_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >&
 scenario_turn_t::national_actions() const {
-  // @@protoc_insertion_point(field_map:message.scenario_turn_t.national_actions)
+  // @@protoc_insertion_point(field_map:pb_message.scenario_turn_t.national_actions)
   return national_actions_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >*
 scenario_turn_t::mutable_national_actions() {
-  // @@protoc_insertion_point(field_mutable_map:message.scenario_turn_t.national_actions)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.scenario_turn_t.national_actions)
   return national_actions_.MutableMap();
 }
 
@@ -14893,7 +14898,7 @@ const int scenario_t_nation_t::kWarEntryConditionsFieldNumber;
 scenario_t_nation_t::scenario_t_nation_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_t.nation_t)
 }
 
 void scenario_t_nation_t::InitAsDefaultInstance() {
@@ -14905,7 +14910,7 @@ scenario_t_nation_t::scenario_t_nation_t(const scenario_t_nation_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_t.nation_t)
 }
 
 void scenario_t_nation_t::SharedCtor() {
@@ -14918,7 +14923,7 @@ void scenario_t_nation_t::SharedCtor() {
 }
 
 scenario_t_nation_t::~scenario_t_nation_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_t.nation_t)
   SharedDtor();
 }
 
@@ -14977,7 +14982,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_t.nation_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -14993,7 +14998,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
             this->at_war_with(this->at_war_with_size() - 1).data(),
             this->at_war_with(this->at_war_with_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.nation_t.at_war_with"));
+            "pb_message.scenario_t.nation_t.at_war_with"));
         } else {
           goto handle_unusual;
         }
@@ -15012,7 +15017,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
             this->future_belligerents(this->future_belligerents_size() - 1).data(),
             this->future_belligerents(this->future_belligerents_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.nation_t.future_belligerents"));
+            "pb_message.scenario_t.nation_t.future_belligerents"));
         } else {
           goto handle_unusual;
         }
@@ -15021,7 +15026,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.war_footing_t economy = 3;
+      // optional .pb_message.war_footing_t economy = 3;
       case 3: {
         if (tag == 24) {
          parse_economy:
@@ -15029,7 +15034,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_economy(static_cast< ::message::war_footing_t >(value));
+          set_economy(static_cast< ::pb_message::war_footing_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -15067,7 +15072,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.fleet_release_condition_t release_conditions = 6;
+      // repeated .pb_message.fleet_release_condition_t release_conditions = 6;
       case 6: {
         if (tag == 50) {
          parse_release_conditions:
@@ -15084,7 +15089,7 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.war_entry_condition_t war_entry_conditions = 7;
+      // repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
       case 7: {
         if (tag == 58) {
           DO_(input->IncrementRecursionDepth());
@@ -15113,23 +15118,23 @@ bool scenario_t_nation_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_t.nation_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_t.nation_t)
   return false;
 #undef DO_
 }
 
 void scenario_t_nation_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_t.nation_t)
   // repeated string at_war_with = 1;
   for (int i = 0; i < this->at_war_with_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->at_war_with(i).data(), this->at_war_with(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.nation_t.at_war_with");
+      "pb_message.scenario_t.nation_t.at_war_with");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       1, this->at_war_with(i), output);
   }
@@ -15139,12 +15144,12 @@ void scenario_t_nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->future_belligerents(i).data(), this->future_belligerents(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.nation_t.future_belligerents");
+      "pb_message.scenario_t.nation_t.future_belligerents");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       2, this->future_belligerents(i), output);
   }
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   if (this->economy() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->economy(), output);
@@ -15160,30 +15165,30 @@ void scenario_t_nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->accumulate_exhaustion_at_peace(), output);
   }
 
-  // repeated .message.fleet_release_condition_t release_conditions = 6;
+  // repeated .pb_message.fleet_release_condition_t release_conditions = 6;
   for (unsigned int i = 0, n = this->release_conditions_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       6, this->release_conditions(i), output);
   }
 
-  // repeated .message.war_entry_condition_t war_entry_conditions = 7;
+  // repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
   for (unsigned int i = 0, n = this->war_entry_conditions_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       7, this->war_entry_conditions(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_t.nation_t)
 }
 
 ::google::protobuf::uint8* scenario_t_nation_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_t.nation_t)
   // repeated string at_war_with = 1;
   for (int i = 0; i < this->at_war_with_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->at_war_with(i).data(), this->at_war_with(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.nation_t.at_war_with");
+      "pb_message.scenario_t.nation_t.at_war_with");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(1, this->at_war_with(i), target);
   }
@@ -15193,12 +15198,12 @@ void scenario_t_nation_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->future_belligerents(i).data(), this->future_belligerents(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.nation_t.future_belligerents");
+      "pb_message.scenario_t.nation_t.future_belligerents");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(2, this->future_belligerents(i), target);
   }
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   if (this->economy() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->economy(), target);
@@ -15214,28 +15219,28 @@ void scenario_t_nation_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->accumulate_exhaustion_at_peace(), target);
   }
 
-  // repeated .message.fleet_release_condition_t release_conditions = 6;
+  // repeated .pb_message.fleet_release_condition_t release_conditions = 6;
   for (unsigned int i = 0, n = this->release_conditions_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         6, this->release_conditions(i), target);
   }
 
-  // repeated .message.war_entry_condition_t war_entry_conditions = 7;
+  // repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
   for (unsigned int i = 0, n = this->war_entry_conditions_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         7, this->war_entry_conditions(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_t.nation_t)
   return target;
 }
 
 int scenario_t_nation_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   if (this->economy() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->economy());
@@ -15267,7 +15272,7 @@ int scenario_t_nation_t::ByteSize() const {
       this->future_belligerents(i));
   }
 
-  // repeated .message.fleet_release_condition_t release_conditions = 6;
+  // repeated .pb_message.fleet_release_condition_t release_conditions = 6;
   total_size += 1 * this->release_conditions_size();
   for (int i = 0; i < this->release_conditions_size(); i++) {
     total_size +=
@@ -15275,7 +15280,7 @@ int scenario_t_nation_t::ByteSize() const {
         this->release_conditions(i));
   }
 
-  // repeated .message.war_entry_condition_t war_entry_conditions = 7;
+  // repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
   total_size += 1 * this->war_entry_conditions_size();
   for (int i = 0; i < this->war_entry_conditions_size(); i++) {
     total_size +=
@@ -15378,12 +15383,12 @@ const int scenario_t::kTurnsFieldNumber;
 scenario_t::scenario_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.scenario_t)
+  // @@protoc_insertion_point(constructor:pb_message.scenario_t)
 }
 
 void scenario_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  start_turn_ = const_cast< ::message::turn_t*>(&::message::turn_t::default_instance());
+  start_turn_ = const_cast< ::pb_message::turn_t*>(&::pb_message::turn_t::default_instance());
 }
 
 scenario_t::scenario_t(const scenario_t& from)
@@ -15391,7 +15396,7 @@ scenario_t::scenario_t(const scenario_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.scenario_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.scenario_t)
 }
 
 void scenario_t::SharedCtor() {
@@ -15406,11 +15411,11 @@ void scenario_t::SharedCtor() {
   nations_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   nations_.SetEntryDescriptor(
-      &::message::scenario_t_NationsEntry_descriptor_);
+      &::pb_message::scenario_t_NationsEntry_descriptor_);
 }
 
 scenario_t::~scenario_t() {
-  // @@protoc_insertion_point(destructor:message.scenario_t)
+  // @@protoc_insertion_point(destructor:pb_message.scenario_t)
   SharedDtor();
 }
 
@@ -15467,7 +15472,7 @@ bool scenario_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.scenario_t)
+  // @@protoc_insertion_point(parse_start:pb_message.scenario_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -15481,7 +15486,7 @@ bool scenario_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.name"));
+            "pb_message.scenario_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -15498,7 +15503,7 @@ bool scenario_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->description().data(), this->description().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.description"));
+            "pb_message.scenario_t.description"));
         } else {
           goto handle_unusual;
         }
@@ -15506,7 +15511,7 @@ bool scenario_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.turn_t start_turn = 3;
+      // optional .pb_message.turn_t start_turn = 3;
       case 3: {
         if (tag == 26) {
          parse_start_turn:
@@ -15519,7 +15524,7 @@ bool scenario_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.team_t teams = 4;
+      // repeated .pb_message.team_t teams = 4;
       case 4: {
         if (tag == 34) {
          parse_teams:
@@ -15546,7 +15551,7 @@ bool scenario_t::MergePartialFromCodedStream(
             this->team_turn_order(this->team_turn_order_size() - 1).data(),
             this->team_turn_order(this->team_turn_order_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.team_turn_order"));
+            "pb_message.scenario_t.team_turn_order"));
         } else {
           goto handle_unusual;
         }
@@ -15564,7 +15569,7 @@ bool scenario_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->map().data(), this->map().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.map"));
+            "pb_message.scenario_t.map"));
         } else {
           goto handle_unusual;
         }
@@ -15581,7 +15586,7 @@ bool scenario_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->order_of_battle().data(), this->order_of_battle().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.order_of_battle"));
+            "pb_message.scenario_t.order_of_battle"));
         } else {
           goto handle_unusual;
         }
@@ -15599,7 +15604,7 @@ bool scenario_t::MergePartialFromCodedStream(
             this->setup_order(this->setup_order_size() - 1).data(),
             this->setup_order(this->setup_order_size() - 1).length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.setup_order"));
+            "pb_message.scenario_t.setup_order"));
         } else {
           goto handle_unusual;
         }
@@ -15608,7 +15613,7 @@ bool scenario_t::MergePartialFromCodedStream(
         break;
       }
 
-      // map<string, .message.scenario_t.nation_t> nations = 9;
+      // map<string, .pb_message.scenario_t.nation_t> nations = 9;
       case 9: {
         if (tag == 74) {
          parse_nations:
@@ -15621,7 +15626,7 @@ bool scenario_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             entry->key().data(), entry->key().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.scenario_t.NationsEntry.key"));
+            "pb_message.scenario_t.NationsEntry.key"));
         } else {
           goto handle_unusual;
         }
@@ -15631,7 +15636,7 @@ bool scenario_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.scenario_turn_t turns = 10;
+      // repeated .pb_message.scenario_turn_t turns = 10;
       case 10: {
         if (tag == 82) {
           DO_(input->IncrementRecursionDepth());
@@ -15660,23 +15665,23 @@ bool scenario_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.scenario_t)
+  // @@protoc_insertion_point(parse_success:pb_message.scenario_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.scenario_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.scenario_t)
   return false;
 #undef DO_
 }
 
 void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.scenario_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.scenario_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.name");
+      "pb_message.scenario_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -15686,18 +15691,18 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.description");
+      "pb_message.scenario_t.description");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->description(), output);
   }
 
-  // optional .message.turn_t start_turn = 3;
+  // optional .pb_message.turn_t start_turn = 3;
   if (this->has_start_turn()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, *this->start_turn_, output);
   }
 
-  // repeated .message.team_t teams = 4;
+  // repeated .pb_message.team_t teams = 4;
   for (unsigned int i = 0, n = this->teams_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->teams(i), output);
@@ -15708,7 +15713,7 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->team_turn_order(i).data(), this->team_turn_order(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.team_turn_order");
+      "pb_message.scenario_t.team_turn_order");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       5, this->team_turn_order(i), output);
   }
@@ -15718,7 +15723,7 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->map().data(), this->map().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.map");
+      "pb_message.scenario_t.map");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       6, this->map(), output);
   }
@@ -15728,7 +15733,7 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->order_of_battle().data(), this->order_of_battle().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.order_of_battle");
+      "pb_message.scenario_t.order_of_battle");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       7, this->order_of_battle(), output);
   }
@@ -15738,15 +15743,15 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->setup_order(i).data(), this->setup_order(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.setup_order");
+      "pb_message.scenario_t.setup_order");
     ::google::protobuf::internal::WireFormatLite::WriteString(
       8, this->setup_order(i), output);
   }
 
-  // map<string, .message.scenario_t.nation_t> nations = 9;
+  // map<string, .pb_message.scenario_t.nation_t> nations = 9;
   {
     ::google::protobuf::scoped_ptr<scenario_t_NationsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >::const_iterator
         it = this->nations().begin();
         it != this->nations().end(); ++it) {
       entry.reset(nations_.NewEntryWrapper(it->first, it->second));
@@ -15755,28 +15760,28 @@ void scenario_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.scenario_t.NationsEntry.key");
+        "pb_message.scenario_t.NationsEntry.key");
     }
   }
 
-  // repeated .message.scenario_turn_t turns = 10;
+  // repeated .pb_message.scenario_turn_t turns = 10;
   for (unsigned int i = 0, n = this->turns_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       10, this->turns(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.scenario_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.scenario_t)
 }
 
 ::google::protobuf::uint8* scenario_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.scenario_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.scenario_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.name");
+      "pb_message.scenario_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -15787,20 +15792,20 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.description");
+      "pb_message.scenario_t.description");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->description(), target);
   }
 
-  // optional .message.turn_t start_turn = 3;
+  // optional .pb_message.turn_t start_turn = 3;
   if (this->has_start_turn()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, *this->start_turn_, target);
   }
 
-  // repeated .message.team_t teams = 4;
+  // repeated .pb_message.team_t teams = 4;
   for (unsigned int i = 0, n = this->teams_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -15812,7 +15817,7 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->team_turn_order(i).data(), this->team_turn_order(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.team_turn_order");
+      "pb_message.scenario_t.team_turn_order");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(5, this->team_turn_order(i), target);
   }
@@ -15822,7 +15827,7 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->map().data(), this->map().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.map");
+      "pb_message.scenario_t.map");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         6, this->map(), target);
@@ -15833,7 +15838,7 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->order_of_battle().data(), this->order_of_battle().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.order_of_battle");
+      "pb_message.scenario_t.order_of_battle");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         7, this->order_of_battle(), target);
@@ -15844,15 +15849,15 @@ void scenario_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->setup_order(i).data(), this->setup_order(i).length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.scenario_t.setup_order");
+      "pb_message.scenario_t.setup_order");
     target = ::google::protobuf::internal::WireFormatLite::
       WriteStringToArray(8, this->setup_order(i), target);
   }
 
-  // map<string, .message.scenario_t.nation_t> nations = 9;
+  // map<string, .pb_message.scenario_t.nation_t> nations = 9;
   {
     ::google::protobuf::scoped_ptr<scenario_t_NationsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >::const_iterator
         it = this->nations().begin();
         it != this->nations().end(); ++it) {
       entry.reset(nations_.NewEntryWrapper(it->first, it->second));
@@ -15862,18 +15867,18 @@ void scenario_t::SerializeWithCachedSizes(
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
         it->first.data(), it->first.length(),
         ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-        "message.scenario_t.NationsEntry.key");
+        "pb_message.scenario_t.NationsEntry.key");
     }
   }
 
-  // repeated .message.scenario_turn_t turns = 10;
+  // repeated .pb_message.scenario_turn_t turns = 10;
   for (unsigned int i = 0, n = this->turns_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         10, this->turns(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.scenario_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.scenario_t)
   return target;
 }
 
@@ -15894,7 +15899,7 @@ int scenario_t::ByteSize() const {
         this->description());
   }
 
-  // optional .message.turn_t start_turn = 3;
+  // optional .pb_message.turn_t start_turn = 3;
   if (this->has_start_turn()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -15915,7 +15920,7 @@ int scenario_t::ByteSize() const {
         this->order_of_battle());
   }
 
-  // repeated .message.team_t teams = 4;
+  // repeated .pb_message.team_t teams = 4;
   total_size += 1 * this->teams_size();
   for (int i = 0; i < this->teams_size(); i++) {
     total_size +=
@@ -15937,11 +15942,11 @@ int scenario_t::ByteSize() const {
       this->setup_order(i));
   }
 
-  // map<string, .message.scenario_t.nation_t> nations = 9;
+  // map<string, .pb_message.scenario_t.nation_t> nations = 9;
   total_size += 1 * this->nations_size();
   {
     ::google::protobuf::scoped_ptr<scenario_t_NationsEntry> entry;
-    for (::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >::const_iterator
+    for (::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >::const_iterator
         it = this->nations().begin();
         it != this->nations().end(); ++it) {
       entry.reset(nations_.NewEntryWrapper(it->first, it->second));
@@ -15950,7 +15955,7 @@ int scenario_t::ByteSize() const {
     }
   }
 
-  // repeated .message.scenario_turn_t turns = 10;
+  // repeated .pb_message.scenario_turn_t turns = 10;
   total_size += 1 * this->turns_size();
   for (int i = 0; i < this->turns_size(); i++) {
     total_size +=
@@ -15992,7 +15997,7 @@ void scenario_t::MergeFrom(const scenario_t& from) {
     description_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.description_);
   }
   if (from.has_start_turn()) {
-    mutable_start_turn()->::message::turn_t::MergeFrom(from.start_turn());
+    mutable_start_turn()->::pb_message::turn_t::MergeFrom(from.start_turn());
   }
   if (from.map().size() > 0) {
 
@@ -16059,49 +16064,49 @@ void scenario_t_nation_t::clear_at_war_with() {
   at_war_with_.Clear();
 }
  const ::std::string& scenario_t_nation_t::at_war_with(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.at_war_with)
   return at_war_with_.Get(index);
 }
  ::std::string* scenario_t_nation_t::mutable_at_war_with(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.at_war_with)
   return at_war_with_.Mutable(index);
 }
  void scenario_t_nation_t::set_at_war_with(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.at_war_with)
   at_war_with_.Mutable(index)->assign(value);
 }
  void scenario_t_nation_t::set_at_war_with(int index, const char* value) {
   at_war_with_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.nation_t.at_war_with)
 }
  void scenario_t_nation_t::set_at_war_with(int index, const char* value, size_t size) {
   at_war_with_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.nation_t.at_war_with)
 }
  ::std::string* scenario_t_nation_t::add_at_war_with() {
   return at_war_with_.Add();
 }
  void scenario_t_nation_t::add_at_war_with(const ::std::string& value) {
   at_war_with_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.at_war_with)
 }
  void scenario_t_nation_t::add_at_war_with(const char* value) {
   at_war_with_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.nation_t.at_war_with)
 }
  void scenario_t_nation_t::add_at_war_with(const char* value, size_t size) {
   at_war_with_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.nation_t.at_war_with)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t_nation_t::at_war_with() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.at_war_with)
   return at_war_with_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t_nation_t::mutable_at_war_with() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.at_war_with)
   return &at_war_with_;
 }
 
@@ -16113,64 +16118,64 @@ void scenario_t_nation_t::clear_future_belligerents() {
   future_belligerents_.Clear();
 }
  const ::std::string& scenario_t_nation_t::future_belligerents(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.future_belligerents)
   return future_belligerents_.Get(index);
 }
  ::std::string* scenario_t_nation_t::mutable_future_belligerents(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.future_belligerents)
   return future_belligerents_.Mutable(index);
 }
  void scenario_t_nation_t::set_future_belligerents(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.future_belligerents)
   future_belligerents_.Mutable(index)->assign(value);
 }
  void scenario_t_nation_t::set_future_belligerents(int index, const char* value) {
   future_belligerents_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.nation_t.future_belligerents)
 }
  void scenario_t_nation_t::set_future_belligerents(int index, const char* value, size_t size) {
   future_belligerents_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.nation_t.future_belligerents)
 }
  ::std::string* scenario_t_nation_t::add_future_belligerents() {
   return future_belligerents_.Add();
 }
  void scenario_t_nation_t::add_future_belligerents(const ::std::string& value) {
   future_belligerents_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.future_belligerents)
 }
  void scenario_t_nation_t::add_future_belligerents(const char* value) {
   future_belligerents_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.nation_t.future_belligerents)
 }
  void scenario_t_nation_t::add_future_belligerents(const char* value, size_t size) {
   future_belligerents_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.nation_t.future_belligerents)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t_nation_t::future_belligerents() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.future_belligerents)
   return future_belligerents_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t_nation_t::mutable_future_belligerents() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.future_belligerents)
   return &future_belligerents_;
 }
 
-// optional .message.war_footing_t economy = 3;
+// optional .pb_message.war_footing_t economy = 3;
 void scenario_t_nation_t::clear_economy() {
   economy_ = 0;
 }
- ::message::war_footing_t scenario_t_nation_t::economy() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.economy)
-  return static_cast< ::message::war_footing_t >(economy_);
+ ::pb_message::war_footing_t scenario_t_nation_t::economy() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.economy)
+  return static_cast< ::pb_message::war_footing_t >(economy_);
 }
- void scenario_t_nation_t::set_economy(::message::war_footing_t value) {
+ void scenario_t_nation_t::set_economy(::pb_message::war_footing_t value) {
   
   economy_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.economy)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.economy)
 }
 
 // optional int32 exhaustion_turns = 4;
@@ -16178,13 +16183,13 @@ void scenario_t_nation_t::clear_exhaustion_turns() {
   exhaustion_turns_ = 0;
 }
  ::google::protobuf::int32 scenario_t_nation_t::exhaustion_turns() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.exhaustion_turns)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.exhaustion_turns)
   return exhaustion_turns_;
 }
  void scenario_t_nation_t::set_exhaustion_turns(::google::protobuf::int32 value) {
   
   exhaustion_turns_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.exhaustion_turns)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.exhaustion_turns)
 }
 
 // optional bool accumulate_exhaustion_at_peace = 5;
@@ -16192,72 +16197,72 @@ void scenario_t_nation_t::clear_accumulate_exhaustion_at_peace() {
   accumulate_exhaustion_at_peace_ = false;
 }
  bool scenario_t_nation_t::accumulate_exhaustion_at_peace() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
   return accumulate_exhaustion_at_peace_;
 }
  void scenario_t_nation_t::set_accumulate_exhaustion_at_peace(bool value) {
   
   accumulate_exhaustion_at_peace_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
 }
 
-// repeated .message.fleet_release_condition_t release_conditions = 6;
+// repeated .pb_message.fleet_release_condition_t release_conditions = 6;
 int scenario_t_nation_t::release_conditions_size() const {
   return release_conditions_.size();
 }
 void scenario_t_nation_t::clear_release_conditions() {
   release_conditions_.Clear();
 }
-const ::message::fleet_release_condition_t& scenario_t_nation_t::release_conditions(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.release_conditions)
+const ::pb_message::fleet_release_condition_t& scenario_t_nation_t::release_conditions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_.Get(index);
 }
-::message::fleet_release_condition_t* scenario_t_nation_t::mutable_release_conditions(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.release_conditions)
+::pb_message::fleet_release_condition_t* scenario_t_nation_t::mutable_release_conditions(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_.Mutable(index);
 }
-::message::fleet_release_condition_t* scenario_t_nation_t::add_release_conditions() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.release_conditions)
+::pb_message::fleet_release_condition_t* scenario_t_nation_t::add_release_conditions() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t >*
 scenario_t_nation_t::mutable_release_conditions() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.release_conditions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.release_conditions)
   return &release_conditions_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t >&
 scenario_t_nation_t::release_conditions() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.release_conditions)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_;
 }
 
-// repeated .message.war_entry_condition_t war_entry_conditions = 7;
+// repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
 int scenario_t_nation_t::war_entry_conditions_size() const {
   return war_entry_conditions_.size();
 }
 void scenario_t_nation_t::clear_war_entry_conditions() {
   war_entry_conditions_.Clear();
 }
-const ::message::war_entry_condition_t& scenario_t_nation_t::war_entry_conditions(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.war_entry_conditions)
+const ::pb_message::war_entry_condition_t& scenario_t_nation_t::war_entry_conditions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_.Get(index);
 }
-::message::war_entry_condition_t* scenario_t_nation_t::mutable_war_entry_conditions(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.war_entry_conditions)
+::pb_message::war_entry_condition_t* scenario_t_nation_t::mutable_war_entry_conditions(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_.Mutable(index);
 }
-::message::war_entry_condition_t* scenario_t_nation_t::add_war_entry_conditions() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.war_entry_conditions)
+::pb_message::war_entry_condition_t* scenario_t_nation_t::add_war_entry_conditions() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t >*
 scenario_t_nation_t::mutable_war_entry_conditions() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.war_entry_conditions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.war_entry_conditions)
   return &war_entry_conditions_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t >&
 scenario_t_nation_t::war_entry_conditions() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.war_entry_conditions)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_;
 }
 
@@ -16270,28 +16275,28 @@ void scenario_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& scenario_t::name() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void scenario_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.name)
 }
  void scenario_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.name)
 }
  void scenario_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.name)
 }
  ::std::string* scenario_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* scenario_t::release_name() {
@@ -16305,7 +16310,7 @@ void scenario_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.name)
 }
 
 // optional string description = 2;
@@ -16313,28 +16318,28 @@ void scenario_t::clear_description() {
   description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& scenario_t::description() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.description)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.description)
   return description_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void scenario_t::set_description(const ::std::string& value) {
   
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.description)
 }
  void scenario_t::set_description(const char* value) {
   
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.description)
 }
  void scenario_t::set_description(const char* value, size_t size) {
   
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.description)
 }
  ::std::string* scenario_t::mutable_description() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.description)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.description)
   return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* scenario_t::release_description() {
@@ -16348,10 +16353,10 @@ void scenario_t::clear_description() {
     
   }
   description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.description)
 }
 
-// optional .message.turn_t start_turn = 3;
+// optional .pb_message.turn_t start_turn = 3;
 bool scenario_t::has_start_turn() const {
   return !_is_default_instance_ && start_turn_ != NULL;
 }
@@ -16359,25 +16364,25 @@ void scenario_t::clear_start_turn() {
   if (GetArenaNoVirtual() == NULL && start_turn_ != NULL) delete start_turn_;
   start_turn_ = NULL;
 }
-const ::message::turn_t& scenario_t::start_turn() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.start_turn)
+const ::pb_message::turn_t& scenario_t::start_turn() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.start_turn)
   return start_turn_ != NULL ? *start_turn_ : *default_instance_->start_turn_;
 }
-::message::turn_t* scenario_t::mutable_start_turn() {
+::pb_message::turn_t* scenario_t::mutable_start_turn() {
   
   if (start_turn_ == NULL) {
-    start_turn_ = new ::message::turn_t;
+    start_turn_ = new ::pb_message::turn_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.start_turn)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.start_turn)
   return start_turn_;
 }
-::message::turn_t* scenario_t::release_start_turn() {
+::pb_message::turn_t* scenario_t::release_start_turn() {
   
-  ::message::turn_t* temp = start_turn_;
+  ::pb_message::turn_t* temp = start_turn_;
   start_turn_ = NULL;
   return temp;
 }
-void scenario_t::set_allocated_start_turn(::message::turn_t* start_turn) {
+void scenario_t::set_allocated_start_turn(::pb_message::turn_t* start_turn) {
   delete start_turn_;
   start_turn_ = start_turn;
   if (start_turn) {
@@ -16385,36 +16390,36 @@ void scenario_t::set_allocated_start_turn(::message::turn_t* start_turn) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.start_turn)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.start_turn)
 }
 
-// repeated .message.team_t teams = 4;
+// repeated .pb_message.team_t teams = 4;
 int scenario_t::teams_size() const {
   return teams_.size();
 }
 void scenario_t::clear_teams() {
   teams_.Clear();
 }
-const ::message::team_t& scenario_t::teams(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.teams)
+const ::pb_message::team_t& scenario_t::teams(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.teams)
   return teams_.Get(index);
 }
-::message::team_t* scenario_t::mutable_teams(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.teams)
+::pb_message::team_t* scenario_t::mutable_teams(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.teams)
   return teams_.Mutable(index);
 }
-::message::team_t* scenario_t::add_teams() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.teams)
+::pb_message::team_t* scenario_t::add_teams() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.teams)
   return teams_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::team_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::team_t >*
 scenario_t::mutable_teams() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.teams)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.teams)
   return &teams_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::team_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::team_t >&
 scenario_t::teams() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.teams)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.teams)
   return teams_;
 }
 
@@ -16426,49 +16431,49 @@ void scenario_t::clear_team_turn_order() {
   team_turn_order_.Clear();
 }
  const ::std::string& scenario_t::team_turn_order(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.team_turn_order)
   return team_turn_order_.Get(index);
 }
  ::std::string* scenario_t::mutable_team_turn_order(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.team_turn_order)
   return team_turn_order_.Mutable(index);
 }
  void scenario_t::set_team_turn_order(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.team_turn_order)
   team_turn_order_.Mutable(index)->assign(value);
 }
  void scenario_t::set_team_turn_order(int index, const char* value) {
   team_turn_order_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.team_turn_order)
 }
  void scenario_t::set_team_turn_order(int index, const char* value, size_t size) {
   team_turn_order_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.team_turn_order)
 }
  ::std::string* scenario_t::add_team_turn_order() {
   return team_turn_order_.Add();
 }
  void scenario_t::add_team_turn_order(const ::std::string& value) {
   team_turn_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.team_turn_order)
 }
  void scenario_t::add_team_turn_order(const char* value) {
   team_turn_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.team_turn_order)
 }
  void scenario_t::add_team_turn_order(const char* value, size_t size) {
   team_turn_order_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.team_turn_order)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t::team_turn_order() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.team_turn_order)
   return team_turn_order_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t::mutable_team_turn_order() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.team_turn_order)
   return &team_turn_order_;
 }
 
@@ -16477,28 +16482,28 @@ void scenario_t::clear_map() {
   map_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& scenario_t::map() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.map)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.map)
   return map_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void scenario_t::set_map(const ::std::string& value) {
   
   map_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.map)
 }
  void scenario_t::set_map(const char* value) {
   
   map_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.map)
 }
  void scenario_t::set_map(const char* value, size_t size) {
   
   map_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.map)
 }
  ::std::string* scenario_t::mutable_map() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.map)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.map)
   return map_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* scenario_t::release_map() {
@@ -16512,7 +16517,7 @@ void scenario_t::clear_map() {
     
   }
   map_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), map);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.map)
 }
 
 // optional string order_of_battle = 7;
@@ -16520,28 +16525,28 @@ void scenario_t::clear_order_of_battle() {
   order_of_battle_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& scenario_t::order_of_battle() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.order_of_battle)
   return order_of_battle_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void scenario_t::set_order_of_battle(const ::std::string& value) {
   
   order_of_battle_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.order_of_battle)
 }
  void scenario_t::set_order_of_battle(const char* value) {
   
   order_of_battle_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.order_of_battle)
 }
  void scenario_t::set_order_of_battle(const char* value, size_t size) {
   
   order_of_battle_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.order_of_battle)
 }
  ::std::string* scenario_t::mutable_order_of_battle() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.order_of_battle)
   return order_of_battle_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* scenario_t::release_order_of_battle() {
@@ -16555,7 +16560,7 @@ void scenario_t::clear_order_of_battle() {
     
   }
   order_of_battle_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), order_of_battle);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.order_of_battle)
 }
 
 // repeated string setup_order = 8;
@@ -16566,97 +16571,97 @@ void scenario_t::clear_setup_order() {
   setup_order_.Clear();
 }
  const ::std::string& scenario_t::setup_order(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.setup_order)
   return setup_order_.Get(index);
 }
  ::std::string* scenario_t::mutable_setup_order(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.setup_order)
   return setup_order_.Mutable(index);
 }
  void scenario_t::set_setup_order(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.setup_order)
   setup_order_.Mutable(index)->assign(value);
 }
  void scenario_t::set_setup_order(int index, const char* value) {
   setup_order_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.setup_order)
 }
  void scenario_t::set_setup_order(int index, const char* value, size_t size) {
   setup_order_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.setup_order)
 }
  ::std::string* scenario_t::add_setup_order() {
   return setup_order_.Add();
 }
  void scenario_t::add_setup_order(const ::std::string& value) {
   setup_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.setup_order)
 }
  void scenario_t::add_setup_order(const char* value) {
   setup_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.setup_order)
 }
  void scenario_t::add_setup_order(const char* value, size_t size) {
   setup_order_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.setup_order)
 }
  const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t::setup_order() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.setup_order)
   return setup_order_;
 }
  ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t::mutable_setup_order() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.setup_order)
   return &setup_order_;
 }
 
-// map<string, .message.scenario_t.nation_t> nations = 9;
+// map<string, .pb_message.scenario_t.nation_t> nations = 9;
 int scenario_t::nations_size() const {
   return nations_.size();
 }
 void scenario_t::clear_nations() {
   nations_.Clear();
 }
- const ::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >&
+ const ::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >&
 scenario_t::nations() const {
-  // @@protoc_insertion_point(field_map:message.scenario_t.nations)
+  // @@protoc_insertion_point(field_map:pb_message.scenario_t.nations)
   return nations_.GetMap();
 }
- ::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >*
+ ::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >*
 scenario_t::mutable_nations() {
-  // @@protoc_insertion_point(field_mutable_map:message.scenario_t.nations)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.scenario_t.nations)
   return nations_.MutableMap();
 }
 
-// repeated .message.scenario_turn_t turns = 10;
+// repeated .pb_message.scenario_turn_t turns = 10;
 int scenario_t::turns_size() const {
   return turns_.size();
 }
 void scenario_t::clear_turns() {
   turns_.Clear();
 }
-const ::message::scenario_turn_t& scenario_t::turns(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.turns)
+const ::pb_message::scenario_turn_t& scenario_t::turns(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.turns)
   return turns_.Get(index);
 }
-::message::scenario_turn_t* scenario_t::mutable_turns(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.turns)
+::pb_message::scenario_turn_t* scenario_t::mutable_turns(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.turns)
   return turns_.Mutable(index);
 }
-::message::scenario_turn_t* scenario_t::add_turns() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.turns)
+::pb_message::scenario_turn_t* scenario_t::add_turns() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.turns)
   return turns_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t >*
 scenario_t::mutable_turns() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.turns)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.turns)
   return &turns_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t >&
 scenario_t::turns() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.turns)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.turns)
   return turns_;
 }
 
@@ -16664,6 +16669,6 @@ scenario_t::turns() const {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace message
+}  // namespace pb_message
 
 // @@protoc_insertion_point(global_scope)

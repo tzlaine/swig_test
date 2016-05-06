@@ -41,8 +41,8 @@ namespace visual_config {
 
 } 
 
-    message::visual_config::color_t to_protobuf (const visual_config::color_t& value);
-    visual_config::color_t from_protobuf (const message::visual_config::color_t& msg);
+    pb_message::visual_config::color_t to_protobuf (const visual_config::color_t& value);
+    visual_config::color_t from_protobuf (const pb_message::visual_config::color_t& msg);
 
-    message::visual_config::hex_map_t to_protobuf (const visual_config::hex_map_t& value);
-    visual_config::hex_map_t from_protobuf (const message::visual_config::hex_map_t& msg);
+    pb_message::visual_config::hex_map_t to_protobuf (const visual_config::hex_map_t& value);
+    visual_config::hex_map_t from_protobuf (const pb_message::visual_config::hex_map_t& msg);

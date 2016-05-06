@@ -50,7 +50,7 @@ void start_data_t::init_nations (std::string const & nations_str)
     assert(nations_str != "");
 
     {
-        message::nations_t nations_msg;
+        pb_message::nations_t nations_msg;
         json2pb(nations_msg, nations_str, map_encoding_t::compact);
         nations_ = from_protobuf(nations_msg);
         validate_nations(nations_);
@@ -65,7 +65,7 @@ void start_data_t::init_unit_defs (std::string const & unit_defs_str)
     assert(unit_defs_str != "");
 
     {
-        message::unit_defs_t unit_defs_msg;
+        pb_message::unit_defs_t unit_defs_msg;
         json2pb(unit_defs_msg, unit_defs_str, map_encoding_t::compact);
         unit_defs_ = from_protobuf(unit_defs_msg);
         validate_unit_defs(unit_defs_);
@@ -78,7 +78,7 @@ void start_data_t::parse_scenario_message (std::string const & scenario_str)
 {
     assert(scenario_str != "");
 
-    message::scenario_t scenario_msg;
+    pb_message::scenario_t scenario_msg;
     json2pb(scenario_msg, scenario_str, map_encoding_t::compact);
     scenario_ = from_protobuf(scenario_msg);
     validate_scenario(scenario_, nations_);
@@ -89,7 +89,7 @@ void start_data_t::init_map (std::string const & map_str)
     assert(map_str != "");
 
     {
-        message::map_t map_msg;
+        pb_message::map_t map_msg;
         json2pb(map_msg, map_str, map_encoding_t::compact);
         map_ = from_protobuf(map_msg);
         validate_and_fill_in_map_hexes(map_, nations_);
@@ -109,7 +109,7 @@ void start_data_t::init_oob (std::string const & oob_str)
     assert(oob_str != "");
 
     {
-        message::orders_of_battle_t oob_msg;
+        pb_message::orders_of_battle_t oob_msg;
         json2pb(oob_msg, oob_str, map_encoding_t::compact);
         oob_ = from_protobuf(oob_msg);
         validate_and_fill_in_unit_times(oob_, map_, nations_, unit_defs_);

@@ -18,23 +18,24 @@ enum class season_t {
 };
 
 enum class tug_mission_t {
-    A = 0,
-    B = 1,
-    C = 2,
-    D = 3,
-    E = 4,
-    F = 5,
-    G = 6,
-    H = 7,
-    I = 8,
-    J1 = 9,
-    J2 = 10,
-    K1 = 11,
-    K2 = 12,
-    L = 13,
-    M = 14,
-    N = 15,
-    O = 16,
+    no_mission = 0,
+    A = 1,
+    B = 2,
+    C = 3,
+    D = 4,
+    E = 5,
+    F = 6,
+    G = 7,
+    H = 8,
+    I = 9,
+    J1 = 10,
+    J2 = 11,
+    K1 = 12,
+    K2 = 13,
+    L = 14,
+    M = 15,
+    N = 16,
+    O = 17,
 };
 
 enum class carrier_type_t {
@@ -71,8 +72,8 @@ struct hex_coord_t
 
 
 
-message::turn_t to_protobuf (const ::turn_t& value);
-::turn_t from_protobuf (const message::turn_t& msg);
+pb_message::turn_t to_protobuf (const ::turn_t& value);
+::turn_t from_protobuf (const pb_message::turn_t& msg);
 
-message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
-::hex_coord_t from_protobuf (const message::hex_coord_t& msg);
+pb_message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
+::hex_coord_t from_protobuf (const pb_message::hex_coord_t& msg);

@@ -33,7 +33,7 @@
 #include "base_types.pb.h"
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 namespace game_data {
 
 // Internal implementation detail -- do not call these.
@@ -172,7 +172,13 @@ class unit_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 original_owner() const;
   void set_original_owner(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.game_data.unit_t)
+  // optional .pb_message.tug_mission_t tug_mission = 4;
+  void clear_tug_mission();
+  static const int kTugMissionFieldNumber = 4;
+  ::pb_message::tug_mission_t tug_mission() const;
+  void set_tug_mission(::pb_message::tug_mission_t value);
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.unit_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -180,6 +186,7 @@ class unit_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 unit_id_;
   ::google::protobuf::int32 owner_;
   ::google::protobuf::int32 original_owner_;
+  int tug_mission_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -246,24 +253,24 @@ class fleet_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.game_data.unit_t units = 1;
+  // repeated .pb_message.game_data.unit_t units = 1;
   int units_size() const;
   void clear_units();
   static const int kUnitsFieldNumber = 1;
-  const ::message::game_data::unit_t& units(int index) const;
-  ::message::game_data::unit_t* mutable_units(int index);
-  ::message::game_data::unit_t* add_units();
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t >*
+  const ::pb_message::game_data::unit_t& units(int index) const;
+  ::pb_message::game_data::unit_t* mutable_units(int index);
+  ::pb_message::game_data::unit_t* add_units();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t >*
       mutable_units();
-  const ::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t >&
       units() const;
 
-  // @@protoc_insertion_point(class_scope:message.game_data.fleet_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.fleet_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t > units_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t > units_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -331,28 +338,28 @@ class fleets_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<int32, .message.game_data.fleet_t> fleets = 1;
+  // map<int32, .pb_message.game_data.fleet_t> fleets = 1;
   int fleets_size() const;
   void clear_fleets();
   static const int kFleetsFieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >&
+  const ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >&
       fleets() const;
-  ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >*
+  ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >*
       mutable_fleets();
 
-  // @@protoc_insertion_point(class_scope:message.game_data.fleets_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.fleets_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::int32, ::message::game_data::fleet_t,
+      ::google::protobuf::int32, ::pb_message::game_data::fleet_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       fleets_t_FleetsEntry;
   ::google::protobuf::internal::MapField<
-      ::google::protobuf::int32, ::message::game_data::fleet_t,
+      ::google::protobuf::int32, ::pb_message::game_data::fleet_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > fleets_;
@@ -459,29 +466,29 @@ class planet_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 original_owner() const;
   void set_original_owner(::google::protobuf::int32 value);
 
-  // optional .message.game_data.planet_t.type_t type = 3;
+  // optional .pb_message.game_data.planet_t.type_t type = 3;
   void clear_type();
   static const int kTypeFieldNumber = 3;
-  ::message::game_data::planet_t_type_t type() const;
-  void set_type(::message::game_data::planet_t_type_t value);
+  ::pb_message::game_data::planet_t_type_t type() const;
+  void set_type(::pb_message::game_data::planet_t_type_t value);
 
-  // optional .message.game_data.fleets_t units = 4;
+  // optional .pb_message.game_data.fleets_t units = 4;
   bool has_units() const;
   void clear_units();
   static const int kUnitsFieldNumber = 4;
-  const ::message::game_data::fleets_t& units() const;
-  ::message::game_data::fleets_t* mutable_units();
-  ::message::game_data::fleets_t* release_units();
-  void set_allocated_units(::message::game_data::fleets_t* units);
+  const ::pb_message::game_data::fleets_t& units() const;
+  ::pb_message::game_data::fleets_t* mutable_units();
+  ::pb_message::game_data::fleets_t* release_units();
+  void set_allocated_units(::pb_message::game_data::fleets_t* units);
 
-  // @@protoc_insertion_point(class_scope:message.game_data.planet_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.planet_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::int32 owner_;
   ::google::protobuf::int32 original_owner_;
-  ::message::game_data::fleets_t* units_;
+  ::pb_message::game_data::fleets_t* units_;
   int type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
@@ -573,37 +580,37 @@ class hex_zone_fixture_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+  // optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
   void clear_type();
   static const int kTypeFieldNumber = 1;
-  ::message::game_data::hex_zone_fixture_t_type_t type() const;
-  void set_type(::message::game_data::hex_zone_fixture_t_type_t value);
+  ::pb_message::game_data::hex_zone_fixture_t_type_t type() const;
+  void set_type(::pb_message::game_data::hex_zone_fixture_t_type_t value);
 
-  // optional .message.game_data.unit_t base = 2;
+  // optional .pb_message.game_data.unit_t base = 2;
   bool has_base() const;
   void clear_base();
   static const int kBaseFieldNumber = 2;
-  const ::message::game_data::unit_t& base() const;
-  ::message::game_data::unit_t* mutable_base();
-  ::message::game_data::unit_t* release_base();
-  void set_allocated_base(::message::game_data::unit_t* base);
+  const ::pb_message::game_data::unit_t& base() const;
+  ::pb_message::game_data::unit_t* mutable_base();
+  ::pb_message::game_data::unit_t* release_base();
+  void set_allocated_base(::pb_message::game_data::unit_t* base);
 
-  // optional .message.game_data.planet_t planet = 3;
+  // optional .pb_message.game_data.planet_t planet = 3;
   bool has_planet() const;
   void clear_planet();
   static const int kPlanetFieldNumber = 3;
-  const ::message::game_data::planet_t& planet() const;
-  ::message::game_data::planet_t* mutable_planet();
-  ::message::game_data::planet_t* release_planet();
-  void set_allocated_planet(::message::game_data::planet_t* planet);
+  const ::pb_message::game_data::planet_t& planet() const;
+  ::pb_message::game_data::planet_t* mutable_planet();
+  ::pb_message::game_data::planet_t* release_planet();
+  void set_allocated_planet(::pb_message::game_data::planet_t* planet);
 
-  // @@protoc_insertion_point(class_scope:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.hex_zone_fixture_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::message::game_data::unit_t* base_;
-  ::message::game_data::planet_t* planet_;
+  ::pb_message::game_data::unit_t* base_;
+  ::pb_message::game_data::planet_t* planet_;
   int type_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
@@ -682,25 +689,25 @@ class hex_zone_t : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+  // repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
   int fixtures_size() const;
   void clear_fixtures();
   static const int kFixturesFieldNumber = 2;
-  const ::message::game_data::hex_zone_fixture_t& fixtures(int index) const;
-  ::message::game_data::hex_zone_fixture_t* mutable_fixtures(int index);
-  ::message::game_data::hex_zone_fixture_t* add_fixtures();
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t >*
+  const ::pb_message::game_data::hex_zone_fixture_t& fixtures(int index) const;
+  ::pb_message::game_data::hex_zone_fixture_t* mutable_fixtures(int index);
+  ::pb_message::game_data::hex_zone_fixture_t* add_fixtures();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t >*
       mutable_fixtures();
-  const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t >&
       fixtures() const;
 
-  // @@protoc_insertion_point(class_scope:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.hex_zone_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t > fixtures_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t > fixtures_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -767,14 +774,14 @@ class hex_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .message.hex_coord_t coord = 1;
+  // optional .pb_message.hex_coord_t coord = 1;
   bool has_coord() const;
   void clear_coord();
   static const int kCoordFieldNumber = 1;
-  const ::message::hex_coord_t& coord() const;
-  ::message::hex_coord_t* mutable_coord();
-  ::message::hex_coord_t* release_coord();
-  void set_allocated_coord(::message::hex_coord_t* coord);
+  const ::pb_message::hex_coord_t& coord() const;
+  ::pb_message::hex_coord_t* mutable_coord();
+  ::pb_message::hex_coord_t* release_coord();
+  void set_allocated_coord(::pb_message::hex_coord_t* coord);
 
   // optional int32 province_id = 2;
   void clear_province_id();
@@ -782,35 +789,35 @@ class hex_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 province_id() const;
   void set_province_id(::google::protobuf::int32 value);
 
-  // repeated .message.game_data.hex_zone_t zones = 4;
+  // repeated .pb_message.game_data.hex_zone_t zones = 4;
   int zones_size() const;
   void clear_zones();
   static const int kZonesFieldNumber = 4;
-  const ::message::game_data::hex_zone_t& zones(int index) const;
-  ::message::game_data::hex_zone_t* mutable_zones(int index);
-  ::message::game_data::hex_zone_t* add_zones();
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >*
+  const ::pb_message::game_data::hex_zone_t& zones(int index) const;
+  ::pb_message::game_data::hex_zone_t* mutable_zones(int index);
+  ::pb_message::game_data::hex_zone_t* add_zones();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t >*
       mutable_zones();
-  const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t >&
       zones() const;
 
-  // optional .message.game_data.fleets_t fleets = 5;
+  // optional .pb_message.game_data.fleets_t fleets = 5;
   bool has_fleets() const;
   void clear_fleets();
   static const int kFleetsFieldNumber = 5;
-  const ::message::game_data::fleets_t& fleets() const;
-  ::message::game_data::fleets_t* mutable_fleets();
-  ::message::game_data::fleets_t* release_fleets();
-  void set_allocated_fleets(::message::game_data::fleets_t* fleets);
+  const ::pb_message::game_data::fleets_t& fleets() const;
+  ::pb_message::game_data::fleets_t* mutable_fleets();
+  ::pb_message::game_data::fleets_t* release_fleets();
+  void set_allocated_fleets(::pb_message::game_data::fleets_t* fleets);
 
-  // @@protoc_insertion_point(class_scope:message.game_data.hex_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.hex_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::message::hex_coord_t* coord_;
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t > zones_;
-  ::message::game_data::fleets_t* fleets_;
+  ::pb_message::hex_coord_t* coord_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t > zones_;
+  ::pb_message::game_data::fleets_t* fleets_;
   ::google::protobuf::int32 province_id_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
@@ -896,7 +903,7 @@ class province_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 original_owner() const;
   void set_original_owner(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.game_data.province_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.province_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -982,39 +989,39 @@ class map_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 height() const;
   void set_height(::google::protobuf::int32 value);
 
-  // repeated .message.game_data.hex_t hexes = 3;
+  // repeated .pb_message.game_data.hex_t hexes = 3;
   int hexes_size() const;
   void clear_hexes();
   static const int kHexesFieldNumber = 3;
-  const ::message::game_data::hex_t& hexes(int index) const;
-  ::message::game_data::hex_t* mutable_hexes(int index);
-  ::message::game_data::hex_t* add_hexes();
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >*
+  const ::pb_message::game_data::hex_t& hexes(int index) const;
+  ::pb_message::game_data::hex_t* mutable_hexes(int index);
+  ::pb_message::game_data::hex_t* add_hexes();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t >*
       mutable_hexes();
-  const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t >&
       hexes() const;
 
-  // repeated .message.game_data.province_t provinces = 4;
+  // repeated .pb_message.game_data.province_t provinces = 4;
   int provinces_size() const;
   void clear_provinces();
   static const int kProvincesFieldNumber = 4;
-  const ::message::game_data::province_t& provinces(int index) const;
-  ::message::game_data::province_t* mutable_provinces(int index);
-  ::message::game_data::province_t* add_provinces();
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >*
+  const ::pb_message::game_data::province_t& provinces(int index) const;
+  ::pb_message::game_data::province_t* mutable_provinces(int index);
+  ::pb_message::game_data::province_t* add_provinces();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t >*
       mutable_provinces();
-  const ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t >&
       provinces() const;
 
-  // @@protoc_insertion_point(class_scope:message.game_data.map_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.map_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::int32 width_;
   ::google::protobuf::int32 height_;
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t > hexes_;
-  ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t > provinces_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t > hexes_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t > provinces_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
   friend void protobuf_AssignDesc_game_5fdata_2eproto();
@@ -1087,21 +1094,21 @@ class offmap_area_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 owner() const;
   void set_owner(::google::protobuf::int32 value);
 
-  // optional .message.game_data.fleets_t fleets = 2;
+  // optional .pb_message.game_data.fleets_t fleets = 2;
   bool has_fleets() const;
   void clear_fleets();
   static const int kFleetsFieldNumber = 2;
-  const ::message::game_data::fleets_t& fleets() const;
-  ::message::game_data::fleets_t* mutable_fleets();
-  ::message::game_data::fleets_t* release_fleets();
-  void set_allocated_fleets(::message::game_data::fleets_t* fleets);
+  const ::pb_message::game_data::fleets_t& fleets() const;
+  ::pb_message::game_data::fleets_t* mutable_fleets();
+  ::pb_message::game_data::fleets_t* release_fleets();
+  void set_allocated_fleets(::pb_message::game_data::fleets_t* fleets);
 
-  // @@protoc_insertion_point(class_scope:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.offmap_area_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::message::game_data::fleets_t* fleets_;
+  ::pb_message::game_data::fleets_t* fleets_;
   ::google::protobuf::int32 owner_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_game_5fdata_2eproto();
@@ -1170,28 +1177,28 @@ class offmap_areas_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<int32, .message.game_data.offmap_area_t> areas = 1;
+  // map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
   int areas_size() const;
   void clear_areas();
   static const int kAreasFieldNumber = 1;
-  const ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >&
+  const ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >&
       areas() const;
-  ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >*
+  ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >*
       mutable_areas();
 
-  // @@protoc_insertion_point(class_scope:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.offmap_areas_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::int32, ::message::game_data::offmap_area_t,
+      ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       offmap_areas_t_AreasEntry;
   ::google::protobuf::internal::MapField<
-      ::google::protobuf::int32, ::message::game_data::offmap_area_t,
+      ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > areas_;
@@ -1216,13 +1223,13 @@ inline void unit_t::clear_unit_id() {
   unit_id_ = 0;
 }
 inline ::google::protobuf::int32 unit_t::unit_id() const {
-  // @@protoc_insertion_point(field_get:message.game_data.unit_t.unit_id)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.unit_id)
   return unit_id_;
 }
 inline void unit_t::set_unit_id(::google::protobuf::int32 value) {
   
   unit_id_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.unit_t.unit_id)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.unit_id)
 }
 
 // optional int32 owner = 2;
@@ -1230,13 +1237,13 @@ inline void unit_t::clear_owner() {
   owner_ = 0;
 }
 inline ::google::protobuf::int32 unit_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.unit_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.owner)
   return owner_;
 }
 inline void unit_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.unit_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.owner)
 }
 
 // optional int32 original_owner = 3;
@@ -1244,46 +1251,60 @@ inline void unit_t::clear_original_owner() {
   original_owner_ = 0;
 }
 inline ::google::protobuf::int32 unit_t::original_owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.unit_t.original_owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.original_owner)
   return original_owner_;
 }
 inline void unit_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.unit_t.original_owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.original_owner)
+}
+
+// optional .pb_message.tug_mission_t tug_mission = 4;
+inline void unit_t::clear_tug_mission() {
+  tug_mission_ = 0;
+}
+inline ::pb_message::tug_mission_t unit_t::tug_mission() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.tug_mission)
+  return static_cast< ::pb_message::tug_mission_t >(tug_mission_);
+}
+inline void unit_t::set_tug_mission(::pb_message::tug_mission_t value) {
+  
+  tug_mission_ = value;
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.tug_mission)
 }
 
 // -------------------------------------------------------------------
 
 // fleet_t
 
-// repeated .message.game_data.unit_t units = 1;
+// repeated .pb_message.game_data.unit_t units = 1;
 inline int fleet_t::units_size() const {
   return units_.size();
 }
 inline void fleet_t::clear_units() {
   units_.Clear();
 }
-inline const ::message::game_data::unit_t& fleet_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.fleet_t.units)
+inline const ::pb_message::game_data::unit_t& fleet_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.fleet_t.units)
   return units_.Get(index);
 }
-inline ::message::game_data::unit_t* fleet_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.fleet_t.units)
+inline ::pb_message::game_data::unit_t* fleet_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.fleet_t.units)
   return units_.Mutable(index);
 }
-inline ::message::game_data::unit_t* fleet_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.game_data.fleet_t.units)
+inline ::pb_message::game_data::unit_t* fleet_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.fleet_t.units)
   return units_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t >*
 fleet_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.fleet_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.fleet_t.units)
   return &units_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t >&
 fleet_t::units() const {
-  // @@protoc_insertion_point(field_list:message.game_data.fleet_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.fleet_t.units)
   return units_;
 }
 
@@ -1291,21 +1312,21 @@ fleet_t::units() const {
 
 // fleets_t
 
-// map<int32, .message.game_data.fleet_t> fleets = 1;
+// map<int32, .pb_message.game_data.fleet_t> fleets = 1;
 inline int fleets_t::fleets_size() const {
   return fleets_.size();
 }
 inline void fleets_t::clear_fleets() {
   fleets_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >&
+inline const ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >&
 fleets_t::fleets() const {
-  // @@protoc_insertion_point(field_map:message.game_data.fleets_t.fleets)
+  // @@protoc_insertion_point(field_map:pb_message.game_data.fleets_t.fleets)
   return fleets_.GetMap();
 }
-inline ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >*
+inline ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >*
 fleets_t::mutable_fleets() {
-  // @@protoc_insertion_point(field_mutable_map:message.game_data.fleets_t.fleets)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.fleets_t.fleets)
   return fleets_.MutableMap();
 }
 
@@ -1318,13 +1339,13 @@ inline void planet_t::clear_owner() {
   owner_ = 0;
 }
 inline ::google::protobuf::int32 planet_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.owner)
   return owner_;
 }
 inline void planet_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.planet_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
 // optional int32 original_owner = 2;
@@ -1332,30 +1353,30 @@ inline void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
 inline ::google::protobuf::int32 planet_t::original_owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.original_owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.original_owner)
   return original_owner_;
 }
 inline void planet_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.planet_t.original_owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// optional .message.game_data.planet_t.type_t type = 3;
+// optional .pb_message.game_data.planet_t.type_t type = 3;
 inline void planet_t::clear_type() {
   type_ = 0;
 }
-inline ::message::game_data::planet_t_type_t planet_t::type() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.type)
-  return static_cast< ::message::game_data::planet_t_type_t >(type_);
+inline ::pb_message::game_data::planet_t_type_t planet_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.type)
+  return static_cast< ::pb_message::game_data::planet_t_type_t >(type_);
 }
-inline void planet_t::set_type(::message::game_data::planet_t_type_t value) {
+inline void planet_t::set_type(::pb_message::game_data::planet_t_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.planet_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.type)
 }
 
-// optional .message.game_data.fleets_t units = 4;
+// optional .pb_message.game_data.fleets_t units = 4;
 inline bool planet_t::has_units() const {
   return !_is_default_instance_ && units_ != NULL;
 }
@@ -1363,25 +1384,25 @@ inline void planet_t::clear_units() {
   if (GetArenaNoVirtual() == NULL && units_ != NULL) delete units_;
   units_ = NULL;
 }
-inline const ::message::game_data::fleets_t& planet_t::units() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.units)
+inline const ::pb_message::game_data::fleets_t& planet_t::units() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.units)
   return units_ != NULL ? *units_ : *default_instance_->units_;
 }
-inline ::message::game_data::fleets_t* planet_t::mutable_units() {
+inline ::pb_message::game_data::fleets_t* planet_t::mutable_units() {
   
   if (units_ == NULL) {
-    units_ = new ::message::game_data::fleets_t;
+    units_ = new ::pb_message::game_data::fleets_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.planet_t.units)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.planet_t.units)
   return units_;
 }
-inline ::message::game_data::fleets_t* planet_t::release_units() {
+inline ::pb_message::game_data::fleets_t* planet_t::release_units() {
   
-  ::message::game_data::fleets_t* temp = units_;
+  ::pb_message::game_data::fleets_t* temp = units_;
   units_ = NULL;
   return temp;
 }
-inline void planet_t::set_allocated_units(::message::game_data::fleets_t* units) {
+inline void planet_t::set_allocated_units(::pb_message::game_data::fleets_t* units) {
   delete units_;
   units_ = units;
   if (units) {
@@ -1389,28 +1410,28 @@ inline void planet_t::set_allocated_units(::message::game_data::fleets_t* units)
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.planet_t.units)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_t.units)
 }
 
 // -------------------------------------------------------------------
 
 // hex_zone_fixture_t
 
-// optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+// optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
 inline void hex_zone_fixture_t::clear_type() {
   type_ = 0;
 }
-inline ::message::game_data::hex_zone_fixture_t_type_t hex_zone_fixture_t::type() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_fixture_t.type)
-  return static_cast< ::message::game_data::hex_zone_fixture_t_type_t >(type_);
+inline ::pb_message::game_data::hex_zone_fixture_t_type_t hex_zone_fixture_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_fixture_t.type)
+  return static_cast< ::pb_message::game_data::hex_zone_fixture_t_type_t >(type_);
 }
-inline void hex_zone_fixture_t::set_type(::message::game_data::hex_zone_fixture_t_type_t value) {
+inline void hex_zone_fixture_t::set_type(::pb_message::game_data::hex_zone_fixture_t_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.hex_zone_fixture_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_zone_fixture_t.type)
 }
 
-// optional .message.game_data.unit_t base = 2;
+// optional .pb_message.game_data.unit_t base = 2;
 inline bool hex_zone_fixture_t::has_base() const {
   return !_is_default_instance_ && base_ != NULL;
 }
@@ -1418,25 +1439,25 @@ inline void hex_zone_fixture_t::clear_base() {
   if (GetArenaNoVirtual() == NULL && base_ != NULL) delete base_;
   base_ = NULL;
 }
-inline const ::message::game_data::unit_t& hex_zone_fixture_t::base() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_fixture_t.base)
+inline const ::pb_message::game_data::unit_t& hex_zone_fixture_t::base() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_fixture_t.base)
   return base_ != NULL ? *base_ : *default_instance_->base_;
 }
-inline ::message::game_data::unit_t* hex_zone_fixture_t::mutable_base() {
+inline ::pb_message::game_data::unit_t* hex_zone_fixture_t::mutable_base() {
   
   if (base_ == NULL) {
-    base_ = new ::message::game_data::unit_t;
+    base_ = new ::pb_message::game_data::unit_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_fixture_t.base)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_fixture_t.base)
   return base_;
 }
-inline ::message::game_data::unit_t* hex_zone_fixture_t::release_base() {
+inline ::pb_message::game_data::unit_t* hex_zone_fixture_t::release_base() {
   
-  ::message::game_data::unit_t* temp = base_;
+  ::pb_message::game_data::unit_t* temp = base_;
   base_ = NULL;
   return temp;
 }
-inline void hex_zone_fixture_t::set_allocated_base(::message::game_data::unit_t* base) {
+inline void hex_zone_fixture_t::set_allocated_base(::pb_message::game_data::unit_t* base) {
   delete base_;
   base_ = base;
   if (base) {
@@ -1444,10 +1465,10 @@ inline void hex_zone_fixture_t::set_allocated_base(::message::game_data::unit_t*
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_zone_fixture_t.base)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_zone_fixture_t.base)
 }
 
-// optional .message.game_data.planet_t planet = 3;
+// optional .pb_message.game_data.planet_t planet = 3;
 inline bool hex_zone_fixture_t::has_planet() const {
   return !_is_default_instance_ && planet_ != NULL;
 }
@@ -1455,25 +1476,25 @@ inline void hex_zone_fixture_t::clear_planet() {
   if (GetArenaNoVirtual() == NULL && planet_ != NULL) delete planet_;
   planet_ = NULL;
 }
-inline const ::message::game_data::planet_t& hex_zone_fixture_t::planet() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_fixture_t.planet)
+inline const ::pb_message::game_data::planet_t& hex_zone_fixture_t::planet() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_fixture_t.planet)
   return planet_ != NULL ? *planet_ : *default_instance_->planet_;
 }
-inline ::message::game_data::planet_t* hex_zone_fixture_t::mutable_planet() {
+inline ::pb_message::game_data::planet_t* hex_zone_fixture_t::mutable_planet() {
   
   if (planet_ == NULL) {
-    planet_ = new ::message::game_data::planet_t;
+    planet_ = new ::pb_message::game_data::planet_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_fixture_t.planet)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_fixture_t.planet)
   return planet_;
 }
-inline ::message::game_data::planet_t* hex_zone_fixture_t::release_planet() {
+inline ::pb_message::game_data::planet_t* hex_zone_fixture_t::release_planet() {
   
-  ::message::game_data::planet_t* temp = planet_;
+  ::pb_message::game_data::planet_t* temp = planet_;
   planet_ = NULL;
   return temp;
 }
-inline void hex_zone_fixture_t::set_allocated_planet(::message::game_data::planet_t* planet) {
+inline void hex_zone_fixture_t::set_allocated_planet(::pb_message::game_data::planet_t* planet) {
   delete planet_;
   planet_ = planet;
   if (planet) {
@@ -1481,7 +1502,7 @@ inline void hex_zone_fixture_t::set_allocated_planet(::message::game_data::plane
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_zone_fixture_t.planet)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_zone_fixture_t.planet)
 }
 
 // -------------------------------------------------------------------
@@ -1493,28 +1514,28 @@ inline void hex_zone_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& hex_zone_t::name() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void hex_zone_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_zone_t.name)
 }
 inline void hex_zone_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.game_data.hex_zone_t.name)
 }
 inline void hex_zone_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.game_data.hex_zone_t.name)
 }
 inline ::std::string* hex_zone_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* hex_zone_t::release_name() {
@@ -1528,36 +1549,36 @@ inline void hex_zone_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_zone_t.name)
 }
 
-// repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+// repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
 inline int hex_zone_t::fixtures_size() const {
   return fixtures_.size();
 }
 inline void hex_zone_t::clear_fixtures() {
   fixtures_.Clear();
 }
-inline const ::message::game_data::hex_zone_fixture_t& hex_zone_t::fixtures(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_t.fixtures)
+inline const ::pb_message::game_data::hex_zone_fixture_t& hex_zone_t::fixtures(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_.Get(index);
 }
-inline ::message::game_data::hex_zone_fixture_t* hex_zone_t::mutable_fixtures(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_t.fixtures)
+inline ::pb_message::game_data::hex_zone_fixture_t* hex_zone_t::mutable_fixtures(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_.Mutable(index);
 }
-inline ::message::game_data::hex_zone_fixture_t* hex_zone_t::add_fixtures() {
-  // @@protoc_insertion_point(field_add:message.game_data.hex_zone_t.fixtures)
+inline ::pb_message::game_data::hex_zone_fixture_t* hex_zone_t::add_fixtures() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t >*
 hex_zone_t::mutable_fixtures() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.hex_zone_t.fixtures)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.hex_zone_t.fixtures)
   return &fixtures_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t >&
 hex_zone_t::fixtures() const {
-  // @@protoc_insertion_point(field_list:message.game_data.hex_zone_t.fixtures)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_;
 }
 
@@ -1565,7 +1586,7 @@ hex_zone_t::fixtures() const {
 
 // hex_t
 
-// optional .message.hex_coord_t coord = 1;
+// optional .pb_message.hex_coord_t coord = 1;
 inline bool hex_t::has_coord() const {
   return !_is_default_instance_ && coord_ != NULL;
 }
@@ -1573,25 +1594,25 @@ inline void hex_t::clear_coord() {
   if (GetArenaNoVirtual() == NULL && coord_ != NULL) delete coord_;
   coord_ = NULL;
 }
-inline const ::message::hex_coord_t& hex_t::coord() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.coord)
+inline const ::pb_message::hex_coord_t& hex_t::coord() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.coord)
   return coord_ != NULL ? *coord_ : *default_instance_->coord_;
 }
-inline ::message::hex_coord_t* hex_t::mutable_coord() {
+inline ::pb_message::hex_coord_t* hex_t::mutable_coord() {
   
   if (coord_ == NULL) {
-    coord_ = new ::message::hex_coord_t;
+    coord_ = new ::pb_message::hex_coord_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.coord)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.coord)
   return coord_;
 }
-inline ::message::hex_coord_t* hex_t::release_coord() {
+inline ::pb_message::hex_coord_t* hex_t::release_coord() {
   
-  ::message::hex_coord_t* temp = coord_;
+  ::pb_message::hex_coord_t* temp = coord_;
   coord_ = NULL;
   return temp;
 }
-inline void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
+inline void hex_t::set_allocated_coord(::pb_message::hex_coord_t* coord) {
   delete coord_;
   coord_ = coord;
   if (coord) {
@@ -1599,7 +1620,7 @@ inline void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_t.coord)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_t.coord)
 }
 
 // optional int32 province_id = 2;
@@ -1607,46 +1628,46 @@ inline void hex_t::clear_province_id() {
   province_id_ = 0;
 }
 inline ::google::protobuf::int32 hex_t::province_id() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.province_id)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.province_id)
   return province_id_;
 }
 inline void hex_t::set_province_id(::google::protobuf::int32 value) {
   
   province_id_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.hex_t.province_id)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.province_id)
 }
 
-// repeated .message.game_data.hex_zone_t zones = 4;
+// repeated .pb_message.game_data.hex_zone_t zones = 4;
 inline int hex_t::zones_size() const {
   return zones_.size();
 }
 inline void hex_t::clear_zones() {
   zones_.Clear();
 }
-inline const ::message::game_data::hex_zone_t& hex_t::zones(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.zones)
+inline const ::pb_message::game_data::hex_zone_t& hex_t::zones(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.zones)
   return zones_.Get(index);
 }
-inline ::message::game_data::hex_zone_t* hex_t::mutable_zones(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.zones)
+inline ::pb_message::game_data::hex_zone_t* hex_t::mutable_zones(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.zones)
   return zones_.Mutable(index);
 }
-inline ::message::game_data::hex_zone_t* hex_t::add_zones() {
-  // @@protoc_insertion_point(field_add:message.game_data.hex_t.zones)
+inline ::pb_message::game_data::hex_zone_t* hex_t::add_zones() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.hex_t.zones)
   return zones_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t >*
 hex_t::mutable_zones() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.hex_t.zones)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.hex_t.zones)
   return &zones_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t >&
 hex_t::zones() const {
-  // @@protoc_insertion_point(field_list:message.game_data.hex_t.zones)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.hex_t.zones)
   return zones_;
 }
 
-// optional .message.game_data.fleets_t fleets = 5;
+// optional .pb_message.game_data.fleets_t fleets = 5;
 inline bool hex_t::has_fleets() const {
   return !_is_default_instance_ && fleets_ != NULL;
 }
@@ -1654,25 +1675,25 @@ inline void hex_t::clear_fleets() {
   if (GetArenaNoVirtual() == NULL && fleets_ != NULL) delete fleets_;
   fleets_ = NULL;
 }
-inline const ::message::game_data::fleets_t& hex_t::fleets() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.fleets)
+inline const ::pb_message::game_data::fleets_t& hex_t::fleets() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.fleets)
   return fleets_ != NULL ? *fleets_ : *default_instance_->fleets_;
 }
-inline ::message::game_data::fleets_t* hex_t::mutable_fleets() {
+inline ::pb_message::game_data::fleets_t* hex_t::mutable_fleets() {
   
   if (fleets_ == NULL) {
-    fleets_ = new ::message::game_data::fleets_t;
+    fleets_ = new ::pb_message::game_data::fleets_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.fleets)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.fleets)
   return fleets_;
 }
-inline ::message::game_data::fleets_t* hex_t::release_fleets() {
+inline ::pb_message::game_data::fleets_t* hex_t::release_fleets() {
   
-  ::message::game_data::fleets_t* temp = fleets_;
+  ::pb_message::game_data::fleets_t* temp = fleets_;
   fleets_ = NULL;
   return temp;
 }
-inline void hex_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) {
+inline void hex_t::set_allocated_fleets(::pb_message::game_data::fleets_t* fleets) {
   delete fleets_;
   fleets_ = fleets;
   if (fleets) {
@@ -1680,7 +1701,7 @@ inline void hex_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) 
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_t.fleets)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_t.fleets)
 }
 
 // -------------------------------------------------------------------
@@ -1692,13 +1713,13 @@ inline void province_t::clear_id() {
   id_ = 0;
 }
 inline ::google::protobuf::int32 province_t::id() const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.id)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.id)
   return id_;
 }
 inline void province_t::set_id(::google::protobuf::int32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.province_t.id)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.id)
 }
 
 // optional int32 owner = 2;
@@ -1706,13 +1727,13 @@ inline void province_t::clear_owner() {
   owner_ = 0;
 }
 inline ::google::protobuf::int32 province_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.owner)
   return owner_;
 }
 inline void province_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.province_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.owner)
 }
 
 // optional int32 original_owner = 3;
@@ -1720,13 +1741,13 @@ inline void province_t::clear_original_owner() {
   original_owner_ = 0;
 }
 inline ::google::protobuf::int32 province_t::original_owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.original_owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.original_owner)
   return original_owner_;
 }
 inline void province_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.province_t.original_owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.original_owner)
 }
 
 // -------------------------------------------------------------------
@@ -1738,13 +1759,13 @@ inline void map_t::clear_width() {
   width_ = 0;
 }
 inline ::google::protobuf::int32 map_t::width() const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.width)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.width)
   return width_;
 }
 inline void map_t::set_width(::google::protobuf::int32 value) {
   
   width_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.map_t.width)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.map_t.width)
 }
 
 // optional int32 height = 2;
@@ -1752,72 +1773,72 @@ inline void map_t::clear_height() {
   height_ = 0;
 }
 inline ::google::protobuf::int32 map_t::height() const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.height)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.height)
   return height_;
 }
 inline void map_t::set_height(::google::protobuf::int32 value) {
   
   height_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.map_t.height)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.map_t.height)
 }
 
-// repeated .message.game_data.hex_t hexes = 3;
+// repeated .pb_message.game_data.hex_t hexes = 3;
 inline int map_t::hexes_size() const {
   return hexes_.size();
 }
 inline void map_t::clear_hexes() {
   hexes_.Clear();
 }
-inline const ::message::game_data::hex_t& map_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.hexes)
+inline const ::pb_message::game_data::hex_t& map_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.hexes)
   return hexes_.Get(index);
 }
-inline ::message::game_data::hex_t* map_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.map_t.hexes)
+inline ::pb_message::game_data::hex_t* map_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.map_t.hexes)
   return hexes_.Mutable(index);
 }
-inline ::message::game_data::hex_t* map_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.game_data.map_t.hexes)
+inline ::pb_message::game_data::hex_t* map_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.map_t.hexes)
   return hexes_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t >*
 map_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.map_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.map_t.hexes)
   return &hexes_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t >&
 map_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.game_data.map_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.map_t.hexes)
   return hexes_;
 }
 
-// repeated .message.game_data.province_t provinces = 4;
+// repeated .pb_message.game_data.province_t provinces = 4;
 inline int map_t::provinces_size() const {
   return provinces_.size();
 }
 inline void map_t::clear_provinces() {
   provinces_.Clear();
 }
-inline const ::message::game_data::province_t& map_t::provinces(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.provinces)
+inline const ::pb_message::game_data::province_t& map_t::provinces(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.provinces)
   return provinces_.Get(index);
 }
-inline ::message::game_data::province_t* map_t::mutable_provinces(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.map_t.provinces)
+inline ::pb_message::game_data::province_t* map_t::mutable_provinces(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.map_t.provinces)
   return provinces_.Mutable(index);
 }
-inline ::message::game_data::province_t* map_t::add_provinces() {
-  // @@protoc_insertion_point(field_add:message.game_data.map_t.provinces)
+inline ::pb_message::game_data::province_t* map_t::add_provinces() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.map_t.provinces)
   return provinces_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t >*
 map_t::mutable_provinces() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.map_t.provinces)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.map_t.provinces)
   return &provinces_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t >&
 map_t::provinces() const {
-  // @@protoc_insertion_point(field_list:message.game_data.map_t.provinces)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.map_t.provinces)
   return provinces_;
 }
 
@@ -1830,16 +1851,16 @@ inline void offmap_area_t::clear_owner() {
   owner_ = 0;
 }
 inline ::google::protobuf::int32 offmap_area_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.offmap_area_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.offmap_area_t.owner)
   return owner_;
 }
 inline void offmap_area_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.offmap_area_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.offmap_area_t.owner)
 }
 
-// optional .message.game_data.fleets_t fleets = 2;
+// optional .pb_message.game_data.fleets_t fleets = 2;
 inline bool offmap_area_t::has_fleets() const {
   return !_is_default_instance_ && fleets_ != NULL;
 }
@@ -1847,25 +1868,25 @@ inline void offmap_area_t::clear_fleets() {
   if (GetArenaNoVirtual() == NULL && fleets_ != NULL) delete fleets_;
   fleets_ = NULL;
 }
-inline const ::message::game_data::fleets_t& offmap_area_t::fleets() const {
-  // @@protoc_insertion_point(field_get:message.game_data.offmap_area_t.fleets)
+inline const ::pb_message::game_data::fleets_t& offmap_area_t::fleets() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.offmap_area_t.fleets)
   return fleets_ != NULL ? *fleets_ : *default_instance_->fleets_;
 }
-inline ::message::game_data::fleets_t* offmap_area_t::mutable_fleets() {
+inline ::pb_message::game_data::fleets_t* offmap_area_t::mutable_fleets() {
   
   if (fleets_ == NULL) {
-    fleets_ = new ::message::game_data::fleets_t;
+    fleets_ = new ::pb_message::game_data::fleets_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.offmap_area_t.fleets)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.offmap_area_t.fleets)
   return fleets_;
 }
-inline ::message::game_data::fleets_t* offmap_area_t::release_fleets() {
+inline ::pb_message::game_data::fleets_t* offmap_area_t::release_fleets() {
   
-  ::message::game_data::fleets_t* temp = fleets_;
+  ::pb_message::game_data::fleets_t* temp = fleets_;
   fleets_ = NULL;
   return temp;
 }
-inline void offmap_area_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) {
+inline void offmap_area_t::set_allocated_fleets(::pb_message::game_data::fleets_t* fleets) {
   delete fleets_;
   fleets_ = fleets;
   if (fleets) {
@@ -1873,28 +1894,28 @@ inline void offmap_area_t::set_allocated_fleets(::message::game_data::fleets_t* 
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.offmap_area_t.fleets)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.offmap_area_t.fleets)
 }
 
 // -------------------------------------------------------------------
 
 // offmap_areas_t
 
-// map<int32, .message.game_data.offmap_area_t> areas = 1;
+// map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
 inline int offmap_areas_t::areas_size() const {
   return areas_.size();
 }
 inline void offmap_areas_t::clear_areas() {
   areas_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >&
+inline const ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >&
 offmap_areas_t::areas() const {
-  // @@protoc_insertion_point(field_map:message.game_data.offmap_areas_t.areas)
+  // @@protoc_insertion_point(field_map:pb_message.game_data.offmap_areas_t.areas)
   return areas_.GetMap();
 }
-inline ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >*
+inline ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >*
 offmap_areas_t::mutable_areas() {
-  // @@protoc_insertion_point(field_mutable_map:message.game_data.offmap_areas_t.areas)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.offmap_areas_t.areas)
   return areas_.MutableMap();
 }
 
@@ -1923,21 +1944,21 @@ offmap_areas_t::mutable_areas() {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace game_data
-}  // namespace message
+}  // namespace pb_message
 
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::message::game_data::planet_t_type_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::game_data::planet_t_type_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::game_data::planet_t_type_t>() {
-  return ::message::game_data::planet_t_type_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::planet_t_type_t>() {
+  return ::pb_message::game_data::planet_t_type_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::game_data::hex_zone_fixture_t_type_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::game_data::hex_zone_fixture_t_type_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::game_data::hex_zone_fixture_t_type_t>() {
-  return ::message::game_data::hex_zone_fixture_t_type_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::hex_zone_fixture_t_type_t>() {
+  return ::pb_message::game_data::hex_zone_fixture_t_type_t_descriptor();
 }
 
 }  // namespace protobuf

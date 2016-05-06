@@ -17,7 +17,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 namespace game_data {
 
 namespace {
@@ -70,10 +70,11 @@ void protobuf_AssignDesc_game_5fdata_2eproto() {
       "game_data.proto");
   GOOGLE_CHECK(file != NULL);
   unit_t_descriptor_ = file->message_type(0);
-  static const int unit_t_offsets_[3] = {
+  static const int unit_t_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, unit_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, owner_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, original_owner_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(unit_t, tug_mission_),
   };
   unit_t_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -277,7 +278,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         fleets_t_FleetsEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::google::protobuf::int32,
-            ::message::game_data::fleet_t,
+            ::pb_message::game_data::fleet_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -302,7 +303,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
         offmap_areas_t_AreasEntry_descriptor_,
         ::google::protobuf::internal::MapEntry<
             ::google::protobuf::int32,
-            ::message::game_data::offmap_area_t,
+            ::pb_message::game_data::offmap_area_t,
             ::google::protobuf::internal::WireFormatLite::TYPE_INT32,
             ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
             0>::CreateDefaultInstance(
@@ -342,44 +343,46 @@ void protobuf_AddDesc_game_5fdata_2eproto() {
   already_here = true;
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::message::protobuf_AddDesc_base_5ftypes_2eproto();
+  ::pb_message::protobuf_AddDesc_base_5ftypes_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\017game_data.proto\022\021message.game_data\032\020ba"
-    "se_types.proto\"@\n\006unit_t\022\017\n\007unit_id\030\001 \001("
-    "\005\022\r\n\005owner\030\002 \001(\005\022\026\n\016original_owner\030\003 \001(\005"
-    "\"3\n\007fleet_t\022(\n\005units\030\001 \003(\0132\031.message.gam"
-    "e_data.unit_t\"\216\001\n\010fleets_t\0227\n\006fleets\030\001 \003"
-    "(\0132\'.message.game_data.fleets_t.FleetsEn"
-    "try\032I\n\013FleetsEntry\022\013\n\003key\030\001 \001(\005\022)\n\005value"
-    "\030\002 \001(\0132\032.message.game_data.fleet_t:\0028\001\"\274"
-    "\001\n\010planet_t\022\r\n\005owner\030\001 \001(\005\022\026\n\016original_o"
-    "wner\030\002 \001(\005\0220\n\004type\030\003 \001(\0162\".message.game_"
-    "data.planet_t.type_t\022*\n\005units\030\004 \001(\0132\033.me"
-    "ssage.game_data.fleets_t\"+\n\006type_t\022\t\n\005mi"
-    "nor\020\000\022\t\n\005major\020\001\022\013\n\007capital\020\002\"\320\001\n\022hex_zo"
-    "ne_fixture_t\022:\n\004type\030\001 \001(\0162,.message.gam"
-    "e_data.hex_zone_fixture_t.type_t\022\'\n\004base"
-    "\030\002 \001(\0132\031.message.game_data.unit_t\022+\n\006pla"
-    "net\030\003 \001(\0132\033.message.game_data.planet_t\"("
-    "\n\006type_t\022\r\n\ttype_base\020\000\022\017\n\013type_planet\020\001"
-    "\"S\n\nhex_zone_t\022\014\n\004name\030\001 \001(\t\0227\n\010fixtures"
-    "\030\002 \003(\0132%.message.game_data.hex_zone_fixt"
-    "ure_t\"\234\001\n\005hex_t\022#\n\005coord\030\001 \001(\0132\024.message"
-    ".hex_coord_t\022\023\n\013province_id\030\002 \001(\005\022,\n\005zon"
-    "es\030\004 \003(\0132\035.message.game_data.hex_zone_t\022"
-    "+\n\006fleets\030\005 \001(\0132\033.message.game_data.flee"
-    "ts_t\"\?\n\nprovince_t\022\n\n\002id\030\001 \001(\005\022\r\n\005owner\030"
-    "\002 \001(\005\022\026\n\016original_owner\030\003 \001(\005\"\201\001\n\005map_t\022"
-    "\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022\'\n\005hexes\030"
-    "\003 \003(\0132\030.message.game_data.hex_t\0220\n\tprovi"
-    "nces\030\004 \003(\0132\035.message.game_data.province_"
-    "t\"K\n\roffmap_area_t\022\r\n\005owner\030\001 \001(\005\022+\n\006fle"
-    "ets\030\002 \001(\0132\033.message.game_data.fleets_t\"\235"
-    "\001\n\016offmap_areas_t\022;\n\005areas\030\001 \003(\0132,.messa"
-    "ge.game_data.offmap_areas_t.AreasEntry\032N"
-    "\n\nAreasEntry\022\013\n\003key\030\001 \001(\005\022/\n\005value\030\002 \001(\013"
-    "2 .message.game_data.offmap_area_t:\0028\001b\006"
-    "proto3", 1406);
+    "\n\017game_data.proto\022\024pb_message.game_data\032"
+    "\020base_types.proto\"p\n\006unit_t\022\017\n\007unit_id\030\001"
+    " \001(\005\022\r\n\005owner\030\002 \001(\005\022\026\n\016original_owner\030\003 "
+    "\001(\005\022.\n\013tug_mission\030\004 \001(\0162\031.pb_message.tu"
+    "g_mission_t\"6\n\007fleet_t\022+\n\005units\030\001 \003(\0132\034."
+    "pb_message.game_data.unit_t\"\224\001\n\010fleets_t"
+    "\022:\n\006fleets\030\001 \003(\0132*.pb_message.game_data."
+    "fleets_t.FleetsEntry\032L\n\013FleetsEntry\022\013\n\003k"
+    "ey\030\001 \001(\005\022,\n\005value\030\002 \001(\0132\035.pb_message.gam"
+    "e_data.fleet_t:\0028\001\"\302\001\n\010planet_t\022\r\n\005owner"
+    "\030\001 \001(\005\022\026\n\016original_owner\030\002 \001(\005\0223\n\004type\030\003"
+    " \001(\0162%.pb_message.game_data.planet_t.typ"
+    "e_t\022-\n\005units\030\004 \001(\0132\036.pb_message.game_dat"
+    "a.fleets_t\"+\n\006type_t\022\t\n\005minor\020\000\022\t\n\005major"
+    "\020\001\022\013\n\007capital\020\002\"\331\001\n\022hex_zone_fixture_t\022="
+    "\n\004type\030\001 \001(\0162/.pb_message.game_data.hex_"
+    "zone_fixture_t.type_t\022*\n\004base\030\002 \001(\0132\034.pb"
+    "_message.game_data.unit_t\022.\n\006planet\030\003 \001("
+    "\0132\036.pb_message.game_data.planet_t\"(\n\006typ"
+    "e_t\022\r\n\ttype_base\020\000\022\017\n\013type_planet\020\001\"V\n\nh"
+    "ex_zone_t\022\014\n\004name\030\001 \001(\t\022:\n\010fixtures\030\002 \003("
+    "\0132(.pb_message.game_data.hex_zone_fixtur"
+    "e_t\"\245\001\n\005hex_t\022&\n\005coord\030\001 \001(\0132\027.pb_messag"
+    "e.hex_coord_t\022\023\n\013province_id\030\002 \001(\005\022/\n\005zo"
+    "nes\030\004 \003(\0132 .pb_message.game_data.hex_zon"
+    "e_t\022.\n\006fleets\030\005 \001(\0132\036.pb_message.game_da"
+    "ta.fleets_t\"\?\n\nprovince_t\022\n\n\002id\030\001 \001(\005\022\r\n"
+    "\005owner\030\002 \001(\005\022\026\n\016original_owner\030\003 \001(\005\"\207\001\n"
+    "\005map_t\022\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022*\n"
+    "\005hexes\030\003 \003(\0132\033.pb_message.game_data.hex_"
+    "t\0223\n\tprovinces\030\004 \003(\0132 .pb_message.game_d"
+    "ata.province_t\"N\n\roffmap_area_t\022\r\n\005owner"
+    "\030\001 \001(\005\022.\n\006fleets\030\002 \001(\0132\036.pb_message.game"
+    "_data.fleets_t\"\243\001\n\016offmap_areas_t\022>\n\005are"
+    "as\030\001 \003(\0132/.pb_message.game_data.offmap_a"
+    "reas_t.AreasEntry\032Q\n\nAreasEntry\022\013\n\003key\030\001"
+    " \001(\005\0222\n\005value\030\002 \001(\0132#.pb_message.game_da"
+    "ta.offmap_area_t:\0028\001b\006proto3", 1508);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "game_data.proto", &protobuf_RegisterTypes);
   unit_t::default_instance_ = new unit_t();
@@ -430,12 +433,13 @@ static void MergeFromFail(int line) {
 const int unit_t::kUnitIdFieldNumber;
 const int unit_t::kOwnerFieldNumber;
 const int unit_t::kOriginalOwnerFieldNumber;
+const int unit_t::kTugMissionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 unit_t::unit_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.unit_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.unit_t)
 }
 
 void unit_t::InitAsDefaultInstance() {
@@ -447,7 +451,7 @@ unit_t::unit_t(const unit_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.unit_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.unit_t)
 }
 
 void unit_t::SharedCtor() {
@@ -456,10 +460,11 @@ void unit_t::SharedCtor() {
   unit_id_ = 0;
   owner_ = 0;
   original_owner_ = 0;
+  tug_mission_ = 0;
 }
 
 unit_t::~unit_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.unit_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.unit_t)
   SharedDtor();
 }
 
@@ -502,7 +507,7 @@ void unit_t::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(unit_id_, original_owner_);
+  ZR_(unit_id_, tug_mission_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -513,7 +518,7 @@ bool unit_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.unit_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.unit_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -559,6 +564,22 @@ bool unit_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(32)) goto parse_tug_mission;
+        break;
+      }
+
+      // optional .pb_message.tug_mission_t tug_mission = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_tug_mission:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_tug_mission(static_cast< ::pb_message::tug_mission_t >(value));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -576,17 +597,17 @@ bool unit_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.unit_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.unit_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.unit_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.unit_t)
   return false;
 #undef DO_
 }
 
 void unit_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.unit_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.unit_t)
   // optional int32 unit_id = 1;
   if (this->unit_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->unit_id(), output);
@@ -602,12 +623,18 @@ void unit_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->original_owner(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.unit_t)
+  // optional .pb_message.tug_mission_t tug_mission = 4;
+  if (this->tug_mission() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->tug_mission(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.unit_t)
 }
 
 ::google::protobuf::uint8* unit_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.unit_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.unit_t)
   // optional int32 unit_id = 1;
   if (this->unit_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->unit_id(), target);
@@ -623,7 +650,13 @@ void unit_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->original_owner(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.unit_t)
+  // optional .pb_message.tug_mission_t tug_mission = 4;
+  if (this->tug_mission() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      4, this->tug_mission(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.unit_t)
   return target;
 }
 
@@ -649,6 +682,12 @@ int unit_t::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->original_owner());
+  }
+
+  // optional .pb_message.tug_mission_t tug_mission = 4;
+  if (this->tug_mission() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->tug_mission());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -680,6 +719,9 @@ void unit_t::MergeFrom(const unit_t& from) {
   if (from.original_owner() != 0) {
     set_original_owner(from.original_owner());
   }
+  if (from.tug_mission() != 0) {
+    set_tug_mission(from.tug_mission());
+  }
 }
 
 void unit_t::CopyFrom(const ::google::protobuf::Message& from) {
@@ -707,6 +749,7 @@ void unit_t::InternalSwap(unit_t* other) {
   std::swap(unit_id_, other->unit_id_);
   std::swap(owner_, other->owner_);
   std::swap(original_owner_, other->original_owner_);
+  std::swap(tug_mission_, other->tug_mission_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -727,13 +770,13 @@ void unit_t::clear_unit_id() {
   unit_id_ = 0;
 }
  ::google::protobuf::int32 unit_t::unit_id() const {
-  // @@protoc_insertion_point(field_get:message.game_data.unit_t.unit_id)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.unit_id)
   return unit_id_;
 }
  void unit_t::set_unit_id(::google::protobuf::int32 value) {
   
   unit_id_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.unit_t.unit_id)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.unit_id)
 }
 
 // optional int32 owner = 2;
@@ -741,13 +784,13 @@ void unit_t::clear_owner() {
   owner_ = 0;
 }
  ::google::protobuf::int32 unit_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.unit_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.owner)
   return owner_;
 }
  void unit_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.unit_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.owner)
 }
 
 // optional int32 original_owner = 3;
@@ -755,13 +798,27 @@ void unit_t::clear_original_owner() {
   original_owner_ = 0;
 }
  ::google::protobuf::int32 unit_t::original_owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.unit_t.original_owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.original_owner)
   return original_owner_;
 }
  void unit_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.unit_t.original_owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.original_owner)
+}
+
+// optional .pb_message.tug_mission_t tug_mission = 4;
+void unit_t::clear_tug_mission() {
+  tug_mission_ = 0;
+}
+ ::pb_message::tug_mission_t unit_t::tug_mission() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.tug_mission)
+  return static_cast< ::pb_message::tug_mission_t >(tug_mission_);
+}
+ void unit_t::set_tug_mission(::pb_message::tug_mission_t value) {
+  
+  tug_mission_ = value;
+  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.tug_mission)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -775,7 +832,7 @@ const int fleet_t::kUnitsFieldNumber;
 fleet_t::fleet_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.fleet_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.fleet_t)
 }
 
 void fleet_t::InitAsDefaultInstance() {
@@ -787,7 +844,7 @@ fleet_t::fleet_t(const fleet_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.fleet_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.fleet_t)
 }
 
 void fleet_t::SharedCtor() {
@@ -796,7 +853,7 @@ void fleet_t::SharedCtor() {
 }
 
 fleet_t::~fleet_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.fleet_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.fleet_t)
   SharedDtor();
 }
 
@@ -838,13 +895,13 @@ bool fleet_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.fleet_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.fleet_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .message.game_data.unit_t units = 1;
+      // repeated .pb_message.game_data.unit_t units = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -873,44 +930,44 @@ bool fleet_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.fleet_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.fleet_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.fleet_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.fleet_t)
   return false;
 #undef DO_
 }
 
 void fleet_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.fleet_t)
-  // repeated .message.game_data.unit_t units = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.fleet_t)
+  // repeated .pb_message.game_data.unit_t units = 1;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->units(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.fleet_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.fleet_t)
 }
 
 ::google::protobuf::uint8* fleet_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.fleet_t)
-  // repeated .message.game_data.unit_t units = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.fleet_t)
+  // repeated .pb_message.game_data.unit_t units = 1;
   for (unsigned int i = 0, n = this->units_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->units(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.fleet_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.fleet_t)
   return target;
 }
 
 int fleet_t::ByteSize() const {
   int total_size = 0;
 
-  // repeated .message.game_data.unit_t units = 1;
+  // repeated .pb_message.game_data.unit_t units = 1;
   total_size += 1 * this->units_size();
   for (int i = 0; i < this->units_size(); i++) {
     total_size +=
@@ -979,33 +1036,33 @@ void fleet_t::InternalSwap(fleet_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // fleet_t
 
-// repeated .message.game_data.unit_t units = 1;
+// repeated .pb_message.game_data.unit_t units = 1;
 int fleet_t::units_size() const {
   return units_.size();
 }
 void fleet_t::clear_units() {
   units_.Clear();
 }
-const ::message::game_data::unit_t& fleet_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.fleet_t.units)
+const ::pb_message::game_data::unit_t& fleet_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.fleet_t.units)
   return units_.Get(index);
 }
-::message::game_data::unit_t* fleet_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.fleet_t.units)
+::pb_message::game_data::unit_t* fleet_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.fleet_t.units)
   return units_.Mutable(index);
 }
-::message::game_data::unit_t* fleet_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.game_data.fleet_t.units)
+::pb_message::game_data::unit_t* fleet_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.fleet_t.units)
   return units_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t >*
 fleet_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.fleet_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.fleet_t.units)
   return &units_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::game_data::unit_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::unit_t >&
 fleet_t::units() const {
-  // @@protoc_insertion_point(field_list:message.game_data.fleet_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.fleet_t.units)
   return units_;
 }
 
@@ -1020,7 +1077,7 @@ const int fleets_t::kFleetsFieldNumber;
 fleets_t::fleets_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.fleets_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.fleets_t)
 }
 
 void fleets_t::InitAsDefaultInstance() {
@@ -1032,7 +1089,7 @@ fleets_t::fleets_t(const fleets_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.fleets_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.fleets_t)
 }
 
 void fleets_t::SharedCtor() {
@@ -1041,11 +1098,11 @@ void fleets_t::SharedCtor() {
   fleets_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   fleets_.SetEntryDescriptor(
-      &::message::game_data::fleets_t_FleetsEntry_descriptor_);
+      &::pb_message::game_data::fleets_t_FleetsEntry_descriptor_);
 }
 
 fleets_t::~fleets_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.fleets_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.fleets_t)
   SharedDtor();
 }
 
@@ -1087,13 +1144,13 @@ bool fleets_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.fleets_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.fleets_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<int32, .message.game_data.fleet_t> fleets = 1;
+      // map<int32, .pb_message.game_data.fleet_t> fleets = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -1124,21 +1181,21 @@ bool fleets_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.fleets_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.fleets_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.fleets_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.fleets_t)
   return false;
 #undef DO_
 }
 
 void fleets_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.fleets_t)
-  // map<int32, .message.game_data.fleet_t> fleets = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.fleets_t)
+  // map<int32, .pb_message.game_data.fleet_t> fleets = 1;
   {
     ::google::protobuf::scoped_ptr<fleets_t_FleetsEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >::const_iterator
         it = this->fleets().begin();
         it != this->fleets().end(); ++it) {
       entry.reset(fleets_.NewEntryWrapper(it->first, it->second));
@@ -1147,16 +1204,16 @@ void fleets_t::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.fleets_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.fleets_t)
 }
 
 ::google::protobuf::uint8* fleets_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.fleets_t)
-  // map<int32, .message.game_data.fleet_t> fleets = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.fleets_t)
+  // map<int32, .pb_message.game_data.fleet_t> fleets = 1;
   {
     ::google::protobuf::scoped_ptr<fleets_t_FleetsEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >::const_iterator
         it = this->fleets().begin();
         it != this->fleets().end(); ++it) {
       entry.reset(fleets_.NewEntryWrapper(it->first, it->second));
@@ -1166,18 +1223,18 @@ void fleets_t::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.fleets_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.fleets_t)
   return target;
 }
 
 int fleets_t::ByteSize() const {
   int total_size = 0;
 
-  // map<int32, .message.game_data.fleet_t> fleets = 1;
+  // map<int32, .pb_message.game_data.fleet_t> fleets = 1;
   total_size += 1 * this->fleets_size();
   {
     ::google::protobuf::scoped_ptr<fleets_t_FleetsEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >::const_iterator
         it = this->fleets().begin();
         it != this->fleets().end(); ++it) {
       entry.reset(fleets_.NewEntryWrapper(it->first, it->second));
@@ -1247,21 +1304,21 @@ void fleets_t::InternalSwap(fleets_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // fleets_t
 
-// map<int32, .message.game_data.fleet_t> fleets = 1;
+// map<int32, .pb_message.game_data.fleet_t> fleets = 1;
 int fleets_t::fleets_size() const {
   return fleets_.size();
 }
 void fleets_t::clear_fleets() {
   fleets_.Clear();
 }
- const ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >&
+ const ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >&
 fleets_t::fleets() const {
-  // @@protoc_insertion_point(field_map:message.game_data.fleets_t.fleets)
+  // @@protoc_insertion_point(field_map:pb_message.game_data.fleets_t.fleets)
   return fleets_.GetMap();
 }
- ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::fleet_t >*
+ ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::fleet_t >*
 fleets_t::mutable_fleets() {
-  // @@protoc_insertion_point(field_mutable_map:message.game_data.fleets_t.fleets)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.fleets_t.fleets)
   return fleets_.MutableMap();
 }
 
@@ -1302,12 +1359,12 @@ const int planet_t::kUnitsFieldNumber;
 planet_t::planet_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.planet_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.planet_t)
 }
 
 void planet_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  units_ = const_cast< ::message::game_data::fleets_t*>(&::message::game_data::fleets_t::default_instance());
+  units_ = const_cast< ::pb_message::game_data::fleets_t*>(&::pb_message::game_data::fleets_t::default_instance());
 }
 
 planet_t::planet_t(const planet_t& from)
@@ -1315,7 +1372,7 @@ planet_t::planet_t(const planet_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.planet_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.planet_t)
 }
 
 void planet_t::SharedCtor() {
@@ -1328,7 +1385,7 @@ void planet_t::SharedCtor() {
 }
 
 planet_t::~planet_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.planet_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.planet_t)
   SharedDtor();
 }
 
@@ -1386,7 +1443,7 @@ bool planet_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.planet_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.planet_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1421,7 +1478,7 @@ bool planet_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.game_data.planet_t.type_t type = 3;
+      // optional .pb_message.game_data.planet_t.type_t type = 3;
       case 3: {
         if (tag == 24) {
          parse_type:
@@ -1429,7 +1486,7 @@ bool planet_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_type(static_cast< ::message::game_data::planet_t_type_t >(value));
+          set_type(static_cast< ::pb_message::game_data::planet_t_type_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -1437,7 +1494,7 @@ bool planet_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.game_data.fleets_t units = 4;
+      // optional .pb_message.game_data.fleets_t units = 4;
       case 4: {
         if (tag == 34) {
          parse_units:
@@ -1463,17 +1520,17 @@ bool planet_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.planet_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.planet_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.planet_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.planet_t)
   return false;
 #undef DO_
 }
 
 void planet_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.planet_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.planet_t)
   // optional int32 owner = 1;
   if (this->owner() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->owner(), output);
@@ -1484,24 +1541,24 @@ void planet_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->original_owner(), output);
   }
 
-  // optional .message.game_data.planet_t.type_t type = 3;
+  // optional .pb_message.game_data.planet_t.type_t type = 3;
   if (this->type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->type(), output);
   }
 
-  // optional .message.game_data.fleets_t units = 4;
+  // optional .pb_message.game_data.fleets_t units = 4;
   if (this->has_units()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, *this->units_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.planet_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.planet_t)
 }
 
 ::google::protobuf::uint8* planet_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.planet_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.planet_t)
   // optional int32 owner = 1;
   if (this->owner() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->owner(), target);
@@ -1512,20 +1569,20 @@ void planet_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->original_owner(), target);
   }
 
-  // optional .message.game_data.planet_t.type_t type = 3;
+  // optional .pb_message.game_data.planet_t.type_t type = 3;
   if (this->type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->type(), target);
   }
 
-  // optional .message.game_data.fleets_t units = 4;
+  // optional .pb_message.game_data.fleets_t units = 4;
   if (this->has_units()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, *this->units_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.planet_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.planet_t)
   return target;
 }
 
@@ -1546,13 +1603,13 @@ int planet_t::ByteSize() const {
         this->original_owner());
   }
 
-  // optional .message.game_data.planet_t.type_t type = 3;
+  // optional .pb_message.game_data.planet_t.type_t type = 3;
   if (this->type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
   }
 
-  // optional .message.game_data.fleets_t units = 4;
+  // optional .pb_message.game_data.fleets_t units = 4;
   if (this->has_units()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1589,7 +1646,7 @@ void planet_t::MergeFrom(const planet_t& from) {
     set_type(from.type());
   }
   if (from.has_units()) {
-    mutable_units()->::message::game_data::fleets_t::MergeFrom(from.units());
+    mutable_units()->::pb_message::game_data::fleets_t::MergeFrom(from.units());
   }
 }
 
@@ -1639,13 +1696,13 @@ void planet_t::clear_owner() {
   owner_ = 0;
 }
  ::google::protobuf::int32 planet_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.owner)
   return owner_;
 }
  void planet_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.planet_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
 // optional int32 original_owner = 2;
@@ -1653,30 +1710,30 @@ void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
  ::google::protobuf::int32 planet_t::original_owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.original_owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.original_owner)
   return original_owner_;
 }
  void planet_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.planet_t.original_owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// optional .message.game_data.planet_t.type_t type = 3;
+// optional .pb_message.game_data.planet_t.type_t type = 3;
 void planet_t::clear_type() {
   type_ = 0;
 }
- ::message::game_data::planet_t_type_t planet_t::type() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.type)
-  return static_cast< ::message::game_data::planet_t_type_t >(type_);
+ ::pb_message::game_data::planet_t_type_t planet_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.type)
+  return static_cast< ::pb_message::game_data::planet_t_type_t >(type_);
 }
- void planet_t::set_type(::message::game_data::planet_t_type_t value) {
+ void planet_t::set_type(::pb_message::game_data::planet_t_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.planet_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.type)
 }
 
-// optional .message.game_data.fleets_t units = 4;
+// optional .pb_message.game_data.fleets_t units = 4;
 bool planet_t::has_units() const {
   return !_is_default_instance_ && units_ != NULL;
 }
@@ -1684,25 +1741,25 @@ void planet_t::clear_units() {
   if (GetArenaNoVirtual() == NULL && units_ != NULL) delete units_;
   units_ = NULL;
 }
-const ::message::game_data::fleets_t& planet_t::units() const {
-  // @@protoc_insertion_point(field_get:message.game_data.planet_t.units)
+const ::pb_message::game_data::fleets_t& planet_t::units() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.units)
   return units_ != NULL ? *units_ : *default_instance_->units_;
 }
-::message::game_data::fleets_t* planet_t::mutable_units() {
+::pb_message::game_data::fleets_t* planet_t::mutable_units() {
   
   if (units_ == NULL) {
-    units_ = new ::message::game_data::fleets_t;
+    units_ = new ::pb_message::game_data::fleets_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.planet_t.units)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.planet_t.units)
   return units_;
 }
-::message::game_data::fleets_t* planet_t::release_units() {
+::pb_message::game_data::fleets_t* planet_t::release_units() {
   
-  ::message::game_data::fleets_t* temp = units_;
+  ::pb_message::game_data::fleets_t* temp = units_;
   units_ = NULL;
   return temp;
 }
-void planet_t::set_allocated_units(::message::game_data::fleets_t* units) {
+void planet_t::set_allocated_units(::pb_message::game_data::fleets_t* units) {
   delete units_;
   units_ = units;
   if (units) {
@@ -1710,7 +1767,7 @@ void planet_t::set_allocated_units(::message::game_data::fleets_t* units) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.planet_t.units)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_t.units)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -1747,13 +1804,13 @@ const int hex_zone_fixture_t::kPlanetFieldNumber;
 hex_zone_fixture_t::hex_zone_fixture_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.hex_zone_fixture_t)
 }
 
 void hex_zone_fixture_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  base_ = const_cast< ::message::game_data::unit_t*>(&::message::game_data::unit_t::default_instance());
-  planet_ = const_cast< ::message::game_data::planet_t*>(&::message::game_data::planet_t::default_instance());
+  base_ = const_cast< ::pb_message::game_data::unit_t*>(&::pb_message::game_data::unit_t::default_instance());
+  planet_ = const_cast< ::pb_message::game_data::planet_t*>(&::pb_message::game_data::planet_t::default_instance());
 }
 
 hex_zone_fixture_t::hex_zone_fixture_t(const hex_zone_fixture_t& from)
@@ -1761,7 +1818,7 @@ hex_zone_fixture_t::hex_zone_fixture_t(const hex_zone_fixture_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.hex_zone_fixture_t)
 }
 
 void hex_zone_fixture_t::SharedCtor() {
@@ -1773,7 +1830,7 @@ void hex_zone_fixture_t::SharedCtor() {
 }
 
 hex_zone_fixture_t::~hex_zone_fixture_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.hex_zone_fixture_t)
   SharedDtor();
 }
 
@@ -1821,20 +1878,20 @@ bool hex_zone_fixture_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.hex_zone_fixture_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+      // optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
       case 1: {
         if (tag == 8) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_type(static_cast< ::message::game_data::hex_zone_fixture_t_type_t >(value));
+          set_type(static_cast< ::pb_message::game_data::hex_zone_fixture_t_type_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -1842,7 +1899,7 @@ bool hex_zone_fixture_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.game_data.unit_t base = 2;
+      // optional .pb_message.game_data.unit_t base = 2;
       case 2: {
         if (tag == 18) {
          parse_base:
@@ -1855,7 +1912,7 @@ bool hex_zone_fixture_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.game_data.planet_t planet = 3;
+      // optional .pb_message.game_data.planet_t planet = 3;
       case 3: {
         if (tag == 26) {
          parse_planet:
@@ -1881,82 +1938,82 @@ bool hex_zone_fixture_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.hex_zone_fixture_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.hex_zone_fixture_t)
   return false;
 #undef DO_
 }
 
 void hex_zone_fixture_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.hex_zone_fixture_t)
-  // optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.hex_zone_fixture_t)
+  // optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
   if (this->type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->type(), output);
   }
 
-  // optional .message.game_data.unit_t base = 2;
+  // optional .pb_message.game_data.unit_t base = 2;
   if (this->has_base()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->base_, output);
   }
 
-  // optional .message.game_data.planet_t planet = 3;
+  // optional .pb_message.game_data.planet_t planet = 3;
   if (this->has_planet()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, *this->planet_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.hex_zone_fixture_t)
 }
 
 ::google::protobuf::uint8* hex_zone_fixture_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.hex_zone_fixture_t)
-  // optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.hex_zone_fixture_t)
+  // optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
   if (this->type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->type(), target);
   }
 
-  // optional .message.game_data.unit_t base = 2;
+  // optional .pb_message.game_data.unit_t base = 2;
   if (this->has_base()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->base_, target);
   }
 
-  // optional .message.game_data.planet_t planet = 3;
+  // optional .pb_message.game_data.planet_t planet = 3;
   if (this->has_planet()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, *this->planet_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.hex_zone_fixture_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.hex_zone_fixture_t)
   return target;
 }
 
 int hex_zone_fixture_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+  // optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
   if (this->type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
   }
 
-  // optional .message.game_data.unit_t base = 2;
+  // optional .pb_message.game_data.unit_t base = 2;
   if (this->has_base()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->base_);
   }
 
-  // optional .message.game_data.planet_t planet = 3;
+  // optional .pb_message.game_data.planet_t planet = 3;
   if (this->has_planet()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1987,10 +2044,10 @@ void hex_zone_fixture_t::MergeFrom(const hex_zone_fixture_t& from) {
     set_type(from.type());
   }
   if (from.has_base()) {
-    mutable_base()->::message::game_data::unit_t::MergeFrom(from.base());
+    mutable_base()->::pb_message::game_data::unit_t::MergeFrom(from.base());
   }
   if (from.has_planet()) {
-    mutable_planet()->::message::game_data::planet_t::MergeFrom(from.planet());
+    mutable_planet()->::pb_message::game_data::planet_t::MergeFrom(from.planet());
   }
 }
 
@@ -2034,21 +2091,21 @@ void hex_zone_fixture_t::InternalSwap(hex_zone_fixture_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // hex_zone_fixture_t
 
-// optional .message.game_data.hex_zone_fixture_t.type_t type = 1;
+// optional .pb_message.game_data.hex_zone_fixture_t.type_t type = 1;
 void hex_zone_fixture_t::clear_type() {
   type_ = 0;
 }
- ::message::game_data::hex_zone_fixture_t_type_t hex_zone_fixture_t::type() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_fixture_t.type)
-  return static_cast< ::message::game_data::hex_zone_fixture_t_type_t >(type_);
+ ::pb_message::game_data::hex_zone_fixture_t_type_t hex_zone_fixture_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_fixture_t.type)
+  return static_cast< ::pb_message::game_data::hex_zone_fixture_t_type_t >(type_);
 }
- void hex_zone_fixture_t::set_type(::message::game_data::hex_zone_fixture_t_type_t value) {
+ void hex_zone_fixture_t::set_type(::pb_message::game_data::hex_zone_fixture_t_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.hex_zone_fixture_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_zone_fixture_t.type)
 }
 
-// optional .message.game_data.unit_t base = 2;
+// optional .pb_message.game_data.unit_t base = 2;
 bool hex_zone_fixture_t::has_base() const {
   return !_is_default_instance_ && base_ != NULL;
 }
@@ -2056,25 +2113,25 @@ void hex_zone_fixture_t::clear_base() {
   if (GetArenaNoVirtual() == NULL && base_ != NULL) delete base_;
   base_ = NULL;
 }
-const ::message::game_data::unit_t& hex_zone_fixture_t::base() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_fixture_t.base)
+const ::pb_message::game_data::unit_t& hex_zone_fixture_t::base() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_fixture_t.base)
   return base_ != NULL ? *base_ : *default_instance_->base_;
 }
-::message::game_data::unit_t* hex_zone_fixture_t::mutable_base() {
+::pb_message::game_data::unit_t* hex_zone_fixture_t::mutable_base() {
   
   if (base_ == NULL) {
-    base_ = new ::message::game_data::unit_t;
+    base_ = new ::pb_message::game_data::unit_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_fixture_t.base)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_fixture_t.base)
   return base_;
 }
-::message::game_data::unit_t* hex_zone_fixture_t::release_base() {
+::pb_message::game_data::unit_t* hex_zone_fixture_t::release_base() {
   
-  ::message::game_data::unit_t* temp = base_;
+  ::pb_message::game_data::unit_t* temp = base_;
   base_ = NULL;
   return temp;
 }
-void hex_zone_fixture_t::set_allocated_base(::message::game_data::unit_t* base) {
+void hex_zone_fixture_t::set_allocated_base(::pb_message::game_data::unit_t* base) {
   delete base_;
   base_ = base;
   if (base) {
@@ -2082,10 +2139,10 @@ void hex_zone_fixture_t::set_allocated_base(::message::game_data::unit_t* base) 
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_zone_fixture_t.base)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_zone_fixture_t.base)
 }
 
-// optional .message.game_data.planet_t planet = 3;
+// optional .pb_message.game_data.planet_t planet = 3;
 bool hex_zone_fixture_t::has_planet() const {
   return !_is_default_instance_ && planet_ != NULL;
 }
@@ -2093,25 +2150,25 @@ void hex_zone_fixture_t::clear_planet() {
   if (GetArenaNoVirtual() == NULL && planet_ != NULL) delete planet_;
   planet_ = NULL;
 }
-const ::message::game_data::planet_t& hex_zone_fixture_t::planet() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_fixture_t.planet)
+const ::pb_message::game_data::planet_t& hex_zone_fixture_t::planet() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_fixture_t.planet)
   return planet_ != NULL ? *planet_ : *default_instance_->planet_;
 }
-::message::game_data::planet_t* hex_zone_fixture_t::mutable_planet() {
+::pb_message::game_data::planet_t* hex_zone_fixture_t::mutable_planet() {
   
   if (planet_ == NULL) {
-    planet_ = new ::message::game_data::planet_t;
+    planet_ = new ::pb_message::game_data::planet_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_fixture_t.planet)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_fixture_t.planet)
   return planet_;
 }
-::message::game_data::planet_t* hex_zone_fixture_t::release_planet() {
+::pb_message::game_data::planet_t* hex_zone_fixture_t::release_planet() {
   
-  ::message::game_data::planet_t* temp = planet_;
+  ::pb_message::game_data::planet_t* temp = planet_;
   planet_ = NULL;
   return temp;
 }
-void hex_zone_fixture_t::set_allocated_planet(::message::game_data::planet_t* planet) {
+void hex_zone_fixture_t::set_allocated_planet(::pb_message::game_data::planet_t* planet) {
   delete planet_;
   planet_ = planet;
   if (planet) {
@@ -2119,7 +2176,7 @@ void hex_zone_fixture_t::set_allocated_planet(::message::game_data::planet_t* pl
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_zone_fixture_t.planet)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_zone_fixture_t.planet)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2134,7 +2191,7 @@ const int hex_zone_t::kFixturesFieldNumber;
 hex_zone_t::hex_zone_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.hex_zone_t)
 }
 
 void hex_zone_t::InitAsDefaultInstance() {
@@ -2146,7 +2203,7 @@ hex_zone_t::hex_zone_t(const hex_zone_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.hex_zone_t)
 }
 
 void hex_zone_t::SharedCtor() {
@@ -2157,7 +2214,7 @@ void hex_zone_t::SharedCtor() {
 }
 
 hex_zone_t::~hex_zone_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.hex_zone_t)
   SharedDtor();
 }
 
@@ -2201,7 +2258,7 @@ bool hex_zone_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.hex_zone_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2215,7 +2272,7 @@ bool hex_zone_t::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "message.game_data.hex_zone_t.name"));
+            "pb_message.game_data.hex_zone_t.name"));
         } else {
           goto handle_unusual;
         }
@@ -2223,7 +2280,7 @@ bool hex_zone_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+      // repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
       case 2: {
         if (tag == 18) {
          parse_fixtures:
@@ -2253,58 +2310,58 @@ bool hex_zone_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.hex_zone_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.hex_zone_t)
   return false;
 #undef DO_
 }
 
 void hex_zone_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.hex_zone_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.game_data.hex_zone_t.name");
+      "pb_message.game_data.hex_zone_t.name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
-  // repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+  // repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
   for (unsigned int i = 0, n = this->fixtures_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->fixtures(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.hex_zone_t)
 }
 
 ::google::protobuf::uint8* hex_zone_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.hex_zone_t)
   // optional string name = 1;
   if (this->name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "message.game_data.hex_zone_t.name");
+      "pb_message.game_data.hex_zone_t.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
   }
 
-  // repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+  // repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
   for (unsigned int i = 0, n = this->fixtures_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->fixtures(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.hex_zone_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.hex_zone_t)
   return target;
 }
 
@@ -2318,7 +2375,7 @@ int hex_zone_t::ByteSize() const {
         this->name());
   }
 
-  // repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+  // repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
   total_size += 1 * this->fixtures_size();
   for (int i = 0; i < this->fixtures_size(); i++) {
     total_size +=
@@ -2397,28 +2454,28 @@ void hex_zone_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  const ::std::string& hex_zone_t::name() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  void hex_zone_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_zone_t.name)
 }
  void hex_zone_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.game_data.hex_zone_t.name)
 }
  void hex_zone_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.game_data.hex_zone_t.name)
 }
  ::std::string* hex_zone_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
  ::std::string* hex_zone_t::release_name() {
@@ -2432,36 +2489,36 @@ void hex_zone_t::clear_name() {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_zone_t.name)
 }
 
-// repeated .message.game_data.hex_zone_fixture_t fixtures = 2;
+// repeated .pb_message.game_data.hex_zone_fixture_t fixtures = 2;
 int hex_zone_t::fixtures_size() const {
   return fixtures_.size();
 }
 void hex_zone_t::clear_fixtures() {
   fixtures_.Clear();
 }
-const ::message::game_data::hex_zone_fixture_t& hex_zone_t::fixtures(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_zone_t.fixtures)
+const ::pb_message::game_data::hex_zone_fixture_t& hex_zone_t::fixtures(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_.Get(index);
 }
-::message::game_data::hex_zone_fixture_t* hex_zone_t::mutable_fixtures(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_zone_t.fixtures)
+::pb_message::game_data::hex_zone_fixture_t* hex_zone_t::mutable_fixtures(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_.Mutable(index);
 }
-::message::game_data::hex_zone_fixture_t* hex_zone_t::add_fixtures() {
-  // @@protoc_insertion_point(field_add:message.game_data.hex_zone_t.fixtures)
+::pb_message::game_data::hex_zone_fixture_t* hex_zone_t::add_fixtures() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t >*
 hex_zone_t::mutable_fixtures() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.hex_zone_t.fixtures)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.hex_zone_t.fixtures)
   return &fixtures_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_fixture_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_fixture_t >&
 hex_zone_t::fixtures() const {
-  // @@protoc_insertion_point(field_list:message.game_data.hex_zone_t.fixtures)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.hex_zone_t.fixtures)
   return fixtures_;
 }
 
@@ -2479,13 +2536,13 @@ const int hex_t::kFleetsFieldNumber;
 hex_t::hex_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.hex_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.hex_t)
 }
 
 void hex_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  coord_ = const_cast< ::message::hex_coord_t*>(&::message::hex_coord_t::default_instance());
-  fleets_ = const_cast< ::message::game_data::fleets_t*>(&::message::game_data::fleets_t::default_instance());
+  coord_ = const_cast< ::pb_message::hex_coord_t*>(&::pb_message::hex_coord_t::default_instance());
+  fleets_ = const_cast< ::pb_message::game_data::fleets_t*>(&::pb_message::game_data::fleets_t::default_instance());
 }
 
 hex_t::hex_t(const hex_t& from)
@@ -2493,7 +2550,7 @@ hex_t::hex_t(const hex_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.hex_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.hex_t)
 }
 
 void hex_t::SharedCtor() {
@@ -2505,7 +2562,7 @@ void hex_t::SharedCtor() {
 }
 
 hex_t::~hex_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.hex_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.hex_t)
   SharedDtor();
 }
 
@@ -2554,13 +2611,13 @@ bool hex_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.hex_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.hex_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .message.hex_coord_t coord = 1;
+      // optional .pb_message.hex_coord_t coord = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -2587,7 +2644,7 @@ bool hex_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.game_data.hex_zone_t zones = 4;
+      // repeated .pb_message.game_data.hex_zone_t zones = 4;
       case 4: {
         if (tag == 34) {
          parse_zones:
@@ -2604,7 +2661,7 @@ bool hex_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.game_data.fleets_t fleets = 5;
+      // optional .pb_message.game_data.fleets_t fleets = 5;
       case 5: {
         if (tag == 42) {
          parse_fleets:
@@ -2630,18 +2687,18 @@ bool hex_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.hex_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.hex_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.hex_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.hex_t)
   return false;
 #undef DO_
 }
 
 void hex_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.hex_t)
-  // optional .message.hex_coord_t coord = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.hex_t)
+  // optional .pb_message.hex_coord_t coord = 1;
   if (this->has_coord()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, *this->coord_, output);
@@ -2652,25 +2709,25 @@ void hex_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->province_id(), output);
   }
 
-  // repeated .message.game_data.hex_zone_t zones = 4;
+  // repeated .pb_message.game_data.hex_zone_t zones = 4;
   for (unsigned int i = 0, n = this->zones_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->zones(i), output);
   }
 
-  // optional .message.game_data.fleets_t fleets = 5;
+  // optional .pb_message.game_data.fleets_t fleets = 5;
   if (this->has_fleets()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       5, *this->fleets_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.hex_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.hex_t)
 }
 
 ::google::protobuf::uint8* hex_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.hex_t)
-  // optional .message.hex_coord_t coord = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.hex_t)
+  // optional .pb_message.hex_coord_t coord = 1;
   if (this->has_coord()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -2682,28 +2739,28 @@ void hex_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->province_id(), target);
   }
 
-  // repeated .message.game_data.hex_zone_t zones = 4;
+  // repeated .pb_message.game_data.hex_zone_t zones = 4;
   for (unsigned int i = 0, n = this->zones_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, this->zones(i), target);
   }
 
-  // optional .message.game_data.fleets_t fleets = 5;
+  // optional .pb_message.game_data.fleets_t fleets = 5;
   if (this->has_fleets()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         5, *this->fleets_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.hex_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.hex_t)
   return target;
 }
 
 int hex_t::ByteSize() const {
   int total_size = 0;
 
-  // optional .message.hex_coord_t coord = 1;
+  // optional .pb_message.hex_coord_t coord = 1;
   if (this->has_coord()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -2717,14 +2774,14 @@ int hex_t::ByteSize() const {
         this->province_id());
   }
 
-  // optional .message.game_data.fleets_t fleets = 5;
+  // optional .pb_message.game_data.fleets_t fleets = 5;
   if (this->has_fleets()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->fleets_);
   }
 
-  // repeated .message.game_data.hex_zone_t zones = 4;
+  // repeated .pb_message.game_data.hex_zone_t zones = 4;
   total_size += 1 * this->zones_size();
   for (int i = 0; i < this->zones_size(); i++) {
     total_size +=
@@ -2754,13 +2811,13 @@ void hex_t::MergeFrom(const hex_t& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
   zones_.MergeFrom(from.zones_);
   if (from.has_coord()) {
-    mutable_coord()->::message::hex_coord_t::MergeFrom(from.coord());
+    mutable_coord()->::pb_message::hex_coord_t::MergeFrom(from.coord());
   }
   if (from.province_id() != 0) {
     set_province_id(from.province_id());
   }
   if (from.has_fleets()) {
-    mutable_fleets()->::message::game_data::fleets_t::MergeFrom(from.fleets());
+    mutable_fleets()->::pb_message::game_data::fleets_t::MergeFrom(from.fleets());
   }
 }
 
@@ -2805,7 +2862,7 @@ void hex_t::InternalSwap(hex_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // hex_t
 
-// optional .message.hex_coord_t coord = 1;
+// optional .pb_message.hex_coord_t coord = 1;
 bool hex_t::has_coord() const {
   return !_is_default_instance_ && coord_ != NULL;
 }
@@ -2813,25 +2870,25 @@ void hex_t::clear_coord() {
   if (GetArenaNoVirtual() == NULL && coord_ != NULL) delete coord_;
   coord_ = NULL;
 }
-const ::message::hex_coord_t& hex_t::coord() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.coord)
+const ::pb_message::hex_coord_t& hex_t::coord() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.coord)
   return coord_ != NULL ? *coord_ : *default_instance_->coord_;
 }
-::message::hex_coord_t* hex_t::mutable_coord() {
+::pb_message::hex_coord_t* hex_t::mutable_coord() {
   
   if (coord_ == NULL) {
-    coord_ = new ::message::hex_coord_t;
+    coord_ = new ::pb_message::hex_coord_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.coord)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.coord)
   return coord_;
 }
-::message::hex_coord_t* hex_t::release_coord() {
+::pb_message::hex_coord_t* hex_t::release_coord() {
   
-  ::message::hex_coord_t* temp = coord_;
+  ::pb_message::hex_coord_t* temp = coord_;
   coord_ = NULL;
   return temp;
 }
-void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
+void hex_t::set_allocated_coord(::pb_message::hex_coord_t* coord) {
   delete coord_;
   coord_ = coord;
   if (coord) {
@@ -2839,7 +2896,7 @@ void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_t.coord)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_t.coord)
 }
 
 // optional int32 province_id = 2;
@@ -2847,46 +2904,46 @@ void hex_t::clear_province_id() {
   province_id_ = 0;
 }
  ::google::protobuf::int32 hex_t::province_id() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.province_id)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.province_id)
   return province_id_;
 }
  void hex_t::set_province_id(::google::protobuf::int32 value) {
   
   province_id_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.hex_t.province_id)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.province_id)
 }
 
-// repeated .message.game_data.hex_zone_t zones = 4;
+// repeated .pb_message.game_data.hex_zone_t zones = 4;
 int hex_t::zones_size() const {
   return zones_.size();
 }
 void hex_t::clear_zones() {
   zones_.Clear();
 }
-const ::message::game_data::hex_zone_t& hex_t::zones(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.zones)
+const ::pb_message::game_data::hex_zone_t& hex_t::zones(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.zones)
   return zones_.Get(index);
 }
-::message::game_data::hex_zone_t* hex_t::mutable_zones(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.zones)
+::pb_message::game_data::hex_zone_t* hex_t::mutable_zones(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.zones)
   return zones_.Mutable(index);
 }
-::message::game_data::hex_zone_t* hex_t::add_zones() {
-  // @@protoc_insertion_point(field_add:message.game_data.hex_t.zones)
+::pb_message::game_data::hex_zone_t* hex_t::add_zones() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.hex_t.zones)
   return zones_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t >*
 hex_t::mutable_zones() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.hex_t.zones)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.hex_t.zones)
   return &zones_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_zone_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_zone_t >&
 hex_t::zones() const {
-  // @@protoc_insertion_point(field_list:message.game_data.hex_t.zones)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.hex_t.zones)
   return zones_;
 }
 
-// optional .message.game_data.fleets_t fleets = 5;
+// optional .pb_message.game_data.fleets_t fleets = 5;
 bool hex_t::has_fleets() const {
   return !_is_default_instance_ && fleets_ != NULL;
 }
@@ -2894,25 +2951,25 @@ void hex_t::clear_fleets() {
   if (GetArenaNoVirtual() == NULL && fleets_ != NULL) delete fleets_;
   fleets_ = NULL;
 }
-const ::message::game_data::fleets_t& hex_t::fleets() const {
-  // @@protoc_insertion_point(field_get:message.game_data.hex_t.fleets)
+const ::pb_message::game_data::fleets_t& hex_t::fleets() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.fleets)
   return fleets_ != NULL ? *fleets_ : *default_instance_->fleets_;
 }
-::message::game_data::fleets_t* hex_t::mutable_fleets() {
+::pb_message::game_data::fleets_t* hex_t::mutable_fleets() {
   
   if (fleets_ == NULL) {
-    fleets_ = new ::message::game_data::fleets_t;
+    fleets_ = new ::pb_message::game_data::fleets_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.hex_t.fleets)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.fleets)
   return fleets_;
 }
-::message::game_data::fleets_t* hex_t::release_fleets() {
+::pb_message::game_data::fleets_t* hex_t::release_fleets() {
   
-  ::message::game_data::fleets_t* temp = fleets_;
+  ::pb_message::game_data::fleets_t* temp = fleets_;
   fleets_ = NULL;
   return temp;
 }
-void hex_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) {
+void hex_t::set_allocated_fleets(::pb_message::game_data::fleets_t* fleets) {
   delete fleets_;
   fleets_ = fleets;
   if (fleets) {
@@ -2920,7 +2977,7 @@ void hex_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.hex_t.fleets)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_t.fleets)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -2936,7 +2993,7 @@ const int province_t::kOriginalOwnerFieldNumber;
 province_t::province_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.province_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.province_t)
 }
 
 void province_t::InitAsDefaultInstance() {
@@ -2948,7 +3005,7 @@ province_t::province_t(const province_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.province_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.province_t)
 }
 
 void province_t::SharedCtor() {
@@ -2960,7 +3017,7 @@ void province_t::SharedCtor() {
 }
 
 province_t::~province_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.province_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.province_t)
   SharedDtor();
 }
 
@@ -3014,7 +3071,7 @@ bool province_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.province_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.province_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3077,17 +3134,17 @@ bool province_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.province_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.province_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.province_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.province_t)
   return false;
 #undef DO_
 }
 
 void province_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.province_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.province_t)
   // optional int32 id = 1;
   if (this->id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
@@ -3103,12 +3160,12 @@ void province_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->original_owner(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.province_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.province_t)
 }
 
 ::google::protobuf::uint8* province_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.province_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.province_t)
   // optional int32 id = 1;
   if (this->id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
@@ -3124,7 +3181,7 @@ void province_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->original_owner(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.province_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.province_t)
   return target;
 }
 
@@ -3228,13 +3285,13 @@ void province_t::clear_id() {
   id_ = 0;
 }
  ::google::protobuf::int32 province_t::id() const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.id)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.id)
   return id_;
 }
  void province_t::set_id(::google::protobuf::int32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.province_t.id)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.id)
 }
 
 // optional int32 owner = 2;
@@ -3242,13 +3299,13 @@ void province_t::clear_owner() {
   owner_ = 0;
 }
  ::google::protobuf::int32 province_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.owner)
   return owner_;
 }
  void province_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.province_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.owner)
 }
 
 // optional int32 original_owner = 3;
@@ -3256,13 +3313,13 @@ void province_t::clear_original_owner() {
   original_owner_ = 0;
 }
  ::google::protobuf::int32 province_t::original_owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.province_t.original_owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.original_owner)
   return original_owner_;
 }
  void province_t::set_original_owner(::google::protobuf::int32 value) {
   
   original_owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.province_t.original_owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.original_owner)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -3279,7 +3336,7 @@ const int map_t::kProvincesFieldNumber;
 map_t::map_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.map_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.map_t)
 }
 
 void map_t::InitAsDefaultInstance() {
@@ -3291,7 +3348,7 @@ map_t::map_t(const map_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.map_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.map_t)
 }
 
 void map_t::SharedCtor() {
@@ -3302,7 +3359,7 @@ void map_t::SharedCtor() {
 }
 
 map_t::~map_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.map_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.map_t)
   SharedDtor();
 }
 
@@ -3358,7 +3415,7 @@ bool map_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.map_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.map_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3393,7 +3450,7 @@ bool map_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.game_data.hex_t hexes = 3;
+      // repeated .pb_message.game_data.hex_t hexes = 3;
       case 3: {
         if (tag == 26) {
          parse_hexes:
@@ -3410,7 +3467,7 @@ bool map_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .message.game_data.province_t provinces = 4;
+      // repeated .pb_message.game_data.province_t provinces = 4;
       case 4: {
         if (tag == 34) {
           DO_(input->IncrementRecursionDepth());
@@ -3439,17 +3496,17 @@ bool map_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.map_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.map_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.map_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.map_t)
   return false;
 #undef DO_
 }
 
 void map_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.map_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.map_t)
   // optional int32 width = 1;
   if (this->width() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->width(), output);
@@ -3460,24 +3517,24 @@ void map_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->height(), output);
   }
 
-  // repeated .message.game_data.hex_t hexes = 3;
+  // repeated .pb_message.game_data.hex_t hexes = 3;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->hexes(i), output);
   }
 
-  // repeated .message.game_data.province_t provinces = 4;
+  // repeated .pb_message.game_data.province_t provinces = 4;
   for (unsigned int i = 0, n = this->provinces_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       4, this->provinces(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.map_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.map_t)
 }
 
 ::google::protobuf::uint8* map_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.map_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.map_t)
   // optional int32 width = 1;
   if (this->width() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->width(), target);
@@ -3488,21 +3545,21 @@ void map_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->height(), target);
   }
 
-  // repeated .message.game_data.hex_t hexes = 3;
+  // repeated .pb_message.game_data.hex_t hexes = 3;
   for (unsigned int i = 0, n = this->hexes_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         3, this->hexes(i), target);
   }
 
-  // repeated .message.game_data.province_t provinces = 4;
+  // repeated .pb_message.game_data.province_t provinces = 4;
   for (unsigned int i = 0, n = this->provinces_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         4, this->provinces(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.map_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.map_t)
   return target;
 }
 
@@ -3523,7 +3580,7 @@ int map_t::ByteSize() const {
         this->height());
   }
 
-  // repeated .message.game_data.hex_t hexes = 3;
+  // repeated .pb_message.game_data.hex_t hexes = 3;
   total_size += 1 * this->hexes_size();
   for (int i = 0; i < this->hexes_size(); i++) {
     total_size +=
@@ -3531,7 +3588,7 @@ int map_t::ByteSize() const {
         this->hexes(i));
   }
 
-  // repeated .message.game_data.province_t provinces = 4;
+  // repeated .pb_message.game_data.province_t provinces = 4;
   total_size += 1 * this->provinces_size();
   for (int i = 0; i < this->provinces_size(); i++) {
     total_size +=
@@ -3615,13 +3672,13 @@ void map_t::clear_width() {
   width_ = 0;
 }
  ::google::protobuf::int32 map_t::width() const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.width)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.width)
   return width_;
 }
  void map_t::set_width(::google::protobuf::int32 value) {
   
   width_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.map_t.width)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.map_t.width)
 }
 
 // optional int32 height = 2;
@@ -3629,72 +3686,72 @@ void map_t::clear_height() {
   height_ = 0;
 }
  ::google::protobuf::int32 map_t::height() const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.height)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.height)
   return height_;
 }
  void map_t::set_height(::google::protobuf::int32 value) {
   
   height_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.map_t.height)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.map_t.height)
 }
 
-// repeated .message.game_data.hex_t hexes = 3;
+// repeated .pb_message.game_data.hex_t hexes = 3;
 int map_t::hexes_size() const {
   return hexes_.size();
 }
 void map_t::clear_hexes() {
   hexes_.Clear();
 }
-const ::message::game_data::hex_t& map_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.hexes)
+const ::pb_message::game_data::hex_t& map_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.hexes)
   return hexes_.Get(index);
 }
-::message::game_data::hex_t* map_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.map_t.hexes)
+::pb_message::game_data::hex_t* map_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.map_t.hexes)
   return hexes_.Mutable(index);
 }
-::message::game_data::hex_t* map_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.game_data.map_t.hexes)
+::pb_message::game_data::hex_t* map_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.map_t.hexes)
   return hexes_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t >*
 map_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.map_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.map_t.hexes)
   return &hexes_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::game_data::hex_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::hex_t >&
 map_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.game_data.map_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.map_t.hexes)
   return hexes_;
 }
 
-// repeated .message.game_data.province_t provinces = 4;
+// repeated .pb_message.game_data.province_t provinces = 4;
 int map_t::provinces_size() const {
   return provinces_.size();
 }
 void map_t::clear_provinces() {
   provinces_.Clear();
 }
-const ::message::game_data::province_t& map_t::provinces(int index) const {
-  // @@protoc_insertion_point(field_get:message.game_data.map_t.provinces)
+const ::pb_message::game_data::province_t& map_t::provinces(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.map_t.provinces)
   return provinces_.Get(index);
 }
-::message::game_data::province_t* map_t::mutable_provinces(int index) {
-  // @@protoc_insertion_point(field_mutable:message.game_data.map_t.provinces)
+::pb_message::game_data::province_t* map_t::mutable_provinces(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.map_t.provinces)
   return provinces_.Mutable(index);
 }
-::message::game_data::province_t* map_t::add_provinces() {
-  // @@protoc_insertion_point(field_add:message.game_data.map_t.provinces)
+::pb_message::game_data::province_t* map_t::add_provinces() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.map_t.provinces)
   return provinces_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >*
+::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t >*
 map_t::mutable_provinces() {
-  // @@protoc_insertion_point(field_mutable_list:message.game_data.map_t.provinces)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.map_t.provinces)
   return &provinces_;
 }
-const ::google::protobuf::RepeatedPtrField< ::message::game_data::province_t >&
+const ::google::protobuf::RepeatedPtrField< ::pb_message::game_data::province_t >&
 map_t::provinces() const {
-  // @@protoc_insertion_point(field_list:message.game_data.map_t.provinces)
+  // @@protoc_insertion_point(field_list:pb_message.game_data.map_t.provinces)
   return provinces_;
 }
 
@@ -3710,12 +3767,12 @@ const int offmap_area_t::kFleetsFieldNumber;
 offmap_area_t::offmap_area_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.offmap_area_t)
 }
 
 void offmap_area_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
-  fleets_ = const_cast< ::message::game_data::fleets_t*>(&::message::game_data::fleets_t::default_instance());
+  fleets_ = const_cast< ::pb_message::game_data::fleets_t*>(&::pb_message::game_data::fleets_t::default_instance());
 }
 
 offmap_area_t::offmap_area_t(const offmap_area_t& from)
@@ -3723,7 +3780,7 @@ offmap_area_t::offmap_area_t(const offmap_area_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.offmap_area_t)
 }
 
 void offmap_area_t::SharedCtor() {
@@ -3734,7 +3791,7 @@ void offmap_area_t::SharedCtor() {
 }
 
 offmap_area_t::~offmap_area_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.offmap_area_t)
   SharedDtor();
 }
 
@@ -3779,7 +3836,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.offmap_area_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3799,7 +3856,7 @@ bool offmap_area_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.game_data.fleets_t fleets = 2;
+      // optional .pb_message.game_data.fleets_t fleets = 2;
       case 2: {
         if (tag == 18) {
          parse_fleets:
@@ -3825,47 +3882,47 @@ bool offmap_area_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.offmap_area_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.offmap_area_t)
   return false;
 #undef DO_
 }
 
 void offmap_area_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.offmap_area_t)
   // optional int32 owner = 1;
   if (this->owner() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->owner(), output);
   }
 
-  // optional .message.game_data.fleets_t fleets = 2;
+  // optional .pb_message.game_data.fleets_t fleets = 2;
   if (this->has_fleets()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, *this->fleets_, output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.offmap_area_t)
 }
 
 ::google::protobuf::uint8* offmap_area_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.offmap_area_t)
   // optional int32 owner = 1;
   if (this->owner() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->owner(), target);
   }
 
-  // optional .message.game_data.fleets_t fleets = 2;
+  // optional .pb_message.game_data.fleets_t fleets = 2;
   if (this->has_fleets()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, *this->fleets_, target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.offmap_area_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.offmap_area_t)
   return target;
 }
 
@@ -3879,7 +3936,7 @@ int offmap_area_t::ByteSize() const {
         this->owner());
   }
 
-  // optional .message.game_data.fleets_t fleets = 2;
+  // optional .pb_message.game_data.fleets_t fleets = 2;
   if (this->has_fleets()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -3910,7 +3967,7 @@ void offmap_area_t::MergeFrom(const offmap_area_t& from) {
     set_owner(from.owner());
   }
   if (from.has_fleets()) {
-    mutable_fleets()->::message::game_data::fleets_t::MergeFrom(from.fleets());
+    mutable_fleets()->::pb_message::game_data::fleets_t::MergeFrom(from.fleets());
   }
 }
 
@@ -3958,16 +4015,16 @@ void offmap_area_t::clear_owner() {
   owner_ = 0;
 }
  ::google::protobuf::int32 offmap_area_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.game_data.offmap_area_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.game_data.offmap_area_t.owner)
   return owner_;
 }
  void offmap_area_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.game_data.offmap_area_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.game_data.offmap_area_t.owner)
 }
 
-// optional .message.game_data.fleets_t fleets = 2;
+// optional .pb_message.game_data.fleets_t fleets = 2;
 bool offmap_area_t::has_fleets() const {
   return !_is_default_instance_ && fleets_ != NULL;
 }
@@ -3975,25 +4032,25 @@ void offmap_area_t::clear_fleets() {
   if (GetArenaNoVirtual() == NULL && fleets_ != NULL) delete fleets_;
   fleets_ = NULL;
 }
-const ::message::game_data::fleets_t& offmap_area_t::fleets() const {
-  // @@protoc_insertion_point(field_get:message.game_data.offmap_area_t.fleets)
+const ::pb_message::game_data::fleets_t& offmap_area_t::fleets() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.offmap_area_t.fleets)
   return fleets_ != NULL ? *fleets_ : *default_instance_->fleets_;
 }
-::message::game_data::fleets_t* offmap_area_t::mutable_fleets() {
+::pb_message::game_data::fleets_t* offmap_area_t::mutable_fleets() {
   
   if (fleets_ == NULL) {
-    fleets_ = new ::message::game_data::fleets_t;
+    fleets_ = new ::pb_message::game_data::fleets_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.game_data.offmap_area_t.fleets)
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.offmap_area_t.fleets)
   return fleets_;
 }
-::message::game_data::fleets_t* offmap_area_t::release_fleets() {
+::pb_message::game_data::fleets_t* offmap_area_t::release_fleets() {
   
-  ::message::game_data::fleets_t* temp = fleets_;
+  ::pb_message::game_data::fleets_t* temp = fleets_;
   fleets_ = NULL;
   return temp;
 }
-void offmap_area_t::set_allocated_fleets(::message::game_data::fleets_t* fleets) {
+void offmap_area_t::set_allocated_fleets(::pb_message::game_data::fleets_t* fleets) {
   delete fleets_;
   fleets_ = fleets;
   if (fleets) {
@@ -4001,7 +4058,7 @@ void offmap_area_t::set_allocated_fleets(::message::game_data::fleets_t* fleets)
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.game_data.offmap_area_t.fleets)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.offmap_area_t.fleets)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -4015,7 +4072,7 @@ const int offmap_areas_t::kAreasFieldNumber;
 offmap_areas_t::offmap_areas_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(constructor:pb_message.game_data.offmap_areas_t)
 }
 
 void offmap_areas_t::InitAsDefaultInstance() {
@@ -4027,7 +4084,7 @@ offmap_areas_t::offmap_areas_t(const offmap_areas_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.offmap_areas_t)
 }
 
 void offmap_areas_t::SharedCtor() {
@@ -4036,11 +4093,11 @@ void offmap_areas_t::SharedCtor() {
   areas_.SetAssignDescriptorCallback(
       protobuf_AssignDescriptorsOnce);
   areas_.SetEntryDescriptor(
-      &::message::game_data::offmap_areas_t_AreasEntry_descriptor_);
+      &::pb_message::game_data::offmap_areas_t_AreasEntry_descriptor_);
 }
 
 offmap_areas_t::~offmap_areas_t() {
-  // @@protoc_insertion_point(destructor:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(destructor:pb_message.game_data.offmap_areas_t)
   SharedDtor();
 }
 
@@ -4082,13 +4139,13 @@ bool offmap_areas_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(parse_start:pb_message.game_data.offmap_areas_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<int32, .message.game_data.offmap_area_t> areas = 1;
+      // map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -4119,21 +4176,21 @@ bool offmap_areas_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(parse_success:pb_message.game_data.offmap_areas_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.game_data.offmap_areas_t)
   return false;
 #undef DO_
 }
 
 void offmap_areas_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.game_data.offmap_areas_t)
-  // map<int32, .message.game_data.offmap_area_t> areas = 1;
+  // @@protoc_insertion_point(serialize_start:pb_message.game_data.offmap_areas_t)
+  // map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
   {
     ::google::protobuf::scoped_ptr<offmap_areas_t_AreasEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >::const_iterator
         it = this->areas().begin();
         it != this->areas().end(); ++it) {
       entry.reset(areas_.NewEntryWrapper(it->first, it->second));
@@ -4142,16 +4199,16 @@ void offmap_areas_t::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_end:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.game_data.offmap_areas_t)
 }
 
 ::google::protobuf::uint8* offmap_areas_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.game_data.offmap_areas_t)
-  // map<int32, .message.game_data.offmap_area_t> areas = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.offmap_areas_t)
+  // map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
   {
     ::google::protobuf::scoped_ptr<offmap_areas_t_AreasEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >::const_iterator
         it = this->areas().begin();
         it != this->areas().end(); ++it) {
       entry.reset(areas_.NewEntryWrapper(it->first, it->second));
@@ -4161,18 +4218,18 @@ void offmap_areas_t::SerializeWithCachedSizes(
     }
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.game_data.offmap_areas_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.offmap_areas_t)
   return target;
 }
 
 int offmap_areas_t::ByteSize() const {
   int total_size = 0;
 
-  // map<int32, .message.game_data.offmap_area_t> areas = 1;
+  // map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
   total_size += 1 * this->areas_size();
   {
     ::google::protobuf::scoped_ptr<offmap_areas_t_AreasEntry> entry;
-    for (::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >::const_iterator
+    for (::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >::const_iterator
         it = this->areas().begin();
         it != this->areas().end(); ++it) {
       entry.reset(areas_.NewEntryWrapper(it->first, it->second));
@@ -4242,21 +4299,21 @@ void offmap_areas_t::InternalSwap(offmap_areas_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // offmap_areas_t
 
-// map<int32, .message.game_data.offmap_area_t> areas = 1;
+// map<int32, .pb_message.game_data.offmap_area_t> areas = 1;
 int offmap_areas_t::areas_size() const {
   return areas_.size();
 }
 void offmap_areas_t::clear_areas() {
   areas_.Clear();
 }
- const ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >&
+ const ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >&
 offmap_areas_t::areas() const {
-  // @@protoc_insertion_point(field_map:message.game_data.offmap_areas_t.areas)
+  // @@protoc_insertion_point(field_map:pb_message.game_data.offmap_areas_t.areas)
   return areas_.GetMap();
 }
- ::google::protobuf::Map< ::google::protobuf::int32, ::message::game_data::offmap_area_t >*
+ ::google::protobuf::Map< ::google::protobuf::int32, ::pb_message::game_data::offmap_area_t >*
 offmap_areas_t::mutable_areas() {
-  // @@protoc_insertion_point(field_mutable_map:message.game_data.offmap_areas_t.areas)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.offmap_areas_t.areas)
   return areas_.MutableMap();
 }
 
@@ -4265,6 +4322,6 @@ offmap_areas_t::mutable_areas() {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace game_data
-}  // namespace message
+}  // namespace pb_message
 
 // @@protoc_insertion_point(global_scope)

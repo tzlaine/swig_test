@@ -33,7 +33,7 @@
 #include "base_types.pb.h"
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 
 // Internal implementation detail -- do not call these.
 void protobuf_AddDesc_start_5fdata_2eproto();
@@ -235,17 +235,17 @@ class capital_hex_zone_t : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   int features_size() const;
   void clear_features();
   static const int kFeaturesFieldNumber = 2;
-  ::message::feature_t features(int index) const;
-  void set_features(int index, ::message::feature_t value);
-  void add_features(::message::feature_t value);
+  ::pb_message::feature_t features(int index) const;
+  void set_features(int index, ::pb_message::feature_t value);
+  void add_features(::pb_message::feature_t value);
   const ::google::protobuf::RepeatedField<int>& features() const;
   ::google::protobuf::RepeatedField<int>* mutable_features();
 
-  // @@protoc_insertion_point(class_scope:message.capital_hex_zone_t)
+  // @@protoc_insertion_point(class_scope:pb_message.capital_hex_zone_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -325,24 +325,24 @@ class capital_hex_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 coord() const;
   void set_coord(::google::protobuf::int32 value);
 
-  // repeated .message.capital_hex_zone_t zones = 2;
+  // repeated .pb_message.capital_hex_zone_t zones = 2;
   int zones_size() const;
   void clear_zones();
   static const int kZonesFieldNumber = 2;
-  const ::message::capital_hex_zone_t& zones(int index) const;
-  ::message::capital_hex_zone_t* mutable_zones(int index);
-  ::message::capital_hex_zone_t* add_zones();
-  ::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t >*
+  const ::pb_message::capital_hex_zone_t& zones(int index) const;
+  ::pb_message::capital_hex_zone_t* mutable_zones(int index);
+  ::pb_message::capital_hex_zone_t* add_zones();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t >*
       mutable_zones();
-  const ::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t >&
       zones() const;
 
-  // @@protoc_insertion_point(class_scope:message.capital_hex_t)
+  // @@protoc_insertion_point(class_scope:pb_message.capital_hex_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t > zones_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t > zones_;
   ::google::protobuf::int32 coord_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
@@ -410,24 +410,24 @@ class capital_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.capital_hex_t hexes = 1;
+  // repeated .pb_message.capital_hex_t hexes = 1;
   int hexes_size() const;
   void clear_hexes();
   static const int kHexesFieldNumber = 1;
-  const ::message::capital_hex_t& hexes(int index) const;
-  ::message::capital_hex_t* mutable_hexes(int index);
-  ::message::capital_hex_t* add_hexes();
-  ::google::protobuf::RepeatedPtrField< ::message::capital_hex_t >*
+  const ::pb_message::capital_hex_t& hexes(int index) const;
+  ::pb_message::capital_hex_t* mutable_hexes(int index);
+  ::pb_message::capital_hex_t* add_hexes();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t >*
       mutable_hexes();
-  const ::google::protobuf::RepeatedPtrField< ::message::capital_hex_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t >&
       hexes() const;
 
-  // @@protoc_insertion_point(class_scope:message.capital_t)
+  // @@protoc_insertion_point(class_scope:pb_message.capital_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::capital_hex_t > hexes_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t > hexes_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -530,7 +530,7 @@ class offmap_possesions_t : public ::google::protobuf::Message {
   bool old_shipyard() const;
   void set_old_shipyard(bool value);
 
-  // @@protoc_insertion_point(class_scope:message.offmap_possesions_t)
+  // @@protoc_insertion_point(class_scope:pb_message.offmap_possesions_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -629,14 +629,14 @@ class nation_t : public ::google::protobuf::Message {
   ::std::string* release_short_name();
   void set_allocated_short_name(::std::string* short_name);
 
-  // optional .message.capital_t capital = 3;
+  // optional .pb_message.capital_t capital = 3;
   bool has_capital() const;
   void clear_capital();
   static const int kCapitalFieldNumber = 3;
-  const ::message::capital_t& capital() const;
-  ::message::capital_t* mutable_capital();
-  ::message::capital_t* release_capital();
-  void set_allocated_capital(::message::capital_t* capital);
+  const ::pb_message::capital_t& capital() const;
+  ::pb_message::capital_t* mutable_capital();
+  ::pb_message::capital_t* release_capital();
+  void set_allocated_capital(::pb_message::capital_t* capital);
 
   // optional int32 free_strategic_moves = 4;
   void clear_free_strategic_moves();
@@ -650,14 +650,14 @@ class nation_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 capital_star_points() const;
   void set_capital_star_points(::google::protobuf::int32 value);
 
-  // optional .message.offmap_possesions_t offmap_possesions = 6;
+  // optional .pb_message.offmap_possesions_t offmap_possesions = 6;
   bool has_offmap_possesions() const;
   void clear_offmap_possesions();
   static const int kOffmapPossesionsFieldNumber = 6;
-  const ::message::offmap_possesions_t& offmap_possesions() const;
-  ::message::offmap_possesions_t* mutable_offmap_possesions();
-  ::message::offmap_possesions_t* release_offmap_possesions();
-  void set_allocated_offmap_possesions(::message::offmap_possesions_t* offmap_possesions);
+  const ::pb_message::offmap_possesions_t& offmap_possesions() const;
+  ::pb_message::offmap_possesions_t* mutable_offmap_possesions();
+  ::pb_message::offmap_possesions_t* release_offmap_possesions();
+  void set_allocated_offmap_possesions(::pb_message::offmap_possesions_t* offmap_possesions);
 
   // optional int32 nation_id = 7;
   void clear_nation_id();
@@ -665,17 +665,17 @@ class nation_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 nation_id() const;
   void set_nation_id(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.nation_t)
+  // @@protoc_insertion_point(class_scope:pb_message.nation_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr short_name_;
-  ::message::capital_t* capital_;
+  ::pb_message::capital_t* capital_;
   ::google::protobuf::int32 free_strategic_moves_;
   ::google::protobuf::int32 capital_star_points_;
-  ::message::offmap_possesions_t* offmap_possesions_;
+  ::pb_message::offmap_possesions_t* offmap_possesions_;
   ::google::protobuf::int32 nation_id_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
@@ -744,28 +744,28 @@ class nations_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<string, .message.nation_t> nations = 1;
+  // map<string, .pb_message.nation_t> nations = 1;
   int nations_size() const;
   void clear_nations();
   static const int kNationsFieldNumber = 1;
-  const ::google::protobuf::Map< ::std::string, ::message::nation_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::nation_t >&
       nations() const;
-  ::google::protobuf::Map< ::std::string, ::message::nation_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::nation_t >*
       mutable_nations();
 
-  // @@protoc_insertion_point(class_scope:message.nations_t)
+  // @@protoc_insertion_point(class_scope:pb_message.nations_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::nation_t,
+      ::std::string, ::pb_message::nation_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       nations_t_NationsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::nation_t,
+      ::std::string, ::pb_message::nation_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > nations_;
@@ -835,14 +835,14 @@ class hex_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .message.hex_coord_t coord = 1;
+  // optional .pb_message.hex_coord_t coord = 1;
   bool has_coord() const;
   void clear_coord();
   static const int kCoordFieldNumber = 1;
-  const ::message::hex_coord_t& coord() const;
-  ::message::hex_coord_t* mutable_coord();
-  ::message::hex_coord_t* release_coord();
-  void set_allocated_coord(::message::hex_coord_t* coord);
+  const ::pb_message::hex_coord_t& coord() const;
+  ::pb_message::hex_coord_t* mutable_coord();
+  ::pb_message::hex_coord_t* release_coord();
+  void set_allocated_coord(::pb_message::hex_coord_t* coord);
 
   // optional int32 owner = 2;
   void clear_owner();
@@ -850,18 +850,18 @@ class hex_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 owner() const;
   void set_owner(::google::protobuf::int32 value);
 
-  // optional .message.feature_t feature = 3;
+  // optional .pb_message.feature_t feature = 3;
   void clear_feature();
   static const int kFeatureFieldNumber = 3;
-  ::message::feature_t feature() const;
-  void set_feature(::message::feature_t value);
+  ::pb_message::feature_t feature() const;
+  void set_feature(::pb_message::feature_t value);
 
-  // @@protoc_insertion_point(class_scope:message.hex_t)
+  // @@protoc_insertion_point(class_scope:pb_message.hex_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::message::hex_coord_t* coord_;
+  ::pb_message::hex_coord_t* coord_;
   ::google::protobuf::int32 owner_;
   int feature_;
   mutable int _cached_size_;
@@ -936,13 +936,13 @@ class province_hex_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 hex() const;
   void set_hex(::google::protobuf::int32 value);
 
-  // optional .message.feature_t feature = 2;
+  // optional .pb_message.feature_t feature = 2;
   void clear_feature();
   static const int kFeatureFieldNumber = 2;
-  ::message::feature_t feature() const;
-  void set_feature(::message::feature_t value);
+  ::pb_message::feature_t feature() const;
+  void set_feature(::pb_message::feature_t value);
 
-  // @@protoc_insertion_point(class_scope:message.province_hex_t)
+  // @@protoc_insertion_point(class_scope:pb_message.province_hex_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1015,24 +1015,24 @@ class province_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.province_hex_t hexes = 1;
+  // repeated .pb_message.province_hex_t hexes = 1;
   int hexes_size() const;
   void clear_hexes();
   static const int kHexesFieldNumber = 1;
-  const ::message::province_hex_t& hexes(int index) const;
-  ::message::province_hex_t* mutable_hexes(int index);
-  ::message::province_hex_t* add_hexes();
-  ::google::protobuf::RepeatedPtrField< ::message::province_hex_t >*
+  const ::pb_message::province_hex_t& hexes(int index) const;
+  ::pb_message::province_hex_t* mutable_hexes(int index);
+  ::pb_message::province_hex_t* add_hexes();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t >*
       mutable_hexes();
-  const ::google::protobuf::RepeatedPtrField< ::message::province_hex_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t >&
       hexes() const;
 
-  // @@protoc_insertion_point(class_scope:message.province_t)
+  // @@protoc_insertion_point(class_scope:pb_message.province_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::province_hex_t > hexes_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t > hexes_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -1110,13 +1110,13 @@ class offmap_area_t : public ::google::protobuf::Message {
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // repeated .message.feature_t features = 2 [packed = true];
+  // repeated .pb_message.feature_t features = 2 [packed = true];
   int features_size() const;
   void clear_features();
   static const int kFeaturesFieldNumber = 2;
-  ::message::feature_t features(int index) const;
-  void set_features(int index, ::message::feature_t value);
-  void add_features(::message::feature_t value);
+  ::pb_message::feature_t features(int index) const;
+  void set_features(int index, ::pb_message::feature_t value);
+  void add_features(::pb_message::feature_t value);
   const ::google::protobuf::RepeatedField<int>& features() const;
   ::google::protobuf::RepeatedField<int>* mutable_features();
 
@@ -1144,7 +1144,7 @@ class offmap_area_t : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_adjacent_hexes();
 
-  // @@protoc_insertion_point(class_scope:message.offmap_area_t)
+  // @@protoc_insertion_point(class_scope:pb_message.offmap_area_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1222,34 +1222,34 @@ class starting_national_holdings_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.province_t provinces = 1;
+  // repeated .pb_message.province_t provinces = 1;
   int provinces_size() const;
   void clear_provinces();
   static const int kProvincesFieldNumber = 1;
-  const ::message::province_t& provinces(int index) const;
-  ::message::province_t* mutable_provinces(int index);
-  ::message::province_t* add_provinces();
-  ::google::protobuf::RepeatedPtrField< ::message::province_t >*
+  const ::pb_message::province_t& provinces(int index) const;
+  ::pb_message::province_t* mutable_provinces(int index);
+  ::pb_message::province_t* add_provinces();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::province_t >*
       mutable_provinces();
-  const ::google::protobuf::RepeatedPtrField< ::message::province_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::province_t >&
       provinces() const;
 
-  // optional .message.offmap_area_t offmap_area = 2;
+  // optional .pb_message.offmap_area_t offmap_area = 2;
   bool has_offmap_area() const;
   void clear_offmap_area();
   static const int kOffmapAreaFieldNumber = 2;
-  const ::message::offmap_area_t& offmap_area() const;
-  ::message::offmap_area_t* mutable_offmap_area();
-  ::message::offmap_area_t* release_offmap_area();
-  void set_allocated_offmap_area(::message::offmap_area_t* offmap_area);
+  const ::pb_message::offmap_area_t& offmap_area() const;
+  ::pb_message::offmap_area_t* mutable_offmap_area();
+  ::pb_message::offmap_area_t* release_offmap_area();
+  void set_allocated_offmap_area(::pb_message::offmap_area_t* offmap_area);
 
-  // @@protoc_insertion_point(class_scope:message.starting_national_holdings_t)
+  // @@protoc_insertion_point(class_scope:pb_message.starting_national_holdings_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::province_t > provinces_;
-  ::message::offmap_area_t* offmap_area_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::province_t > provinces_;
+  ::pb_message::offmap_area_t* offmap_area_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -1353,28 +1353,28 @@ class map_t : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_nz_hexes();
 
-  // map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+  // map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
   int starting_national_holdings_size() const;
   void clear_starting_national_holdings();
   static const int kStartingNationalHoldingsFieldNumber = 5;
-  const ::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >&
       starting_national_holdings() const;
-  ::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >*
       mutable_starting_national_holdings();
 
-  // repeated .message.hex_t hexes = 6;
+  // repeated .pb_message.hex_t hexes = 6;
   int hexes_size() const;
   void clear_hexes();
   static const int kHexesFieldNumber = 6;
-  const ::message::hex_t& hexes(int index) const;
-  ::message::hex_t* mutable_hexes(int index);
-  ::message::hex_t* add_hexes();
-  ::google::protobuf::RepeatedPtrField< ::message::hex_t >*
+  const ::pb_message::hex_t& hexes(int index) const;
+  ::pb_message::hex_t* mutable_hexes(int index);
+  ::pb_message::hex_t* add_hexes();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::hex_t >*
       mutable_hexes();
-  const ::google::protobuf::RepeatedPtrField< ::message::hex_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::hex_t >&
       hexes() const;
 
-  // @@protoc_insertion_point(class_scope:message.map_t)
+  // @@protoc_insertion_point(class_scope:pb_message.map_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1386,17 +1386,17 @@ class map_t : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > nz_hexes_;
   mutable int _nz_hexes_cached_byte_size_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::starting_national_holdings_t,
+      ::std::string, ::pb_message::starting_national_holdings_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       map_t_StartingNationalHoldingsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::starting_national_holdings_t,
+      ::std::string, ::pb_message::starting_national_holdings_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > starting_national_holdings_;
-  ::google::protobuf::RepeatedPtrField< ::message::hex_t > hexes_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::hex_t > hexes_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -1463,31 +1463,31 @@ class model_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .message.nations_t nations = 1;
+  // optional .pb_message.nations_t nations = 1;
   bool has_nations() const;
   void clear_nations();
   static const int kNationsFieldNumber = 1;
-  const ::message::nations_t& nations() const;
-  ::message::nations_t* mutable_nations();
-  ::message::nations_t* release_nations();
-  void set_allocated_nations(::message::nations_t* nations);
+  const ::pb_message::nations_t& nations() const;
+  ::pb_message::nations_t* mutable_nations();
+  ::pb_message::nations_t* release_nations();
+  void set_allocated_nations(::pb_message::nations_t* nations);
 
-  // optional .message.map_t map = 2;
+  // optional .pb_message.map_t map = 2;
   bool has_map() const;
   void clear_map();
   static const int kMapFieldNumber = 2;
-  const ::message::map_t& map() const;
-  ::message::map_t* mutable_map();
-  ::message::map_t* release_map();
-  void set_allocated_map(::message::map_t* map);
+  const ::pb_message::map_t& map() const;
+  ::pb_message::map_t* mutable_map();
+  ::pb_message::map_t* release_map();
+  void set_allocated_map(::pb_message::map_t* map);
 
-  // @@protoc_insertion_point(class_scope:message.model_t)
+  // @@protoc_insertion_point(class_scope:pb_message.model_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::message::nations_t* nations_;
-  ::message::map_t* map_;
+  ::pb_message::nations_t* nations_;
+  ::pb_message::map_t* map_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -1571,7 +1571,7 @@ class oob_unit_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 times() const;
   void set_times(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.oob_unit_t)
+  // @@protoc_insertion_point(class_scope:pb_message.oob_unit_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1650,32 +1650,32 @@ class production_element_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 year() const;
   void set_year(::google::protobuf::int32 value);
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   void clear_season();
   static const int kSeasonFieldNumber = 2;
-  ::message::season_t season() const;
-  void set_season(::message::season_t value);
+  ::pb_message::season_t season() const;
+  void set_season(::pb_message::season_t value);
 
-  // repeated .message.oob_unit_t units = 3;
+  // repeated .pb_message.oob_unit_t units = 3;
   int units_size() const;
   void clear_units();
   static const int kUnitsFieldNumber = 3;
-  const ::message::oob_unit_t& units(int index) const;
-  ::message::oob_unit_t* mutable_units(int index);
-  ::message::oob_unit_t* add_units();
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+  const ::pb_message::oob_unit_t& units(int index) const;
+  ::pb_message::oob_unit_t* mutable_units(int index);
+  ::pb_message::oob_unit_t* add_units();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
       mutable_units();
-  const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
       units() const;
 
-  // @@protoc_insertion_point(class_scope:message.production_element_t)
+  // @@protoc_insertion_point(class_scope:pb_message.production_element_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::int32 year_;
   int season_;
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t > units_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t > units_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -1755,16 +1755,16 @@ class starting_fleet_t : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_hexes();
 
-  // repeated .message.oob_unit_t units = 2;
+  // repeated .pb_message.oob_unit_t units = 2;
   int units_size() const;
   void clear_units();
   static const int kUnitsFieldNumber = 2;
-  const ::message::oob_unit_t& units(int index) const;
-  ::message::oob_unit_t* mutable_units(int index);
-  ::message::oob_unit_t* add_units();
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+  const ::pb_message::oob_unit_t& units(int index) const;
+  ::pb_message::oob_unit_t* mutable_units(int index);
+  ::pb_message::oob_unit_t* add_units();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
       mutable_units();
-  const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
       units() const;
 
   // optional bool reserve = 3;
@@ -1773,16 +1773,16 @@ class starting_fleet_t : public ::google::protobuf::Message {
   bool reserve() const;
   void set_reserve(bool value);
 
-  // repeated .message.production_element_t prewar_construction = 4;
+  // repeated .pb_message.production_element_t prewar_construction = 4;
   int prewar_construction_size() const;
   void clear_prewar_construction();
   static const int kPrewarConstructionFieldNumber = 4;
-  const ::message::production_element_t& prewar_construction(int index) const;
-  ::message::production_element_t* mutable_prewar_construction(int index);
-  ::message::production_element_t* add_prewar_construction();
-  ::google::protobuf::RepeatedPtrField< ::message::production_element_t >*
+  const ::pb_message::production_element_t& prewar_construction(int index) const;
+  ::pb_message::production_element_t* mutable_prewar_construction(int index);
+  ::pb_message::production_element_t* add_prewar_construction();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >*
       mutable_prewar_construction();
-  const ::google::protobuf::RepeatedPtrField< ::message::production_element_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >&
       prewar_construction() const;
 
   // optional int32 strategic_move_arrival_year = 5;
@@ -1791,11 +1791,11 @@ class starting_fleet_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 strategic_move_arrival_year() const;
   void set_strategic_move_arrival_year(::google::protobuf::int32 value);
 
-  // optional .message.season_t strategic_move_arrival_season = 6;
+  // optional .pb_message.season_t strategic_move_arrival_season = 6;
   void clear_strategic_move_arrival_season();
   static const int kStrategicMoveArrivalSeasonFieldNumber = 6;
-  ::message::season_t strategic_move_arrival_season() const;
-  void set_strategic_move_arrival_season(::message::season_t value);
+  ::pb_message::season_t strategic_move_arrival_season() const;
+  void set_strategic_move_arrival_season(::pb_message::season_t value);
 
   // map<int32, int32> hex_placement_limits = 7;
   int hex_placement_limits_size() const;
@@ -1806,15 +1806,15 @@ class starting_fleet_t : public ::google::protobuf::Message {
   ::google::protobuf::Map< ::google::protobuf::int32, ::google::protobuf::int32 >*
       mutable_hex_placement_limits();
 
-  // @@protoc_insertion_point(class_scope:message.starting_fleet_t)
+  // @@protoc_insertion_point(class_scope:pb_message.starting_fleet_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > hexes_;
   mutable int _hexes_cached_byte_size_;
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t > units_;
-  ::google::protobuf::RepeatedPtrField< ::message::production_element_t > prewar_construction_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t > units_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t > prewar_construction_;
   bool reserve_;
   ::google::protobuf::int32 strategic_move_arrival_year_;
   typedef ::google::protobuf::internal::MapEntryLite<
@@ -1895,50 +1895,50 @@ class mothball_reserve_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.oob_unit_t units = 1;
+  // repeated .pb_message.oob_unit_t units = 1;
   int units_size() const;
   void clear_units();
   static const int kUnitsFieldNumber = 1;
-  const ::message::oob_unit_t& units(int index) const;
-  ::message::oob_unit_t* mutable_units(int index);
-  ::message::oob_unit_t* add_units();
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+  const ::pb_message::oob_unit_t& units(int index) const;
+  ::pb_message::oob_unit_t* mutable_units(int index);
+  ::pb_message::oob_unit_t* add_units();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
       mutable_units();
-  const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
       units() const;
 
-  // repeated .message.oob_unit_t war_release = 2;
+  // repeated .pb_message.oob_unit_t war_release = 2;
   int war_release_size() const;
   void clear_war_release();
   static const int kWarReleaseFieldNumber = 2;
-  const ::message::oob_unit_t& war_release(int index) const;
-  ::message::oob_unit_t* mutable_war_release(int index);
-  ::message::oob_unit_t* add_war_release();
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+  const ::pb_message::oob_unit_t& war_release(int index) const;
+  ::pb_message::oob_unit_t* mutable_war_release(int index);
+  ::pb_message::oob_unit_t* add_war_release();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
       mutable_war_release();
-  const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
       war_release() const;
 
-  // repeated .message.oob_unit_t limited_war_release = 3;
+  // repeated .pb_message.oob_unit_t limited_war_release = 3;
   int limited_war_release_size() const;
   void clear_limited_war_release();
   static const int kLimitedWarReleaseFieldNumber = 3;
-  const ::message::oob_unit_t& limited_war_release(int index) const;
-  ::message::oob_unit_t* mutable_limited_war_release(int index);
-  ::message::oob_unit_t* add_limited_war_release();
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+  const ::pb_message::oob_unit_t& limited_war_release(int index) const;
+  ::pb_message::oob_unit_t* mutable_limited_war_release(int index);
+  ::pb_message::oob_unit_t* add_limited_war_release();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
       mutable_limited_war_release();
-  const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
       limited_war_release() const;
 
-  // @@protoc_insertion_point(class_scope:message.mothball_reserve_t)
+  // @@protoc_insertion_point(class_scope:pb_message.mothball_reserve_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t > units_;
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t > war_release_;
-  ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t > limited_war_release_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t > units_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t > war_release_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t > limited_war_release_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -2006,54 +2006,54 @@ class order_of_battle_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<string, .message.starting_fleet_t> starting_fleets = 1;
+  // map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
   int starting_fleets_size() const;
   void clear_starting_fleets();
   static const int kStartingFleetsFieldNumber = 1;
-  const ::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >&
       starting_fleets() const;
-  ::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >*
       mutable_starting_fleets();
 
-  // optional .message.mothball_reserve_t mothball_reserve = 2;
+  // optional .pb_message.mothball_reserve_t mothball_reserve = 2;
   bool has_mothball_reserve() const;
   void clear_mothball_reserve();
   static const int kMothballReserveFieldNumber = 2;
-  const ::message::mothball_reserve_t& mothball_reserve() const;
-  ::message::mothball_reserve_t* mutable_mothball_reserve();
-  ::message::mothball_reserve_t* release_mothball_reserve();
-  void set_allocated_mothball_reserve(::message::mothball_reserve_t* mothball_reserve);
+  const ::pb_message::mothball_reserve_t& mothball_reserve() const;
+  ::pb_message::mothball_reserve_t* mutable_mothball_reserve();
+  ::pb_message::mothball_reserve_t* release_mothball_reserve();
+  void set_allocated_mothball_reserve(::pb_message::mothball_reserve_t* mothball_reserve);
 
-  // repeated .message.production_element_t production = 3;
+  // repeated .pb_message.production_element_t production = 3;
   int production_size() const;
   void clear_production();
   static const int kProductionFieldNumber = 3;
-  const ::message::production_element_t& production(int index) const;
-  ::message::production_element_t* mutable_production(int index);
-  ::message::production_element_t* add_production();
-  ::google::protobuf::RepeatedPtrField< ::message::production_element_t >*
+  const ::pb_message::production_element_t& production(int index) const;
+  ::pb_message::production_element_t* mutable_production(int index);
+  ::pb_message::production_element_t* add_production();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >*
       mutable_production();
-  const ::google::protobuf::RepeatedPtrField< ::message::production_element_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >&
       production() const;
 
-  // @@protoc_insertion_point(class_scope:message.order_of_battle_t)
+  // @@protoc_insertion_point(class_scope:pb_message.order_of_battle_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::starting_fleet_t,
+      ::std::string, ::pb_message::starting_fleet_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       order_of_battle_t_StartingFleetsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::starting_fleet_t,
+      ::std::string, ::pb_message::starting_fleet_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > starting_fleets_;
-  ::message::mothball_reserve_t* mothball_reserve_;
-  ::google::protobuf::RepeatedPtrField< ::message::production_element_t > production_;
+  ::pb_message::mothball_reserve_t* mothball_reserve_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t > production_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -2121,28 +2121,28 @@ class orders_of_battle_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<string, .message.order_of_battle_t> oobs = 1;
+  // map<string, .pb_message.order_of_battle_t> oobs = 1;
   int oobs_size() const;
   void clear_oobs();
   static const int kOobsFieldNumber = 1;
-  const ::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >&
       oobs() const;
-  ::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >*
       mutable_oobs();
 
-  // @@protoc_insertion_point(class_scope:message.orders_of_battle_t)
+  // @@protoc_insertion_point(class_scope:pb_message.orders_of_battle_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::order_of_battle_t,
+      ::std::string, ::pb_message::order_of_battle_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       orders_of_battle_t_OobsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::order_of_battle_t,
+      ::std::string, ::pb_message::order_of_battle_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > oobs_;
@@ -2260,17 +2260,17 @@ class unit_def_side_t : public ::google::protobuf::Message {
   bool mauler() const;
   void set_mauler(bool value);
 
-  // repeated .message.tug_mission_t tug_missions = 9;
+  // repeated .pb_message.tug_mission_t tug_missions = 9;
   int tug_missions_size() const;
   void clear_tug_missions();
   static const int kTugMissionsFieldNumber = 9;
-  ::message::tug_mission_t tug_missions(int index) const;
-  void set_tug_missions(int index, ::message::tug_mission_t value);
-  void add_tug_missions(::message::tug_mission_t value);
+  ::pb_message::tug_mission_t tug_missions(int index) const;
+  void set_tug_missions(int index, ::pb_message::tug_mission_t value);
+  void add_tug_missions(::pb_message::tug_mission_t value);
   const ::google::protobuf::RepeatedField<int>& tug_missions() const;
   ::google::protobuf::RepeatedField<int>* mutable_tug_missions();
 
-  // @@protoc_insertion_point(class_scope:message.unit_def_side_t)
+  // @@protoc_insertion_point(class_scope:pb_message.unit_def_side_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -2363,7 +2363,7 @@ class towable_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 strat_move_limit() const;
   void set_strat_move_limit(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.towable_t)
+  // @@protoc_insertion_point(class_scope:pb_message.towable_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -2448,7 +2448,7 @@ class production_cost_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 fighter_cost() const;
   void set_fighter_cost(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.production_cost_t)
+  // @@protoc_insertion_point(class_scope:pb_message.production_cost_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -2539,38 +2539,38 @@ class unit_def_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 cmd() const;
   void set_cmd(::google::protobuf::int32 value);
 
-  // optional .message.unit_def_side_t uncrippled = 3;
+  // optional .pb_message.unit_def_side_t uncrippled = 3;
   bool has_uncrippled() const;
   void clear_uncrippled();
   static const int kUncrippledFieldNumber = 3;
-  const ::message::unit_def_side_t& uncrippled() const;
-  ::message::unit_def_side_t* mutable_uncrippled();
-  ::message::unit_def_side_t* release_uncrippled();
-  void set_allocated_uncrippled(::message::unit_def_side_t* uncrippled);
+  const ::pb_message::unit_def_side_t& uncrippled() const;
+  ::pb_message::unit_def_side_t* mutable_uncrippled();
+  ::pb_message::unit_def_side_t* release_uncrippled();
+  void set_allocated_uncrippled(::pb_message::unit_def_side_t* uncrippled);
 
-  // optional .message.unit_def_side_t crippled = 4;
+  // optional .pb_message.unit_def_side_t crippled = 4;
   bool has_crippled() const;
   void clear_crippled();
   static const int kCrippledFieldNumber = 4;
-  const ::message::unit_def_side_t& crippled() const;
-  ::message::unit_def_side_t* mutable_crippled();
-  ::message::unit_def_side_t* release_crippled();
-  void set_allocated_crippled(::message::unit_def_side_t* crippled);
+  const ::pb_message::unit_def_side_t& crippled() const;
+  ::pb_message::unit_def_side_t* mutable_crippled();
+  ::pb_message::unit_def_side_t* release_crippled();
+  void set_allocated_crippled(::pb_message::unit_def_side_t* crippled);
 
-  // optional .message.escort_type_t escort_type = 5;
+  // optional .pb_message.escort_type_t escort_type = 5;
   void clear_escort_type();
   static const int kEscortTypeFieldNumber = 5;
-  ::message::escort_type_t escort_type() const;
-  void set_escort_type(::message::escort_type_t value);
+  ::pb_message::escort_type_t escort_type() const;
+  void set_escort_type(::pb_message::escort_type_t value);
 
-  // optional .message.turn_t available = 6;
+  // optional .pb_message.turn_t available = 6;
   bool has_available() const;
   void clear_available();
   static const int kAvailableFieldNumber = 6;
-  const ::message::turn_t& available() const;
-  ::message::turn_t* mutable_available();
-  ::message::turn_t* release_available();
-  void set_allocated_available(::message::turn_t* available);
+  const ::pb_message::turn_t& available() const;
+  ::pb_message::turn_t* mutable_available();
+  ::pb_message::turn_t* release_available();
+  void set_allocated_available(::pb_message::turn_t* available);
 
   // optional bool pod = 7;
   void clear_pod();
@@ -2584,31 +2584,31 @@ class unit_def_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 max_in_service() const;
   void set_max_in_service(::google::protobuf::int32 value);
 
-  // optional .message.production_cost_t construction = 9;
+  // optional .pb_message.production_cost_t construction = 9;
   bool has_construction() const;
   void clear_construction();
   static const int kConstructionFieldNumber = 9;
-  const ::message::production_cost_t& construction() const;
-  ::message::production_cost_t* mutable_construction();
-  ::message::production_cost_t* release_construction();
-  void set_allocated_construction(::message::production_cost_t* construction);
+  const ::pb_message::production_cost_t& construction() const;
+  ::pb_message::production_cost_t* mutable_construction();
+  ::pb_message::production_cost_t* release_construction();
+  void set_allocated_construction(::pb_message::production_cost_t* construction);
 
-  // map<string, .message.production_cost_t> substitutions = 10;
+  // map<string, .pb_message.production_cost_t> substitutions = 10;
   int substitutions_size() const;
   void clear_substitutions();
   static const int kSubstitutionsFieldNumber = 10;
-  const ::google::protobuf::Map< ::std::string, ::message::production_cost_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >&
       substitutions() const;
-  ::google::protobuf::Map< ::std::string, ::message::production_cost_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >*
       mutable_substitutions();
 
-  // map<string, .message.production_cost_t> conversions = 11;
+  // map<string, .pb_message.production_cost_t> conversions = 11;
   int conversions_size() const;
   void clear_conversions();
   static const int kConversionsFieldNumber = 11;
-  const ::google::protobuf::Map< ::std::string, ::message::production_cost_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >&
       conversions() const;
-  ::google::protobuf::Map< ::std::string, ::message::production_cost_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >*
       mutable_conversions();
 
   // optional int32 move = 12;
@@ -2617,11 +2617,11 @@ class unit_def_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 move() const;
   void set_move(::google::protobuf::int32 value);
 
-  // optional .message.carrier_type_t carrier_type = 13;
+  // optional .pb_message.carrier_type_t carrier_type = 13;
   void clear_carrier_type();
   static const int kCarrierTypeFieldNumber = 13;
-  ::message::carrier_type_t carrier_type() const;
-  void set_carrier_type(::message::carrier_type_t value);
+  ::pb_message::carrier_type_t carrier_type() const;
+  void set_carrier_type(::pb_message::carrier_type_t value);
 
   // optional bool not_spaceworthy = 14;
   void clear_not_spaceworthy();
@@ -2629,14 +2629,14 @@ class unit_def_t : public ::google::protobuf::Message {
   bool not_spaceworthy() const;
   void set_not_spaceworthy(bool value);
 
-  // optional .message.towable_t towable = 15;
+  // optional .pb_message.towable_t towable = 15;
   bool has_towable() const;
   void clear_towable();
   static const int kTowableFieldNumber = 15;
-  const ::message::towable_t& towable() const;
-  ::message::towable_t* mutable_towable();
-  ::message::towable_t* release_towable();
-  void set_allocated_towable(::message::towable_t* towable);
+  const ::pb_message::towable_t& towable() const;
+  ::pb_message::towable_t* mutable_towable();
+  ::pb_message::towable_t* release_towable();
+  void set_allocated_towable(::pb_message::towable_t* towable);
 
   // optional int32 salvage = 16;
   void clear_salvage();
@@ -2655,46 +2655,46 @@ class unit_def_t : public ::google::protobuf::Message {
   ::std::string* release_notes();
   void set_allocated_notes(::std::string* notes);
 
-  // @@protoc_insertion_point(class_scope:message.unit_def_t)
+  // @@protoc_insertion_point(class_scope:pb_message.unit_def_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
-  ::message::unit_def_side_t* uncrippled_;
+  ::pb_message::unit_def_side_t* uncrippled_;
   ::google::protobuf::int32 cmd_;
   int escort_type_;
-  ::message::unit_def_side_t* crippled_;
-  ::message::turn_t* available_;
-  ::message::production_cost_t* construction_;
+  ::pb_message::unit_def_side_t* crippled_;
+  ::pb_message::turn_t* available_;
+  ::pb_message::production_cost_t* construction_;
   ::google::protobuf::int32 max_in_service_;
   bool pod_;
   bool not_spaceworthy_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::production_cost_t,
+      ::std::string, ::pb_message::production_cost_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       unit_def_t_SubstitutionsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::production_cost_t,
+      ::std::string, ::pb_message::production_cost_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > substitutions_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::production_cost_t,
+      ::std::string, ::pb_message::production_cost_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       unit_def_t_ConversionsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::production_cost_t,
+      ::std::string, ::pb_message::production_cost_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > conversions_;
   ::google::protobuf::int32 move_;
   int carrier_type_;
-  ::message::towable_t* towable_;
+  ::pb_message::towable_t* towable_;
   ::google::protobuf::internal::ArenaStringPtr notes_;
   ::google::protobuf::int32 salvage_;
   mutable int _cached_size_;
@@ -2763,24 +2763,24 @@ class nation_unit_defs_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.unit_def_t units = 1;
+  // repeated .pb_message.unit_def_t units = 1;
   int units_size() const;
   void clear_units();
   static const int kUnitsFieldNumber = 1;
-  const ::message::unit_def_t& units(int index) const;
-  ::message::unit_def_t* mutable_units(int index);
-  ::message::unit_def_t* add_units();
-  ::google::protobuf::RepeatedPtrField< ::message::unit_def_t >*
+  const ::pb_message::unit_def_t& units(int index) const;
+  ::pb_message::unit_def_t* mutable_units(int index);
+  ::pb_message::unit_def_t* add_units();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t >*
       mutable_units();
-  const ::google::protobuf::RepeatedPtrField< ::message::unit_def_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t >&
       units() const;
 
-  // @@protoc_insertion_point(class_scope:message.nation_unit_defs_t)
+  // @@protoc_insertion_point(class_scope:pb_message.nation_unit_defs_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::unit_def_t > units_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t > units_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -2848,28 +2848,28 @@ class unit_defs_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<string, .message.nation_unit_defs_t> nation_units = 1;
+  // map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
   int nation_units_size() const;
   void clear_nation_units();
   static const int kNationUnitsFieldNumber = 1;
-  const ::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >&
       nation_units() const;
-  ::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >*
       mutable_nation_units();
 
-  // @@protoc_insertion_point(class_scope:message.unit_defs_t)
+  // @@protoc_insertion_point(class_scope:pb_message.unit_defs_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::nation_unit_defs_t,
+      ::std::string, ::pb_message::nation_unit_defs_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       unit_defs_t_NationUnitsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::nation_unit_defs_t,
+      ::std::string, ::pb_message::nation_unit_defs_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > nation_units_;
@@ -2966,7 +2966,7 @@ class team_t : public ::google::protobuf::Message {
   const ::google::protobuf::RepeatedPtrField< ::std::string>& nations() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_nations();
 
-  // @@protoc_insertion_point(class_scope:message.team_t)
+  // @@protoc_insertion_point(class_scope:pb_message.team_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3039,11 +3039,11 @@ class scenario_condition_t_object_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .message.scenario_condition_t.object_type_t type = 1;
+  // optional .pb_message.scenario_condition_t.object_type_t type = 1;
   void clear_type();
   static const int kTypeFieldNumber = 1;
-  ::message::scenario_condition_t_object_type_t type() const;
-  void set_type(::message::scenario_condition_t_object_type_t value);
+  ::pb_message::scenario_condition_t_object_type_t type() const;
+  void set_type(::pb_message::scenario_condition_t_object_type_t value);
 
   // repeated string names = 2;
   int names_size() const;
@@ -3073,7 +3073,7 @@ class scenario_condition_t_object_t : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_hexes();
 
-  // @@protoc_insertion_point(class_scope:message.scenario_condition_t.object_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_condition_t.object_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3216,31 +3216,31 @@ class scenario_condition_t : public ::google::protobuf::Message {
   const ::google::protobuf::RepeatedPtrField< ::std::string>& actors() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_actors();
 
-  // optional .message.scenario_condition_t.action_t action = 2;
+  // optional .pb_message.scenario_condition_t.action_t action = 2;
   void clear_action();
   static const int kActionFieldNumber = 2;
-  ::message::scenario_condition_t_action_t action() const;
-  void set_action(::message::scenario_condition_t_action_t value);
+  ::pb_message::scenario_condition_t_action_t action() const;
+  void set_action(::pb_message::scenario_condition_t_action_t value);
 
-  // repeated .message.scenario_condition_t.object_t one_of = 3;
+  // repeated .pb_message.scenario_condition_t.object_t one_of = 3;
   int one_of_size() const;
   void clear_one_of();
   static const int kOneOfFieldNumber = 3;
-  const ::message::scenario_condition_t_object_t& one_of(int index) const;
-  ::message::scenario_condition_t_object_t* mutable_one_of(int index);
-  ::message::scenario_condition_t_object_t* add_one_of();
-  ::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t >*
+  const ::pb_message::scenario_condition_t_object_t& one_of(int index) const;
+  ::pb_message::scenario_condition_t_object_t* mutable_one_of(int index);
+  ::pb_message::scenario_condition_t_object_t* add_one_of();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t >*
       mutable_one_of();
-  const ::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t >&
       one_of() const;
 
-  // @@protoc_insertion_point(class_scope:message.scenario_condition_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_condition_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::RepeatedPtrField< ::std::string> actors_;
-  ::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t > one_of_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t > one_of_;
   int action_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
@@ -3319,22 +3319,22 @@ class fleet_release_condition_t : public ::google::protobuf::Message {
   ::std::string* release_fleet();
   void set_allocated_fleet(::std::string* fleet);
 
-  // optional .message.scenario_condition_t condition = 2;
+  // optional .pb_message.scenario_condition_t condition = 2;
   bool has_condition() const;
   void clear_condition();
   static const int kConditionFieldNumber = 2;
-  const ::message::scenario_condition_t& condition() const;
-  ::message::scenario_condition_t* mutable_condition();
-  ::message::scenario_condition_t* release_condition();
-  void set_allocated_condition(::message::scenario_condition_t* condition);
+  const ::pb_message::scenario_condition_t& condition() const;
+  ::pb_message::scenario_condition_t* mutable_condition();
+  ::pb_message::scenario_condition_t* release_condition();
+  void set_allocated_condition(::pb_message::scenario_condition_t* condition);
 
-  // @@protoc_insertion_point(class_scope:message.fleet_release_condition_t)
+  // @@protoc_insertion_point(class_scope:pb_message.fleet_release_condition_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr fleet_;
-  ::message::scenario_condition_t* condition_;
+  ::pb_message::scenario_condition_t* condition_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -3401,27 +3401,27 @@ class war_entry_condition_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   void clear_economy();
   static const int kEconomyFieldNumber = 3;
-  ::message::war_footing_t economy() const;
-  void set_economy(::message::war_footing_t value);
+  ::pb_message::war_footing_t economy() const;
+  void set_economy(::pb_message::war_footing_t value);
 
-  // optional .message.scenario_condition_t condition = 2;
+  // optional .pb_message.scenario_condition_t condition = 2;
   bool has_condition() const;
   void clear_condition();
   static const int kConditionFieldNumber = 2;
-  const ::message::scenario_condition_t& condition() const;
-  ::message::scenario_condition_t* mutable_condition();
-  ::message::scenario_condition_t* release_condition();
-  void set_allocated_condition(::message::scenario_condition_t* condition);
+  const ::pb_message::scenario_condition_t& condition() const;
+  ::pb_message::scenario_condition_t* mutable_condition();
+  ::pb_message::scenario_condition_t* release_condition();
+  void set_allocated_condition(::pb_message::scenario_condition_t* condition);
 
-  // @@protoc_insertion_point(class_scope:message.war_entry_condition_t)
+  // @@protoc_insertion_point(class_scope:pb_message.war_entry_condition_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::message::scenario_condition_t* condition_;
+  ::pb_message::scenario_condition_t* condition_;
   int economy_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
@@ -3489,11 +3489,11 @@ class scenario_turn_t_national_action_t_action_t : public ::google::protobuf::Me
 
   // accessors -------------------------------------------------------
 
-  // optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+  // optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
   void clear_type();
   static const int kTypeFieldNumber = 1;
-  ::message::scenario_turn_t_national_action_t_action_type_t type() const;
-  void set_type(::message::scenario_turn_t_national_action_t_action_type_t value);
+  ::pb_message::scenario_turn_t_national_action_t_action_type_t type() const;
+  void set_type(::pb_message::scenario_turn_t_national_action_t_action_type_t value);
 
   // repeated string names = 2;
   int names_size() const;
@@ -3511,7 +3511,7 @@ class scenario_turn_t_national_action_t_action_t : public ::google::protobuf::Me
   const ::google::protobuf::RepeatedPtrField< ::std::string>& names() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_names();
 
-  // @@protoc_insertion_point(class_scope:message.scenario_turn_t.national_action_t.action_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_turn_t.national_action_t.action_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3610,24 +3610,24 @@ class scenario_turn_t_national_action_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+  // repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
   int actions_size() const;
   void clear_actions();
   static const int kActionsFieldNumber = 1;
-  const ::message::scenario_turn_t_national_action_t_action_t& actions(int index) const;
-  ::message::scenario_turn_t_national_action_t_action_t* mutable_actions(int index);
-  ::message::scenario_turn_t_national_action_t_action_t* add_actions();
-  ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t >*
+  const ::pb_message::scenario_turn_t_national_action_t_action_t& actions(int index) const;
+  ::pb_message::scenario_turn_t_national_action_t_action_t* mutable_actions(int index);
+  ::pb_message::scenario_turn_t_national_action_t_action_t* add_actions();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t >*
       mutable_actions();
-  const ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t >&
       actions() const;
 
-  // @@protoc_insertion_point(class_scope:message.scenario_turn_t.national_action_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_turn_t.national_action_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t > actions_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t > actions_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -3702,28 +3702,28 @@ class scenario_turn_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 turn() const;
   void set_turn(::google::protobuf::int32 value);
 
-  // map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+  // map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
   int national_actions_size() const;
   void clear_national_actions();
   static const int kNationalActionsFieldNumber = 2;
-  const ::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >&
       national_actions() const;
-  ::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >*
       mutable_national_actions();
 
-  // @@protoc_insertion_point(class_scope:message.scenario_turn_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_turn_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::scenario_turn_t_national_action_t,
+      ::std::string, ::pb_message::scenario_turn_t_national_action_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       scenario_turn_t_NationalActionsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::scenario_turn_t_national_action_t,
+      ::std::string, ::pb_message::scenario_turn_t_national_action_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > national_actions_;
@@ -3826,11 +3826,11 @@ class scenario_t_nation_t : public ::google::protobuf::Message {
   const ::google::protobuf::RepeatedPtrField< ::std::string>& future_belligerents() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_future_belligerents();
 
-  // optional .message.war_footing_t economy = 3;
+  // optional .pb_message.war_footing_t economy = 3;
   void clear_economy();
   static const int kEconomyFieldNumber = 3;
-  ::message::war_footing_t economy() const;
-  void set_economy(::message::war_footing_t value);
+  ::pb_message::war_footing_t economy() const;
+  void set_economy(::pb_message::war_footing_t value);
 
   // optional int32 exhaustion_turns = 4;
   void clear_exhaustion_turns();
@@ -3844,31 +3844,31 @@ class scenario_t_nation_t : public ::google::protobuf::Message {
   bool accumulate_exhaustion_at_peace() const;
   void set_accumulate_exhaustion_at_peace(bool value);
 
-  // repeated .message.fleet_release_condition_t release_conditions = 6;
+  // repeated .pb_message.fleet_release_condition_t release_conditions = 6;
   int release_conditions_size() const;
   void clear_release_conditions();
   static const int kReleaseConditionsFieldNumber = 6;
-  const ::message::fleet_release_condition_t& release_conditions(int index) const;
-  ::message::fleet_release_condition_t* mutable_release_conditions(int index);
-  ::message::fleet_release_condition_t* add_release_conditions();
-  ::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t >*
+  const ::pb_message::fleet_release_condition_t& release_conditions(int index) const;
+  ::pb_message::fleet_release_condition_t* mutable_release_conditions(int index);
+  ::pb_message::fleet_release_condition_t* add_release_conditions();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t >*
       mutable_release_conditions();
-  const ::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t >&
       release_conditions() const;
 
-  // repeated .message.war_entry_condition_t war_entry_conditions = 7;
+  // repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
   int war_entry_conditions_size() const;
   void clear_war_entry_conditions();
   static const int kWarEntryConditionsFieldNumber = 7;
-  const ::message::war_entry_condition_t& war_entry_conditions(int index) const;
-  ::message::war_entry_condition_t* mutable_war_entry_conditions(int index);
-  ::message::war_entry_condition_t* add_war_entry_conditions();
-  ::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t >*
+  const ::pb_message::war_entry_condition_t& war_entry_conditions(int index) const;
+  ::pb_message::war_entry_condition_t* mutable_war_entry_conditions(int index);
+  ::pb_message::war_entry_condition_t* add_war_entry_conditions();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t >*
       mutable_war_entry_conditions();
-  const ::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t >&
       war_entry_conditions() const;
 
-  // @@protoc_insertion_point(class_scope:message.scenario_t.nation_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_t.nation_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3877,8 +3877,8 @@ class scenario_t_nation_t : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::std::string> future_belligerents_;
   int economy_;
   ::google::protobuf::int32 exhaustion_turns_;
-  ::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t > release_conditions_;
-  ::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t > war_entry_conditions_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t > release_conditions_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t > war_entry_conditions_;
   bool accumulate_exhaustion_at_peace_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
@@ -3970,25 +3970,25 @@ class scenario_t : public ::google::protobuf::Message {
   ::std::string* release_description();
   void set_allocated_description(::std::string* description);
 
-  // optional .message.turn_t start_turn = 3;
+  // optional .pb_message.turn_t start_turn = 3;
   bool has_start_turn() const;
   void clear_start_turn();
   static const int kStartTurnFieldNumber = 3;
-  const ::message::turn_t& start_turn() const;
-  ::message::turn_t* mutable_start_turn();
-  ::message::turn_t* release_start_turn();
-  void set_allocated_start_turn(::message::turn_t* start_turn);
+  const ::pb_message::turn_t& start_turn() const;
+  ::pb_message::turn_t* mutable_start_turn();
+  ::pb_message::turn_t* release_start_turn();
+  void set_allocated_start_turn(::pb_message::turn_t* start_turn);
 
-  // repeated .message.team_t teams = 4;
+  // repeated .pb_message.team_t teams = 4;
   int teams_size() const;
   void clear_teams();
   static const int kTeamsFieldNumber = 4;
-  const ::message::team_t& teams(int index) const;
-  ::message::team_t* mutable_teams(int index);
-  ::message::team_t* add_teams();
-  ::google::protobuf::RepeatedPtrField< ::message::team_t >*
+  const ::pb_message::team_t& teams(int index) const;
+  ::pb_message::team_t* mutable_teams(int index);
+  ::pb_message::team_t* add_teams();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::team_t >*
       mutable_teams();
-  const ::google::protobuf::RepeatedPtrField< ::message::team_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::team_t >&
       teams() const;
 
   // repeated string team_turn_order = 5;
@@ -4045,52 +4045,52 @@ class scenario_t : public ::google::protobuf::Message {
   const ::google::protobuf::RepeatedPtrField< ::std::string>& setup_order() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_setup_order();
 
-  // map<string, .message.scenario_t.nation_t> nations = 9;
+  // map<string, .pb_message.scenario_t.nation_t> nations = 9;
   int nations_size() const;
   void clear_nations();
   static const int kNationsFieldNumber = 9;
-  const ::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >&
       nations() const;
-  ::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >*
       mutable_nations();
 
-  // repeated .message.scenario_turn_t turns = 10;
+  // repeated .pb_message.scenario_turn_t turns = 10;
   int turns_size() const;
   void clear_turns();
   static const int kTurnsFieldNumber = 10;
-  const ::message::scenario_turn_t& turns(int index) const;
-  ::message::scenario_turn_t* mutable_turns(int index);
-  ::message::scenario_turn_t* add_turns();
-  ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t >*
+  const ::pb_message::scenario_turn_t& turns(int index) const;
+  ::pb_message::scenario_turn_t* mutable_turns(int index);
+  ::pb_message::scenario_turn_t* add_turns();
+  ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t >*
       mutable_turns();
-  const ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t >&
+  const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t >&
       turns() const;
 
-  // @@protoc_insertion_point(class_scope:message.scenario_t)
+  // @@protoc_insertion_point(class_scope:pb_message.scenario_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr description_;
-  ::message::turn_t* start_turn_;
-  ::google::protobuf::RepeatedPtrField< ::message::team_t > teams_;
+  ::pb_message::turn_t* start_turn_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::team_t > teams_;
   ::google::protobuf::RepeatedPtrField< ::std::string> team_turn_order_;
   ::google::protobuf::internal::ArenaStringPtr map_;
   ::google::protobuf::internal::ArenaStringPtr order_of_battle_;
   ::google::protobuf::RepeatedPtrField< ::std::string> setup_order_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::scenario_t_nation_t,
+      ::std::string, ::pb_message::scenario_t_nation_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       scenario_t_NationsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::scenario_t_nation_t,
+      ::std::string, ::pb_message::scenario_t_nation_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > nations_;
-  ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t > turns_;
+  ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t > turns_;
   mutable int _cached_size_;
   friend void  protobuf_AddDesc_start_5fdata_2eproto();
   friend void protobuf_AssignDesc_start_5fdata_2eproto();
@@ -4112,28 +4112,28 @@ inline void capital_hex_zone_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& capital_hex_zone_t::name() const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_zone_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void capital_hex_zone_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.capital_hex_zone_t.name)
 }
 inline void capital_hex_zone_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.capital_hex_zone_t.name)
 }
 inline void capital_hex_zone_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.capital_hex_zone_t.name)
 }
 inline ::std::string* capital_hex_zone_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.capital_hex_zone_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* capital_hex_zone_t::release_name() {
@@ -4147,36 +4147,36 @@ inline void capital_hex_zone_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.capital_hex_zone_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.capital_hex_zone_t.name)
 }
 
-// repeated .message.feature_t features = 2 [packed = true];
+// repeated .pb_message.feature_t features = 2 [packed = true];
 inline int capital_hex_zone_t::features_size() const {
   return features_.size();
 }
 inline void capital_hex_zone_t::clear_features() {
   features_.Clear();
 }
-inline ::message::feature_t capital_hex_zone_t::features(int index) const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_zone_t.features)
-  return static_cast< ::message::feature_t >(features_.Get(index));
+inline ::pb_message::feature_t capital_hex_zone_t::features(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_zone_t.features)
+  return static_cast< ::pb_message::feature_t >(features_.Get(index));
 }
-inline void capital_hex_zone_t::set_features(int index, ::message::feature_t value) {
+inline void capital_hex_zone_t::set_features(int index, ::pb_message::feature_t value) {
   features_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_set:pb_message.capital_hex_zone_t.features)
 }
-inline void capital_hex_zone_t::add_features(::message::feature_t value) {
+inline void capital_hex_zone_t::add_features(::pb_message::feature_t value) {
   features_.Add(value);
-  // @@protoc_insertion_point(field_add:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_add:pb_message.capital_hex_zone_t.features)
 }
 inline const ::google::protobuf::RepeatedField<int>&
 capital_hex_zone_t::features() const {
-  // @@protoc_insertion_point(field_list:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_list:pb_message.capital_hex_zone_t.features)
   return features_;
 }
 inline ::google::protobuf::RepeatedField<int>*
 capital_hex_zone_t::mutable_features() {
-  // @@protoc_insertion_point(field_mutable_list:message.capital_hex_zone_t.features)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.capital_hex_zone_t.features)
   return &features_;
 }
 
@@ -4189,42 +4189,42 @@ inline void capital_hex_t::clear_coord() {
   coord_ = 0;
 }
 inline ::google::protobuf::int32 capital_hex_t::coord() const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_t.coord)
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_t.coord)
   return coord_;
 }
 inline void capital_hex_t::set_coord(::google::protobuf::int32 value) {
   
   coord_ = value;
-  // @@protoc_insertion_point(field_set:message.capital_hex_t.coord)
+  // @@protoc_insertion_point(field_set:pb_message.capital_hex_t.coord)
 }
 
-// repeated .message.capital_hex_zone_t zones = 2;
+// repeated .pb_message.capital_hex_zone_t zones = 2;
 inline int capital_hex_t::zones_size() const {
   return zones_.size();
 }
 inline void capital_hex_t::clear_zones() {
   zones_.Clear();
 }
-inline const ::message::capital_hex_zone_t& capital_hex_t::zones(int index) const {
-  // @@protoc_insertion_point(field_get:message.capital_hex_t.zones)
+inline const ::pb_message::capital_hex_zone_t& capital_hex_t::zones(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.capital_hex_t.zones)
   return zones_.Get(index);
 }
-inline ::message::capital_hex_zone_t* capital_hex_t::mutable_zones(int index) {
-  // @@protoc_insertion_point(field_mutable:message.capital_hex_t.zones)
+inline ::pb_message::capital_hex_zone_t* capital_hex_t::mutable_zones(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.capital_hex_t.zones)
   return zones_.Mutable(index);
 }
-inline ::message::capital_hex_zone_t* capital_hex_t::add_zones() {
-  // @@protoc_insertion_point(field_add:message.capital_hex_t.zones)
+inline ::pb_message::capital_hex_zone_t* capital_hex_t::add_zones() {
+  // @@protoc_insertion_point(field_add:pb_message.capital_hex_t.zones)
   return zones_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t >*
 capital_hex_t::mutable_zones() {
-  // @@protoc_insertion_point(field_mutable_list:message.capital_hex_t.zones)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.capital_hex_t.zones)
   return &zones_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::capital_hex_zone_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_zone_t >&
 capital_hex_t::zones() const {
-  // @@protoc_insertion_point(field_list:message.capital_hex_t.zones)
+  // @@protoc_insertion_point(field_list:pb_message.capital_hex_t.zones)
   return zones_;
 }
 
@@ -4232,33 +4232,33 @@ capital_hex_t::zones() const {
 
 // capital_t
 
-// repeated .message.capital_hex_t hexes = 1;
+// repeated .pb_message.capital_hex_t hexes = 1;
 inline int capital_t::hexes_size() const {
   return hexes_.size();
 }
 inline void capital_t::clear_hexes() {
   hexes_.Clear();
 }
-inline const ::message::capital_hex_t& capital_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.capital_t.hexes)
+inline const ::pb_message::capital_hex_t& capital_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.capital_t.hexes)
   return hexes_.Get(index);
 }
-inline ::message::capital_hex_t* capital_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.capital_t.hexes)
+inline ::pb_message::capital_hex_t* capital_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.capital_t.hexes)
   return hexes_.Mutable(index);
 }
-inline ::message::capital_hex_t* capital_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.capital_t.hexes)
+inline ::pb_message::capital_hex_t* capital_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.capital_t.hexes)
   return hexes_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::capital_hex_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t >*
 capital_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.capital_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.capital_t.hexes)
   return &hexes_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::capital_hex_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::capital_hex_t >&
 capital_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.capital_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.capital_t.hexes)
   return hexes_;
 }
 
@@ -4271,13 +4271,13 @@ inline void offmap_possesions_t::clear_provinces() {
   provinces_ = 0;
 }
 inline ::google::protobuf::int32 offmap_possesions_t::provinces() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.provinces)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.provinces)
   return provinces_;
 }
 inline void offmap_possesions_t::set_provinces(::google::protobuf::int32 value) {
   
   provinces_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.provinces)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.provinces)
 }
 
 // optional int32 mins = 2;
@@ -4285,13 +4285,13 @@ inline void offmap_possesions_t::clear_mins() {
   mins_ = 0;
 }
 inline ::google::protobuf::int32 offmap_possesions_t::mins() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.mins)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.mins)
   return mins_;
 }
 inline void offmap_possesions_t::set_mins(::google::protobuf::int32 value) {
   
   mins_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.mins)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.mins)
 }
 
 // optional int32 majs = 3;
@@ -4299,13 +4299,13 @@ inline void offmap_possesions_t::clear_majs() {
   majs_ = 0;
 }
 inline ::google::protobuf::int32 offmap_possesions_t::majs() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.majs)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.majs)
   return majs_;
 }
 inline void offmap_possesions_t::set_majs(::google::protobuf::int32 value) {
   
   majs_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.majs)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.majs)
 }
 
 // optional int32 survey_ships = 4;
@@ -4313,13 +4313,13 @@ inline void offmap_possesions_t::clear_survey_ships() {
   survey_ships_ = 0;
 }
 inline ::google::protobuf::int32 offmap_possesions_t::survey_ships() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.survey_ships)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.survey_ships)
   return survey_ships_;
 }
 inline void offmap_possesions_t::set_survey_ships(::google::protobuf::int32 value) {
   
   survey_ships_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.survey_ships)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.survey_ships)
 }
 
 // optional bool cannot_build_offmap_capital = 5;
@@ -4327,13 +4327,13 @@ inline void offmap_possesions_t::clear_cannot_build_offmap_capital() {
   cannot_build_offmap_capital_ = false;
 }
 inline bool offmap_possesions_t::cannot_build_offmap_capital() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.cannot_build_offmap_capital)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.cannot_build_offmap_capital)
   return cannot_build_offmap_capital_;
 }
 inline void offmap_possesions_t::set_cannot_build_offmap_capital(bool value) {
   
   cannot_build_offmap_capital_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.cannot_build_offmap_capital)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.cannot_build_offmap_capital)
 }
 
 // optional bool old_shipyard = 6;
@@ -4341,13 +4341,13 @@ inline void offmap_possesions_t::clear_old_shipyard() {
   old_shipyard_ = false;
 }
 inline bool offmap_possesions_t::old_shipyard() const {
-  // @@protoc_insertion_point(field_get:message.offmap_possesions_t.old_shipyard)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_possesions_t.old_shipyard)
   return old_shipyard_;
 }
 inline void offmap_possesions_t::set_old_shipyard(bool value) {
   
   old_shipyard_ = value;
-  // @@protoc_insertion_point(field_set:message.offmap_possesions_t.old_shipyard)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_possesions_t.old_shipyard)
 }
 
 // -------------------------------------------------------------------
@@ -4359,28 +4359,28 @@ inline void nation_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& nation_t::name() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void nation_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.nation_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.name)
 }
 inline void nation_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.nation_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.nation_t.name)
 }
 inline void nation_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.nation_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.nation_t.name)
 }
 inline ::std::string* nation_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.nation_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* nation_t::release_name() {
@@ -4394,7 +4394,7 @@ inline void nation_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.name)
 }
 
 // optional string short_name = 2;
@@ -4402,28 +4402,28 @@ inline void nation_t::clear_short_name() {
   short_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& nation_t::short_name() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.short_name)
   return short_name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void nation_t::set_short_name(const ::std::string& value) {
   
   short_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.short_name)
 }
 inline void nation_t::set_short_name(const char* value) {
   
   short_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set_char:pb_message.nation_t.short_name)
 }
 inline void nation_t::set_short_name(const char* value, size_t size) {
   
   short_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.nation_t.short_name)
 }
 inline ::std::string* nation_t::mutable_short_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.short_name)
   return short_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* nation_t::release_short_name() {
@@ -4437,10 +4437,10 @@ inline void nation_t::set_allocated_short_name(::std::string* short_name) {
     
   }
   short_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), short_name);
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.short_name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.short_name)
 }
 
-// optional .message.capital_t capital = 3;
+// optional .pb_message.capital_t capital = 3;
 inline bool nation_t::has_capital() const {
   return !_is_default_instance_ && capital_ != NULL;
 }
@@ -4448,25 +4448,25 @@ inline void nation_t::clear_capital() {
   if (GetArenaNoVirtual() == NULL && capital_ != NULL) delete capital_;
   capital_ = NULL;
 }
-inline const ::message::capital_t& nation_t::capital() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.capital)
+inline const ::pb_message::capital_t& nation_t::capital() const {
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.capital)
   return capital_ != NULL ? *capital_ : *default_instance_->capital_;
 }
-inline ::message::capital_t* nation_t::mutable_capital() {
+inline ::pb_message::capital_t* nation_t::mutable_capital() {
   
   if (capital_ == NULL) {
-    capital_ = new ::message::capital_t;
+    capital_ = new ::pb_message::capital_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.nation_t.capital)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.capital)
   return capital_;
 }
-inline ::message::capital_t* nation_t::release_capital() {
+inline ::pb_message::capital_t* nation_t::release_capital() {
   
-  ::message::capital_t* temp = capital_;
+  ::pb_message::capital_t* temp = capital_;
   capital_ = NULL;
   return temp;
 }
-inline void nation_t::set_allocated_capital(::message::capital_t* capital) {
+inline void nation_t::set_allocated_capital(::pb_message::capital_t* capital) {
   delete capital_;
   capital_ = capital;
   if (capital) {
@@ -4474,7 +4474,7 @@ inline void nation_t::set_allocated_capital(::message::capital_t* capital) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.capital)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.capital)
 }
 
 // optional int32 free_strategic_moves = 4;
@@ -4482,13 +4482,13 @@ inline void nation_t::clear_free_strategic_moves() {
   free_strategic_moves_ = 0;
 }
 inline ::google::protobuf::int32 nation_t::free_strategic_moves() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.free_strategic_moves)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.free_strategic_moves)
   return free_strategic_moves_;
 }
 inline void nation_t::set_free_strategic_moves(::google::protobuf::int32 value) {
   
   free_strategic_moves_ = value;
-  // @@protoc_insertion_point(field_set:message.nation_t.free_strategic_moves)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.free_strategic_moves)
 }
 
 // optional int32 capital_star_points = 5;
@@ -4496,16 +4496,16 @@ inline void nation_t::clear_capital_star_points() {
   capital_star_points_ = 0;
 }
 inline ::google::protobuf::int32 nation_t::capital_star_points() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.capital_star_points)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.capital_star_points)
   return capital_star_points_;
 }
 inline void nation_t::set_capital_star_points(::google::protobuf::int32 value) {
   
   capital_star_points_ = value;
-  // @@protoc_insertion_point(field_set:message.nation_t.capital_star_points)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.capital_star_points)
 }
 
-// optional .message.offmap_possesions_t offmap_possesions = 6;
+// optional .pb_message.offmap_possesions_t offmap_possesions = 6;
 inline bool nation_t::has_offmap_possesions() const {
   return !_is_default_instance_ && offmap_possesions_ != NULL;
 }
@@ -4513,25 +4513,25 @@ inline void nation_t::clear_offmap_possesions() {
   if (GetArenaNoVirtual() == NULL && offmap_possesions_ != NULL) delete offmap_possesions_;
   offmap_possesions_ = NULL;
 }
-inline const ::message::offmap_possesions_t& nation_t::offmap_possesions() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.offmap_possesions)
+inline const ::pb_message::offmap_possesions_t& nation_t::offmap_possesions() const {
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.offmap_possesions)
   return offmap_possesions_ != NULL ? *offmap_possesions_ : *default_instance_->offmap_possesions_;
 }
-inline ::message::offmap_possesions_t* nation_t::mutable_offmap_possesions() {
+inline ::pb_message::offmap_possesions_t* nation_t::mutable_offmap_possesions() {
   
   if (offmap_possesions_ == NULL) {
-    offmap_possesions_ = new ::message::offmap_possesions_t;
+    offmap_possesions_ = new ::pb_message::offmap_possesions_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.nation_t.offmap_possesions)
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_t.offmap_possesions)
   return offmap_possesions_;
 }
-inline ::message::offmap_possesions_t* nation_t::release_offmap_possesions() {
+inline ::pb_message::offmap_possesions_t* nation_t::release_offmap_possesions() {
   
-  ::message::offmap_possesions_t* temp = offmap_possesions_;
+  ::pb_message::offmap_possesions_t* temp = offmap_possesions_;
   offmap_possesions_ = NULL;
   return temp;
 }
-inline void nation_t::set_allocated_offmap_possesions(::message::offmap_possesions_t* offmap_possesions) {
+inline void nation_t::set_allocated_offmap_possesions(::pb_message::offmap_possesions_t* offmap_possesions) {
   delete offmap_possesions_;
   offmap_possesions_ = offmap_possesions;
   if (offmap_possesions) {
@@ -4539,7 +4539,7 @@ inline void nation_t::set_allocated_offmap_possesions(::message::offmap_possesio
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.nation_t.offmap_possesions)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.nation_t.offmap_possesions)
 }
 
 // optional int32 nation_id = 7;
@@ -4547,34 +4547,34 @@ inline void nation_t::clear_nation_id() {
   nation_id_ = 0;
 }
 inline ::google::protobuf::int32 nation_t::nation_id() const {
-  // @@protoc_insertion_point(field_get:message.nation_t.nation_id)
+  // @@protoc_insertion_point(field_get:pb_message.nation_t.nation_id)
   return nation_id_;
 }
 inline void nation_t::set_nation_id(::google::protobuf::int32 value) {
   
   nation_id_ = value;
-  // @@protoc_insertion_point(field_set:message.nation_t.nation_id)
+  // @@protoc_insertion_point(field_set:pb_message.nation_t.nation_id)
 }
 
 // -------------------------------------------------------------------
 
 // nations_t
 
-// map<string, .message.nation_t> nations = 1;
+// map<string, .pb_message.nation_t> nations = 1;
 inline int nations_t::nations_size() const {
   return nations_.size();
 }
 inline void nations_t::clear_nations() {
   nations_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::nation_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::nation_t >&
 nations_t::nations() const {
-  // @@protoc_insertion_point(field_map:message.nations_t.nations)
+  // @@protoc_insertion_point(field_map:pb_message.nations_t.nations)
   return nations_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::nation_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::nation_t >*
 nations_t::mutable_nations() {
-  // @@protoc_insertion_point(field_mutable_map:message.nations_t.nations)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.nations_t.nations)
   return nations_.MutableMap();
 }
 
@@ -4582,7 +4582,7 @@ nations_t::mutable_nations() {
 
 // hex_t
 
-// optional .message.hex_coord_t coord = 1;
+// optional .pb_message.hex_coord_t coord = 1;
 inline bool hex_t::has_coord() const {
   return !_is_default_instance_ && coord_ != NULL;
 }
@@ -4590,25 +4590,25 @@ inline void hex_t::clear_coord() {
   if (GetArenaNoVirtual() == NULL && coord_ != NULL) delete coord_;
   coord_ = NULL;
 }
-inline const ::message::hex_coord_t& hex_t::coord() const {
-  // @@protoc_insertion_point(field_get:message.hex_t.coord)
+inline const ::pb_message::hex_coord_t& hex_t::coord() const {
+  // @@protoc_insertion_point(field_get:pb_message.hex_t.coord)
   return coord_ != NULL ? *coord_ : *default_instance_->coord_;
 }
-inline ::message::hex_coord_t* hex_t::mutable_coord() {
+inline ::pb_message::hex_coord_t* hex_t::mutable_coord() {
   
   if (coord_ == NULL) {
-    coord_ = new ::message::hex_coord_t;
+    coord_ = new ::pb_message::hex_coord_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.hex_t.coord)
+  // @@protoc_insertion_point(field_mutable:pb_message.hex_t.coord)
   return coord_;
 }
-inline ::message::hex_coord_t* hex_t::release_coord() {
+inline ::pb_message::hex_coord_t* hex_t::release_coord() {
   
-  ::message::hex_coord_t* temp = coord_;
+  ::pb_message::hex_coord_t* temp = coord_;
   coord_ = NULL;
   return temp;
 }
-inline void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
+inline void hex_t::set_allocated_coord(::pb_message::hex_coord_t* coord) {
   delete coord_;
   coord_ = coord;
   if (coord) {
@@ -4616,7 +4616,7 @@ inline void hex_t::set_allocated_coord(::message::hex_coord_t* coord) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.hex_t.coord)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.hex_t.coord)
 }
 
 // optional int32 owner = 2;
@@ -4624,27 +4624,27 @@ inline void hex_t::clear_owner() {
   owner_ = 0;
 }
 inline ::google::protobuf::int32 hex_t::owner() const {
-  // @@protoc_insertion_point(field_get:message.hex_t.owner)
+  // @@protoc_insertion_point(field_get:pb_message.hex_t.owner)
   return owner_;
 }
 inline void hex_t::set_owner(::google::protobuf::int32 value) {
   
   owner_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_t.owner)
+  // @@protoc_insertion_point(field_set:pb_message.hex_t.owner)
 }
 
-// optional .message.feature_t feature = 3;
+// optional .pb_message.feature_t feature = 3;
 inline void hex_t::clear_feature() {
   feature_ = 0;
 }
-inline ::message::feature_t hex_t::feature() const {
-  // @@protoc_insertion_point(field_get:message.hex_t.feature)
-  return static_cast< ::message::feature_t >(feature_);
+inline ::pb_message::feature_t hex_t::feature() const {
+  // @@protoc_insertion_point(field_get:pb_message.hex_t.feature)
+  return static_cast< ::pb_message::feature_t >(feature_);
 }
-inline void hex_t::set_feature(::message::feature_t value) {
+inline void hex_t::set_feature(::pb_message::feature_t value) {
   
   feature_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_t.feature)
+  // @@protoc_insertion_point(field_set:pb_message.hex_t.feature)
 }
 
 // -------------------------------------------------------------------
@@ -4656,60 +4656,60 @@ inline void province_hex_t::clear_hex() {
   hex_ = 0;
 }
 inline ::google::protobuf::int32 province_hex_t::hex() const {
-  // @@protoc_insertion_point(field_get:message.province_hex_t.hex)
+  // @@protoc_insertion_point(field_get:pb_message.province_hex_t.hex)
   return hex_;
 }
 inline void province_hex_t::set_hex(::google::protobuf::int32 value) {
   
   hex_ = value;
-  // @@protoc_insertion_point(field_set:message.province_hex_t.hex)
+  // @@protoc_insertion_point(field_set:pb_message.province_hex_t.hex)
 }
 
-// optional .message.feature_t feature = 2;
+// optional .pb_message.feature_t feature = 2;
 inline void province_hex_t::clear_feature() {
   feature_ = 0;
 }
-inline ::message::feature_t province_hex_t::feature() const {
-  // @@protoc_insertion_point(field_get:message.province_hex_t.feature)
-  return static_cast< ::message::feature_t >(feature_);
+inline ::pb_message::feature_t province_hex_t::feature() const {
+  // @@protoc_insertion_point(field_get:pb_message.province_hex_t.feature)
+  return static_cast< ::pb_message::feature_t >(feature_);
 }
-inline void province_hex_t::set_feature(::message::feature_t value) {
+inline void province_hex_t::set_feature(::pb_message::feature_t value) {
   
   feature_ = value;
-  // @@protoc_insertion_point(field_set:message.province_hex_t.feature)
+  // @@protoc_insertion_point(field_set:pb_message.province_hex_t.feature)
 }
 
 // -------------------------------------------------------------------
 
 // province_t
 
-// repeated .message.province_hex_t hexes = 1;
+// repeated .pb_message.province_hex_t hexes = 1;
 inline int province_t::hexes_size() const {
   return hexes_.size();
 }
 inline void province_t::clear_hexes() {
   hexes_.Clear();
 }
-inline const ::message::province_hex_t& province_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.province_t.hexes)
+inline const ::pb_message::province_hex_t& province_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.province_t.hexes)
   return hexes_.Get(index);
 }
-inline ::message::province_hex_t* province_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.province_t.hexes)
+inline ::pb_message::province_hex_t* province_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.province_t.hexes)
   return hexes_.Mutable(index);
 }
-inline ::message::province_hex_t* province_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.province_t.hexes)
+inline ::pb_message::province_hex_t* province_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.province_t.hexes)
   return hexes_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::province_hex_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t >*
 province_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.province_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.province_t.hexes)
   return &hexes_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::province_hex_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::province_hex_t >&
 province_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.province_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.province_t.hexes)
   return hexes_;
 }
 
@@ -4722,28 +4722,28 @@ inline void offmap_area_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& offmap_area_t::name() const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void offmap_area_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.name)
 }
 inline void offmap_area_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.offmap_area_t.name)
 }
 inline void offmap_area_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.offmap_area_t.name)
 }
 inline ::std::string* offmap_area_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.offmap_area_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* offmap_area_t::release_name() {
@@ -4757,36 +4757,36 @@ inline void offmap_area_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.offmap_area_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.offmap_area_t.name)
 }
 
-// repeated .message.feature_t features = 2 [packed = true];
+// repeated .pb_message.feature_t features = 2 [packed = true];
 inline int offmap_area_t::features_size() const {
   return features_.size();
 }
 inline void offmap_area_t::clear_features() {
   features_.Clear();
 }
-inline ::message::feature_t offmap_area_t::features(int index) const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.features)
-  return static_cast< ::message::feature_t >(features_.Get(index));
+inline ::pb_message::feature_t offmap_area_t::features(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.features)
+  return static_cast< ::pb_message::feature_t >(features_.Get(index));
 }
-inline void offmap_area_t::set_features(int index, ::message::feature_t value) {
+inline void offmap_area_t::set_features(int index, ::pb_message::feature_t value) {
   features_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.features)
 }
-inline void offmap_area_t::add_features(::message::feature_t value) {
+inline void offmap_area_t::add_features(::pb_message::feature_t value) {
   features_.Add(value);
-  // @@protoc_insertion_point(field_add:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_add:pb_message.offmap_area_t.features)
 }
 inline const ::google::protobuf::RepeatedField<int>&
 offmap_area_t::features() const {
-  // @@protoc_insertion_point(field_list:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_list:pb_message.offmap_area_t.features)
   return features_;
 }
 inline ::google::protobuf::RepeatedField<int>*
 offmap_area_t::mutable_features() {
-  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.features)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.offmap_area_t.features)
   return &features_;
 }
 
@@ -4798,25 +4798,25 @@ inline void offmap_area_t::clear_feature_hexes() {
   feature_hexes_.Clear();
 }
 inline ::google::protobuf::int32 offmap_area_t::feature_hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.feature_hexes)
   return feature_hexes_.Get(index);
 }
 inline void offmap_area_t::set_feature_hexes(int index, ::google::protobuf::int32 value) {
   feature_hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.feature_hexes)
 }
 inline void offmap_area_t::add_feature_hexes(::google::protobuf::int32 value) {
   feature_hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_add:pb_message.offmap_area_t.feature_hexes)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 offmap_area_t::feature_hexes() const {
-  // @@protoc_insertion_point(field_list:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_list:pb_message.offmap_area_t.feature_hexes)
   return feature_hexes_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 offmap_area_t::mutable_feature_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.feature_hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.offmap_area_t.feature_hexes)
   return &feature_hexes_;
 }
 
@@ -4828,25 +4828,25 @@ inline void offmap_area_t::clear_adjacent_hexes() {
   adjacent_hexes_.Clear();
 }
 inline ::google::protobuf::int32 offmap_area_t::adjacent_hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_get:pb_message.offmap_area_t.adjacent_hexes)
   return adjacent_hexes_.Get(index);
 }
 inline void offmap_area_t::set_adjacent_hexes(int index, ::google::protobuf::int32 value) {
   adjacent_hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_set:pb_message.offmap_area_t.adjacent_hexes)
 }
 inline void offmap_area_t::add_adjacent_hexes(::google::protobuf::int32 value) {
   adjacent_hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_add:pb_message.offmap_area_t.adjacent_hexes)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 offmap_area_t::adjacent_hexes() const {
-  // @@protoc_insertion_point(field_list:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_list:pb_message.offmap_area_t.adjacent_hexes)
   return adjacent_hexes_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 offmap_area_t::mutable_adjacent_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.offmap_area_t.adjacent_hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.offmap_area_t.adjacent_hexes)
   return &adjacent_hexes_;
 }
 
@@ -4854,37 +4854,37 @@ offmap_area_t::mutable_adjacent_hexes() {
 
 // starting_national_holdings_t
 
-// repeated .message.province_t provinces = 1;
+// repeated .pb_message.province_t provinces = 1;
 inline int starting_national_holdings_t::provinces_size() const {
   return provinces_.size();
 }
 inline void starting_national_holdings_t::clear_provinces() {
   provinces_.Clear();
 }
-inline const ::message::province_t& starting_national_holdings_t::provinces(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_national_holdings_t.provinces)
+inline const ::pb_message::province_t& starting_national_holdings_t::provinces(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_national_holdings_t.provinces)
   return provinces_.Get(index);
 }
-inline ::message::province_t* starting_national_holdings_t::mutable_provinces(int index) {
-  // @@protoc_insertion_point(field_mutable:message.starting_national_holdings_t.provinces)
+inline ::pb_message::province_t* starting_national_holdings_t::mutable_provinces(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_national_holdings_t.provinces)
   return provinces_.Mutable(index);
 }
-inline ::message::province_t* starting_national_holdings_t::add_provinces() {
-  // @@protoc_insertion_point(field_add:message.starting_national_holdings_t.provinces)
+inline ::pb_message::province_t* starting_national_holdings_t::add_provinces() {
+  // @@protoc_insertion_point(field_add:pb_message.starting_national_holdings_t.provinces)
   return provinces_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::province_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::province_t >*
 starting_national_holdings_t::mutable_provinces() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_national_holdings_t.provinces)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_national_holdings_t.provinces)
   return &provinces_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::province_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::province_t >&
 starting_national_holdings_t::provinces() const {
-  // @@protoc_insertion_point(field_list:message.starting_national_holdings_t.provinces)
+  // @@protoc_insertion_point(field_list:pb_message.starting_national_holdings_t.provinces)
   return provinces_;
 }
 
-// optional .message.offmap_area_t offmap_area = 2;
+// optional .pb_message.offmap_area_t offmap_area = 2;
 inline bool starting_national_holdings_t::has_offmap_area() const {
   return !_is_default_instance_ && offmap_area_ != NULL;
 }
@@ -4892,25 +4892,25 @@ inline void starting_national_holdings_t::clear_offmap_area() {
   if (GetArenaNoVirtual() == NULL && offmap_area_ != NULL) delete offmap_area_;
   offmap_area_ = NULL;
 }
-inline const ::message::offmap_area_t& starting_national_holdings_t::offmap_area() const {
-  // @@protoc_insertion_point(field_get:message.starting_national_holdings_t.offmap_area)
+inline const ::pb_message::offmap_area_t& starting_national_holdings_t::offmap_area() const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_national_holdings_t.offmap_area)
   return offmap_area_ != NULL ? *offmap_area_ : *default_instance_->offmap_area_;
 }
-inline ::message::offmap_area_t* starting_national_holdings_t::mutable_offmap_area() {
+inline ::pb_message::offmap_area_t* starting_national_holdings_t::mutable_offmap_area() {
   
   if (offmap_area_ == NULL) {
-    offmap_area_ = new ::message::offmap_area_t;
+    offmap_area_ = new ::pb_message::offmap_area_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.starting_national_holdings_t.offmap_area)
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_national_holdings_t.offmap_area)
   return offmap_area_;
 }
-inline ::message::offmap_area_t* starting_national_holdings_t::release_offmap_area() {
+inline ::pb_message::offmap_area_t* starting_national_holdings_t::release_offmap_area() {
   
-  ::message::offmap_area_t* temp = offmap_area_;
+  ::pb_message::offmap_area_t* temp = offmap_area_;
   offmap_area_ = NULL;
   return temp;
 }
-inline void starting_national_holdings_t::set_allocated_offmap_area(::message::offmap_area_t* offmap_area) {
+inline void starting_national_holdings_t::set_allocated_offmap_area(::pb_message::offmap_area_t* offmap_area) {
   delete offmap_area_;
   offmap_area_ = offmap_area;
   if (offmap_area) {
@@ -4918,7 +4918,7 @@ inline void starting_national_holdings_t::set_allocated_offmap_area(::message::o
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.starting_national_holdings_t.offmap_area)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.starting_national_holdings_t.offmap_area)
 }
 
 // -------------------------------------------------------------------
@@ -4930,13 +4930,13 @@ inline void map_t::clear_width() {
   width_ = 0;
 }
 inline ::google::protobuf::int32 map_t::width() const {
-  // @@protoc_insertion_point(field_get:message.map_t.width)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.width)
   return width_;
 }
 inline void map_t::set_width(::google::protobuf::int32 value) {
   
   width_ = value;
-  // @@protoc_insertion_point(field_set:message.map_t.width)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.width)
 }
 
 // optional int32 height = 2;
@@ -4944,13 +4944,13 @@ inline void map_t::clear_height() {
   height_ = 0;
 }
 inline ::google::protobuf::int32 map_t::height() const {
-  // @@protoc_insertion_point(field_get:message.map_t.height)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.height)
   return height_;
 }
 inline void map_t::set_height(::google::protobuf::int32 value) {
   
   height_ = value;
-  // @@protoc_insertion_point(field_set:message.map_t.height)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.height)
 }
 
 // repeated int32 nz_planets = 3 [packed = true];
@@ -4961,25 +4961,25 @@ inline void map_t::clear_nz_planets() {
   nz_planets_.Clear();
 }
 inline ::google::protobuf::int32 map_t::nz_planets(int index) const {
-  // @@protoc_insertion_point(field_get:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.nz_planets)
   return nz_planets_.Get(index);
 }
 inline void map_t::set_nz_planets(int index, ::google::protobuf::int32 value) {
   nz_planets_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.nz_planets)
 }
 inline void map_t::add_nz_planets(::google::protobuf::int32 value) {
   nz_planets_.Add(value);
-  // @@protoc_insertion_point(field_add:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_add:pb_message.map_t.nz_planets)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 map_t::nz_planets() const {
-  // @@protoc_insertion_point(field_list:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_list:pb_message.map_t.nz_planets)
   return nz_planets_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 map_t::mutable_nz_planets() {
-  // @@protoc_insertion_point(field_mutable_list:message.map_t.nz_planets)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.map_t.nz_planets)
   return &nz_planets_;
 }
 
@@ -4991,73 +4991,73 @@ inline void map_t::clear_nz_hexes() {
   nz_hexes_.Clear();
 }
 inline ::google::protobuf::int32 map_t::nz_hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_get:pb_message.map_t.nz_hexes)
   return nz_hexes_.Get(index);
 }
 inline void map_t::set_nz_hexes(int index, ::google::protobuf::int32 value) {
   nz_hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_set:pb_message.map_t.nz_hexes)
 }
 inline void map_t::add_nz_hexes(::google::protobuf::int32 value) {
   nz_hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_add:pb_message.map_t.nz_hexes)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 map_t::nz_hexes() const {
-  // @@protoc_insertion_point(field_list:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_list:pb_message.map_t.nz_hexes)
   return nz_hexes_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 map_t::mutable_nz_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.map_t.nz_hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.map_t.nz_hexes)
   return &nz_hexes_;
 }
 
-// map<string, .message.starting_national_holdings_t> starting_national_holdings = 5;
+// map<string, .pb_message.starting_national_holdings_t> starting_national_holdings = 5;
 inline int map_t::starting_national_holdings_size() const {
   return starting_national_holdings_.size();
 }
 inline void map_t::clear_starting_national_holdings() {
   starting_national_holdings_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >&
 map_t::starting_national_holdings() const {
-  // @@protoc_insertion_point(field_map:message.map_t.starting_national_holdings)
+  // @@protoc_insertion_point(field_map:pb_message.map_t.starting_national_holdings)
   return starting_national_holdings_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::starting_national_holdings_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::starting_national_holdings_t >*
 map_t::mutable_starting_national_holdings() {
-  // @@protoc_insertion_point(field_mutable_map:message.map_t.starting_national_holdings)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.map_t.starting_national_holdings)
   return starting_national_holdings_.MutableMap();
 }
 
-// repeated .message.hex_t hexes = 6;
+// repeated .pb_message.hex_t hexes = 6;
 inline int map_t::hexes_size() const {
   return hexes_.size();
 }
 inline void map_t::clear_hexes() {
   hexes_.Clear();
 }
-inline const ::message::hex_t& map_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.map_t.hexes)
+inline const ::pb_message::hex_t& map_t::hexes(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.map_t.hexes)
   return hexes_.Get(index);
 }
-inline ::message::hex_t* map_t::mutable_hexes(int index) {
-  // @@protoc_insertion_point(field_mutable:message.map_t.hexes)
+inline ::pb_message::hex_t* map_t::mutable_hexes(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.map_t.hexes)
   return hexes_.Mutable(index);
 }
-inline ::message::hex_t* map_t::add_hexes() {
-  // @@protoc_insertion_point(field_add:message.map_t.hexes)
+inline ::pb_message::hex_t* map_t::add_hexes() {
+  // @@protoc_insertion_point(field_add:pb_message.map_t.hexes)
   return hexes_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::hex_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::hex_t >*
 map_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.map_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.map_t.hexes)
   return &hexes_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::hex_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::hex_t >&
 map_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.map_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.map_t.hexes)
   return hexes_;
 }
 
@@ -5065,7 +5065,7 @@ map_t::hexes() const {
 
 // model_t
 
-// optional .message.nations_t nations = 1;
+// optional .pb_message.nations_t nations = 1;
 inline bool model_t::has_nations() const {
   return !_is_default_instance_ && nations_ != NULL;
 }
@@ -5073,25 +5073,25 @@ inline void model_t::clear_nations() {
   if (GetArenaNoVirtual() == NULL && nations_ != NULL) delete nations_;
   nations_ = NULL;
 }
-inline const ::message::nations_t& model_t::nations() const {
-  // @@protoc_insertion_point(field_get:message.model_t.nations)
+inline const ::pb_message::nations_t& model_t::nations() const {
+  // @@protoc_insertion_point(field_get:pb_message.model_t.nations)
   return nations_ != NULL ? *nations_ : *default_instance_->nations_;
 }
-inline ::message::nations_t* model_t::mutable_nations() {
+inline ::pb_message::nations_t* model_t::mutable_nations() {
   
   if (nations_ == NULL) {
-    nations_ = new ::message::nations_t;
+    nations_ = new ::pb_message::nations_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.model_t.nations)
+  // @@protoc_insertion_point(field_mutable:pb_message.model_t.nations)
   return nations_;
 }
-inline ::message::nations_t* model_t::release_nations() {
+inline ::pb_message::nations_t* model_t::release_nations() {
   
-  ::message::nations_t* temp = nations_;
+  ::pb_message::nations_t* temp = nations_;
   nations_ = NULL;
   return temp;
 }
-inline void model_t::set_allocated_nations(::message::nations_t* nations) {
+inline void model_t::set_allocated_nations(::pb_message::nations_t* nations) {
   delete nations_;
   nations_ = nations;
   if (nations) {
@@ -5099,10 +5099,10 @@ inline void model_t::set_allocated_nations(::message::nations_t* nations) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.model_t.nations)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.model_t.nations)
 }
 
-// optional .message.map_t map = 2;
+// optional .pb_message.map_t map = 2;
 inline bool model_t::has_map() const {
   return !_is_default_instance_ && map_ != NULL;
 }
@@ -5110,25 +5110,25 @@ inline void model_t::clear_map() {
   if (GetArenaNoVirtual() == NULL && map_ != NULL) delete map_;
   map_ = NULL;
 }
-inline const ::message::map_t& model_t::map() const {
-  // @@protoc_insertion_point(field_get:message.model_t.map)
+inline const ::pb_message::map_t& model_t::map() const {
+  // @@protoc_insertion_point(field_get:pb_message.model_t.map)
   return map_ != NULL ? *map_ : *default_instance_->map_;
 }
-inline ::message::map_t* model_t::mutable_map() {
+inline ::pb_message::map_t* model_t::mutable_map() {
   
   if (map_ == NULL) {
-    map_ = new ::message::map_t;
+    map_ = new ::pb_message::map_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.model_t.map)
+  // @@protoc_insertion_point(field_mutable:pb_message.model_t.map)
   return map_;
 }
-inline ::message::map_t* model_t::release_map() {
+inline ::pb_message::map_t* model_t::release_map() {
   
-  ::message::map_t* temp = map_;
+  ::pb_message::map_t* temp = map_;
   map_ = NULL;
   return temp;
 }
-inline void model_t::set_allocated_map(::message::map_t* map) {
+inline void model_t::set_allocated_map(::pb_message::map_t* map) {
   delete map_;
   map_ = map;
   if (map) {
@@ -5136,7 +5136,7 @@ inline void model_t::set_allocated_map(::message::map_t* map) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.model_t.map)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.model_t.map)
 }
 
 // -------------------------------------------------------------------
@@ -5148,28 +5148,28 @@ inline void oob_unit_t::clear_unit() {
   unit_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& oob_unit_t::unit() const {
-  // @@protoc_insertion_point(field_get:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_get:pb_message.oob_unit_t.unit)
   return unit_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void oob_unit_t::set_unit(const ::std::string& value) {
   
   unit_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set:pb_message.oob_unit_t.unit)
 }
 inline void oob_unit_t::set_unit(const char* value) {
   
   unit_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set_char:pb_message.oob_unit_t.unit)
 }
 inline void oob_unit_t::set_unit(const char* value, size_t size) {
   
   unit_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.oob_unit_t.unit)
 }
 inline ::std::string* oob_unit_t::mutable_unit() {
   
-  // @@protoc_insertion_point(field_mutable:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_mutable:pb_message.oob_unit_t.unit)
   return unit_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* oob_unit_t::release_unit() {
@@ -5183,7 +5183,7 @@ inline void oob_unit_t::set_allocated_unit(::std::string* unit) {
     
   }
   unit_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unit);
-  // @@protoc_insertion_point(field_set_allocated:message.oob_unit_t.unit)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.oob_unit_t.unit)
 }
 
 // optional int32 times = 2;
@@ -5191,13 +5191,13 @@ inline void oob_unit_t::clear_times() {
   times_ = 0;
 }
 inline ::google::protobuf::int32 oob_unit_t::times() const {
-  // @@protoc_insertion_point(field_get:message.oob_unit_t.times)
+  // @@protoc_insertion_point(field_get:pb_message.oob_unit_t.times)
   return times_;
 }
 inline void oob_unit_t::set_times(::google::protobuf::int32 value) {
   
   times_ = value;
-  // @@protoc_insertion_point(field_set:message.oob_unit_t.times)
+  // @@protoc_insertion_point(field_set:pb_message.oob_unit_t.times)
 }
 
 // -------------------------------------------------------------------
@@ -5209,56 +5209,56 @@ inline void production_element_t::clear_year() {
   year_ = 0;
 }
 inline ::google::protobuf::int32 production_element_t::year() const {
-  // @@protoc_insertion_point(field_get:message.production_element_t.year)
+  // @@protoc_insertion_point(field_get:pb_message.production_element_t.year)
   return year_;
 }
 inline void production_element_t::set_year(::google::protobuf::int32 value) {
   
   year_ = value;
-  // @@protoc_insertion_point(field_set:message.production_element_t.year)
+  // @@protoc_insertion_point(field_set:pb_message.production_element_t.year)
 }
 
-// optional .message.season_t season = 2;
+// optional .pb_message.season_t season = 2;
 inline void production_element_t::clear_season() {
   season_ = 0;
 }
-inline ::message::season_t production_element_t::season() const {
-  // @@protoc_insertion_point(field_get:message.production_element_t.season)
-  return static_cast< ::message::season_t >(season_);
+inline ::pb_message::season_t production_element_t::season() const {
+  // @@protoc_insertion_point(field_get:pb_message.production_element_t.season)
+  return static_cast< ::pb_message::season_t >(season_);
 }
-inline void production_element_t::set_season(::message::season_t value) {
+inline void production_element_t::set_season(::pb_message::season_t value) {
   
   season_ = value;
-  // @@protoc_insertion_point(field_set:message.production_element_t.season)
+  // @@protoc_insertion_point(field_set:pb_message.production_element_t.season)
 }
 
-// repeated .message.oob_unit_t units = 3;
+// repeated .pb_message.oob_unit_t units = 3;
 inline int production_element_t::units_size() const {
   return units_.size();
 }
 inline void production_element_t::clear_units() {
   units_.Clear();
 }
-inline const ::message::oob_unit_t& production_element_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.production_element_t.units)
+inline const ::pb_message::oob_unit_t& production_element_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.production_element_t.units)
   return units_.Get(index);
 }
-inline ::message::oob_unit_t* production_element_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.production_element_t.units)
+inline ::pb_message::oob_unit_t* production_element_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.production_element_t.units)
   return units_.Mutable(index);
 }
-inline ::message::oob_unit_t* production_element_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.production_element_t.units)
+inline ::pb_message::oob_unit_t* production_element_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.production_element_t.units)
   return units_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 production_element_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.production_element_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.production_element_t.units)
   return &units_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 production_element_t::units() const {
-  // @@protoc_insertion_point(field_list:message.production_element_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.production_element_t.units)
   return units_;
 }
 
@@ -5274,55 +5274,55 @@ inline void starting_fleet_t::clear_hexes() {
   hexes_.Clear();
 }
 inline ::google::protobuf::int32 starting_fleet_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.hexes)
   return hexes_.Get(index);
 }
 inline void starting_fleet_t::set_hexes(int index, ::google::protobuf::int32 value) {
   hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.hexes)
 }
 inline void starting_fleet_t::add_hexes(::google::protobuf::int32 value) {
   hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_add:pb_message.starting_fleet_t.hexes)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 starting_fleet_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.starting_fleet_t.hexes)
   return hexes_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 starting_fleet_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_fleet_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_fleet_t.hexes)
   return &hexes_;
 }
 
-// repeated .message.oob_unit_t units = 2;
+// repeated .pb_message.oob_unit_t units = 2;
 inline int starting_fleet_t::units_size() const {
   return units_.size();
 }
 inline void starting_fleet_t::clear_units() {
   units_.Clear();
 }
-inline const ::message::oob_unit_t& starting_fleet_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.units)
+inline const ::pb_message::oob_unit_t& starting_fleet_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.units)
   return units_.Get(index);
 }
-inline ::message::oob_unit_t* starting_fleet_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.starting_fleet_t.units)
+inline ::pb_message::oob_unit_t* starting_fleet_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_fleet_t.units)
   return units_.Mutable(index);
 }
-inline ::message::oob_unit_t* starting_fleet_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.starting_fleet_t.units)
+inline ::pb_message::oob_unit_t* starting_fleet_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.starting_fleet_t.units)
   return units_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 starting_fleet_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_fleet_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_fleet_t.units)
   return &units_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 starting_fleet_t::units() const {
-  // @@protoc_insertion_point(field_list:message.starting_fleet_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.starting_fleet_t.units)
   return units_;
 }
 
@@ -5331,42 +5331,42 @@ inline void starting_fleet_t::clear_reserve() {
   reserve_ = false;
 }
 inline bool starting_fleet_t::reserve() const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.reserve)
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.reserve)
   return reserve_;
 }
 inline void starting_fleet_t::set_reserve(bool value) {
   
   reserve_ = value;
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.reserve)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.reserve)
 }
 
-// repeated .message.production_element_t prewar_construction = 4;
+// repeated .pb_message.production_element_t prewar_construction = 4;
 inline int starting_fleet_t::prewar_construction_size() const {
   return prewar_construction_.size();
 }
 inline void starting_fleet_t::clear_prewar_construction() {
   prewar_construction_.Clear();
 }
-inline const ::message::production_element_t& starting_fleet_t::prewar_construction(int index) const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.prewar_construction)
+inline const ::pb_message::production_element_t& starting_fleet_t::prewar_construction(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_.Get(index);
 }
-inline ::message::production_element_t* starting_fleet_t::mutable_prewar_construction(int index) {
-  // @@protoc_insertion_point(field_mutable:message.starting_fleet_t.prewar_construction)
+inline ::pb_message::production_element_t* starting_fleet_t::mutable_prewar_construction(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_.Mutable(index);
 }
-inline ::message::production_element_t* starting_fleet_t::add_prewar_construction() {
-  // @@protoc_insertion_point(field_add:message.starting_fleet_t.prewar_construction)
+inline ::pb_message::production_element_t* starting_fleet_t::add_prewar_construction() {
+  // @@protoc_insertion_point(field_add:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::production_element_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >*
 starting_fleet_t::mutable_prewar_construction() {
-  // @@protoc_insertion_point(field_mutable_list:message.starting_fleet_t.prewar_construction)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.starting_fleet_t.prewar_construction)
   return &prewar_construction_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::production_element_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >&
 starting_fleet_t::prewar_construction() const {
-  // @@protoc_insertion_point(field_list:message.starting_fleet_t.prewar_construction)
+  // @@protoc_insertion_point(field_list:pb_message.starting_fleet_t.prewar_construction)
   return prewar_construction_;
 }
 
@@ -5375,27 +5375,27 @@ inline void starting_fleet_t::clear_strategic_move_arrival_year() {
   strategic_move_arrival_year_ = 0;
 }
 inline ::google::protobuf::int32 starting_fleet_t::strategic_move_arrival_year() const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.strategic_move_arrival_year)
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.strategic_move_arrival_year)
   return strategic_move_arrival_year_;
 }
 inline void starting_fleet_t::set_strategic_move_arrival_year(::google::protobuf::int32 value) {
   
   strategic_move_arrival_year_ = value;
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.strategic_move_arrival_year)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.strategic_move_arrival_year)
 }
 
-// optional .message.season_t strategic_move_arrival_season = 6;
+// optional .pb_message.season_t strategic_move_arrival_season = 6;
 inline void starting_fleet_t::clear_strategic_move_arrival_season() {
   strategic_move_arrival_season_ = 0;
 }
-inline ::message::season_t starting_fleet_t::strategic_move_arrival_season() const {
-  // @@protoc_insertion_point(field_get:message.starting_fleet_t.strategic_move_arrival_season)
-  return static_cast< ::message::season_t >(strategic_move_arrival_season_);
+inline ::pb_message::season_t starting_fleet_t::strategic_move_arrival_season() const {
+  // @@protoc_insertion_point(field_get:pb_message.starting_fleet_t.strategic_move_arrival_season)
+  return static_cast< ::pb_message::season_t >(strategic_move_arrival_season_);
 }
-inline void starting_fleet_t::set_strategic_move_arrival_season(::message::season_t value) {
+inline void starting_fleet_t::set_strategic_move_arrival_season(::pb_message::season_t value) {
   
   strategic_move_arrival_season_ = value;
-  // @@protoc_insertion_point(field_set:message.starting_fleet_t.strategic_move_arrival_season)
+  // @@protoc_insertion_point(field_set:pb_message.starting_fleet_t.strategic_move_arrival_season)
 }
 
 // map<int32, int32> hex_placement_limits = 7;
@@ -5407,12 +5407,12 @@ inline void starting_fleet_t::clear_hex_placement_limits() {
 }
 inline const ::google::protobuf::Map< ::google::protobuf::int32, ::google::protobuf::int32 >&
 starting_fleet_t::hex_placement_limits() const {
-  // @@protoc_insertion_point(field_map:message.starting_fleet_t.hex_placement_limits)
+  // @@protoc_insertion_point(field_map:pb_message.starting_fleet_t.hex_placement_limits)
   return hex_placement_limits_.GetMap();
 }
 inline ::google::protobuf::Map< ::google::protobuf::int32, ::google::protobuf::int32 >*
 starting_fleet_t::mutable_hex_placement_limits() {
-  // @@protoc_insertion_point(field_mutable_map:message.starting_fleet_t.hex_placement_limits)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.starting_fleet_t.hex_placement_limits)
   return hex_placement_limits_.MutableMap();
 }
 
@@ -5420,93 +5420,93 @@ starting_fleet_t::mutable_hex_placement_limits() {
 
 // mothball_reserve_t
 
-// repeated .message.oob_unit_t units = 1;
+// repeated .pb_message.oob_unit_t units = 1;
 inline int mothball_reserve_t::units_size() const {
   return units_.size();
 }
 inline void mothball_reserve_t::clear_units() {
   units_.Clear();
 }
-inline const ::message::oob_unit_t& mothball_reserve_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.mothball_reserve_t.units)
+inline const ::pb_message::oob_unit_t& mothball_reserve_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.mothball_reserve_t.units)
   return units_.Get(index);
 }
-inline ::message::oob_unit_t* mothball_reserve_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.mothball_reserve_t.units)
+inline ::pb_message::oob_unit_t* mothball_reserve_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.mothball_reserve_t.units)
   return units_.Mutable(index);
 }
-inline ::message::oob_unit_t* mothball_reserve_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.mothball_reserve_t.units)
+inline ::pb_message::oob_unit_t* mothball_reserve_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.mothball_reserve_t.units)
   return units_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 mothball_reserve_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.mothball_reserve_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.mothball_reserve_t.units)
   return &units_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 mothball_reserve_t::units() const {
-  // @@protoc_insertion_point(field_list:message.mothball_reserve_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.mothball_reserve_t.units)
   return units_;
 }
 
-// repeated .message.oob_unit_t war_release = 2;
+// repeated .pb_message.oob_unit_t war_release = 2;
 inline int mothball_reserve_t::war_release_size() const {
   return war_release_.size();
 }
 inline void mothball_reserve_t::clear_war_release() {
   war_release_.Clear();
 }
-inline const ::message::oob_unit_t& mothball_reserve_t::war_release(int index) const {
-  // @@protoc_insertion_point(field_get:message.mothball_reserve_t.war_release)
+inline const ::pb_message::oob_unit_t& mothball_reserve_t::war_release(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.mothball_reserve_t.war_release)
   return war_release_.Get(index);
 }
-inline ::message::oob_unit_t* mothball_reserve_t::mutable_war_release(int index) {
-  // @@protoc_insertion_point(field_mutable:message.mothball_reserve_t.war_release)
+inline ::pb_message::oob_unit_t* mothball_reserve_t::mutable_war_release(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.mothball_reserve_t.war_release)
   return war_release_.Mutable(index);
 }
-inline ::message::oob_unit_t* mothball_reserve_t::add_war_release() {
-  // @@protoc_insertion_point(field_add:message.mothball_reserve_t.war_release)
+inline ::pb_message::oob_unit_t* mothball_reserve_t::add_war_release() {
+  // @@protoc_insertion_point(field_add:pb_message.mothball_reserve_t.war_release)
   return war_release_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 mothball_reserve_t::mutable_war_release() {
-  // @@protoc_insertion_point(field_mutable_list:message.mothball_reserve_t.war_release)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.mothball_reserve_t.war_release)
   return &war_release_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 mothball_reserve_t::war_release() const {
-  // @@protoc_insertion_point(field_list:message.mothball_reserve_t.war_release)
+  // @@protoc_insertion_point(field_list:pb_message.mothball_reserve_t.war_release)
   return war_release_;
 }
 
-// repeated .message.oob_unit_t limited_war_release = 3;
+// repeated .pb_message.oob_unit_t limited_war_release = 3;
 inline int mothball_reserve_t::limited_war_release_size() const {
   return limited_war_release_.size();
 }
 inline void mothball_reserve_t::clear_limited_war_release() {
   limited_war_release_.Clear();
 }
-inline const ::message::oob_unit_t& mothball_reserve_t::limited_war_release(int index) const {
-  // @@protoc_insertion_point(field_get:message.mothball_reserve_t.limited_war_release)
+inline const ::pb_message::oob_unit_t& mothball_reserve_t::limited_war_release(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_.Get(index);
 }
-inline ::message::oob_unit_t* mothball_reserve_t::mutable_limited_war_release(int index) {
-  // @@protoc_insertion_point(field_mutable:message.mothball_reserve_t.limited_war_release)
+inline ::pb_message::oob_unit_t* mothball_reserve_t::mutable_limited_war_release(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_.Mutable(index);
 }
-inline ::message::oob_unit_t* mothball_reserve_t::add_limited_war_release() {
-  // @@protoc_insertion_point(field_add:message.mothball_reserve_t.limited_war_release)
+inline ::pb_message::oob_unit_t* mothball_reserve_t::add_limited_war_release() {
+  // @@protoc_insertion_point(field_add:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >*
 mothball_reserve_t::mutable_limited_war_release() {
-  // @@protoc_insertion_point(field_mutable_list:message.mothball_reserve_t.limited_war_release)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.mothball_reserve_t.limited_war_release)
   return &limited_war_release_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::oob_unit_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::oob_unit_t >&
 mothball_reserve_t::limited_war_release() const {
-  // @@protoc_insertion_point(field_list:message.mothball_reserve_t.limited_war_release)
+  // @@protoc_insertion_point(field_list:pb_message.mothball_reserve_t.limited_war_release)
   return limited_war_release_;
 }
 
@@ -5514,25 +5514,25 @@ mothball_reserve_t::limited_war_release() const {
 
 // order_of_battle_t
 
-// map<string, .message.starting_fleet_t> starting_fleets = 1;
+// map<string, .pb_message.starting_fleet_t> starting_fleets = 1;
 inline int order_of_battle_t::starting_fleets_size() const {
   return starting_fleets_.size();
 }
 inline void order_of_battle_t::clear_starting_fleets() {
   starting_fleets_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >&
 order_of_battle_t::starting_fleets() const {
-  // @@protoc_insertion_point(field_map:message.order_of_battle_t.starting_fleets)
+  // @@protoc_insertion_point(field_map:pb_message.order_of_battle_t.starting_fleets)
   return starting_fleets_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::starting_fleet_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::starting_fleet_t >*
 order_of_battle_t::mutable_starting_fleets() {
-  // @@protoc_insertion_point(field_mutable_map:message.order_of_battle_t.starting_fleets)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.order_of_battle_t.starting_fleets)
   return starting_fleets_.MutableMap();
 }
 
-// optional .message.mothball_reserve_t mothball_reserve = 2;
+// optional .pb_message.mothball_reserve_t mothball_reserve = 2;
 inline bool order_of_battle_t::has_mothball_reserve() const {
   return !_is_default_instance_ && mothball_reserve_ != NULL;
 }
@@ -5540,25 +5540,25 @@ inline void order_of_battle_t::clear_mothball_reserve() {
   if (GetArenaNoVirtual() == NULL && mothball_reserve_ != NULL) delete mothball_reserve_;
   mothball_reserve_ = NULL;
 }
-inline const ::message::mothball_reserve_t& order_of_battle_t::mothball_reserve() const {
-  // @@protoc_insertion_point(field_get:message.order_of_battle_t.mothball_reserve)
+inline const ::pb_message::mothball_reserve_t& order_of_battle_t::mothball_reserve() const {
+  // @@protoc_insertion_point(field_get:pb_message.order_of_battle_t.mothball_reserve)
   return mothball_reserve_ != NULL ? *mothball_reserve_ : *default_instance_->mothball_reserve_;
 }
-inline ::message::mothball_reserve_t* order_of_battle_t::mutable_mothball_reserve() {
+inline ::pb_message::mothball_reserve_t* order_of_battle_t::mutable_mothball_reserve() {
   
   if (mothball_reserve_ == NULL) {
-    mothball_reserve_ = new ::message::mothball_reserve_t;
+    mothball_reserve_ = new ::pb_message::mothball_reserve_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.order_of_battle_t.mothball_reserve)
+  // @@protoc_insertion_point(field_mutable:pb_message.order_of_battle_t.mothball_reserve)
   return mothball_reserve_;
 }
-inline ::message::mothball_reserve_t* order_of_battle_t::release_mothball_reserve() {
+inline ::pb_message::mothball_reserve_t* order_of_battle_t::release_mothball_reserve() {
   
-  ::message::mothball_reserve_t* temp = mothball_reserve_;
+  ::pb_message::mothball_reserve_t* temp = mothball_reserve_;
   mothball_reserve_ = NULL;
   return temp;
 }
-inline void order_of_battle_t::set_allocated_mothball_reserve(::message::mothball_reserve_t* mothball_reserve) {
+inline void order_of_battle_t::set_allocated_mothball_reserve(::pb_message::mothball_reserve_t* mothball_reserve) {
   delete mothball_reserve_;
   mothball_reserve_ = mothball_reserve;
   if (mothball_reserve) {
@@ -5566,36 +5566,36 @@ inline void order_of_battle_t::set_allocated_mothball_reserve(::message::mothbal
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.order_of_battle_t.mothball_reserve)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.order_of_battle_t.mothball_reserve)
 }
 
-// repeated .message.production_element_t production = 3;
+// repeated .pb_message.production_element_t production = 3;
 inline int order_of_battle_t::production_size() const {
   return production_.size();
 }
 inline void order_of_battle_t::clear_production() {
   production_.Clear();
 }
-inline const ::message::production_element_t& order_of_battle_t::production(int index) const {
-  // @@protoc_insertion_point(field_get:message.order_of_battle_t.production)
+inline const ::pb_message::production_element_t& order_of_battle_t::production(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.order_of_battle_t.production)
   return production_.Get(index);
 }
-inline ::message::production_element_t* order_of_battle_t::mutable_production(int index) {
-  // @@protoc_insertion_point(field_mutable:message.order_of_battle_t.production)
+inline ::pb_message::production_element_t* order_of_battle_t::mutable_production(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.order_of_battle_t.production)
   return production_.Mutable(index);
 }
-inline ::message::production_element_t* order_of_battle_t::add_production() {
-  // @@protoc_insertion_point(field_add:message.order_of_battle_t.production)
+inline ::pb_message::production_element_t* order_of_battle_t::add_production() {
+  // @@protoc_insertion_point(field_add:pb_message.order_of_battle_t.production)
   return production_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::production_element_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >*
 order_of_battle_t::mutable_production() {
-  // @@protoc_insertion_point(field_mutable_list:message.order_of_battle_t.production)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.order_of_battle_t.production)
   return &production_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::production_element_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::production_element_t >&
 order_of_battle_t::production() const {
-  // @@protoc_insertion_point(field_list:message.order_of_battle_t.production)
+  // @@protoc_insertion_point(field_list:pb_message.order_of_battle_t.production)
   return production_;
 }
 
@@ -5603,21 +5603,21 @@ order_of_battle_t::production() const {
 
 // orders_of_battle_t
 
-// map<string, .message.order_of_battle_t> oobs = 1;
+// map<string, .pb_message.order_of_battle_t> oobs = 1;
 inline int orders_of_battle_t::oobs_size() const {
   return oobs_.size();
 }
 inline void orders_of_battle_t::clear_oobs() {
   oobs_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >&
 orders_of_battle_t::oobs() const {
-  // @@protoc_insertion_point(field_map:message.orders_of_battle_t.oobs)
+  // @@protoc_insertion_point(field_map:pb_message.orders_of_battle_t.oobs)
   return oobs_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::order_of_battle_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::order_of_battle_t >*
 orders_of_battle_t::mutable_oobs() {
-  // @@protoc_insertion_point(field_mutable_map:message.orders_of_battle_t.oobs)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.orders_of_battle_t.oobs)
   return oobs_.MutableMap();
 }
 
@@ -5630,13 +5630,13 @@ inline void unit_def_side_t::clear_att() {
   att_ = 0;
 }
 inline float unit_def_side_t::att() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.att)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.att)
   return att_;
 }
 inline void unit_def_side_t::set_att(float value) {
   
   att_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.att)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.att)
 }
 
 // optional float def = 2;
@@ -5644,13 +5644,13 @@ inline void unit_def_side_t::clear_def() {
   def_ = 0;
 }
 inline float unit_def_side_t::def() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.def)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.def)
   return def_;
 }
 inline void unit_def_side_t::set_def(float value) {
   
   def_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.def)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.def)
 }
 
 // optional bool scout = 3;
@@ -5658,13 +5658,13 @@ inline void unit_def_side_t::clear_scout() {
   scout_ = false;
 }
 inline bool unit_def_side_t::scout() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.scout)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.scout)
   return scout_;
 }
 inline void unit_def_side_t::set_scout(bool value) {
   
   scout_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.scout)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.scout)
 }
 
 // optional float fighters = 4;
@@ -5672,13 +5672,13 @@ inline void unit_def_side_t::clear_fighters() {
   fighters_ = 0;
 }
 inline float unit_def_side_t::fighters() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.fighters)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.fighters)
   return fighters_;
 }
 inline void unit_def_side_t::set_fighters(float value) {
   
   fighters_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.fighters)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.fighters)
 }
 
 // optional float heavy_fighter_bonus = 5;
@@ -5686,13 +5686,13 @@ inline void unit_def_side_t::clear_heavy_fighter_bonus() {
   heavy_fighter_bonus_ = 0;
 }
 inline float unit_def_side_t::heavy_fighter_bonus() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.heavy_fighter_bonus)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.heavy_fighter_bonus)
   return heavy_fighter_bonus_;
 }
 inline void unit_def_side_t::set_heavy_fighter_bonus(float value) {
   
   heavy_fighter_bonus_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.heavy_fighter_bonus)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.heavy_fighter_bonus)
 }
 
 // optional int32 pfs = 6;
@@ -5700,13 +5700,13 @@ inline void unit_def_side_t::clear_pfs() {
   pfs_ = 0;
 }
 inline ::google::protobuf::int32 unit_def_side_t::pfs() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.pfs)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.pfs)
   return pfs_;
 }
 inline void unit_def_side_t::set_pfs(::google::protobuf::int32 value) {
   
   pfs_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.pfs)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.pfs)
 }
 
 // optional int32 drones = 7;
@@ -5714,13 +5714,13 @@ inline void unit_def_side_t::clear_drones() {
   drones_ = 0;
 }
 inline ::google::protobuf::int32 unit_def_side_t::drones() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.drones)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.drones)
   return drones_;
 }
 inline void unit_def_side_t::set_drones(::google::protobuf::int32 value) {
   
   drones_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.drones)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.drones)
 }
 
 // optional bool mauler = 8;
@@ -5728,42 +5728,42 @@ inline void unit_def_side_t::clear_mauler() {
   mauler_ = false;
 }
 inline bool unit_def_side_t::mauler() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.mauler)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.mauler)
   return mauler_;
 }
 inline void unit_def_side_t::set_mauler(bool value) {
   
   mauler_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.mauler)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.mauler)
 }
 
-// repeated .message.tug_mission_t tug_missions = 9;
+// repeated .pb_message.tug_mission_t tug_missions = 9;
 inline int unit_def_side_t::tug_missions_size() const {
   return tug_missions_.size();
 }
 inline void unit_def_side_t::clear_tug_missions() {
   tug_missions_.Clear();
 }
-inline ::message::tug_mission_t unit_def_side_t::tug_missions(int index) const {
-  // @@protoc_insertion_point(field_get:message.unit_def_side_t.tug_missions)
-  return static_cast< ::message::tug_mission_t >(tug_missions_.Get(index));
+inline ::pb_message::tug_mission_t unit_def_side_t::tug_missions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_side_t.tug_missions)
+  return static_cast< ::pb_message::tug_mission_t >(tug_missions_.Get(index));
 }
-inline void unit_def_side_t::set_tug_missions(int index, ::message::tug_mission_t value) {
+inline void unit_def_side_t::set_tug_missions(int index, ::pb_message::tug_mission_t value) {
   tug_missions_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_side_t.tug_missions)
 }
-inline void unit_def_side_t::add_tug_missions(::message::tug_mission_t value) {
+inline void unit_def_side_t::add_tug_missions(::pb_message::tug_mission_t value) {
   tug_missions_.Add(value);
-  // @@protoc_insertion_point(field_add:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_add:pb_message.unit_def_side_t.tug_missions)
 }
 inline const ::google::protobuf::RepeatedField<int>&
 unit_def_side_t::tug_missions() const {
-  // @@protoc_insertion_point(field_list:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_list:pb_message.unit_def_side_t.tug_missions)
   return tug_missions_;
 }
 inline ::google::protobuf::RepeatedField<int>*
 unit_def_side_t::mutable_tug_missions() {
-  // @@protoc_insertion_point(field_mutable_list:message.unit_def_side_t.tug_missions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.unit_def_side_t.tug_missions)
   return &tug_missions_;
 }
 
@@ -5776,13 +5776,13 @@ inline void towable_t::clear_move_cost() {
   move_cost_ = 0;
 }
 inline ::google::protobuf::int32 towable_t::move_cost() const {
-  // @@protoc_insertion_point(field_get:message.towable_t.move_cost)
+  // @@protoc_insertion_point(field_get:pb_message.towable_t.move_cost)
   return move_cost_;
 }
 inline void towable_t::set_move_cost(::google::protobuf::int32 value) {
   
   move_cost_ = value;
-  // @@protoc_insertion_point(field_set:message.towable_t.move_cost)
+  // @@protoc_insertion_point(field_set:pb_message.towable_t.move_cost)
 }
 
 // optional int32 strat_move_limit = 2;
@@ -5790,13 +5790,13 @@ inline void towable_t::clear_strat_move_limit() {
   strat_move_limit_ = 0;
 }
 inline ::google::protobuf::int32 towable_t::strat_move_limit() const {
-  // @@protoc_insertion_point(field_get:message.towable_t.strat_move_limit)
+  // @@protoc_insertion_point(field_get:pb_message.towable_t.strat_move_limit)
   return strat_move_limit_;
 }
 inline void towable_t::set_strat_move_limit(::google::protobuf::int32 value) {
   
   strat_move_limit_ = value;
-  // @@protoc_insertion_point(field_set:message.towable_t.strat_move_limit)
+  // @@protoc_insertion_point(field_set:pb_message.towable_t.strat_move_limit)
 }
 
 // -------------------------------------------------------------------
@@ -5808,13 +5808,13 @@ inline void production_cost_t::clear_cost() {
   cost_ = 0;
 }
 inline ::google::protobuf::int32 production_cost_t::cost() const {
-  // @@protoc_insertion_point(field_get:message.production_cost_t.cost)
+  // @@protoc_insertion_point(field_get:pb_message.production_cost_t.cost)
   return cost_;
 }
 inline void production_cost_t::set_cost(::google::protobuf::int32 value) {
   
   cost_ = value;
-  // @@protoc_insertion_point(field_set:message.production_cost_t.cost)
+  // @@protoc_insertion_point(field_set:pb_message.production_cost_t.cost)
 }
 
 // optional int32 fighter_cost = 2;
@@ -5822,13 +5822,13 @@ inline void production_cost_t::clear_fighter_cost() {
   fighter_cost_ = 0;
 }
 inline ::google::protobuf::int32 production_cost_t::fighter_cost() const {
-  // @@protoc_insertion_point(field_get:message.production_cost_t.fighter_cost)
+  // @@protoc_insertion_point(field_get:pb_message.production_cost_t.fighter_cost)
   return fighter_cost_;
 }
 inline void production_cost_t::set_fighter_cost(::google::protobuf::int32 value) {
   
   fighter_cost_ = value;
-  // @@protoc_insertion_point(field_set:message.production_cost_t.fighter_cost)
+  // @@protoc_insertion_point(field_set:pb_message.production_cost_t.fighter_cost)
 }
 
 // -------------------------------------------------------------------
@@ -5840,28 +5840,28 @@ inline void unit_def_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& unit_def_t::name() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void unit_def_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.name)
 }
 inline void unit_def_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.unit_def_t.name)
 }
 inline void unit_def_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.unit_def_t.name)
 }
 inline ::std::string* unit_def_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* unit_def_t::release_name() {
@@ -5875,7 +5875,7 @@ inline void unit_def_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.name)
 }
 
 // optional int32 cmd = 2;
@@ -5883,16 +5883,16 @@ inline void unit_def_t::clear_cmd() {
   cmd_ = 0;
 }
 inline ::google::protobuf::int32 unit_def_t::cmd() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.cmd)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.cmd)
   return cmd_;
 }
 inline void unit_def_t::set_cmd(::google::protobuf::int32 value) {
   
   cmd_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.cmd)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.cmd)
 }
 
-// optional .message.unit_def_side_t uncrippled = 3;
+// optional .pb_message.unit_def_side_t uncrippled = 3;
 inline bool unit_def_t::has_uncrippled() const {
   return !_is_default_instance_ && uncrippled_ != NULL;
 }
@@ -5900,25 +5900,25 @@ inline void unit_def_t::clear_uncrippled() {
   if (GetArenaNoVirtual() == NULL && uncrippled_ != NULL) delete uncrippled_;
   uncrippled_ = NULL;
 }
-inline const ::message::unit_def_side_t& unit_def_t::uncrippled() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.uncrippled)
+inline const ::pb_message::unit_def_side_t& unit_def_t::uncrippled() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.uncrippled)
   return uncrippled_ != NULL ? *uncrippled_ : *default_instance_->uncrippled_;
 }
-inline ::message::unit_def_side_t* unit_def_t::mutable_uncrippled() {
+inline ::pb_message::unit_def_side_t* unit_def_t::mutable_uncrippled() {
   
   if (uncrippled_ == NULL) {
-    uncrippled_ = new ::message::unit_def_side_t;
+    uncrippled_ = new ::pb_message::unit_def_side_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.uncrippled)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.uncrippled)
   return uncrippled_;
 }
-inline ::message::unit_def_side_t* unit_def_t::release_uncrippled() {
+inline ::pb_message::unit_def_side_t* unit_def_t::release_uncrippled() {
   
-  ::message::unit_def_side_t* temp = uncrippled_;
+  ::pb_message::unit_def_side_t* temp = uncrippled_;
   uncrippled_ = NULL;
   return temp;
 }
-inline void unit_def_t::set_allocated_uncrippled(::message::unit_def_side_t* uncrippled) {
+inline void unit_def_t::set_allocated_uncrippled(::pb_message::unit_def_side_t* uncrippled) {
   delete uncrippled_;
   uncrippled_ = uncrippled;
   if (uncrippled) {
@@ -5926,10 +5926,10 @@ inline void unit_def_t::set_allocated_uncrippled(::message::unit_def_side_t* unc
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.uncrippled)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.uncrippled)
 }
 
-// optional .message.unit_def_side_t crippled = 4;
+// optional .pb_message.unit_def_side_t crippled = 4;
 inline bool unit_def_t::has_crippled() const {
   return !_is_default_instance_ && crippled_ != NULL;
 }
@@ -5937,25 +5937,25 @@ inline void unit_def_t::clear_crippled() {
   if (GetArenaNoVirtual() == NULL && crippled_ != NULL) delete crippled_;
   crippled_ = NULL;
 }
-inline const ::message::unit_def_side_t& unit_def_t::crippled() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.crippled)
+inline const ::pb_message::unit_def_side_t& unit_def_t::crippled() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.crippled)
   return crippled_ != NULL ? *crippled_ : *default_instance_->crippled_;
 }
-inline ::message::unit_def_side_t* unit_def_t::mutable_crippled() {
+inline ::pb_message::unit_def_side_t* unit_def_t::mutable_crippled() {
   
   if (crippled_ == NULL) {
-    crippled_ = new ::message::unit_def_side_t;
+    crippled_ = new ::pb_message::unit_def_side_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.crippled)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.crippled)
   return crippled_;
 }
-inline ::message::unit_def_side_t* unit_def_t::release_crippled() {
+inline ::pb_message::unit_def_side_t* unit_def_t::release_crippled() {
   
-  ::message::unit_def_side_t* temp = crippled_;
+  ::pb_message::unit_def_side_t* temp = crippled_;
   crippled_ = NULL;
   return temp;
 }
-inline void unit_def_t::set_allocated_crippled(::message::unit_def_side_t* crippled) {
+inline void unit_def_t::set_allocated_crippled(::pb_message::unit_def_side_t* crippled) {
   delete crippled_;
   crippled_ = crippled;
   if (crippled) {
@@ -5963,24 +5963,24 @@ inline void unit_def_t::set_allocated_crippled(::message::unit_def_side_t* cripp
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.crippled)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.crippled)
 }
 
-// optional .message.escort_type_t escort_type = 5;
+// optional .pb_message.escort_type_t escort_type = 5;
 inline void unit_def_t::clear_escort_type() {
   escort_type_ = 0;
 }
-inline ::message::escort_type_t unit_def_t::escort_type() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.escort_type)
-  return static_cast< ::message::escort_type_t >(escort_type_);
+inline ::pb_message::escort_type_t unit_def_t::escort_type() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.escort_type)
+  return static_cast< ::pb_message::escort_type_t >(escort_type_);
 }
-inline void unit_def_t::set_escort_type(::message::escort_type_t value) {
+inline void unit_def_t::set_escort_type(::pb_message::escort_type_t value) {
   
   escort_type_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.escort_type)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.escort_type)
 }
 
-// optional .message.turn_t available = 6;
+// optional .pb_message.turn_t available = 6;
 inline bool unit_def_t::has_available() const {
   return !_is_default_instance_ && available_ != NULL;
 }
@@ -5988,25 +5988,25 @@ inline void unit_def_t::clear_available() {
   if (GetArenaNoVirtual() == NULL && available_ != NULL) delete available_;
   available_ = NULL;
 }
-inline const ::message::turn_t& unit_def_t::available() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.available)
+inline const ::pb_message::turn_t& unit_def_t::available() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.available)
   return available_ != NULL ? *available_ : *default_instance_->available_;
 }
-inline ::message::turn_t* unit_def_t::mutable_available() {
+inline ::pb_message::turn_t* unit_def_t::mutable_available() {
   
   if (available_ == NULL) {
-    available_ = new ::message::turn_t;
+    available_ = new ::pb_message::turn_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.available)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.available)
   return available_;
 }
-inline ::message::turn_t* unit_def_t::release_available() {
+inline ::pb_message::turn_t* unit_def_t::release_available() {
   
-  ::message::turn_t* temp = available_;
+  ::pb_message::turn_t* temp = available_;
   available_ = NULL;
   return temp;
 }
-inline void unit_def_t::set_allocated_available(::message::turn_t* available) {
+inline void unit_def_t::set_allocated_available(::pb_message::turn_t* available) {
   delete available_;
   available_ = available;
   if (available) {
@@ -6014,7 +6014,7 @@ inline void unit_def_t::set_allocated_available(::message::turn_t* available) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.available)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.available)
 }
 
 // optional bool pod = 7;
@@ -6022,13 +6022,13 @@ inline void unit_def_t::clear_pod() {
   pod_ = false;
 }
 inline bool unit_def_t::pod() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.pod)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.pod)
   return pod_;
 }
 inline void unit_def_t::set_pod(bool value) {
   
   pod_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.pod)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.pod)
 }
 
 // optional int32 max_in_service = 8;
@@ -6036,16 +6036,16 @@ inline void unit_def_t::clear_max_in_service() {
   max_in_service_ = 0;
 }
 inline ::google::protobuf::int32 unit_def_t::max_in_service() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.max_in_service)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.max_in_service)
   return max_in_service_;
 }
 inline void unit_def_t::set_max_in_service(::google::protobuf::int32 value) {
   
   max_in_service_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.max_in_service)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.max_in_service)
 }
 
-// optional .message.production_cost_t construction = 9;
+// optional .pb_message.production_cost_t construction = 9;
 inline bool unit_def_t::has_construction() const {
   return !_is_default_instance_ && construction_ != NULL;
 }
@@ -6053,25 +6053,25 @@ inline void unit_def_t::clear_construction() {
   if (GetArenaNoVirtual() == NULL && construction_ != NULL) delete construction_;
   construction_ = NULL;
 }
-inline const ::message::production_cost_t& unit_def_t::construction() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.construction)
+inline const ::pb_message::production_cost_t& unit_def_t::construction() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.construction)
   return construction_ != NULL ? *construction_ : *default_instance_->construction_;
 }
-inline ::message::production_cost_t* unit_def_t::mutable_construction() {
+inline ::pb_message::production_cost_t* unit_def_t::mutable_construction() {
   
   if (construction_ == NULL) {
-    construction_ = new ::message::production_cost_t;
+    construction_ = new ::pb_message::production_cost_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.construction)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.construction)
   return construction_;
 }
-inline ::message::production_cost_t* unit_def_t::release_construction() {
+inline ::pb_message::production_cost_t* unit_def_t::release_construction() {
   
-  ::message::production_cost_t* temp = construction_;
+  ::pb_message::production_cost_t* temp = construction_;
   construction_ = NULL;
   return temp;
 }
-inline void unit_def_t::set_allocated_construction(::message::production_cost_t* construction) {
+inline void unit_def_t::set_allocated_construction(::pb_message::production_cost_t* construction) {
   delete construction_;
   construction_ = construction;
   if (construction) {
@@ -6079,42 +6079,42 @@ inline void unit_def_t::set_allocated_construction(::message::production_cost_t*
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.construction)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.construction)
 }
 
-// map<string, .message.production_cost_t> substitutions = 10;
+// map<string, .pb_message.production_cost_t> substitutions = 10;
 inline int unit_def_t::substitutions_size() const {
   return substitutions_.size();
 }
 inline void unit_def_t::clear_substitutions() {
   substitutions_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::production_cost_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >&
 unit_def_t::substitutions() const {
-  // @@protoc_insertion_point(field_map:message.unit_def_t.substitutions)
+  // @@protoc_insertion_point(field_map:pb_message.unit_def_t.substitutions)
   return substitutions_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::production_cost_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >*
 unit_def_t::mutable_substitutions() {
-  // @@protoc_insertion_point(field_mutable_map:message.unit_def_t.substitutions)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.unit_def_t.substitutions)
   return substitutions_.MutableMap();
 }
 
-// map<string, .message.production_cost_t> conversions = 11;
+// map<string, .pb_message.production_cost_t> conversions = 11;
 inline int unit_def_t::conversions_size() const {
   return conversions_.size();
 }
 inline void unit_def_t::clear_conversions() {
   conversions_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::production_cost_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >&
 unit_def_t::conversions() const {
-  // @@protoc_insertion_point(field_map:message.unit_def_t.conversions)
+  // @@protoc_insertion_point(field_map:pb_message.unit_def_t.conversions)
   return conversions_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::production_cost_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::production_cost_t >*
 unit_def_t::mutable_conversions() {
-  // @@protoc_insertion_point(field_mutable_map:message.unit_def_t.conversions)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.unit_def_t.conversions)
   return conversions_.MutableMap();
 }
 
@@ -6123,27 +6123,27 @@ inline void unit_def_t::clear_move() {
   move_ = 0;
 }
 inline ::google::protobuf::int32 unit_def_t::move() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.move)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.move)
   return move_;
 }
 inline void unit_def_t::set_move(::google::protobuf::int32 value) {
   
   move_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.move)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.move)
 }
 
-// optional .message.carrier_type_t carrier_type = 13;
+// optional .pb_message.carrier_type_t carrier_type = 13;
 inline void unit_def_t::clear_carrier_type() {
   carrier_type_ = 0;
 }
-inline ::message::carrier_type_t unit_def_t::carrier_type() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.carrier_type)
-  return static_cast< ::message::carrier_type_t >(carrier_type_);
+inline ::pb_message::carrier_type_t unit_def_t::carrier_type() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.carrier_type)
+  return static_cast< ::pb_message::carrier_type_t >(carrier_type_);
 }
-inline void unit_def_t::set_carrier_type(::message::carrier_type_t value) {
+inline void unit_def_t::set_carrier_type(::pb_message::carrier_type_t value) {
   
   carrier_type_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.carrier_type)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.carrier_type)
 }
 
 // optional bool not_spaceworthy = 14;
@@ -6151,16 +6151,16 @@ inline void unit_def_t::clear_not_spaceworthy() {
   not_spaceworthy_ = false;
 }
 inline bool unit_def_t::not_spaceworthy() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.not_spaceworthy)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.not_spaceworthy)
   return not_spaceworthy_;
 }
 inline void unit_def_t::set_not_spaceworthy(bool value) {
   
   not_spaceworthy_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.not_spaceworthy)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.not_spaceworthy)
 }
 
-// optional .message.towable_t towable = 15;
+// optional .pb_message.towable_t towable = 15;
 inline bool unit_def_t::has_towable() const {
   return !_is_default_instance_ && towable_ != NULL;
 }
@@ -6168,25 +6168,25 @@ inline void unit_def_t::clear_towable() {
   if (GetArenaNoVirtual() == NULL && towable_ != NULL) delete towable_;
   towable_ = NULL;
 }
-inline const ::message::towable_t& unit_def_t::towable() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.towable)
+inline const ::pb_message::towable_t& unit_def_t::towable() const {
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.towable)
   return towable_ != NULL ? *towable_ : *default_instance_->towable_;
 }
-inline ::message::towable_t* unit_def_t::mutable_towable() {
+inline ::pb_message::towable_t* unit_def_t::mutable_towable() {
   
   if (towable_ == NULL) {
-    towable_ = new ::message::towable_t;
+    towable_ = new ::pb_message::towable_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.towable)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.towable)
   return towable_;
 }
-inline ::message::towable_t* unit_def_t::release_towable() {
+inline ::pb_message::towable_t* unit_def_t::release_towable() {
   
-  ::message::towable_t* temp = towable_;
+  ::pb_message::towable_t* temp = towable_;
   towable_ = NULL;
   return temp;
 }
-inline void unit_def_t::set_allocated_towable(::message::towable_t* towable) {
+inline void unit_def_t::set_allocated_towable(::pb_message::towable_t* towable) {
   delete towable_;
   towable_ = towable;
   if (towable) {
@@ -6194,7 +6194,7 @@ inline void unit_def_t::set_allocated_towable(::message::towable_t* towable) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.towable)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.towable)
 }
 
 // optional int32 salvage = 16;
@@ -6202,13 +6202,13 @@ inline void unit_def_t::clear_salvage() {
   salvage_ = 0;
 }
 inline ::google::protobuf::int32 unit_def_t::salvage() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.salvage)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.salvage)
   return salvage_;
 }
 inline void unit_def_t::set_salvage(::google::protobuf::int32 value) {
   
   salvage_ = value;
-  // @@protoc_insertion_point(field_set:message.unit_def_t.salvage)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.salvage)
 }
 
 // optional string notes = 17;
@@ -6216,28 +6216,28 @@ inline void unit_def_t::clear_notes() {
   notes_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& unit_def_t::notes() const {
-  // @@protoc_insertion_point(field_get:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_get:pb_message.unit_def_t.notes)
   return notes_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void unit_def_t::set_notes(const ::std::string& value) {
   
   notes_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set:pb_message.unit_def_t.notes)
 }
 inline void unit_def_t::set_notes(const char* value) {
   
   notes_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set_char:pb_message.unit_def_t.notes)
 }
 inline void unit_def_t::set_notes(const char* value, size_t size) {
   
   notes_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.unit_def_t.notes)
 }
 inline ::std::string* unit_def_t::mutable_notes() {
   
-  // @@protoc_insertion_point(field_mutable:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_mutable:pb_message.unit_def_t.notes)
   return notes_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* unit_def_t::release_notes() {
@@ -6251,40 +6251,40 @@ inline void unit_def_t::set_allocated_notes(::std::string* notes) {
     
   }
   notes_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), notes);
-  // @@protoc_insertion_point(field_set_allocated:message.unit_def_t.notes)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.unit_def_t.notes)
 }
 
 // -------------------------------------------------------------------
 
 // nation_unit_defs_t
 
-// repeated .message.unit_def_t units = 1;
+// repeated .pb_message.unit_def_t units = 1;
 inline int nation_unit_defs_t::units_size() const {
   return units_.size();
 }
 inline void nation_unit_defs_t::clear_units() {
   units_.Clear();
 }
-inline const ::message::unit_def_t& nation_unit_defs_t::units(int index) const {
-  // @@protoc_insertion_point(field_get:message.nation_unit_defs_t.units)
+inline const ::pb_message::unit_def_t& nation_unit_defs_t::units(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.nation_unit_defs_t.units)
   return units_.Get(index);
 }
-inline ::message::unit_def_t* nation_unit_defs_t::mutable_units(int index) {
-  // @@protoc_insertion_point(field_mutable:message.nation_unit_defs_t.units)
+inline ::pb_message::unit_def_t* nation_unit_defs_t::mutable_units(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.nation_unit_defs_t.units)
   return units_.Mutable(index);
 }
-inline ::message::unit_def_t* nation_unit_defs_t::add_units() {
-  // @@protoc_insertion_point(field_add:message.nation_unit_defs_t.units)
+inline ::pb_message::unit_def_t* nation_unit_defs_t::add_units() {
+  // @@protoc_insertion_point(field_add:pb_message.nation_unit_defs_t.units)
   return units_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::unit_def_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t >*
 nation_unit_defs_t::mutable_units() {
-  // @@protoc_insertion_point(field_mutable_list:message.nation_unit_defs_t.units)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.nation_unit_defs_t.units)
   return &units_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::unit_def_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::unit_def_t >&
 nation_unit_defs_t::units() const {
-  // @@protoc_insertion_point(field_list:message.nation_unit_defs_t.units)
+  // @@protoc_insertion_point(field_list:pb_message.nation_unit_defs_t.units)
   return units_;
 }
 
@@ -6292,21 +6292,21 @@ nation_unit_defs_t::units() const {
 
 // unit_defs_t
 
-// map<string, .message.nation_unit_defs_t> nation_units = 1;
+// map<string, .pb_message.nation_unit_defs_t> nation_units = 1;
 inline int unit_defs_t::nation_units_size() const {
   return nation_units_.size();
 }
 inline void unit_defs_t::clear_nation_units() {
   nation_units_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >&
 unit_defs_t::nation_units() const {
-  // @@protoc_insertion_point(field_map:message.unit_defs_t.nation_units)
+  // @@protoc_insertion_point(field_map:pb_message.unit_defs_t.nation_units)
   return nation_units_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::nation_unit_defs_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::nation_unit_defs_t >*
 unit_defs_t::mutable_nation_units() {
-  // @@protoc_insertion_point(field_mutable_map:message.unit_defs_t.nation_units)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.unit_defs_t.nation_units)
   return nation_units_.MutableMap();
 }
 
@@ -6319,28 +6319,28 @@ inline void team_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& team_t::name() const {
-  // @@protoc_insertion_point(field_get:message.team_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.team_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void team_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.team_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.team_t.name)
 }
 inline void team_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.team_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.team_t.name)
 }
 inline void team_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.team_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.team_t.name)
 }
 inline ::std::string* team_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.team_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.team_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* team_t::release_name() {
@@ -6354,7 +6354,7 @@ inline void team_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.team_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.team_t.name)
 }
 
 // repeated string nations = 2;
@@ -6365,49 +6365,49 @@ inline void team_t::clear_nations() {
   nations_.Clear();
 }
 inline const ::std::string& team_t::nations(int index) const {
-  // @@protoc_insertion_point(field_get:message.team_t.nations)
+  // @@protoc_insertion_point(field_get:pb_message.team_t.nations)
   return nations_.Get(index);
 }
 inline ::std::string* team_t::mutable_nations(int index) {
-  // @@protoc_insertion_point(field_mutable:message.team_t.nations)
+  // @@protoc_insertion_point(field_mutable:pb_message.team_t.nations)
   return nations_.Mutable(index);
 }
 inline void team_t::set_nations(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.team_t.nations)
+  // @@protoc_insertion_point(field_set:pb_message.team_t.nations)
   nations_.Mutable(index)->assign(value);
 }
 inline void team_t::set_nations(int index, const char* value) {
   nations_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.team_t.nations)
+  // @@protoc_insertion_point(field_set_char:pb_message.team_t.nations)
 }
 inline void team_t::set_nations(int index, const char* value, size_t size) {
   nations_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.team_t.nations)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.team_t.nations)
 }
 inline ::std::string* team_t::add_nations() {
   return nations_.Add();
 }
 inline void team_t::add_nations(const ::std::string& value) {
   nations_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.team_t.nations)
+  // @@protoc_insertion_point(field_add:pb_message.team_t.nations)
 }
 inline void team_t::add_nations(const char* value) {
   nations_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.team_t.nations)
+  // @@protoc_insertion_point(field_add_char:pb_message.team_t.nations)
 }
 inline void team_t::add_nations(const char* value, size_t size) {
   nations_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.team_t.nations)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.team_t.nations)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 team_t::nations() const {
-  // @@protoc_insertion_point(field_list:message.team_t.nations)
+  // @@protoc_insertion_point(field_list:pb_message.team_t.nations)
   return nations_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 team_t::mutable_nations() {
-  // @@protoc_insertion_point(field_mutable_list:message.team_t.nations)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.team_t.nations)
   return &nations_;
 }
 
@@ -6415,18 +6415,18 @@ team_t::mutable_nations() {
 
 // scenario_condition_t_object_t
 
-// optional .message.scenario_condition_t.object_type_t type = 1;
+// optional .pb_message.scenario_condition_t.object_type_t type = 1;
 inline void scenario_condition_t_object_t::clear_type() {
   type_ = 0;
 }
-inline ::message::scenario_condition_t_object_type_t scenario_condition_t_object_t::type() const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.object_t.type)
-  return static_cast< ::message::scenario_condition_t_object_type_t >(type_);
+inline ::pb_message::scenario_condition_t_object_type_t scenario_condition_t_object_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.object_t.type)
+  return static_cast< ::pb_message::scenario_condition_t_object_type_t >(type_);
 }
-inline void scenario_condition_t_object_t::set_type(::message::scenario_condition_t_object_type_t value) {
+inline void scenario_condition_t_object_t::set_type(::pb_message::scenario_condition_t_object_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.object_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.object_t.type)
 }
 
 // repeated string names = 2;
@@ -6437,49 +6437,49 @@ inline void scenario_condition_t_object_t::clear_names() {
   names_.Clear();
 }
 inline const ::std::string& scenario_condition_t_object_t::names(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.object_t.names)
   return names_.Get(index);
 }
 inline ::std::string* scenario_condition_t_object_t::mutable_names(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_condition_t.object_t.names)
   return names_.Mutable(index);
 }
 inline void scenario_condition_t_object_t::set_names(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.object_t.names)
   names_.Mutable(index)->assign(value);
 }
 inline void scenario_condition_t_object_t::set_names(int index, const char* value) {
   names_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_condition_t.object_t.names)
 }
 inline void scenario_condition_t_object_t::set_names(int index, const char* value, size_t size) {
   names_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_condition_t.object_t.names)
 }
 inline ::std::string* scenario_condition_t_object_t::add_names() {
   return names_.Add();
 }
 inline void scenario_condition_t_object_t::add_names(const ::std::string& value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.object_t.names)
 }
 inline void scenario_condition_t_object_t::add_names(const char* value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_condition_t.object_t.names)
 }
 inline void scenario_condition_t_object_t::add_names(const char* value, size_t size) {
   names_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_condition_t.object_t.names)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_condition_t_object_t::names() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.object_t.names)
   return names_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_condition_t_object_t::mutable_names() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.object_t.names)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.object_t.names)
   return &names_;
 }
 
@@ -6491,25 +6491,25 @@ inline void scenario_condition_t_object_t::clear_hexes() {
   hexes_.Clear();
 }
 inline ::google::protobuf::int32 scenario_condition_t_object_t::hexes(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.object_t.hexes)
   return hexes_.Get(index);
 }
 inline void scenario_condition_t_object_t::set_hexes(int index, ::google::protobuf::int32 value) {
   hexes_.Set(index, value);
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.object_t.hexes)
 }
 inline void scenario_condition_t_object_t::add_hexes(::google::protobuf::int32 value) {
   hexes_.Add(value);
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.object_t.hexes)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 scenario_condition_t_object_t::hexes() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.object_t.hexes)
   return hexes_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 scenario_condition_t_object_t::mutable_hexes() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.object_t.hexes)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.object_t.hexes)
   return &hexes_;
 }
 
@@ -6525,93 +6525,93 @@ inline void scenario_condition_t::clear_actors() {
   actors_.Clear();
 }
 inline const ::std::string& scenario_condition_t::actors(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.actors)
   return actors_.Get(index);
 }
 inline ::std::string* scenario_condition_t::mutable_actors(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_condition_t.actors)
   return actors_.Mutable(index);
 }
 inline void scenario_condition_t::set_actors(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.actors)
   actors_.Mutable(index)->assign(value);
 }
 inline void scenario_condition_t::set_actors(int index, const char* value) {
   actors_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_condition_t.actors)
 }
 inline void scenario_condition_t::set_actors(int index, const char* value, size_t size) {
   actors_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_condition_t.actors)
 }
 inline ::std::string* scenario_condition_t::add_actors() {
   return actors_.Add();
 }
 inline void scenario_condition_t::add_actors(const ::std::string& value) {
   actors_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.actors)
 }
 inline void scenario_condition_t::add_actors(const char* value) {
   actors_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_condition_t.actors)
 }
 inline void scenario_condition_t::add_actors(const char* value, size_t size) {
   actors_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_condition_t.actors)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_condition_t::actors() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.actors)
   return actors_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_condition_t::mutable_actors() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.actors)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.actors)
   return &actors_;
 }
 
-// optional .message.scenario_condition_t.action_t action = 2;
+// optional .pb_message.scenario_condition_t.action_t action = 2;
 inline void scenario_condition_t::clear_action() {
   action_ = 0;
 }
-inline ::message::scenario_condition_t_action_t scenario_condition_t::action() const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.action)
-  return static_cast< ::message::scenario_condition_t_action_t >(action_);
+inline ::pb_message::scenario_condition_t_action_t scenario_condition_t::action() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.action)
+  return static_cast< ::pb_message::scenario_condition_t_action_t >(action_);
 }
-inline void scenario_condition_t::set_action(::message::scenario_condition_t_action_t value) {
+inline void scenario_condition_t::set_action(::pb_message::scenario_condition_t_action_t value) {
   
   action_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_condition_t.action)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_condition_t.action)
 }
 
-// repeated .message.scenario_condition_t.object_t one_of = 3;
+// repeated .pb_message.scenario_condition_t.object_t one_of = 3;
 inline int scenario_condition_t::one_of_size() const {
   return one_of_.size();
 }
 inline void scenario_condition_t::clear_one_of() {
   one_of_.Clear();
 }
-inline const ::message::scenario_condition_t_object_t& scenario_condition_t::one_of(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_condition_t.one_of)
+inline const ::pb_message::scenario_condition_t_object_t& scenario_condition_t::one_of(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_condition_t.one_of)
   return one_of_.Get(index);
 }
-inline ::message::scenario_condition_t_object_t* scenario_condition_t::mutable_one_of(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_condition_t.one_of)
+inline ::pb_message::scenario_condition_t_object_t* scenario_condition_t::mutable_one_of(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_condition_t.one_of)
   return one_of_.Mutable(index);
 }
-inline ::message::scenario_condition_t_object_t* scenario_condition_t::add_one_of() {
-  // @@protoc_insertion_point(field_add:message.scenario_condition_t.one_of)
+inline ::pb_message::scenario_condition_t_object_t* scenario_condition_t::add_one_of() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_condition_t.one_of)
   return one_of_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t >*
 scenario_condition_t::mutable_one_of() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_condition_t.one_of)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_condition_t.one_of)
   return &one_of_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::scenario_condition_t_object_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_condition_t_object_t >&
 scenario_condition_t::one_of() const {
-  // @@protoc_insertion_point(field_list:message.scenario_condition_t.one_of)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_condition_t.one_of)
   return one_of_;
 }
 
@@ -6624,28 +6624,28 @@ inline void fleet_release_condition_t::clear_fleet() {
   fleet_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& fleet_release_condition_t::fleet() const {
-  // @@protoc_insertion_point(field_get:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_get:pb_message.fleet_release_condition_t.fleet)
   return fleet_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void fleet_release_condition_t::set_fleet(const ::std::string& value) {
   
   fleet_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set:pb_message.fleet_release_condition_t.fleet)
 }
 inline void fleet_release_condition_t::set_fleet(const char* value) {
   
   fleet_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set_char:pb_message.fleet_release_condition_t.fleet)
 }
 inline void fleet_release_condition_t::set_fleet(const char* value, size_t size) {
   
   fleet_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.fleet_release_condition_t.fleet)
 }
 inline ::std::string* fleet_release_condition_t::mutable_fleet() {
   
-  // @@protoc_insertion_point(field_mutable:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_mutable:pb_message.fleet_release_condition_t.fleet)
   return fleet_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* fleet_release_condition_t::release_fleet() {
@@ -6659,10 +6659,10 @@ inline void fleet_release_condition_t::set_allocated_fleet(::std::string* fleet)
     
   }
   fleet_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), fleet);
-  // @@protoc_insertion_point(field_set_allocated:message.fleet_release_condition_t.fleet)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.fleet_release_condition_t.fleet)
 }
 
-// optional .message.scenario_condition_t condition = 2;
+// optional .pb_message.scenario_condition_t condition = 2;
 inline bool fleet_release_condition_t::has_condition() const {
   return !_is_default_instance_ && condition_ != NULL;
 }
@@ -6670,25 +6670,25 @@ inline void fleet_release_condition_t::clear_condition() {
   if (GetArenaNoVirtual() == NULL && condition_ != NULL) delete condition_;
   condition_ = NULL;
 }
-inline const ::message::scenario_condition_t& fleet_release_condition_t::condition() const {
-  // @@protoc_insertion_point(field_get:message.fleet_release_condition_t.condition)
+inline const ::pb_message::scenario_condition_t& fleet_release_condition_t::condition() const {
+  // @@protoc_insertion_point(field_get:pb_message.fleet_release_condition_t.condition)
   return condition_ != NULL ? *condition_ : *default_instance_->condition_;
 }
-inline ::message::scenario_condition_t* fleet_release_condition_t::mutable_condition() {
+inline ::pb_message::scenario_condition_t* fleet_release_condition_t::mutable_condition() {
   
   if (condition_ == NULL) {
-    condition_ = new ::message::scenario_condition_t;
+    condition_ = new ::pb_message::scenario_condition_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.fleet_release_condition_t.condition)
+  // @@protoc_insertion_point(field_mutable:pb_message.fleet_release_condition_t.condition)
   return condition_;
 }
-inline ::message::scenario_condition_t* fleet_release_condition_t::release_condition() {
+inline ::pb_message::scenario_condition_t* fleet_release_condition_t::release_condition() {
   
-  ::message::scenario_condition_t* temp = condition_;
+  ::pb_message::scenario_condition_t* temp = condition_;
   condition_ = NULL;
   return temp;
 }
-inline void fleet_release_condition_t::set_allocated_condition(::message::scenario_condition_t* condition) {
+inline void fleet_release_condition_t::set_allocated_condition(::pb_message::scenario_condition_t* condition) {
   delete condition_;
   condition_ = condition;
   if (condition) {
@@ -6696,28 +6696,28 @@ inline void fleet_release_condition_t::set_allocated_condition(::message::scenar
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.fleet_release_condition_t.condition)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.fleet_release_condition_t.condition)
 }
 
 // -------------------------------------------------------------------
 
 // war_entry_condition_t
 
-// optional .message.war_footing_t economy = 3;
+// optional .pb_message.war_footing_t economy = 3;
 inline void war_entry_condition_t::clear_economy() {
   economy_ = 0;
 }
-inline ::message::war_footing_t war_entry_condition_t::economy() const {
-  // @@protoc_insertion_point(field_get:message.war_entry_condition_t.economy)
-  return static_cast< ::message::war_footing_t >(economy_);
+inline ::pb_message::war_footing_t war_entry_condition_t::economy() const {
+  // @@protoc_insertion_point(field_get:pb_message.war_entry_condition_t.economy)
+  return static_cast< ::pb_message::war_footing_t >(economy_);
 }
-inline void war_entry_condition_t::set_economy(::message::war_footing_t value) {
+inline void war_entry_condition_t::set_economy(::pb_message::war_footing_t value) {
   
   economy_ = value;
-  // @@protoc_insertion_point(field_set:message.war_entry_condition_t.economy)
+  // @@protoc_insertion_point(field_set:pb_message.war_entry_condition_t.economy)
 }
 
-// optional .message.scenario_condition_t condition = 2;
+// optional .pb_message.scenario_condition_t condition = 2;
 inline bool war_entry_condition_t::has_condition() const {
   return !_is_default_instance_ && condition_ != NULL;
 }
@@ -6725,25 +6725,25 @@ inline void war_entry_condition_t::clear_condition() {
   if (GetArenaNoVirtual() == NULL && condition_ != NULL) delete condition_;
   condition_ = NULL;
 }
-inline const ::message::scenario_condition_t& war_entry_condition_t::condition() const {
-  // @@protoc_insertion_point(field_get:message.war_entry_condition_t.condition)
+inline const ::pb_message::scenario_condition_t& war_entry_condition_t::condition() const {
+  // @@protoc_insertion_point(field_get:pb_message.war_entry_condition_t.condition)
   return condition_ != NULL ? *condition_ : *default_instance_->condition_;
 }
-inline ::message::scenario_condition_t* war_entry_condition_t::mutable_condition() {
+inline ::pb_message::scenario_condition_t* war_entry_condition_t::mutable_condition() {
   
   if (condition_ == NULL) {
-    condition_ = new ::message::scenario_condition_t;
+    condition_ = new ::pb_message::scenario_condition_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.war_entry_condition_t.condition)
+  // @@protoc_insertion_point(field_mutable:pb_message.war_entry_condition_t.condition)
   return condition_;
 }
-inline ::message::scenario_condition_t* war_entry_condition_t::release_condition() {
+inline ::pb_message::scenario_condition_t* war_entry_condition_t::release_condition() {
   
-  ::message::scenario_condition_t* temp = condition_;
+  ::pb_message::scenario_condition_t* temp = condition_;
   condition_ = NULL;
   return temp;
 }
-inline void war_entry_condition_t::set_allocated_condition(::message::scenario_condition_t* condition) {
+inline void war_entry_condition_t::set_allocated_condition(::pb_message::scenario_condition_t* condition) {
   delete condition_;
   condition_ = condition;
   if (condition) {
@@ -6751,25 +6751,25 @@ inline void war_entry_condition_t::set_allocated_condition(::message::scenario_c
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.war_entry_condition_t.condition)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.war_entry_condition_t.condition)
 }
 
 // -------------------------------------------------------------------
 
 // scenario_turn_t_national_action_t_action_t
 
-// optional .message.scenario_turn_t.national_action_t.action_type_t type = 1;
+// optional .pb_message.scenario_turn_t.national_action_t.action_type_t type = 1;
 inline void scenario_turn_t_national_action_t_action_t::clear_type() {
   type_ = 0;
 }
-inline ::message::scenario_turn_t_national_action_t_action_type_t scenario_turn_t_national_action_t_action_t::type() const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.national_action_t.action_t.type)
-  return static_cast< ::message::scenario_turn_t_national_action_t_action_type_t >(type_);
+inline ::pb_message::scenario_turn_t_national_action_t_action_type_t scenario_turn_t_national_action_t_action_t::type() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.national_action_t.action_t.type)
+  return static_cast< ::pb_message::scenario_turn_t_national_action_t_action_type_t >(type_);
 }
-inline void scenario_turn_t_national_action_t_action_t::set_type(::message::scenario_turn_t_national_action_t_action_type_t value) {
+inline void scenario_turn_t_national_action_t_action_t::set_type(::pb_message::scenario_turn_t_national_action_t_action_type_t value) {
   
   type_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_turn_t.national_action_t.action_t.type)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_turn_t.national_action_t.action_t.type)
 }
 
 // repeated string names = 2;
@@ -6780,49 +6780,49 @@ inline void scenario_turn_t_national_action_t_action_t::clear_names() {
   names_.Clear();
 }
 inline const ::std::string& scenario_turn_t_national_action_t_action_t::names(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return names_.Get(index);
 }
 inline ::std::string* scenario_turn_t_national_action_t_action_t::mutable_names(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return names_.Mutable(index);
 }
 inline void scenario_turn_t_national_action_t_action_t::set_names(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_turn_t.national_action_t.action_t.names)
   names_.Mutable(index)->assign(value);
 }
 inline void scenario_turn_t_national_action_t_action_t::set_names(int index, const char* value) {
   names_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
 inline void scenario_turn_t_national_action_t_action_t::set_names(int index, const char* value, size_t size) {
   names_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
 inline ::std::string* scenario_turn_t_national_action_t_action_t::add_names() {
   return names_.Add();
 }
 inline void scenario_turn_t_national_action_t_action_t::add_names(const ::std::string& value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
 inline void scenario_turn_t_national_action_t_action_t::add_names(const char* value) {
   names_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
 inline void scenario_turn_t_national_action_t_action_t::add_names(const char* value, size_t size) {
   names_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_turn_t.national_action_t.action_t.names)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_turn_t_national_action_t_action_t::names() const {
-  // @@protoc_insertion_point(field_list:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return names_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_turn_t_national_action_t_action_t::mutable_names() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_turn_t.national_action_t.action_t.names)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_turn_t.national_action_t.action_t.names)
   return &names_;
 }
 
@@ -6830,33 +6830,33 @@ scenario_turn_t_national_action_t_action_t::mutable_names() {
 
 // scenario_turn_t_national_action_t
 
-// repeated .message.scenario_turn_t.national_action_t.action_t actions = 1;
+// repeated .pb_message.scenario_turn_t.national_action_t.action_t actions = 1;
 inline int scenario_turn_t_national_action_t::actions_size() const {
   return actions_.size();
 }
 inline void scenario_turn_t_national_action_t::clear_actions() {
   actions_.Clear();
 }
-inline const ::message::scenario_turn_t_national_action_t_action_t& scenario_turn_t_national_action_t::actions(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.national_action_t.actions)
+inline const ::pb_message::scenario_turn_t_national_action_t_action_t& scenario_turn_t_national_action_t::actions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_.Get(index);
 }
-inline ::message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::mutable_actions(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_turn_t.national_action_t.actions)
+inline ::pb_message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::mutable_actions(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_.Mutable(index);
 }
-inline ::message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::add_actions() {
-  // @@protoc_insertion_point(field_add:message.scenario_turn_t.national_action_t.actions)
+inline ::pb_message::scenario_turn_t_national_action_t_action_t* scenario_turn_t_national_action_t::add_actions() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t >*
 scenario_turn_t_national_action_t::mutable_actions() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_turn_t.national_action_t.actions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_turn_t.national_action_t.actions)
   return &actions_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t_national_action_t_action_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t_national_action_t_action_t >&
 scenario_turn_t_national_action_t::actions() const {
-  // @@protoc_insertion_point(field_list:message.scenario_turn_t.national_action_t.actions)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_turn_t.national_action_t.actions)
   return actions_;
 }
 
@@ -6869,30 +6869,30 @@ inline void scenario_turn_t::clear_turn() {
   turn_ = 0;
 }
 inline ::google::protobuf::int32 scenario_turn_t::turn() const {
-  // @@protoc_insertion_point(field_get:message.scenario_turn_t.turn)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_turn_t.turn)
   return turn_;
 }
 inline void scenario_turn_t::set_turn(::google::protobuf::int32 value) {
   
   turn_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_turn_t.turn)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_turn_t.turn)
 }
 
-// map<string, .message.scenario_turn_t.national_action_t> national_actions = 2;
+// map<string, .pb_message.scenario_turn_t.national_action_t> national_actions = 2;
 inline int scenario_turn_t::national_actions_size() const {
   return national_actions_.size();
 }
 inline void scenario_turn_t::clear_national_actions() {
   national_actions_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >&
 scenario_turn_t::national_actions() const {
-  // @@protoc_insertion_point(field_map:message.scenario_turn_t.national_actions)
+  // @@protoc_insertion_point(field_map:pb_message.scenario_turn_t.national_actions)
   return national_actions_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::scenario_turn_t_national_action_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::scenario_turn_t_national_action_t >*
 scenario_turn_t::mutable_national_actions() {
-  // @@protoc_insertion_point(field_mutable_map:message.scenario_turn_t.national_actions)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.scenario_turn_t.national_actions)
   return national_actions_.MutableMap();
 }
 
@@ -6908,49 +6908,49 @@ inline void scenario_t_nation_t::clear_at_war_with() {
   at_war_with_.Clear();
 }
 inline const ::std::string& scenario_t_nation_t::at_war_with(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.at_war_with)
   return at_war_with_.Get(index);
 }
 inline ::std::string* scenario_t_nation_t::mutable_at_war_with(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.at_war_with)
   return at_war_with_.Mutable(index);
 }
 inline void scenario_t_nation_t::set_at_war_with(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.at_war_with)
   at_war_with_.Mutable(index)->assign(value);
 }
 inline void scenario_t_nation_t::set_at_war_with(int index, const char* value) {
   at_war_with_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.nation_t.at_war_with)
 }
 inline void scenario_t_nation_t::set_at_war_with(int index, const char* value, size_t size) {
   at_war_with_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.nation_t.at_war_with)
 }
 inline ::std::string* scenario_t_nation_t::add_at_war_with() {
   return at_war_with_.Add();
 }
 inline void scenario_t_nation_t::add_at_war_with(const ::std::string& value) {
   at_war_with_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.at_war_with)
 }
 inline void scenario_t_nation_t::add_at_war_with(const char* value) {
   at_war_with_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.nation_t.at_war_with)
 }
 inline void scenario_t_nation_t::add_at_war_with(const char* value, size_t size) {
   at_war_with_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.nation_t.at_war_with)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t_nation_t::at_war_with() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.at_war_with)
   return at_war_with_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t_nation_t::mutable_at_war_with() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.at_war_with)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.at_war_with)
   return &at_war_with_;
 }
 
@@ -6962,64 +6962,64 @@ inline void scenario_t_nation_t::clear_future_belligerents() {
   future_belligerents_.Clear();
 }
 inline const ::std::string& scenario_t_nation_t::future_belligerents(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.future_belligerents)
   return future_belligerents_.Get(index);
 }
 inline ::std::string* scenario_t_nation_t::mutable_future_belligerents(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.future_belligerents)
   return future_belligerents_.Mutable(index);
 }
 inline void scenario_t_nation_t::set_future_belligerents(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.future_belligerents)
   future_belligerents_.Mutable(index)->assign(value);
 }
 inline void scenario_t_nation_t::set_future_belligerents(int index, const char* value) {
   future_belligerents_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.nation_t.future_belligerents)
 }
 inline void scenario_t_nation_t::set_future_belligerents(int index, const char* value, size_t size) {
   future_belligerents_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.nation_t.future_belligerents)
 }
 inline ::std::string* scenario_t_nation_t::add_future_belligerents() {
   return future_belligerents_.Add();
 }
 inline void scenario_t_nation_t::add_future_belligerents(const ::std::string& value) {
   future_belligerents_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.future_belligerents)
 }
 inline void scenario_t_nation_t::add_future_belligerents(const char* value) {
   future_belligerents_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.nation_t.future_belligerents)
 }
 inline void scenario_t_nation_t::add_future_belligerents(const char* value, size_t size) {
   future_belligerents_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.nation_t.future_belligerents)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t_nation_t::future_belligerents() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.future_belligerents)
   return future_belligerents_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t_nation_t::mutable_future_belligerents() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.future_belligerents)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.future_belligerents)
   return &future_belligerents_;
 }
 
-// optional .message.war_footing_t economy = 3;
+// optional .pb_message.war_footing_t economy = 3;
 inline void scenario_t_nation_t::clear_economy() {
   economy_ = 0;
 }
-inline ::message::war_footing_t scenario_t_nation_t::economy() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.economy)
-  return static_cast< ::message::war_footing_t >(economy_);
+inline ::pb_message::war_footing_t scenario_t_nation_t::economy() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.economy)
+  return static_cast< ::pb_message::war_footing_t >(economy_);
 }
-inline void scenario_t_nation_t::set_economy(::message::war_footing_t value) {
+inline void scenario_t_nation_t::set_economy(::pb_message::war_footing_t value) {
   
   economy_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.economy)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.economy)
 }
 
 // optional int32 exhaustion_turns = 4;
@@ -7027,13 +7027,13 @@ inline void scenario_t_nation_t::clear_exhaustion_turns() {
   exhaustion_turns_ = 0;
 }
 inline ::google::protobuf::int32 scenario_t_nation_t::exhaustion_turns() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.exhaustion_turns)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.exhaustion_turns)
   return exhaustion_turns_;
 }
 inline void scenario_t_nation_t::set_exhaustion_turns(::google::protobuf::int32 value) {
   
   exhaustion_turns_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.exhaustion_turns)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.exhaustion_turns)
 }
 
 // optional bool accumulate_exhaustion_at_peace = 5;
@@ -7041,72 +7041,72 @@ inline void scenario_t_nation_t::clear_accumulate_exhaustion_at_peace() {
   accumulate_exhaustion_at_peace_ = false;
 }
 inline bool scenario_t_nation_t::accumulate_exhaustion_at_peace() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
   return accumulate_exhaustion_at_peace_;
 }
 inline void scenario_t_nation_t::set_accumulate_exhaustion_at_peace(bool value) {
   
   accumulate_exhaustion_at_peace_ = value;
-  // @@protoc_insertion_point(field_set:message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.nation_t.accumulate_exhaustion_at_peace)
 }
 
-// repeated .message.fleet_release_condition_t release_conditions = 6;
+// repeated .pb_message.fleet_release_condition_t release_conditions = 6;
 inline int scenario_t_nation_t::release_conditions_size() const {
   return release_conditions_.size();
 }
 inline void scenario_t_nation_t::clear_release_conditions() {
   release_conditions_.Clear();
 }
-inline const ::message::fleet_release_condition_t& scenario_t_nation_t::release_conditions(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.release_conditions)
+inline const ::pb_message::fleet_release_condition_t& scenario_t_nation_t::release_conditions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_.Get(index);
 }
-inline ::message::fleet_release_condition_t* scenario_t_nation_t::mutable_release_conditions(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.release_conditions)
+inline ::pb_message::fleet_release_condition_t* scenario_t_nation_t::mutable_release_conditions(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_.Mutable(index);
 }
-inline ::message::fleet_release_condition_t* scenario_t_nation_t::add_release_conditions() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.release_conditions)
+inline ::pb_message::fleet_release_condition_t* scenario_t_nation_t::add_release_conditions() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t >*
 scenario_t_nation_t::mutable_release_conditions() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.release_conditions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.release_conditions)
   return &release_conditions_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::fleet_release_condition_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::fleet_release_condition_t >&
 scenario_t_nation_t::release_conditions() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.release_conditions)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.release_conditions)
   return release_conditions_;
 }
 
-// repeated .message.war_entry_condition_t war_entry_conditions = 7;
+// repeated .pb_message.war_entry_condition_t war_entry_conditions = 7;
 inline int scenario_t_nation_t::war_entry_conditions_size() const {
   return war_entry_conditions_.size();
 }
 inline void scenario_t_nation_t::clear_war_entry_conditions() {
   war_entry_conditions_.Clear();
 }
-inline const ::message::war_entry_condition_t& scenario_t_nation_t::war_entry_conditions(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.nation_t.war_entry_conditions)
+inline const ::pb_message::war_entry_condition_t& scenario_t_nation_t::war_entry_conditions(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_.Get(index);
 }
-inline ::message::war_entry_condition_t* scenario_t_nation_t::mutable_war_entry_conditions(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.nation_t.war_entry_conditions)
+inline ::pb_message::war_entry_condition_t* scenario_t_nation_t::mutable_war_entry_conditions(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_.Mutable(index);
 }
-inline ::message::war_entry_condition_t* scenario_t_nation_t::add_war_entry_conditions() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.nation_t.war_entry_conditions)
+inline ::pb_message::war_entry_condition_t* scenario_t_nation_t::add_war_entry_conditions() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t >*
 scenario_t_nation_t::mutable_war_entry_conditions() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.nation_t.war_entry_conditions)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.nation_t.war_entry_conditions)
   return &war_entry_conditions_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::war_entry_condition_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::war_entry_condition_t >&
 scenario_t_nation_t::war_entry_conditions() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.nation_t.war_entry_conditions)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.nation_t.war_entry_conditions)
   return war_entry_conditions_;
 }
 
@@ -7119,28 +7119,28 @@ inline void scenario_t::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& scenario_t::name() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.name)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void scenario_t::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.name)
 }
 inline void scenario_t::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.name)
 }
 inline void scenario_t::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.name)
 }
 inline ::std::string* scenario_t::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.name)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* scenario_t::release_name() {
@@ -7154,7 +7154,7 @@ inline void scenario_t::set_allocated_name(::std::string* name) {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.name)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.name)
 }
 
 // optional string description = 2;
@@ -7162,28 +7162,28 @@ inline void scenario_t::clear_description() {
   description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& scenario_t::description() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.description)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.description)
   return description_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void scenario_t::set_description(const ::std::string& value) {
   
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.description)
 }
 inline void scenario_t::set_description(const char* value) {
   
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.description)
 }
 inline void scenario_t::set_description(const char* value, size_t size) {
   
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.description)
 }
 inline ::std::string* scenario_t::mutable_description() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.description)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.description)
   return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* scenario_t::release_description() {
@@ -7197,10 +7197,10 @@ inline void scenario_t::set_allocated_description(::std::string* description) {
     
   }
   description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.description)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.description)
 }
 
-// optional .message.turn_t start_turn = 3;
+// optional .pb_message.turn_t start_turn = 3;
 inline bool scenario_t::has_start_turn() const {
   return !_is_default_instance_ && start_turn_ != NULL;
 }
@@ -7208,25 +7208,25 @@ inline void scenario_t::clear_start_turn() {
   if (GetArenaNoVirtual() == NULL && start_turn_ != NULL) delete start_turn_;
   start_turn_ = NULL;
 }
-inline const ::message::turn_t& scenario_t::start_turn() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.start_turn)
+inline const ::pb_message::turn_t& scenario_t::start_turn() const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.start_turn)
   return start_turn_ != NULL ? *start_turn_ : *default_instance_->start_turn_;
 }
-inline ::message::turn_t* scenario_t::mutable_start_turn() {
+inline ::pb_message::turn_t* scenario_t::mutable_start_turn() {
   
   if (start_turn_ == NULL) {
-    start_turn_ = new ::message::turn_t;
+    start_turn_ = new ::pb_message::turn_t;
   }
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.start_turn)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.start_turn)
   return start_turn_;
 }
-inline ::message::turn_t* scenario_t::release_start_turn() {
+inline ::pb_message::turn_t* scenario_t::release_start_turn() {
   
-  ::message::turn_t* temp = start_turn_;
+  ::pb_message::turn_t* temp = start_turn_;
   start_turn_ = NULL;
   return temp;
 }
-inline void scenario_t::set_allocated_start_turn(::message::turn_t* start_turn) {
+inline void scenario_t::set_allocated_start_turn(::pb_message::turn_t* start_turn) {
   delete start_turn_;
   start_turn_ = start_turn;
   if (start_turn) {
@@ -7234,36 +7234,36 @@ inline void scenario_t::set_allocated_start_turn(::message::turn_t* start_turn) 
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.start_turn)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.start_turn)
 }
 
-// repeated .message.team_t teams = 4;
+// repeated .pb_message.team_t teams = 4;
 inline int scenario_t::teams_size() const {
   return teams_.size();
 }
 inline void scenario_t::clear_teams() {
   teams_.Clear();
 }
-inline const ::message::team_t& scenario_t::teams(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.teams)
+inline const ::pb_message::team_t& scenario_t::teams(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.teams)
   return teams_.Get(index);
 }
-inline ::message::team_t* scenario_t::mutable_teams(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.teams)
+inline ::pb_message::team_t* scenario_t::mutable_teams(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.teams)
   return teams_.Mutable(index);
 }
-inline ::message::team_t* scenario_t::add_teams() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.teams)
+inline ::pb_message::team_t* scenario_t::add_teams() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.teams)
   return teams_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::team_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::team_t >*
 scenario_t::mutable_teams() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.teams)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.teams)
   return &teams_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::team_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::team_t >&
 scenario_t::teams() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.teams)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.teams)
   return teams_;
 }
 
@@ -7275,49 +7275,49 @@ inline void scenario_t::clear_team_turn_order() {
   team_turn_order_.Clear();
 }
 inline const ::std::string& scenario_t::team_turn_order(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.team_turn_order)
   return team_turn_order_.Get(index);
 }
 inline ::std::string* scenario_t::mutable_team_turn_order(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.team_turn_order)
   return team_turn_order_.Mutable(index);
 }
 inline void scenario_t::set_team_turn_order(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.team_turn_order)
   team_turn_order_.Mutable(index)->assign(value);
 }
 inline void scenario_t::set_team_turn_order(int index, const char* value) {
   team_turn_order_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.team_turn_order)
 }
 inline void scenario_t::set_team_turn_order(int index, const char* value, size_t size) {
   team_turn_order_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.team_turn_order)
 }
 inline ::std::string* scenario_t::add_team_turn_order() {
   return team_turn_order_.Add();
 }
 inline void scenario_t::add_team_turn_order(const ::std::string& value) {
   team_turn_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.team_turn_order)
 }
 inline void scenario_t::add_team_turn_order(const char* value) {
   team_turn_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.team_turn_order)
 }
 inline void scenario_t::add_team_turn_order(const char* value, size_t size) {
   team_turn_order_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.team_turn_order)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t::team_turn_order() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.team_turn_order)
   return team_turn_order_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t::mutable_team_turn_order() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.team_turn_order)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.team_turn_order)
   return &team_turn_order_;
 }
 
@@ -7326,28 +7326,28 @@ inline void scenario_t::clear_map() {
   map_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& scenario_t::map() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.map)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.map)
   return map_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void scenario_t::set_map(const ::std::string& value) {
   
   map_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.map)
 }
 inline void scenario_t::set_map(const char* value) {
   
   map_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.map)
 }
 inline void scenario_t::set_map(const char* value, size_t size) {
   
   map_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.map)
 }
 inline ::std::string* scenario_t::mutable_map() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.map)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.map)
   return map_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* scenario_t::release_map() {
@@ -7361,7 +7361,7 @@ inline void scenario_t::set_allocated_map(::std::string* map) {
     
   }
   map_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), map);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.map)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.map)
 }
 
 // optional string order_of_battle = 7;
@@ -7369,28 +7369,28 @@ inline void scenario_t::clear_order_of_battle() {
   order_of_battle_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline const ::std::string& scenario_t::order_of_battle() const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.order_of_battle)
   return order_of_battle_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void scenario_t::set_order_of_battle(const ::std::string& value) {
   
   order_of_battle_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.order_of_battle)
 }
 inline void scenario_t::set_order_of_battle(const char* value) {
   
   order_of_battle_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.order_of_battle)
 }
 inline void scenario_t::set_order_of_battle(const char* value, size_t size) {
   
   order_of_battle_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.order_of_battle)
 }
 inline ::std::string* scenario_t::mutable_order_of_battle() {
   
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.order_of_battle)
   return order_of_battle_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* scenario_t::release_order_of_battle() {
@@ -7404,7 +7404,7 @@ inline void scenario_t::set_allocated_order_of_battle(::std::string* order_of_ba
     
   }
   order_of_battle_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), order_of_battle);
-  // @@protoc_insertion_point(field_set_allocated:message.scenario_t.order_of_battle)
+  // @@protoc_insertion_point(field_set_allocated:pb_message.scenario_t.order_of_battle)
 }
 
 // repeated string setup_order = 8;
@@ -7415,97 +7415,97 @@ inline void scenario_t::clear_setup_order() {
   setup_order_.Clear();
 }
 inline const ::std::string& scenario_t::setup_order(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.setup_order)
   return setup_order_.Get(index);
 }
 inline ::std::string* scenario_t::mutable_setup_order(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.setup_order)
   return setup_order_.Mutable(index);
 }
 inline void scenario_t::set_setup_order(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_set:pb_message.scenario_t.setup_order)
   setup_order_.Mutable(index)->assign(value);
 }
 inline void scenario_t::set_setup_order(int index, const char* value) {
   setup_order_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_set_char:pb_message.scenario_t.setup_order)
 }
 inline void scenario_t::set_setup_order(int index, const char* value, size_t size) {
   setup_order_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_set_pointer:pb_message.scenario_t.setup_order)
 }
 inline ::std::string* scenario_t::add_setup_order() {
   return setup_order_.Add();
 }
 inline void scenario_t::add_setup_order(const ::std::string& value) {
   setup_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.setup_order)
 }
 inline void scenario_t::add_setup_order(const char* value) {
   setup_order_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_add_char:pb_message.scenario_t.setup_order)
 }
 inline void scenario_t::add_setup_order(const char* value, size_t size) {
   setup_order_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_add_pointer:pb_message.scenario_t.setup_order)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 scenario_t::setup_order() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.setup_order)
   return setup_order_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 scenario_t::mutable_setup_order() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.setup_order)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.setup_order)
   return &setup_order_;
 }
 
-// map<string, .message.scenario_t.nation_t> nations = 9;
+// map<string, .pb_message.scenario_t.nation_t> nations = 9;
 inline int scenario_t::nations_size() const {
   return nations_.size();
 }
 inline void scenario_t::clear_nations() {
   nations_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >&
 scenario_t::nations() const {
-  // @@protoc_insertion_point(field_map:message.scenario_t.nations)
+  // @@protoc_insertion_point(field_map:pb_message.scenario_t.nations)
   return nations_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::scenario_t_nation_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::scenario_t_nation_t >*
 scenario_t::mutable_nations() {
-  // @@protoc_insertion_point(field_mutable_map:message.scenario_t.nations)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.scenario_t.nations)
   return nations_.MutableMap();
 }
 
-// repeated .message.scenario_turn_t turns = 10;
+// repeated .pb_message.scenario_turn_t turns = 10;
 inline int scenario_t::turns_size() const {
   return turns_.size();
 }
 inline void scenario_t::clear_turns() {
   turns_.Clear();
 }
-inline const ::message::scenario_turn_t& scenario_t::turns(int index) const {
-  // @@protoc_insertion_point(field_get:message.scenario_t.turns)
+inline const ::pb_message::scenario_turn_t& scenario_t::turns(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.scenario_t.turns)
   return turns_.Get(index);
 }
-inline ::message::scenario_turn_t* scenario_t::mutable_turns(int index) {
-  // @@protoc_insertion_point(field_mutable:message.scenario_t.turns)
+inline ::pb_message::scenario_turn_t* scenario_t::mutable_turns(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.scenario_t.turns)
   return turns_.Mutable(index);
 }
-inline ::message::scenario_turn_t* scenario_t::add_turns() {
-  // @@protoc_insertion_point(field_add:message.scenario_t.turns)
+inline ::pb_message::scenario_turn_t* scenario_t::add_turns() {
+  // @@protoc_insertion_point(field_add:pb_message.scenario_t.turns)
   return turns_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t >*
+inline ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t >*
 scenario_t::mutable_turns() {
-  // @@protoc_insertion_point(field_mutable_list:message.scenario_t.turns)
+  // @@protoc_insertion_point(field_mutable_list:pb_message.scenario_t.turns)
   return &turns_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::message::scenario_turn_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::pb_message::scenario_turn_t >&
 scenario_t::turns() const {
-  // @@protoc_insertion_point(field_list:message.scenario_t.turns)
+  // @@protoc_insertion_point(field_list:pb_message.scenario_t.turns)
   return turns_;
 }
 
@@ -7581,31 +7581,31 @@ scenario_t::turns() const {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace message
+}  // namespace pb_message
 
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::message::scenario_condition_t_action_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::scenario_condition_t_action_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::scenario_condition_t_action_t>() {
-  return ::message::scenario_condition_t_action_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::scenario_condition_t_action_t>() {
+  return ::pb_message::scenario_condition_t_action_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::scenario_condition_t_object_type_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::scenario_condition_t_object_type_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::scenario_condition_t_object_type_t>() {
-  return ::message::scenario_condition_t_object_type_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::scenario_condition_t_object_type_t>() {
+  return ::pb_message::scenario_condition_t_object_type_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::scenario_turn_t_national_action_t_action_type_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::scenario_turn_t_national_action_t_action_type_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::scenario_turn_t_national_action_t_action_type_t>() {
-  return ::message::scenario_turn_t_national_action_t_action_type_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::scenario_turn_t_national_action_t_action_type_t>() {
+  return ::pb_message::scenario_turn_t_national_action_t_action_type_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::feature_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::feature_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::feature_t>() {
-  return ::message::feature_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::feature_t>() {
+  return ::pb_message::feature_t_descriptor();
 }
 
 }  // namespace protobuf

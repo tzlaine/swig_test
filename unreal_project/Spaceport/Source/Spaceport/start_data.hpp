@@ -304,107 +304,107 @@ namespace start_data {
 
 } 
 
-    message::capital_hex_zone_t to_protobuf (const start_data::capital_hex_zone_t& value);
-    start_data::capital_hex_zone_t from_protobuf (const message::capital_hex_zone_t& msg);
+    pb_message::capital_hex_zone_t to_protobuf (const start_data::capital_hex_zone_t& value);
+    start_data::capital_hex_zone_t from_protobuf (const pb_message::capital_hex_zone_t& msg);
 
-    message::capital_hex_t to_protobuf (const start_data::capital_hex_t& value);
-    start_data::capital_hex_t from_protobuf (const message::capital_hex_t& msg);
+    pb_message::capital_hex_t to_protobuf (const start_data::capital_hex_t& value);
+    start_data::capital_hex_t from_protobuf (const pb_message::capital_hex_t& msg);
 
-    message::capital_t to_protobuf (const start_data::capital_t& value);
-    start_data::capital_t from_protobuf (const message::capital_t& msg);
+    pb_message::capital_t to_protobuf (const start_data::capital_t& value);
+    start_data::capital_t from_protobuf (const pb_message::capital_t& msg);
 
-    message::offmap_possesions_t to_protobuf (const start_data::offmap_possesions_t& value);
-    start_data::offmap_possesions_t from_protobuf (const message::offmap_possesions_t& msg);
+    pb_message::offmap_possesions_t to_protobuf (const start_data::offmap_possesions_t& value);
+    start_data::offmap_possesions_t from_protobuf (const pb_message::offmap_possesions_t& msg);
 
-    message::nation_t to_protobuf (const start_data::nation_t& value);
-    start_data::nation_t from_protobuf (const message::nation_t& msg);
+    pb_message::nation_t to_protobuf (const start_data::nation_t& value);
+    start_data::nation_t from_protobuf (const pb_message::nation_t& msg);
 
-    message::nations_t to_protobuf (const start_data::nations_t& value);
-    start_data::nations_t from_protobuf (const message::nations_t& msg);
+    pb_message::nations_t to_protobuf (const start_data::nations_t& value);
+    start_data::nations_t from_protobuf (const pb_message::nations_t& msg);
 
-    message::hex_t to_protobuf (const start_data::hex_t& value);
-    start_data::hex_t from_protobuf (const message::hex_t& msg);
+    pb_message::hex_t to_protobuf (const start_data::hex_t& value);
+    start_data::hex_t from_protobuf (const pb_message::hex_t& msg);
 
-    message::province_hex_t to_protobuf (const start_data::province_hex_t& value);
-    start_data::province_hex_t from_protobuf (const message::province_hex_t& msg);
+    pb_message::province_hex_t to_protobuf (const start_data::province_hex_t& value);
+    start_data::province_hex_t from_protobuf (const pb_message::province_hex_t& msg);
 
-    message::province_t to_protobuf (const start_data::province_t& value);
-    start_data::province_t from_protobuf (const message::province_t& msg);
+    pb_message::province_t to_protobuf (const start_data::province_t& value);
+    start_data::province_t from_protobuf (const pb_message::province_t& msg);
 
-    message::offmap_area_t to_protobuf (const start_data::offmap_area_t& value);
-    start_data::offmap_area_t from_protobuf (const message::offmap_area_t& msg);
+    pb_message::offmap_area_t to_protobuf (const start_data::offmap_area_t& value);
+    start_data::offmap_area_t from_protobuf (const pb_message::offmap_area_t& msg);
 
-    message::starting_national_holdings_t to_protobuf (const start_data::starting_national_holdings_t& value);
-    start_data::starting_national_holdings_t from_protobuf (const message::starting_national_holdings_t& msg);
+    pb_message::starting_national_holdings_t to_protobuf (const start_data::starting_national_holdings_t& value);
+    start_data::starting_national_holdings_t from_protobuf (const pb_message::starting_national_holdings_t& msg);
 
-    message::map_t to_protobuf (const start_data::map_t& value);
-    start_data::map_t from_protobuf (const message::map_t& msg);
+    pb_message::map_t to_protobuf (const start_data::map_t& value);
+    start_data::map_t from_protobuf (const pb_message::map_t& msg);
 
-    message::model_t to_protobuf (const start_data::model_t& value);
-    start_data::model_t from_protobuf (const message::model_t& msg);
+    pb_message::model_t to_protobuf (const start_data::model_t& value);
+    start_data::model_t from_protobuf (const pb_message::model_t& msg);
 
-    message::oob_unit_t to_protobuf (const start_data::oob_unit_t& value);
-    start_data::oob_unit_t from_protobuf (const message::oob_unit_t& msg);
+    pb_message::oob_unit_t to_protobuf (const start_data::oob_unit_t& value);
+    start_data::oob_unit_t from_protobuf (const pb_message::oob_unit_t& msg);
 
-    message::production_element_t to_protobuf (const start_data::production_element_t& value);
-    start_data::production_element_t from_protobuf (const message::production_element_t& msg);
+    pb_message::production_element_t to_protobuf (const start_data::production_element_t& value);
+    start_data::production_element_t from_protobuf (const pb_message::production_element_t& msg);
 
-    message::starting_fleet_t to_protobuf (const start_data::starting_fleet_t& value);
-    start_data::starting_fleet_t from_protobuf (const message::starting_fleet_t& msg);
+    pb_message::starting_fleet_t to_protobuf (const start_data::starting_fleet_t& value);
+    start_data::starting_fleet_t from_protobuf (const pb_message::starting_fleet_t& msg);
 
-    message::mothball_reserve_t to_protobuf (const start_data::mothball_reserve_t& value);
-    start_data::mothball_reserve_t from_protobuf (const message::mothball_reserve_t& msg);
+    pb_message::mothball_reserve_t to_protobuf (const start_data::mothball_reserve_t& value);
+    start_data::mothball_reserve_t from_protobuf (const pb_message::mothball_reserve_t& msg);
 
-    message::order_of_battle_t to_protobuf (const start_data::order_of_battle_t& value);
-    start_data::order_of_battle_t from_protobuf (const message::order_of_battle_t& msg);
+    pb_message::order_of_battle_t to_protobuf (const start_data::order_of_battle_t& value);
+    start_data::order_of_battle_t from_protobuf (const pb_message::order_of_battle_t& msg);
 
-    message::orders_of_battle_t to_protobuf (const start_data::orders_of_battle_t& value);
-    start_data::orders_of_battle_t from_protobuf (const message::orders_of_battle_t& msg);
+    pb_message::orders_of_battle_t to_protobuf (const start_data::orders_of_battle_t& value);
+    start_data::orders_of_battle_t from_protobuf (const pb_message::orders_of_battle_t& msg);
 
-    message::unit_def_side_t to_protobuf (const start_data::unit_def_side_t& value);
-    start_data::unit_def_side_t from_protobuf (const message::unit_def_side_t& msg);
+    pb_message::unit_def_side_t to_protobuf (const start_data::unit_def_side_t& value);
+    start_data::unit_def_side_t from_protobuf (const pb_message::unit_def_side_t& msg);
 
-    message::towable_t to_protobuf (const start_data::towable_t& value);
-    start_data::towable_t from_protobuf (const message::towable_t& msg);
+    pb_message::towable_t to_protobuf (const start_data::towable_t& value);
+    start_data::towable_t from_protobuf (const pb_message::towable_t& msg);
 
-    message::production_cost_t to_protobuf (const start_data::production_cost_t& value);
-    start_data::production_cost_t from_protobuf (const message::production_cost_t& msg);
+    pb_message::production_cost_t to_protobuf (const start_data::production_cost_t& value);
+    start_data::production_cost_t from_protobuf (const pb_message::production_cost_t& msg);
 
-    message::unit_def_t to_protobuf (const start_data::unit_def_t& value);
-    start_data::unit_def_t from_protobuf (const message::unit_def_t& msg);
+    pb_message::unit_def_t to_protobuf (const start_data::unit_def_t& value);
+    start_data::unit_def_t from_protobuf (const pb_message::unit_def_t& msg);
 
-    message::nation_unit_defs_t to_protobuf (const start_data::nation_unit_defs_t& value);
-    start_data::nation_unit_defs_t from_protobuf (const message::nation_unit_defs_t& msg);
+    pb_message::nation_unit_defs_t to_protobuf (const start_data::nation_unit_defs_t& value);
+    start_data::nation_unit_defs_t from_protobuf (const pb_message::nation_unit_defs_t& msg);
 
-    message::unit_defs_t to_protobuf (const start_data::unit_defs_t& value);
-    start_data::unit_defs_t from_protobuf (const message::unit_defs_t& msg);
+    pb_message::unit_defs_t to_protobuf (const start_data::unit_defs_t& value);
+    start_data::unit_defs_t from_protobuf (const pb_message::unit_defs_t& msg);
 
-    message::team_t to_protobuf (const start_data::team_t& value);
-    start_data::team_t from_protobuf (const message::team_t& msg);
+    pb_message::team_t to_protobuf (const start_data::team_t& value);
+    start_data::team_t from_protobuf (const pb_message::team_t& msg);
 
-    message::scenario_condition_t::object_t to_protobuf (const start_data::scenario_condition_t::object_t& value);
-    start_data::scenario_condition_t::object_t from_protobuf (const message::scenario_condition_t::object_t& msg);
+    pb_message::scenario_condition_t::object_t to_protobuf (const start_data::scenario_condition_t::object_t& value);
+    start_data::scenario_condition_t::object_t from_protobuf (const pb_message::scenario_condition_t::object_t& msg);
 
-    message::scenario_condition_t to_protobuf (const start_data::scenario_condition_t& value);
-    start_data::scenario_condition_t from_protobuf (const message::scenario_condition_t& msg);
+    pb_message::scenario_condition_t to_protobuf (const start_data::scenario_condition_t& value);
+    start_data::scenario_condition_t from_protobuf (const pb_message::scenario_condition_t& msg);
 
-    message::fleet_release_condition_t to_protobuf (const start_data::fleet_release_condition_t& value);
-    start_data::fleet_release_condition_t from_protobuf (const message::fleet_release_condition_t& msg);
+    pb_message::fleet_release_condition_t to_protobuf (const start_data::fleet_release_condition_t& value);
+    start_data::fleet_release_condition_t from_protobuf (const pb_message::fleet_release_condition_t& msg);
 
-    message::war_entry_condition_t to_protobuf (const start_data::war_entry_condition_t& value);
-    start_data::war_entry_condition_t from_protobuf (const message::war_entry_condition_t& msg);
+    pb_message::war_entry_condition_t to_protobuf (const start_data::war_entry_condition_t& value);
+    start_data::war_entry_condition_t from_protobuf (const pb_message::war_entry_condition_t& msg);
 
-    message::scenario_turn_t::national_action_t::action_t to_protobuf (const start_data::scenario_turn_t::national_action_t::action_t& value);
-    start_data::scenario_turn_t::national_action_t::action_t from_protobuf (const message::scenario_turn_t::national_action_t::action_t& msg);
+    pb_message::scenario_turn_t::national_action_t::action_t to_protobuf (const start_data::scenario_turn_t::national_action_t::action_t& value);
+    start_data::scenario_turn_t::national_action_t::action_t from_protobuf (const pb_message::scenario_turn_t::national_action_t::action_t& msg);
 
-    message::scenario_turn_t::national_action_t to_protobuf (const start_data::scenario_turn_t::national_action_t& value);
-    start_data::scenario_turn_t::national_action_t from_protobuf (const message::scenario_turn_t::national_action_t& msg);
+    pb_message::scenario_turn_t::national_action_t to_protobuf (const start_data::scenario_turn_t::national_action_t& value);
+    start_data::scenario_turn_t::national_action_t from_protobuf (const pb_message::scenario_turn_t::national_action_t& msg);
 
-    message::scenario_turn_t to_protobuf (const start_data::scenario_turn_t& value);
-    start_data::scenario_turn_t from_protobuf (const message::scenario_turn_t& msg);
+    pb_message::scenario_turn_t to_protobuf (const start_data::scenario_turn_t& value);
+    start_data::scenario_turn_t from_protobuf (const pb_message::scenario_turn_t& msg);
 
-    message::scenario_t::nation_t to_protobuf (const start_data::scenario_t::nation_t& value);
-    start_data::scenario_t::nation_t from_protobuf (const message::scenario_t::nation_t& msg);
+    pb_message::scenario_t::nation_t to_protobuf (const start_data::scenario_t::nation_t& value);
+    start_data::scenario_t::nation_t from_protobuf (const pb_message::scenario_t::nation_t& msg);
 
-    message::scenario_t to_protobuf (const start_data::scenario_t& value);
-    start_data::scenario_t from_protobuf (const message::scenario_t& msg);
+    pb_message::scenario_t to_protobuf (const start_data::scenario_t& value);
+    start_data::scenario_t from_protobuf (const pb_message::scenario_t& msg);

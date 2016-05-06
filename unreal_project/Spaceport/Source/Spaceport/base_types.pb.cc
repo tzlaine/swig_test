@@ -17,7 +17,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 
 namespace {
 
@@ -113,20 +113,21 @@ void protobuf_AddDesc_base_5ftypes_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\020base_types.proto\022\007message\"9\n\006turn_t\022\014\n"
-    "\004year\030\001 \001(\005\022!\n\006season\030\002 \001(\0162\021.message.se"
-    "ason_t\"#\n\013hex_coord_t\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 "
-    "\001(\005* \n\010season_t\022\n\n\006spring\020\000\022\010\n\004fall\020\001*\212\001"
-    "\n\rtug_mission_t\022\005\n\001A\020\000\022\005\n\001B\020\001\022\005\n\001C\020\002\022\005\n\001"
-    "D\020\003\022\005\n\001E\020\004\022\005\n\001F\020\005\022\005\n\001G\020\006\022\005\n\001H\020\007\022\005\n\001I\020\010\022\006"
-    "\n\002J1\020\t\022\006\n\002J2\020\n\022\006\n\002K1\020\013\022\006\n\002K2\020\014\022\005\n\001L\020\r\022\005\n"
-    "\001M\020\016\022\005\n\001N\020\017\022\005\n\001O\020\020*v\n\016carrier_type_t\022\021\n\r"
-    "not_a_carrier\020\000\022\027\n\023single_ship_carrier\020\001"
-    "\022\021\n\rlight_carrier\020\002\022\022\n\016medium_carrier\020\003\022"
-    "\021\n\rheavy_carrier\020\004*F\n\rescort_type_t\022\021\n\rn"
-    "ot_an_escort\020\000\022\020\n\014light_escort\020\001\022\020\n\014heav"
-    "y_escort\020\002*4\n\rwar_footing_t\022\007\n\003war\020\000\022\017\n\013"
-    "limited_war\020\001\022\t\n\005peace\020\002b\006proto3", 552);
+    "\n\020base_types.proto\022\npb_message\"<\n\006turn_t"
+    "\022\014\n\004year\030\001 \001(\005\022$\n\006season\030\002 \001(\0162\024.pb_mess"
+    "age.season_t\"#\n\013hex_coord_t\022\t\n\001x\030\001 \001(\005\022\t"
+    "\n\001y\030\002 \001(\005* \n\010season_t\022\n\n\006spring\020\000\022\010\n\004fal"
+    "l\020\001*\232\001\n\rtug_mission_t\022\016\n\nno_mission\020\000\022\005\n"
+    "\001A\020\001\022\005\n\001B\020\002\022\005\n\001C\020\003\022\005\n\001D\020\004\022\005\n\001E\020\005\022\005\n\001F\020\006\022"
+    "\005\n\001G\020\007\022\005\n\001H\020\010\022\005\n\001I\020\t\022\006\n\002J1\020\n\022\006\n\002J2\020\013\022\006\n\002"
+    "K1\020\014\022\006\n\002K2\020\r\022\005\n\001L\020\016\022\005\n\001M\020\017\022\005\n\001N\020\020\022\005\n\001O\020\021"
+    "*v\n\016carrier_type_t\022\021\n\rnot_a_carrier\020\000\022\027\n"
+    "\023single_ship_carrier\020\001\022\021\n\rlight_carrier\020"
+    "\002\022\022\n\016medium_carrier\020\003\022\021\n\rheavy_carrier\020\004"
+    "*F\n\rescort_type_t\022\021\n\rnot_an_escort\020\000\022\020\n\014"
+    "light_escort\020\001\022\020\n\014heavy_escort\020\002*4\n\rwar_"
+    "footing_t\022\007\n\003war\020\000\022\017\n\013limited_war\020\001\022\t\n\005p"
+    "eace\020\002b\006proto3", 574);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "base_types.proto", &protobuf_RegisterTypes);
   turn_t::default_instance_ = new turn_t();
@@ -179,6 +180,7 @@ bool tug_mission_t_IsValid(int value) {
     case 14:
     case 15:
     case 16:
+    case 17:
       return true;
     default:
       return false;
@@ -253,7 +255,7 @@ const int turn_t::kSeasonFieldNumber;
 turn_t::turn_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.turn_t)
+  // @@protoc_insertion_point(constructor:pb_message.turn_t)
 }
 
 void turn_t::InitAsDefaultInstance() {
@@ -265,7 +267,7 @@ turn_t::turn_t(const turn_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.turn_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.turn_t)
 }
 
 void turn_t::SharedCtor() {
@@ -276,7 +278,7 @@ void turn_t::SharedCtor() {
 }
 
 turn_t::~turn_t() {
-  // @@protoc_insertion_point(destructor:message.turn_t)
+  // @@protoc_insertion_point(destructor:pb_message.turn_t)
   SharedDtor();
 }
 
@@ -330,7 +332,7 @@ bool turn_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.turn_t)
+  // @@protoc_insertion_point(parse_start:pb_message.turn_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -350,7 +352,7 @@ bool turn_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .message.season_t season = 2;
+      // optional .pb_message.season_t season = 2;
       case 2: {
         if (tag == 16) {
          parse_season:
@@ -358,7 +360,7 @@ bool turn_t::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          set_season(static_cast< ::message::season_t >(value));
+          set_season(static_cast< ::pb_message::season_t >(value));
         } else {
           goto handle_unusual;
         }
@@ -379,46 +381,46 @@ bool turn_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.turn_t)
+  // @@protoc_insertion_point(parse_success:pb_message.turn_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.turn_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.turn_t)
   return false;
 #undef DO_
 }
 
 void turn_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.turn_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.turn_t)
   // optional int32 year = 1;
   if (this->year() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->year(), output);
   }
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   if (this->season() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->season(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.turn_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.turn_t)
 }
 
 ::google::protobuf::uint8* turn_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.turn_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.turn_t)
   // optional int32 year = 1;
   if (this->year() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->year(), target);
   }
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   if (this->season() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->season(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.turn_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.turn_t)
   return target;
 }
 
@@ -432,7 +434,7 @@ int turn_t::ByteSize() const {
         this->year());
   }
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   if (this->season() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->season());
@@ -510,27 +512,27 @@ void turn_t::clear_year() {
   year_ = 0;
 }
  ::google::protobuf::int32 turn_t::year() const {
-  // @@protoc_insertion_point(field_get:message.turn_t.year)
+  // @@protoc_insertion_point(field_get:pb_message.turn_t.year)
   return year_;
 }
  void turn_t::set_year(::google::protobuf::int32 value) {
   
   year_ = value;
-  // @@protoc_insertion_point(field_set:message.turn_t.year)
+  // @@protoc_insertion_point(field_set:pb_message.turn_t.year)
 }
 
-// optional .message.season_t season = 2;
+// optional .pb_message.season_t season = 2;
 void turn_t::clear_season() {
   season_ = 0;
 }
- ::message::season_t turn_t::season() const {
-  // @@protoc_insertion_point(field_get:message.turn_t.season)
-  return static_cast< ::message::season_t >(season_);
+ ::pb_message::season_t turn_t::season() const {
+  // @@protoc_insertion_point(field_get:pb_message.turn_t.season)
+  return static_cast< ::pb_message::season_t >(season_);
 }
- void turn_t::set_season(::message::season_t value) {
+ void turn_t::set_season(::pb_message::season_t value) {
   
   season_ = value;
-  // @@protoc_insertion_point(field_set:message.turn_t.season)
+  // @@protoc_insertion_point(field_set:pb_message.turn_t.season)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -545,7 +547,7 @@ const int hex_coord_t::kYFieldNumber;
 hex_coord_t::hex_coord_t()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:message.hex_coord_t)
+  // @@protoc_insertion_point(constructor:pb_message.hex_coord_t)
 }
 
 void hex_coord_t::InitAsDefaultInstance() {
@@ -557,7 +559,7 @@ hex_coord_t::hex_coord_t(const hex_coord_t& from)
     _internal_metadata_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:message.hex_coord_t)
+  // @@protoc_insertion_point(copy_constructor:pb_message.hex_coord_t)
 }
 
 void hex_coord_t::SharedCtor() {
@@ -568,7 +570,7 @@ void hex_coord_t::SharedCtor() {
 }
 
 hex_coord_t::~hex_coord_t() {
-  // @@protoc_insertion_point(destructor:message.hex_coord_t)
+  // @@protoc_insertion_point(destructor:pb_message.hex_coord_t)
   SharedDtor();
 }
 
@@ -622,7 +624,7 @@ bool hex_coord_t::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:message.hex_coord_t)
+  // @@protoc_insertion_point(parse_start:pb_message.hex_coord_t)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -670,17 +672,17 @@ bool hex_coord_t::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:message.hex_coord_t)
+  // @@protoc_insertion_point(parse_success:pb_message.hex_coord_t)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:message.hex_coord_t)
+  // @@protoc_insertion_point(parse_failure:pb_message.hex_coord_t)
   return false;
 #undef DO_
 }
 
 void hex_coord_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:message.hex_coord_t)
+  // @@protoc_insertion_point(serialize_start:pb_message.hex_coord_t)
   // optional int32 x = 1;
   if (this->x() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->x(), output);
@@ -691,12 +693,12 @@ void hex_coord_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->y(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:message.hex_coord_t)
+  // @@protoc_insertion_point(serialize_end:pb_message.hex_coord_t)
 }
 
 ::google::protobuf::uint8* hex_coord_t::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:message.hex_coord_t)
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.hex_coord_t)
   // optional int32 x = 1;
   if (this->x() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->x(), target);
@@ -707,7 +709,7 @@ void hex_coord_t::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->y(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:message.hex_coord_t)
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.hex_coord_t)
   return target;
 }
 
@@ -800,13 +802,13 @@ void hex_coord_t::clear_x() {
   x_ = 0;
 }
  ::google::protobuf::int32 hex_coord_t::x() const {
-  // @@protoc_insertion_point(field_get:message.hex_coord_t.x)
+  // @@protoc_insertion_point(field_get:pb_message.hex_coord_t.x)
   return x_;
 }
  void hex_coord_t::set_x(::google::protobuf::int32 value) {
   
   x_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_coord_t.x)
+  // @@protoc_insertion_point(field_set:pb_message.hex_coord_t.x)
 }
 
 // optional int32 y = 2;
@@ -814,19 +816,19 @@ void hex_coord_t::clear_y() {
   y_ = 0;
 }
  ::google::protobuf::int32 hex_coord_t::y() const {
-  // @@protoc_insertion_point(field_get:message.hex_coord_t.y)
+  // @@protoc_insertion_point(field_get:pb_message.hex_coord_t.y)
   return y_;
 }
  void hex_coord_t::set_y(::google::protobuf::int32 value) {
   
   y_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_coord_t.y)
+  // @@protoc_insertion_point(field_set:pb_message.hex_coord_t.y)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace message
+}  // namespace pb_message
 
 // @@protoc_insertion_point(global_scope)

@@ -30,7 +30,7 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 
 // Internal implementation detail -- do not call these.
 void protobuf_AddDesc_base_5ftypes_2eproto();
@@ -62,28 +62,29 @@ inline bool season_t_Parse(
     season_t_descriptor(), name, value);
 }
 enum tug_mission_t {
-  A = 0,
-  B = 1,
-  C = 2,
-  D = 3,
-  E = 4,
-  F = 5,
-  G = 6,
-  H = 7,
-  I = 8,
-  J1 = 9,
-  J2 = 10,
-  K1 = 11,
-  K2 = 12,
-  L = 13,
-  M = 14,
-  N = 15,
-  O = 16,
+  no_mission = 0,
+  A = 1,
+  B = 2,
+  C = 3,
+  D = 4,
+  E = 5,
+  F = 6,
+  G = 7,
+  H = 8,
+  I = 9,
+  J1 = 10,
+  J2 = 11,
+  K1 = 12,
+  K2 = 13,
+  L = 14,
+  M = 15,
+  N = 16,
+  O = 17,
   tug_mission_t_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   tug_mission_t_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool tug_mission_t_IsValid(int value);
-const tug_mission_t tug_mission_t_MIN = A;
+const tug_mission_t tug_mission_t_MIN = no_mission;
 const tug_mission_t tug_mission_t_MAX = O;
 const int tug_mission_t_ARRAYSIZE = tug_mission_t_MAX + 1;
 
@@ -229,13 +230,13 @@ class turn_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 year() const;
   void set_year(::google::protobuf::int32 value);
 
-  // optional .message.season_t season = 2;
+  // optional .pb_message.season_t season = 2;
   void clear_season();
   static const int kSeasonFieldNumber = 2;
-  ::message::season_t season() const;
-  void set_season(::message::season_t value);
+  ::pb_message::season_t season() const;
+  void set_season(::pb_message::season_t value);
 
-  // @@protoc_insertion_point(class_scope:message.turn_t)
+  // @@protoc_insertion_point(class_scope:pb_message.turn_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -320,7 +321,7 @@ class hex_coord_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 y() const;
   void set_y(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.hex_coord_t)
+  // @@protoc_insertion_point(class_scope:pb_message.hex_coord_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -348,27 +349,27 @@ inline void turn_t::clear_year() {
   year_ = 0;
 }
 inline ::google::protobuf::int32 turn_t::year() const {
-  // @@protoc_insertion_point(field_get:message.turn_t.year)
+  // @@protoc_insertion_point(field_get:pb_message.turn_t.year)
   return year_;
 }
 inline void turn_t::set_year(::google::protobuf::int32 value) {
   
   year_ = value;
-  // @@protoc_insertion_point(field_set:message.turn_t.year)
+  // @@protoc_insertion_point(field_set:pb_message.turn_t.year)
 }
 
-// optional .message.season_t season = 2;
+// optional .pb_message.season_t season = 2;
 inline void turn_t::clear_season() {
   season_ = 0;
 }
-inline ::message::season_t turn_t::season() const {
-  // @@protoc_insertion_point(field_get:message.turn_t.season)
-  return static_cast< ::message::season_t >(season_);
+inline ::pb_message::season_t turn_t::season() const {
+  // @@protoc_insertion_point(field_get:pb_message.turn_t.season)
+  return static_cast< ::pb_message::season_t >(season_);
 }
-inline void turn_t::set_season(::message::season_t value) {
+inline void turn_t::set_season(::pb_message::season_t value) {
   
   season_ = value;
-  // @@protoc_insertion_point(field_set:message.turn_t.season)
+  // @@protoc_insertion_point(field_set:pb_message.turn_t.season)
 }
 
 // -------------------------------------------------------------------
@@ -380,13 +381,13 @@ inline void hex_coord_t::clear_x() {
   x_ = 0;
 }
 inline ::google::protobuf::int32 hex_coord_t::x() const {
-  // @@protoc_insertion_point(field_get:message.hex_coord_t.x)
+  // @@protoc_insertion_point(field_get:pb_message.hex_coord_t.x)
   return x_;
 }
 inline void hex_coord_t::set_x(::google::protobuf::int32 value) {
   
   x_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_coord_t.x)
+  // @@protoc_insertion_point(field_set:pb_message.hex_coord_t.x)
 }
 
 // optional int32 y = 2;
@@ -394,13 +395,13 @@ inline void hex_coord_t::clear_y() {
   y_ = 0;
 }
 inline ::google::protobuf::int32 hex_coord_t::y() const {
-  // @@protoc_insertion_point(field_get:message.hex_coord_t.y)
+  // @@protoc_insertion_point(field_get:pb_message.hex_coord_t.y)
   return y_;
 }
 inline void hex_coord_t::set_y(::google::protobuf::int32 value) {
   
   y_ = value;
-  // @@protoc_insertion_point(field_set:message.hex_coord_t.y)
+  // @@protoc_insertion_point(field_set:pb_message.hex_coord_t.y)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -409,36 +410,36 @@ inline void hex_coord_t::set_y(::google::protobuf::int32 value) {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace message
+}  // namespace pb_message
 
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::message::season_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::season_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::season_t>() {
-  return ::message::season_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::season_t>() {
+  return ::pb_message::season_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::tug_mission_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::tug_mission_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::tug_mission_t>() {
-  return ::message::tug_mission_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::tug_mission_t>() {
+  return ::pb_message::tug_mission_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::carrier_type_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::carrier_type_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::carrier_type_t>() {
-  return ::message::carrier_type_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::carrier_type_t>() {
+  return ::pb_message::carrier_type_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::escort_type_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::escort_type_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::escort_type_t>() {
-  return ::message::escort_type_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::escort_type_t>() {
+  return ::pb_message::escort_type_t_descriptor();
 }
-template <> struct is_proto_enum< ::message::war_footing_t> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::pb_message::war_footing_t> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::message::war_footing_t>() {
-  return ::message::war_footing_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::war_footing_t>() {
+  return ::pb_message::war_footing_t_descriptor();
 }
 
 }  // namespace protobuf

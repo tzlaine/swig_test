@@ -76,6 +76,18 @@ def type_without_namespace(field_descriptor_proto, namespace):
     prefix = filter(lambda x: x[0] == x[1], zip(typenames, namespace))
     return '.'.join(typenames[len(prefix):])
 
+def type_namespace(field_descriptor_proto, namespace):
+    typenames = field_descriptor_proto.type_name.split('.')[1:]
+    prefix = filter(lambda x: x[0] == x[1], zip(typenames, namespace))
+
+    if False:
+        print
+        print typenames
+        print namespace
+        print
+
+    return '.'.join(typenames[:len(prefix)])
+
 def to_cpp_namespace(typename):
     return typename.replace('.', '::')
 
@@ -302,7 +314,7 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
 
 def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
-    proto_ns = '::'.join(protobuf_namespace)
+    proto_ns = '::'.join(type_namespace(field_descriptor_proto, protobuf_namespace).split('.'))
     if repeated(field_descriptor_proto):
         args.cpp_file.write('{0}for (const auto& x : value.{1}) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
@@ -347,7 +359,6 @@ def define_cpp_to_pb_impl(decl_data, depth, map_fields):
 
 def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
-    proto_ns = '::'.join(protobuf_namespace)
     user_ns = '::'.join(user_namespace)
     if repeated(field_descriptor_proto):
         args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
@@ -402,7 +413,6 @@ def define_cpp_from_pb_impl(decl_data, depth, map_fields):
 
 def define_cpp_to_bin_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
-    proto_ns = '::'.join(protobuf_namespace)
     if repeated(field_descriptor_proto):
         args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
         depth += 1

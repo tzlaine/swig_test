@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package message.visual_config;
+package pb_message.visual_config;
 
 
 message color_t

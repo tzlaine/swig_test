@@ -13,16 +13,16 @@ namespace visual_config {
 
 } 
 
-    message::visual_config::color_t to_protobuf (const visual_config::color_t& value)
+    pb_message::visual_config::color_t to_protobuf (const visual_config::color_t& value)
     {
-        message::visual_config::color_t retval;
+        pb_message::visual_config::color_t retval;
         retval.set_r(value.r);
         retval.set_g(value.g);
         retval.set_b(value.b);
         return retval;
     }
 
-    visual_config::color_t from_protobuf (const message::visual_config::color_t& msg)
+    visual_config::color_t from_protobuf (const pb_message::visual_config::color_t& msg)
     {
         visual_config::color_t retval;
         retval.r = msg.r();
@@ -31,9 +31,9 @@ namespace visual_config {
         return retval;
     }
 
-    message::visual_config::hex_map_t to_protobuf (const visual_config::hex_map_t& value)
+    pb_message::visual_config::hex_map_t to_protobuf (const visual_config::hex_map_t& value)
     {
-        message::visual_config::hex_map_t retval;
+        pb_message::visual_config::hex_map_t retval;
         for (const auto& x : value.primary_colors) {
             (*retval.mutable_primary_colors())[x.first] = to_protobuf(x.second);
         }
@@ -57,7 +57,7 @@ namespace visual_config {
         return retval;
     }
 
-    visual_config::hex_map_t from_protobuf (const message::visual_config::hex_map_t& msg)
+    visual_config::hex_map_t from_protobuf (const pb_message::visual_config::hex_map_t& msg)
     {
         visual_config::hex_map_t retval;
         {

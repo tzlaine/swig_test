@@ -31,7 +31,7 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace message {
+namespace pb_message {
 namespace visual_config {
 
 // Internal implementation detail -- do not call these.
@@ -118,7 +118,7 @@ class color_t : public ::google::protobuf::Message {
   ::google::protobuf::int32 b() const;
   void set_b(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:message.visual_config.color_t)
+  // @@protoc_insertion_point(class_scope:pb_message.visual_config.color_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -193,22 +193,22 @@ class hex_map_t : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // map<string, .message.visual_config.color_t> primary_colors = 1;
+  // map<string, .pb_message.visual_config.color_t> primary_colors = 1;
   int primary_colors_size() const;
   void clear_primary_colors();
   static const int kPrimaryColorsFieldNumber = 1;
-  const ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >&
       primary_colors() const;
-  ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >*
       mutable_primary_colors();
 
-  // map<string, .message.visual_config.color_t> secondary_colors = 2;
+  // map<string, .pb_message.visual_config.color_t> secondary_colors = 2;
   int secondary_colors_size() const;
   void clear_secondary_colors();
   static const int kSecondaryColorsFieldNumber = 2;
-  const ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >&
+  const ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >&
       secondary_colors() const;
-  ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >*
+  ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >*
       mutable_secondary_colors();
 
   // optional float national_border_thickness = 3;
@@ -295,30 +295,30 @@ class hex_map_t : public ::google::protobuf::Message {
   float offmap_top_bottom_thickness() const;
   void set_offmap_top_bottom_thickness(float value);
 
-  // @@protoc_insertion_point(class_scope:message.visual_config.hex_map_t)
+  // @@protoc_insertion_point(class_scope:pb_message.visual_config.hex_map_t)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   bool _is_default_instance_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::visual_config::color_t,
+      ::std::string, ::pb_message::visual_config::color_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       hex_map_t_PrimaryColorsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::visual_config::color_t,
+      ::std::string, ::pb_message::visual_config::color_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > primary_colors_;
   typedef ::google::protobuf::internal::MapEntryLite<
-      ::std::string, ::message::visual_config::color_t,
+      ::std::string, ::pb_message::visual_config::color_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 >
       hex_map_t_SecondaryColorsEntry;
   ::google::protobuf::internal::MapField<
-      ::std::string, ::message::visual_config::color_t,
+      ::std::string, ::pb_message::visual_config::color_t,
       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE,
       0 > secondary_colors_;
@@ -357,13 +357,13 @@ inline void color_t::clear_r() {
   r_ = 0;
 }
 inline ::google::protobuf::int32 color_t::r() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.color_t.r)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.color_t.r)
   return r_;
 }
 inline void color_t::set_r(::google::protobuf::int32 value) {
   
   r_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.color_t.r)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.color_t.r)
 }
 
 // optional int32 g = 2;
@@ -371,13 +371,13 @@ inline void color_t::clear_g() {
   g_ = 0;
 }
 inline ::google::protobuf::int32 color_t::g() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.color_t.g)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.color_t.g)
   return g_;
 }
 inline void color_t::set_g(::google::protobuf::int32 value) {
   
   g_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.color_t.g)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.color_t.g)
 }
 
 // optional int32 b = 3;
@@ -385,52 +385,52 @@ inline void color_t::clear_b() {
   b_ = 0;
 }
 inline ::google::protobuf::int32 color_t::b() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.color_t.b)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.color_t.b)
   return b_;
 }
 inline void color_t::set_b(::google::protobuf::int32 value) {
   
   b_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.color_t.b)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.color_t.b)
 }
 
 // -------------------------------------------------------------------
 
 // hex_map_t
 
-// map<string, .message.visual_config.color_t> primary_colors = 1;
+// map<string, .pb_message.visual_config.color_t> primary_colors = 1;
 inline int hex_map_t::primary_colors_size() const {
   return primary_colors_.size();
 }
 inline void hex_map_t::clear_primary_colors() {
   primary_colors_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >&
 hex_map_t::primary_colors() const {
-  // @@protoc_insertion_point(field_map:message.visual_config.hex_map_t.primary_colors)
+  // @@protoc_insertion_point(field_map:pb_message.visual_config.hex_map_t.primary_colors)
   return primary_colors_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >*
 hex_map_t::mutable_primary_colors() {
-  // @@protoc_insertion_point(field_mutable_map:message.visual_config.hex_map_t.primary_colors)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.visual_config.hex_map_t.primary_colors)
   return primary_colors_.MutableMap();
 }
 
-// map<string, .message.visual_config.color_t> secondary_colors = 2;
+// map<string, .pb_message.visual_config.color_t> secondary_colors = 2;
 inline int hex_map_t::secondary_colors_size() const {
   return secondary_colors_.size();
 }
 inline void hex_map_t::clear_secondary_colors() {
   secondary_colors_.Clear();
 }
-inline const ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >&
+inline const ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >&
 hex_map_t::secondary_colors() const {
-  // @@protoc_insertion_point(field_map:message.visual_config.hex_map_t.secondary_colors)
+  // @@protoc_insertion_point(field_map:pb_message.visual_config.hex_map_t.secondary_colors)
   return secondary_colors_.GetMap();
 }
-inline ::google::protobuf::Map< ::std::string, ::message::visual_config::color_t >*
+inline ::google::protobuf::Map< ::std::string, ::pb_message::visual_config::color_t >*
 hex_map_t::mutable_secondary_colors() {
-  // @@protoc_insertion_point(field_mutable_map:message.visual_config.hex_map_t.secondary_colors)
+  // @@protoc_insertion_point(field_mutable_map:pb_message.visual_config.hex_map_t.secondary_colors)
   return secondary_colors_.MutableMap();
 }
 
@@ -439,13 +439,13 @@ inline void hex_map_t::clear_national_border_thickness() {
   national_border_thickness_ = 0;
 }
 inline float hex_map_t::national_border_thickness() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.national_border_thickness)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.national_border_thickness)
   return national_border_thickness_;
 }
 inline void hex_map_t::set_national_border_thickness(float value) {
   
   national_border_thickness_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.national_border_thickness)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.national_border_thickness)
 }
 
 // optional float province_border_thickness = 4;
@@ -453,13 +453,13 @@ inline void hex_map_t::clear_province_border_thickness() {
   province_border_thickness_ = 0;
 }
 inline float hex_map_t::province_border_thickness() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.province_border_thickness)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.province_border_thickness)
   return province_border_thickness_;
 }
 inline void hex_map_t::set_province_border_thickness(float value) {
   
   province_border_thickness_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.province_border_thickness)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.province_border_thickness)
 }
 
 // optional float planet_star_thickness = 5;
@@ -467,13 +467,13 @@ inline void hex_map_t::clear_planet_star_thickness() {
   planet_star_thickness_ = 0;
 }
 inline float hex_map_t::planet_star_thickness() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.planet_star_thickness)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.planet_star_thickness)
   return planet_star_thickness_;
 }
 inline void hex_map_t::set_planet_star_thickness(float value) {
   
   planet_star_thickness_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.planet_star_thickness)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.planet_star_thickness)
 }
 
 // optional float minor_planet_scale = 6;
@@ -481,13 +481,13 @@ inline void hex_map_t::clear_minor_planet_scale() {
   minor_planet_scale_ = 0;
 }
 inline float hex_map_t::minor_planet_scale() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.minor_planet_scale)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.minor_planet_scale)
   return minor_planet_scale_;
 }
 inline void hex_map_t::set_minor_planet_scale(float value) {
   
   minor_planet_scale_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.minor_planet_scale)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.minor_planet_scale)
 }
 
 // optional float major_planet_scale = 7;
@@ -495,13 +495,13 @@ inline void hex_map_t::clear_major_planet_scale() {
   major_planet_scale_ = 0;
 }
 inline float hex_map_t::major_planet_scale() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.major_planet_scale)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.major_planet_scale)
   return major_planet_scale_;
 }
 inline void hex_map_t::set_major_planet_scale(float value) {
   
   major_planet_scale_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.major_planet_scale)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.major_planet_scale)
 }
 
 // optional float star_scale = 8;
@@ -509,13 +509,13 @@ inline void hex_map_t::clear_star_scale() {
   star_scale_ = 0;
 }
 inline float hex_map_t::star_scale() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.star_scale)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.star_scale)
   return star_scale_;
 }
 inline void hex_map_t::set_star_scale(float value) {
   
   star_scale_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.star_scale)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.star_scale)
 }
 
 // optional float mb_scale = 9;
@@ -523,13 +523,13 @@ inline void hex_map_t::clear_mb_scale() {
   mb_scale_ = 0;
 }
 inline float hex_map_t::mb_scale() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.mb_scale)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.mb_scale)
   return mb_scale_;
 }
 inline void hex_map_t::set_mb_scale(float value) {
   
   mb_scale_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.mb_scale)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.mb_scale)
 }
 
 // optional float bats_scale = 10;
@@ -537,13 +537,13 @@ inline void hex_map_t::clear_bats_scale() {
   bats_scale_ = 0;
 }
 inline float hex_map_t::bats_scale() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.bats_scale)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.bats_scale)
   return bats_scale_;
 }
 inline void hex_map_t::set_bats_scale(float value) {
   
   bats_scale_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.bats_scale)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.bats_scale)
 }
 
 // optional float sb_scale = 11;
@@ -551,13 +551,13 @@ inline void hex_map_t::clear_sb_scale() {
   sb_scale_ = 0;
 }
 inline float hex_map_t::sb_scale() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.sb_scale)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.sb_scale)
   return sb_scale_;
 }
 inline void hex_map_t::set_sb_scale(float value) {
   
   sb_scale_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.sb_scale)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.sb_scale)
 }
 
 // optional float offmap_z = 12;
@@ -565,13 +565,13 @@ inline void hex_map_t::clear_offmap_z() {
   offmap_z_ = 0;
 }
 inline float hex_map_t::offmap_z() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_z)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.offmap_z)
   return offmap_z_;
 }
 inline void hex_map_t::set_offmap_z(float value) {
   
   offmap_z_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_z)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.offmap_z)
 }
 
 // optional float offmap_border_thickness = 13;
@@ -579,13 +579,13 @@ inline void hex_map_t::clear_offmap_border_thickness() {
   offmap_border_thickness_ = 0;
 }
 inline float hex_map_t::offmap_border_thickness() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_border_thickness)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.offmap_border_thickness)
   return offmap_border_thickness_;
 }
 inline void hex_map_t::set_offmap_border_thickness(float value) {
   
   offmap_border_thickness_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_border_thickness)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.offmap_border_thickness)
 }
 
 // optional float offmap_label_size = 14;
@@ -593,13 +593,13 @@ inline void hex_map_t::clear_offmap_label_size() {
   offmap_label_size_ = 0;
 }
 inline float hex_map_t::offmap_label_size() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_label_size)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.offmap_label_size)
   return offmap_label_size_;
 }
 inline void hex_map_t::set_offmap_label_size(float value) {
   
   offmap_label_size_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_label_size)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.offmap_label_size)
 }
 
 // optional float offmap_left_right_thickness = 15;
@@ -607,13 +607,13 @@ inline void hex_map_t::clear_offmap_left_right_thickness() {
   offmap_left_right_thickness_ = 0;
 }
 inline float hex_map_t::offmap_left_right_thickness() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_left_right_thickness)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.offmap_left_right_thickness)
   return offmap_left_right_thickness_;
 }
 inline void hex_map_t::set_offmap_left_right_thickness(float value) {
   
   offmap_left_right_thickness_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_left_right_thickness)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.offmap_left_right_thickness)
 }
 
 // optional float offmap_top_bottom_thickness = 16;
@@ -621,13 +621,13 @@ inline void hex_map_t::clear_offmap_top_bottom_thickness() {
   offmap_top_bottom_thickness_ = 0;
 }
 inline float hex_map_t::offmap_top_bottom_thickness() const {
-  // @@protoc_insertion_point(field_get:message.visual_config.hex_map_t.offmap_top_bottom_thickness)
+  // @@protoc_insertion_point(field_get:pb_message.visual_config.hex_map_t.offmap_top_bottom_thickness)
   return offmap_top_bottom_thickness_;
 }
 inline void hex_map_t::set_offmap_top_bottom_thickness(float value) {
   
   offmap_top_bottom_thickness_ = value;
-  // @@protoc_insertion_point(field_set:message.visual_config.hex_map_t.offmap_top_bottom_thickness)
+  // @@protoc_insertion_point(field_set:pb_message.visual_config.hex_map_t.offmap_top_bottom_thickness)
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -637,7 +637,7 @@ inline void hex_map_t::set_offmap_top_bottom_thickness(float value) {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace visual_config
-}  // namespace message
+}  // namespace pb_message
 
 // @@protoc_insertion_point(global_scope)
 
