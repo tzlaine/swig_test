@@ -1,55 +1,62 @@
 #include "graph.hpp"
+#include "data_utility.hpp"
 
+
+namespace {
+
+    inline int hex_owner (hex_t const & hex, map_t const & map)
+    { return map.provinces[hex.province_id].owner; }
+
+    inline bool neutral_zone (hex_t const & hex, map_t const & map, int nz_nation_id)
+    { return hex_owner(hex, map) == nz_nation_id; }
+
+    inline bool supply_source (hex_t const & hex, map_t const & map, int nation_id)
+    {
+        for (auto const & zone : hex.zones) {
+            for (auto const & fixture : zone.fixtures) {
+                if (fixture.type == hex_zone_fixture_t::type_t::type_planet) {
+                    if (fixture.planet.owner == nation_id)
+                        return true;
+                } else if (fixture.base.owner == nation_id &&
+                           (is_bats(fixture.base) || is_sb(fixture.base))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    inline bool supply_point (hex_t const & hex, map_t const & map, int nation_id)
+    {
+        for (auto const & zone : hex.zones) {
+            for (auto const & fixture : zone.fixtures) {
+                if (fixture.type == hex_zone_fixture_t::type_t::type_planet) {
+                    if (fixture.planet.owner == nation_id)
+                        return true;
+                } else if (fixture.base.owner == nation_id) {
+                    return true;
+                }
+            }
+        }
+
+        auto it = hex.fleets.fleets.find(nation_id);
+        if (it == hex.fleets.fleets.end())
+            return false;
+
+        auto const & fleet = it->second;
+        for (auto const & unit : fleet.units) {
+            // TODO: I don't think A is actually the supply mission!
+            if (is_convoy(unit) || unit.tug_mission == tug_mission_t::A)
+                return true;
+        }
+
+        return false;
+    }
+
+}
 
 #if 0
-struct supply_data
-{
-    std::vector<int> supply;
-} g_supply_data;
-
-bool neutral (supply_check_hex_t h, int nz_id)
-{ return h.owner_id == nz_id; }
-
-bool supply_point (supply_check_hex_t h, int nation)
-{
-    const int flag = 1 << nation;
-    return
-        h.planet & flag ||
-        h.SB & flag ||
-        h.BATS & flag ||
-        h.MB & flag ||
-        h.convoy & flag ||
-        h.supply_tug & flag;
-}
-
-bool supply_source (supply_check_hex_t h, int nation)
-{
-    const int flag = 1 << nation;
-    return nation == -1 ?
-        h.planet || h.SB || h.BATS :
-        h.planet & flag || h.SB & flag || h.BATS & flag;
-}
-
-int add_vertex (graph::graph& g,
-                int v,
-                boost::unordered_map<int, int>& vertex_id_to_hex_id,
-                boost::unordered_map<int, int>& hex_id_to_vertex_id)
-{
-    int n = boost::num_vertices(g);
-    vertex_id_to_hex_id[n] = v;
-    hex_id_to_vertex_id[v] = n;
-#if LOG
-    std::cerr << "add_vertex(";
-    if (v < 0)
-        std::cerr << v;
-    else
-        std::cerr << hex_coord_t{v / 100, v % 100};
-    std::cerr << ") as vertex " << n << '\n';
-#endif
-    boost::add_vertex(g);
-    return n;
-}
-
 void find_blocking_contents (
     const supply_check_hex_t & hex,
     int team,

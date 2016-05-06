@@ -42,3 +42,6 @@ inline bool is_sb (unit_t unit)
 
 inline bool is_pdu (unit_t unit)
 { return unit.unit_id == early_pdu_unit_id() || unit.unit_id == late_pdu_unit_id(); }
+
+inline bool is_convoy (unit_t unit)
+{ return unit.unit_id == convoy_unit_id(); }
