@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
 
 

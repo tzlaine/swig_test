@@ -16,7 +16,7 @@ namespace start_data {
     pb_message::capital_hex_zone_t to_protobuf (const start_data::capital_hex_zone_t& value)
     {
         pb_message::capital_hex_zone_t retval;
-        retval.set_name(value.name);
+        retval.set_name(value.name.c_str());
         for (const auto& x : value.features) {
             retval.add_features(static_cast< pb_message::feature_t >(x));
         }
@@ -26,7 +26,7 @@ namespace start_data {
     start_data::capital_hex_zone_t from_protobuf (const pb_message::capital_hex_zone_t& msg)
     {
         start_data::capital_hex_zone_t retval;
-        retval.name = msg.name();
+        retval.name = adobe::name_t(msg.name().c_str());
         {
             retval.features.resize(msg.features_size());
             auto it = retval.features.begin();
@@ -110,8 +110,8 @@ namespace start_data {
     pb_message::nation_t to_protobuf (const start_data::nation_t& value)
     {
         pb_message::nation_t retval;
-        retval.set_name(value.name);
-        retval.set_short_name(value.short_name);
+        retval.set_name(value.name.c_str());
+        retval.set_short_name(value.short_name.c_str());
         retval.mutable_capital()->CopyFrom(to_protobuf(value.capital));
         retval.set_free_strategic_moves(value.free_strategic_moves);
         retval.set_capital_star_points(value.capital_star_points);
@@ -123,8 +123,8 @@ namespace start_data {
     start_data::nation_t from_protobuf (const pb_message::nation_t& msg)
     {
         start_data::nation_t retval;
-        retval.name = msg.name();
-        retval.short_name = msg.short_name();
+        retval.name = adobe::name_t(msg.name().c_str());
+        retval.short_name = adobe::name_t(msg.short_name().c_str());
         retval.capital = from_protobuf(msg.capital());
         retval.free_strategic_moves = msg.free_strategic_moves();
         retval.capital_star_points = msg.capital_star_points();
@@ -137,7 +137,7 @@ namespace start_data {
     {
         pb_message::nations_t retval;
         for (const auto& x : value.nations) {
-            (*retval.mutable_nations())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_nations())[x.first.c_str()] = to_protobuf(x.second);
         }
         return retval;
     }
@@ -147,7 +147,7 @@ namespace start_data {
         start_data::nations_t retval;
         {
             for (const auto& x : msg.nations()) {
-                retval.nations[x.first] = from_protobuf(x.second);
+                retval.nations[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         return retval;
@@ -212,7 +212,7 @@ namespace start_data {
     pb_message::offmap_area_t to_protobuf (const start_data::offmap_area_t& value)
     {
         pb_message::offmap_area_t retval;
-        retval.set_name(value.name);
+        retval.set_name(value.name.c_str());
         for (const auto& x : value.features) {
             retval.add_features(static_cast< pb_message::feature_t >(x));
         }
@@ -228,7 +228,7 @@ namespace start_data {
     start_data::offmap_area_t from_protobuf (const pb_message::offmap_area_t& msg)
     {
         start_data::offmap_area_t retval;
-        retval.name = msg.name();
+        retval.name = adobe::name_t(msg.name().c_str());
         {
             retval.features.resize(msg.features_size());
             auto it = retval.features.begin();
@@ -289,7 +289,7 @@ namespace start_data {
             retval.add_nz_hexes(x);
         }
         for (const auto& x : value.starting_national_holdings) {
-            (*retval.mutable_starting_national_holdings())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_starting_national_holdings())[x.first.c_str()] = to_protobuf(x.second);
         }
         for (const auto& x : value.hexes) {
             retval.add_hexes()->CopyFrom(to_protobuf(x));
@@ -318,7 +318,7 @@ namespace start_data {
         }
         {
             for (const auto& x : msg.starting_national_holdings()) {
-                retval.starting_national_holdings[x.first] = from_protobuf(x.second);
+                retval.starting_national_holdings[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         {
@@ -350,7 +350,7 @@ namespace start_data {
     pb_message::oob_unit_t to_protobuf (const start_data::oob_unit_t& value)
     {
         pb_message::oob_unit_t retval;
-        retval.set_unit(value.unit);
+        retval.set_unit(value.unit.c_str());
         retval.set_times(value.times);
         return retval;
     }
@@ -358,7 +358,7 @@ namespace start_data {
     start_data::oob_unit_t from_protobuf (const pb_message::oob_unit_t& msg)
     {
         start_data::oob_unit_t retval;
-        retval.unit = msg.unit();
+        retval.unit = adobe::name_t(msg.unit().c_str());
         retval.times = msg.times();
         return retval;
     }
@@ -491,7 +491,7 @@ namespace start_data {
     {
         pb_message::order_of_battle_t retval;
         for (const auto& x : value.starting_fleets) {
-            (*retval.mutable_starting_fleets())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_starting_fleets())[x.first.c_str()] = to_protobuf(x.second);
         }
         retval.mutable_mothball_reserve()->CopyFrom(to_protobuf(value.mothball_reserve));
         for (const auto& x : value.production) {
@@ -505,7 +505,7 @@ namespace start_data {
         start_data::order_of_battle_t retval;
         {
             for (const auto& x : msg.starting_fleets()) {
-                retval.starting_fleets[x.first] = from_protobuf(x.second);
+                retval.starting_fleets[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         retval.mothball_reserve = from_protobuf(msg.mothball_reserve());
@@ -523,7 +523,7 @@ namespace start_data {
     {
         pb_message::orders_of_battle_t retval;
         for (const auto& x : value.oobs) {
-            (*retval.mutable_oobs())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_oobs())[x.first.c_str()] = to_protobuf(x.second);
         }
         return retval;
     }
@@ -533,7 +533,7 @@ namespace start_data {
         start_data::orders_of_battle_t retval;
         {
             for (const auto& x : msg.oobs()) {
-                retval.oobs[x.first] = from_protobuf(x.second);
+                retval.oobs[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         return retval;
@@ -612,7 +612,7 @@ namespace start_data {
     pb_message::unit_def_t to_protobuf (const start_data::unit_def_t& value)
     {
         pb_message::unit_def_t retval;
-        retval.set_name(value.name);
+        retval.set_name(value.name.c_str());
         retval.set_cmd(value.cmd);
         retval.mutable_uncrippled()->CopyFrom(to_protobuf(value.uncrippled));
         retval.mutable_crippled()->CopyFrom(to_protobuf(value.crippled));
@@ -622,24 +622,24 @@ namespace start_data {
         retval.set_max_in_service(value.max_in_service);
         retval.mutable_construction()->CopyFrom(to_protobuf(value.construction));
         for (const auto& x : value.substitutions) {
-            (*retval.mutable_substitutions())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_substitutions())[x.first.c_str()] = to_protobuf(x.second);
         }
         for (const auto& x : value.conversions) {
-            (*retval.mutable_conversions())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_conversions())[x.first.c_str()] = to_protobuf(x.second);
         }
         retval.set_move(value.move);
         retval.set_carrier_type(static_cast< pb_message::carrier_type_t >(value.carrier_type));
         retval.set_not_spaceworthy(value.not_spaceworthy);
         retval.mutable_towable()->CopyFrom(to_protobuf(value.towable));
         retval.set_salvage(value.salvage);
-        retval.set_notes(value.notes);
+        retval.set_notes(value.notes.c_str());
         return retval;
     }
 
     start_data::unit_def_t from_protobuf (const pb_message::unit_def_t& msg)
     {
         start_data::unit_def_t retval;
-        retval.name = msg.name();
+        retval.name = adobe::name_t(msg.name().c_str());
         retval.cmd = msg.cmd();
         retval.uncrippled = from_protobuf(msg.uncrippled());
         retval.crippled = from_protobuf(msg.crippled());
@@ -650,12 +650,12 @@ namespace start_data {
         retval.construction = from_protobuf(msg.construction());
         {
             for (const auto& x : msg.substitutions()) {
-                retval.substitutions[x.first] = from_protobuf(x.second);
+                retval.substitutions[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         {
             for (const auto& x : msg.conversions()) {
-                retval.conversions[x.first] = from_protobuf(x.second);
+                retval.conversions[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         retval.move = msg.move();
@@ -663,7 +663,7 @@ namespace start_data {
         retval.not_spaceworthy = msg.not_spaceworthy();
         retval.towable = from_protobuf(msg.towable());
         retval.salvage = msg.salvage();
-        retval.notes = msg.notes();
+        retval.notes = adobe::name_t(msg.notes().c_str());
         return retval;
     }
 
@@ -693,7 +693,7 @@ namespace start_data {
     {
         pb_message::unit_defs_t retval;
         for (const auto& x : value.nation_units) {
-            (*retval.mutable_nation_units())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_nation_units())[x.first.c_str()] = to_protobuf(x.second);
         }
         return retval;
     }
@@ -703,7 +703,7 @@ namespace start_data {
         start_data::unit_defs_t retval;
         {
             for (const auto& x : msg.nation_units()) {
-                retval.nation_units[x.first] = from_protobuf(x.second);
+                retval.nation_units[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         return retval;
@@ -712,9 +712,9 @@ namespace start_data {
     pb_message::team_t to_protobuf (const start_data::team_t& value)
     {
         pb_message::team_t retval;
-        retval.set_name(value.name);
+        retval.set_name(value.name.c_str());
         for (const auto& x : value.nations) {
-            retval.add_nations(x);
+            retval.add_nations(x.c_str());
         }
         return retval;
     }
@@ -722,12 +722,12 @@ namespace start_data {
     start_data::team_t from_protobuf (const pb_message::team_t& msg)
     {
         start_data::team_t retval;
-        retval.name = msg.name();
+        retval.name = adobe::name_t(msg.name().c_str());
         {
             retval.nations.resize(msg.nations_size());
             auto it = retval.nations.begin();
             for (const auto& x : msg.nations()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         return retval;
@@ -738,7 +738,7 @@ namespace start_data {
         pb_message::scenario_condition_t::object_t retval;
         retval.set_type(static_cast< pb_message::scenario_condition_t::object_type_t >(value.type));
         for (const auto& x : value.names) {
-            retval.add_names(x);
+            retval.add_names(x.c_str());
         }
         for (const auto& x : value.hexes) {
             retval.add_hexes(x);
@@ -754,7 +754,7 @@ namespace start_data {
             retval.names.resize(msg.names_size());
             auto it = retval.names.begin();
             for (const auto& x : msg.names()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         {
@@ -771,7 +771,7 @@ namespace start_data {
     {
         pb_message::scenario_condition_t retval;
         for (const auto& x : value.actors) {
-            retval.add_actors(x);
+            retval.add_actors(x.c_str());
         }
         retval.set_action(static_cast< pb_message::scenario_condition_t::action_t >(value.action));
         for (const auto& x : value.one_of) {
@@ -787,7 +787,7 @@ namespace start_data {
             retval.actors.resize(msg.actors_size());
             auto it = retval.actors.begin();
             for (const auto& x : msg.actors()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         retval.action = static_cast<std::remove_reference<decltype(retval.action)>::type>(msg.action());
@@ -804,7 +804,7 @@ namespace start_data {
     pb_message::fleet_release_condition_t to_protobuf (const start_data::fleet_release_condition_t& value)
     {
         pb_message::fleet_release_condition_t retval;
-        retval.set_fleet(value.fleet);
+        retval.set_fleet(value.fleet.c_str());
         retval.mutable_condition()->CopyFrom(to_protobuf(value.condition));
         return retval;
     }
@@ -812,7 +812,7 @@ namespace start_data {
     start_data::fleet_release_condition_t from_protobuf (const pb_message::fleet_release_condition_t& msg)
     {
         start_data::fleet_release_condition_t retval;
-        retval.fleet = msg.fleet();
+        retval.fleet = adobe::name_t(msg.fleet().c_str());
         retval.condition = from_protobuf(msg.condition());
         return retval;
     }
@@ -838,7 +838,7 @@ namespace start_data {
         pb_message::scenario_turn_t::national_action_t::action_t retval;
         retval.set_type(static_cast< pb_message::scenario_turn_t::national_action_t::action_type_t >(value.type));
         for (const auto& x : value.names) {
-            retval.add_names(x);
+            retval.add_names(x.c_str());
         }
         return retval;
     }
@@ -851,7 +851,7 @@ namespace start_data {
             retval.names.resize(msg.names_size());
             auto it = retval.names.begin();
             for (const auto& x : msg.names()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         return retval;
@@ -884,7 +884,7 @@ namespace start_data {
         pb_message::scenario_turn_t retval;
         retval.set_turn(value.turn);
         for (const auto& x : value.national_actions) {
-            (*retval.mutable_national_actions())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_national_actions())[x.first.c_str()] = to_protobuf(x.second);
         }
         return retval;
     }
@@ -895,7 +895,7 @@ namespace start_data {
         retval.turn = msg.turn();
         {
             for (const auto& x : msg.national_actions()) {
-                retval.national_actions[x.first] = from_protobuf(x.second);
+                retval.national_actions[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         return retval;
@@ -905,10 +905,10 @@ namespace start_data {
     {
         pb_message::scenario_t::nation_t retval;
         for (const auto& x : value.at_war_with) {
-            retval.add_at_war_with(x);
+            retval.add_at_war_with(x.c_str());
         }
         for (const auto& x : value.future_belligerents) {
-            retval.add_future_belligerents(x);
+            retval.add_future_belligerents(x.c_str());
         }
         retval.set_economy(static_cast< pb_message::war_footing_t >(value.economy));
         retval.set_exhaustion_turns(value.exhaustion_turns);
@@ -929,14 +929,14 @@ namespace start_data {
             retval.at_war_with.resize(msg.at_war_with_size());
             auto it = retval.at_war_with.begin();
             for (const auto& x : msg.at_war_with()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         {
             retval.future_belligerents.resize(msg.future_belligerents_size());
             auto it = retval.future_belligerents.begin();
             for (const auto& x : msg.future_belligerents()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         retval.economy = static_cast<std::remove_reference<decltype(retval.economy)>::type>(msg.economy());
@@ -962,22 +962,22 @@ namespace start_data {
     pb_message::scenario_t to_protobuf (const start_data::scenario_t& value)
     {
         pb_message::scenario_t retval;
-        retval.set_name(value.name);
-        retval.set_description(value.description);
+        retval.set_name(value.name.c_str());
+        retval.set_description(value.description.c_str());
         retval.mutable_start_turn()->CopyFrom(to_protobuf(value.start_turn));
         for (const auto& x : value.teams) {
             retval.add_teams()->CopyFrom(to_protobuf(x));
         }
         for (const auto& x : value.team_turn_order) {
-            retval.add_team_turn_order(x);
+            retval.add_team_turn_order(x.c_str());
         }
-        retval.set_map(value.map);
-        retval.set_order_of_battle(value.order_of_battle);
+        retval.set_map(value.map.c_str());
+        retval.set_order_of_battle(value.order_of_battle.c_str());
         for (const auto& x : value.setup_order) {
-            retval.add_setup_order(x);
+            retval.add_setup_order(x.c_str());
         }
         for (const auto& x : value.nations) {
-            (*retval.mutable_nations())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_nations())[x.first.c_str()] = to_protobuf(x.second);
         }
         for (const auto& x : value.turns) {
             retval.add_turns()->CopyFrom(to_protobuf(x));
@@ -988,8 +988,8 @@ namespace start_data {
     start_data::scenario_t from_protobuf (const pb_message::scenario_t& msg)
     {
         start_data::scenario_t retval;
-        retval.name = msg.name();
-        retval.description = msg.description();
+        retval.name = adobe::name_t(msg.name().c_str());
+        retval.description = adobe::name_t(msg.description().c_str());
         retval.start_turn = from_protobuf(msg.start_turn());
         {
             retval.teams.resize(msg.teams_size());
@@ -1002,21 +1002,21 @@ namespace start_data {
             retval.team_turn_order.resize(msg.team_turn_order_size());
             auto it = retval.team_turn_order.begin();
             for (const auto& x : msg.team_turn_order()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
-        retval.map = msg.map();
-        retval.order_of_battle = msg.order_of_battle();
+        retval.map = adobe::name_t(msg.map().c_str());
+        retval.order_of_battle = adobe::name_t(msg.order_of_battle().c_str());
         {
             retval.setup_order.resize(msg.setup_order_size());
             auto it = retval.setup_order.begin();
             for (const auto& x : msg.setup_order()) {
-                *it++ = x;
+                *it++ = adobe::name_t(x.c_str());
             }
         }
         {
             for (const auto& x : msg.nations()) {
-                retval.nations[x.first] = from_protobuf(x.second);
+                retval.nations[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         {

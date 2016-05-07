@@ -120,7 +120,7 @@ pb_message::game_data::hex_zone_fixture_t to_protobuf (const ::hex_zone_fixture_
 pb_message::game_data::hex_zone_t to_protobuf (const ::hex_zone_t& value)
 {
     pb_message::game_data::hex_zone_t retval;
-    retval.set_name(value.name);
+    retval.set_name(value.name.c_str());
     for (const auto& x : value.fixtures) {
         retval.add_fixtures()->CopyFrom(to_protobuf(x));
     }
@@ -130,7 +130,7 @@ pb_message::game_data::hex_zone_t to_protobuf (const ::hex_zone_t& value)
 ::hex_zone_t from_protobuf (const pb_message::game_data::hex_zone_t& msg)
 {
     ::hex_zone_t retval;
-    retval.name = msg.name();
+    retval.name = adobe::name_t(msg.name().c_str());
     {
         retval.fixtures.resize(msg.fixtures_size());
         auto it = retval.fixtures.begin();
@@ -262,7 +262,7 @@ pb_message::game_data::offmap_areas_t to_protobuf (const ::offmap_areas_t& value
 pb_message::game_data::team_t to_protobuf (const ::team_t& value)
 {
     pb_message::game_data::team_t retval;
-    retval.set_name(value.name);
+    retval.set_name(value.name.c_str());
     for (const auto& x : value.nations) {
         retval.add_nations(x);
     }
@@ -272,7 +272,7 @@ pb_message::game_data::team_t to_protobuf (const ::team_t& value)
 ::team_t from_protobuf (const pb_message::game_data::team_t& msg)
 {
     ::team_t retval;
-    retval.name = msg.name();
+    retval.name = adobe::name_t(msg.name().c_str());
     {
         retval.nations.resize(msg.nations_size());
         auto it = retval.nations.begin();

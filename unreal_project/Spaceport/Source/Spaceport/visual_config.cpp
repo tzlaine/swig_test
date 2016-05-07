@@ -35,10 +35,10 @@ namespace visual_config {
     {
         pb_message::visual_config::hex_map_t retval;
         for (const auto& x : value.primary_colors) {
-            (*retval.mutable_primary_colors())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_primary_colors())[x.first.c_str()] = to_protobuf(x.second);
         }
         for (const auto& x : value.secondary_colors) {
-            (*retval.mutable_secondary_colors())[x.first] = to_protobuf(x.second);
+            (*retval.mutable_secondary_colors())[x.first.c_str()] = to_protobuf(x.second);
         }
         retval.set_national_border_thickness(value.national_border_thickness);
         retval.set_province_border_thickness(value.province_border_thickness);
@@ -62,12 +62,12 @@ namespace visual_config {
         visual_config::hex_map_t retval;
         {
             for (const auto& x : msg.primary_colors()) {
-                retval.primary_colors[x.first] = from_protobuf(x.second);
+                retval.primary_colors[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         {
             for (const auto& x : msg.secondary_colors()) {
-                retval.secondary_colors[x.first] = from_protobuf(x.second);
+                retval.secondary_colors[adobe::name_t(x.first.c_str())] = from_protobuf(x.second);
             }
         }
         retval.national_border_thickness = msg.national_border_thickness();

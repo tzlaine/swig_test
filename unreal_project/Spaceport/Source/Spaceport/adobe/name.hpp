@@ -227,11 +227,20 @@ struct name_t : boost::totally_ordered<name_t, name_t> {
     friend std::ostream& operator<<(std::ostream& s, const name_t& name);
 
     /**
-        \return
-            \false iff the instance is equal to the empty string.
+    \return
+    \true iff the instance is equal to the empty string.
 
-        \complexity
-            O(1)
+    \complexity
+    O(1)
+    */
+    bool empty() const;
+
+    /**
+    \return
+    \false iff the instance is equal to the empty string.
+
+    \complexity
+    O(1)
     */
     explicit operator bool() const;
 
@@ -308,6 +317,34 @@ struct promote<static_name_t> {
 };
 
 /**************************************************************************************************/
+
+inline std::string make_string(const char* a, const char* b) {
+	std::string result;
+	result.reserve(std::strlen(a) + std::strlen(b));
+	result += a;
+	result += b;
+	return result;
+}
+
+inline std::string make_string(name_t n) {
+	return std::string(n.c_str());
+}
+
+inline std::string make_string(name_t n, const char* suffix) {
+	return make_string(n.c_str(), suffix);
+}
+
+inline std::string make_string(const char* prefix, name_t n) {
+	return make_string(prefix, n.c_str());
+}
+
+inline name_t make_name(name_t n, const char* suffix) {
+	return name_t(make_string(n, suffix).c_str());
+}
+
+inline name_t make_name(const char* prefix, name_t n) {
+	return name_t(make_string(prefix, n).c_str());
+}
 
 } // namespace adobe
 

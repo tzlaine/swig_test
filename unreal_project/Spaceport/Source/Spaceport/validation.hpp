@@ -3,8 +3,13 @@
 #include "hex_operations.hpp"
 #include "visual_config.hpp"
 
+#include <adobe/name.hpp>
+
 #include <boost/exception/diagnostic_information.hpp>
 
+
+using name_t = adobe::name_t;
+using namespace adobe::literals;
 
 namespace start_data {
 
@@ -65,10 +70,10 @@ namespace start_data {
         }
     }
 
-    inline void require_nation (const std::string& str, const nations_t& nations)
+    inline void require_nation (name_t name, const nations_t& nations)
     {
-        if (nations.nations.count(str) == 0) {
-            throw std::runtime_error("Nation '" + str + "' is not found in the nation definitions");
+        if (nations.nations.count(name) == 0) {
+            throw std::runtime_error("Nation '" + make_string(name) + "' is not found in the nation definitions");
         }
     }
 
@@ -190,7 +195,7 @@ namespace start_data {
         const hex_t uninitialized_hex = { invalid_hex_coord, -1 };
         map.hexes.resize(map.width * map.height, uninitialized_hex);
 
-        auto nz_nation_id = nations.nations.find("NZ")->second.nation_id;
+        auto nz_nation_id = nations.nations.find("NZ"_name)->second.nation_id;
 
         // Add NZ hexes.
         for (auto hex_id : map.nz_hexes) {
@@ -229,7 +234,7 @@ namespace start_data {
         for (const auto& holdings : map.starting_national_holdings) {
             auto nations_it = nations.nations.find(holdings.first);
             if (nations_it == nations.nations.end()) {
-                throw std::runtime_error("Unknown owner nation '" + holdings.first + "' encountered in map data");
+                throw std::runtime_error("Unknown owner nation '" + make_string(holdings.first) + "' encountered in map data");
             }
             const int nation_id = nations_it->second.nation_id;
 
@@ -320,7 +325,7 @@ namespace start_data {
 
             if (unit_defs_.nation_units.count(oob.first) == 0) {
                 static std::string msg;
-                msg = "Cannot validate the OOB for " + oob.first +
+                msg = "Cannot validate the OOB for " + make_string(oob.first) +
                     " because there are no units defined for that nation.";
                 throw std::runtime_error(msg.c_str());
             }
@@ -421,24 +426,25 @@ namespace start_data {
         return
             object.type == scenario_condition_t::object_type_t::sb &&
             object.hexes.empty() &&
-            object.names.size() == 1u && object.names[0] == "any";
+            object.names.size() == 1u && object.names[0] == "any"_name;
     }
 
     inline void validate_scenario_condition (const scenario_condition_t& scenario_condition,
                                              const team_t& team,
                                              const nations_t& nations)
     {
-        auto require_different_team = [&team](const std::string& name) {
+        auto require_different_team = [&team](name_t name) {
             auto it = std::find(team.nations.begin(), team.nations.end(), name);
             if (it != team.nations.end()) {
                 static std::string msg;
-                msg = "A release or war entry condition cannot be based on the actions of fellow team member " + name;
+                msg = "A release or war entry condition cannot be based on the "
+                    "actions of fellow team member " + make_string(name);
                 throw std::runtime_error(msg.c_str());
             }
         };
 
         for (const auto& actor : scenario_condition.actors) {
-            if (actor == "future belligerent")
+            if (actor == "future belligerent"_name)
                 continue;
             require_nation(actor, nations);
             require_different_team(actor);
@@ -522,13 +528,14 @@ namespace start_data {
                                           const team_t& team,
                                           const nations_t& nations)
     {
-        auto require_different_team = [&team](const std::string& name) {
+        auto require_different_team = [&team](name_t name) {
             auto it = std::find(team.nations.begin(), team.nations.end(), name);
             if (it != team.nations.end()) {
                 static std::string msg;
+                auto name_str = make_string(name);
                 msg =
-                    "A nation cannot be at war with or a future belligerent of " + name +
-                    " and on the same team with " + name;
+                    "A nation cannot be at war with or a future belligerent of " +
+                    name_str + " and on the same team with " + name_str;
                 throw std::runtime_error(msg.c_str());
             }
         };
@@ -580,8 +587,8 @@ namespace start_data {
         require_nonempty(scenario.description, "scenario.description");
         validate_turn(scenario.start_turn);
 
-        std::vector<std::string> team_names;
-        std::vector<std::string> team_member_names;
+        std::vector<name_t> team_names;
+        std::vector<name_t> team_member_names;
         for (const auto& team : scenario.teams) {
             validate_team(team, nations);
             team_names.push_back(team.name);
@@ -623,7 +630,7 @@ namespace start_data {
             );
             if (it == scenario.teams.end()) {
                 static std::string msg;
-                msg = "Unable to find the team to which nation " + nation.first + " belongs.";
+                msg = "Unable to find the team to which nation " + make_string(nation.first) + " belongs.";
                 throw std::runtime_error(msg.c_str());
             }
 
@@ -669,7 +676,7 @@ namespace visual_config {
             "hex_map.primary_colors.size()", "hex_map.secondary_colors.size()"
         );
 
-        using pair_t = boost::container::flat_map<std::string, color_t>::value_type;
+        using pair_t = boost::container::flat_map<name_t, color_t>::value_type;
         if (!std::equal(
                 hex_map.primary_colors.begin(), hex_map.primary_colors.end(),
                 hex_map.secondary_colors.begin(),

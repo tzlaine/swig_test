@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
 
 
@@ -21,8 +22,8 @@ namespace visual_config {
 
     struct hex_map_t
     {
-        boost::container::flat_map<std::string, color_t> primary_colors;
-        boost::container::flat_map<std::string, color_t> secondary_colors;
+        boost::container::flat_map<adobe::name_t, color_t> primary_colors;
+        boost::container::flat_map<adobe::name_t, color_t> secondary_colors;
         float national_border_thickness;
         float province_border_thickness;
         float planet_star_thickness;

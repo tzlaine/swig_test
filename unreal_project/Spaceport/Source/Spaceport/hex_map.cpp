@@ -115,30 +115,30 @@ Ahex_map::Ahex_map () :
         auto const nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
 
-        initialize(interior_hexes_, nation_id, color, pair.first + "_interior_hexes");
-        initialize(edge_hexes_, nation_id, color, pair.first + "_edge_hexes");
+        initialize(interior_hexes_, nation_id, color, make_string(pair.first, "_interior_hexes"));
+        initialize(edge_hexes_, nation_id, color, make_string(pair.first, "_edge_hexes"));
 
-        initialize(offmap_panels_, nation_id, color, pair.first + "_offmap_panels");
+        initialize(offmap_panels_, nation_id, color, make_string(pair.first, "_offmap_panels"));
     }
 
     for (auto const & pair : visual_config_.hex_map().secondary_colors) {
         auto const nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
 
-        initialize(national_borders_, nation_id, color, pair.first + "_national_borders");
-        initialize(province_borders_, nation_id, color, pair.first + "_province_borders");
-        initialize(hex_borders_, nation_id, color, pair.first + "_hex_borders");
+        initialize(national_borders_, nation_id, color, make_string(pair.first, "_national_borders"));
+        initialize(province_borders_, nation_id, color, make_string(pair.first, "_province_borders"));
+        initialize(hex_borders_, nation_id, color, make_string(pair.first, "_hex_borders"));
 
-        initialize(planets_, nation_id, color, pair.first + "_planets");
-        initialize(star5s_, nation_id, color, pair.first + "_star5s");
-        initialize(star6s_, nation_id, color, pair.first + "_star6s");
-        initialize(star8s_, nation_id, color, pair.first + "_star8s");
+        initialize(planets_, nation_id, color, make_string(pair.first, "_planets"));
+        initialize(star5s_, nation_id, color, make_string(pair.first, "_star5s"));
+        initialize(star6s_, nation_id, color, make_string(pair.first, "_star6s"));
+        initialize(star8s_, nation_id, color, make_string(pair.first, "_star8s"));
 
-        initialize(mobile_bases_, nation_id, color, pair.first + "_mobile_bases");
-        initialize(battlestations_, nation_id, color, pair.first + "_battlestations");
-        initialize(starbases_, nation_id, color, pair.first + "_starbases");
+        initialize(mobile_bases_, nation_id, color, make_string(pair.first, "_mobile_bases"));
+        initialize(battlestations_, nation_id, color, make_string(pair.first, "_battlestations"));
+        initialize(starbases_, nation_id, color, make_string(pair.first, "_starbases"));
 
-        initialize(offmap_borders_, nation_id, color, pair.first + "_offmap_borders");
+        initialize(offmap_borders_, nation_id, color, make_string(pair.first, "_offmap_borders"));
     }
 
     for (auto const & pair : start_data_.map().starting_national_holdings) {
@@ -149,7 +149,7 @@ Ahex_map::Ahex_map () :
             continue;
 
         auto text_render_component =
-            CreateDefaultSubobject<UTextRenderComponent>((pair.first + "_offmap_label").c_str());
+            CreateDefaultSubobject<UTextRenderComponent>(make_string(pair.first, "_offmap_label").c_str());
         offmap_labels_[nation.nation_id] = text_render_component;
     }
 
@@ -738,6 +738,19 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         starbases_.add(owner_id, transform);
+#if 0 // For testing only!
+        FVector fleet_location = location;
+        fleet_location.Z = -0.25f * meters;
+
+        FRotator const rotation = {0.0f, 0.0f, 0.0f};
+
+        FActorSpawnParameters spawn_params;
+        spawn_params.Owner = this;
+        spawn_params.Instigator = Instigator;
+
+        UWorld * const world = GetWorld();
+        world->SpawnActor<AActor>(large_fleet_actor_, fleet_location, rotation, spawn_params);
+#endif
     } else if (0 < batss) {
         FTransform const transform(
             rotation,
@@ -750,6 +763,19 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         battlestations_.add(owner_id, transform);
+#if 0 // For testing only!
+        FVector fleet_location = location;
+        fleet_location.Z = -0.25f * meters;
+
+        FRotator const rotation = {0.0f, 0.0f, 0.0f};
+
+        FActorSpawnParameters spawn_params;
+        spawn_params.Owner = this;
+        spawn_params.Instigator = Instigator;
+
+        UWorld * const world = GetWorld();
+        world->SpawnActor<AActor>(large_fleet_actor_, fleet_location, rotation, spawn_params);
+#endif
     } else if (0 < mbs) {
         FTransform const transform(
             rotation,

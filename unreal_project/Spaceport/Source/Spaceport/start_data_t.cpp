@@ -99,7 +99,7 @@ void start_data_t::init_map (std::string const & map_str)
     for (int i = 0; i < map_.width; ++i) {
         for (int j = 0; j < map_.height; ++j) {
             hex_coord_t const hc = {i, j};
-            hex_strings_[to_hex_index(hc, map_.width)] = ::hex_string(hc);
+            hex_strings_[to_hex_index(hc, map_.width)] = name_t(::hex_string(hc).c_str());
         }
     }
 }

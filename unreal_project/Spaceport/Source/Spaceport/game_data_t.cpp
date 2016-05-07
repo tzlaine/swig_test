@@ -151,13 +151,13 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
 
     auto const & scenario = start_data.scenario();
     for (auto const & t : scenario.teams) {
-        auto & team = teams_[name_t(t.name.c_str())];
+        auto & team = teams_[t.name];
 
         team.nations.resize(t.nations.size());
         std::transform(
             t.nations.begin(), t.nations.end(),
             team.nations.begin(),
-            [&](std::string const & nation_name) {
+            [&](name_t nation_name) {
                 return start_data.nation_id(nation_name);
             }
         );

@@ -9,6 +9,7 @@
 
 
 using name_t = adobe::name_t;
+using namespace adobe::literals;
 
 namespace start_data {
 
@@ -36,20 +37,20 @@ namespace start_data {
         orders_of_battle_t const & oob () const
         { assert(scenario_initialized_); return oob_; }
 
-        std::string const & nation_key (int i) const
-        { return boost::next(nations_.nations.begin(), i)->first; }
+        name_t nation_key (int i) const
+        { return name_t(boost::next(nations_.nations.begin(), i)->first.c_str()); }
 
-        int nation_id (std::string const & key) const
+        int nation_id (name_t key) const
         { return nations_.nations.find(key)->second.nation_id; }
 
         nation_t const & nation (int i) const
         { return boost::next(nations_.nations.begin(), i)->second; }
 
-        nation_t const & nation (std::string const & key) const
+        nation_t const & nation (name_t key) const
         { return nations_.nations.find(key)->second; }
 
         int neutral_zone_id () const
-        { return nation_id("NZ"); }
+        { return nation_id("NZ"_name); }
 
         char const * hex_string (hex_coord_t hc) const;
 
@@ -86,9 +87,9 @@ namespace start_data {
         {
             assert(!scenario_initialized_);
             parse_scenario_message(scenario_str);
-            auto const map_str = get_map_str(scenario_.map);
+            auto const map_str = get_map_str(scenario_.map.c_str());
             init_map(map_str);
-            auto const oob_str = get_oob_str(scenario_.order_of_battle);
+            auto const oob_str = get_oob_str(scenario_.order_of_battle.c_str());
             init_oob(oob_str);
             init_scenario_impl();
         }
@@ -110,7 +111,7 @@ namespace start_data {
         orders_of_battle_t oob_;
         bool scenario_initialized_;
 
-        std::vector<std::string> hex_strings_;
+        std::vector<name_t> hex_strings_;
 
         int num_provinces_;
         boost::container::flat_multimap<int, hex_coord_t> province_hexes_;

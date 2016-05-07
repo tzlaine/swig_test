@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
 
 
@@ -23,7 +24,7 @@ namespace start_data {
 
     struct capital_hex_zone_t
     {
-        std::string name;
+        adobe::name_t name;
         std::vector<feature_t> features;
     };
 
@@ -50,8 +51,8 @@ namespace start_data {
 
     struct nation_t
     {
-        std::string name;
-        std::string short_name;
+        adobe::name_t name;
+        adobe::name_t short_name;
         capital_t capital;
         int free_strategic_moves;
         int capital_star_points;
@@ -61,7 +62,7 @@ namespace start_data {
 
     struct nations_t
     {
-        boost::container::flat_map<std::string, nation_t> nations;
+        boost::container::flat_map<adobe::name_t, nation_t> nations;
     };
 
     struct hex_t
@@ -84,7 +85,7 @@ namespace start_data {
 
     struct offmap_area_t
     {
-        std::string name;
+        adobe::name_t name;
         std::vector<feature_t> features;
         std::vector<int> feature_hexes;
         std::vector<int> adjacent_hexes;
@@ -102,7 +103,7 @@ namespace start_data {
         int height;
         std::vector<int> nz_planets;
         std::vector<int> nz_hexes;
-        boost::container::flat_map<std::string, starting_national_holdings_t> starting_national_holdings;
+        boost::container::flat_map<adobe::name_t, starting_national_holdings_t> starting_national_holdings;
         std::vector<hex_t> hexes;
     };
 
@@ -114,7 +115,7 @@ namespace start_data {
 
     struct oob_unit_t
     {
-        std::string unit;
+        adobe::name_t unit;
         int times;
     };
 
@@ -145,14 +146,14 @@ namespace start_data {
 
     struct order_of_battle_t
     {
-        boost::container::flat_map<std::string, starting_fleet_t> starting_fleets;
+        boost::container::flat_map<adobe::name_t, starting_fleet_t> starting_fleets;
         mothball_reserve_t mothball_reserve;
         std::vector<production_element_t> production;
     };
 
     struct orders_of_battle_t
     {
-        boost::container::flat_map<std::string, order_of_battle_t> oobs;
+        boost::container::flat_map<adobe::name_t, order_of_battle_t> oobs;
     };
 
     struct unit_def_side_t
@@ -182,7 +183,7 @@ namespace start_data {
 
     struct unit_def_t
     {
-        std::string name;
+        adobe::name_t name;
         int cmd;
         unit_def_side_t uncrippled;
         unit_def_side_t crippled;
@@ -191,14 +192,14 @@ namespace start_data {
         bool pod;
         int max_in_service;
         production_cost_t construction;
-        boost::container::flat_map<std::string, production_cost_t> substitutions;
-        boost::container::flat_map<std::string, production_cost_t> conversions;
+        boost::container::flat_map<adobe::name_t, production_cost_t> substitutions;
+        boost::container::flat_map<adobe::name_t, production_cost_t> conversions;
         int move;
         carrier_type_t carrier_type;
         bool not_spaceworthy;
         towable_t towable;
         int salvage;
-        std::string notes;
+        adobe::name_t notes;
     };
 
     struct nation_unit_defs_t
@@ -208,13 +209,13 @@ namespace start_data {
 
     struct unit_defs_t
     {
-        boost::container::flat_map<std::string, nation_unit_defs_t> nation_units;
+        boost::container::flat_map<adobe::name_t, nation_unit_defs_t> nation_units;
     };
 
     struct team_t
     {
-        std::string name;
-        std::vector<std::string> nations;
+        adobe::name_t name;
+        std::vector<adobe::name_t> nations;
     };
 
     struct scenario_condition_t
@@ -235,17 +236,17 @@ namespace start_data {
         struct object_t
         {
             scenario_condition_t::object_type_t type;
-            std::vector<std::string> names;
+            std::vector<adobe::name_t> names;
             std::vector<int> hexes;
         };
-        std::vector<std::string> actors;
+        std::vector<adobe::name_t> actors;
         scenario_condition_t::action_t action;
         std::vector<scenario_condition_t::object_t> one_of;
     };
 
     struct fleet_release_condition_t
     {
-        std::string fleet;
+        adobe::name_t fleet;
         scenario_condition_t condition;
     };
 
@@ -269,12 +270,12 @@ namespace start_data {
             struct action_t
             {
                 scenario_turn_t::national_action_t::action_type_t type;
-                std::vector<std::string> names;
+                std::vector<adobe::name_t> names;
             };
             std::vector<scenario_turn_t::national_action_t::action_t> actions;
         };
         int turn;
-        boost::container::flat_map<std::string, scenario_turn_t::national_action_t> national_actions;
+        boost::container::flat_map<adobe::name_t, scenario_turn_t::national_action_t> national_actions;
     };
 
     struct scenario_t
@@ -282,23 +283,23 @@ namespace start_data {
 
         struct nation_t
         {
-            std::vector<std::string> at_war_with;
-            std::vector<std::string> future_belligerents;
+            std::vector<adobe::name_t> at_war_with;
+            std::vector<adobe::name_t> future_belligerents;
             war_footing_t economy;
             int exhaustion_turns;
             bool accumulate_exhaustion_at_peace;
             std::vector<fleet_release_condition_t> release_conditions;
             std::vector<war_entry_condition_t> war_entry_conditions;
         };
-        std::string name;
-        std::string description;
+        adobe::name_t name;
+        adobe::name_t description;
         turn_t start_turn;
         std::vector<team_t> teams;
-        std::vector<std::string> team_turn_order;
-        std::string map;
-        std::string order_of_battle;
-        std::vector<std::string> setup_order;
-        boost::container::flat_map<std::string, scenario_t::nation_t> nations;
+        std::vector<adobe::name_t> team_turn_order;
+        adobe::name_t map;
+        adobe::name_t order_of_battle;
+        std::vector<adobe::name_t> setup_order;
+        boost::container::flat_map<adobe::name_t, scenario_t::nation_t> nations;
         std::vector<scenario_turn_t> turns;
     };
 

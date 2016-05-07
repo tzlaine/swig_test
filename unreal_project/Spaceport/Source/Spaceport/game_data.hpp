@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
 
 
@@ -60,7 +61,7 @@ struct hex_zone_fixture_t
 
 struct hex_zone_t
 {
-    std::string name;
+    adobe::name_t name;
     std::vector<hex_zone_fixture_t> fixtures;
 };
 
@@ -100,7 +101,7 @@ struct offmap_areas_t
 
 struct team_t
 {
-    std::string name;
+    adobe::name_t name;
     std::vector<int> nations;
 };
 

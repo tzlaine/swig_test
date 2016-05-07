@@ -51,7 +51,7 @@ struct game_data_t
         return &it->second;
     }
 
-    bool at_war_with (std::string const & team, int nation_id) const
+    bool at_war_with (name_t team, int nation_id) const
     {
         reusable_elem_.team_ = team;
         reusable_elem_.nation_ = nation_id;
@@ -73,11 +73,11 @@ private:
     map_t map_;
     offmap_areas_t offmap_areas_;
     team_map_t teams_;
-    boost::container::flat_map<int, std::string> nation_teams_;
+    boost::container::flat_map<int, name_t> nation_teams_;
 
     struct team_and_nation_at_war_elem_t
     {
-        std::string team_;
+        name_t team_;
         int nation_;
     };
     friend bool operator< (

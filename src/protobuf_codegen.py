@@ -35,25 +35,25 @@ proto_contents = args.proto_file.read()
 # generated types.  Comments below from descriptor.proto in the
 # Protobuf sources.
 types = [
-    ('void', 'void'),          #    // 0 is reserved for errors.
-    ('double', 'double'),      #    TYPE_DOUBLE         = 1;
-    ('float', 'float'),        #    TYPE_FLOAT          = 2;
-    ('void', 'void'),          #    TYPE_INT64          = 3;
-    ('void', 'void'),          #    TYPE_UINT64         = 4;
-    ('int', 'int'),            #    TYPE_INT32          = 5;
-    ('void', 'void'),          #    TYPE_FIXED64        = 6;
-    ('int', 'int'),            #    TYPE_FIXED32        = 7;
-    ('bool', 'bool'),          #    TYPE_BOOL           = 8;
-    ('std::string', 'string'), #    TYPE_STRING         = 9;
-    ('void', 'void'),          #    TYPE_GROUP          = 10;  // Tag-delimited aggregate.
-    ('void', 'void'),          #    TYPE_MESSAGE        = 11;  // Length-delimited aggregate.
-    ('void', 'void'),          #    TYPE_BYTES          = 12;
-    ('unsigned int', 'uint'),  #    TYPE_UINT32         = 13;
-    ('void', 'void'),          #    TYPE_ENUM           = 14;
-    ('int', 'int'),            #    TYPE_SFIXED32       = 15;
-    ('void', 'void'),          #    TYPE_SFIXED64       = 16;
-    ('int', 'int'),            #    TYPE_SINT32         = 17;  // Uses ZigZag encoding.
-    ('void', 'void')           #    TYPE_SINT64         = 18;  // Uses ZigZag encoding.
+    ('void', 'void'),            #    // 0 is reserved for errors.
+    ('double', 'double'),        #    TYPE_DOUBLE         = 1;
+    ('float', 'float'),          #    TYPE_FLOAT          = 2;
+    ('void', 'void'),            #    TYPE_INT64          = 3;
+    ('void', 'void'),            #    TYPE_UINT64         = 4;
+    ('int', 'int'),              #    TYPE_INT32          = 5;
+    ('void', 'void'),            #    TYPE_FIXED64        = 6;
+    ('int', 'int'),              #    TYPE_FIXED32        = 7;
+    ('bool', 'bool'),            #    TYPE_BOOL           = 8;
+    ('adobe::name_t', 'string'), #    TYPE_STRING         = 9;
+    ('void', 'void'),            #    TYPE_GROUP          = 10;  // Tag-delimited aggregate.
+    ('void', 'void'),            #    TYPE_MESSAGE        = 11;  // Length-delimited aggregate.
+    ('void', 'void'),            #    TYPE_BYTES          = 12;
+    ('unsigned int', 'uint'),    #    TYPE_UINT32         = 13;
+    ('void', 'void'),            #    TYPE_ENUM           = 14;
+    ('int', 'int'),              #    TYPE_SFIXED32       = 15;
+    ('void', 'void'),            #    TYPE_SFIXED64       = 16;
+    ('int', 'int'),              #    TYPE_SINT32         = 17;  // Uses ZigZag encoding.
+    ('void', 'void')             #    TYPE_SINT64         = 18;  // Uses ZigZag encoding.
 ]
 
 def get_cpp_type(typecode):
@@ -127,6 +127,7 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 
 #include <string>
 #include <vector>
+#include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
 
 
@@ -319,18 +320,24 @@ def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
         args.cpp_file.write('{0}for (const auto& x : value.{1}) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
+            key_field = map_fields[leaf_type].field[0]
             value_field = map_fields[leaf_type].field[1]
+            key_suffix = ''
+            if key_field.type is value_field.TYPE_STRING:
+                key_suffix = '.c_str()'
             if value_field.type is value_field.TYPE_MESSAGE:
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = to_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
+                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = to_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field, 'cpp')
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
+                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first{4}] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type), key_suffix))
             else:
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
+                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}retval.add_{1}()->CopyFrom(to_protobuf(x));\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             args.cpp_file.write('{0}retval.add_{1}(static_cast< {2}::{3} >(x));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cpp_file.write('{0}retval.add_{1}(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
             args.cpp_file.write('{0}retval.add_{1}(x);\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
@@ -340,6 +347,8 @@ def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
             args.cpp_file.write('{0}retval.mutable_{1}()->CopyFrom(to_protobuf(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             args.cpp_file.write('{0}retval.set_{1}(static_cast< {2}::{3} >(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cpp_file.write('{0}retval.set_{1}(value.{1}.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
             args.cpp_file.write('{0}retval.set_{1}(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
 
@@ -370,19 +379,25 @@ def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
         args.cpp_file.write('{0}for (const auto& x : msg.{1}()) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
+            key_field = map_fields[leaf_type].field[0]
             value_field = map_fields[leaf_type].field[1]
+            key_expr = 'x.first'
+            if key_field.type is value_field.TYPE_STRING:
+                key_expr = 'adobe::name_t(x.first.c_str())'
             if value_field.type is value_field.TYPE_MESSAGE:
-                args.cpp_file.write('{0}retval.{1}[x.first] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
+                args.cpp_file.write('{0}retval.{1}[{2}] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field, 'cpp')
-                args.cpp_file.write('{0}retval.{1}[x.first] = static_cast<std::remove_reference<decltype(retval.{1}[x.first])>::type>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name))
+                args.cpp_file.write('{0}retval.{1}[{2}] = static_cast<std::remove_reference<decltype(retval.{1}[x.first])>::type>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
             else:
-                args.cpp_file.write('{0}retval.{1}[x.first] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name))
+                args.cpp_file.write('{0}retval.{1}[{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             args.cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             value_type = field_type(field_descriptor_proto, 'cpp')
             args.cpp_file.write('{0}*it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);\n'.format(indent_str(depth)))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cpp_file.write('{0}*it++ = adobe::name_t(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
             args.cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
@@ -394,6 +409,8 @@ def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
             args.cpp_file.write('{0}retval.{1} = from_protobuf(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             args.cpp_file.write('{0}retval.{1} = static_cast<std::remove_reference<decltype(retval.{1})>::type>(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
+        elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
+            args.cpp_file.write('{0}retval.{1} = adobe::name_t(msg.{1}().c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
             args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
 
