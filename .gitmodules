@@ -1,0 +1,3 @@
+[submodule "unreal_project/Spaceport/Content/ships"]
+	path = unreal_project/Spaceport/Content/ships
+	url = git@github.com:tzlaine/ships.git
