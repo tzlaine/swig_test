@@ -32,6 +32,9 @@ public:
     class UStaticMesh * hover_indicator_mesh_;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
+    TSubclassOf<AActor> large_fleet_actor_;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * interior_hex_mesh_;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "hex_map")
     class UStaticMesh * edge_hex_mesh_;

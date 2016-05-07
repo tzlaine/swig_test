@@ -52,6 +52,7 @@ namespace {
 
 Ahex_map::Ahex_map () :
     hover_indicator_mesh_ (nullptr),
+    large_fleet_actor_ (nullptr),
     interior_hex_mesh_ (nullptr),
     edge_hex_mesh_ (nullptr),
     planet_mesh_ (nullptr),
@@ -738,7 +739,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         starbases_.add(owner_id, transform);
-#if 0 // For testing only!
+#if 1 // For testing only!
         FVector fleet_location = location;
         fleet_location.Z = -0.25f * meters;
 
@@ -763,7 +764,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         battlestations_.add(owner_id, transform);
-#if 0 // For testing only!
+#if 1 // For testing only!
         FVector fleet_location = location;
         fleet_location.Z = -0.25f * meters;
 
