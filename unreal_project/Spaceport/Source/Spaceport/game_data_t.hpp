@@ -40,7 +40,7 @@ struct game_data_t
     { return teams_; }
 
     team_t const & team (name_t team_name) const
-    { assert(teams_.count(name) != 0); return teams_.find(team_name)->second; }
+    { assert(teams_.count(team_name) != 0); return teams_.find(team_name)->second; }
 
     team_t const * team (int nation_id, start_data::start_data_t const & start_data) const
     {
