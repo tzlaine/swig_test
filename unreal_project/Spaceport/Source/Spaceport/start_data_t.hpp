@@ -39,6 +39,9 @@ namespace start_data {
         std::string const & nation_key (int i) const
         { return boost::next(nations_.nations.begin(), i)->first; }
 
+        int nation_id (std::string const & key) const
+        { return nations_.nations.find(key)->second.nation_id; }
+
         nation_t const & nation (int i) const
         { return boost::next(nations_.nations.begin(), i)->second; }
 
@@ -46,7 +49,7 @@ namespace start_data {
         { return nations_.nations.find(key)->second; }
 
         int neutral_zone_id () const
-        { return nation("NZ").nation_id; }
+        { return nation_id("NZ"); }
 
         char const * hex_string (hex_coord_t hc) const;
 

@@ -112,7 +112,7 @@ Ahex_map::Ahex_map () :
     offmap_borders_.instances_.resize(num_primary_colors);
 
     for (auto const & pair : visual_config_.hex_map().primary_colors) {
-        auto const nation_id = start_data_.nation(pair.first).nation_id;
+        auto const nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
 
         initialize(interior_hexes_, nation_id, color, pair.first + "_interior_hexes");
@@ -122,7 +122,7 @@ Ahex_map::Ahex_map () :
     }
 
     for (auto const & pair : visual_config_.hex_map().secondary_colors) {
-        auto const nation_id = start_data_.nation(pair.first).nation_id;
+        auto const nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
 
         initialize(national_borders_, nation_id, color, pair.first + "_national_borders");
@@ -343,7 +343,7 @@ void Ahex_map::instantiate_hexes ()
     // TODO: Probably this mapping should exist somewhere else as well.
     nation_id_primary_colors_.resize(hex_map_config.primary_colors.size());
     for (auto const & pair : hex_map_config.primary_colors) {
-        auto nation_id = start_data_.nation(pair.first).nation_id;
+        auto nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
         nation_id_primary_colors_[nation_id] = color;
         use_solid_color(interior_hexes_.instances_[nation_id], color);
@@ -352,7 +352,7 @@ void Ahex_map::instantiate_hexes ()
 
     nation_id_secondary_colors_.resize(hex_map_config.secondary_colors.size());
     for (auto const & pair : hex_map_config.secondary_colors) {
-        auto nation_id = start_data_.nation(pair.first).nation_id;
+        auto nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
         nation_id_secondary_colors_[nation_id] = color;
         initialize_border_instanced_mesh(
@@ -407,14 +407,14 @@ void Ahex_map::create_offmap_areas ()
     auto const & hex_map_config = visual_config_.hex_map();
 
     for (auto const & pair : hex_map_config.primary_colors) {
-        auto nation_id = start_data_.nation(pair.first).nation_id;
+        auto nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
         use_solid_color(offmap_panels_.instances_[nation_id], color);
     }
 
     nation_id_secondary_colors_.resize(hex_map_config.secondary_colors.size());
     for (auto const & pair : hex_map_config.secondary_colors) {
-        auto nation_id = start_data_.nation(pair.first).nation_id;
+        auto nation_id = start_data_.nation_id(pair.first);
         FColor const color = to_fcolor(pair.second);
         use_solid_color(offmap_borders_.instances_[nation_id], color);
     }

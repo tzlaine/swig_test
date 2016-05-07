@@ -158,7 +158,7 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
             t.nations.begin(), t.nations.end(),
             team.nations.begin(),
             [&](std::string const & nation_name) {
-                return start_data.nation(nation_name).nation_id;
+                return start_data.nation_id(nation_name);
             }
         );
 
@@ -172,8 +172,8 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
     for (auto const & pair : scenario.nations) {
         auto const & nation = pair.second;
         for (auto const & enemy_nation_key : nation.at_war_with) {
-            auto const nation_id = start_data.nation(pair.first).nation_id;
-            auto const enemy_nation_id = start_data.nation(enemy_nation_key).nation_id;
+            auto const nation_id = start_data.nation_id(pair.first);
+            auto const enemy_nation_id = start_data.nation_id(enemy_nation_key);
             declare_war(nation_id, enemy_nation_id, start_data);
         }
     }
