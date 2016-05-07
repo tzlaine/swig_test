@@ -1,3 +1,7 @@
+#ifndef BUILD_FOR_TEST
+#include "Spaceport.h"
+#endif
+
 #include "graph.hpp"
 #include "data_utility.hpp"
 

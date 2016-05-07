@@ -151,7 +151,7 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
 
     auto const & scenario = start_data.scenario();
     for (auto const & t : scenario.teams) {
-        auto & team = teams_[t.name];
+        auto & team = teams_[name_t(t.name.c_str())];
 
         team.nations.resize(t.nations.size());
         std::transform(

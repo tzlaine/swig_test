@@ -17,6 +17,7 @@ target_link_libraries(
     start_data
     game_data
     visual_config
+    adobe_name
     jansson
     gtest
     gtest_main

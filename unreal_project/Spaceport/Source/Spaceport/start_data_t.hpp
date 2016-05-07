@@ -2,7 +2,13 @@
 
 #include "start_data.hpp"
 #include "hex_operations.hpp"
+
+#include <adobe/name.hpp>
+
 #include <boost/utility.hpp>
+
+
+using name_t = adobe::name_t;
 
 namespace start_data {
 

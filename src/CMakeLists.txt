@@ -111,3 +111,14 @@ add_dependencies(visual_config base_types_message_target visual_config_message_t
 if (PYTHON_EXECUTABLE)
     add_dependencies(visual_config base_types_target visual_config_target)
 endif ()
+
+
+########################################
+# visual_config
+########################################
+add_library(
+    adobe_name
+    STATIC
+    ${unreal_src_dir}/adobe/src/name.cpp
+    ${unreal_src_dir}/adobe/src/string_pool.cpp
+)

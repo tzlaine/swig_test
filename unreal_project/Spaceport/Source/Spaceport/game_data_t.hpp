@@ -2,6 +2,7 @@
 
 #include "game_data.hpp"
 #include "hex_operations.hpp"
+
 #include <boost/utility.hpp>
 #include <boost/container/flat_set.hpp>
 
@@ -10,6 +11,8 @@ namespace start_data { struct start_data_t; }
 
 struct game_data_t
 {
+    using team_map_t = boost::container::flat_map<name_t, team_t>;
+
     game_data_t ();
     game_data_t (start_data::start_data_t const & start_data);
 
@@ -33,15 +36,16 @@ struct game_data_t
     offmap_areas_t const & offmap_areas () const
     { return offmap_areas_; }
 
-    boost::container::flat_map<std::string, team_t> const & teams () const
+    team_map_t const & teams () const
     { return teams_; }
 
-    team_t const & team (std::string const & name) const
-    { assert(teams_.count(name) != 0); return teams_.find(name)->second; }
+    team_t const & team (name_t team_name) const
+    { assert(teams_.count(name) != 0); return teams_.find(team_name)->second; }
 
     team_t const * team (int nation_id, start_data::start_data_t const & start_data) const
     {
-        auto const it = teams_.find(start_data.nation_key(nation_id));
+        name_t const nation_key(start_data.nation_key(nation_id).c_str()); // TODO: nation_key -> name_t
+        auto const it = teams_.find(nation_key);
         if (it == teams_.end())
             return nullptr;
         return &it->second;
@@ -68,7 +72,7 @@ struct game_data_t
 private:
     map_t map_;
     offmap_areas_t offmap_areas_;
-    boost::container::flat_map<std::string, team_t> teams_;
+    team_map_t teams_;
     boost::container::flat_map<int, std::string> nation_teams_;
 
     struct team_and_nation_at_war_elem_t
