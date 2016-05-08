@@ -117,17 +117,21 @@ void protobuf_AddDesc_base_5ftypes_2eproto() {
     "\022\014\n\004year\030\001 \001(\005\022$\n\006season\030\002 \001(\0162\024.pb_mess"
     "age.season_t\"#\n\013hex_coord_t\022\t\n\001x\030\001 \001(\005\022\t"
     "\n\001y\030\002 \001(\005* \n\010season_t\022\n\n\006spring\020\000\022\010\n\004fal"
-    "l\020\001*\232\001\n\rtug_mission_t\022\016\n\nno_mission\020\000\022\005\n"
-    "\001A\020\001\022\005\n\001B\020\002\022\005\n\001C\020\003\022\005\n\001D\020\004\022\005\n\001E\020\005\022\005\n\001F\020\006\022"
-    "\005\n\001G\020\007\022\005\n\001H\020\010\022\005\n\001I\020\t\022\006\n\002J1\020\n\022\006\n\002J2\020\013\022\006\n\002"
-    "K1\020\014\022\006\n\002K2\020\r\022\005\n\001L\020\016\022\005\n\001M\020\017\022\005\n\001N\020\020\022\005\n\001O\020\021"
+    "l\020\001*\272\002\n\rtug_mission_t\022\016\n\nno_mission\020\000\022\014\n"
+    "\010A_battle\020\001\022\r\n\tB_carrier\020\002\022\021\n\rC_mobile_b"
+    "ase\020\003\022\014\n\010D_supply\020\004\022\014\n\010E_repair\020\005\022\r\n\tF_t"
+    "ow_frd\020\006\022\t\n\005G_pft\020\007\022\027\n\023H_economic_transf"
+    "er\020\010\022\016\n\nI_crippled\020\t\022\022\n\016J1_base_repair\020\n"
+    "\022\023\n\017J2_base_upgrade\020\013\022\024\n\020K1_pdu_transpor"
+    "t\020\014\022\022\n\016K2_pdu_upgrade\020\r\022\013\n\007L_drone\020\016\022\r\n\t"
+    "M_vanilla\020\017\022\033\n\027O_hydran_special_supply\020\020"
     "*v\n\016carrier_type_t\022\021\n\rnot_a_carrier\020\000\022\027\n"
     "\023single_ship_carrier\020\001\022\021\n\rlight_carrier\020"
     "\002\022\022\n\016medium_carrier\020\003\022\021\n\rheavy_carrier\020\004"
     "*F\n\rescort_type_t\022\021\n\rnot_an_escort\020\000\022\020\n\014"
     "light_escort\020\001\022\020\n\014heavy_escort\020\002*4\n\rwar_"
     "footing_t\022\007\n\003war\020\000\022\017\n\013limited_war\020\001\022\t\n\005p"
-    "eace\020\002b\006proto3", 574);
+    "eace\020\002b\006proto3", 734);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "base_types.proto", &protobuf_RegisterTypes);
   turn_t::default_instance_ = new turn_t();
@@ -180,7 +184,6 @@ bool tug_mission_t_IsValid(int value) {
     case 14:
     case 15:
     case 16:
-    case 17:
       return true;
     default:
       return false;

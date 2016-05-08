@@ -63,29 +63,28 @@ inline bool season_t_Parse(
 }
 enum tug_mission_t {
   no_mission = 0,
-  A = 1,
-  B = 2,
-  C = 3,
-  D = 4,
-  E = 5,
-  F = 6,
-  G = 7,
-  H = 8,
-  I = 9,
-  J1 = 10,
-  J2 = 11,
-  K1 = 12,
-  K2 = 13,
-  L = 14,
-  M = 15,
-  N = 16,
-  O = 17,
+  A_battle = 1,
+  B_carrier = 2,
+  C_mobile_base = 3,
+  D_supply = 4,
+  E_repair = 5,
+  F_tow_frd = 6,
+  G_pft = 7,
+  H_economic_transfer = 8,
+  I_crippled = 9,
+  J1_base_repair = 10,
+  J2_base_upgrade = 11,
+  K1_pdu_transport = 12,
+  K2_pdu_upgrade = 13,
+  L_drone = 14,
+  M_vanilla = 15,
+  O_hydran_special_supply = 16,
   tug_mission_t_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   tug_mission_t_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool tug_mission_t_IsValid(int value);
 const tug_mission_t tug_mission_t_MIN = no_mission;
-const tug_mission_t tug_mission_t_MAX = O;
+const tug_mission_t tug_mission_t_MAX = O_hydran_special_supply;
 const int tug_mission_t_ARRAYSIZE = tug_mission_t_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* tug_mission_t_descriptor();

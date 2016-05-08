@@ -31,7 +31,12 @@ namespace {
         return false;
     }
 
-    inline bool supply_point (hex_t const & hex, map_t const & map, int nation_id)
+    enum class supply_point_context_t {
+        determining_supply,
+        determining_grids
+    };
+
+    inline bool supply_point (hex_t const & hex, map_t const & map, int nation_id, supply_point_context_t supply_point_context)
     {
         for (auto const & zone : hex.zones) {
             for (auto const & fixture : zone.fixtures) {
@@ -44,21 +49,22 @@ namespace {
             }
         }
 
-        auto it = hex.fleets.fleets.find(nation_id);
-        if (it == hex.fleets.fleets.end())
-            return false;
+        if (supply_point_context == supply_point_context_t::determining_supply) {
+            auto it = hex.fleets.fleets.find(nation_id);
+            if (it == hex.fleets.fleets.end())
+                return false;
 
-        auto const & fleet = it->second;
-        for (auto const & unit : fleet.units) {
-            // TODO: I don't think A is actually the supply mission!
-            if (is_convoy(unit) || unit.tug_mission == tug_mission_t::A)
-                return true;
+            auto const & fleet = it->second;
+            for (auto const & unit : fleet.units) {
+                if (is_convoy(unit) || unit.tug_mission == tug_mission_t::D_supply)
+                    return true;
+            }
         }
 
         return false;
     }
 
-    struct blocking_contents_t
+    struct supply_relevant_contents_t
     {
         int friendly_ships;
         int friendly_units;
@@ -68,19 +74,22 @@ namespace {
         int enemy_bases;
     };
 
-    blocking_contents_t blocking_contents (hex_t const & hex, team_t const & team)
-    {
-        blocking_contents_t retval = {0};
+    supply_relevant_contents_t find_supply_relevant_contents (
+        hex_t const & hex,
+        team_t const & team,
+        start_data::start_data_t const & start_data,
+        game_data_t const & game_data
+    ) {
+        supply_relevant_contents_t retval = {0};
 
         for (auto const & zone : hex.zones) {
             for (auto const & fixture : zone.fixtures) {
-                if (fixture.type == hex_zone_fixture_t::type_t::type_base) {
-                    // TODO: Must this be a certain number of fighters or PFs to count?
-                    if (fixture.base.fighters != 0 || fixture.base.pfs != 0) {
-                        // TODO: if allied, increment friendly
+                if (fixture.type == hex_zone_fixture_t::type_t::type_base &&
+                    (6 <= fixture.base.fighters || 6 <= fixture.base.pfs)) {
+                    if (part_of_team(fixture.base.owner, team))
                         ++retval.friendly_bases;
-                        // TODO: if enemy, increment enemy
-                    }
+                    else if (game_data.at_war_with(team.name, fixture.base.owner))
+                        ++retval.enemy_bases;
                 }
             }
         }
@@ -92,24 +101,20 @@ namespace {
 
             auto const & fleet = it->second;
             for (auto const & unit : fleet.units) {
-                // TODO
+                auto const ship = is_ship(unit, start_data);
+                if (part_of_team(unit.owner, team)) {
+                    if (ship)
+                        ++retval.friendly_ships;
+                    else
+                        ++retval.friendly_units;
+                } else if (game_data.at_war_with(team.name, unit.owner)) {
+                    if (ship)
+                        ++retval.friendly_ships;
+                    else
+                        ++retval.friendly_units;
+                }
             }
         }
-
-#if 0
-        for (int n = 0; n < nations; ++n) {
-            const int flag = 1 << n;
-            if (nation_team_membership[n] == team) {
-                friendly_ships |= bool(hex.ship & flag);
-                friendly_units |= friendly_ships || hex.nonship_unit & flag;
-                friendly_base |= bool(hex.base_with_fighters & flag);
-            } else {
-                enemy_ships |= bool(hex.ship & flag);
-                enemy_units |= friendly_ships || hex.nonship_unit & flag;
-                enemy_base |= bool(hex.base_with_fighters & flag);
-            }
-        }
-#endif
 
         return retval;
     }
@@ -181,7 +186,7 @@ bool supply_blocked (
 
     if (hex.owner_id == neutral_zone_id) {
         retval = true;
-    } else if (friendly_units) {
+    } else if (friendly_units) { // TODO: friendly units vs. enemy unit checks only applies during combat.
         retval = false;
     } else if (enemy_units) {
         retval = true;

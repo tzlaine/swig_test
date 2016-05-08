@@ -12,6 +12,9 @@ inline int owner (hex_coord_t hc, start_data::start_data_t const & start_data, g
     return game_data.province(province_id)->owner;
 }
 
+inline bool part_of_team (int nation_id, team_t const & team)
+{ return 0 < std::count(team.nations.begin(), team.nations.end(), nation_id); }
+
 inline int stored_mb_unit_id () { return 0; }
 inline int deployed_mb_unit_id () { return 1; }
 
@@ -45,3 +48,6 @@ inline bool is_pdu (unit_t unit)
 
 inline bool is_convoy (unit_t unit)
 { return unit.unit_id == convoy_unit_id(); }
+
+inline bool is_ship (unit_t unit, start_data::start_data_t const & start_data)
+{ return 6 <= start_data.unit_defs(unit.original_owner)[unit.unit_id].move; }

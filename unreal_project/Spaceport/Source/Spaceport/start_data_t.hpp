@@ -28,6 +28,9 @@ namespace start_data {
         unit_defs_t const & unit_defs () const
         { assert(unit_defs_initialized_); return unit_defs_; }
 
+        std::vector<unit_def_t> const & unit_defs (int nation_id) const
+        { return unit_defs().nation_units.find(nation_key(nation_id))->second.units; }
+
         scenario_t const & scenario () const
         { assert(scenario_initialized_); return scenario_; }
 

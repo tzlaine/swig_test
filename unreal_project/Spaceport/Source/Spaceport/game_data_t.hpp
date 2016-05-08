@@ -44,8 +44,7 @@ struct game_data_t
 
     team_t const * team (int nation_id, start_data::start_data_t const & start_data) const
     {
-        name_t const nation_key(start_data.nation_key(nation_id).c_str()); // TODO: nation_key -> name_t
-        auto const it = teams_.find(nation_key);
+        auto const it = teams_.find(start_data.nation_key(nation_id));
         if (it == teams_.end())
             return nullptr;
         return &it->second;
