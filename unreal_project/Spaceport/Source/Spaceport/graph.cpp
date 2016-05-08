@@ -121,6 +121,32 @@ namespace {
 
 }
 
+// TODO: These need to move to a supply-centric header.
+std::vector<hex_coord_t> get_hexes_in_supply (
+    int nation_id,
+    start_data::start_data_t const & start_data,
+    game_data_t const & game_data)
+{
+    std::vector<hex_coord_t> retval;
+    // TODO
+    return retval;
+}
+
+struct supply_grid_t
+{
+    // TOOD
+};
+
+std::vector<supply_grid_t> get_supply_grids (
+    int nation_id,
+    start_data::start_data_t const & start_data,
+    game_data_t const & game_data)
+{
+    std::vector<supply_grid_t> retval;
+    // TODO
+    return retval;
+}
+
 #if 0
 void find_blocking_contents (
     const supply_check_hex_t & hex,
