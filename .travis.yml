@@ -1,6 +1,9 @@
 language: cpp
 script: cmake
 
+git:
+    submodules: false
+
 matrix:
     include:
         # OSX
