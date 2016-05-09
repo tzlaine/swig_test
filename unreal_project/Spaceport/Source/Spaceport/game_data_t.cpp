@@ -121,7 +121,7 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
             auto const & nation = start_data.nation(h.owner);
             auto const & capital_hex = *std::find_if(
                 nation.capital.hexes.begin(), nation.capital.hexes.end(),
-                [=] (start_data::capital_hex_t const & x) { return x.coord == to_hex_id(hex.coord); }
+                [=] (start_data::capital_hex_t const & x) { return x.coord == hex_id_t(hex.coord).to_int(); }
             );
             hex.zones.resize(capital_hex.zones.size());
             auto start_zone_it = capital_hex.zones.begin();

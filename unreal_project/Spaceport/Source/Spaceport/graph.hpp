@@ -95,7 +95,7 @@ namespace graph {
 
     typedef boost::property<
         vertex_hex_id_tag_t,
-        int,
+        hex_id_t,
         boost::property<boost::vertex_index_t, int>
     > vertex_property_t;
 
@@ -148,14 +148,14 @@ namespace graph {
             int i = 0;
             for (auto const neighbor : neighbors) {
                 if (valid(hc))
-                    offset_indices[to_hex_index(neighbor, width)] = i++;
+                    offset_indices[hex_index_t(neighbor, width)] = i++;
             }
         }
 
         {
             int i = 0;
             for (auto const neighbor : neighbors) {
-                int id = to_hex_id(neighbor);
+                auto const id = hex_id_t(neighbor);
                 boost::add_vertex(g);
                 hex_id_property_map[i] = id;
             }
@@ -165,7 +165,7 @@ namespace graph {
             // connect hc to r=1 hexes
             for (hex_direction_t const d : all_hex_directions) {
                 auto const adjacent_hc = adjacent_hex_coord(hc, d);
-                auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
                 assert(other_vertex != -1);
                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                     boost::add_edge(0, other_vertex, g);
@@ -188,7 +188,7 @@ namespace graph {
                         auto adjacent_d = d;
                         auto adjacent_hc = adjacent_hex_coord(current, adjacent_d);
                         {
-                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);
@@ -199,7 +199,7 @@ namespace graph {
                         // Connect to the next CW hex.
                         adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
                         {
-                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);
@@ -210,7 +210,7 @@ namespace graph {
                         // Connect to the next CW hex.
                         adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
                         {
-                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);
@@ -221,7 +221,7 @@ namespace graph {
                         if (k == 0) {
                             adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
 
-                            auto const other_vertex = offset_indices[to_hex_index(adjacent_hc, width)];
+                            auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_descriptor_t, bool> const add_edge_result =
                                     boost::add_edge(i, other_vertex, g);

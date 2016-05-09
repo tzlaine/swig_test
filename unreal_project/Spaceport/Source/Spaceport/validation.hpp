@@ -58,12 +58,12 @@ namespace start_data {
         }
     }
 
-    inline void require_hex_coord (int i, int width, int height, const std::string& name)
+    inline void require_hex_coord (int hex_id, int width, int height, const std::string& name)
     {
-        const auto hc = to_hex_coord(i);
+        const auto hc = hex_id_t(hex_id).to_hex_coord();
         if (!on_map(hc, width, height)) {
             throw std::runtime_error(
-                name + " (=" + std::to_string(i) + ") " +
+                name + " (=" + std::to_string(hex_id) + ") " +
                 "must be a valid hex coordinate within the map (map width=" +
                 std::to_string(width) + " and height=" + std::to_string(height) + ")"
             );
@@ -142,7 +142,7 @@ namespace start_data {
         );
 
         for (auto hex_id : offmap_area.feature_hexes) {
-            const auto hc = to_hex_coord(hex_id);
+            const auto hc = hex_id_t(hex_id).to_hex_coord();
             if (hc.x != -1 && hc.x != map.width && hc.y != -1 && hc.y != map.height) {
                 throw std::runtime_error(
                     "offmap_area_t.feature_hexes (=" + std::to_string(hex_id) + ") " +
@@ -157,7 +157,7 @@ namespace start_data {
             "offmap_area_t.adjacent_hexes.size()"
         );
         for (auto hex_id : offmap_area.adjacent_hexes) {
-            const auto hc = to_hex_coord(hex_id);
+            const auto hc = hex_id_t(hex_id).to_hex_coord();
             if (hc.x != 0 && hc.x != map.width - 1 && hc.y != 0 && hc.y != map.height - 1) {
                 throw std::runtime_error(
                     "offmap_area_t.adjacent_hexes (=" + std::to_string(hex_id) + ") " +
@@ -166,12 +166,12 @@ namespace start_data {
                 );
             }
         }
-        auto const first_hc = to_hex_coord(offmap_area.adjacent_hexes[0]);
+        auto const first_hc = hex_id_t(offmap_area.adjacent_hexes[0]).to_hex_coord();
         auto const same_x = std::all_of(
             offmap_area.adjacent_hexes.begin(),
             offmap_area.adjacent_hexes.end(),
             [=](int hex_id) {
-                auto const hc = to_hex_coord(hex_id);
+                auto const hc = hex_id_t(hex_id).to_hex_coord();
                 return hc.x == first_hc.x;
             }
         );
@@ -179,7 +179,7 @@ namespace start_data {
             offmap_area.adjacent_hexes.begin(),
             offmap_area.adjacent_hexes.end(),
             [=](int hex_id) {
-                auto const hc = to_hex_coord(hex_id);
+                auto const hc = hex_id_t(hex_id).to_hex_coord();
                 return hc.y == first_hc.y;
             }
         );
@@ -201,8 +201,8 @@ namespace start_data {
         for (auto hex_id : map.nz_hexes) {
             require_hex_coord(hex_id, map.width, map.height, "nz_hexes hex");
 
-            const hex_coord_t hc = to_hex_coord(hex_id);
-            const int i = to_hex_index(hc, map.width);
+            const hex_coord_t hc = hex_id_t(hex_id).to_hex_coord();
+            auto const i = hex_index_t(hc, map.width);
             hex_t& hex = map.hexes[i];
 
             if (hex.coord != invalid_hex_coord) {
@@ -217,8 +217,8 @@ namespace start_data {
         for (auto hex_id : map.nz_planets) {
             require_hex_coord(hex_id, map.width, map.height, "nz_planets hex");
 
-            const hex_coord_t hc = to_hex_coord(hex_id);
-            const int i = to_hex_index(hc, map.width);
+            const hex_coord_t hc = hex_id_t(hex_id).to_hex_coord();
+            auto const i = hex_index_t(hc, map.width);
             hex_t& hex = map.hexes[i];
 
             if (hex.owner != nz_nation_id) {
@@ -247,8 +247,8 @@ namespace start_data {
                     const auto hex_id = province_hex.hex;
                     require_hex_coord(hex_id, map.width, map.height, "starting province hex");
 
-                    const hex_coord_t hc = to_hex_coord(hex_id);
-                    const int i = to_hex_index(hc, map.width);
+                    const hex_coord_t hc = hex_id_t(hex_id).to_hex_coord();
+                    auto const i = hex_index_t(hc, map.width);
                     hex_t& hex = map.hexes[i];
 
                     if (hex.coord != invalid_hex_coord) {

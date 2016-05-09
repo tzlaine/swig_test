@@ -43,7 +43,7 @@ void fill_in_nation_ids (nations_t& nations)
 }
 
 char const * start_data_t::hex_string (hex_coord_t hc) const
-{ return hex_strings_[to_hex_index(hc, map_.width)].c_str(); }
+{ return hex_strings_[hex_index_t(hc, map_.width)].c_str(); }
 
 void start_data_t::init_nations (std::string const & nations_str)
 {
@@ -99,7 +99,7 @@ void start_data_t::init_map (std::string const & map_str)
     for (int i = 0; i < map_.width; ++i) {
         for (int j = 0; j < map_.height; ++j) {
             hex_coord_t const hc = {i, j};
-            hex_strings_[to_hex_index(hc, map_.width)] = name_t(::hex_string(hc).c_str());
+            hex_strings_[hex_index_t(hc, map_.width)] = name_t(::hex_string(hc).c_str());
         }
     }
 }
@@ -128,7 +128,7 @@ void start_data_t::init_scenario_impl ()
     for (auto const & pair : map_.starting_national_holdings) {
         for (auto const & province : pair.second.provinces) {
             for (auto const & province_hex : province.hexes) {
-                auto const hc = to_hex_coord(province_hex.hex);
+                auto const hc = hex_id_t(province_hex.hex).to_hex_coord();
                 auto const inserted = provinces_.insert(std::make_pair(hc, num_provinces_)).second;
                 if (!inserted) {
                     throw std::runtime_error(
@@ -143,7 +143,7 @@ void start_data_t::init_scenario_impl ()
 
     for (auto const & pair : nations_.nations) {
         for (auto const & capital_hex : pair.second.capital.hexes) {
-            int const hex_index = to_hex_index(to_hex_coord(capital_hex.coord), map_.width);
+            int const hex_index = hex_index_t(hex_id_t(capital_hex.coord).to_hex_coord(), map_.width);
             for (auto const & zone : capital_hex.zones) {
                 if (0 < std::count(zone.features.begin(), zone.features.end(), feature_t::capital))
                     national_capitals_[nation_id(pair.first)] = hex_index;

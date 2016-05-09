@@ -115,13 +115,95 @@ inline bool on_map (hex_coord_t hc, int width, int height)
 inline bool on_map (hex_coord_t hc, const map_t& m)
 { return on_map(hc, m.width, m.height); }
 
+struct hex_index_t;
 
-inline int to_hex_index (hex_coord_t hc, int width)
-{ return hc.x + hc.y * width; }
+struct hex_id_t
+{
+    hex_id_t () :
+        value_ (-1)
+    {}
 
+    explicit hex_id_t (int hex_id) :
+        value_ (hex_id)
+    {}
 
-inline int to_hex_id (hex_coord_t hc)
-{ return (hc.x + 1) * 100 + hc.y + 1; }
+    hex_id_t (hex_index_t hex_index, int map_width);
+
+    explicit hex_id_t (hex_coord_t hc) :
+        value_ ((hc.x + 1) * 100 + hc.y + 1)
+    {}
+
+    int to_int () const
+    { return value_; }
+
+    hex_index_t to_hex_index (int map_width) const;
+
+    hex_coord_t to_hex_coord () const
+    {
+        int const hex_x = value_ / 100 - 1;
+        int const hex_y = value_ % 100 - 1;
+        return hex_coord_t{hex_x, hex_y};
+    }
+
+private:
+    int value_;
+};
+
+struct hex_index_t
+{
+    hex_index_t () :
+        value_ (-1)
+    {}
+
+    explicit hex_index_t (int hex_index) :
+        value_ (hex_index)
+    {}
+
+    hex_index_t (hex_id_t hex_id, int map_width)
+    {
+        int const hex_x = hex_id.to_int() / 100 - 1;
+        int const hex_y = hex_id.to_int() % 100 - 1;
+        value_ = hex_x + hex_y * map_width;
+    }
+
+    explicit hex_index_t (hex_coord_t hc, int map_width) :
+        value_ (hc.x + hc.y * map_width)
+    {}
+
+    operator int () const
+    { return value_; }
+
+    hex_index_t to_hex_id (int map_width) const
+    {
+        int const hex_x = value_ % map_width;
+        int const hex_y = value_ / map_width;
+        return hex_index_t((hex_x + 1) * 100 + hex_y + 1);
+    }
+
+    hex_coord_t to_hex_coord (int map_width) const
+    {
+        int const hex_x = value_ % map_width;
+        int const hex_y = value_ / map_width;
+        return hex_coord_t{hex_x, hex_y};
+    }
+
+private:
+    int value_;
+};
+
+inline hex_id_t::hex_id_t (hex_index_t hex_index, int map_width)
+{
+    int const hex_x = hex_index % map_width;
+    int const hex_y = hex_index / map_width;
+    value_ = (hex_x + 1) * 100 + hex_y + 1;
+}
+
+inline hex_index_t hex_id_t::to_hex_index (int map_width) const
+{
+    int const hex_x = value_ / 100 - 1;
+    int const hex_y = value_ % 100 - 1;
+    return hex_index_t(hex_x + hex_y * map_width);
+}
 
 
 constexpr int const max_useful_hex_distance = 6;
@@ -420,11 +502,4 @@ inline neighbors_t adjacent_hex_coords (hex_coord_t hc, int width, int height, i
     }
 
     return retval;
-}
-
-inline hex_coord_t to_hex_coord (int hex_id)
-{
-    int hex_x = hex_id / 100 - 1;
-    int hex_y = hex_id % 100 - 1;
-    return hex_coord_t{hex_x, hex_y};
 }

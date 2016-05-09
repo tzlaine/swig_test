@@ -140,7 +140,7 @@ TEST(graph_tests, construct)
         g,
         hex_id_property_map,
         edge_weight_map,
-        to_hex_coord(1411),
+        hex_id_t(1411).to_hex_coord(),
         [](hex_coord_t hc) { return true; },
         [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
         start_data.map().width,
