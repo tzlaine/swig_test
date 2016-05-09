@@ -141,6 +141,16 @@ void start_data_t::init_scenario_impl ()
         }
     }
 
+    for (auto const & pair : nations_.nations) {
+        for (auto const & capital_hex : pair.second.capital.hexes) {
+            int const hex_index = to_hex_index(to_hex_coord(capital_hex.coord), map_.width);
+            for (auto const & zone : capital_hex.zones) {
+                if (0 < std::count(zone.features.begin(), zone.features.end(), feature_t::capital))
+                    national_capitals_[nation_id(pair.first)] = hex_index;
+            }
+        }
+    }
+
     scenario_initialized_ = true;
 #if 0
     init_graph(

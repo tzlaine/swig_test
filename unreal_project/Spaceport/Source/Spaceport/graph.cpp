@@ -74,9 +74,25 @@ namespace {
         int enemy_bases;
     };
 
+    enum class supply_determination_hex_state_t
+    {
+        unvisited,
+        enqueued,
+        visited
+    };
+
+    struct supply_determination_hex_t
+    {
+        supply_determination_hex_state_t state;
+        bool supply_source;
+        bool supply_point;
+        supply_relevant_contents_t supply_relevant_contents;
+    };
+
     supply_relevant_contents_t find_supply_relevant_contents (
         hex_t const & hex,
-        team_t const & team,
+        int nation_id,
+        team_t const * team,
         start_data::start_data_t const & start_data,
         game_data_t const & game_data
     ) {
@@ -86,28 +102,25 @@ namespace {
             for (auto const & fixture : zone.fixtures) {
                 if (fixture.type == hex_zone_fixture_t::type_t::type_base &&
                     (6 <= fixture.base.fighters || 6 <= fixture.base.pfs)) {
-                    if (part_of_team(fixture.base.owner, team))
+                    if (team && part_of_team(fixture.base.owner, *team) || fixture.base.owner == nation_id)
                         ++retval.friendly_bases;
-                    else if (game_data.at_war_with(team.name, fixture.base.owner))
+                    else if (team && game_data.at_war_with(team->name, fixture.base.owner) || fixture.base.owner != nation_id)
                         ++retval.enemy_bases;
                 }
             }
         }
 
-        for (auto const nation_id : team.nations) {
-            auto it = hex.fleets.fleets.find(nation_id);
-            if (it == hex.fleets.fleets.end())
-                continue;
-
-            auto const & fleet = it->second;
+        for (auto const & pair : hex.fleets.fleets) {
+            int const fleet_nation_id = pair.first;
+            auto const & fleet = pair.second;
             for (auto const & unit : fleet.units) {
                 auto const ship = is_ship(unit, start_data);
-                if (part_of_team(unit.owner, team)) {
+                if (team && part_of_team(unit.owner, *team) || fleet_nation_id == nation_id) {
                     if (ship)
                         ++retval.friendly_ships;
                     else
                         ++retval.friendly_units;
-                } else if (game_data.at_war_with(team.name, unit.owner)) {
+                } else if (team && game_data.at_war_with(team->name, unit.owner) || fleet_nation_id != nation_id) {
                     if (ship)
                         ++retval.friendly_ships;
                     else
@@ -132,9 +145,17 @@ std::vector<hex_coord_t> get_hexes_in_supply (
     return retval;
 }
 
+enum class grid_type_t {
+    capital,
+    offmap,
+    partial
+};
+    
 struct supply_grid_t
 {
-    // TOOD
+    grid_type_t type;
+
+    // TODO
 };
 
 std::vector<supply_grid_t> get_supply_grids (
@@ -143,37 +164,99 @@ std::vector<supply_grid_t> get_supply_grids (
     game_data_t const & game_data)
 {
     std::vector<supply_grid_t> retval;
-    // TODO
+
+    auto const team = game_data.team(nation_id, start_data);
+
+    auto const & game_map = game_data.map();
+
+    std::vector<supply_determination_hex_t> supply_determination_hexes(
+        game_map.width * game_map.height,
+        supply_determination_hex_t{supply_determination_hex_state_t::unvisited, false, false, {0}}
+    );
+
+    std::vector<int> supply_sources;
+
+    {
+        auto game_hex_it = game_map.hexes.begin();
+        auto supply_hex_it = supply_determination_hexes.begin();
+        auto const supply_hex_end = supply_determination_hexes.end();
+        int i = 0;
+        for (; supply_hex_it != supply_hex_end; ++game_hex_it, ++supply_hex_it, ++i) {
+            auto const & h = *game_hex_it;
+            supply_hex_it->supply_relevant_contents =
+                find_supply_relevant_contents(h, nation_id, team, start_data, game_data);
+            supply_hex_it->supply_source = supply_source(h, game_map, nation_id);
+            if (supply_hex_it->supply_source) {
+                supply_sources.push_back(i);
+                supply_hex_it->supply_point = true; // TODO: Exception: not if it's a disconencted base in enemy territory.(?)
+            } else {
+                supply_hex_it->supply_point = supply_point(h, game_map, nation_id, supply_point_context_t::determining_grids);
+            }
+        }
+    }
+
+    std::sort(supply_sources.begin(), supply_sources.end());
+
+    std::vector<int> hex_index_stack;
+    if (!supply_sources.empty()) {
+        auto const starting_capital = start_data.starting_national_capital(nation_id); // TODO: Take into account moved (non-offmap) capitals....
+        auto const it = std::lower_bound(supply_sources.begin(), supply_sources.end(), starting_capital);
+        if (it != supply_sources.end()) {
+            hex_index_stack.push_back(starting_capital);
+            supply_sources.erase(it);
+
+            // TODO: Don't start the "capital grid" here if the actual capital planet has been captured.
+            retval.push_back(supply_grid_t{grid_type_t::capital});
+
+            auto & grid = retval.back();
+            while (!hex_index_stack.empty()) {
+                int const hex_index = hex_index_stack.back();
+                hex_index_stack.pop_back();
+                // TODO     
+            }
+        }
+    }
+
+#if 0 // Adapt this to start at the offmap area.
+    if (!supply_sources.empty()) {
+        auto const starting_capital = start_data.starting_national_capital(nation_id); // TODO: Take into account moved (non-offmap) capitals....
+        auto const it = std::lower_bound(supply_sources.begin(), supply_sources.end(), starting_capital);
+        if (it != supply_sources.end()) {
+            hex_index_stack.push_back(starting_capital);
+            supply_sources.erase(it);
+
+            retval.push_back(supply_grid_t{grid_type_t::offmap});
+
+            auto & grid = retval.back();
+            while (!hex_index_stack.empty()) {
+                int const hex_index = hex_index_stack.back();
+                hex_index_stack.pop_back();
+                // TODO     
+            }
+        }
+    }
+#endif
+
+#if 0
+    while (!supply_sources.empty()) {
+        hex_index_stack.push_back(supply_sources.back());
+        supply_sources.pop_back();
+
+        retval.push_back(supply_grid_t{grid_type_t::partial});
+
+        auto & grid = retval.back();
+        while (!hex_index_stack.empty()) {
+            int const hex_index = hex_index_stack.back();
+            hex_index_stack.pop_back();
+            // TODO     
+        }
+    }
+#endif
+
     return retval;
 }
 
 #if 0
-void find_blocking_contents (
-    const supply_check_hex_t & hex,
-    int team,
-    int nations,
-    const int* nation_team_membership,
-    bool & friendly_ships,
-    bool & friendly_units,
-    bool & friendly_base,
-    bool & enemy_ships,
-    bool & enemy_units,
-    bool & enemy_base
-) {
-    for (int n = 0; n < nations; ++n) {
-        const int flag = 1 << n;
-        if (nation_team_membership[n] == team) {
-            friendly_ships |= bool(hex.ship & flag);
-            friendly_units |= friendly_ships || hex.nonship_unit & flag;
-            friendly_base |= bool(hex.base_with_fighters & flag);
-        } else {
-            enemy_ships |= bool(hex.ship & flag);
-            enemy_units |= friendly_ships || hex.nonship_unit & flag;
-            enemy_base |= bool(hex.base_with_fighters & flag);
-        }
-    }
-}
-
 bool supply_blocked (
     hex_coord_t hc,
     int nation,

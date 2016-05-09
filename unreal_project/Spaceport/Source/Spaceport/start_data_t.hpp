@@ -82,6 +82,12 @@ namespace start_data {
             return it->second;
         }
 
+        int starting_national_capital (int nation_id) const
+        {
+            assert(national_capitals_.count(nation_id));
+            return national_capitals_.find(nation_id)->second;
+        }
+
         void init_nations (std::string const & nations_str);
         void init_unit_defs (std::string const & unit_defs_str);
 
@@ -119,6 +125,8 @@ namespace start_data {
         int num_provinces_;
         boost::container::flat_multimap<int, hex_coord_t> province_hexes_;
         boost::container::flat_map<hex_coord_t, int> provinces_;
+
+        boost::container::flat_map<int, int> national_capitals_; // nation_id -> hex_index
     };
 
 }
