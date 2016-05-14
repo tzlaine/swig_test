@@ -73,6 +73,7 @@ add_library(
     graph
     STATIC
     ${unreal_src_dir}/graph.cpp
+    ${unreal_src_dir}/supply.cpp
     ${unreal_src_dir}/base_types.cpp
     ${unreal_src_dir}/base_types.pb.cc
 )
