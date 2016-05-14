@@ -7,19 +7,19 @@
 #include "test_data.hpp"
 
 
-TEST(init_model_ops, test_init_nations)
+TEST(start_data_tests, test_init_nations)
 {
     start_data::start_data_t start_data;
     start_data.init_nations(nations_json_string);
 }
 
-TEST(init_model_ops, test_init_units)
+TEST(start_data_tests, test_init_units)
 {
     start_data::start_data_t start_data;
     start_data.init_unit_defs(units_json_string);
 }
 
-TEST(init_model_ops, test_init_scenario)
+TEST(start_data_tests, test_init_scenario)
 {
     start_data::start_data_t start_data;
 
@@ -34,7 +34,7 @@ TEST(init_model_ops, test_init_scenario)
 }
 
 #if 0
-TEST(init_model_ops, test_nations_bin_encoding)
+TEST(start_data_tests, test_nations_bin_encoding)
 {
     using namespace start_data;
 
