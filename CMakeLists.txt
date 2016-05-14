@@ -31,33 +31,6 @@ endif ()
 add_subdirectory(jansson)
 include_directories(${CMAKE_BINARY_DIR}/jansson/include)
 
-add_custom_command(
-    OUTPUT
-        test_data.hpp
-    COMMAND
-        ${CMAKE_COMMAND}
-            -Dnations_file=${unreal_root}/nations.json
-            -Dmap_file=${unreal_root}/default_map.json
-            -Doob_file=${unreal_root}/default_oob.json
-            -Dunits_file=${unreal_root}/units.json
-            -Dscenario_file=${unreal_root}/scenarios/the_wind.json
-            -Dhex_map_config_file=${unreal_root}/hex_map_config.json
-            -Din_file=${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
-            -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
-    DEPENDS
-        ${unreal_root}/nations.json
-        ${unreal_root}/default_map.json
-        ${unreal_root}/default_oob.json
-        ${unreal_root}/units.json
-        ${unreal_root}/scenarios/the_wind.json
-        ${unreal_root}/hex_map_config.json
-        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/test_data.hpp.in
-        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.cmake
-    COMMENT "Create JSON data header."
-    VERBATIM
-)
-add_custom_target(data_header_target DEPENDS test_data.hpp)
-
 macro(generate_protobuf file_root target)
     add_custom_command(
         OUTPUT
@@ -89,6 +62,31 @@ endmacro()
 
 find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
+    add_custom_command(
+        OUTPUT
+            test_data.hpp
+        COMMAND
+            ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/cmake/make_data.py
+                --nations-file=${unreal_root}/nations.json
+                --map-file=${unreal_root}/default_map.json
+                --oob-file=${unreal_root}/default_oob.json
+                --units-file=${unreal_root}/units.json
+                --scenario-file=${unreal_root}/scenarios/the_wind.json
+                --hex-map-config-file=${unreal_root}/hex_map_config.json
+                --out-file=${CMAKE_SOURCE_DIR}/tests/test_data.hpp
+        DEPENDS
+            ${unreal_root}/nations.json
+            ${unreal_root}/default_map.json
+            ${unreal_root}/default_oob.json
+            ${unreal_root}/units.json
+            ${unreal_root}/scenarios/the_wind.json
+            ${unreal_root}/hex_map_config.json
+            ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.py
+        COMMENT "Create JSON data header."
+        VERBATIM
+    )
+    add_custom_target(data_header_target DEPENDS test_data.hpp)
+
     set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
 
     if (CYGWIN OR MINGW)
