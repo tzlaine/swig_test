@@ -4,28 +4,8 @@
 #include <json2pb.h>
 #include <gtest/gtest.h>
 
-// This horrible business works around the fact that the MS compiler
-// chokes on string literals that are "too long".
-#ifdef _MSC_VER
-#include <fstream>
+#include "test_data.hpp"
 
-std::string nations_json_string;
-std::string map_json_string;
-std::string oob_json_string;
-std::string units_json_string;
-std::string scenario_json_string;
-std::string hex_map_config_json_string;
-
-std::string file_slurp (const char* filename)
-{
-    std::string retval;
-    std::ifstream ifs(filename);
-    std::getline(ifs, retval, '\0');
-    return retval;
-}
-#else
-#include <test_data.hpp>
-#endif
 
 TEST(init_model_ops, test_init_nations)
 {
@@ -124,26 +104,6 @@ TEST(visual_config_tests, validate_visual_config)
 
 int main(int argc, char **argv)
 {
-#ifdef _MSC_VER
-    if (1 < argc)
-        nations_json_string = file_slurp(argv[1]);
-
-    if (2 < argc)
-        map_json_string = file_slurp(argv[2]);
-
-    if (3 < argc)
-        oob_json_string = file_slurp(argv[3]);
-
-    if (4 < argc)
-        units_json_string = file_slurp(argv[4]);
-
-    if (5 < argc)
-        scenario_json_string = file_slurp(argv[5]);
-
-    if (6 < argc)
-        hex_map_config_json_string = file_slurp(argv[6]);
-#endif
-
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
