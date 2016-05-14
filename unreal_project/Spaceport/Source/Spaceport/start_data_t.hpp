@@ -82,7 +82,7 @@ namespace start_data {
             return it->second;
         }
 
-        int starting_national_capital (int nation_id) const
+        hex_id_t starting_national_capital (int nation_id) const
         {
             assert(national_capitals_.count(nation_id));
             return national_capitals_.find(nation_id)->second;
@@ -126,7 +126,7 @@ namespace start_data {
         boost::container::flat_multimap<int, hex_coord_t> province_hexes_;
         boost::container::flat_map<hex_coord_t, int> provinces_;
 
-        boost::container::flat_map<int, int> national_capitals_; // nation_id -> hex_index
+        boost::container::flat_map<int, hex_id_t> national_capitals_; // nation_id key
     };
 
 }

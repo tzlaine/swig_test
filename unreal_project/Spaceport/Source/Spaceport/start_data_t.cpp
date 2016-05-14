@@ -129,10 +129,12 @@ void start_data_t::init_scenario_impl ()
         for (auto const & province : pair.second.provinces) {
             for (auto const & province_hex : province.hexes) {
                 auto const hc = hex_id_t(province_hex.hex).to_hex_coord();
-                auto const inserted = provinces_.insert(std::make_pair(hc, num_provinces_)).second;
+                auto const inserted =
+                    provinces_.insert(std::make_pair(hc, num_provinces_)).second;
                 if (!inserted) {
                     throw std::runtime_error(
-                        std::string("Hex ") + hex_string(hc) + " cannot be associated with two provinces."
+                        std::string("Hex ") + hex_string(hc) +
+                        " cannot be associated with two provinces."
                     );
                 }
                 province_hexes_.insert(std::make_pair(num_provinces_, hc));
@@ -143,10 +145,10 @@ void start_data_t::init_scenario_impl ()
 
     for (auto const & pair : nations_.nations) {
         for (auto const & capital_hex : pair.second.capital.hexes) {
-            int const hex_index = hex_index_t(hex_id_t(capital_hex.coord).to_hex_coord(), map_.width);
+            hex_id_t const hex_id(capital_hex.coord);
             for (auto const & zone : capital_hex.zones) {
                 if (0 < std::count(zone.features.begin(), zone.features.end(), feature_t::capital))
-                    national_capitals_[nation_id(pair.first)] = hex_index;
+                    national_capitals_[nation_id(pair.first)] = hex_id;
             }
         }
     }
