@@ -220,14 +220,16 @@ std::vector<supply_grid_t> find_supply_grids (
             bool unblocked_by_adjacent_contents = false;
             for (hex_direction_t d : all_hex_directions) {
                 auto const adjacent_coord = adjacent_hex_coord(hc, d);
-                hex_index_t const hex_index(adjacent_coord, width);
-                auto const adjacent_hex = supply_determination_hexes[hex_index];
-                auto const & adjacent_contents = adjacent_hex.supply_relevant_contents;
-                unblocked_by_adjacent_contents |=
-                    adjacent_contents.friendly_ships;
-                blocked_by_adjacent_contents |=
-                    adjacent_contents.enemy_ships ||
-                    adjacent_contents.enemy_bases;
+                if (on_map(adjacent_coord, width, height)) {
+                    hex_index_t const hex_index(adjacent_coord, width);
+                    auto const adjacent_hex = supply_determination_hexes[hex_index];
+                    auto const & adjacent_contents = adjacent_hex.supply_relevant_contents;
+                    unblocked_by_adjacent_contents |=
+                        adjacent_contents.friendly_ships;
+                    blocked_by_adjacent_contents |=
+                        adjacent_contents.enemy_ships ||
+                        adjacent_contents.enemy_bases;
+                }
             }
 
             if (unblocked_by_adjacent_contents)
