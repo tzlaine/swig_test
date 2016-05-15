@@ -9,7 +9,7 @@
 #include "test_data.hpp"
 
 
-TEST(graph_tests, construct)
+TEST(graph_tests, init_graph)
 {
     auto get_map_str = [](std::string const &) { return map_json_string; };
     auto get_oob_str = [](std::string const &) { return oob_json_string; };
@@ -27,6 +27,56 @@ TEST(graph_tests, construct)
         hex_id_property_map,
         edge_weight_map,
         hex_id_t(1411).to_hex_coord(),
+        [](hex_coord_t hc) { return true; },
+        [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
+        start_data.map().width,
+        start_data.map().height
+    );
+}
+
+TEST(graph_tests, init_graph_at_origin)
+{
+    auto get_map_str = [](std::string const &) { return map_json_string; };
+    auto get_oob_str = [](std::string const &) { return oob_json_string; };
+
+    start_data::start_data_t start_data;
+    start_data.init_unit_defs(units_json_string);
+    start_data.init_nations(nations_json_string);
+    start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
+
+    graph::graph_t g;
+    graph::hex_id_property_map_t hex_id_property_map;
+    graph::edge_weight_property_map_t edge_weight_map;
+    init_graph(
+        g,
+        hex_id_property_map,
+        edge_weight_map,
+        hex_id_t(101).to_hex_coord(),
+        [](hex_coord_t hc) { return true; },
+        [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
+        start_data.map().width,
+        start_data.map().height
+    );
+}
+
+TEST(graph_tests, init_graph_near_bottom)
+{
+    auto get_map_str = [](std::string const &) { return map_json_string; };
+    auto get_oob_str = [](std::string const &) { return oob_json_string; };
+
+    start_data::start_data_t start_data;
+    start_data.init_unit_defs(units_json_string);
+    start_data.init_nations(nations_json_string);
+    start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
+
+    graph::graph_t g;
+    graph::hex_id_property_map_t hex_id_property_map;
+    graph::edge_weight_property_map_t edge_weight_map;
+    init_graph(
+        g,
+        hex_id_property_map,
+        edge_weight_map,
+        hex_id_t(1417).to_hex_coord(),
         [](hex_coord_t hc) { return true; },
         [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
         start_data.map().width,
@@ -144,6 +194,7 @@ TEST(graph_tests, supply_source)
 }
 
 
+#if 0
 TEST(graph_tests, find_supply_grids)
 {
     auto get_map_str = [](std::string const &) { return map_json_string; };
@@ -170,6 +221,7 @@ TEST(graph_tests, find_supply_grids)
     std::cout << "supply_points: " << grids[0].supply_points.size() << "\n";
 #endif
 }
+#endif
 
 int main(int argc, char **argv)
 {
