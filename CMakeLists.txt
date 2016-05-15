@@ -14,6 +14,10 @@ if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif ()
 
+if (NOT MSVC)
+    add_definitions(-Wall -Wno-parentheses)
+endif ()
+
 set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport)
 set(unreal_src_dir ${unreal_root}/Source/Spaceport)
 set(unreal_3rd_party_root ${unreal_root}/ThirdParty)
