@@ -1,7 +1,14 @@
 cmake_minimum_required(VERSION 3.0)
 
+set(use_asan false)
+
 if (APPLE)
     set(CMAKE_OSX_ARCHITECTURES i386 x86_64)
+
+    if (${use_asan})
+        add_definitions(-fsanitize=address)
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+    endif ()
 endif ()
 
 if (MSVC)
