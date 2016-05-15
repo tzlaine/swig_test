@@ -88,16 +88,17 @@ namespace {
         {}
 
         void initialize_vertex (const Vertex& v, const Graph& g) {}
-        void discover_vertex (const Vertex& v, const Graph& g) {}
 
-        void examine_vertex (const Vertex& v, const Graph& g)
+        void discover_vertex (const Vertex& v, const Graph& g)
         {
             int d = 0;
             if (source_ != -1)
                 d = distances_[source_] + 1;
             distances_[v] = d;
-            source_ = v;
         }
+
+        void examine_vertex (const Vertex& v, const Graph& g)
+        { source_ = v; }
 
         void examine_edge (const Edge& e, const Graph& g) {}
         void tree_edge (const Edge& e, const Graph& g) {}
@@ -257,8 +258,12 @@ std::vector<supply_grid_t> find_supply_grids (
             // TODO: Don't start the "capital grid" here if the actual capital
             // planet has been captured.
             retval.push_back(supply_grid_t{grid_type_t::capital});
-
             auto & grid = retval.back();
+
+            auto const capital_hc = starting_capital_index.to_hex_coord(width);
+            grid.supply_points.push_back(capital_hc);
+            grid.hexes_in_supply.push_back(capital_hc);
+
             while (!supply_point_stack.empty()) {
                 auto const hex_index = supply_point_stack.back();
                 supply_point_stack.pop_back();
@@ -304,10 +309,11 @@ std::vector<supply_grid_t> find_supply_grids (
                     if (distances[i] <= max_useful_hex_distance) {
                         hex_id_t const hex_id(hex_id_property_map[i]);
                         grid.hexes_in_supply.push_back(hex_id.to_hex_coord());
+                        // TODO: Mark hex as already assigned to a grid.
                     }
                 }
                 // TODO: Add provinces in supply?
-                
+
                 if (supply_determination_hexes[hex_index].supply_source) {
                     // TODO: Add discovered supply points & sources to stack;
                     // points must go to the bottom of the stack.
