@@ -34,15 +34,22 @@ def quote(s):
 
 def prepare(lines):
     retval = ''
-    for line in lines:
+    count = 0
+    for i in range(len(lines)):
+        line = lines[i]
+        if i == 0:
+            retval += 'std::string(\n'
         retval += '"' + quote(strip_newline(line)) + r'\n' + '"\n'
+        if i != 0 and i % 100 == 0 and i != len(lines) - 1:
+            retval += ') + std::string(\n'
+    retval += ')\n'
     return retval
 
 def process(f):
     name = f + '_json_string'
     f = getattr(args, f + '_file')
     s = prepare(f.readlines())
-    args.out_file.write('''const char* {name} = {s};
+    args.out_file.write('''std::string const {name} = {s};
 
 '''.format(**locals()))
 
