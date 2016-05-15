@@ -75,7 +75,7 @@ find_package(PythonInterp)
 if (PYTHON_EXECUTABLE)
     add_custom_command(
         OUTPUT
-            test_data.hpp
+            ${CMAKE_SOURCE_DIR}/tests/test_data.hpp
         COMMAND
             ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/cmake/make_data.py
                 --nations-file=${unreal_root}/nations.json
@@ -96,7 +96,7 @@ if (PYTHON_EXECUTABLE)
         COMMENT "Create JSON data header."
         VERBATIM
     )
-    add_custom_target(data_header_target DEPENDS test_data.hpp)
+    add_custom_target(data_header_target DEPENDS ${CMAKE_SOURCE_DIR}/tests/test_data.hpp)
 
     set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
 
