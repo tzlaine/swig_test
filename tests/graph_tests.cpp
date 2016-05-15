@@ -143,6 +143,34 @@ TEST(graph_tests, supply_source)
     }
 }
 
+
+TEST(graph_tests, find_supply_grids)
+{
+    auto get_map_str = [](std::string const &) { return map_json_string; };
+    auto get_oob_str = [](std::string const &) { return oob_json_string; };
+
+    start_data::start_data_t start_data;
+    start_data.init_unit_defs(units_json_string);
+    start_data.init_nations(nations_json_string);
+    start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
+
+    game_data_t game_data(start_data);
+
+    auto const nation_id = start_data.nation_id("KLI"_name);
+
+    std::vector<supply_grid_t> grids = find_supply_grids(nation_id, start_data, game_data);
+
+    EXPECT_EQ(grids.size(), std::size_t(1));
+
+#if 0
+    std::cout << "hexes: " << grids[0].hexes_in_supply.size() << "\n";
+    for (auto hc : grids[0].hexes_in_supply) {
+        std::cout << "    " << hex_id_t(hc).to_int() << "\n";
+    }
+    std::cout << "supply_points: " << grids[0].supply_points.size() << "\n";
+#endif
+}
+
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
