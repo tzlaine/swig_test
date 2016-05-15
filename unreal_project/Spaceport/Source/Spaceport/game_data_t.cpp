@@ -4,6 +4,8 @@
 
 #include "data_utility.hpp"
 
+#include <boost/range/adaptor/reversed.hpp>
+
 
 namespace {
 
@@ -198,22 +200,28 @@ void game_data_t::declare_war (
 void game_data_t::leave_war (int nation_id, start_data::start_data_t const & start_data)
 {
     {
-        auto const new_end_it = std::remove_if(
-            team_and_nation_at_war_.begin(), team_and_nation_at_war_.end(),
-            [=](team_and_nation_at_war_elem_t elem) {
-                return elem.nation_ == nation_id;
-            }
-        );
-        team_and_nation_at_war_.erase(new_end_it, team_and_nation_at_war_.end());
+        std::vector<int> indices;
+        int i = 0;
+        for (auto const elem : team_and_nation_at_war_) {
+            if (elem.nation_ == nation_id)
+                indices.push_back(i);
+            ++i;
+        }
+        for (auto i : boost::adaptors::reverse(indices)) {
+            team_and_nation_at_war_.erase(team_and_nation_at_war_.begin() + i);
+        }
     }
 
     {
-        auto const new_end_it = std::remove_if(
-            nations_at_war_.begin(), nations_at_war_.end(),
-            [=](nations_at_war_elem_t elem) {
-                return elem.lhs_ == nation_id || elem.rhs_ == nation_id;
-            }
-        );
-        nations_at_war_.erase(new_end_it, nations_at_war_.end());
+        std::vector<int> indices;
+        int i = 0;
+        for (auto const elem : nations_at_war_) {
+            if (elem.lhs_ == nation_id || elem.rhs_ == nation_id)
+                indices.push_back(i);
+            ++i;
+        }
+        for (auto i : boost::adaptors::reverse(indices)) {
+            nations_at_war_.erase(nations_at_war_.begin() + i);
+        }
     }
 }
