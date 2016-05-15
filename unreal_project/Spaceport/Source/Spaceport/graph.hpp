@@ -169,7 +169,9 @@ namespace graph {
                 if (!on_map(adjacent_hc, width, height))
                     continue;
                 auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
-                assert(other_vertex != -1);
+                if (other_vertex == -1)
+                    continue;
+
                 std::pair<edge_t, bool> const add_edge_result =
                     boost::add_edge(0, other_vertex, g);
                 edge_weight_map[add_edge_result.first] = weight(hc, adjacent_hc);

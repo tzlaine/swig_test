@@ -194,7 +194,6 @@ TEST(graph_tests, supply_source)
 }
 
 
-#if 0
 TEST(graph_tests, find_supply_grids)
 {
     auto get_map_str = [](std::string const &) { return map_json_string; };
@@ -213,15 +212,40 @@ TEST(graph_tests, find_supply_grids)
 
     EXPECT_EQ(grids.size(), std::size_t(1));
 
+    auto points = grids[0].supply_points;
+    std::sort(points.begin(), points.end());
+    EXPECT_EQ(std::unique(points.begin(), points.end()), points.end());
+
+    auto hexes = grids[0].hexes_in_supply;
+    std::sort(hexes.begin(), hexes.end());
+    EXPECT_EQ(std::unique(hexes.begin(), hexes.end()), hexes.end());
+
 #if 0
-    std::cout << "hexes: " << grids[0].hexes_in_supply.size() << "\n";
-    for (auto hc : grids[0].hexes_in_supply) {
-        std::cout << "    " << hex_id_t(hc).to_int() << "\n";
+    for (int i = 0; i < game_data.map().width * game_data.map().height; ++i) {
+        hex_index_t const hex_index(i);
+        auto const hc = hex_index.to_hex_coord(game_data.map().width);
+        auto const province = game_data.province(start_data.hex_province(hc));
+#if 0
+        std::cout << "std::binary_search(hexes.begin(), hexes.end(), hc)="
+                  << std::binary_search(hexes.begin(), hexes.end(), hc) << "\n";
+#endif
+        std::cout << "hex-id=" << hex_id_t(hc).to_int() << "\n";
+        EXPECT_EQ(
+            std::binary_search(hexes.begin(), hexes.end(), hc),
+            province && province->owner == nation_id
+        );
     }
-    std::cout << "supply_points: " << grids[0].supply_points.size() << "\n";
+
+    {
+        hex_id_t const id(2519);
+        auto const hc = id.to_hex_coord();
+        EXPECT_EQ(
+            std::count(grids[0].supply_points.begin(), grids[0].supply_points.end(), hc),
+            std::size_t(1)
+        );
+    }
 #endif
 }
-#endif
 
 int main(int argc, char **argv)
 {

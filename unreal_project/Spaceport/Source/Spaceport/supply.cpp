@@ -15,6 +15,7 @@ namespace {
 
     struct supply_relevant_contents_t
     {
+        bool neutral_zone;
         int friendly_ships;
         int friendly_units;
         int friendly_bases;
@@ -37,9 +38,12 @@ namespace {
         int nation_id,
         team_t const * team,
         start_data::start_data_t const & start_data,
-        game_data_t const & game_data
+        game_data_t const & game_data,
+        int nz_nation_id
     ) {
         supply_relevant_contents_t retval = {0};
+
+        retval.neutral_zone = neutral_zone(hex, game_data.map(), nz_nation_id);
 
         for (auto const & zone : hex.zones) {
             for (auto const & fixture : zone.fixtures) {
@@ -168,9 +172,11 @@ std::vector<supply_grid_t> find_supply_grids (
 
     auto const & game_map = game_data.map();
 
+    auto const nz_nation_id = start_data.nation_id("NZ"_name);
+
     std::vector<supply_determination_hex_t> supply_determination_hexes(
         game_map.width * game_map.height,
-        supply_determination_hex_t{false, false, false, false, {0}}
+        supply_determination_hex_t{false, false, false, false, {false}}
     );
 
     std::vector<hex_index_t> supply_sources;
@@ -183,8 +189,14 @@ std::vector<supply_grid_t> find_supply_grids (
         for (; supply_hex_it != supply_hex_end;
              ++game_hex_it, ++supply_hex_it, i = hex_index_t(i + 1)) {
             auto const & h = *game_hex_it;
-            supply_hex_it->supply_relevant_contents =
-                find_supply_relevant_contents(h, nation_id, team, start_data, game_data);
+            supply_hex_it->supply_relevant_contents = find_supply_relevant_contents(
+                h,
+                nation_id,
+                team,
+                start_data,
+                game_data,
+                nz_nation_id
+            );
             supply_hex_it->supply_source = supply_source(nation_id, h, game_map);
             if (supply_hex_it->supply_source) {
                 supply_sources.push_back(i);
@@ -206,12 +218,18 @@ std::vector<supply_grid_t> find_supply_grids (
 
             auto const & contents = hex.supply_relevant_contents;
 
+            if (contents.neutral_zone) {
+                hex.impassable = true;
+                continue;
+            }
+
             bool const unblocked_by_contents =
                 contents.friendly_units || contents.friendly_ships || contents.friendly_bases;
             if (unblocked_by_contents)
                 continue;
 
-            bool const blocked_by_contents = contents.enemy_units || contents.enemy_ships;
+            bool const blocked_by_contents =
+                contents.enemy_units || contents.enemy_ships || contents.enemy_bases;
             if (blocked_by_contents) {
                 hex.impassable = true;
                 continue;
@@ -243,6 +261,7 @@ std::vector<supply_grid_t> find_supply_grids (
 
     std::sort(supply_sources.begin(), supply_sources.end());
 
+    std::vector<hex_index_t> supply_source_stack;
     std::vector<hex_index_t> supply_point_stack;
     if (!supply_sources.empty()) {
         auto const starting_capital = start_data.starting_national_capital(nation_id); // TODO: Take into account moved (non-offmap) capitals....
@@ -252,7 +271,7 @@ std::vector<supply_grid_t> find_supply_grids (
             starting_capital_index
         );
         if (it != supply_sources.end() && *it == starting_capital_index) {
-            supply_point_stack.push_back(starting_capital_index);
+            supply_source_stack.push_back(starting_capital_index);
             supply_sources.erase(it);
 
             // TODO: Don't start the "capital grid" here if the actual capital
@@ -261,12 +280,16 @@ std::vector<supply_grid_t> find_supply_grids (
             auto & grid = retval.back();
 
             auto const capital_hc = starting_capital_index.to_hex_coord(width);
-            grid.supply_points.push_back(capital_hc);
-            grid.hexes_in_supply.push_back(capital_hc);
 
-            while (!supply_point_stack.empty()) {
-                auto const hex_index = supply_point_stack.back();
-                supply_point_stack.pop_back();
+            while (!supply_source_stack.empty() || !supply_point_stack.empty()) {
+                auto const starting_hex_index = supply_source_stack.empty() ?
+                    supply_point_stack.back() : supply_source_stack.back();
+                if (supply_source_stack.empty())
+                    supply_point_stack.pop_back();
+                else
+                    supply_source_stack.pop_back();
+
+                auto const starting_hc = starting_hex_index.to_hex_coord(width);
 
                 graph::graph_t g;
                 graph::hex_id_property_map_t hex_id_property_map;
@@ -275,15 +298,20 @@ std::vector<supply_grid_t> find_supply_grids (
                     g,
                     hex_id_property_map,
                     edge_weight_map,
-                    hex_index.to_hex_coord(width),
+                    starting_hc,
                     [&](hex_coord_t hc) {
-                        auto const & hex = supply_determination_hexes[hex_index];
+                        auto const & hex = supply_determination_hexes[hex_index_t(hc, width)];
                         return !hex.already_assigned_grid && !hex.impassable;
                     },
                     [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
                     width,
                     height
                 );
+
+                grid.supply_points.push_back(starting_hc);
+                grid.hexes_in_supply.push_back(starting_hc);
+                auto & starting_hex = supply_determination_hexes[hex_index_t(starting_hc, width)];
+                starting_hex.already_assigned_grid = true;
 
                 boost::queue<int> buf;
                 std::array<int, max_neighbors> distances = {{0}};
@@ -306,60 +334,55 @@ std::vector<supply_grid_t> find_supply_grids (
 
                 auto const vertices = (int)num_vertices(g);
                 for (int i = 1; i < vertices; ++i) {
-                    if (distances[i] <= max_useful_hex_distance) {
+                    if (0 < distances[i] && distances[i] <= max_useful_hex_distance) {
                         hex_id_t const hex_id(hex_id_property_map[i]);
-                        grid.hexes_in_supply.push_back(hex_id.to_hex_coord());
-                        // TODO: Mark hex as already assigned to a grid.
+                        auto const hex_index = hex_id.to_hex_index(width);
+                        auto & hex = supply_determination_hexes[hex_index];
+
+                        bool enqueued = false;
+
+                        // If the source of this BFS is a source (as opposed
+                        // to just a point), then extend the grid to all
+                        // sources and points found.
+                        if (supply_determination_hexes[starting_hex_index].supply_source) {
+                            if (hex.supply_source) {
+                                auto it = std::lower_bound(
+                                    supply_source_stack.begin(), supply_source_stack.end(),
+                                    hex_index
+                                );
+                                if (it == supply_source_stack.end() || *it != hex_index)
+                                    supply_source_stack.insert(it, hex_index);
+                                enqueued = true;
+                            } else if (hex.supply_point) {
+                                auto it = std::lower_bound(
+                                    supply_point_stack.begin(), supply_point_stack.end(),
+                                    hex_index
+                                );
+                                if (it == supply_point_stack.end() || *it != hex_index)
+                                    supply_point_stack.insert(it, hex_index);
+                                enqueued = true;
+                            }
+                        }
+
+                        if (!enqueued) {
+                            grid.hexes_in_supply.push_back(hex_id.to_hex_coord());
+                            hex.already_assigned_grid = true;
+                        }
                     }
                 }
+
                 // TODO: Add provinces in supply?
-
-                if (supply_determination_hexes[hex_index].supply_source) {
-                    // TODO: Add discovered supply points & sources to stack;
-                    // points must go to the bottom of the stack.
-                }
             }
         }
     }
 
-#if 0 // Adapt this to start at the offmap area.
-    if (!supply_sources.empty()) {
-        auto const starting_capital = start_data.starting_national_capital(nation_id); // TODO: Take into account moved (non-offmap) capitals....
-        auto const it = std::lower_bound(
-            supply_sources.begin(), supply_sources.end(),
-            starting_capital
-        );
-        if (it != supply_sources.end()) {
-            hex_index_stack.push_back(starting_capital);
-            supply_sources.erase(it);
+    // TODO: Reuse the above, and start at the offmap area.
 
-            retval.push_back(supply_grid_t{grid_type_t::offmap});
-
-            auto & grid = retval.back();
-            while (!hex_index_stack.empty()) {
-                int const hex_index = hex_index_stack.back();
-                hex_index_stack.pop_back();
-                // TODO     
-            }
-        }
-    }
-#endif
-
-#if 0
     while (!supply_sources.empty()) {
-        hex_index_stack.push_back(supply_sources.back());
         supply_sources.pop_back();
 
-        retval.push_back(supply_grid_t{grid_type_t::partial});
-
-        auto & grid = retval.back();
-        while (!hex_index_stack.empty()) {
-            int const hex_index = hex_index_stack.back();
-            hex_index_stack.pop_back();
-            // TODO     
-        }
+        // TODO: Reuse the above, and start here.
     }
-#endif
 
     return retval;
 }
