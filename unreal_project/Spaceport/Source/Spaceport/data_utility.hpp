@@ -53,7 +53,11 @@ inline bool is_ship (unit_t unit, start_data::start_data_t const & start_data)
 { return 6 <= start_data.unit_defs(unit.original_owner)[unit.unit_id].move; }
 
 inline int hex_owner (hex_t const & hex, map_t const & map)
-{ return map.provinces[hex.province_id].owner; }
+{
+    if (hex.province_id < 0 || (int)map.provinces.size() <= hex.province_id)
+        return -1;
+    return map.provinces[hex.province_id].owner;
+}
 
 inline bool neutral_zone (hex_t const & hex, map_t const & map, int nz_nation_id)
 { return hex_owner(hex, map) == nz_nation_id; }
