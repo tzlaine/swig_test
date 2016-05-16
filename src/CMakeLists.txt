@@ -6,8 +6,6 @@ generate_protobuf(start_data start_data_message_target)
 generate_protobuf(game_data game_data_message_target)
 generate_protobuf(visual_config visual_config_message_target)
 
-add_definitions(-DBUILD_FOR_TEST)
-
 ########################################
 # start_data
 ########################################

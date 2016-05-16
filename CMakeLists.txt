@@ -201,5 +201,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+add_definitions(-DBUILD_FOR_TEST)
+
 add_subdirectory(src)
 add_subdirectory(tests)
