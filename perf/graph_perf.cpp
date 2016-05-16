@@ -13,7 +13,7 @@
 
 void BM_find_supply_grids (benchmark::State & state)
 {
-    std::vector<supply_grid_t> grids;
+    std::vector<supply_grid_t> grids[7];
 
     while (state.KeepRunning()) {
         state.PauseTiming();
@@ -27,19 +27,50 @@ void BM_find_supply_grids (benchmark::State & state)
 
             game_data_t game_data(start_data);
 
-            auto const nation_id = start_data.nation_id("KLI"_name);
-
-            std::vector<supply_grid_t> empty_grids;
-            grids.swap(empty_grids);
+            for (auto & g : grids) {
+                std::vector<supply_grid_t> empty_grids;
+                g.swap(empty_grids);
+            }
         state.ResumeTiming();
 
         // Timing on from here.
-        grids = find_supply_grids(nation_id, start_data, game_data);
+        {
+            auto const nation_id = start_data.nation_id("HYD"_name);
+            grids[0] = find_supply_grids(nation_id, start_data, game_data);
+        }
+        {
+            auto const nation_id = start_data.nation_id("LYR"_name);
+            grids[1] = find_supply_grids(nation_id, start_data, game_data);
+        }
+        {
+            auto const nation_id = start_data.nation_id("KZI"_name);
+            grids[2] = find_supply_grids(nation_id, start_data, game_data);
+        }
+        {
+            auto const nation_id = start_data.nation_id("KLI"_name);
+            grids[3] = find_supply_grids(nation_id, start_data, game_data);
+        }
+        {
+            auto const nation_id = start_data.nation_id("FED"_name);
+            grids[4] = find_supply_grids(nation_id, start_data, game_data);
+        }
+        {
+            auto const nation_id = start_data.nation_id("GOR"_name);
+            grids[5] = find_supply_grids(nation_id, start_data, game_data);
+        }
+        {
+            auto const nation_id = start_data.nation_id("ROM"_name);
+            grids[6] = find_supply_grids(nation_id, start_data, game_data);
+        }
     }
 
     // Prevent optimiations from gutting the test.
+    std::size_t total = 0;
+    for (auto const & g : grids) {
+        total += g.size();
+    }
     std::stringstream ss;
-    ss << grids.size() << " grids found.\n";
+    ss << total << " grids found.\n";
     state.SetLabel(ss.str());
 }
 
