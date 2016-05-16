@@ -3237,6 +3237,229 @@
         }
       ]
     },
+    "ISC": {
+      "units": [
+        {
+          "name": "MB (ND)",
+          "uncrippled": {},
+          "available": {
+            "year": 1000
+          },
+          "not_spaceworthy": true,
+          "towable": {
+            "move_cost": 1
+          },
+          "notes": "Undeployed MB"
+        },
+        {
+          "name": "MB",
+          "cmd": 6,
+          "uncrippled": {
+            "att": 8.0,
+            "def": 8.0,
+            "scout": true
+          },
+          "crippled": {
+            "att": 4.0,
+            "def": 4.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "notes": "See (510.2); EW=1"
+        },
+        {
+          "name": "BATS",
+          "cmd": 9,
+          "uncrippled": {
+            "att": 12.0,
+            "def": 12.0,
+            "scout": true,
+            "fighters": 6.0
+          },
+          "crippled": {
+            "att": 6.0,
+            "def": 6.0,
+            "scout": true,
+            "fighters": 3.0
+          },
+          "available": {
+            "year": 130
+          },
+          "conversions": {
+            "MB": {
+              "cost": 9,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "Battle station. See (433.41), (510.3)."
+        },
+        {
+          "name": "SB",
+          "cmd": 10,
+          "uncrippled": {
+            "att": 36.0,
+            "def": 36.0,
+            "scout": true,
+            "fighters": 12.0
+          },
+          "crippled": {
+            "att": 18.0,
+            "def": 18.0,
+            "scout": true,
+            "fighters": 6.0
+          },
+          "available": {
+            "year": 140
+          },
+          "conversions": {
+            "BATS": {
+              "cost": 30,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "Starbase. See (433.41)"
+        },
+        {
+          "name": "PDU",
+          "uncrippled": {
+            "att": 3.0,
+            "def": 3.0,
+            "fighters": 6.0
+          },
+          "available": {
+            "year": 167
+          },
+          "not_spaceworthy": true,
+          "towable": {
+            "move_cost": 1
+          },
+          "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        {
+          "name": "BATSv.2",
+          "cmd": 9,
+          "uncrippled": {
+            "att": 12.0,
+            "def": 12.0,
+            "scout": true,
+            "fighters": 6.0,
+            "pfs": 6
+          },
+          "crippled": {
+            "att": 6.0,
+            "def": 6.0,
+            "scout": true,
+            "fighters": 3.0,
+            "pfs": 6
+          },
+          "available": {
+            "year": 1000
+          },
+          "conversions": {
+            "BS": {
+              "cost": 4
+            },
+            "MB": {
+              "cost": 9,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        {
+          "name": "SBv.2",
+          "cmd": 10,
+          "uncrippled": {
+            "att": 36.0,
+            "def": 36.0,
+            "scout": true,
+            "fighters": 12.0,
+            "pfs": 12
+          },
+          "crippled": {
+            "att": 18.0,
+            "def": 18.0,
+            "scout": true,
+            "fighters": 6.0,
+            "pfs": 6
+          },
+          "available": {
+            "year": 1000
+          },
+          "conversions": {
+            "BATS": {
+              "cost": 30,
+              "fighter_cost": 6
+            },
+            "STB": {
+              "cost": 20,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
+        },
+        {
+          "name": "PDUv.2",
+          "uncrippled": {
+            "att": 3.0,
+            "def": 3.0,
+            "fighters": 6.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "conversions": {
+            "PBG": {}
+          },
+          "not_spaceworthy": true,
+          "towable": {
+            "move_cost": 1
+          },
+          "notes": "See (508.1) and (431.2).  For conversion from PGB, see (441.3)."
+        },
+        {
+          "name": "REPR",
+          "uncrippled": {
+            "def": 1.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "construction": {
+            "cost": 5
+          },
+          "notes": "See (422.0)"
+        },
+        {
+          "name": "CONVOY",
+          "uncrippled": {
+            "def": 6.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "move": 2,
+          "notes": "See (414.0); Cargo = 20EP"
+        },
+        {
+          "name": "FRD",
+          "uncrippled": {
+            "att": 1.0,
+            "def": 4.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "move": 1,
+          "towable": {
+            "move_cost": 2,
+            "strat_move_limit": 12
+          },
+          "notes": "See (421.0)"
+        }
+      ]
+    },
     "KLI": {
       "units": [
         {
@@ -5387,6 +5610,229 @@
           },
           "move": 6,
           "notes": "Light Escort §"
+        }
+      ]
+    },
+    "LDR": {
+      "units": [
+        {
+          "name": "MB (ND)",
+          "uncrippled": {},
+          "available": {
+            "year": 1000
+          },
+          "not_spaceworthy": true,
+          "towable": {
+            "move_cost": 1
+          },
+          "notes": "Undeployed MB"
+        },
+        {
+          "name": "MB",
+          "cmd": 6,
+          "uncrippled": {
+            "att": 8.0,
+            "def": 8.0,
+            "scout": true
+          },
+          "crippled": {
+            "att": 4.0,
+            "def": 4.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "notes": "See (510.2); EW=1"
+        },
+        {
+          "name": "BATS",
+          "cmd": 9,
+          "uncrippled": {
+            "att": 12.0,
+            "def": 12.0,
+            "scout": true,
+            "fighters": 6.0
+          },
+          "crippled": {
+            "att": 6.0,
+            "def": 6.0,
+            "scout": true,
+            "fighters": 3.0
+          },
+          "available": {
+            "year": 130
+          },
+          "conversions": {
+            "MB": {
+              "cost": 9,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "Battle station. See (433.41), (510.3)."
+        },
+        {
+          "name": "SB",
+          "cmd": 10,
+          "uncrippled": {
+            "att": 36.0,
+            "def": 36.0,
+            "scout": true,
+            "fighters": 12.0
+          },
+          "crippled": {
+            "att": 18.0,
+            "def": 18.0,
+            "scout": true,
+            "fighters": 6.0
+          },
+          "available": {
+            "year": 140
+          },
+          "conversions": {
+            "BATS": {
+              "cost": 30,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "Starbase. See (433.41)"
+        },
+        {
+          "name": "PDU",
+          "uncrippled": {
+            "att": 3.0,
+            "def": 3.0,
+            "fighters": 6.0
+          },
+          "available": {
+            "year": 167
+          },
+          "not_spaceworthy": true,
+          "towable": {
+            "move_cost": 1
+          },
+          "notes": "See (502.51), (508.1), and(431.2)."
+        },
+        {
+          "name": "BATSv.2",
+          "cmd": 9,
+          "uncrippled": {
+            "att": 12.0,
+            "def": 12.0,
+            "scout": true,
+            "fighters": 6.0,
+            "pfs": 6
+          },
+          "crippled": {
+            "att": 6.0,
+            "def": 6.0,
+            "scout": true,
+            "fighters": 3.0,
+            "pfs": 6
+          },
+          "available": {
+            "year": 1000
+          },
+          "conversions": {
+            "BS": {
+              "cost": 4
+            },
+            "MB": {
+              "cost": 9,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "See (433.41), (441.0), and (510.3)"
+        },
+        {
+          "name": "SBv.2",
+          "cmd": 10,
+          "uncrippled": {
+            "att": 36.0,
+            "def": 36.0,
+            "scout": true,
+            "fighters": 12.0,
+            "pfs": 12
+          },
+          "crippled": {
+            "att": 18.0,
+            "def": 18.0,
+            "scout": true,
+            "fighters": 6.0,
+            "pfs": 6
+          },
+          "available": {
+            "year": 1000
+          },
+          "conversions": {
+            "BATS": {
+              "cost": 30,
+              "fighter_cost": 6
+            },
+            "STB": {
+              "cost": 20,
+              "fighter_cost": 6
+            }
+          },
+          "notes": "Starbase. See EW Chart. See (433.41), (441.0), and (510.3). ModuleLimits 4FTM+2PFM."
+        },
+        {
+          "name": "PDUv.2",
+          "uncrippled": {
+            "att": 3.0,
+            "def": 3.0,
+            "fighters": 6.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "conversions": {
+            "PBG": {}
+          },
+          "not_spaceworthy": true,
+          "towable": {
+            "move_cost": 1
+          },
+          "notes": "See (508.1) and (431.2).  For conversion from PGB, see (441.3)."
+        },
+        {
+          "name": "REPR",
+          "uncrippled": {
+            "def": 1.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "construction": {
+            "cost": 5
+          },
+          "notes": "See (422.0)"
+        },
+        {
+          "name": "CONVOY",
+          "uncrippled": {
+            "def": 6.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "move": 2,
+          "notes": "See (414.0); Cargo = 20EP"
+        },
+        {
+          "name": "FRD",
+          "uncrippled": {
+            "att": 1.0,
+            "def": 4.0
+          },
+          "available": {
+            "year": 1000
+          },
+          "move": 1,
+          "towable": {
+            "move_cost": 2,
+            "strat_move_limit": 12
+          },
+          "notes": "See (421.0)"
         }
       ]
     },
