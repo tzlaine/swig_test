@@ -28,8 +28,11 @@ namespace {
         }
     }
 
-    hex_zone_fixture_t make_fixture (start_data::feature_t feature, int owner)
-    {
+    hex_zone_fixture_t make_fixture (
+        start_data::feature_t feature,
+        int owner,
+        start_data::start_data_t const & start_data
+    ) {
         hex_zone_fixture_t retval = {};
 
         if (planet(feature)) {
@@ -42,10 +45,17 @@ namespace {
             retval.base.original_owner = owner;
         }
 
+        // TODO: Instead of adding the fighters/pfs explicitly, create a
+        // supply() function that does this and whatever else needs to be done
+        // for a unit receiving supplies.
+
         unit_t pdu;
         pdu.unit_id = early_pdu_unit_id();
         pdu.owner = owner;
         pdu.original_owner = owner;
+        auto const & pdu_def = start_data.unit_def(owner, pdu.unit_id);
+        pdu.fighters = pdu_def.uncrippled.fighters;
+        pdu.pfs = pdu_def.uncrippled.pfs;
 
         switch (feature) {
         default:
@@ -53,12 +63,20 @@ namespace {
             assert(!"Unreachable");
             break;
 
-        case start_data::feature_t::bats:
+        case start_data::feature_t::bats: {
             retval.base.unit_id = early_bats_unit_id();
+            auto const & def = start_data.unit_def(owner, retval.base.unit_id);
+            retval.base.fighters = def.uncrippled.fighters;
+            retval.base.pfs = def.uncrippled.pfs;
             break;
-        case start_data::feature_t::sb:
+        }
+        case start_data::feature_t::sb: {
             retval.base.unit_id = early_sb_unit_id();
+            auto const & def = start_data.unit_def(owner, retval.base.unit_id);
+            retval.base.fighters = def.uncrippled.fighters;
+            retval.base.pfs = def.uncrippled.pfs;
             break;
+        }
         case start_data::feature_t::min:
             retval.planet.type = planet_t::type_t::minor;
             retval.planet.units.fleets[owner].units.resize(minor_planet_starting_pdus(), pdu);
@@ -116,7 +134,7 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
         case start_data::feature_t::maj:
             hex.zones.resize(1u);
             hex.zones.back().fixtures.resize(1u);
-            hex.zones.back().fixtures.back() = make_fixture(h.feature, h.owner);
+            hex.zones.back().fixtures.back() = make_fixture(h.feature, h.owner, start_data);
             break;
 
         case start_data::feature_t::capital: {
@@ -132,7 +150,7 @@ game_data_t::game_data_t (start_data::start_data_t const & start_data)
                 zone.fixtures.resize(start_zone_it->features.size());
                 auto feature_it = start_zone_it->features.begin();
                 for (auto & fixture : zone.fixtures) {
-                    fixture = make_fixture(*feature_it, h.owner);
+                    fixture = make_fixture(*feature_it, h.owner, start_data);
                     ++feature_it;
                 }
                 ++start_zone_it;
