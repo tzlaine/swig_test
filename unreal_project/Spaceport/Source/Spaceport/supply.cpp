@@ -13,75 +13,14 @@
 
 namespace {
 
-    struct supply_relevant_contents_t
-    {
-        bool neutral_zone;
-        int friendly_ships;
-        int friendly_units;
-        int friendly_bases;
-        int enemy_ships;
-        int enemy_units;
-        int enemy_bases;
-    };
-
     struct supply_determination_hex_t
     {
         bool already_assigned_grid;
         bool supply_source;
         bool supply_point;
         bool impassable;
-        supply_relevant_contents_t supply_relevant_contents;
+        detail::supply_relevant_contents_t supply_relevant_contents;
     };
-
-    supply_relevant_contents_t find_supply_relevant_contents (
-        hex_t const & hex,
-        int nation_id,
-        team_t const * team,
-        start_data::start_data_t const & start_data,
-        game_data_t const & game_data,
-        int nz_nation_id
-    ) {
-        supply_relevant_contents_t retval = {0};
-
-        retval.neutral_zone = neutral_zone(hex, game_data.map(), nz_nation_id);
-
-        for (auto const & zone : hex.zones) {
-            for (auto const & fixture : zone.fixtures) {
-                if (fixture.type == hex_zone_fixture_t::type_t::type_base &&
-                    (6 <= fixture.base.fighters || 6 <= fixture.base.pfs)) {
-                    if (team && part_of_team(fixture.base.owner, *team) ||
-                        fixture.base.owner == nation_id) {
-                        ++retval.friendly_bases;
-                    } else if (team && game_data.at_war_with(team->name, fixture.base.owner) ||
-                               fixture.base.owner != nation_id) {
-                        ++retval.enemy_bases;
-                    }
-                }
-            }
-        }
-
-        for (auto const & pair : hex.fleets.fleets) {
-            int const fleet_nation_id = pair.first;
-            auto const & fleet = pair.second;
-            for (auto const & unit : fleet.units) {
-                auto const ship = is_ship(unit, start_data);
-                if (team && part_of_team(unit.owner, *team) || fleet_nation_id == nation_id) {
-                    if (ship)
-                        ++retval.friendly_ships;
-                    else
-                        ++retval.friendly_units;
-                } else if (team && game_data.at_war_with(team->name, unit.owner) ||
-                           fleet_nation_id != nation_id) {
-                    if (ship)
-                        ++retval.friendly_ships;
-                    else
-                        ++retval.friendly_units;
-                }
-            }
-        }
-
-        return retval;
-    }
 
     template <typename Graph, typename Edge, typename Vertex, std::size_t N>
     struct bfs_visitor_t
@@ -121,6 +60,56 @@ namespace {
         int source_;
     };
 
+}
+
+detail::supply_relevant_contents_t detail::find_supply_relevant_contents (
+    hex_t const & hex,
+    int nation_id,
+    team_t const * team,
+    start_data::start_data_t const & start_data,
+    game_data_t const & game_data,
+    int nz_nation_id
+) {
+    supply_relevant_contents_t retval = {0};
+
+    retval.neutral_zone = neutral_zone(hex, game_data.map(), nz_nation_id);
+
+    for (auto const & zone : hex.zones) {
+        for (auto const & fixture : zone.fixtures) {
+            if (fixture.type == hex_zone_fixture_t::type_t::type_base &&
+                (6 <= fixture.base.fighters || 6 <= fixture.base.pfs)) {
+                if (team && part_of_team(fixture.base.owner, *team) ||
+                    fixture.base.owner == nation_id) {
+                    ++retval.friendly_bases;
+                } else if (team && game_data.at_war_with(team->name, fixture.base.owner) ||
+                    fixture.base.owner != nation_id) {
+                    ++retval.enemy_bases;
+                }
+            }
+        }
+    }
+
+    for (auto const & pair : hex.fleets.fleets) {
+        int const fleet_nation_id = pair.first;
+        auto const & fleet = pair.second;
+        for (auto const & unit : fleet.units) {
+            auto const ship = is_ship(unit, start_data);
+            if (team && part_of_team(unit.owner, *team) || fleet_nation_id == nation_id) {
+                if (ship)
+                    ++retval.friendly_ships;
+                else
+                    ++retval.friendly_units;
+            } else if (team && game_data.at_war_with(team->name, unit.owner) ||
+                fleet_nation_id != nation_id) {
+                if (ship)
+                    ++retval.friendly_ships;
+                else
+                    ++retval.friendly_units;
+            }
+        }
+    }
+
+    return retval;
 }
 
 bool supply_source (int nation_id, hex_t const & hex, map_t const & map)
@@ -194,7 +183,7 @@ std::vector<supply_grid_t> find_supply_grids (
         for (; supply_hex_it != supply_hex_end;
              ++game_hex_it, ++supply_hex_it, i = hex_index_t(i + 1)) {
             auto const & h = *game_hex_it;
-            supply_hex_it->supply_relevant_contents = find_supply_relevant_contents(
+            supply_hex_it->supply_relevant_contents = detail::find_supply_relevant_contents(
                 h,
                 nation_id,
                 team,

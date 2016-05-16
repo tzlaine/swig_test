@@ -4,6 +4,30 @@
 #include "game_data_t.hpp"
 
 
+namespace detail {
+
+    struct supply_relevant_contents_t
+    {
+        bool neutral_zone;
+        int friendly_ships;
+        int friendly_units;
+        int friendly_bases;
+        int enemy_ships;
+        int enemy_units;
+        int enemy_bases;
+    };
+
+    supply_relevant_contents_t find_supply_relevant_contents (
+        hex_t const & hex,
+        int nation_id,
+        team_t const * team,
+        start_data::start_data_t const & start_data,
+        game_data_t const & game_data,
+        int nz_nation_id
+    );
+
+}
+
 enum class grid_type_t {
     capital,
     offmap,
