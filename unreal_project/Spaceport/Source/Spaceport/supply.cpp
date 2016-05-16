@@ -86,33 +86,38 @@ namespace {
     template <typename Graph, typename Edge, typename Vertex, std::size_t N>
     struct bfs_visitor_t
     {
-        bfs_visitor_t (std::array<int, N> & distances) :
+        bfs_visitor_t (std::array<int, N> & distances, int * predecessors) :
             distances_ (distances),
+            predecessors_ (predecessors),
             source_ (-1)
         {}
 
-        void initialize_vertex (const Vertex& v, const Graph& g) {}
+        void initialize_vertex (const Vertex & v, const Graph & g) {}
 
-        void discover_vertex (const Vertex& v, const Graph& g)
+        void discover_vertex (const Vertex & v, const Graph & g)
         {
             int d = 0;
             if (source_ != -1)
                 d = distances_[source_] + 1;
             distances_[v] = d;
+
+            if (predecessors_)
+                predecessors_[v] = source_;
         }
 
-        void examine_vertex (const Vertex& v, const Graph& g)
+        void examine_vertex (const Vertex & v, const Graph & g)
         { source_ = v; }
 
-        void examine_edge (const Edge& e, const Graph& g) {}
-        void tree_edge (const Edge& e, const Graph& g) {}
+        void examine_edge (const Edge & e, const Graph & g) {}
+        void tree_edge (const Edge & e, const Graph & g) {}
 
-        void non_tree_edge (const Edge& e, const Graph& g) {}
-        void gray_target (const Edge& e, const Graph& g) {}
-        void black_target (const Edge& e, const Graph& g) {}
-        void finish_vertex (const Vertex& e, const Graph& g) {}
+        void non_tree_edge (const Edge & e, const Graph & g) {}
+        void gray_target (const Edge & e, const Graph & g) {}
+        void black_target (const Edge & e, const Graph & g) {}
+        void finish_vertex (const Vertex & e, const Graph & g) {}
 
         std::array<int, N> & distances_;
+        int * predecessors_;
         int source_;
     };
 
@@ -312,6 +317,10 @@ std::vector<supply_grid_t> find_supply_grids (
                 grid.hexes_in_supply.push_back(starting_hc);
                 auto & starting_hex = supply_determination_hexes[hex_index_t(starting_hc, width)];
                 starting_hex.already_assigned_grid = true;
+#ifdef BUILD_FOR_TEST
+                grid.hex_supply_sources[starting_hc] =
+                    supply_grid_t::supply_source_t{hex_id_t(starting_hc)};
+#endif
 
                 boost::queue<int> buf;
                 std::array<int, max_neighbors> distances = {{0}};
@@ -324,11 +333,17 @@ std::vector<supply_grid_t> find_supply_grids (
                     max_neighbors
                 >;
 
+                int * predecessors = nullptr;
+#ifdef BUILD_FOR_TEST
+                int predecessors_array[max_neighbors] = {0};
+                predecessors = predecessors_array;
+#endif
+
                 boost::breadth_first_search(
                     g,
                     vertex(0, g),
                     buf,
-                    visitor_t{distances},
+                    visitor_t{distances, predecessors},
                     &colors[0]
                 );
 
@@ -367,6 +382,17 @@ std::vector<supply_grid_t> find_supply_grids (
                         if (!enqueued) {
                             grid.hexes_in_supply.push_back(hex_id.to_hex_coord());
                             hex.already_assigned_grid = true;
+#ifdef BUILD_FOR_TEST
+                            auto & supply_source = grid.hex_supply_sources[hex_id.to_hex_coord()];
+                            supply_source.origin_ = hex_id_t(starting_hc);
+                            supply_source.path_.reserve(max_useful_hex_distance);
+                            int v = i;
+                            while (v != 0) {
+                                hex_id_t const v_hex_id(hex_id_property_map[v]);
+                                supply_source.path_.insert(supply_source.path_.begin(), v_hex_id);
+                                v = predecessors[v];
+                            }
+#endif
                         }
                     }
                 }

@@ -21,6 +21,15 @@ struct supply_grid_t
 
     std::vector<hex_coord_t> supply_points;
     std::vector<hex_coord_t> hexes_in_supply;
+
+#ifdef BUILD_FOR_TEST
+    struct supply_source_t
+    {
+        hex_id_t origin_;
+        std::vector<hex_id_t> path_;
+    };
+    boost::container::flat_map<hex_coord_t, supply_source_t> hex_supply_sources;
+#endif
 };
 
 bool supply_source (int nation_id, hex_t const & hex, map_t const & map);
