@@ -16,6 +16,7 @@ if (MSVC)
 endif ()
 
 add_subdirectory(googletest)
+add_subdirectory(benchmark-1.0.0)
 
 if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
