@@ -60,4 +60,7 @@ inline int hex_owner (hex_t const & hex, map_t const & map)
 }
 
 inline bool neutral_zone (hex_t const & hex, map_t const & map, int nz_nation_id)
-{ return hex_owner(hex, map) == nz_nation_id; }
+{
+    auto const owner = hex_owner(hex, map);
+    return owner == -1 || owner == nz_nation_id;
+}
