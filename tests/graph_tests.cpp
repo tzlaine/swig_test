@@ -194,6 +194,237 @@ TEST(graph_tests, supply_source)
 }
 
 
+TEST(graph_tests, find_supply_relevant_contents)
+{
+    auto get_map_str = [](std::string const &) { return map_json_string; };
+    auto get_oob_str = [](std::string const &) { return oob_json_string; };
+
+    start_data::start_data_t start_data;
+    start_data.init_unit_defs(units_json_string);
+    start_data.init_nations(nations_json_string);
+    start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
+
+    game_data_t game_data(start_data);
+
+    auto const & map = game_data.map();
+    auto const width = map.width;
+
+    auto const nation_id = start_data.nation_id("KLI"_name);
+    auto const nz_nation_id = start_data.nation_id("NZ"_name);
+    auto const team = game_data.team(nation_id, start_data);
+
+    { // friendly capital
+        hex_id_t const id(1411);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 3);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+
+    { // friendly bats
+        hex_id_t const id(1407);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 1);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+
+    { // friendly sb
+        hex_id_t const id(1509);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 1);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+
+    { // friendly planet
+        hex_id_t const id(1611);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+
+    { // unfriendly capital
+        hex_id_t const id(2908);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 3);
+    }
+
+    { // unfriendly bats
+        hex_id_t const id(2012);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 1);
+    }
+
+    { // unfriendly sb
+        hex_id_t const id(2211);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 1);
+    }
+
+    { // unfriendly planet
+        hex_id_t const id(2106);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_FALSE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+
+    { // NZ hex
+        hex_id_t const id(1406);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_TRUE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+
+    { // NZ hex with planet
+        hex_id_t const id(1506);
+        hex_index_t const index = id.to_hex_index(width);
+        auto const hex = map.hexes[index];
+        auto const contents = detail::find_supply_relevant_contents(
+            hex,
+            nation_id,
+            team,
+            start_data,
+            game_data,
+            nz_nation_id
+        );
+        EXPECT_TRUE(contents.neutral_zone);
+        EXPECT_EQ(contents.friendly_ships, 0);
+        EXPECT_EQ(contents.friendly_units, 0);
+        EXPECT_EQ(contents.friendly_bases, 0);
+        EXPECT_EQ(contents.enemy_ships, 0);
+        EXPECT_EQ(contents.enemy_units, 0);
+        EXPECT_EQ(contents.enemy_bases, 0);
+    }
+}
+
+
 TEST(graph_tests, find_supply_grids)
 {
     auto get_map_str = [](std::string const &) { return map_json_string; };
