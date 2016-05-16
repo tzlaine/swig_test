@@ -235,7 +235,7 @@ TEST(graph_tests, find_supply_relevant_contents)
     }
 
     { // friendly bats
-        hex_id_t const id(1407);
+        hex_id_t const id(1507);
         hex_index_t const index = id.to_hex_index(width);
         auto const hex = map.hexes[index];
         auto const contents = detail::find_supply_relevant_contents(
