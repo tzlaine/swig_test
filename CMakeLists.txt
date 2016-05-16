@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 set(use_asan false)
 
 if (APPLE)
-    set(CMAKE_OSX_ARCHITECTURES i386 x86_64)
+    set(CMAKE_OSX_ARCHITECTURES x86_64)
 
     if (${use_asan})
         add_definitions(-fsanitize=address)
@@ -206,3 +206,4 @@ add_definitions(-DBUILD_FOR_TEST)
 
 add_subdirectory(src)
 add_subdirectory(tests)
+add_subdirectory(perf)
