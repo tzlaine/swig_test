@@ -72,11 +72,29 @@ std::ostream& operator<< (std::ostream& os, hex_coord_t hc)
 }
 #endif
 
+constexpr hex_coord_t const odd_direction_offsets[6] = {
+    hex_coord_t{1, 0},
+    hex_coord_t{0, -1},
+    hex_coord_t{-1, 0},
+    hex_coord_t{-1, 1},
+    hex_coord_t{0, 1},
+    hex_coord_t{1, 1}
+};
+
+constexpr hex_coord_t const even_direction_offsets[6] = {
+    hex_coord_t{1, -1},
+    hex_coord_t{0, -1},
+    hex_coord_t{-1, -1},
+    hex_coord_t{-1, 0},
+    hex_coord_t{0, 1},
+    hex_coord_t{1, 0}
+};
+
+inline hex_coord_t hex_above_right (hex_coord_t hc)
+{ return hex_coord_t{hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)}; }
+
 inline hex_coord_t hex_above (hex_coord_t hc)
 { return hex_coord_t{hc.x, hc.y - 1}; }
-
-inline hex_coord_t hex_below (hex_coord_t hc)
-{ return hex_coord_t{hc.x, hc.y + 1}; }
 
 inline hex_coord_t hex_above_left (hex_coord_t hc)
 { return hex_coord_t{hc.x - 1, hc.y + (hc.x % 2 ? 0 : -1)}; }
@@ -84,28 +102,17 @@ inline hex_coord_t hex_above_left (hex_coord_t hc)
 inline hex_coord_t hex_below_left (hex_coord_t hc)
 { return hex_coord_t{hc.x - 1, hc.y + (hc.x % 2 ? 1 : 0)}; }
 
-inline hex_coord_t hex_above_right (hex_coord_t hc)
-{ return hex_coord_t{hc.x + 1, hc.y + (hc.x % 2 ? 0 : -1)}; }
+inline hex_coord_t hex_below (hex_coord_t hc)
+{ return hex_coord_t{hc.x, hc.y + 1}; }
 
 inline hex_coord_t hex_below_right (hex_coord_t hc)
 { return hex_coord_t{hc.x + 1, hc.y + (hc.x % 2 ? 1 : 0)}; }
 
-
 inline hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 {
-    switch (hd) {
-#define CASE(x) case hex_direction_t::x: return hex_##x(hc)
-    CASE(above_right);
-    CASE(above);
-    CASE(above_left);
-    CASE(below_left);
-    CASE(below);
-    CASE(below_right);
-#undef CASE
-    default:
-    case hex_direction_t::hex_directions:
-        return invalid_hex_coord;
-    };
+    auto const offset =
+        (hc.x % 2 ? odd_direction_offsets : even_direction_offsets)[(int)hd];
+    return hex_coord_t{hc.x + offset.x, hc.y + offset.y};
 }
 
 
@@ -224,7 +231,7 @@ constexpr int const max_neighbors = max_hexes_at_radius[max_useful_hex_distance]
 // 1 + 1*6 + 2*6 + ... + 6*MAX_USEFUL_HEX_DISTANCE.
 typedef boost::container::static_vector<hex_coord_t, max_neighbors> neighbors_t;
 
-hex_coord_t const even_offsets[max_neighbors] = {
+hex_coord_t const even_neighbor_offsets[max_neighbors] = {
     { 0, 0 },
     { 1, 0 },
     { 1, -1 },
@@ -354,7 +361,7 @@ hex_coord_t const even_offsets[max_neighbors] = {
     { 0, 6 }
 };
 
-hex_coord_t const odd_offsets[max_neighbors] = {
+hex_coord_t const odd_neighbor_offsets[max_neighbors] = {
     { 0, 0 },
     { 1, 1 },
     { 1, 0 },
@@ -492,7 +499,8 @@ inline neighbors_t adjacent_hex_coords (hex_coord_t hc, int width, int height, i
     assert(on_map(hc, width, height));
 
     int const n = max_hexes_at_radius[r];
-    hex_coord_t const * const offsets = hc.x % 2 == 0 ? even_offsets : odd_offsets;
+    hex_coord_t const * const offsets =
+        hc.x % 2 == 0 ? even_neighbor_offsets : odd_neighbor_offsets;
 
     for (int i = 0; i < n; ++i) {
         hex_coord_t const offset = offsets[i];

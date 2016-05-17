@@ -11,6 +11,13 @@
 
 #include <queue>
 
+#if _MSC_VER
+#include <malloc.h>
+#define alloca _alloca
+#else
+#include <alloca.h>
+#endif
+
 
 namespace graph {
 
@@ -145,9 +152,13 @@ namespace graph {
         edge_weight_map = boost::get(boost::edge_weight, g);
 
         auto const neighbors = adjacent_hex_coords(hc, width, height, radius);
-        std::vector<int> offset_indices(width * height, -1); // TODO: calloc()?
+
+        using offset_t = int16_t;
+        offset_t * offset_indices = (offset_t *)alloca(width * height * sizeof(offset_t));
+        std::fill(offset_indices, offset_indices + width * height, offset_t{-1});
+
         {
-            int i = 0;
+            offset_t i = 0;
             for (auto const neighbor : neighbors) {
                 if (valid(neighbor))
                     offset_indices[hex_index_t(neighbor, width)] = i++;
@@ -168,7 +179,7 @@ namespace graph {
                 auto const adjacent_hc = adjacent_hex_coord(hc, d);
                 if (!on_map(adjacent_hc, width, height))
                     continue;
-                auto const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
+                int const other_vertex = offset_indices[hex_index_t(adjacent_hc, width)];
                 if (other_vertex == -1)
                     continue;
 
@@ -189,7 +200,7 @@ namespace graph {
                         current = adjacent_hex_coord(current, d);
                         if (!on_map(current, width, height))
                             continue;
-                        auto const current_vertex =
+                        int const current_vertex =
                             offset_indices[hex_index_t(current, width)];
                         if (current_vertex == -1)
                             continue;
@@ -198,7 +209,7 @@ namespace graph {
                         auto adjacent_d = d;
                         auto adjacent_hc = adjacent_hex_coord(current, adjacent_d);
                         if (on_map(adjacent_hc, width, height)) {
-                            auto const other_vertex =
+                            int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_t, bool> const add_edge_result =
@@ -211,7 +222,7 @@ namespace graph {
                         // Connect to the next CW hex.
                         adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
                         if (on_map(adjacent_hc, width, height)) {
-                            auto const other_vertex =
+                            int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_t, bool> const add_edge_result =
@@ -224,7 +235,7 @@ namespace graph {
                         // Connect to the next CW hex.
                         adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
                         if (on_map(adjacent_hc, width, height)) {
-                            auto const other_vertex =
+                            int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
                                 std::pair<edge_t, bool> const add_edge_result =
@@ -238,7 +249,7 @@ namespace graph {
                             adjacent_hc = adjacent_hex_coord(current, --adjacent_d);
 
                             if (on_map(adjacent_hc, width, height)) {
-                                auto const other_vertex =
+                                int const other_vertex =
                                     offset_indices[hex_index_t(adjacent_hc, width)];
                                 if (other_vertex != -1) {
                                     std::pair<edge_t, bool> const add_edge_result =

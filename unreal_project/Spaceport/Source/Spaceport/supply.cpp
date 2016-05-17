@@ -31,9 +31,9 @@ namespace {
             source_ (-1)
         {}
 
-        void initialize_vertex (const Vertex & v, const Graph & g) {}
+        void initialize_vertex (Vertex v, const Graph & g) {}
 
-        void discover_vertex (const Vertex & v, const Graph & g)
+        void discover_vertex (Vertex v, const Graph & g)
         {
             int d = 0;
             if (source_ != -1)
@@ -44,16 +44,16 @@ namespace {
                 predecessors_[v] = source_;
         }
 
-        void examine_vertex (const Vertex & v, const Graph & g)
+        void examine_vertex (Vertex v, const Graph & g)
         { source_ = v; }
 
-        void examine_edge (const Edge & e, const Graph & g) {}
-        void tree_edge (const Edge & e, const Graph & g) {}
+        void examine_edge (Edge e, const Graph & g) {}
+        void tree_edge (Edge e, const Graph & g) {}
 
-        void non_tree_edge (const Edge & e, const Graph & g) {}
-        void gray_target (const Edge & e, const Graph & g) {}
-        void black_target (const Edge & e, const Graph & g) {}
-        void finish_vertex (const Vertex & e, const Graph & g) {}
+        void non_tree_edge (Edge e, const Graph & g) {}
+        void gray_target (Edge e, const Graph & g) {}
+        void black_target (Edge e, const Graph & g) {}
+        void finish_vertex (Vertex v, const Graph & g) {}
 
         std::array<int, N> & distances_;
         int * predecessors_;
