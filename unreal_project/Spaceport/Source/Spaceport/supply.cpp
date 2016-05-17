@@ -273,8 +273,6 @@ std::vector<supply_grid_t> find_supply_grids (
             retval.push_back(supply_grid_t{grid_type_t::capital});
             auto & grid = retval.back();
 
-            auto const capital_hc = starting_capital_index.to_hex_coord(width);
-
             while (!supply_source_stack.empty() || !supply_point_stack.empty()) {
                 auto const starting_hex_index = supply_source_stack.empty() ?
                     supply_point_stack.back() : supply_source_stack.back();
