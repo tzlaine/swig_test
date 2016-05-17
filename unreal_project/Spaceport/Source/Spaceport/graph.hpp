@@ -3,13 +3,12 @@
 #include "hex_operations.hpp"
 
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/compressed_sparse_row_graph.hpp>
 #include <boost/graph/breadth_first_search.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/filtered_graph.hpp>
 #include <boost/graph/johnson_all_pairs_shortest.hpp>
 #include <boost/container/static_vector.hpp>
-
-#include <queue>
 
 #if _MSC_VER
 #include <malloc.h>
@@ -21,119 +20,29 @@
 
 namespace graph {
 
-    struct out_edge_container_tag_t {};
-    struct edge_list_container_tag_t {};
-
-    template <class Key, class Value>
-    struct constant_property_t
-    { Value m_value; };
-
-}
-
-namespace boost {
-
-    template <class Key, class Value>
-    struct property_traits< ::graph::constant_property_t<Key, Value> >
+    struct vertex_data_t
     {
-        typedef Value value_type;
-        typedef Key key_type;
-        typedef readable_property_map_tag category;
+        hex_id_t hex_id;
     };
 
-    template <class Key, class Value>
-    Value const & get( ::graph::constant_property_t<Key, Value> const & pmap, Key const &)
-    { return pmap.m_value; }
-
-    // Specializations for custom out-edge containers.
-    template <class ValueType>
-    struct container_gen< ::graph::out_edge_container_tag_t, ValueType>
+    struct edge_data_t
     {
-        typedef boost::container::static_vector<ValueType, 6> type;
+        edge_data_t () : weight (0) {}
+        edge_data_t (float weight) : weight (weight) {}
+
+        float weight;
     };
 
-    template <class ValueType>
-    std::pair<typename boost::container::static_vector<ValueType, 6>::iterator, bool>
-    push (boost::container::static_vector<ValueType, 6> & c, ValueType const & v)
-    {
-        c.push_back(v);
-        return std::make_pair(boost::prior(c.end()), true);
-    }
-
-    template <class ValueType>
-    void erase (boost::container::static_vector<ValueType, 6> & c, ValueType const & x)
-    {
-        c.erase(std::remove(c.begin(), c.end(), x), c.end());
-    }
-
-    template <>
-    struct parallel_edge_traits< ::graph::out_edge_container_tag_t>
-    {
-        typedef allow_parallel_edge_tag type;
-    };
-
-
-    // Specializations for custom vertex containers.
-    template <class ValueType>
-    struct container_gen< ::graph::edge_list_container_tag_t, ValueType>
-    {
-        typedef boost::container::static_vector<ValueType, max_neighbors * 6> type;
-    };
-
-    template <class ValueType>
-    std::pair<typename boost::container::static_vector<ValueType, max_neighbors * 6>::iterator, bool>
-    push (boost::container::static_vector<ValueType, max_neighbors * 6> & c, ValueType const & v)
-    {
-        c.push_back(v);
-        return std::make_pair(boost::prior(c.end()), true);
-    }
-
-    template <class ValueType>
-    void erase (boost::container::static_vector<ValueType, max_neighbors * 6> & c, ValueType const & x)
-    {
-        c.erase(std::remove(c.begin(), c.end(), x), c.end());
-    }
-
-}
-
-
-namespace graph {
-
-    struct vertex_hex_id_tag_t { typedef boost::vertex_property_tag kind; };
-
-    typedef boost::property<
-        vertex_hex_id_tag_t,
-        hex_id_t,
-        boost::property<boost::vertex_index_t, hex_id_t>
-    > vertex_property_t;
-
-    typedef boost::property<
-        boost::edge_weight_t,
-        float
-    > edge_property_t;
-
-    typedef boost::adjacency_list<
-        out_edge_container_tag_t,
-        boost::vecS,
-        boost::undirectedS,
-        vertex_property_t,
-        edge_property_t,
-        edge_list_container_tag_t
-    > graph_t;
-
-    typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::const_type const_hex_id_property_map_t;
-    typedef boost::property_map<graph_t, vertex_hex_id_tag_t>::type hex_id_property_map_t;
-
-    typedef boost::property_map<graph_t, boost::edge_weight_t>::const_type const_edge_weight_property_map_t; // todo
-    typedef boost::property_map<graph_t, boost::edge_weight_t>::type edge_weight_property_map_t;
-
-    typedef boost::graph_traits<graph_t>::edge_descriptor edge_t;
-    typedef boost::graph_traits<graph_t>::vertex_descriptor vertex_t;
+    using graph_t = boost::compressed_sparse_row_graph<
+        boost::directedS,
+        vertex_data_t,
+        edge_data_t,
+        boost::no_property,
+        int
+    >;
 
     template <typename ValidFn, typename WeightFn>
-    void init_graph (
-        graph_t & g,
-        hex_id_property_map_t & hex_id_property_map,
-        edge_weight_property_map_t & edge_weight_map,
+    graph_t local_graph (
         hex_coord_t hc,
         ValidFn valid,
         WeightFn weight,
@@ -148,28 +57,29 @@ namespace graph {
         assert(0 < radius);
         assert(radius <= max_useful_hex_distance);
 
-        hex_id_property_map = boost::get(vertex_hex_id_tag_t(), g);
-        edge_weight_map = boost::get(boost::edge_weight, g);
-
         auto const neighbors = adjacent_hex_coords(hc, width, height, radius);
 
         using offset_t = int16_t;
         offset_t * offset_indices = (offset_t *)alloca(width * height * sizeof(offset_t));
         std::fill(offset_indices, offset_indices + width * height, offset_t{-1});
 
+        std::vector<int> sources;
+        std::vector<int> targets;
+        std::vector<edge_data_t> edge_data;
+
+        sources.reserve(2 * 6 * max_neighbors);
+        targets.reserve(2 * 6 * max_neighbors);
+        edge_data.reserve(2 * 6 * max_neighbors);
+
+        boost::container::static_vector<hex_id_t, max_neighbors> vertex_hex_ids;
+
         {
             offset_t i = 0;
             for (auto const neighbor : neighbors) {
-                if (valid(neighbor))
+                if (valid(neighbor)) {
                     offset_indices[hex_index_t(neighbor, width)] = i++;
-            }
-        }
-
-        for (auto const neighbor : neighbors) {
-            if (valid(neighbor)) {
-                auto const id = hex_id_t(neighbor);
-                auto const v = boost::add_vertex(g);
-                hex_id_property_map[v] = id;
+                    vertex_hex_ids.push_back(hex_id_t(neighbor));
+                }
             }
         }
 
@@ -183,9 +93,13 @@ namespace graph {
                 if (other_vertex == -1)
                     continue;
 
-                std::pair<edge_t, bool> const add_edge_result =
-                    boost::add_edge(0, other_vertex, g);
-                edge_weight_map[add_edge_result.first] = weight(hc, adjacent_hc);
+                sources.push_back(0);
+                sources.push_back(other_vertex);
+                targets.push_back(other_vertex);
+                targets.push_back(0);
+                edge_data_t const edge_weight{weight(hc, adjacent_hc)};
+                edge_data.push_back(edge_weight);
+                edge_data.push_back(edge_weight);
             }
 
             auto current = hc;
@@ -212,10 +126,13 @@ namespace graph {
                             int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
-                                std::pair<edge_t, bool> const add_edge_result =
-                                    boost::add_edge(current_vertex, other_vertex, g);
-                                edge_weight_map[add_edge_result.first] =
-                                    weight(current, adjacent_hc);
+                                sources.push_back(current_vertex);
+                                sources.push_back(other_vertex);
+                                targets.push_back(other_vertex);
+                                targets.push_back(current_vertex);
+                                edge_data_t const edge_weight{weight(current, adjacent_hc)};
+                                edge_data.push_back(edge_weight);
+                                edge_data.push_back(edge_weight);
                             }
                         }
 
@@ -225,10 +142,13 @@ namespace graph {
                             int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
-                                std::pair<edge_t, bool> const add_edge_result =
-                                    boost::add_edge(current_vertex, other_vertex, g);
-                                edge_weight_map[add_edge_result.first] =
-                                    weight(current, adjacent_hc);
+                                sources.push_back(current_vertex);
+                                sources.push_back(other_vertex);
+                                targets.push_back(other_vertex);
+                                targets.push_back(current_vertex);
+                                edge_data_t const edge_weight{weight(current, adjacent_hc)};
+                                edge_data.push_back(edge_weight);
+                                edge_data.push_back(edge_weight);
                             }
                         }
 
@@ -238,10 +158,13 @@ namespace graph {
                             int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
-                                std::pair<edge_t, bool> const add_edge_result =
-                                    boost::add_edge(current_vertex, other_vertex, g);
-                                edge_weight_map[add_edge_result.first] =
-                                    weight(current, adjacent_hc);
+                                sources.push_back(current_vertex);
+                                sources.push_back(other_vertex);
+                                targets.push_back(other_vertex);
+                                targets.push_back(current_vertex);
+                                edge_data_t const edge_weight{weight(current, adjacent_hc)};
+                                edge_data.push_back(edge_weight);
+                                edge_data.push_back(edge_weight);
                             }
                         }
 
@@ -252,10 +175,13 @@ namespace graph {
                                 int const other_vertex =
                                     offset_indices[hex_index_t(adjacent_hc, width)];
                                 if (other_vertex != -1) {
-                                    std::pair<edge_t, bool> const add_edge_result =
-                                        boost::add_edge(current_vertex, other_vertex, g);
-                                    edge_weight_map[add_edge_result.first] =
-                                        weight(current, adjacent_hc);
+                                    sources.push_back(current_vertex);
+                                    sources.push_back(other_vertex);
+                                    targets.push_back(other_vertex);
+                                    targets.push_back(current_vertex);
+                                    edge_data_t const edge_weight{weight(current, adjacent_hc)};
+                                    edge_data.push_back(edge_weight);
+                                    edge_data.push_back(edge_weight);
                                 }
                             }
                         }
@@ -263,6 +189,23 @@ namespace graph {
                 }
             }
         }
+
+        graph::graph_t retval(
+            boost::construct_inplace_from_sources_and_targets,
+            sources,
+            targets,
+            edge_data,
+            vertex_hex_ids.size()
+        );
+
+        {
+            int i = 0;
+            for (auto const hex_id : vertex_hex_ids) {
+                retval[i++].hex_id = hex_id;
+            }
+        }
+
+        return retval;
     }
 
 }

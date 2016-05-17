@@ -23,15 +23,13 @@ namespace {
     };
 
     template <typename Graph, typename Edge, typename Vertex, std::size_t N>
-    struct bfs_visitor_t
+    struct bfs_visitor_t : boost::default_bfs_visitor
     {
         bfs_visitor_t (std::array<int, N> & distances, int * predecessors) :
             distances_ (distances),
             predecessors_ (predecessors),
             source_ (-1)
         {}
-
-        void initialize_vertex (Vertex v, const Graph & g) {}
 
         void discover_vertex (Vertex v, const Graph & g)
         {
@@ -46,14 +44,6 @@ namespace {
 
         void examine_vertex (Vertex v, const Graph & g)
         { source_ = v; }
-
-        void examine_edge (Edge e, const Graph & g) {}
-        void tree_edge (Edge e, const Graph & g) {}
-
-        void non_tree_edge (Edge e, const Graph & g) {}
-        void gray_target (Edge e, const Graph & g) {}
-        void black_target (Edge e, const Graph & g) {}
-        void finish_vertex (Vertex v, const Graph & g) {}
 
         std::array<int, N> & distances_;
         int * predecessors_;
@@ -283,13 +273,7 @@ std::vector<supply_grid_t> find_supply_grids (
 
                 auto const starting_hc = starting_hex_index.to_hex_coord(width);
 
-                graph::graph_t g;
-                graph::hex_id_property_map_t hex_id_property_map;
-                graph::edge_weight_property_map_t edge_weight_map;
-                init_graph(
-                    g,
-                    hex_id_property_map,
-                    edge_weight_map,
+                graph::graph_t g = graph::local_graph(
                     starting_hc,
                     [&](hex_coord_t hc) {
                         auto const & hex = supply_determination_hexes[hex_index_t(hc, width)];
@@ -309,9 +293,7 @@ std::vector<supply_grid_t> find_supply_grids (
                     supply_grid_t::supply_source_t{hex_id_t(starting_hc)};
 #endif
 
-                boost::queue<int> buf;
                 std::array<int, max_neighbors> distances = {{0}};
-                std::array<int, max_neighbors> colors = {{0}};
 
                 using visitor_t = bfs_visitor_t<
                     graph::graph_t,
@@ -328,16 +310,14 @@ std::vector<supply_grid_t> find_supply_grids (
 
                 boost::breadth_first_search(
                     g,
-                    vertex(0, g),
-                    buf,
-                    visitor_t{distances, predecessors},
-                    &colors[0]
+                    0,
+                    boost::visitor(visitor_t{distances, predecessors})
                 );
 
                 auto const vertices = (int)num_vertices(g);
                 for (int i = 1; i < vertices; ++i) {
                     if (0 < distances[i] && distances[i] <= max_useful_hex_distance) {
-                        hex_id_t const hex_id(hex_id_property_map[i]);
+                        auto const hex_id = g[i].hex_id;
                         auto const hex_index = hex_id.to_hex_index(width);
                         auto & hex = supply_determination_hexes[hex_index];
 
@@ -375,7 +355,7 @@ std::vector<supply_grid_t> find_supply_grids (
                             supply_source.path_.reserve(max_useful_hex_distance);
                             int v = i;
                             while (v != 0) {
-                                hex_id_t const v_hex_id(hex_id_property_map[v]);
+                                auto const v_hex_id = g[v].hex_id;
                                 supply_source.path_.insert(supply_source.path_.begin(), v_hex_id);
                                 v = predecessors[v];
                             }

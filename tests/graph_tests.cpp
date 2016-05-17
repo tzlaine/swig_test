@@ -19,13 +19,7 @@ TEST(graph_tests, init_graph)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    graph::graph_t g;
-    graph::hex_id_property_map_t hex_id_property_map;
-    graph::edge_weight_property_map_t edge_weight_map;
-    init_graph(
-        g,
-        hex_id_property_map,
-        edge_weight_map,
+    graph::graph_t g = graph::local_graph(
         hex_id_t(1411).to_hex_coord(),
         [](hex_coord_t hc) { return true; },
         [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
@@ -44,13 +38,7 @@ TEST(graph_tests, init_graph_at_origin)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    graph::graph_t g;
-    graph::hex_id_property_map_t hex_id_property_map;
-    graph::edge_weight_property_map_t edge_weight_map;
-    init_graph(
-        g,
-        hex_id_property_map,
-        edge_weight_map,
+    graph::graph_t g = graph::local_graph(
         hex_id_t(101).to_hex_coord(),
         [](hex_coord_t hc) { return true; },
         [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
@@ -69,13 +57,7 @@ TEST(graph_tests, init_graph_near_bottom)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    graph::graph_t g;
-    graph::hex_id_property_map_t hex_id_property_map;
-    graph::edge_weight_property_map_t edge_weight_map;
-    init_graph(
-        g,
-        hex_id_property_map,
-        edge_weight_map,
+    graph::graph_t g = graph::local_graph(
         hex_id_t(1417).to_hex_coord(),
         [](hex_coord_t hc) { return true; },
         [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
