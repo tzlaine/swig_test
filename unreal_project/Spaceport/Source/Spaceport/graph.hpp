@@ -34,7 +34,7 @@ namespace graph {
     };
 
     using graph_t = boost::compressed_sparse_row_graph<
-        boost::directedS,
+        boost::bidirectionalS,
         vertex_data_t,
         edge_data_t,
         boost::no_property,
@@ -63,13 +63,9 @@ namespace graph {
         offset_t * offset_indices = (offset_t *)alloca(width * height * sizeof(offset_t));
         std::fill(offset_indices, offset_indices + width * height, offset_t{-1});
 
-        std::vector<int> sources;
-        std::vector<int> targets;
-        std::vector<edge_data_t> edge_data;
-
-        sources.reserve(2 * 6 * max_neighbors);
-        targets.reserve(2 * 6 * max_neighbors);
-        edge_data.reserve(2 * 6 * max_neighbors);
+        using edge_pair_t = std::pair<int, int>;
+        boost::container::static_vector<edge_pair_t, 6 * max_neighbors> edges;
+        boost::container::static_vector<edge_data_t, 6 * max_neighbors> edge_data;
 
         boost::container::static_vector<hex_id_t, max_neighbors> vertex_hex_ids;
 
@@ -93,12 +89,8 @@ namespace graph {
                 if (other_vertex == -1)
                     continue;
 
-                sources.push_back(0);
-                sources.push_back(other_vertex);
-                targets.push_back(other_vertex);
-                targets.push_back(0);
+                edges.push_back(edge_pair_t(0, other_vertex));
                 edge_data_t const edge_weight{weight(hc, adjacent_hc)};
-                edge_data.push_back(edge_weight);
                 edge_data.push_back(edge_weight);
             }
 
@@ -126,12 +118,8 @@ namespace graph {
                             int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
-                                sources.push_back(current_vertex);
-                                sources.push_back(other_vertex);
-                                targets.push_back(other_vertex);
-                                targets.push_back(current_vertex);
+                                edges.push_back(edge_pair_t(current_vertex, other_vertex));
                                 edge_data_t const edge_weight{weight(current, adjacent_hc)};
-                                edge_data.push_back(edge_weight);
                                 edge_data.push_back(edge_weight);
                             }
                         }
@@ -142,12 +130,8 @@ namespace graph {
                             int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
-                                sources.push_back(current_vertex);
-                                sources.push_back(other_vertex);
-                                targets.push_back(other_vertex);
-                                targets.push_back(current_vertex);
+                                edges.push_back(edge_pair_t(current_vertex, other_vertex));
                                 edge_data_t const edge_weight{weight(current, adjacent_hc)};
-                                edge_data.push_back(edge_weight);
                                 edge_data.push_back(edge_weight);
                             }
                         }
@@ -158,12 +142,8 @@ namespace graph {
                             int const other_vertex =
                                 offset_indices[hex_index_t(adjacent_hc, width)];
                             if (other_vertex != -1) {
-                                sources.push_back(current_vertex);
-                                sources.push_back(other_vertex);
-                                targets.push_back(other_vertex);
-                                targets.push_back(current_vertex);
+                                edges.push_back(edge_pair_t(current_vertex, other_vertex));
                                 edge_data_t const edge_weight{weight(current, adjacent_hc)};
-                                edge_data.push_back(edge_weight);
                                 edge_data.push_back(edge_weight);
                             }
                         }
@@ -175,12 +155,8 @@ namespace graph {
                                 int const other_vertex =
                                     offset_indices[hex_index_t(adjacent_hc, width)];
                                 if (other_vertex != -1) {
-                                    sources.push_back(current_vertex);
-                                    sources.push_back(other_vertex);
-                                    targets.push_back(other_vertex);
-                                    targets.push_back(current_vertex);
+                                    edges.push_back(edge_pair_t(current_vertex, other_vertex));
                                     edge_data_t const edge_weight{weight(current, adjacent_hc)};
-                                    edge_data.push_back(edge_weight);
                                     edge_data.push_back(edge_weight);
                                 }
                             }
@@ -191,10 +167,9 @@ namespace graph {
         }
 
         graph::graph_t retval(
-            boost::construct_inplace_from_sources_and_targets,
-            sources,
-            targets,
-            edge_data,
+            boost::edges_are_unsorted_multi_pass,
+            edges.begin(), edges.end(),
+            edge_data.begin(),
             vertex_hex_ids.size()
         );
 
