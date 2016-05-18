@@ -317,7 +317,7 @@ std::vector<supply_grid_t> find_supply_grids (
 
                 auto const starting_hc = starting_hex_index.to_hex_coord(width);
 
-                boost::container::static_vector<bool, max_neighbors> valid_vertices;
+                std::array<bool, max_neighbors> valid_vertices;
                 {
                     int i = 0;
                     for (auto offset : starting_hc.x % 2 == 0 ? even_neighbor_offsets : odd_neighbor_offsets) {
