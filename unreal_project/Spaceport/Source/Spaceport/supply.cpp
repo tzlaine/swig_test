@@ -9,6 +9,7 @@
 
 #include <boost/graph/breadth_first_search.hpp>
 #include <boost/graph/visitors.hpp>
+#include <boost/graph/filtered_graph.hpp>
 
 
 namespace {
@@ -49,6 +50,47 @@ namespace {
         int * predecessors_;
         int source_;
     };
+
+    using edge_descriptor_t =
+        typename boost::graph_traits<graph::graph_t>::edge_descriptor;
+
+    struct edge_filter_t
+    {
+        edge_filter_t () :
+            g_ (nullptr),
+            vertices_ (nullptr)
+        {}
+
+        explicit edge_filter_t (graph::graph_t const & g, bool * vertices) :
+            g_ (&g),
+            vertices_ (vertices)
+        {}
+
+        bool operator() (edge_descriptor_t e) const
+        { return vertices_[boost::source(e, *g_)] && vertices_[boost::target(e, *g_)]; }
+
+        graph::graph_t const * g_;
+        bool * vertices_;
+    };
+
+    struct vertex_filter_t
+    {
+        vertex_filter_t () :
+            vertices_ (nullptr)
+        {}
+
+        explicit vertex_filter_t (bool * vertices) :
+            vertices_ (vertices)
+        {}
+
+        bool operator() (int v) const
+        { return vertices_[v]; }
+
+        bool * vertices_;
+    };
+
+    using filtered_graph_t =
+        boost::filtered_graph<graph::graph_t, edge_filter_t, vertex_filter_t>;
 
 }
 
@@ -245,6 +287,8 @@ std::vector<supply_grid_t> find_supply_grids (
 
     std::sort(supply_sources.begin(), supply_sources.end());
 
+    graph::graph_t full_graph = graph::full_local_graph();
+
     std::vector<hex_index_t> supply_source_stack;
     std::vector<hex_index_t> supply_point_stack;
     if (!supply_sources.empty()) {
@@ -273,15 +317,27 @@ std::vector<supply_grid_t> find_supply_grids (
 
                 auto const starting_hc = starting_hex_index.to_hex_coord(width);
 
-                graph::graph_t g = graph::local_graph(
-                    starting_hc,
-                    [&](hex_coord_t hc) {
-                        auto const & hex = supply_determination_hexes[hex_index_t(hc, width)];
-                        return !hex.already_assigned_grid && !hex.impassable;
-                    },
-                    [](hex_coord_t lhs, hex_coord_t rhs) { return 1.0f; },
-                    width,
-                    height
+                boost::container::static_vector<bool, max_neighbors> valid_vertices;
+                {
+                    int i = 0;
+                    for (auto offset : starting_hc.x % 2 == 0 ? even_neighbor_offsets : odd_neighbor_offsets) {
+                        hex_coord_t const neighbor{starting_hc.x + offset.x, starting_hc.y + offset.y};
+                        bool valid = false;
+                        if (on_map(neighbor, width, height)) {
+                            auto const & hex =
+                                supply_determination_hexes[hex_index_t(neighbor, width)];
+                            valid = !hex.already_assigned_grid && !hex.impassable;
+                        }
+                        valid_vertices[i] = valid;
+                        full_graph[i].hex_id = hex_id_t(neighbor);
+                        ++i;
+                    }
+                }
+
+                filtered_graph_t g(
+                    full_graph,
+                    edge_filter_t(full_graph, &valid_vertices[0]),
+                    vertex_filter_t(&valid_vertices[0])
                 );
 
                 grid.supply_points.push_back(starting_hc);
@@ -296,8 +352,8 @@ std::vector<supply_grid_t> find_supply_grids (
                 std::array<int, max_neighbors> distances = {{0}};
 
                 using visitor_t = bfs_visitor_t<
-                    graph::graph_t,
-                    typename boost::graph_traits<graph::graph_t>::edge_descriptor,
+                    filtered_graph_t,
+                    edge_descriptor_t,
                     int,
                     max_neighbors
                 >;
