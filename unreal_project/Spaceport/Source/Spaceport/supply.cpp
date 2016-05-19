@@ -269,11 +269,10 @@ std::vector<supply_grid_t> find_supply_grids (
                     hex_index_t const hex_index(adjacent_coord, width);
                     auto const adjacent_hex = supply_determination_hexes[hex_index];
                     auto const & adjacent_contents = adjacent_hex.supply_relevant_contents;
-                    unblocked_by_adjacent_contents |=
-                        adjacent_contents.friendly_ships;
-                    blocked_by_adjacent_contents |=
-                        adjacent_contents.enemy_ships ||
-                        adjacent_contents.enemy_bases;
+                    if (adjacent_contents.friendly_ships)
+                        unblocked_by_adjacent_contents = true;
+                    if (adjacent_contents.enemy_ships || adjacent_contents.enemy_bases)
+                        blocked_by_adjacent_contents = true;
                 }
             }
 

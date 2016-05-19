@@ -10,4 +10,5 @@ inline bool operator< (FColor lhs, FColor rhs)
 #ifdef _MSC_VER
 #pragma warning(disable: 4125)
 #pragma warning(disable: 4800)
+#pragma warning(disable: 4913) // user defined binary operator ',' exists but no overload could convert all operands, default built-in binary operator ',' used
 #endif

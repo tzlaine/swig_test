@@ -437,7 +437,7 @@ void Ahex_map::create_offmap_areas ()
         std::transform(
             offmap_area.adjacent_hexes.begin(), offmap_area.adjacent_hexes.end(),
             adjacent_hexes.begin(),
-            [](int hex_id) { return to_hex_coord(hex_id); }
+            [](int id) { return hex_id_t(id).to_hex_coord(); }
         );
         std::sort(adjacent_hexes.begin(), adjacent_hexes.end());
 
@@ -485,7 +485,7 @@ void Ahex_map::create_offmap_areas ()
         auto feature_hex_it = offmap_area.feature_hexes.begin();
         for (auto const feature : offmap_area.features) {
             // TODO: For now, only SBs may appear as features....
-            auto const hc = to_hex_coord(*feature_hex_it++);
+            auto const hc = hex_id_t(*feature_hex_it++).to_hex_coord();
             auto location = hex_location(hc, map);
             location.Z = hex_map_config.offmap_z * meters;
             FTransform const transform(
@@ -652,10 +652,10 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
     int star_points = 5;
     {
         auto const & nation = start_data_.nation(owner_id);
-        auto const id = to_hex_id(map_hex.coord);
+        auto const id = hex_id_t(map_hex.coord);
         capital_hex = std::count_if(
             nation.capital.hexes.begin(), nation.capital.hexes.end(),
-            [=](start_data::capital_hex_t const & capital_hex) { return capital_hex.coord == id; }
+            [=](start_data::capital_hex_t const & capital_hex) { return capital_hex.coord == id.to_int(); }
         );
         star_points = nation.capital_star_points;
     }
