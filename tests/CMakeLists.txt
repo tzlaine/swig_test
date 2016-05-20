@@ -17,7 +17,7 @@ target_link_libraries(
     start_data
     game_data
     visual_config
-    adobe_name
+    asl
     jansson
     gtest
     gtest_main
@@ -45,7 +45,7 @@ target_link_libraries(
     game_data
     graph
     visual_config
-    adobe_name
+    asl
     jansson
     gtest
     gtest_main

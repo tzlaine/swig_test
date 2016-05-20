@@ -200,10 +200,21 @@ include_directories(
     ${unreal_src_dir}
     ${unreal_3rd_party_root}/Protobuf/Includes
     ${CMAKE_CURRENT_BINARY_DIR}
+    adobe_source_libraries
 )
 
 add_definitions(-DBUILD_FOR_TEST)
 
 add_subdirectory(src)
+
+set(USE_LOCAL_COPY_OF_BOOST true)
+set(LOCAL_BOOST_LIBRARYDIR ${boost_dir})
+set(LOCAL_BOOST_INCLUDE_DIRS ${CMAKE_BINARY_DIR/src})
+set(Boost_UNIT_TEST_FRAMEWORK_LIBRARY boost_unit_test_framework)
+set(Boost_SYSTEM_LIBRARY boost_system)
+set(Boost_FILESYSTEM_LIBRARY boost_filesystem)
+set(Boost_THREAD_LIBRARY boost_thread)
+add_subdirectory(adobe_source_libraries)
+
 add_subdirectory(tests)
 add_subdirectory(perf)

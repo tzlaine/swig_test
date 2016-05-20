@@ -8,7 +8,7 @@ target_link_libraries(
     game_data
     graph
     visual_config
-    adobe_name
+    asl
     jansson
     benchmark
 )

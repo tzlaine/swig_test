@@ -109,17 +109,6 @@ endif ()
 
 
 ########################################
-# adobe_name
-########################################
-add_library(
-    adobe_name
-    STATIC
-    ${unreal_src_dir}/adobe/src/name.cpp
-    ${unreal_src_dir}/adobe/src/string_pool.cpp
-)
-
-
-########################################
 # Boost.System
 ########################################
 add_library(
