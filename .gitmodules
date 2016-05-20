@@ -1,3 +1,6 @@
 [submodule "unreal_project/Spaceport/Content/ships"]
 	path = unreal_project/Spaceport/Content/ships
 	url = git@github.com:tzlaine/ships.git
+[submodule "adobe_source_libraries"]
+	path = adobe_source_libraries
+	url = git@github.com:tzlaine/adobe_source_libraries.git
