@@ -117,3 +117,109 @@ add_library(
     ${unreal_src_dir}/adobe/src/name.cpp
     ${unreal_src_dir}/adobe/src/string_pool.cpp
 )
+
+
+########################################
+# Boost.System
+########################################
+add_library(
+    boost_system
+    STATIC
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/system/src/error_code.cpp
+)
+
+
+########################################
+# Boost.Filesystem
+########################################
+add_library(
+    boost_filesystem
+    STATIC
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/codecvt_error_category.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/operations.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/path.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/path_traits.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/portability.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/unique_path.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/utf8_codecvt_facet.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/filesystem/src/windows_file_codecvt.cpp
+)
+
+
+########################################
+# Boost.Thread
+########################################
+if (WIN32)
+    set(boost_thread_sources
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/win32/thread.cpp
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/win32/tss_dll.cpp
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/win32/tss_pe.cpp
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/future.cpp
+    )
+else ()
+    set(boost_thread_sources
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/pthread/thread.cpp
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/pthread/once.cpp
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/thread/src/future.cpp
+    )
+endif ()
+
+add_library(
+    boost_thread
+    STATIC
+    ${boost_thread_sources}
+)
+
+
+install(
+    TARGETS boost_system boost_filesystem boost_thread
+    DESTINATION ${unreal_3rd_party_root}/Boost/Libraries
+)
+
+
+# These last two are only used for the adobe_source_libraries' tests.
+
+########################################
+# Boost.ProgramOptions
+########################################
+add_library(
+    boost_program_options
+    STATIC
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/cmdline.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/config_file.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/options_description.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/parsers.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/variables_map.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/value_semantic.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/positional_options.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/utf8_codecvt_facet.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/convert.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/winmain.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/program_options/src/split.cpp
+)
+
+
+########################################
+# Boost.Test
+########################################
+add_library(
+    boost_unit_test_framework
+    STATIC
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/compiler_log_formatter.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/debug.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/decorator.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/execution_monitor.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/framework.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/plain_report_formatter.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/progress_monitor.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/results_collector.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/results_reporter.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/test_tools.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/test_tree.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/unit_test_log.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/unit_test_main.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/unit_test_monitor.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/unit_test_parameters.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/xml_log_formatter.cpp
+    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/test/src/xml_report_formatter.cpp
+)
