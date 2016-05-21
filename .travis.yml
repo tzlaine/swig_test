@@ -3,6 +3,9 @@ script: cmake
 
 git:
     submodules: true
+before_install:
+    - git submodule init
+    - git submodule update
 
 matrix:
     include:
