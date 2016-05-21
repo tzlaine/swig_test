@@ -159,6 +159,10 @@ add_library(
     ${boost_thread_sources}
 )
 
+if (UNIX AND NOT APPLE)
+    target_link_libraries(boost_thread rt)
+endif ()
+
 
 install(
     TARGETS boost_system boost_filesystem boost_thread
