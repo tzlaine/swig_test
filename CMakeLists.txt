@@ -13,6 +13,7 @@ endif ()
 
 if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+    add_definitions(-DADOBE_FNV_NO_BIGINTS -DBOOST_ALL_NO_LIB)
 endif ()
 
 add_subdirectory(googletest)
