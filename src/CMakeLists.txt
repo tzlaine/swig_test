@@ -111,12 +111,13 @@ endif ()
 ########################################
 # Boost.System
 ########################################
-add_library(
-    boost_system
-    STATIC
-    ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/system/src/error_code.cpp
-)
-
+if (NOT MSVC)
+    add_library(
+        boost_system
+        STATIC
+        ${CMAKE_SOURCE_DIR}/boost_1_60_0/libs/system/src/error_code.cpp
+    )
+endif ()
 
 ########################################
 # Boost.Filesystem
@@ -165,7 +166,7 @@ endif ()
 
 
 install(
-    TARGETS boost_system boost_filesystem boost_thread
+    TARGETS boost_filesystem boost_thread
     DESTINATION ${unreal_3rd_party_root}/Boost/Libraries
 )
 

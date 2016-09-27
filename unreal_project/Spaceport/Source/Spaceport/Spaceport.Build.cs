@@ -5,14 +5,9 @@ using System.IO;
 
 public class Spaceport : ModuleRules
 {
-    private string ModulePath
-    {
-        get { return Path.GetDirectoryName(RulesCompiler.GetModuleFilename(this.GetType().Name)); }
-    }
-
     private string ThirdPartyPath
     {
-        get { return Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/")); }
+        get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../ThirdParty/")); }
     }
 
     public Spaceport(TargetInfo Target)
@@ -34,10 +29,11 @@ public class Spaceport : ModuleRules
         //		}
         // }
 
-        PublicIncludePaths.Add(Path.Combine(ModulePath, "../../../../", "boost_1_60_0"));
+        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../../../", "boost_1_60_0"));
 
         LoadProtobuf(Target);
         LoadJansson(Target);
+        LoadASL(Target);
     }
 
     public bool LoadProtobuf(TargetInfo Target)
@@ -79,6 +75,28 @@ public class Spaceport : ModuleRules
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, jansson_lib));
         PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Jansson", "Includes"));
         //Definitions.Add(string.Format("USE_JANSSON=1"));
+
+        return true;
+    }
+
+    public bool LoadASL(TargetInfo Target)
+    {
+        string libraries_path = Path.Combine(ThirdPartyPath, "ASL", "Libraries");
+
+        string asl_lib;
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            asl_lib = "asl.lib";
+        }
+        else // TODO: Untested!
+        {
+            asl_lib = "libasl.a";
+        }
+
+        PublicAdditionalLibraries.Add(Path.Combine(libraries_path, asl_lib));
+
+        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../../../", "adobe_source_libraries"));
+        Definitions.Add(string.Format("ADOBE_FNV_NO_BIGINTS"));
 
         return true;
     }
