@@ -97,6 +97,7 @@ public class Spaceport : ModuleRules
 
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../../../", "adobe_source_libraries"));
         Definitions.Add(string.Format("ADOBE_FNV_NO_BIGINTS"));
+        Definitions.Add(string.Format("ADOBE_NO_MSVC64_PROMOTION_ERROR"));
 
         return true;
     }
