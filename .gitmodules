@@ -4,3 +4,6 @@
 [submodule "adobe_source_libraries"]
 	path = adobe_source_libraries
 	url = ../adobe_source_libraries.git
+[submodule "adobe_platform_libraries"]
+	path = adobe_platform_libraries
+	url = git@github.com:tzlaine/adobe_platform_libraries.git
