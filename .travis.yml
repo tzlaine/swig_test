@@ -156,8 +156,6 @@ script:
     - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX_PATH ..
     - make -j2 VERBOSE=1
     - make check VERBOSE=1
-    - (cd adobe_source_libraries/test && ctest -C $BUILD_TYPE -VV)
-    - (cd adobe_source_libraries/test/spirit2 && ctest -C $BUILD_TYPE -VV)
     - make install
     - cd ..
     - rm -rf build/

@@ -28,7 +28,3 @@ build_script:
  - cmd: cmake .. -G"%GENERATOR%"
  - cmd: cmake --build . --config %CONFIG%
  - cmd: cmake --build . --config %CONFIG% --target check
- - cmd: cd adobe_source_libraries\test
- - cmd: ctest -C %CONFIG% -VV
- - cmd: cd spirit2
- - cmd: ctest -C %CONFIG% -VV

@@ -5,7 +5,12 @@ include(CTest)
 
 enable_testing()
 
-add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR})
+add_custom_target(
+    check
+    COMMAND ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR}
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR}/adobe_source_libraries/test ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR}
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR}/adobe_source_libraries/test/spirit2_parser ${CMAKE_CTEST_COMMAND} -VV -C ${CMAKE_CFG_INTDIR}
+)
 
 include_directories(
     ${CMAKE_BINARY_DIR}
