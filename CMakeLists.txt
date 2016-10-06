@@ -17,7 +17,6 @@ if (MSVC)
         -DADOBE_FNV_NO_BIGINTS
         -DBOOST_ALL_NO_LIB
         -DBOOST_SYSTEM_NO_DEPRECATED
-        -DADOBE_NO_MSVC64_PROMOTION_ERROR
     )
 endif ()
 
