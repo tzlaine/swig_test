@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'graph_algorithms' target in the 'graph_algorithms' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
