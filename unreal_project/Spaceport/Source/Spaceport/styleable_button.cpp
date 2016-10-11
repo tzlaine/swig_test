@@ -5,28 +5,34 @@
 #include "ui_defaults.h"
 
 
-Ustyleable_button::Ustyleable_button ()
+Ustyleable_button::Ustyleable_button () :
+    style_asset_ (nullptr),
+    built_ (false)
 {
     auto const & defaults = ui_defaults();
-    init(defaults.UButton_style_path_);
+    set_style(defaults.UButton_style_path_);
 }
 
-Ustyleable_button::Ustyleable_button (FString const & style_path)
-{ init(style_path); }
-
-TSharedRef<SWidget> Ustyleable_button::RebuildWidget()
+TSharedRef<SWidget> Ustyleable_button::RebuildWidget ()
 {
     auto retval = Super::RebuildWidget();
-
-    SButton::FArguments args;
-    args.ButtonStyle(style_asset_);
-    WidgetStyle = *args._ButtonStyle;
-
+    apply_style();
+    built_ = true;
     return retval;
 }
 
-void Ustyleable_button::init (FString const & style_path)
+void Ustyleable_button::set_style (FString const & style_path)
 {
     ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> style(*style_path);
     style_asset_ = style.Object;
+
+    if (built_)
+        apply_style();
+}
+
+void Ustyleable_button::apply_style ()
+{
+    SButton::FArguments args;
+    args.ButtonStyle(style_asset_);
+    WidgetStyle = *args._ButtonStyle;
 }

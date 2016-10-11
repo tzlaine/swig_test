@@ -17,12 +17,15 @@ class SPACEPORT_API Ustyleable_text_block : public UTextBlock
 
 public:
     Ustyleable_text_block ();
-    Ustyleable_text_block (FText const & text, FString const & font_path, FString const & style_path);
 
-    virtual TSharedRef<SWidget> RebuildWidget() override;
+    virtual TSharedRef<SWidget> RebuildWidget () override;
+
+    void set_style (FString const & style_path);
+    void set_font (FString const & font_path);
 
 private:
-    void init (FString const & font_path, FString const & style_path);
+    void apply_style ();
 
     USlateWidgetStyleAsset* style_asset_;
+    bool built_;
 };

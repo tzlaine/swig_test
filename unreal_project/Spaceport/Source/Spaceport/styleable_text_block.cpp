@@ -5,34 +5,41 @@
 #include "ui_defaults.h"
 
 
-Ustyleable_text_block::Ustyleable_text_block ()
+Ustyleable_text_block::Ustyleable_text_block () :
+    style_asset_ (nullptr),
+    built_ (false)
 {
     auto const & defaults = ui_defaults();
-    init(defaults.font_path_, defaults.UTextBlock_style_path_);
+    set_font(defaults.font_path_);
+    set_style(defaults.UTextBlock_style_path_);
 }
 
-Ustyleable_text_block::Ustyleable_text_block (FText const & text, FString const & font_path, FString const & style_path)
-{
-    init(font_path, style_path);
-    SetText(text);
-}
-
-TSharedRef<SWidget> Ustyleable_text_block::RebuildWidget()
+TSharedRef<SWidget> Ustyleable_text_block::RebuildWidget ()
 {
     auto retval = Super::RebuildWidget();
-
-    STextBlock::FArguments args;
-    args.TextStyle(style_asset_);
-    MyTextBlock->SetTextStyle(args._TextStyle);
-
+    apply_style();
+    built_ = true;
     return retval;
 }
 
-void Ustyleable_text_block::init (FString const & font_path, FString const & style_path)
+void Ustyleable_text_block::set_font (FString const & font_path)
 {
     ConstructorHelpers::FObjectFinder<UFont> font(*font_path);
     SetFont(font.Object->GetLegacySlateFontInfo());
+}
 
+void Ustyleable_text_block::set_style (FString const & style_path)
+{
     ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> style(*style_path);
     style_asset_ = style.Object;
+
+    if (built_)
+        apply_style();
+}
+
+void Ustyleable_text_block::apply_style ()
+{
+    STextBlock::FArguments args;
+    args.TextStyle(style_asset_);
+    MyTextBlock->SetTextStyle(args._TextStyle);
 }

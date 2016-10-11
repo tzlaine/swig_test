@@ -17,12 +17,14 @@ class SPACEPORT_API Ustyleable_button : public UButton
 
 public:
     Ustyleable_button ();
-    Ustyleable_button (FString const & style_path);
 
-    virtual TSharedRef<SWidget> RebuildWidget() override;
+    virtual TSharedRef<SWidget> RebuildWidget () override;
+
+    void set_style (FString const & style_path);
 
 private:
-    void init (FString const & style_path);
+    void apply_style ();
 
     USlateWidgetStyleAsset* style_asset_;
+    bool built_;
 };
