@@ -13,7 +13,7 @@
 UCLASS()
 class SPACEPORT_API Ustyleable_button : public UButton
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     Ustyleable_button ();

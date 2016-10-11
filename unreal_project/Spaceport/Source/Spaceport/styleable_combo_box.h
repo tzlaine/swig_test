@@ -3,25 +3,24 @@
 #pragma once
 
 #include "Runtime/UMG/Public/UMG.h"
-#include "Components/TextBlock.h"
+#include "Components/ComboBox.h"
 
-#include "styleable_text_block.generated.h"
+#include "styleable_combo_box.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPACEPORT_API Ustyleable_text_block : public UTextBlock
+class SPACEPORT_API Ustyleable_combo_box : public UComboBox
 {
     GENERATED_BODY()
 
 public:
-    Ustyleable_text_block ();
+    Ustyleable_combo_box ();
 
     virtual TSharedRef<SWidget> RebuildWidget () override;
 
     void set_style (FString const & style_path);
-    void set_font (FString const & font_path);
 
 private:
     void apply_style ();
