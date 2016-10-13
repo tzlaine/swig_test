@@ -3,20 +3,19 @@
 #pragma once
 
 #include "Runtime/UMG/Public/UMG.h"
-#include "Components/ComboBox.h"
-
-#include "styleable_combo_box.generated.h"
+#include "Components/SpinBox.h"
+#include "styleable_spin_box.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPACEPORT_API Ustyleable_combo_box : public UComboBox
+class SPACEPORT_API Ustyleable_spin_box : public USpinBox
 {
     GENERATED_BODY()
 
 public:
-    Ustyleable_combo_box ();
+    Ustyleable_spin_box ();
 
     virtual TSharedRef<SWidget> RebuildWidget () override;
 

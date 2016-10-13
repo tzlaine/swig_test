@@ -8,6 +8,7 @@ struct ui_defaults_t
     FString UButton_style_path_;
     FString UCheckBox_style_path_;
     FString UComboBox_style_path_;
+    FString USpinBox_style_path_;
     FString UTextBlock_style_path_;
 };
 
@@ -24,6 +25,7 @@ inline ui_defaults_t const & ui_defaults()
         retval.UButton_style_path_ = TEXT("/Game/ui/styles/button_style");
         retval.UCheckBox_style_path_ = TEXT("/Game/ui/styles/check_box_style");
         retval.UComboBox_style_path_ = TEXT("/Game/ui/styles/combo_box_style");
+        retval.USpinBox_style_path_ = TEXT("/Game/ui/styles/spin_box_style");
         retval.UTextBlock_style_path_ = TEXT("/Game/ui/styles/text_block_style");
 
         once = false;

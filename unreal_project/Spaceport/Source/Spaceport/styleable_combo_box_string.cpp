@@ -1,20 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Spaceport.h"
-#include "styleable_text_block.h"
+#include "styleable_combo_box_string.h"
 #include "ui_defaults.h"
 
 
-Ustyleable_text_block::Ustyleable_text_block () :
+Ustyleable_combo_box_string::Ustyleable_combo_box_string () :
     style_asset_ (nullptr),
     built_ (false)
 {
     auto const & defaults = ui_defaults();
-    set_style(defaults.UTextBlock_style_path_);
+    set_style(defaults.UComboBox_style_path_);
     set_font(defaults.font_path_);
 }
 
-TSharedRef<SWidget> Ustyleable_text_block::RebuildWidget ()
+TSharedRef<SWidget> Ustyleable_combo_box_string::RebuildWidget ()
 {
     auto retval = Super::RebuildWidget();
     apply_style();
@@ -22,7 +22,7 @@ TSharedRef<SWidget> Ustyleable_text_block::RebuildWidget ()
     return retval;
 }
 
-void Ustyleable_text_block::set_style (FString const & style_path)
+void Ustyleable_combo_box_string::set_style (FString const & style_path)
 {
     ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> style(*style_path);
     style_asset_ = style.Object;
@@ -31,15 +31,15 @@ void Ustyleable_text_block::set_style (FString const & style_path)
         apply_style();
 }
 
-void Ustyleable_text_block::set_font (FString const & font_path)
+void Ustyleable_combo_box_string::set_font (FString const & font_path)
 {
     ConstructorHelpers::FObjectFinder<UFont> font(*font_path);
-    SetFont(font.Object->GetLegacySlateFontInfo());
+    Font = font.Object->GetLegacySlateFontInfo();
 }
 
-void Ustyleable_text_block::apply_style ()
+void Ustyleable_combo_box_string::apply_style ()
 {
-    STextBlock::FArguments args;
-    args.TextStyle(style_asset_);
-    MyTextBlock->SetTextStyle(args._TextStyle);
+    SComboBox<TSharedPtr<FString>>::FArguments args;
+    args.ComboBoxStyle(style_asset_);
+    MyComboBox->Construct(args);
 }

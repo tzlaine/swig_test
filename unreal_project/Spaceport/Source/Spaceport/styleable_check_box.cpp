@@ -34,5 +34,5 @@ void Ustyleable_check_box::apply_style ()
 {
     SCheckBox::FArguments args;
     args.Style(style_asset_);
-    MyCheckbox->SetStyle(args._Style);
+    WidgetStyle = *args._Style;
 }
