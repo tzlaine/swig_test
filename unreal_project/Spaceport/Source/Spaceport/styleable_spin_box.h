@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Runtime/UMG/Public/UMG.h"
+#include "ui_util.h"
 #include "Components/SpinBox.h"
 #include "styleable_spin_box.generated.h"
 
@@ -14,17 +14,10 @@ class SPACEPORT_API Ustyleable_spin_box : public USpinBox
 {
     GENERATED_BODY()
 
-public:
+    STYLEABLE_WIDGET_PUBLIC();
+
     Ustyleable_spin_box ();
-
-    virtual TSharedRef<SWidget> RebuildWidget () override;
-
-    void set_style (FString const & style_path);
     void set_font (FString const & font_path);
 
-private:
-    void apply_style ();
-
-    USlateWidgetStyleAsset* style_asset_;
-    bool built_;
+    STYLEABLE_WIDGET_PRIVATE();
 };

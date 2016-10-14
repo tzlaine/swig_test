@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "Runtime/UMG/Public/UMG.h"
+#include "ui_util.h"
 #include "Components/ComboBoxString.h"
+
 #include "styleable_combo_box_string.generated.h"
 
 /**
@@ -14,17 +15,10 @@ class SPACEPORT_API Ustyleable_combo_box_string : public UComboBoxString
 {
     GENERATED_BODY()
 
-public:
+    STYLEABLE_WIDGET_PUBLIC();
+
     Ustyleable_combo_box_string ();
-
-    virtual TSharedRef<SWidget> RebuildWidget () override;
-
-    void set_style (FString const & style_path);
     void set_font (FString const & font_path);
 
-private:
-    void apply_style ();
-
-    USlateWidgetStyleAsset* style_asset_;
-    bool built_;
+    STYLEABLE_WIDGET_PRIVATE();
 };

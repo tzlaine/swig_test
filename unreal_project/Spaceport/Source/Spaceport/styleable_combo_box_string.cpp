@@ -5,31 +5,13 @@
 #include "ui_defaults.h"
 
 
-Ustyleable_combo_box_string::Ustyleable_combo_box_string () :
-    style_asset_ (nullptr),
-    built_ (false)
-{
-    auto const & defaults = ui_defaults();
+STYLEABLE_WIDGET_IMPL_1(Ustyleable_combo_box_string)
     set_style(defaults.UComboBox_style_path_);
     set_font(defaults.font_path_);
-}
+    ForegroundColor = defaults.UComboBoxString_USpinBox_foreground_color_; // TODO: -> mutator
+STYLEABLE_WIDGET_IMPL_2(Ustyleable_combo_box_string)
 
-TSharedRef<SWidget> Ustyleable_combo_box_string::RebuildWidget ()
-{
-    auto retval = Super::RebuildWidget();
-    apply_style();
-    built_ = true;
-    return retval;
-}
-
-void Ustyleable_combo_box_string::set_style (FString const & style_path)
-{
-    ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> style(*style_path);
-    style_asset_ = style.Object;
-
-    if (built_)
-        apply_style();
-}
+STYLEABLE_WIDGET_IMPL_SET_STYLE(Ustyleable_combo_box_string)
 
 void Ustyleable_combo_box_string::set_font (FString const & font_path)
 {

@@ -3,21 +3,21 @@
 #pragma once
 
 #include "ui_util.h"
-#include "Components/Button.h"
+#include "Components/Slider.h"
 
-#include "styleable_button.generated.h"
+#include "styleable_slider.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPACEPORT_API Ustyleable_button : public UButton
+class SPACEPORT_API Ustyleable_slider : public USlider
 {
     GENERATED_BODY()
 
     STYLEABLE_WIDGET_PUBLIC();
 
-    Ustyleable_button ();
+    Ustyleable_slider ();
 
     STYLEABLE_WIDGET_PRIVATE();
 };
