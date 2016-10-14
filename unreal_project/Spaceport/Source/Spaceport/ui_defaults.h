@@ -10,7 +10,10 @@ struct ui_defaults_t
     FString UComboBox_style_path_;
     FString UEditableText_style_path_;
     FString UEditableTextBox_style_path_;
+    FString UProgressBar_style_path_;
     FString USpinBox_style_path_;
+    FString UScrollBar_style_path_;
+    FString UScrollBox_style_path_;
     FString UTextBlock_style_path_;
 
     FSlateColor UComboBoxString_USpinBox_foreground_color_;
@@ -31,7 +34,10 @@ inline ui_defaults_t const & ui_defaults()
         retval.UComboBox_style_path_ = TEXT("/Game/ui/styles/combo_box_style");
         retval.UEditableText_style_path_ = TEXT("/Game/ui/styles/editable_text_style");
         retval.UEditableTextBox_style_path_ = TEXT("/Game/ui/styles/editable_text_box_style");
+        retval.UProgressBar_style_path_ = TEXT("/Game/ui/styles/progress_style");
         retval.USpinBox_style_path_ = TEXT("/Game/ui/styles/spin_box_style");
+        retval.UScrollBar_style_path_ = TEXT("/Game/ui/styles/scroll_bar_style");
+        retval.UScrollBox_style_path_ = TEXT("/Game/ui/styles/scroll_box_style");
         retval.UTextBlock_style_path_ = TEXT("/Game/ui/styles/text_block_style");
 
         retval.UComboBoxString_USpinBox_foreground_color_ = FLinearColor::White;
