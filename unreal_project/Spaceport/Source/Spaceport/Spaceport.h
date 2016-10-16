@@ -11,4 +11,6 @@ inline bool operator< (FColor lhs, FColor rhs)
 #pragma warning(disable: 4125)
 #pragma warning(disable: 4800)
 #pragma warning(disable: 4913) // user defined binary operator ',' exists but no overload could convert all operands, default built-in binary operator ',' used
+#pragma warning(disable: 4307) // integer constant overflow
+#pragma warning(disable: 4647) // __is_pod() has different value in previous versions
 #endif

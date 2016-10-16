@@ -30,10 +30,46 @@ public class Spaceport : ModuleRules
         // }
 
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../../../", "boost_1_60_0"));
+        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../Source/Spaceport/", "adobe_platform_libraries"));
+        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../Source/Spaceport/", "adobe_platform_libraries", "ue4_umg"));
 
+        LoadBoost(Target);
         LoadProtobuf(Target);
         LoadJansson(Target);
         LoadASL(Target);
+    }
+
+    public bool LoadBoost(TargetInfo Target)
+    {
+        string libraries_path = Path.Combine(ThirdPartyPath, "Boost", "Libraries");
+
+        string boost_lib;
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            boost_lib = "boost_filesystem.lib";
+        }
+        else // TODO: Untested!
+        {
+            boost_lib = "libboost_filesystem.a";
+        }
+        PublicAdditionalLibraries.Add(Path.Combine(libraries_path, boost_lib));
+
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            boost_lib = "boost_thread.lib";
+        }
+        else // TODO: Untested!
+        {
+            boost_lib = "libboost_thread.a";
+        }
+        PublicAdditionalLibraries.Add(Path.Combine(libraries_path, boost_lib));
+
+        Definitions.Add(string.Format("BOOST_ALL_NO_LIB"));
+        Definitions.Add(string.Format("BOOST_NO_RTTI"));
+        //Definitions.Add(string.Format("BOOST_SYSTEM_NO_DEPRECATED"));
+        //Definitions.Add(string.Format("BOOST_ERROR_CODE_HEADER_ONLY"));
+
+        return true;
     }
 
     public bool LoadProtobuf(TargetInfo Target)
@@ -92,11 +128,22 @@ public class Spaceport : ModuleRules
         {
             asl_lib = "libasl.a";
         }
-
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, asl_lib));
+
+        string double_conversion_lib;
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            double_conversion_lib = "double-conversion.lib";
+        }
+        else // TODO: Untested!
+        {
+            double_conversion_lib = "libdouble-conversion.a";
+        }
+        PublicAdditionalLibraries.Add(Path.Combine(libraries_path, double_conversion_lib));
 
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "../../../../", "adobe_source_libraries"));
         Definitions.Add(string.Format("ADOBE_FNV_NO_BIGINTS"));
+        Definitions.Add(string.Format("ADOBE_STD_SERIALIZATION"));
 
         return true;
     }
