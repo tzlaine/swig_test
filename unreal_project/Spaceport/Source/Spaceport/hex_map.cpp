@@ -6,6 +6,9 @@
 #include "data_utility.hpp"
 #include "hex_operations.hpp"
 
+#include "root_widget.h"
+#include "widgets/styleable_button.h"
+
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
 
 #include <algorithm>
@@ -75,6 +78,7 @@ Ahex_map::Ahex_map () :
     cursor_indicator_move_timeline_ (nullptr),
     unit_curve_ (nullptr),
     cursor_indicator_move_fn ()
+    ,showing_ui_(false)
 {
     PrimaryActorTick.bCanEverTick = true;
 
@@ -177,6 +181,16 @@ void Ahex_map::BeginPlay ()
 
 void Ahex_map::Tick (float delta_seconds)
 {
+    if (false && !showing_ui_) {
+        Uroot_widget * root_widget = CreateWidget<Uroot_widget>(GetWorld()->GetFirstPlayerController(), Uroot_widget::StaticClass());
+        auto panel = root_widget->panel();
+        auto button = root_widget->WidgetTree->ConstructWidget<Ustyleable_button>(Ustyleable_button::StaticClass());
+        auto slot = panel->AddChildToCanvas(button);
+        slot->SetAutoSize(true);
+
+        root_widget->AddToViewport();
+        showing_ui_ = true;
+    }
     hex_coord_t const hc = hex_under_cursor();
     if (hc != invalid_hex_coord) {
         // TODO: Offmap area hit test.

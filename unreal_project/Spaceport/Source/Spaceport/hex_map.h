@@ -138,4 +138,6 @@ private:
     FOnTimelineFloat cursor_indicator_move_fn;
     FVector hover_indicator_from_;
     FVector hover_indicator_to_;
+
+    bool showing_ui_;
 };
