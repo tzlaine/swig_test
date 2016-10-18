@@ -8,6 +8,13 @@
 
 #include "root_widget.generated.h"
 
+template <typename T>
+struct widget_and_slot_t
+{
+    T * widget_;
+    UCanvasPanelSlot * slot_;
+};
+
 /** The root element in every HUD or dialog box. */
 UCLASS()
 class SPACEPORT_API Uroot_widget : public UUserWidget
@@ -20,6 +27,15 @@ public:
         creates it if it does not already exist.  may return nullptr if
         creation fails. */
     UCanvasPanel * panel();
+
+    template <typename T>
+    widget_and_slot_t<T> new_child(UClass * class_ = nullptr)
+    {
+        if (!class_)
+            class_ = T::StaticClass();
+        auto child = WidgetTree->ConstructWidget<T>(class_);
+        return widget_and_slot_t<T>{child, panel()->AddChildToCanvas(child)};
+    }
 
 private:
     UCanvasPanel * panel_;

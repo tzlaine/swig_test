@@ -8,6 +8,7 @@
 
 #include "root_widget.h"
 #include "widgets/styleable_button.h"
+#include "widgets/styleable_text_block.h"
 
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
 
@@ -183,11 +184,17 @@ void Ahex_map::Tick (float delta_seconds)
 {
     if (false && !showing_ui_) {
         Uroot_widget * root_widget = CreateWidget<Uroot_widget>(GetWorld()->GetFirstPlayerController(), Uroot_widget::StaticClass());
-        auto panel = root_widget->panel();
-        auto button = root_widget->WidgetTree->ConstructWidget<Ustyleable_button>(Ustyleable_button::StaticClass());
-        auto slot = panel->AddChildToCanvas(button);
-        slot->SetAutoSize(true);
-
+        {
+            auto widget_and_slot = root_widget->new_child<Ustyleable_button>();
+            auto slot = widget_and_slot.slot_;
+            slot->SetAutoSize(true);
+        }
+        {
+            auto widget_and_slot = root_widget->new_child<Ustyleable_text_block>();
+            widget_and_slot.widget_->SetText(FText::FromString(TEXT("Some text!")));
+            auto slot = widget_and_slot.slot_;
+            slot->SetAutoSize(true);
+        }
         root_widget->AddToViewport();
         showing_ui_ = true;
     }
