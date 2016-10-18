@@ -7,6 +7,8 @@
 #include "hex_operations.hpp"
 
 #include "root_widget.h"
+#include "SlateStats.h"
+#include "Stats.h"
 #include "widgets/styleable_button.h"
 #include "widgets/styleable_text_block.h"
 
@@ -183,6 +185,30 @@ void Ahex_map::BeginPlay ()
 void Ahex_map::Tick (float delta_seconds)
 {
     if (false && !showing_ui_) {
+#if 0
+        //auto const & slate_app = FSlateApplication::Get();
+
+        TSharedRef<SWindow> SlateWin = SNew(SWindow)
+            .AutoCenter(EAutoCenter::None)
+            .Title(FText::FromString(TEXT("Control Window")))
+            .IsInitiallyMaximized(false)
+            .ScreenPosition(FVector2D(100, 100))
+            .ClientSize(FVector2D(500, 800))
+            .CreateTitleBar(true)
+            .SizingRule(ESizingRule::UserSized)
+            .SupportsMaximize(false)
+            .SupportsMinimize(true)
+            .HasCloseButton(true);
+
+        //TSharedRef<SWindow> SlateWinRef = SlateWin.ToSharedRef();
+
+        FSlateApplication & SlateApp = FSlateApplication::Get();
+
+        SlateApp.AddWindow(SlateWin, true);
+
+        //SlateWinRef->SetContent(SNew(SControlWidget));
+#endif
+
         Uroot_widget * root_widget = CreateWidget<Uroot_widget>(GetWorld()->GetFirstPlayerController(), Uroot_widget::StaticClass());
         {
             auto widget_and_slot = root_widget->new_child<Ustyleable_button>();
@@ -196,6 +222,70 @@ void Ahex_map::Tick (float delta_seconds)
             slot->SetAutoSize(true);
         }
         root_widget->AddToViewport();
+
+#if 0 // This is the run-modal code.
+        auto & slate_app = FSlateApplication::Get();
+        slate_app.GetRenderer()->FlushCommands();
+
+        // Show the cursor if it was previously hidden so users can interact with the window
+#if 0
+        if ( slate_app.PlatformApplication->Cursor.IsValid() )
+        {
+            slate_app.PlatformApplication->Cursor->Show( true );
+        }
+#endif
+
+        //Throttle loop data
+        float LastLoopTime = (float)FPlatformTime::Seconds();
+        const float MinThrottlePeriod = (1.0f / 60.0f); //Throttle the loop to a maximum of 60Hz
+
+                                                        // Tick slate from here in the event that we should not return until the modal window is closed.
+        while( true/*InSlateWindow == GetActiveModalWindow()*/ )
+        {
+            //Throttle the loop
+            const float CurrentLoopTime = FPlatformTime::Seconds();
+            const float SleepTime = MinThrottlePeriod - (CurrentLoopTime-LastLoopTime);
+            LastLoopTime = CurrentLoopTime;
+            if (SleepTime > 0.0f)
+            {
+                // Sleep a bit to not eat up all CPU time
+                FPlatformProcess::Sleep(SleepTime);
+            }
+
+            FPlatformMisc::BeginNamedEvent(FColor::Magenta, "Slate::Tick");
+
+            {
+#if 0
+                SCOPE_CYCLE_COUNTER(STAT_SlateTickTime);
+                SLATE_CYCLE_COUNTER_SCOPE(GSlateTotalTickTime);
+#endif
+
+                const float DeltaTime = slate_app.GetDeltaTime();
+
+                // Tick and pump messages for the platform.
+                slate_app.TickPlatform_(DeltaTime);
+
+                // It's possible that during ticking the platform we'll find out the modal dialog was closed.
+                // in which case we need to abort the current flow.
+                if ( false/*InSlateWindow != GetActiveModalWindow()*/ )
+                {
+                    break;
+                }
+
+                // Tick and render Slate
+                slate_app.TickApplication_(DeltaTime);
+            }
+
+            // Update Slate Stats
+            SLATE_STATS_END_FRAME(GetCurrentTime());
+
+            FPlatformMisc::EndNamedEvent();
+
+            // Synchronize the game thread and the render thread so that the render thread doesn't get too far behind.
+            slate_app.GetRenderer()->Sync();
+        }
+#endif
+
         showing_ui_ = true;
     }
     hex_coord_t const hc = hex_under_cursor();
