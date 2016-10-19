@@ -4,12 +4,12 @@
 #include "root_widget.h"
 
 
-Uroot_widget::Uroot_widget(FObjectInitializer const & init) :
+Uroot_widget::Uroot_widget (FObjectInitializer const & init) :
     UUserWidget (init),
     panel_ (nullptr)
 {}
 
-UCanvasPanel * Uroot_widget::panel()
+UCanvasPanel * Uroot_widget::panel ()
 {
     if (!panel_) {
         if (!WidgetTree)
@@ -25,3 +25,19 @@ UCanvasPanel * Uroot_widget::panel()
 
     return panel_;
 }
+
+void Uroot_widget::NativeTick (FGeometry const & geometry, float dt)
+{
+    Super::NativeTick(geometry, dt);
+
+    FVector2D size = geometry.GetLocalSize() * geometry.Scale;
+
+    float const epsilon = -0.5f;
+    if (!size.Equals(prev_size_, epsilon) && resize_callback_)
+        resize_callback_(size.X, size.Y);
+
+    prev_size_ = size;
+}
+
+void Uroot_widget::set_resize_callback (resize_callback_t const & callback)
+{ resize_callback_ = callback; }
