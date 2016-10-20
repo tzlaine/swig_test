@@ -4,6 +4,6 @@
 [submodule "adobe_source_libraries"]
 	path = adobe_source_libraries
 	url = ../adobe_source_libraries.git
-[submodule "adobe_platform_libraries"]
+[submodule "unreal_project/Spaceport/Source/Spaceport/adobe_platform_libraries"]
 	path = unreal_project/Spaceport/Source/Spaceport/adobe_platform_libraries
 	url = ../adobe_platform_libraries.git
