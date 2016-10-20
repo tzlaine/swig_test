@@ -184,7 +184,7 @@ void Ahex_map::BeginPlay ()
 
 void Ahex_map::Tick (float delta_seconds)
 {
-    if (false && !showing_ui_) {
+    if (!showing_ui_) {
 #if 0
         //auto const & slate_app = FSlateApplication::Get();
 
