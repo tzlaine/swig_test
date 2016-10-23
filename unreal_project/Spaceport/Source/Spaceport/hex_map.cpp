@@ -12,6 +12,11 @@
 #include "widgets/styleable_button.h"
 #include "widgets/styleable_text_block.h"
 
+
+#include <boost/polymorphic_cast.hpp>
+#include "adobe/future/modal_dialog_interface.hpp"
+#include "adobe/future/widgets/headers/platform_window.hpp"
+
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
 
 #include <algorithm>
@@ -182,9 +187,133 @@ void Ahex_map::BeginPlay ()
     call_real_soon(instantiation_timer_, this, &Ahex_map::instantiate_hexes);
 }
 
+/** Contains the result of a modal dialog created by modal_dialog(). */
+struct modal_dialog_result
+{
+    /** A map from adobe::name_t to value (adobe::any_regular_t) of the
+        expected results.  The contents of m_results will depend on the value
+        specified for "result" in the Adam script associated with the modal
+        dialog. */
+    adobe::dictionary_t result_;
+
+    /** Indicates the name of the action that terminated the dialog (e.g. "ok"
+        or "cancel"). */
+    adobe::name_t terminating_action_;
+};
+
+#if 0 // TODO
+modal_dialog_result modal_dialog (
+    UWorld * world,
+    std::istream & eve_definition,
+    std::string const & eve_filename,
+    std::istream & adam_definition,
+    std::string const & adam_filename
+) {
+    modal_dialog_result retval;
+
+    adobe::window_t::create_widget_world_ = world;
+
+    std::unique_ptr<adobe::modal_dialog_t> eve_modal_dialog(new adobe::modal_dialog_t);
+    eve_modal_dialog->input_m = adobe::dictionary_t();
+    eve_modal_dialog->record_m = adobe::dictionary_t();
+    eve_modal_dialog->display_state_m = adobe::dictionary_t();
+    eve_modal_dialog->display_options_m = adobe::dialog_display_s;
+    eve_modal_dialog->working_directory_m = boost::filesystem::path();
+    eve_modal_dialog->parent_m = nullptr;
+
+    UWidget * widget = eve_modal_dialog->init(eve_definition, eve_filename, adam_definition, adam_filename);
+    Uroot_widget * root_widget = boost::polymorphic_downcast<Uroot_widget *>(widget);
+    // TODO: Move to a certain location (center, maybe).
+    adobe::dialog_result_t adobe_result = dialog->go(); // TODO: Add modal-pumping code to this function.
+
+    retval.result_ = std::move(adobe_result.command_m);
+    retval.terminating_action_ = adobe_result.terminating_action_m;
+
+    return retval;
+}
+#endif
+
+struct adam_eve_ui_t
+{
+    adam_eve_ui_t () :
+        root_widget_ ()
+    {}
+
+    adam_eve_ui_t (
+        UWorld * world,
+        std::istream & eve_definition,
+        std::string const & eve_filename,
+        std::istream & adam_definition,
+        std::string const & adam_filename
+    ) {
+        adobe::window_t::create_widget_world_ = world;
+
+        eve_modal_dialog_.reset(new adobe::modal_dialog_t);
+        eve_modal_dialog_->input_m = adobe::dictionary_t();
+        eve_modal_dialog_->record_m = adobe::dictionary_t();
+        eve_modal_dialog_->display_state_m = adobe::dictionary_t();
+        eve_modal_dialog_->display_options_m = adobe::dialog_display_s;
+        eve_modal_dialog_->working_directory_m = boost::filesystem::path();
+        eve_modal_dialog_->parent_m = nullptr;
+
+        UWidget * widget =
+            eve_modal_dialog_->init(eve_definition/*, eve_filename*/, adam_definition/*, adam_filename*/);
+        root_widget_ = boost::polymorphic_downcast<Uroot_widget *>(widget);
+    }
+
+    Uroot_widget & root_widget ()
+    { return *root_widget_; }
+
+private:
+    std::unique_ptr<adobe::modal_dialog_t> eve_modal_dialog_;
+    Uroot_widget * root_widget_;
+};
+
 void Ahex_map::Tick (float delta_seconds)
 {
+    static adam_eve_ui_t adam_eve_ui;
     if (!showing_ui_) {
+        std::string const sheet =
+            "sheet alert_dialog\n"
+            "{\n"
+            "output:\n"
+            "    result <== { dummy_value: 42 };\n"
+            "}\n";
+        std::string const layout_whole =
+            "layout alert_dialog\n"
+            "{\n"
+            "    view dialog(name: \"Alert\", placement: place_row)\n"
+            "    {\n"
+            "        image(image: \"stop.tga\");\n"
+            "\n"
+            "        column(vertical: align_fill)\n"
+            "        {\n"
+            "            static_text(name: \"Unfortunately, something drastic has happened. If you would like we can try to continue with the operation, but there is a chance you will blow up your computer. Would you like to try?\", characters: 25);\n"
+            "            row(vertical: align_bottom, horizontal: align_right)\n"
+            "            {\n"
+            "                button(name: \"Cancel\", action: @cancel, cancel: true);\n"
+            "                button(name: \"OK\", bind: @result, action: @ok, default: true);\n"
+            "            }\n"
+            "        }\n"
+            "    }\n"
+            "}\n";
+        std::string const layout =
+            "layout alert_dialog\n"
+            "{\n"
+            "    view dialog(name: \"Alert\", placement: place_row)\n"
+            "    {\n"
+            "        column(vertical: align_fill)\n"
+            "        {\n"
+            "            static_text(name: \"Unfortunately, something drastic has happened. If you would like we can try to continue with the operation, but there is a chance you will blow up your computer. Would you like to try?\", characters: 25);\n"
+            "        }\n"
+            "    }\n"
+            "}\n";
+        std::istringstream sheet_stream(sheet);
+        std::istringstream layout_stream(layout);
+        adam_eve_ui = adam_eve_ui_t(GetWorld(), layout_stream, "inline layout", sheet_stream, "inline sheet");
+        auto & root_widget = adam_eve_ui.root_widget();
+        root_widget.AddToViewport();
+#if 0
 #if 0
         //auto const & slate_app = FSlateApplication::Get();
 
@@ -284,6 +413,7 @@ void Ahex_map::Tick (float delta_seconds)
             // Synchronize the game thread and the render thread so that the render thread doesn't get too far behind.
             slate_app.GetRenderer()->Sync();
         }
+#endif
 #endif
 
         showing_ui_ = true;
