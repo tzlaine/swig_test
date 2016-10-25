@@ -19,6 +19,7 @@ class SPACEPORT_API Ustyleable_text_block : public UTextBlock
 
     Ustyleable_text_block ();
     void set_font (FString const & font_path);
+    void set_wrap_width (float w);
 
     STYLEABLE_WIDGET_PRIVATE();
 };

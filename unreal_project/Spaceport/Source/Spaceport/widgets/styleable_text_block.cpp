@@ -18,6 +18,9 @@ void Ustyleable_text_block::set_font (FString const & font_path)
     SetFont(font.Object->GetLegacySlateFontInfo());
 }
 
+void Ustyleable_text_block::set_wrap_width (float w)
+{ WrapTextAt = w; }
+
 void Ustyleable_text_block::apply_style ()
 {
     STextBlock::FArguments args;
