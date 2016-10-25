@@ -218,7 +218,7 @@ void Ahex_map::Tick (float delta_seconds)
             "    {\n"
             "        column(vertical: align_fill)\n"
             "        {\n"
-            "            static_text(name: \"Unfortunately, something drastic has happened. If you would like we can try to continue with the operation, but there is a chance you will blow up your computer. Would you like to try?\", characters: 8);\n"
+            "            static_text(name: \"Unfortunately, something drastic has happened. If you would like we can try to continue with the operation, but there is a chance you will blow up your computer. Would you like to try?\", characters: 25);\n"
             "        }\n"
             "    }\n"
             "}\n";

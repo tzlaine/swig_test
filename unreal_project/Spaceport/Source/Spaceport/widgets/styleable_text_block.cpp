@@ -26,4 +26,5 @@ void Ustyleable_text_block::apply_style ()
     STextBlock::FArguments args;
     args.TextStyle(style_asset_);
     MyTextBlock->SetTextStyle(args._TextStyle);
+    Font.Size = args._TextStyle->Font.Size; // Sigh.
 }
