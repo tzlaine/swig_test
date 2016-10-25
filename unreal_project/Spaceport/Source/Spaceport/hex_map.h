@@ -7,8 +7,12 @@ class UInstancedStaticMeshComponent;
 #include "visual_config_t.hpp"
 #include "start_data_t.hpp"
 #include "game_data_t.hpp"
-#include <vector>
+#if 1
+#include "ui.hpp"
+#endif
 #include "GameFramework/Actor.h"
+#include <vector>
+
 #include "hex_map.generated.h"
 
 UCLASS()
@@ -139,5 +143,8 @@ private:
     FVector hover_indicator_from_;
     FVector hover_indicator_to_;
 
+#if 1
     bool showing_ui_;
+    adam_eve_ui_t adam_eve_ui_;
+#endif
 };

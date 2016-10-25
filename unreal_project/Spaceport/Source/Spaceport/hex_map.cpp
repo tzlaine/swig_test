@@ -12,8 +12,6 @@
 #include "widgets/styleable_button.h"
 #include "widgets/styleable_text_block.h"
 #include "widgets/styleable_text_block.h"
-#elif 1
-#include "ui.hpp"
 #endif
 
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
@@ -188,7 +186,6 @@ void Ahex_map::BeginPlay ()
 
 void Ahex_map::Tick (float delta_seconds)
 {
-    static adam_eve_ui_t adam_eve_ui;
     if (!showing_ui_) {
         std::string const sheet =
             "sheet alert_dialog\n"
@@ -227,8 +224,8 @@ void Ahex_map::Tick (float delta_seconds)
             "}\n";
         std::istringstream sheet_stream(sheet);
         std::istringstream layout_stream(layout);
-        adam_eve_ui = adam_eve_ui_t(GetWorld(), layout_stream, "inline layout", sheet_stream, "inline sheet");
-        auto & root_widget = adam_eve_ui.root_widget();
+        adam_eve_ui_ = adam_eve_ui_t(GetWorld(), layout_stream, "inline layout", sheet_stream, "inline sheet");
+        auto & root_widget = adam_eve_ui_.root_widget();
         root_widget.AddToViewport();
 #if 0
 #if 0
