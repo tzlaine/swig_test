@@ -219,6 +219,11 @@ void Ahex_map::Tick (float delta_seconds)
             "        column(vertical: align_fill)\n"
             "        {\n"
             "            static_text(name: \"Unfortunately, something drastic has happened. If you would like we can try to continue with the operation, but there is a chance you will blow up your computer. Would you like to try?\", characters: 25);\n"
+            "            row(vertical: align_bottom, horizontal: align_right)\n"
+            "            {\n"
+            "                button(name: \"Cancel\", action: @cancel, cancel: true);\n"
+            "                button(name: \"OK\", bind: @result, action: @ok, default: true);\n"
+            "            }\n"
             "        }\n"
             "    }\n"
             "}\n";

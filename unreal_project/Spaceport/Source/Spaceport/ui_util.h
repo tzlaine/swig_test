@@ -2,6 +2,8 @@
 
 #include "Runtime/UMG/Public/UMG.h"
 
+#include <boost/function.hpp>
+
 
 #define STYLEABLE_WIDGET_PUBLIC()                                       \
 public:                                                                 \
@@ -178,3 +180,14 @@ namespace detail {
     };
 
 }
+
+struct signal_forwarder
+{
+    using signal_forward_fn_t = boost::function<void ()>;
+
+    void set_signal_forward_fn(signal_forward_fn_t fn)
+    { signal_forward_fn_ = fn; }
+
+protected:
+    signal_forward_fn_t signal_forward_fn_;
+};

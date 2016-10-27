@@ -11,13 +11,18 @@
  * 
  */
 UCLASS()
-class SPACEPORT_API Ustyleable_button : public UButton
+class SPACEPORT_API Ustyleable_button :
+    public UButton,
+    public signal_forwarder
 {
     GENERATED_BODY()
 
     STYLEABLE_WIDGET_PUBLIC();
 
     Ustyleable_button ();
+
+    UFUNCTION()
+    void forward_signal () { signal_forward_fn_(); }
 
     STYLEABLE_WIDGET_PRIVATE();
 };
