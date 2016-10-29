@@ -19,5 +19,15 @@ class SPACEPORT_API Ustyleable_check_box : public UCheckBox
 
     Ustyleable_check_box ();
 
+    using signal_forward_fn_t = boost::function<void (bool)>;
+
+    void set_signal_forward_fn(signal_forward_fn_t fn)
+    { signal_forward_fn_ = fn; }
+
+    UFUNCTION()
+    void forward_signal (bool b) { signal_forward_fn_(b); }
+
     STYLEABLE_WIDGET_PRIVATE();
+
+    signal_forward_fn_t signal_forward_fn_;
 };

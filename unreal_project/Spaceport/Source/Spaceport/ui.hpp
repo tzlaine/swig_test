@@ -63,7 +63,9 @@ struct adam_eve_ui_t
         std::istream & eve_definition,
         std::string const & eve_filename,
         std::istream & adam_definition,
-        std::string const & adam_filename
+        std::string const & adam_filename,
+        adobe::action_callback_t button_callback = adobe::action_callback_t(),
+        adobe::signal_notifier_t signal_notifier = adobe::signal_notifier_t()
     ) {
         adobe::window_t::create_widget_world_ = world;
 
@@ -72,11 +74,13 @@ struct adam_eve_ui_t
         eve_modal_dialog_->record_m = adobe::dictionary_t();
         eve_modal_dialog_->display_state_m = adobe::dictionary_t();
         eve_modal_dialog_->display_options_m = adobe::dialog_display_s;
+        eve_modal_dialog_->button_callback_m = button_callback;
+        eve_modal_dialog_->signal_notifier_m = signal_notifier;
         eve_modal_dialog_->working_directory_m = boost::filesystem::path();
         eve_modal_dialog_->parent_m = nullptr;
 
         UWidget * widget =
-            eve_modal_dialog_->init(eve_definition/*, eve_filename*/, adam_definition/*, adam_filename*/);
+            eve_modal_dialog_->init(eve_definition, eve_filename, adam_definition, adam_filename);
         root_widget_ = boost::polymorphic_downcast<Uroot_widget *>(widget);
     }
 

@@ -11,9 +11,7 @@
  * 
  */
 UCLASS()
-class SPACEPORT_API Ustyleable_button :
-    public UButton,
-    public signal_forwarder
+class SPACEPORT_API Ustyleable_button : public UButton
 {
     GENERATED_BODY()
 
@@ -21,8 +19,15 @@ class SPACEPORT_API Ustyleable_button :
 
     Ustyleable_button ();
 
+    using signal_forward_fn_t = boost::function<void ()>;
+
+    void set_signal_forward_fn(signal_forward_fn_t fn)
+    { signal_forward_fn_ = fn; }
+
     UFUNCTION()
     void forward_signal () { signal_forward_fn_(); }
 
     STYLEABLE_WIDGET_PRIVATE();
+
+    signal_forward_fn_t signal_forward_fn_;
 };
