@@ -190,8 +190,10 @@ void Ahex_map::Tick (float delta_seconds)
         std::string const sheet =
             "sheet alert_dialog\n"
             "{\n"
+            "interface:\n"
+            "    dummy_value: 42;\n"
             "output:\n"
-            "    result <== { dummy_value: 42 };\n"
+            "    result <== { dummy_value: dummy_value };\n"
             "}\n";
         std::string const layout_whole =
             "layout alert_dialog\n"
@@ -221,6 +223,7 @@ void Ahex_map::Tick (float delta_seconds)
             "            static_text(name: \"Unfortunately, something drastic has happened. If you would like we can try to continue with the operation, but there is a chance you will blow up your computer. Would you like to try?\", characters: 25);\n"
             "            row(vertical: align_bottom, horizontal: align_right)\n"
             "            {\n"
+            "                display_number(name: \"Roads\", bind: @dummy_value);\n"
             "                checkbox(name: \"Check me\");\n"
             "                button(name: \"Cancel\", action: @cancel, cancel: true);\n"
             "                button(name: \"OK\", bind: @result, action: @ok, default: true);\n"
