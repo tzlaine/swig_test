@@ -15,7 +15,7 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 endif ()
 
-add_subdirectory(googletest)
+add_subdirectory(googletest-1.10.0)
 #TODO add_subdirectory(benchmark-1.0.0)
 
 if (UNIX AND NOT APPLE)
@@ -205,5 +205,5 @@ include_directories(
 add_definitions(-DBUILD_FOR_TEST)
 
 add_subdirectory(src)
-#add_subdirectory(tests)
+add_subdirectory(tests)
 # TODO add_subdirectory(perf)
