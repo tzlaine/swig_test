@@ -16,7 +16,7 @@ if (MSVC)
 endif ()
 
 add_subdirectory(googletest)
-add_subdirectory(benchmark-1.0.0)
+#TODO add_subdirectory(benchmark-1.0.0)
 
 if (UNIX AND NOT APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -26,12 +26,12 @@ if (NOT MSVC)
     add_definitions(-Wall -Wno-parentheses)
 endif ()
 
-set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport)
-set(unreal_src_dir ${unreal_root}/Source/Spaceport)
+set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Fresh)
+set(unreal_src_dir ${unreal_root}/Source/Fresh)
 set(unreal_3rd_party_root ${unreal_root}/ThirdParty)
 
 add_definitions(-DGOOGLE_PROTOBUF_NO_RTTI)
-set(protobuf_dir protobuf-v3.0.0-beta-2)
+set(protobuf_dir protobuf-3.13.0)
 add_subdirectory(${protobuf_dir}/cmake)
 
 set(boost_dir ${CMAKE_HOME_DIRECTORY}/boost_1_60_0)
@@ -205,5 +205,5 @@ include_directories(
 add_definitions(-DBUILD_FOR_TEST)
 
 add_subdirectory(src)
-add_subdirectory(tests)
-add_subdirectory(perf)
+#add_subdirectory(tests)
+# TODO add_subdirectory(perf)

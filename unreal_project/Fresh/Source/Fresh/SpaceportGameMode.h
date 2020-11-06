@@ -3,13 +3,13 @@
 #pragma once
 
 #include "GameFramework/GameMode.h"
-#include "SpaceportGameMode.generated.h"
+#include "FreshGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPACEPORT_API ASpaceportGameMode : public AGameMode
+class SPACEPORT_API AFreshGameMode : public AGameMode
 {
     GENERATED_BODY()
     
