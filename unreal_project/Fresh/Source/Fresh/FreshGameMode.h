@@ -9,7 +9,7 @@
  * 
  */
 UCLASS()
-class SPACEPORT_API AFreshGameMode : public AGameMode
+class FRESH_API AFreshGameMode : public AGameMode
 {
     GENERATED_BODY()
     

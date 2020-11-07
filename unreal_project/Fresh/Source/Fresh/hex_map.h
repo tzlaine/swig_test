@@ -12,7 +12,7 @@ class UInstancedStaticMeshComponent;
 #include "hex_map.generated.h"
 
 UCLASS()
-class SPACEPORT_API Ahex_map : public AActor
+class FRESH_API Ahex_map : public AActor
 {
     GENERATED_BODY()
 

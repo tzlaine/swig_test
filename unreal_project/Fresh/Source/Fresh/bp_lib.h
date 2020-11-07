@@ -9,7 +9,7 @@
  * 
  */
 UCLASS()
-class SPACEPORT_API Ubp_lib : public UBlueprintFunctionLibrary
+class FRESH_API Ubp_lib : public UBlueprintFunctionLibrary
 {
     GENERATED_BODY()
 
