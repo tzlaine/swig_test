@@ -41,6 +41,7 @@
 
 #include "boost/detail/workaround.hpp" // needed for BOOST_WORKAROUND
 
+#pragma warning(disable: 4668)
 #if BOOST_GCC >= 40700
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"

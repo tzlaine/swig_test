@@ -109,6 +109,9 @@
 #ifndef GOOGLE_PROTOBUF_IO_CODED_STREAM_H__
 #define GOOGLE_PROTOBUF_IO_CODED_STREAM_H__
 
+#pragma warning(disable: 4125)
+#pragma warning(disable: 4800)
+
 
 #include <assert.h>
 

@@ -12,6 +12,7 @@
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
 
+#pragma warning(disable: 4668)
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_DECLTYPE) && !BOOST_WORKAROUND(BOOST_MSVC, < 1800) && !BOOST_WORKAROUND(BOOST_GCC_VERSION, < 40900)
 
 #include <boost/type_traits/is_constructible.hpp>

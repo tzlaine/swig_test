@@ -2,6 +2,10 @@
 // This file was generated from base_types (proto3)
 #pragma once
 
+#pragma warning(disable: 4456)
+#pragma warning(disable: 4430)
+#pragma warning(disable: 4668)
+
 #include <base_types.pb.h>
 
 

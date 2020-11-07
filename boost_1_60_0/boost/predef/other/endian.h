@@ -8,6 +8,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 #ifndef BOOST_PREDEF_ENDIAN_H
 #define BOOST_PREDEF_ENDIAN_H
 
+#pragma warning(disable: 4668)
+
 #include <boost/predef/version_number.h>
 #include <boost/predef/make.h>
 #include <boost/predef/library/c/gnu.h>

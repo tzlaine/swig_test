@@ -5,6 +5,7 @@
 
 #ifndef UUID_E788439ED9F011DCB181F25B55D89593
 #define UUID_E788439ED9F011DCB181F25B55D89593
+#pragma warning(disable: 4668)
 #if (__GNUC__*100+__GNUC_MINOR__>301) && !defined(BOOST_EXCEPTION_ENABLE_WARNINGS)
 #pragma GCC system_header
 #endif
