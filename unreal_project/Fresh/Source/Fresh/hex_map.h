@@ -8,8 +8,18 @@ class UInstancedStaticMeshComponent;
 #include "start_data_t.hpp"
 #include "game_data_t.hpp"
 #include <vector>
-#include "GameFramework/Actor.h"
+#include <GameFramework/Actor.h>
+#include <Components/TextRenderComponent.h>
+#include <Components/TimelineComponent.h>
 #include "hex_map.generated.h"
+
+struct FColor_cmp
+{
+    bool operator()(FColor lhs, FColor rhs) const
+    {
+        return lhs.DWColor() < rhs.DWColor();
+    }
+};
 
 UCLASS()
 class FRESH_API Ahex_map : public AActor
@@ -83,7 +93,7 @@ public:
 
 private:
     using national_instances_t = std::vector<UInstancedStaticMeshComponent *>; // indexed by nation_id
-    using color_instances_t = boost::container::flat_map<FColor, UInstancedStaticMeshComponent *>;
+    using color_instances_t = boost::container::flat_map<FColor, UInstancedStaticMeshComponent *, FColor_cmp>;
 
     struct instances_t
     {
@@ -108,7 +118,7 @@ private:
     std::vector<FColor> nation_id_primary_colors_;
     std::vector<FColor> nation_id_secondary_colors_;
 
-    boost::container::flat_map<FColor, UMaterialInstanceDynamic *> solid_color_materials_;
+    boost::container::flat_map<FColor, UMaterialInstanceDynamic *, FColor_cmp> solid_color_materials_;
 
     UStaticMeshComponent * hover_indicator_;
 

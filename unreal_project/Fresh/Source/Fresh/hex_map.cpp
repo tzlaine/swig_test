@@ -7,6 +7,7 @@
 #include "hex_operations.hpp"
 
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
+#include <Components/TimelineComponent.h>
 
 #include <algorithm>
 #include <memory>
@@ -19,7 +20,7 @@ namespace {
     {
         std::string retval;
         auto & platform_file = FPlatformFileManager::Get().GetPlatformFile();
-        FString map_filename = FPaths::GameDir() + name.c_str();
+        FString map_filename = FPaths::ProjectDir() + name.c_str();
         std::unique_ptr<IFileHandle> file_handle(platform_file.OpenRead(*map_filename));
         if (file_handle) {
             auto const size = file_handle->Size();
@@ -184,7 +185,7 @@ void Ahex_map::Tick (float delta_seconds)
         auto location = hex_location(hc, game_data_.map());
         location.Z = -0.05 * meters;
 
-        if (!hover_indicator_->bVisible) {
+        if (!hover_indicator_->GetVisibleFlag()) {
             hover_indicator_->SetWorldLocation(location);
             hover_indicator_->SetVisibility(true);
         } else if (!old_location.Equals(location, 1.0f)) {
@@ -747,7 +748,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
 
         FActorSpawnParameters spawn_params;
         spawn_params.Owner = this;
-        spawn_params.Instigator = Instigator;
+        spawn_params.Instigator = GetInstigator();
 
         UWorld * const world = GetWorld();
         world->SpawnActor<AActor>(large_fleet_actor_, fleet_location, rotation, spawn_params);
@@ -772,7 +773,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
 
         FActorSpawnParameters spawn_params;
         spawn_params.Owner = this;
-        spawn_params.Instigator = Instigator;
+        spawn_params.Instigator = GetInstigator();
 
         UWorld * const world = GetWorld();
         world->SpawnActor<AActor>(large_fleet_actor_, fleet_location, rotation, spawn_params);
