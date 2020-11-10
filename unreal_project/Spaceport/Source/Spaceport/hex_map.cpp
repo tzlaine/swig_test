@@ -740,7 +740,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         starbases_.add(owner_id, transform);
-#if 1 // For testing only!
+#if 0 // For testing only!
         FVector fleet_location = location;
         fleet_location.Z = -0.25f * meters;
 
@@ -765,7 +765,7 @@ void Ahex_map::instantiate_hex (hex_coord_t hc)
         );
         // TODO: Adjust for the presence of other sb, bats, or mb?
         battlestations_.add(owner_id, transform);
-#if 1 // For testing only!
+#if 0 // For testing only!
         FVector fleet_location = location;
         fleet_location.Z = -0.25f * meters;
 
