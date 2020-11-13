@@ -28,7 +28,7 @@ inline ui_defaults_t const & ui_defaults()
     static bool once = true;
 
     if (once) {
-        retval.font_path_ = TEXT("/Game/ui/fonts/JosefinSans-Regular");
+        retval.font_path_ = TEXT("/Game/ui/fonts/futura_light_bt_Font");
         retval.font_size_ = 24;
 
         retval.UButton_style_path_ = TEXT("/Game/ui/styles/button_style");
