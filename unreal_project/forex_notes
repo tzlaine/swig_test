@@ -1,12 +1,13 @@
-Elements:
+ELEMENTS:
+=========
 
-TODO: Replace "population" with development below.  Development is an abstration of population plus infrastructure, food production, industry, etc.
 
-Turns:
+TURNS:
 ======
 
-* The game is turn-based.  Each turn consists of three phases: orders, movement, and combat.
+* THE GAME is turn-based.  Each turn consists of three phases: orders, movement, and combat.
 * In the orders phase, all the choice of builds, ship movements, ship orders, etc., are done.  All players do the orders phase at the same time.
+* Ships that are being repaired may operate in the same turn if the repairs are less than some threashold percentage T4.  Other repairs take the entire turn.  If an in-repair ship is in a combat hex, half of its repairs will have been done before combat is resolved.
 * After all players have hit the "turn" button, the movement phase begins.  Players watch as the moves are executed.
 * Then begins the combat phase.  If friendly and enemy units end up in the same hex, combat is resolved there.  The only exceptions to this are: no side has attack capability; and N-1 or more sides are evading successfully.
 * Combat is resolved for all hexes.  Combat must result in the destruction or retreat of at least N-1 sides.
@@ -17,12 +18,15 @@ The map, and colonization:
 ==========================
 
 * The map is comprised of hexes.
-* Each hex covers a lot of space, and may have multiple important locations within it.  Such locations include colonies, worlds (high-development colonies), homeworlds, starbases, outposts, etc.  Each such location is a "zone".  A zone may have multiple things in it.  For instance: the homeworld and the starting outpust are in the same zone.
-* Hexes are colonized a planet at a time, using reusable colony ships.  Colony ships require resources to operate.  Colony ships can develop existing colonies (deliver pop), or start new ones.  It takes more resources (maybe longer) to start new colonies.  Colonies consume resources in the early turns, then develop into resource-producers.
-* When C1 colonies exist in a hex, and their pop and/or development is above a certain threshold T1, the hex is owned.
+* Each hex covers a lot of space, and may have multiple important locations within it.  Such locations include colonies, worlds (high-development colonies), homeworlds, starbases, outposts, etc.  Each such location is a "zone".  A zone may have multiple things in it.  For instance: the homeworld and the starting outpost are in the same zone.
+* Each hex has multiple habitable planets within it.  (TODO: How many?  Maybe you never run out, but just take longer and longer to find each one.)  They must be discovered via the Explore fleet mission.  As you find more of them, each one becomes harder to find.  The base discovery time should be normally distributed.
+* Colonies have a single value that represents their level of population, infrastructure, etc., "development".  1 development roughly corresponds to 1 million population on a highly developed world.
+* Hexes are colonized a planet at a time, using reusable colony ships.  Colony ships require resources to operate.  Colony ships can develop existing colonies (deliver development), or start new ones.  It takes more resources (maybe longer) to start new colonies.  Lifters can be used to deliver development to a colony too, at a reduced effectiveness (say, half).
+* Colonies consume resources in the early turns, then develop into resource-producers.
+* When C1 colonies exist in a hex, and their development is above a certain threshold T1, the hex is owned.
 * A hex can contain multiple colonies from multiple nations.  Nations can attack and/or force other nations' colonies to move.  More than one nation may "own" a hex.  Each nation may or may not know about other nations' colonies.
 * One or more significant worlds may exist within a hex.  Once a colony crosses a certain threshold T2 (> T1), it starts to generate resources (we'll call this a "world").  Each world is a supply node.
-* Each province of hexes earns you income.  A province is 6 adjacent hexes.
+* Each province of hexes earns you extra income from the planets in that province, and makes colonies cheaper within the province.  A province is 6 connected hexes.
 * Forming a province takes resources.
 * The home hex for each nation starts with multiple worlds, an outpost, a reasonably sized fleet of weak ships, and a colony ship.
 
@@ -32,29 +36,26 @@ Supply:
 
 * Supply starts in the home hex, and goes outward from there H1 hexes.  If supply encounters a mobile base, outpost, starbase, or world (a "supply node") owned by the same nation, supply radiates out from that supply node, etc.  Stated another way, a hex is in supply if it can trace a path from itself to the home hex, from supply node to supply node, without ever moving H1 + 1 hexes without reaching a supply node.
 * When tracing a supply path, the path is blocked by enemies, and unblocked by friendlies.  TODO!
+* If part of the empire is disconnected from the home hex, any world(s) within the disconnected portion generate supply.  TODO: How much dev does it take to supply one ship?
 
 
-Ships and fleets:
-=================
+Ships:
+======
 
 * Ships should be relatively plentiful.
-* Non-combat operations (delivering ground forces, setting up outposts and bases, etc.) must be done by special craft, "lifters".
-* Most ships should travel at the same speed: H1 hexes per turn.  H1 should depend on the current tech level.  The Lightest ships should get a bonus on top H1.  The heaviest should get a malus.  This may apply to heavy warships, but must definitely apply to lifters and colony ships.
+* Each ship has a combat factor.  The earliest ships will have a factor of 1 or 2.  Large ships in the mid-game will have factors of 7-8.  Ships in the late game will have factors mich higher, perhaps up to 15 or 20.  The combat factor is the base value used for construction, shield, and weapons.  Some ships will have higher a defense factor than attack factor (e.g. carrier escorts), and others will have only a defense factor (e.g. colony ships and lifters).
+* Some ships carry fighers.  Each fighter factor is a combat factor of 1.  Each fighter factor may represent more than one actual fighter.
+* Non-combat operations (delivering ground forces, setting up outposts and bases, etc.) must be done by special craft, "lifters".  Lifters have large stealth and propulsion maluses, like the largest warships.  They have no attack factor, but have high defense factors.
+* Most ships should travel at the same speed: H1 hexes per turn.  H1 should depend on the current tech level.  The Lightest ships should get a bonus on top of H1.  The heaviest should get a malus.  This may apply to heavy warships, but must definitely apply to lifters and colony ships.
 * When the tech level goes up, a ship must be upgraded to get the new speed H1.  They can do this at a starbase (limit S1 ships/turn), or at the shipyard (unlimited upgrades).  The upgrades cost resources.
 * Each ship's tech level in each tech area is listed, along with the current tech level.  For instance, detection may be lited as 3/5 if the ship's detection hardware is level 3, and level 5 has been researched.
 * When ships are damaged in combat, they must be repaired at a mobile repair yard (limited to P1 points/turn), or the shipyard (unlimited upgrades).  The repairs cost money.
-* Ships must be in supply to operate normally.  If they move outside of supply, their speed and fighting strength are halved (rounding down).  If they move more than H1/2 hexes outside of supply, they are stuck.  If they do not re-enter supply within two turns of that, they are lost.
+* Ships must be in supply to operate normally.  If they move outside of supply, their speed and fighting strength are halved (rounding down, minimum 1) to H2.  If they move more than H2 hexes outside of supply, they are stuck.  If they do not re-enter supply within two turns of that, they are lost.
 * Each nation has a ship build schedule; builds are at the main shipyard in the home hex.  It is *extremely* expensive to establish new shipyards, including when the old one is destroyed.  All ships in the schedule may be built at face value.  Any ships in excess of that may only be built in times of war, and for double price.
-* The schedule includes a mix of small, medium, and large warships.  It also includes lifters and colony ships.
+* The schedule includes a mix of small, medium, and large warships.  It also includes lifters, colony ships, and fighters.
 * There needs to be system for upgrading shipyards to increase the build schedule.  TODO!
 * Shipyards appear in the same zone as the starting outpost and homeworld.
-* Ships can be organized into fleets.  Fleets can have several missions: Engage, Evade, Intercept, Guard Supply, Planetary attack, and Occupy.  TODO: Pirate mission to steal resources from other nations?  What would counter that?
-* Engage is the default.  The fleet will hold its position, and fight any units that enter its hex.
-* Evade is like engage, except that the fleet will will try not to fight units that enter its hex.  The fleet must remain undetected for this to work.  The detection chance increases turn by turn for uncloaked ships.
-* Intercept: the fleet should move to intercept ships moving toward its hex.  It will intercept them as far away as possible, given the detection done by all friendlies.  This makes it a good idea to have a picket line of small ships out in front of the hex you want to defend.
-* Guard supply: the fleet should move to unblock supply to friendlies.  If it has no hex within range at which to do so, it moves to block supply to enemies.  It will move to (un)block the biggest force possible.  Guard supply moves happen after regular moves.  Guard fleets may not be able to reach some hexes that are otherwise within range, due to pinning effects.
-* Planetary attack: Kill population on any and all planets within the hex.  Bigger fleets do more damage.  May only be done when at war with the target hex's nation.
-* Occupy: spread out and occupy captured territory.  One ship is required per world, and one additional ship is required per province.  Ships will automatically react into clumps when attacked, within the limit of their movement ratings.  May only be done at war.
+* The smallest ships have a bonus to their detection, stealth, and propulsion ratings.  The largest have maluses.
 
 
 Other units:
@@ -72,13 +73,33 @@ Other units:
 * Mobile repair yards exist to repair and upgrade ships in the field, so that they don't have to return to a starbase or the shipyard.  They must be built special, and towed with a lifter like a mobile base.  They may only be built during times of war.
 
 
+Fleets and missions:
+====================
+
+* Ships can be organized into fleets.  Fleets can have several missions: Explore, Engage, Evade, Intercept, Guard Supply, Planetary attack, and Occupy.  TODO: Pirate mission to steal resources from other nations?  What would counter that?
+* Engage is the default.  The fleet will hold its position, and fight any units that enter its hex.
+* Evade is like engage, except that the fleet will will try not to fight units that enter its hex.  The fleet must remain undetected for this to work.  The detection chance increases turn by turn for uncloaked ships.
+* Intercept: the fleet should move to intercept ships moving toward the nation's hexes.  It will intercept them as far away as possible, given the detection done by all friendlies.  This makes it a good idea to have a picket line of small ships out in front of the area you want to defend.
+* Guard supply: the fleet should move to unblock supply to friendlies.  If it has no hex within range at which to do so, it moves to block supply to enemies.  It will move to (un)block the biggest force possible.  Guard supply moves happen after regular moves.  Guard fleets may not be able to reach some hexes that are otherwise within range, due to pinning effects.
+* Planetary attack: Reduce development on any and all planets within the hex.  Bigger fleets do more damage.  May only be done when at war with the target hex's nation.
+* Occupy: spread out and occupy captured territory.  One ship is required per world, and one additional ship is required per province.  Ships will automatically react into clumps when attacked, within the limit of their movement ratings.  May only be done at war.
+* Explore: find habitable worlds in a given hex.  Better detection and propulsion make this work better.  If all habitable worlds are found, the fleet will move on to the next hex.  Hexes in supply are preferred.
+
+
+Special missions:
+=================
+
+* Colony ships have these missions: Found colonies, Expand colonies.  Each requires a target hex.  Founding starts as many new colonies as possible, then behaves as the Expand mission.  Expanding delivers development to existing colonies.  The number of times a colony ship may act during a turn is determined by H1; as many round-trip-and-back moves from the home hex to each colony in the target hex as possible will be done.  The colony ship may end the turn in some hex between the target hex and the home hex.  The colony ship moves during the normal movement phase (i.e. not the supply (un)blocking movement phase), and will never move out of supply.
+* Lifters have these missions: Deliver divisions, Deliver mobile repair yard, Deliver mobile base, Build outpost, Build starbase, Upgrade base, Expand colonies.  The deliver mission move to where the divisions or repair yard/mobile base is, and then deliver it to the target world or hex, respectively.  Lifters can carry multiple divisions.  (TODO: How many depends on tech level?)  Divisions are ready in the combat phase of the same turn in which they are placed; repair yards and mobile bases are available the next turn.  The Build missions each take a predecessor base and construct the next largest base from that.  Upgrade base is used to upgrade a base's tech levels once a new tech is available; this does not cost resources.  Just like with colony ships, lifters may perform multiple deliveries and/or colony expansions in a single turn, if their movement allows.
+
+
 Resources, maintenance, industry, and tech:
 ===========================================
 
-* Resources are produced by worlds (planets above T2 population).  The amount produced is proportional to the population above T2.  (TODO: Consider sublinear pop growth, and perhaps a sigmoid dampening when reaching some max pop based on that planet's livable area.)
+* Resources are produced by worlds (planets above T2 development).  The amount produced is proportional to the development above T2.  (TODO: Consider sigmoid dev growth, where the top of the curve is the max pop based on that planet's livable area.)
 * Resources are split among tech, industry, and maintenance.  If the total amount of resources available is R, Rt + Ri + Rm = R.  (TODO: Consider allowing resources to be banked, lent out, given to, and/or borrowed from, other nations, or internally within one's own economy.  Lending and borrowing imply interest.  Inability to repay loans may result in bankruptcy.)
-* Maintenance must be paid for ships, divisions, mobile bases, and outposts.
-* Maintenance must be paid for colonies before they reach T1 population.
+* Maintenance must be paid for ships, divisions, mobile bases, and outposts.  If maintenance is M%, the combat factors for an affected unit are scaled by M%.  TODO: Consider allowing bases to be "turned off".  TODO: Consider an N-turn lag between increasing maintenacne/turning maintenance back on and full increase of combat strength.
+* Maintenance must be paid for colonies before they reach T1 development.
 * Industry is production of ships and other units.  To build everything in the build schedule, the right amount of resources must be supplied.  Provide less ,and everything cannot be built.  Supply more if you want to over-build.
 * Resources may also be spent to upgrade the shipyard.  This is effectively an increase to the build schedule.
 * Tech consumes resources as well.  Spending on tech increases the per-turn chance of developing a given tech.  The chance starts at 0%, but maxes out at 94%
@@ -103,12 +124,113 @@ Other:
 ======
 
 * War support is a thing.  It can be manufactured in order to start a war, but when this is done it is not very high at the start of the war.  It is very high at the start of a defensive war.
-* War support increases when your population is attacked.
+* War support increases when your development (which includes population) is attacked.
 * War support increases when you lose territory -- up to some threshold percentage of your territory, T3.  After that, it falls precipitously.
 * War support increases when you win battles, and decreases when you lose them.
+* Low war support will force peace treaties that are unfavorable to the nation that has it.
+* High war support dramatically reduces the likelihood of secessions by the nation's settled territories.  It does not affect secession likelihood of conquered territory.
+
+* National unity is a thing.  National unity is affected by integration of conquered territory; the balance of near and far territories; and the balance of colonies and worlds.
+* Colonies have lower national unity than worlds.
+* Colony expansion increases national unity.
+* Attacks on a colony in times of peace reduce national unity.
+* Distant planets (colonies and worlds) have lower nationaly unity than ones near the home hex.  This changes over time, as the notion of what a "core" territory expands.  (TODO: Should this world sort of like supply, but measured among worlds -- that is, the effect is not in play aas long as you can trace N-hex hops from loyal world to loyal world?)
+* Recently conquered territory low national unity.  Garrisons and fleets reduce this.  This fades over time.
+* Worlds and provinces can secede, and worlds can do so independently of their containing province.  When a world or province drops below its loyalty threshold, it will secede.  The secession of a world will influence the loyalty of planets within the same province, and the secession of a province will influence the loyalty of neighboring provinces.  This may result in a slow-motion secession of a large section of the empire.
 
 
 Pinning:
 ========
 
 * At any time during the movement phase, if a fleet is moving and it either moves into a hex containing enemy ships, or it is met by enemy ships that react into its hex via an Intercept mission, it must leave behind a number of ships equal to the number of enemy ships.  The ships left behind are always chosen from lowest to highest combat rating.
+
+
+Capturing and disrupting provinces:
+===================================
+
+* In time of war, worlds and provinces can be captured.  For the explanations below, say countries A and B are at war.
+* A disrupted planet produces less income.  A disrupted province produces less income.  A captured planet produces partial income for the capturer.
+* For planets: A can "capture" B's world W by destroying all W's existing divisions, and putting 1 division on W per D1 development.  If W has no divisions, and A has placed less than 1 division per D1 development, the planet is "disrupted".  If A ends the turn with a ship in the hex where W is located, W is also disrupted if it is not captured.
+* For provinces: If B has no uncaptured planets in province P, and no ships in P, and A has at least one ship in P, A has captured the province.  Otherwise, if A has any ships at all in P, P is disrupted.
+* TODO: Does disruption level depend upon the size of the disrupting fleet?
+* A captured world or province must be "cored" (made into a "core" world/province).  This takes time and resources.  The process is faster and cheaper in peacetime.  If a world or province is cored during wartime, and then given back in the peace treaty at the end of the war, all the coring effects are reverted.
+
+
+War and Peace:
+==============
+
+* In order to declare war, a justification (cassus belli, "CB") is required.  The better the CB, the less war support is needed to declare.  CBs include: attacks on colonies (cummulative), attacks on fleets (cummulative), settlements in hexes where we have settled, TODO.
+* Once war has started, a war score is computed for each side.  The war score for a side will include: strength of each side's fleet (inlcuding tech differential), captured and disrupted territory (friendly and enemy), war support, the length of the war, TODO.  The differential can be used to force concessions in a peace deal.  Each concession has a point value based on the game-value of that concession.  Possible concessions include: war reparations, worlds, provinces, TODO.
+
+
+International relations and diplomacy:
+======================================
+
+* Similar to Stellaris and EU4, except without the vassal/subject business.
+
+
+Combat:
+=======
+
+TODO
+
+
+
+
+ROADMAP:
+========
+
+
+Phase 1:
+========
+
+* Start screen: Continue, New Game, Options, Quit.  Only New Game and Quit should do anything.  New Game takes you straight to:
+* Initial map -- just gray neutral hexes, with a starting home hex selected at random.
+* Initial fleet contains 10 1's and a pair of 2's, plus a single colony ship.
+* Home hex contains the homeworld, with 15 billion people/15k development.
+* Home hex also contains a world with 3 billion people/3k development, and another one with 2 billion/2k development.
+* Initial build schedule: 0.5 1s every turn; 0.1 colony ship every 10 turns, 0.2 2s every turn.
+* Homeworld contains 15 divisions.  The other two contain 3 and 2 divisions, respectively.
+* Hexes are selectable, and you can see what's in each hex; all of the above units and build capability should be viewable.
+* A next turn button that advances the build progress one turn.
+
+Phase 2:
+========
+
+* Implement saving and loading.
+* Connect the Continue option from the start screen to loading the current game.
+* Every turn, Save the game state to the current file when (some of these won't be ready in this phase):
+  - The main map "Next Turn" button is clicked.
+  - The combat "Next Turn" button is clicked.
+
+Phase 3:
+========
+
+* Implement supply determination.
+* Implement map views.  The first and only view will be to display supply.  This needs to work for any list of hexes, of course.
+* Implement a fleet interface.  This should include the ability to form fleets, merge and split them, and give right-click move orders to fleets.  There should also be buttons for missions.  For now, just engage and explore.
+
+Phase 4:
+========
+
+* Implement the fleet explore mission.
+* Implement the colony ship colonize mission.
+* Implement the colony ship expand mission.
+* Implement fleet mission queue.
+
+Phase 4:
+========
+
+- Implement tech screen.
+- Add a button for this somewhere in the main map HUD.
+
+Phase 5:
+========
+
+- Implement build screen.
+- Add a button for this somewhere in the main map HUD.
+
+Phase 6:
+========
+
+TODO
