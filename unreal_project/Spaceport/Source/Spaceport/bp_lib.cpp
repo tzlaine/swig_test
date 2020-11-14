@@ -93,3 +93,9 @@ FVector Ubp_lib::map_drag_offset(APlayerController* pc)
 
     return retval;
 }
+
+bool Ubp_lib::continuable_game_available ()
+{
+    // TODO: Look and see if there is a save file to resume.
+    return false;
+}
