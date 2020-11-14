@@ -19,9 +19,10 @@ void Umain_menu::NativeConstruct()
         // TODO: Hide this HUD if there is a current game; load the latest save-file otherwise.
     });
 
-    new_game_bn->connect([] {
-        GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::White, TEXT("Coming soon!"));
-        // TODO
+    new_game_bn->connect([this] {
+        assert(game_state_actor.Get());
+        RemoveFromParent();
+        game_state_actor->new_game();
     });
 
     options_bn->connect([] {
@@ -30,10 +31,16 @@ void Umain_menu::NativeConstruct()
     });
 
     exit_bn->connect([this] {
-        // TODO: We don't have a reference to the world in this part of the code!
-        // UKismetSystemLibrary::QuitGame(GEngine->GetWorld(), 0, EQuitPreference::Quit, false);
 #ifdef WITH_EDITOR
         GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::White, TEXT("Exit is disabled in the editor."));
+        if (game_state_actor.Get()) {
+            // TODO: Why doesn't this work?
+            UKismetSystemLibrary::QuitGame(
+                game_state_actor->GetWorld(),
+                game_state_actor->GetWorld()->GetFirstPlayerController(),
+                EQuitPreference::Quit,
+                false);
+        }
 #else
         FGenericPlatformMisc::RequestExit(false);
 #endif

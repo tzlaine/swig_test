@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "game_state_actor.h"
 #include "widgets/styled_button.h"
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
@@ -26,6 +27,8 @@ protected:
     Ustyled_button * options_bn = nullptr;
     UPROPERTY(meta = (BindWidget))
     Ustyled_button * exit_bn = nullptr;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Actors")
+    TSoftObjectPtr<Agame_state_actor> game_state_actor;
 
 private:
     bool current_game_available();
