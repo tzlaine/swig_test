@@ -9,6 +9,19 @@ STYLEABLE_WIDGET_IMPL_2(Ustyled_button)
 
 STYLEABLE_WIDGET_IMPL_SET_STYLE(Ustyled_button)
 
+void Ustyled_button::OnWidgetRebuilt()
+{
+    Super::OnWidgetRebuilt();
+
+    OnClicked.AddUniqueDynamic(this, &Ustyled_button::trampoline);
+}
+
+void Ustyled_button::trampoline()
+{
+    if (fn_)
+      fn_();
+}
+
 void Ustyled_button::apply_style ()
 {
     SButton::FArguments args;

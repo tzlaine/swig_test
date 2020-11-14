@@ -19,6 +19,18 @@ class SPACEPORT_API Ustyled_button : public UButton
     STYLEABLE_WIDGET_PUBLIC();
 
     Ustyled_button ();
+
+    virtual void OnWidgetRebuilt() override;
+
+    template<typename Fn>
+    void connect(Fn && fn)
+    { fn_ = fn; }
+
+protected:
+    UFUNCTION()
+    void trampoline();
     
     STYLEABLE_WIDGET_PRIVATE();
+
+    std::function<void ()> fn_;
 };
