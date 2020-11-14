@@ -17,12 +17,17 @@ class SPACEPORT_API Umain_menu : public UUserWidget
 
     virtual void NativeConstruct() override;
 
+protected:
     UPROPERTY(meta = (BindWidget))
-    Ustyled_button* continue_bn = nullptr;
+    Ustyled_button * continue_bn = nullptr;
     UPROPERTY(meta = (BindWidget))
-    Ustyled_button* new_game_bn = nullptr;
+    Ustyled_button * new_game_bn = nullptr;
     UPROPERTY(meta = (BindWidget))
-    Ustyled_button* options_bn = nullptr;
+    Ustyled_button * options_bn = nullptr;
     UPROPERTY(meta = (BindWidget))
-    Ustyled_button* exit_bn = nullptr;
+    Ustyled_button * exit_bn = nullptr;
+
+private:
+    bool current_game_available();
+
 };
