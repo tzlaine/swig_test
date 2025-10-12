@@ -48,13 +48,13 @@ namespace start_data {
         { assert(scenario_initialized_); return oob_; }
 
         name_t nation_key (int i) const
-        { return name_t(boost::next(nations_.nations.begin(), i)->first.c_str()); }
+        { return name_t(std::next(nations_.nations.begin(), i)->first.c_str()); }
 
         int nation_id (name_t key) const
         { return nations_.nations.find(key)->second.nation_id; }
 
         nation_t const & nation (int i) const
-        { return boost::next(nations_.nations.begin(), i)->second; }
+        { return std::next(nations_.nations.begin(), i)->second; }
 
         nation_t const & nation (name_t key) const
         { return nations_.nations.find(key)->second; }

@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 4.0)
+
+project(spaceport)
 
 set(use_asan false)
 
@@ -26,8 +28,8 @@ if (NOT MSVC)
     add_definitions(-Wall -Wno-parentheses)
 endif ()
 
-set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Fresh)
-set(unreal_src_dir ${unreal_root}/Source/Fresh)
+set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport)
+set(unreal_src_dir ${unreal_root}/Source/Spaceport)
 set(unreal_3rd_party_root ${unreal_root}/ThirdParty)
 
 add_definitions(-DGOOGLE_PROTOBUF_NO_RTTI)

@@ -253,7 +253,7 @@ struct element<1, pair<T1, T2> >
 /*************************************************************************************************/
 
 template <int N, typename T> // T is pair or tuple
-struct get_element : std::unary_function<T, typename element<N, T>::type> {
+struct get_element : unary_function_base<T, typename element<N, T>::type> {
     typename element<N, T>::type& operator()(T& x) const { return boost::get<N>(x); }
 
     const typename element<N, T>::type& operator()(const T& x) const { return boost::get<N>(x); }
@@ -262,7 +262,7 @@ struct get_element : std::unary_function<T, typename element<N, T>::type> {
 /*************************************************************************************************/
 
 template <typename T1, typename T2> // T is pair or tuple
-struct get_element<0, std::pair<T1, T2>> : std::unary_function<
+struct get_element<0, std::pair<T1, T2>> : unary_function_base<
                                                std::pair<T1, T2>,
                                                typename std::pair<T1, T2>::first_type> {
     typedef std::pair<T1, T2> argument_type;
@@ -294,7 +294,7 @@ struct get_element<0, pair<T1, T2> > :
 /*************************************************************************************************/
 
 template <typename T1, typename T2> // T is pair or tuple
-struct get_element<1, std::pair<T1, T2>> : std::unary_function<
+struct get_element<1, std::pair<T1, T2>> : unary_function_base<
                                                std::pair<T1, T2>,
                                                typename std::pair<T1, T2>::second_type> {
     typedef std::pair<T1, T2> argument_type;
@@ -326,7 +326,7 @@ struct get_element<1, pair<T1, T2> > :
 /*************************************************************************************************/
 
 template <typename T>
-struct always_true : std::unary_function<T, bool> {
+struct always_true : unary_function_base<T, bool> {
     bool operator()(const T&) const { return true; }
 };
 
@@ -356,7 +356,7 @@ private:
 /*************************************************************************************************/
 
 template <class T, typename R, class Compare>
-struct compare_members_t : std::binary_function<T, T, bool> {
+struct compare_members_t : binary_function_base<T, T, bool> {
     compare_members_t(R T::*member, Compare compare) : compare_m(compare), member_m(member) {}
 
     bool operator()(const T& x, const T& y) const { return compare_m(x.*member_m, y.*member_m); }
@@ -387,7 +387,7 @@ compare_members_t<T, R, Compare> compare_members(R T::*member, Compare compare) 
 /*************************************************************************************************/
 
 template <class T, typename R>
-struct mem_data_t : std::unary_function<T, R&> {
+struct mem_data_t : unary_function_base<T, R&> {
     mem_data_t() {}
 
     explicit mem_data_t(R T::*member) : member_m(member) {}
@@ -401,7 +401,7 @@ private:
 };
 
 template <class T, typename R>
-struct mem_data_t<const T, R> : std::unary_function<T, const R&> {
+struct mem_data_t<const T, R> : unary_function_base<T, const R&> {
     explicit mem_data_t(R T::*member) : member_m(member) {}
 
     const R& operator()(const T& x) const { return x.*member_m; }
@@ -418,7 +418,7 @@ mem_data_t<T, R> mem_data(R T::*member) {
 /*************************************************************************************************/
 
 template <typename O> // O models StrictWeakOrdering
-struct equivalent : std::binary_function<typename O::first_argument_type,
+struct equivalent : binary_function_base<typename O::first_argument_type,
                                          typename O::second_argument_type, bool> {
 public:
     explicit equivalent(const O& x) : o_m(x) {}
@@ -435,7 +435,7 @@ private:
 /*************************************************************************************************/
 
 template <class F> // F models a BinaryFunction
-struct transposer : std::binary_function<typename F::second_argument_type,
+struct transposer : binary_function_base<typename F::second_argument_type,
                                          typename F::first_argument_type, typename F::result_type> {
     typedef typename F::second_argument_type first_argument_type;
     typedef typename F::first_argument_type second_argument_type;

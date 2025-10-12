@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <functional>
 #include <ui_defaults.h>
 #include <ui_util.h>
 #include "CoreMinimal.h"

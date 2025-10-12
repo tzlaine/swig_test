@@ -8,6 +8,7 @@
 
 #include <Runtime/Engine/Classes/Kismet/KismetMathLibrary.h>
 #include <Components/TimelineComponent.h>
+#include <Components/InstancedStaticMeshComponent.h>
 
 #include <algorithm>
 #include <memory>
@@ -90,7 +91,7 @@ Ahex_map::Ahex_map () :
     visual_config_.init_hex_map(load_text_file("hex_map_config.json"), start_data_);
 
     hover_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>("hover_indicator");
-    hover_indicator_->AttachTo(RootComponent);
+    hover_indicator_->SetupAttachment(RootComponent);
 
     auto const num_primary_colors = visual_config_.hex_map().primary_colors.size();
 
@@ -272,7 +273,7 @@ void Ahex_map::initialize (instances_t & instances, int nation_id, FColor color,
     auto & instanced = instances.by_color_[color];
     if (!instanced)
         instanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>(name.c_str());
-    instanced->AttachTo(RootComponent);
+    instanced->SetupAttachment(RootComponent);
     instances.instances_[nation_id] = instanced;
 }
 
@@ -574,7 +575,7 @@ void Ahex_map::create_offmap_areas ()
 
         if (auto & text_render_component = offmap_labels_[nation.nation_id]) {
             text_render_component->SetVisibility(true);
-            text_render_component->SetText(offmap_area.name.c_str());
+            text_render_component->SetText(FText::FromString(FString(offmap_area.name.c_str())));
             text_render_component->VerticalAlignment = EVerticalTextAligment::EVRTA_TextCenter;
             text_render_component->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
             text_render_component->SetWorldSize(hex_map_config.offmap_label_size);
@@ -802,5 +803,5 @@ void Ahex_map::instances_t::use (UStaticMesh * mesh)
 
 void Ahex_map::instances_t::add(int nation_id, FTransform transform)
 {
-    instances_[nation_id]->AddInstanceWorldSpace(transform);
+    instances_[nation_id]->AddInstance(transform, true);
 }

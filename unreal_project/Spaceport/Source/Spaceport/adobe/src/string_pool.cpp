@@ -107,7 +107,7 @@ public:
     }
 
 private:
-    struct str_less_t : std::binary_function<const char*, const char*, bool> {
+    struct str_less_t : binary_function_base<const char*, const char*, bool> {
         bool operator()(const char* x, const char* y) const { return strcmp(x, y) < 0; }
     };
 

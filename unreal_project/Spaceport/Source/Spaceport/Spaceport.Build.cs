@@ -31,7 +31,9 @@ public class Spaceport : ModuleRules
 
 		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
 
-        PublicIncludePaths.Add(Path.Combine(ModulePath, "../../../../", "boost_1_60_0"));
+                CppStandard = CppStandardVersion.Cpp20;
+
+        PublicIncludePaths.Add(Path.Combine(ModulePath, "../../../../", "boost_1_89_0"));
         PublicIncludePaths.Add(Path.Combine(ModulePath, "../../../../unreal_project/Spaceport/Source/Spaceport"));
 
         LoadProtobuf(Target);
