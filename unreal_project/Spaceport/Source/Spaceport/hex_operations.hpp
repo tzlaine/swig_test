@@ -119,9 +119,6 @@ inline hex_coord_t adjacent_hex_coord (hex_coord_t hc, hex_direction_t hd)
 inline bool on_map (hex_coord_t hc, int width, int height)
 { return 0 <= hc.x && hc.x < width && 0 <= hc.y && hc.y < height; }
 
-inline bool on_map (hex_coord_t hc, const map_t& m)
-{ return on_map(hc, m.width, m.height); }
-
 struct hex_index_t;
 
 struct hex_id_t

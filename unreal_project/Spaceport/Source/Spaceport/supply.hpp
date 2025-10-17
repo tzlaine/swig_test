@@ -1,6 +1,5 @@
 #pragma once
 
-#include "start_data_t.hpp"
 #include "game_data_t.hpp"
 
 
@@ -8,7 +7,6 @@ namespace detail {
 
     struct supply_relevant_contents_t
     {
-        bool neutral_zone;
         int friendly_ships;
         int friendly_units;
         int friendly_bases;
@@ -20,10 +18,7 @@ namespace detail {
     supply_relevant_contents_t find_supply_relevant_contents (
         hex_t const & hex,
         int nation_id,
-        team_t const * team,
-        start_data::start_data_t const & start_data,
-        game_data_t const & game_data,
-        int nz_nation_id
+        game_data_t const & game_data
     );
 
 }
@@ -56,12 +51,11 @@ struct supply_grid_t
 #endif
 };
 
-bool supply_source (int nation_id, hex_t const & hex, map_t const & map);
+bool supply_source (int nation_id, hex_t const & hex, std::vector<hex_t> const & hexes, int map_width);
 
-bool supply_point (int nation_id, hex_t const & hex, map_t const & map);
+bool supply_point (int nation_id, hex_t const & hex, std::vector<hex_t> const & hexes, int map_width);
 
 std::vector<supply_grid_t> find_supply_grids (
     int nation_id,
-    start_data::start_data_t const & start_data,
     game_data_t const & game_data
 );

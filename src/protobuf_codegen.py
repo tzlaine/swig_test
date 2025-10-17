@@ -3,8 +3,6 @@
 import argparse
 
 parser = argparse.ArgumentParser(description='Generate C++ structs and binding layers from Protobuf messages.')
-parser.add_argument('--site-packages', required=True, type=str,
-                    help='Path to the built Protobuf Python files (usually called "site-packages"')
 parser.add_argument('--proto-file', required=True, type=argparse.FileType('r'),
                     help='Original .proto file')
 parser.add_argument('--desc-file', required=True, type=argparse.FileType('rb'),
@@ -20,9 +18,6 @@ parser.add_argument('--cs-file', type=argparse.FileType('w'),
 parser.add_argument('--cs-namespace', type=str,
                     help='C# namespace into which to place generated code (e.g. foo.bar).')
 args = parser.parse_args()
-
-import site
-site.addsitedir(args.site_packages)
 
 from google.protobuf import descriptor_pb2
 import re
@@ -73,18 +68,18 @@ def map_field_entry_type(descriptor_proto):
 
 def type_without_namespace(field_descriptor_proto, namespace):
     typenames = field_descriptor_proto.type_name.split('.')[1:]
-    prefix = filter(lambda x: x[0] == x[1], zip(typenames, namespace))
+    prefix = list(filter(lambda x: x[0] == x[1], zip(typenames, namespace)))
     return '.'.join(typenames[len(prefix):])
 
 def type_namespace(field_descriptor_proto, namespace):
     typenames = field_descriptor_proto.type_name.split('.')[1:]
-    prefix = filter(lambda x: x[0] == x[1], zip(typenames, namespace))
+    prefix = list(filter(lambda x: x[0] == x[1], zip(typenames, namespace)))
 
     if False:
-        print
-        print typenames
-        print namespace
-        print
+        print()
+        print(typenames)
+        print(namespace)
+        print()
 
     return '.'.join(typenames[:len(prefix)])
 
@@ -174,10 +169,10 @@ def field_element_type(field_descriptor_proto, lang):
     if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE or \
        field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
         typename = type_without_namespace(field_descriptor_proto, protobuf_namespace)
-        if lang is 'cpp':
+        if lang == 'cpp':
             typename = typename.replace('.', '::')
     else:
-        if lang is 'cpp':
+        if lang == 'cpp':
             typename = get_cpp_type(field_descriptor_proto.type)
         else:
             typename = get_csharp_type(field_descriptor_proto.type)
@@ -186,7 +181,7 @@ def field_element_type(field_descriptor_proto, lang):
 def field_type(field_descriptor_proto, lang):
     typename = field_element_type(field_descriptor_proto, lang)
     if repeated(field_descriptor_proto):
-        if lang is 'cpp':
+        if lang == 'cpp':
             typename = 'std::vector<{}>'.format(typename)
         else:
             typename = '{}[]'.format(typename)
@@ -676,7 +671,7 @@ if args.cs_file and len(cs_namespace) == 0:
 
 file_descriptor_set = descriptor_pb2.FileDescriptorSet()
 file_descriptor_set.ParseFromString(args.desc_file.read())
-#print file_descriptor_set
+#print(file_descriptor_set)
 for field_descriptor_proto in file_descriptor_set.file:
     proto_source = field_descriptor_proto.name
     syntax = str(field_descriptor_proto.syntax)

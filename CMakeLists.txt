@@ -36,10 +36,10 @@ add_definitions(-DGOOGLE_PROTOBUF_NO_RTTI)
 set(protobuf_dir protobuf-3.13.0)
 add_subdirectory(${protobuf_dir}/cmake)
 
-set(boost_dir ${CMAKE_HOME_DIRECTORY}/boost_1_60_0)
+set(boost_dir ${CMAKE_HOME_DIRECTORY}/boost_1_89_0)
 include_directories(${boost_dir})
 if (NOT MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 endif ()
 
 add_subdirectory(jansson)
@@ -69,133 +69,96 @@ macro(generate_protobuf file_root target)
     set_source_files_properties(
         ${unreal_src_dir}/${file_root}.pb.h
         ${unreal_src_dir}/${file_root}.pb.cc
+        ${CMAKE_BINARY_DIR}}/${file_root}_pb2.py
         PROPERTIES
             GENERATED true
     )
 endmacro()
 
-find_package(PythonInterp)
-if (PYTHON_EXECUTABLE)
+find_package(Python3 COMPONENTS Interpreter Development)
+if (Python3_FOUND)
+    set(installed_token ${CMAKE_BINARY_DIR}/python_google_protobuf_installed_token)
+
     add_custom_command(
         OUTPUT
-            ${CMAKE_SOURCE_DIR}/tests/test_data.hpp
+            ${installed_token}
         COMMAND
-            ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/cmake/make_data.py
-                --nations-file=${unreal_root}/nations.json
-                --map-file=${unreal_root}/default_map.json
-                --oob-file=${unreal_root}/default_oob.json
-                --units-file=${unreal_root}/units.json
-                --scenario-file=${unreal_root}/scenarios/the_wind.json
-                --hex-map-config-file=${unreal_root}/hex_map_config.json
-                --out-file=${CMAKE_SOURCE_DIR}/tests/test_data.hpp
+            ${Python3_EXECUTABLE} -m pip install six # We also need this.
+        COMMAND
+            ${Python3_EXECUTABLE} -m pip install protobuf==3.13.0
+        COMMAND
+            ${CMAKE_COMMAND} -E copy ${CMAKE_HOME_DIRECTORY}/CMakeLists.txt ${installed_token}
         DEPENDS
-            ${unreal_root}/nations.json
-            ${unreal_root}/default_map.json
-            ${unreal_root}/default_oob.json
-            ${unreal_root}/units.json
-            ${unreal_root}/scenarios/the_wind.json
-            ${unreal_root}/hex_map_config.json
-            ${CMAKE_CURRENT_SOURCE_DIR}/cmake/make_data.py
-        COMMENT "Create JSON data header."
+            protoc
+        COMMENT "Install the Google Protobuf Python module."
         VERBATIM
     )
-    add_custom_target(data_header_target DEPENDS ${CMAKE_SOURCE_DIR}/tests/test_data.hpp)
 
-#    set(protobuf_python_dir ${CMAKE_BINARY_DIR}/protobuf_python)
-#
-#    if (CYGWIN OR MINGW)
-#        message(FATAL_ERROR "Cygwin and MSYS builds are not supported!  Use the Windows version of CMake.")
-#    elseif (APPLE)
-#        set(protobuf_python_pth_dir ${protobuf_python_dir}/lib/python/site-packages)
-#    elseif (WIN32)
-#        set(protobuf_python_pth_dir ${protobuf_python_dir}/Python27/site-packages)
-#    elseif (UNIX)
-#        set(protobuf_python_pth_dir ${protobuf_python_dir}/lib/python2.7/site-packages)
-#    endif()
-#
-#    add_custom_command(
-#        OUTPUT
-#            ${protobuf_python_pth_dir}/setuptools.pth
-#        COMMAND
-#            ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
-#                --working-dir ${CMAKE_HOME_DIRECTORY}/${protobuf_dir}/python
-#                --protoc-path $<TARGET_FILE_DIR:protoc>
-#                --protobuf-python-dir ${protobuf_python_dir}
-#        DEPENDS
-#            protoc
-#            ${CMAKE_SOURCE_DIR}/src/build_protobuf_python.py
-#        COMMENT "Build the Python Protobuf module."
-#        VERBATIM
-#    )
-#
-#    add_custom_target(
-#        install_python_protobuf
-#        DEPENDS
-#            ${protobuf_python_pth_dir}/setuptools.pth
-#    )
-#
-#    macro(python_generate_sources file_root namespace)
-#        add_custom_target(
-#            make_desc_file_${file_root}
-#            COMMAND
-#                protoc
-#                    --proto_path=${CMAKE_HOME_DIRECTORY}/proto
-#                    --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
-#                    ${CMAKE_HOME_DIRECTORY}/proto/${file_root}.proto
-#            DEPENDS
-#                install_python_protobuf
-#                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
-#            COMMENT "Make ${file_root}.desc from ${file_root}.proto."
-#            VERBATIM
-#        )
-#    
-#        set(generated_sources
-#            ${unreal_src_dir}/${file_root}.hpp
-#            ${unreal_src_dir}/${file_root}.cpp
-#        )
-#        set(python_generated_sources ${python_generated_sources} ${generated_sources})
-#
-#        set(ns_arg --namespace ${namespace})
-#        if (${namespace} STREQUAL GLOBAL)
-#            set(ns_arg)
-#        endif ()
-#    
-#        add_custom_command(
-#            OUTPUT
-#                ${generated_sources}
-#            COMMAND
-#                ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
-#                    --site-packages ${protobuf_python_pth_dir}
-#                    --proto-file ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
-#                    --desc-file ${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
-#                    --hpp-file ${unreal_src_dir}/${file_root}.hpp
-#                    --cpp-file ${unreal_src_dir}/${file_root}.cpp
-#                    ${ns_arg}
-#            DEPENDS
-#                ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
-#                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
-#                make_desc_file_${file_root}
-#            COMMENT "Create ${file_root}.{h,c}pp."
-#            VERBATIM
-#        )
-#        add_custom_target(
-#            ${file_root}_target
-#            DEPENDS
-#                ${generated_sources}
-#        )
-#    endmacro()
-#
-#    set(python_generated_sources)
-#    python_generate_sources(base_types GLOBAL)
-#    python_generate_sources(start_data start_data)
-#    python_generate_sources(game_data GLOBAL)
-#    python_generate_sources(visual_config visual_config)
-#
-#    set_source_files_properties(
-#        ${python_generated_sources}
-#        PROPERTIES
-#            GENERATED true
-#    )
+    add_custom_target(
+        install_python_protobuf
+        DEPENDS
+            ${installed_token}
+    )
+
+    macro(python_generate_sources file_root namespace)
+        add_custom_target(
+            make_desc_file_${file_root}
+            COMMAND
+                protoc
+                    --proto_path=${CMAKE_HOME_DIRECTORY}/proto
+                    --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
+                    ${CMAKE_HOME_DIRECTORY}/proto/${file_root}.proto
+            DEPENDS
+                install_python_protobuf
+                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
+            COMMENT "Make ${file_root}.desc from ${file_root}.proto."
+            VERBATIM
+        )
+
+        set(generated_sources
+            ${unreal_src_dir}/${file_root}.hpp
+            ${unreal_src_dir}/${file_root}.cpp
+        )
+        set(python_generated_sources ${python_generated_sources} ${generated_sources})
+
+        set(ns_arg --namespace ${namespace})
+        if (${namespace} STREQUAL GLOBAL)
+            set(ns_arg)
+        endif ()
+
+        add_custom_command(
+            OUTPUT
+                ${generated_sources}
+            COMMAND
+                ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
+                    --proto-file ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
+                    --desc-file ${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
+                    --hpp-file ${unreal_src_dir}/${file_root}.hpp
+                    --cpp-file ${unreal_src_dir}/${file_root}.cpp
+                    ${ns_arg}
+            DEPENDS
+                ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
+                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
+                make_desc_file_${file_root}
+            COMMENT "Create ${file_root}.{h,c}pp."
+            VERBATIM
+        )
+        add_custom_target(
+            ${file_root}_target
+            DEPENDS
+                ${generated_sources}
+        )
+    endmacro()
+
+    set(python_generated_sources)
+    python_generate_sources(base_types GLOBAL)
+    python_generate_sources(game_data GLOBAL)
+
+    set_source_files_properties(
+        ${python_generated_sources}
+        PROPERTIES
+            GENERATED true
+    )
 endif ()
 
 include_directories(
@@ -207,5 +170,5 @@ include_directories(
 add_definitions(-DBUILD_FOR_TEST)
 
 add_subdirectory(src)
-add_subdirectory(tests)
+# TODO add_subdirectory(tests)
 # TODO add_subdirectory(perf)

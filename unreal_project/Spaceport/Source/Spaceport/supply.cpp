@@ -4,7 +4,6 @@
 
 #include "supply.hpp"
 
-#include "data_utility.hpp"
 #include "graph.hpp"
 
 #include <boost/graph/breadth_first_search.hpp>
@@ -97,15 +96,11 @@ namespace {
 detail::supply_relevant_contents_t detail::find_supply_relevant_contents (
     hex_t const & hex,
     int nation_id,
-    team_t const * team,
-    start_data::start_data_t const & start_data,
-    game_data_t const & game_data,
-    int nz_nation_id
+    game_data_t const & game_data
 ) {
     supply_relevant_contents_t retval = {0};
 
-    retval.neutral_zone = neutral_zone(hex, game_data.map(), nz_nation_id);
-
+#if 0 // TODO
     for (auto const & zone : hex.zones) {
         for (auto const & fixture : zone.fixtures) {
             if (fixture.type == hex_zone_fixture_t::type_t::type_base &&
@@ -140,12 +135,14 @@ detail::supply_relevant_contents_t detail::find_supply_relevant_contents (
             }
         }
     }
+#endif
 
     return retval;
 }
 
-bool supply_source (int nation_id, hex_t const & hex, map_t const & map)
+bool supply_source (int nation_id, hex_t const & hex)
 {
+#if 0 // TODO
     for (auto const & zone : hex.zones) {
         for (auto const & fixture : zone.fixtures) {
             if (fixture.type == hex_zone_fixture_t::type_t::type_planet) {
@@ -157,12 +154,14 @@ bool supply_source (int nation_id, hex_t const & hex, map_t const & map)
             }
         }
     }
+#endif
 
     return false;
 }
 
-bool supply_point (int nation_id, hex_t const & hex, map_t const & map)
+bool supply_point (int nation_id, hex_t const & hex)
 {
+#if 0 // TODO
     for (auto const & zone : hex.zones) {
         for (auto const & fixture : zone.fixtures) {
             if (fixture.type == hex_zone_fixture_t::type_t::type_planet) {
@@ -183,17 +182,18 @@ bool supply_point (int nation_id, hex_t const & hex, map_t const & map)
         if (is_convoy(unit) || unit.tug_mission == tug_mission_t::D_supply)
             return true;
     }
+#endif
 
     return false;
 }
 
 std::vector<supply_grid_t> find_supply_grids (
     int nation_id,
-    start_data::start_data_t const & start_data,
     game_data_t const & game_data
 ) {
     std::vector<supply_grid_t> retval;
 
+#if 0 // TODO
     auto const team = game_data.team(nation_id, start_data);
 
     auto const & game_map = game_data.map();
@@ -431,6 +431,7 @@ std::vector<supply_grid_t> find_supply_grids (
 
         // TODO: Reuse the above, and start here.
     }
+#endif
 
     return retval;
 }

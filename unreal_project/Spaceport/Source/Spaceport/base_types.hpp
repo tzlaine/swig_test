@@ -2,10 +2,6 @@
 // This file was generated from base_types (proto3)
 #pragma once
 
-#pragma warning(disable: 4456)
-#pragma warning(disable: 4430)
-#pragma warning(disable: 4668)
-
 #include <base_types.pb.h>
 
 
@@ -17,55 +13,23 @@
 
 
 
-enum class season_t {
-    spring = 0,
-    fall = 1,
-};
-
-enum class tug_mission_t {
+enum class mission_t {
     no_mission = 0,
-    A_battle = 1,
-    B_carrier = 2,
-    C_mobile_base = 3,
-    D_supply = 4,
-    E_repair = 5,
-    F_tow_frd = 6,
-    G_pft = 7,
-    H_economic_transfer = 8,
-    I_crippled = 9,
-    J1_base_repair = 10,
-    J2_base_upgrade = 11,
-    K1_pdu_transport = 12,
-    K2_pdu_upgrade = 13,
-    L_drone = 14,
-    M_vanilla = 15,
-    O_hydran_special_supply = 16,
-};
-
-enum class carrier_type_t {
-    not_a_carrier = 0,
-    single_ship_carrier = 1,
-    light_carrier = 2,
-    medium_carrier = 3,
-    heavy_carrier = 4,
-};
-
-enum class escort_type_t {
-    not_an_escort = 0,
-    light_escort = 1,
-    heavy_escort = 2,
-};
-
-enum class war_footing_t {
-    war = 0,
-    limited_war = 1,
-    peace = 2,
-};
-
-struct turn_t
-{
-    int year;
-    season_t season;
+    explore = 1,
+    attack = 2,
+    evade = 3,
+    intercept = 4,
+    convoy_guard = 5,
+    ground_attack = 6,
+    privateer = 7,
+    found_coloy = 8,
+    expand_colony = 9,
+    deliver_armies = 64,
+    deliver_repair_yard = 65,
+    deliver_mobile_base = 66,
+    build_outpost = 67,
+    build_starbase = 68,
+    upgrade_base = 69,
 };
 
 struct hex_coord_t
@@ -75,9 +39,6 @@ struct hex_coord_t
 };
 
 
-
-pb_message::turn_t to_protobuf (const ::turn_t& value);
-::turn_t from_protobuf (const pb_message::turn_t& msg);
 
 pb_message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
 ::hex_coord_t from_protobuf (const pb_message::hex_coord_t& msg);

@@ -5,7 +5,6 @@
 class UInstancedStaticMeshComponent;
 
 #include "visual_config_t.hpp"
-#include "start_data_t.hpp"
 #include "game_data_t.hpp"
 #include <vector>
 #include <GameFramework/Actor.h>

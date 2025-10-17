@@ -3,55 +3,25 @@ syntax = "proto3";
 package pb_message;
 
 
-enum season_t {
-    spring = 0;
-    fall = 1;
-}
-
-enum tug_mission_t {
+enum mission_t {
     no_mission = 0;
-    A_battle = 1;
-    B_carrier = 2;
-    C_mobile_base = 3;
-    D_supply = 4;
-    E_repair = 5;
-    F_tow_frd = 6;
-    G_pft = 7;
-    H_economic_transfer = 8;
-    I_crippled = 9;
-    J1_base_repair = 10;
-    J2_base_upgrade = 11;
-    K1_pdu_transport = 12;
-    K2_pdu_upgrade = 13;
-    L_drone = 14;
-    M_vanilla = 15;
-    O_hydran_special_supply = 16;
-}
+    explore = 1;
+    attack = 2;
+    evade = 3;
+    intercept = 4;
+    convoy_guard = 5;
+    ground_attack = 6;
+    privateer = 7;
+    found_coloy = 8;
+    expand_colony = 9;
 
-enum carrier_type_t {
-    not_a_carrier = 0;
-    single_ship_carrier = 1;
-    light_carrier = 2;
-    medium_carrier = 3;
-    heavy_carrier = 4;
-}
-
-enum escort_type_t {
-    not_an_escort = 0;
-    light_escort = 1;
-    heavy_escort = 2;
-}
-
-enum war_footing_t {
-    war = 0;
-    limited_war = 1;
-    peace = 2;
-}
-
-message turn_t
-{
-    int32 year = 1;
-    season_t season = 2;
+    // Lifters only from here down.
+    deliver_armies = 64;
+    deliver_repair_yard = 65;
+    deliver_mobile_base = 66;
+    build_outpost = 67;
+    build_starbase = 68;
+    upgrade_base = 69;
 }
 
 message hex_coord_t

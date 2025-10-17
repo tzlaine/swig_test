@@ -48,7 +48,7 @@ struct TableStruct_base_5ftypes_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[2]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[1]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -59,310 +59,52 @@ namespace pb_message {
 class hex_coord_t;
 class hex_coord_tDefaultTypeInternal;
 extern hex_coord_tDefaultTypeInternal _hex_coord_t_default_instance_;
-class turn_t;
-class turn_tDefaultTypeInternal;
-extern turn_tDefaultTypeInternal _turn_t_default_instance_;
 }  // namespace pb_message
 PROTOBUF_NAMESPACE_OPEN
 template<> ::pb_message::hex_coord_t* Arena::CreateMaybeMessage<::pb_message::hex_coord_t>(Arena*);
-template<> ::pb_message::turn_t* Arena::CreateMaybeMessage<::pb_message::turn_t>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace pb_message {
 
-enum season_t : int {
-  spring = 0,
-  fall = 1,
-  season_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  season_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool season_t_IsValid(int value);
-constexpr season_t season_t_MIN = spring;
-constexpr season_t season_t_MAX = fall;
-constexpr int season_t_ARRAYSIZE = season_t_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* season_t_descriptor();
-template<typename T>
-inline const std::string& season_t_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, season_t>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function season_t_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    season_t_descriptor(), enum_t_value);
-}
-inline bool season_t_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, season_t* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<season_t>(
-    season_t_descriptor(), name, value);
-}
-enum tug_mission_t : int {
+enum mission_t : int {
   no_mission = 0,
-  A_battle = 1,
-  B_carrier = 2,
-  C_mobile_base = 3,
-  D_supply = 4,
-  E_repair = 5,
-  F_tow_frd = 6,
-  G_pft = 7,
-  H_economic_transfer = 8,
-  I_crippled = 9,
-  J1_base_repair = 10,
-  J2_base_upgrade = 11,
-  K1_pdu_transport = 12,
-  K2_pdu_upgrade = 13,
-  L_drone = 14,
-  M_vanilla = 15,
-  O_hydran_special_supply = 16,
-  tug_mission_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  tug_mission_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+  explore = 1,
+  attack = 2,
+  evade = 3,
+  intercept = 4,
+  convoy_guard = 5,
+  ground_attack = 6,
+  privateer = 7,
+  found_coloy = 8,
+  expand_colony = 9,
+  deliver_armies = 64,
+  deliver_repair_yard = 65,
+  deliver_mobile_base = 66,
+  build_outpost = 67,
+  build_starbase = 68,
+  upgrade_base = 69,
+  mission_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  mission_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
-bool tug_mission_t_IsValid(int value);
-constexpr tug_mission_t tug_mission_t_MIN = no_mission;
-constexpr tug_mission_t tug_mission_t_MAX = O_hydran_special_supply;
-constexpr int tug_mission_t_ARRAYSIZE = tug_mission_t_MAX + 1;
+bool mission_t_IsValid(int value);
+constexpr mission_t mission_t_MIN = no_mission;
+constexpr mission_t mission_t_MAX = upgrade_base;
+constexpr int mission_t_ARRAYSIZE = mission_t_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* tug_mission_t_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* mission_t_descriptor();
 template<typename T>
-inline const std::string& tug_mission_t_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, tug_mission_t>::value ||
+inline const std::string& mission_t_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, mission_t>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function tug_mission_t_Name.");
+    "Incorrect type passed to function mission_t_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    tug_mission_t_descriptor(), enum_t_value);
+    mission_t_descriptor(), enum_t_value);
 }
-inline bool tug_mission_t_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, tug_mission_t* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<tug_mission_t>(
-    tug_mission_t_descriptor(), name, value);
-}
-enum carrier_type_t : int {
-  not_a_carrier = 0,
-  single_ship_carrier = 1,
-  light_carrier = 2,
-  medium_carrier = 3,
-  heavy_carrier = 4,
-  carrier_type_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  carrier_type_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool carrier_type_t_IsValid(int value);
-constexpr carrier_type_t carrier_type_t_MIN = not_a_carrier;
-constexpr carrier_type_t carrier_type_t_MAX = heavy_carrier;
-constexpr int carrier_type_t_ARRAYSIZE = carrier_type_t_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* carrier_type_t_descriptor();
-template<typename T>
-inline const std::string& carrier_type_t_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, carrier_type_t>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function carrier_type_t_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    carrier_type_t_descriptor(), enum_t_value);
-}
-inline bool carrier_type_t_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, carrier_type_t* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<carrier_type_t>(
-    carrier_type_t_descriptor(), name, value);
-}
-enum escort_type_t : int {
-  not_an_escort = 0,
-  light_escort = 1,
-  heavy_escort = 2,
-  escort_type_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  escort_type_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool escort_type_t_IsValid(int value);
-constexpr escort_type_t escort_type_t_MIN = not_an_escort;
-constexpr escort_type_t escort_type_t_MAX = heavy_escort;
-constexpr int escort_type_t_ARRAYSIZE = escort_type_t_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* escort_type_t_descriptor();
-template<typename T>
-inline const std::string& escort_type_t_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, escort_type_t>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function escort_type_t_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    escort_type_t_descriptor(), enum_t_value);
-}
-inline bool escort_type_t_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, escort_type_t* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<escort_type_t>(
-    escort_type_t_descriptor(), name, value);
-}
-enum war_footing_t : int {
-  war = 0,
-  limited_war = 1,
-  peace = 2,
-  war_footing_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  war_footing_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
-};
-bool war_footing_t_IsValid(int value);
-constexpr war_footing_t war_footing_t_MIN = war;
-constexpr war_footing_t war_footing_t_MAX = peace;
-constexpr int war_footing_t_ARRAYSIZE = war_footing_t_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* war_footing_t_descriptor();
-template<typename T>
-inline const std::string& war_footing_t_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, war_footing_t>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function war_footing_t_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    war_footing_t_descriptor(), enum_t_value);
-}
-inline bool war_footing_t_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, war_footing_t* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<war_footing_t>(
-    war_footing_t_descriptor(), name, value);
+inline bool mission_t_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, mission_t* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<mission_t>(
+    mission_t_descriptor(), name, value);
 }
 // ===================================================================
-
-class turn_t PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.turn_t) */ {
- public:
-  inline turn_t() : turn_t(nullptr) {}
-  virtual ~turn_t();
-
-  turn_t(const turn_t& from);
-  turn_t(turn_t&& from) noexcept
-    : turn_t() {
-    *this = ::std::move(from);
-  }
-
-  inline turn_t& operator=(const turn_t& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline turn_t& operator=(turn_t&& from) noexcept {
-    if (GetArena() == from.GetArena()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const turn_t& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const turn_t* internal_default_instance() {
-    return reinterpret_cast<const turn_t*>(
-               &_turn_t_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    0;
-
-  friend void swap(turn_t& a, turn_t& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(turn_t* other) {
-    if (other == this) return;
-    if (GetArena() == other->GetArena()) {
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(turn_t* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline turn_t* New() const final {
-    return CreateMaybeMessage<turn_t>(nullptr);
-  }
-
-  turn_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<turn_t>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const turn_t& from);
-  void MergeFrom(const turn_t& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(turn_t* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "pb_message.turn_t";
-  }
-  protected:
-  explicit turn_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_base_5ftypes_2eproto);
-    return ::descriptor_table_base_5ftypes_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kYearFieldNumber = 1,
-    kSeasonFieldNumber = 2,
-  };
-  // int32 year = 1;
-  void clear_year();
-  ::PROTOBUF_NAMESPACE_ID::int32 year() const;
-  void set_year(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_year() const;
-  void _internal_set_year(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // .pb_message.season_t season = 2;
-  void clear_season();
-  ::pb_message::season_t season() const;
-  void set_season(::pb_message::season_t value);
-  private:
-  ::pb_message::season_t _internal_season() const;
-  void _internal_set_season(::pb_message::season_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:pb_message.turn_t)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::int32 year_;
-  int season_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_base_5ftypes_2eproto;
-};
-// -------------------------------------------------------------------
 
 class hex_coord_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.hex_coord_t) */ {
@@ -406,7 +148,7 @@ class hex_coord_t PROTOBUF_FINAL :
                &_hex_coord_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    0;
 
   friend void swap(hex_coord_t& a, hex_coord_t& b) {
     a.Swap(&b);
@@ -519,50 +261,6 @@ class hex_coord_t PROTOBUF_FINAL :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// turn_t
-
-// int32 year = 1;
-inline void turn_t::clear_year() {
-  year_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 turn_t::_internal_year() const {
-  return year_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 turn_t::year() const {
-  // @@protoc_insertion_point(field_get:pb_message.turn_t.year)
-  return _internal_year();
-}
-inline void turn_t::_internal_set_year(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  year_ = value;
-}
-inline void turn_t::set_year(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_year(value);
-  // @@protoc_insertion_point(field_set:pb_message.turn_t.year)
-}
-
-// .pb_message.season_t season = 2;
-inline void turn_t::clear_season() {
-  season_ = 0;
-}
-inline ::pb_message::season_t turn_t::_internal_season() const {
-  return static_cast< ::pb_message::season_t >(season_);
-}
-inline ::pb_message::season_t turn_t::season() const {
-  // @@protoc_insertion_point(field_get:pb_message.turn_t.season)
-  return _internal_season();
-}
-inline void turn_t::_internal_set_season(::pb_message::season_t value) {
-  
-  season_ = value;
-}
-inline void turn_t::set_season(::pb_message::season_t value) {
-  _internal_set_season(value);
-  // @@protoc_insertion_point(field_set:pb_message.turn_t.season)
-}
-
-// -------------------------------------------------------------------
-
 // hex_coord_t
 
 // int32 x = 1;
@@ -608,8 +306,6 @@ inline void hex_coord_t::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -617,30 +313,10 @@ inline void hex_coord_t::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::pb_message::season_t> : ::std::true_type {};
+template <> struct is_proto_enum< ::pb_message::mission_t> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::season_t>() {
-  return ::pb_message::season_t_descriptor();
-}
-template <> struct is_proto_enum< ::pb_message::tug_mission_t> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::tug_mission_t>() {
-  return ::pb_message::tug_mission_t_descriptor();
-}
-template <> struct is_proto_enum< ::pb_message::carrier_type_t> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::carrier_type_t>() {
-  return ::pb_message::carrier_type_t_descriptor();
-}
-template <> struct is_proto_enum< ::pb_message::escort_type_t> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::escort_type_t>() {
-  return ::pb_message::escort_type_t_descriptor();
-}
-template <> struct is_proto_enum< ::pb_message::war_footing_t> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::war_footing_t>() {
-  return ::pb_message::war_footing_t_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::mission_t>() {
+  return ::pb_message::mission_t_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

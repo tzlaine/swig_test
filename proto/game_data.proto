@@ -5,19 +5,39 @@ import "base_types.proto";
 package pb_message.game_data;
 
 
+message unit_design_t
+{
+    int32 id = 1;
+    int32 owner = 2;
+    int32 hull = 3;
+    int32 armor = 4;
+    int32 propulsion = 5;
+    int32 weapons = 6;
+    int32 shields = 7;
+    int32 detection = 8;
+    int32 stealth = 9;
+    int32 automation = 10;
+    int32 attack = 11;
+    int32 defense = 12;
+    int32 ground_attack = 13;
+}
+
 message unit_t
 {
-    int32 unit_id = 1; // TODO: Define this type for real.
-    int32 owner = 2;
-    int32 original_owner = 3;
-    int32 fighters = 4;
-    int32 pfs = 5;
-    pb_message.tug_mission_t tug_mission = 6;
+    int32 design_id = 1;
+    int32 design_owner = 2;
+    int32 health = 3; // <= design defense
 }
 
 message fleet_t
 {
-    repeated unit_t units = 1;
+    uint32 id = 1;
+    pb_message.mission_t mission = 2;
+    repeated unit_t units = 3;
+    float fuel = 4;
+    int32 rounds = 5;
+    int32 missiles = 6;
+    int32 fighters = 7;
 }
 
 message fleets_t
@@ -27,74 +47,78 @@ message fleets_t
 
 message planet_t
 {
-    enum type_t {
-        minor = 0;
-        major = 1;
-        capital = 2;
-    }
-
-    // TODO: Turns owned by captor, etc.
-    int32 owner = 1;
-    int32 original_owner = 2;
-    type_t type = 3;
-    fleets_t units = 4;
+    int32 system_id = 1;
+    int32 water = 2;
+    int32 food = 3;
+    int32 enery = 4;
+    int32 metal = 5;
+    int32 fuel = 6;
+    int32 population = 7;
+    int32 infrastructure = 8;
+    int32 max_population = 9;
+    int32 owner = 10;
+    int32 original_owner = 11;
+    // TODO: language, culture, religion
+    // TODO: visual properties (incl. axial tilt)
+    fleet_t garrison = 12;
+    // TODO: ground-to-space defenses
 }
 
-message hex_zone_fixture_t
+message location_object_t
 {
-    enum type_t {
-        type_base = 0;
-        type_planet = 1;
-    }
-
-    type_t type = 1;
-    unit_t base = 2;
-    planet_t planet = 3;
+    fleet_t bases = 1;
+    planet_t planet = 2; // no planet if planet.system_id < 0
+    // TODO: orbital position, if planet is nonempty
+    // TODO: other kinds of things as well?
 }
 
-message hex_zone_t
+message system_location_t
 {
-    string name = 1; // Only defined in capital hexes zones.
-    repeated hex_zone_fixture_t fixtures = 2;
+    repeated location_object_t objects = 1;
+    fleets_t units = 2;
+}
+
+message system_t
+{
+    string name = 1;
+    hex_coord_t coord = 2;
+    // TODO: star visual properties
+    // TODO: position within hex
+    repeated system_location_t permanent_locations = 3;
+    repeated system_location_t temporary_locations = 4;
 }
 
 message hex_t
 {
     hex_coord_t coord = 1;
     int32 province_id = 2;
-    repeated hex_zone_t zones = 4;
-    fleets_t fleets = 5;
+    repeated system_t systems = 3;
+    fleets_t fleets = 4;
 }
 
 message province_t
 {
-    // TODO: Turns owned by captor, etc.
     int32 id = 1;
     int32 owner = 2;
-    int32 original_owner = 3;
+    repeated  hex_coord_t hex_coords = 3;
 }
 
-message map_t
+message nation_t
 {
-    int32 width = 1;
-    int32 height = 2;
+    int32 id = 1;
+    repeated unit_design_t unit_designs = 2;
+    repeated province_t provinces = 3;
+    repeated uint32 fleets = 4;
+    repeated int32 planets = 5;
+    bool defeated = 6;
+}
+
+message game_state_t
+{
+    int32 map_width = 1;
+    int32 map_height = 2;
     repeated hex_t hexes = 3;
-    repeated province_t provinces = 4;
-}
-
-message offmap_area_t
-{
-    int32 owner = 1;
-    fleets_t fleets = 2;
-}
-
-message offmap_areas_t
-{
-    map<int32, offmap_area_t> areas = 1;
-}
-
-message team_t
-{
-    string name = 1;
-    repeated int32 nations = 2;
+    repeated system_t systems = 4;
+    repeated planet_t planets = 5;
+    repeated nation_t nations = 6;
 }
