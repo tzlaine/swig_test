@@ -4,6 +4,8 @@ project(spaceport)
 
 set(use_asan false)
 
+set(CMAKE_CXX_STANDARD 20)
+
 if (APPLE)
     set(CMAKE_OSX_ARCHITECTURES i386 x86_64)
 
@@ -38,9 +40,6 @@ add_subdirectory(${protobuf_dir}/cmake)
 
 set(boost_dir ${CMAKE_HOME_DIRECTORY}/boost_1_89_0)
 include_directories(${boost_dir})
-if (NOT MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
-endif ()
 
 add_subdirectory(jansson)
 include_directories(${CMAKE_BINARY_DIR}/jansson/include)
