@@ -109,12 +109,12 @@ private:
 
             std::ofstream ofs(path, std::ios::binary);
             if (!ofs) {
-                UE_LOG(LogCore, Error,
+                UE_LOG(general, Error,
                        TEXT("Unable to open save file %s for writing."), *FSTRINGIZE(path));
             }
             ofs.write(serialized_bytes_.data(), serialized_bytes_.size());
             if (!ofs) {
-                UE_LOG(LogCore, Error,
+                UE_LOG(general, Error,
                        TEXT("Unable to write contents to save file %s."), *FSTRINGIZE(path));
             }
         }

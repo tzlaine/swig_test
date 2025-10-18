@@ -27,4 +27,13 @@ inline FString fstringize(std::filesystem::path p)
 {
     return fstringize(p.native());
 }
+
+#define DEFINE_INLINE_LOG_CATEGORY(name)                                \
+    inline struct FLogCategory ## name :                                \
+    FLogCategory<ELogVerbosity::Log, ELogVerbosity::All> {              \
+        FORCEINLINE FLogCategory ## name() :                            \
+            FLogCategory(TEXT(#name)) {}                                \
+    } name
+
+DEFINE_INLINE_LOG_CATEGORY(general);
 #endif
