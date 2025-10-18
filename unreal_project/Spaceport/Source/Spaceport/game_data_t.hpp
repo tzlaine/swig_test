@@ -87,7 +87,7 @@ private:
 
     concurrent_queue<
         std::pair<boost::shared_ptr<game_state_t const>,
-        std::filesystem::path>> save_queue_;
+                  std::filesystem::path>> save_queue_;
     std::jthread save_thread_;
     void save_worker()
     {
@@ -96,21 +96,23 @@ private:
         while (save_queue_.pop(save_state_and_path)) {
             auto [save_state, path] = save_state_and_path;
             reset_saving saving_reseter(saving_);
-            reset_save_state save_state_reseter(save_state);
 
-            pb_message::game_data::game_state_t as_protobuf =
-                to_protobuf(*save_state);
+            pb_message::game_data::game_state_t as_protobuf;
+            {
+                reset_save_state save_state_reseter(save_state);
+                as_protobuf = to_protobuf(*save_state);
+            }
 
             serialized_bytes_.clear();
             as_protobuf.SerializeToString(&serialized_bytes_);
 
             std::ofstream ofs(path, std::ios::binary);
             if (!ofs) {
-                // log and return false on failure.
+                // log on failure.
             }
             ofs.write(serialized_bytes_.data(), serialized_bytes_.size());
             if (!ofs) {
-                // log and return false on failure.
+                // log on failure.
             }
         }
     }
