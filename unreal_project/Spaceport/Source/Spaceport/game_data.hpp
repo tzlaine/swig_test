@@ -13,6 +13,24 @@
 
 
 
+enum class planet_type_t {
+    invalid_planet = 0,
+    rocky = 1,
+    gas_giant = 2,
+    ice_giant = 3,
+};
+
+enum class star_class_t {
+    invalid_star_class = 0,
+    o = 1,
+    b = 2,
+    a = 3,
+    f = 4,
+    g = 5,
+    k = 6,
+    m = 7,
+};
+
 struct unit_design_t
 {
     int id;
@@ -56,6 +74,13 @@ struct fleets_t
 struct planet_t
 {
     int system_id;
+    planet_type_t planet_type;
+    double mass_kg;
+    double radius_km;
+    float orbit_au;
+    float gravity_g;
+    float axial_tilt_d;
+    float day_h;
     int water;
     int food;
     int enery;
@@ -72,7 +97,7 @@ struct planet_t
 struct location_object_t
 {
     fleet_t bases;
-    planet_t planet;
+    std::ptrdiff_t planet_id;
 };
 
 struct system_location_t
@@ -81,19 +106,34 @@ struct system_location_t
     fleets_t units;
 };
 
+struct star_t
+{
+    star_class_t star_class;
+    double temperature_k;
+    double solar_masses;
+    double solar_luminosities;
+    double solar_radii;
+};
+
 struct system_t
 {
     adobe::name_t name;
     hex_coord_t coord;
+    star_t star;
     std::vector<system_location_t> permanent_locations;
     std::vector<system_location_t> temporary_locations;
+    double world_pos_x;
+    double world_pos_y;
+    std::ptrdiff_t first_planet;
+    std::ptrdiff_t last_planet;
 };
 
 struct hex_t
 {
     hex_coord_t coord;
     int province_id;
-    std::vector<system_t> systems;
+    std::ptrdiff_t first_system;
+    std::ptrdiff_t last_system;
     fleets_t fleets;
 };
 
@@ -146,6 +186,9 @@ pb_message::game_data::location_object_t to_protobuf (const ::location_object_t&
 
 pb_message::game_data::system_location_t to_protobuf (const ::system_location_t& value);
 ::system_location_t from_protobuf (const pb_message::game_data::system_location_t& msg);
+
+pb_message::game_data::star_t to_protobuf (const ::star_t& value);
+::star_t from_protobuf (const pb_message::game_data::star_t& msg);
 
 pb_message::game_data::system_t to_protobuf (const ::system_t& value);
 ::system_t from_protobuf (const pb_message::game_data::system_t& msg);

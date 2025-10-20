@@ -1,6 +1,6 @@
-namespace {
-    float const meters = 100.0f;
-}
+#pragma once
+
+inline constexpr float meters = 100.0f;
 
 template <typename T>
 void call_real_soon(FTimerHandle& timer, T* t_ptr, void (T::*member_ptr)())

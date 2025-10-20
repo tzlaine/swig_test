@@ -127,6 +127,13 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
 {
     pb_message::game_data::planet_t retval;
     retval.set_system_id(value.system_id);
+    retval.set_planet_type(static_cast< pb_message::game_data::planet_type_t >(value.planet_type));
+    retval.set_mass_kg(value.mass_kg);
+    retval.set_radius_km(value.radius_km);
+    retval.set_orbit_au(value.orbit_au);
+    retval.set_gravity_g(value.gravity_g);
+    retval.set_axial_tilt_d(value.axial_tilt_d);
+    retval.set_day_h(value.day_h);
     retval.set_water(value.water);
     retval.set_food(value.food);
     retval.set_enery(value.enery);
@@ -145,6 +152,13 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
 {
     ::planet_t retval;
     retval.system_id = msg.system_id();
+    retval.planet_type = static_cast<std::remove_reference<decltype(retval.planet_type)>::type>(msg.planet_type());
+    retval.mass_kg = msg.mass_kg();
+    retval.radius_km = msg.radius_km();
+    retval.orbit_au = msg.orbit_au();
+    retval.gravity_g = msg.gravity_g();
+    retval.axial_tilt_d = msg.axial_tilt_d();
+    retval.day_h = msg.day_h();
     retval.water = msg.water();
     retval.food = msg.food();
     retval.enery = msg.enery();
@@ -163,7 +177,7 @@ pb_message::game_data::location_object_t to_protobuf (const ::location_object_t&
 {
     pb_message::game_data::location_object_t retval;
     retval.mutable_bases()->CopyFrom(to_protobuf(value.bases));
-    retval.mutable_planet()->CopyFrom(to_protobuf(value.planet));
+    retval.set_planet_id(value.planet_id);
     return retval;
 }
 
@@ -171,7 +185,7 @@ pb_message::game_data::location_object_t to_protobuf (const ::location_object_t&
 {
     ::location_object_t retval;
     retval.bases = from_protobuf(msg.bases());
-    retval.planet = from_protobuf(msg.planet());
+    retval.planet_id = msg.planet_id();
     return retval;
 }
 
@@ -199,17 +213,44 @@ pb_message::game_data::system_location_t to_protobuf (const ::system_location_t&
     return retval;
 }
 
+pb_message::game_data::star_t to_protobuf (const ::star_t& value)
+{
+    pb_message::game_data::star_t retval;
+    retval.set_star_class(static_cast< pb_message::game_data::star_class_t >(value.star_class));
+    retval.set_temperature_k(value.temperature_k);
+    retval.set_solar_masses(value.solar_masses);
+    retval.set_solar_luminosities(value.solar_luminosities);
+    retval.set_solar_radii(value.solar_radii);
+    return retval;
+}
+
+::star_t from_protobuf (const pb_message::game_data::star_t& msg)
+{
+    ::star_t retval;
+    retval.star_class = static_cast<std::remove_reference<decltype(retval.star_class)>::type>(msg.star_class());
+    retval.temperature_k = msg.temperature_k();
+    retval.solar_masses = msg.solar_masses();
+    retval.solar_luminosities = msg.solar_luminosities();
+    retval.solar_radii = msg.solar_radii();
+    return retval;
+}
+
 pb_message::game_data::system_t to_protobuf (const ::system_t& value)
 {
     pb_message::game_data::system_t retval;
     retval.set_name(value.name.c_str());
     retval.mutable_coord()->CopyFrom(to_protobuf(value.coord));
+    retval.mutable_star()->CopyFrom(to_protobuf(value.star));
     for (const auto& x : value.permanent_locations) {
         retval.add_permanent_locations()->CopyFrom(to_protobuf(x));
     }
     for (const auto& x : value.temporary_locations) {
         retval.add_temporary_locations()->CopyFrom(to_protobuf(x));
     }
+    retval.set_world_pos_x(value.world_pos_x);
+    retval.set_world_pos_y(value.world_pos_y);
+    retval.set_first_planet(value.first_planet);
+    retval.set_last_planet(value.last_planet);
     return retval;
 }
 
@@ -218,6 +259,7 @@ pb_message::game_data::system_t to_protobuf (const ::system_t& value)
     ::system_t retval;
     retval.name = adobe::name_t(msg.name().c_str());
     retval.coord = from_protobuf(msg.coord());
+    retval.star = from_protobuf(msg.star());
     {
         retval.permanent_locations.resize(msg.permanent_locations_size());
         auto it = retval.permanent_locations.begin();
@@ -232,6 +274,10 @@ pb_message::game_data::system_t to_protobuf (const ::system_t& value)
             *it++ = from_protobuf(x);
         }
     }
+    retval.world_pos_x = msg.world_pos_x();
+    retval.world_pos_y = msg.world_pos_y();
+    retval.first_planet = msg.first_planet();
+    retval.last_planet = msg.last_planet();
     return retval;
 }
 
@@ -240,9 +286,8 @@ pb_message::game_data::hex_t to_protobuf (const ::hex_t& value)
     pb_message::game_data::hex_t retval;
     retval.mutable_coord()->CopyFrom(to_protobuf(value.coord));
     retval.set_province_id(value.province_id);
-    for (const auto& x : value.systems) {
-        retval.add_systems()->CopyFrom(to_protobuf(x));
-    }
+    retval.set_first_system(value.first_system);
+    retval.set_last_system(value.last_system);
     retval.mutable_fleets()->CopyFrom(to_protobuf(value.fleets));
     return retval;
 }
@@ -252,13 +297,8 @@ pb_message::game_data::hex_t to_protobuf (const ::hex_t& value)
     ::hex_t retval;
     retval.coord = from_protobuf(msg.coord());
     retval.province_id = msg.province_id();
-    {
-        retval.systems.resize(msg.systems_size());
-        auto it = retval.systems.begin();
-        for (const auto& x : msg.systems()) {
-            *it++ = from_protobuf(x);
-        }
-    }
+    retval.first_system = msg.first_system();
+    retval.last_system = msg.last_system();
     retval.fleets = from_protobuf(msg.fleets());
     return retval;
 }

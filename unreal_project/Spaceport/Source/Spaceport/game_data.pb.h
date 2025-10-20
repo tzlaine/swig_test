@@ -34,6 +34,7 @@
 #include <google/protobuf/map.h>  // IWYU pragma: export
 #include <google/protobuf/map_entry.h>
 #include <google/protobuf/map_field_inl.h>
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "base_types.pb.h"
 // @@protoc_insertion_point(includes)
@@ -51,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -87,6 +88,9 @@ extern planet_tDefaultTypeInternal _planet_t_default_instance_;
 class province_t;
 class province_tDefaultTypeInternal;
 extern province_tDefaultTypeInternal _province_t_default_instance_;
+class star_t;
+class star_tDefaultTypeInternal;
+extern star_tDefaultTypeInternal _star_t_default_instance_;
 class system_location_t;
 class system_location_tDefaultTypeInternal;
 extern system_location_tDefaultTypeInternal _system_location_t_default_instance_;
@@ -111,6 +115,7 @@ template<> ::pb_message::game_data::location_object_t* Arena::CreateMaybeMessage
 template<> ::pb_message::game_data::nation_t* Arena::CreateMaybeMessage<::pb_message::game_data::nation_t>(Arena*);
 template<> ::pb_message::game_data::planet_t* Arena::CreateMaybeMessage<::pb_message::game_data::planet_t>(Arena*);
 template<> ::pb_message::game_data::province_t* Arena::CreateMaybeMessage<::pb_message::game_data::province_t>(Arena*);
+template<> ::pb_message::game_data::star_t* Arena::CreateMaybeMessage<::pb_message::game_data::star_t>(Arena*);
 template<> ::pb_message::game_data::system_location_t* Arena::CreateMaybeMessage<::pb_message::game_data::system_location_t>(Arena*);
 template<> ::pb_message::game_data::system_t* Arena::CreateMaybeMessage<::pb_message::game_data::system_t>(Arena*);
 template<> ::pb_message::game_data::unit_design_t* Arena::CreateMaybeMessage<::pb_message::game_data::unit_design_t>(Arena*);
@@ -119,6 +124,64 @@ PROTOBUF_NAMESPACE_CLOSE
 namespace pb_message {
 namespace game_data {
 
+enum planet_type_t : int {
+  invalid_planet = 0,
+  rocky = 1,
+  gas_giant = 2,
+  ice_giant = 3,
+  planet_type_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  planet_type_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool planet_type_t_IsValid(int value);
+constexpr planet_type_t planet_type_t_MIN = invalid_planet;
+constexpr planet_type_t planet_type_t_MAX = ice_giant;
+constexpr int planet_type_t_ARRAYSIZE = planet_type_t_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* planet_type_t_descriptor();
+template<typename T>
+inline const std::string& planet_type_t_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, planet_type_t>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function planet_type_t_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    planet_type_t_descriptor(), enum_t_value);
+}
+inline bool planet_type_t_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, planet_type_t* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<planet_type_t>(
+    planet_type_t_descriptor(), name, value);
+}
+enum star_class_t : int {
+  invalid_star_class = 0,
+  o = 1,
+  b = 2,
+  a = 3,
+  f = 4,
+  g = 5,
+  k = 6,
+  m = 7,
+  star_class_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  star_class_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool star_class_t_IsValid(int value);
+constexpr star_class_t star_class_t_MIN = invalid_star_class;
+constexpr star_class_t star_class_t_MAX = m;
+constexpr int star_class_t_ARRAYSIZE = star_class_t_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* star_class_t_descriptor();
+template<typename T>
+inline const std::string& star_class_t_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, star_class_t>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function star_class_t_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    star_class_t_descriptor(), enum_t_value);
+}
+inline bool star_class_t_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, star_class_t* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<star_class_t>(
+    star_class_t_descriptor(), name, value);
+}
 // ===================================================================
 
 class unit_design_t PROTOBUF_FINAL :
@@ -1055,20 +1118,27 @@ class planet_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kGarrisonFieldNumber = 12,
+    kGarrisonFieldNumber = 20,
     kSystemIdFieldNumber = 1,
-    kWaterFieldNumber = 2,
-    kFoodFieldNumber = 3,
-    kEneryFieldNumber = 4,
-    kMetalFieldNumber = 5,
-    kFuelFieldNumber = 6,
-    kPopulationFieldNumber = 7,
-    kInfrastructureFieldNumber = 8,
-    kMaxPopulationFieldNumber = 9,
-    kOwnerFieldNumber = 10,
-    kOriginalOwnerFieldNumber = 11,
+    kPlanetTypeFieldNumber = 2,
+    kMassKgFieldNumber = 3,
+    kRadiusKmFieldNumber = 4,
+    kOrbitAuFieldNumber = 5,
+    kGravityGFieldNumber = 6,
+    kAxialTiltDFieldNumber = 7,
+    kDayHFieldNumber = 8,
+    kWaterFieldNumber = 10,
+    kFoodFieldNumber = 11,
+    kEneryFieldNumber = 12,
+    kMetalFieldNumber = 13,
+    kFuelFieldNumber = 14,
+    kPopulationFieldNumber = 15,
+    kInfrastructureFieldNumber = 16,
+    kMaxPopulationFieldNumber = 17,
+    kOwnerFieldNumber = 18,
+    kOriginalOwnerFieldNumber = 19,
   };
-  // .pb_message.game_data.fleet_t garrison = 12;
+  // .pb_message.game_data.fleet_t garrison = 20;
   bool has_garrison() const;
   private:
   bool _internal_has_garrison() const;
@@ -1095,7 +1165,70 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_system_id(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 water = 2;
+  // .pb_message.game_data.planet_type_t planet_type = 2;
+  void clear_planet_type();
+  ::pb_message::game_data::planet_type_t planet_type() const;
+  void set_planet_type(::pb_message::game_data::planet_type_t value);
+  private:
+  ::pb_message::game_data::planet_type_t _internal_planet_type() const;
+  void _internal_set_planet_type(::pb_message::game_data::planet_type_t value);
+  public:
+
+  // double mass_kg = 3;
+  void clear_mass_kg();
+  double mass_kg() const;
+  void set_mass_kg(double value);
+  private:
+  double _internal_mass_kg() const;
+  void _internal_set_mass_kg(double value);
+  public:
+
+  // double radius_km = 4;
+  void clear_radius_km();
+  double radius_km() const;
+  void set_radius_km(double value);
+  private:
+  double _internal_radius_km() const;
+  void _internal_set_radius_km(double value);
+  public:
+
+  // float orbit_au = 5;
+  void clear_orbit_au();
+  float orbit_au() const;
+  void set_orbit_au(float value);
+  private:
+  float _internal_orbit_au() const;
+  void _internal_set_orbit_au(float value);
+  public:
+
+  // float gravity_g = 6;
+  void clear_gravity_g();
+  float gravity_g() const;
+  void set_gravity_g(float value);
+  private:
+  float _internal_gravity_g() const;
+  void _internal_set_gravity_g(float value);
+  public:
+
+  // float axial_tilt_d = 7;
+  void clear_axial_tilt_d();
+  float axial_tilt_d() const;
+  void set_axial_tilt_d(float value);
+  private:
+  float _internal_axial_tilt_d() const;
+  void _internal_set_axial_tilt_d(float value);
+  public:
+
+  // float day_h = 8;
+  void clear_day_h();
+  float day_h() const;
+  void set_day_h(float value);
+  private:
+  float _internal_day_h() const;
+  void _internal_set_day_h(float value);
+  public:
+
+  // int32 water = 10;
   void clear_water();
   ::PROTOBUF_NAMESPACE_ID::int32 water() const;
   void set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1104,7 +1237,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 food = 3;
+  // int32 food = 11;
   void clear_food();
   ::PROTOBUF_NAMESPACE_ID::int32 food() const;
   void set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1113,7 +1246,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 enery = 4;
+  // int32 enery = 12;
   void clear_enery();
   ::PROTOBUF_NAMESPACE_ID::int32 enery() const;
   void set_enery(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1122,7 +1255,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_enery(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 metal = 5;
+  // int32 metal = 13;
   void clear_metal();
   ::PROTOBUF_NAMESPACE_ID::int32 metal() const;
   void set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1131,7 +1264,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 fuel = 6;
+  // int32 fuel = 14;
   void clear_fuel();
   ::PROTOBUF_NAMESPACE_ID::int32 fuel() const;
   void set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1140,7 +1273,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 population = 7;
+  // int32 population = 15;
   void clear_population();
   ::PROTOBUF_NAMESPACE_ID::int32 population() const;
   void set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1149,7 +1282,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 infrastructure = 8;
+  // int32 infrastructure = 16;
   void clear_infrastructure();
   ::PROTOBUF_NAMESPACE_ID::int32 infrastructure() const;
   void set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1158,7 +1291,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 max_population = 9;
+  // int32 max_population = 17;
   void clear_max_population();
   ::PROTOBUF_NAMESPACE_ID::int32 max_population() const;
   void set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1167,7 +1300,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 owner = 10;
+  // int32 owner = 18;
   void clear_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
   void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1176,7 +1309,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 original_owner = 11;
+  // int32 original_owner = 19;
   void clear_original_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner() const;
   void set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1194,6 +1327,13 @@ class planet_t PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::pb_message::game_data::fleet_t* garrison_;
   ::PROTOBUF_NAMESPACE_ID::int32 system_id_;
+  int planet_type_;
+  double mass_kg_;
+  double radius_km_;
+  float orbit_au_;
+  float gravity_g_;
+  float axial_tilt_d_;
+  float day_h_;
   ::PROTOBUF_NAMESPACE_ID::int32 water_;
   ::PROTOBUF_NAMESPACE_ID::int32 food_;
   ::PROTOBUF_NAMESPACE_ID::int32 enery_;
@@ -1323,7 +1463,7 @@ class location_object_t PROTOBUF_FINAL :
 
   enum : int {
     kBasesFieldNumber = 1,
-    kPlanetFieldNumber = 2,
+    kPlanetIdFieldNumber = 2,
   };
   // .pb_message.game_data.fleet_t bases = 1;
   bool has_bases() const;
@@ -1343,23 +1483,14 @@ class location_object_t PROTOBUF_FINAL :
       ::pb_message::game_data::fleet_t* bases);
   ::pb_message::game_data::fleet_t* unsafe_arena_release_bases();
 
-  // .pb_message.game_data.planet_t planet = 2;
-  bool has_planet() const;
+  // int64 planet_id = 2;
+  void clear_planet_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 planet_id() const;
+  void set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value);
   private:
-  bool _internal_has_planet() const;
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_planet_id() const;
+  void _internal_set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
-  void clear_planet();
-  const ::pb_message::game_data::planet_t& planet() const;
-  ::pb_message::game_data::planet_t* release_planet();
-  ::pb_message::game_data::planet_t* mutable_planet();
-  void set_allocated_planet(::pb_message::game_data::planet_t* planet);
-  private:
-  const ::pb_message::game_data::planet_t& _internal_planet() const;
-  ::pb_message::game_data::planet_t* _internal_mutable_planet();
-  public:
-  void unsafe_arena_set_allocated_planet(
-      ::pb_message::game_data::planet_t* planet);
-  ::pb_message::game_data::planet_t* unsafe_arena_release_planet();
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.location_object_t)
  private:
@@ -1369,7 +1500,7 @@ class location_object_t PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::pb_message::game_data::fleet_t* bases_;
-  ::pb_message::game_data::planet_t* planet_;
+  ::PROTOBUF_NAMESPACE_ID::int64 planet_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -1541,6 +1672,187 @@ class system_location_t PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class star_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.star_t) */ {
+ public:
+  inline star_t() : star_t(nullptr) {}
+  virtual ~star_t();
+
+  star_t(const star_t& from);
+  star_t(star_t&& from) noexcept
+    : star_t() {
+    *this = ::std::move(from);
+  }
+
+  inline star_t& operator=(const star_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline star_t& operator=(star_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const star_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const star_t* internal_default_instance() {
+    return reinterpret_cast<const star_t*>(
+               &_star_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(star_t& a, star_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(star_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(star_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline star_t* New() const final {
+    return CreateMaybeMessage<star_t>(nullptr);
+  }
+
+  star_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<star_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const star_t& from);
+  void MergeFrom(const star_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(star_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.star_t";
+  }
+  protected:
+  explicit star_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTemperatureKFieldNumber = 2,
+    kSolarMassesFieldNumber = 3,
+    kSolarLuminositiesFieldNumber = 4,
+    kSolarRadiiFieldNumber = 5,
+    kStarClassFieldNumber = 1,
+  };
+  // double temperature_k = 2;
+  void clear_temperature_k();
+  double temperature_k() const;
+  void set_temperature_k(double value);
+  private:
+  double _internal_temperature_k() const;
+  void _internal_set_temperature_k(double value);
+  public:
+
+  // double solar_masses = 3;
+  void clear_solar_masses();
+  double solar_masses() const;
+  void set_solar_masses(double value);
+  private:
+  double _internal_solar_masses() const;
+  void _internal_set_solar_masses(double value);
+  public:
+
+  // double solar_luminosities = 4;
+  void clear_solar_luminosities();
+  double solar_luminosities() const;
+  void set_solar_luminosities(double value);
+  private:
+  double _internal_solar_luminosities() const;
+  void _internal_set_solar_luminosities(double value);
+  public:
+
+  // double solar_radii = 5;
+  void clear_solar_radii();
+  double solar_radii() const;
+  void set_solar_radii(double value);
+  private:
+  double _internal_solar_radii() const;
+  void _internal_set_solar_radii(double value);
+  public:
+
+  // .pb_message.game_data.star_class_t star_class = 1;
+  void clear_star_class();
+  ::pb_message::game_data::star_class_t star_class() const;
+  void set_star_class(::pb_message::game_data::star_class_t value);
+  private:
+  ::pb_message::game_data::star_class_t _internal_star_class() const;
+  void _internal_set_star_class(::pb_message::game_data::star_class_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.star_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  double temperature_k_;
+  double solar_masses_;
+  double solar_luminosities_;
+  double solar_radii_;
+  int star_class_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class system_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.system_t) */ {
  public:
@@ -1583,7 +1895,7 @@ class system_t PROTOBUF_FINAL :
                &_system_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(system_t& a, system_t& b) {
     a.Swap(&b);
@@ -1654,12 +1966,17 @@ class system_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPermanentLocationsFieldNumber = 3,
-    kTemporaryLocationsFieldNumber = 4,
+    kPermanentLocationsFieldNumber = 4,
+    kTemporaryLocationsFieldNumber = 5,
     kNameFieldNumber = 1,
     kCoordFieldNumber = 2,
+    kStarFieldNumber = 3,
+    kWorldPosXFieldNumber = 6,
+    kWorldPosYFieldNumber = 7,
+    kFirstPlanetFieldNumber = 8,
+    kLastPlanetFieldNumber = 9,
   };
-  // repeated .pb_message.game_data.system_location_t permanent_locations = 3;
+  // repeated .pb_message.game_data.system_location_t permanent_locations = 4;
   int permanent_locations_size() const;
   private:
   int _internal_permanent_locations_size() const;
@@ -1677,7 +1994,7 @@ class system_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_location_t >&
       permanent_locations() const;
 
-  // repeated .pb_message.game_data.system_location_t temporary_locations = 4;
+  // repeated .pb_message.game_data.system_location_t temporary_locations = 5;
   int temporary_locations_size() const;
   private:
   int _internal_temporary_locations_size() const;
@@ -1729,6 +2046,60 @@ class system_t PROTOBUF_FINAL :
       ::pb_message::hex_coord_t* coord);
   ::pb_message::hex_coord_t* unsafe_arena_release_coord();
 
+  // .pb_message.game_data.star_t star = 3;
+  bool has_star() const;
+  private:
+  bool _internal_has_star() const;
+  public:
+  void clear_star();
+  const ::pb_message::game_data::star_t& star() const;
+  ::pb_message::game_data::star_t* release_star();
+  ::pb_message::game_data::star_t* mutable_star();
+  void set_allocated_star(::pb_message::game_data::star_t* star);
+  private:
+  const ::pb_message::game_data::star_t& _internal_star() const;
+  ::pb_message::game_data::star_t* _internal_mutable_star();
+  public:
+  void unsafe_arena_set_allocated_star(
+      ::pb_message::game_data::star_t* star);
+  ::pb_message::game_data::star_t* unsafe_arena_release_star();
+
+  // double world_pos_x = 6;
+  void clear_world_pos_x();
+  double world_pos_x() const;
+  void set_world_pos_x(double value);
+  private:
+  double _internal_world_pos_x() const;
+  void _internal_set_world_pos_x(double value);
+  public:
+
+  // double world_pos_y = 7;
+  void clear_world_pos_y();
+  double world_pos_y() const;
+  void set_world_pos_y(double value);
+  private:
+  double _internal_world_pos_y() const;
+  void _internal_set_world_pos_y(double value);
+  public:
+
+  // int64 first_planet = 8;
+  void clear_first_planet();
+  ::PROTOBUF_NAMESPACE_ID::int64 first_planet() const;
+  void set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_first_planet() const;
+  void _internal_set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // int64 last_planet = 9;
+  void clear_last_planet();
+  ::PROTOBUF_NAMESPACE_ID::int64 last_planet() const;
+  void set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_last_planet() const;
+  void _internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:pb_message.game_data.system_t)
  private:
   class _Internal;
@@ -1740,6 +2111,11 @@ class system_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_location_t > temporary_locations_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::pb_message::hex_coord_t* coord_;
+  ::pb_message::game_data::star_t* star_;
+  double world_pos_x_;
+  double world_pos_y_;
+  ::PROTOBUF_NAMESPACE_ID::int64 first_planet_;
+  ::PROTOBUF_NAMESPACE_ID::int64 last_planet_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -1787,7 +2163,7 @@ class hex_t PROTOBUF_FINAL :
                &_hex_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(hex_t& a, hex_t& b) {
     a.Swap(&b);
@@ -1858,29 +2234,12 @@ class hex_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSystemsFieldNumber = 3,
     kCoordFieldNumber = 1,
-    kFleetsFieldNumber = 4,
+    kFleetsFieldNumber = 5,
+    kFirstSystemFieldNumber = 3,
+    kLastSystemFieldNumber = 4,
     kProvinceIdFieldNumber = 2,
   };
-  // repeated .pb_message.game_data.system_t systems = 3;
-  int systems_size() const;
-  private:
-  int _internal_systems_size() const;
-  public:
-  void clear_systems();
-  ::pb_message::game_data::system_t* mutable_systems(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_t >*
-      mutable_systems();
-  private:
-  const ::pb_message::game_data::system_t& _internal_systems(int index) const;
-  ::pb_message::game_data::system_t* _internal_add_systems();
-  public:
-  const ::pb_message::game_data::system_t& systems(int index) const;
-  ::pb_message::game_data::system_t* add_systems();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_t >&
-      systems() const;
-
   // .pb_message.hex_coord_t coord = 1;
   bool has_coord() const;
   private:
@@ -1899,7 +2258,7 @@ class hex_t PROTOBUF_FINAL :
       ::pb_message::hex_coord_t* coord);
   ::pb_message::hex_coord_t* unsafe_arena_release_coord();
 
-  // .pb_message.game_data.fleets_t fleets = 4;
+  // .pb_message.game_data.fleets_t fleets = 5;
   bool has_fleets() const;
   private:
   bool _internal_has_fleets() const;
@@ -1917,6 +2276,24 @@ class hex_t PROTOBUF_FINAL :
       ::pb_message::game_data::fleets_t* fleets);
   ::pb_message::game_data::fleets_t* unsafe_arena_release_fleets();
 
+  // int64 first_system = 3;
+  void clear_first_system();
+  ::PROTOBUF_NAMESPACE_ID::int64 first_system() const;
+  void set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_first_system() const;
+  void _internal_set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // int64 last_system = 4;
+  void clear_last_system();
+  ::PROTOBUF_NAMESPACE_ID::int64 last_system() const;
+  void set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_last_system() const;
+  void _internal_set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
   // int32 province_id = 2;
   void clear_province_id();
   ::PROTOBUF_NAMESPACE_ID::int32 province_id() const;
@@ -1933,9 +2310,10 @@ class hex_t PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_t > systems_;
   ::pb_message::hex_coord_t* coord_;
   ::pb_message::game_data::fleets_t* fleets_;
+  ::PROTOBUF_NAMESPACE_ID::int64 first_system_;
+  ::PROTOBUF_NAMESPACE_ID::int64 last_system_;
   ::PROTOBUF_NAMESPACE_ID::int32 province_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
@@ -1984,7 +2362,7 @@ class province_t PROTOBUF_FINAL :
                &_province_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(province_t& a, province_t& b) {
     a.Swap(&b);
@@ -2152,7 +2530,7 @@ class nation_t PROTOBUF_FINAL :
                &_nation_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(nation_t& a, nation_t& b) {
     a.Swap(&b);
@@ -2390,7 +2768,7 @@ class game_state_t PROTOBUF_FINAL :
                &_game_state_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(game_state_t& a, game_state_t& b) {
     a.Swap(&b);
@@ -3131,7 +3509,147 @@ inline void planet_t::set_system_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.system_id)
 }
 
-// int32 water = 2;
+// .pb_message.game_data.planet_type_t planet_type = 2;
+inline void planet_t::clear_planet_type() {
+  planet_type_ = 0;
+}
+inline ::pb_message::game_data::planet_type_t planet_t::_internal_planet_type() const {
+  return static_cast< ::pb_message::game_data::planet_type_t >(planet_type_);
+}
+inline ::pb_message::game_data::planet_type_t planet_t::planet_type() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.planet_type)
+  return _internal_planet_type();
+}
+inline void planet_t::_internal_set_planet_type(::pb_message::game_data::planet_type_t value) {
+  
+  planet_type_ = value;
+}
+inline void planet_t::set_planet_type(::pb_message::game_data::planet_type_t value) {
+  _internal_set_planet_type(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.planet_type)
+}
+
+// double mass_kg = 3;
+inline void planet_t::clear_mass_kg() {
+  mass_kg_ = 0;
+}
+inline double planet_t::_internal_mass_kg() const {
+  return mass_kg_;
+}
+inline double planet_t::mass_kg() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.mass_kg)
+  return _internal_mass_kg();
+}
+inline void planet_t::_internal_set_mass_kg(double value) {
+  
+  mass_kg_ = value;
+}
+inline void planet_t::set_mass_kg(double value) {
+  _internal_set_mass_kg(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.mass_kg)
+}
+
+// double radius_km = 4;
+inline void planet_t::clear_radius_km() {
+  radius_km_ = 0;
+}
+inline double planet_t::_internal_radius_km() const {
+  return radius_km_;
+}
+inline double planet_t::radius_km() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.radius_km)
+  return _internal_radius_km();
+}
+inline void planet_t::_internal_set_radius_km(double value) {
+  
+  radius_km_ = value;
+}
+inline void planet_t::set_radius_km(double value) {
+  _internal_set_radius_km(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.radius_km)
+}
+
+// float orbit_au = 5;
+inline void planet_t::clear_orbit_au() {
+  orbit_au_ = 0;
+}
+inline float planet_t::_internal_orbit_au() const {
+  return orbit_au_;
+}
+inline float planet_t::orbit_au() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.orbit_au)
+  return _internal_orbit_au();
+}
+inline void planet_t::_internal_set_orbit_au(float value) {
+  
+  orbit_au_ = value;
+}
+inline void planet_t::set_orbit_au(float value) {
+  _internal_set_orbit_au(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbit_au)
+}
+
+// float gravity_g = 6;
+inline void planet_t::clear_gravity_g() {
+  gravity_g_ = 0;
+}
+inline float planet_t::_internal_gravity_g() const {
+  return gravity_g_;
+}
+inline float planet_t::gravity_g() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.gravity_g)
+  return _internal_gravity_g();
+}
+inline void planet_t::_internal_set_gravity_g(float value) {
+  
+  gravity_g_ = value;
+}
+inline void planet_t::set_gravity_g(float value) {
+  _internal_set_gravity_g(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.gravity_g)
+}
+
+// float axial_tilt_d = 7;
+inline void planet_t::clear_axial_tilt_d() {
+  axial_tilt_d_ = 0;
+}
+inline float planet_t::_internal_axial_tilt_d() const {
+  return axial_tilt_d_;
+}
+inline float planet_t::axial_tilt_d() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.axial_tilt_d)
+  return _internal_axial_tilt_d();
+}
+inline void planet_t::_internal_set_axial_tilt_d(float value) {
+  
+  axial_tilt_d_ = value;
+}
+inline void planet_t::set_axial_tilt_d(float value) {
+  _internal_set_axial_tilt_d(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.axial_tilt_d)
+}
+
+// float day_h = 8;
+inline void planet_t::clear_day_h() {
+  day_h_ = 0;
+}
+inline float planet_t::_internal_day_h() const {
+  return day_h_;
+}
+inline float planet_t::day_h() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.day_h)
+  return _internal_day_h();
+}
+inline void planet_t::_internal_set_day_h(float value) {
+  
+  day_h_ = value;
+}
+inline void planet_t::set_day_h(float value) {
+  _internal_set_day_h(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.day_h)
+}
+
+// int32 water = 10;
 inline void planet_t::clear_water() {
   water_ = 0;
 }
@@ -3151,7 +3669,7 @@ inline void planet_t::set_water(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.water)
 }
 
-// int32 food = 3;
+// int32 food = 11;
 inline void planet_t::clear_food() {
   food_ = 0;
 }
@@ -3171,7 +3689,7 @@ inline void planet_t::set_food(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.food)
 }
 
-// int32 enery = 4;
+// int32 enery = 12;
 inline void planet_t::clear_enery() {
   enery_ = 0;
 }
@@ -3191,7 +3709,7 @@ inline void planet_t::set_enery(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.enery)
 }
 
-// int32 metal = 5;
+// int32 metal = 13;
 inline void planet_t::clear_metal() {
   metal_ = 0;
 }
@@ -3211,7 +3729,7 @@ inline void planet_t::set_metal(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.metal)
 }
 
-// int32 fuel = 6;
+// int32 fuel = 14;
 inline void planet_t::clear_fuel() {
   fuel_ = 0;
 }
@@ -3231,7 +3749,7 @@ inline void planet_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.fuel)
 }
 
-// int32 population = 7;
+// int32 population = 15;
 inline void planet_t::clear_population() {
   population_ = 0;
 }
@@ -3251,7 +3769,7 @@ inline void planet_t::set_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.population)
 }
 
-// int32 infrastructure = 8;
+// int32 infrastructure = 16;
 inline void planet_t::clear_infrastructure() {
   infrastructure_ = 0;
 }
@@ -3271,7 +3789,7 @@ inline void planet_t::set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure)
 }
 
-// int32 max_population = 9;
+// int32 max_population = 17;
 inline void planet_t::clear_max_population() {
   max_population_ = 0;
 }
@@ -3291,7 +3809,7 @@ inline void planet_t::set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.max_population)
 }
 
-// int32 owner = 10;
+// int32 owner = 18;
 inline void planet_t::clear_owner() {
   owner_ = 0;
 }
@@ -3311,7 +3829,7 @@ inline void planet_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
-// int32 original_owner = 11;
+// int32 original_owner = 19;
 inline void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
@@ -3331,7 +3849,7 @@ inline void planet_t::set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// .pb_message.game_data.fleet_t garrison = 12;
+// .pb_message.game_data.fleet_t garrison = 20;
 inline bool planet_t::_internal_has_garrison() const {
   return this != internal_default_instance() && garrison_ != nullptr;
 }
@@ -3501,87 +4019,24 @@ inline void location_object_t::set_allocated_bases(::pb_message::game_data::flee
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.location_object_t.bases)
 }
 
-// .pb_message.game_data.planet_t planet = 2;
-inline bool location_object_t::_internal_has_planet() const {
-  return this != internal_default_instance() && planet_ != nullptr;
+// int64 planet_id = 2;
+inline void location_object_t::clear_planet_id() {
+  planet_id_ = PROTOBUF_LONGLONG(0);
 }
-inline bool location_object_t::has_planet() const {
-  return _internal_has_planet();
+inline ::PROTOBUF_NAMESPACE_ID::int64 location_object_t::_internal_planet_id() const {
+  return planet_id_;
 }
-inline void location_object_t::clear_planet() {
-  if (GetArena() == nullptr && planet_ != nullptr) {
-    delete planet_;
-  }
-  planet_ = nullptr;
+inline ::PROTOBUF_NAMESPACE_ID::int64 location_object_t::planet_id() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.location_object_t.planet_id)
+  return _internal_planet_id();
 }
-inline const ::pb_message::game_data::planet_t& location_object_t::_internal_planet() const {
-  const ::pb_message::game_data::planet_t* p = planet_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::planet_t*>(
-      &::pb_message::game_data::_planet_t_default_instance_);
-}
-inline const ::pb_message::game_data::planet_t& location_object_t::planet() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.location_object_t.planet)
-  return _internal_planet();
-}
-inline void location_object_t::unsafe_arena_set_allocated_planet(
-    ::pb_message::game_data::planet_t* planet) {
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(planet_);
-  }
-  planet_ = planet;
-  if (planet) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.location_object_t.planet)
-}
-inline ::pb_message::game_data::planet_t* location_object_t::release_planet() {
+inline void location_object_t::_internal_set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
   
-  ::pb_message::game_data::planet_t* temp = planet_;
-  planet_ = nullptr;
-  if (GetArena() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-  return temp;
+  planet_id_ = value;
 }
-inline ::pb_message::game_data::planet_t* location_object_t::unsafe_arena_release_planet() {
-  // @@protoc_insertion_point(field_release:pb_message.game_data.location_object_t.planet)
-  
-  ::pb_message::game_data::planet_t* temp = planet_;
-  planet_ = nullptr;
-  return temp;
-}
-inline ::pb_message::game_data::planet_t* location_object_t::_internal_mutable_planet() {
-  
-  if (planet_ == nullptr) {
-    auto* p = CreateMaybeMessage<::pb_message::game_data::planet_t>(GetArena());
-    planet_ = p;
-  }
-  return planet_;
-}
-inline ::pb_message::game_data::planet_t* location_object_t::mutable_planet() {
-  // @@protoc_insertion_point(field_mutable:pb_message.game_data.location_object_t.planet)
-  return _internal_mutable_planet();
-}
-inline void location_object_t::set_allocated_planet(::pb_message::game_data::planet_t* planet) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
-  if (message_arena == nullptr) {
-    delete planet_;
-  }
-  if (planet) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(planet);
-    if (message_arena != submessage_arena) {
-      planet = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, planet, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  planet_ = planet;
-  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.location_object_t.planet)
+inline void location_object_t::set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_planet_id(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.location_object_t.planet_id)
 }
 
 // -------------------------------------------------------------------
@@ -3708,6 +4163,110 @@ inline void system_location_t::set_allocated_units(::pb_message::game_data::flee
   }
   units_ = units;
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.system_location_t.units)
+}
+
+// -------------------------------------------------------------------
+
+// star_t
+
+// .pb_message.game_data.star_class_t star_class = 1;
+inline void star_t::clear_star_class() {
+  star_class_ = 0;
+}
+inline ::pb_message::game_data::star_class_t star_t::_internal_star_class() const {
+  return static_cast< ::pb_message::game_data::star_class_t >(star_class_);
+}
+inline ::pb_message::game_data::star_class_t star_t::star_class() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.star_t.star_class)
+  return _internal_star_class();
+}
+inline void star_t::_internal_set_star_class(::pb_message::game_data::star_class_t value) {
+  
+  star_class_ = value;
+}
+inline void star_t::set_star_class(::pb_message::game_data::star_class_t value) {
+  _internal_set_star_class(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.star_t.star_class)
+}
+
+// double temperature_k = 2;
+inline void star_t::clear_temperature_k() {
+  temperature_k_ = 0;
+}
+inline double star_t::_internal_temperature_k() const {
+  return temperature_k_;
+}
+inline double star_t::temperature_k() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.star_t.temperature_k)
+  return _internal_temperature_k();
+}
+inline void star_t::_internal_set_temperature_k(double value) {
+  
+  temperature_k_ = value;
+}
+inline void star_t::set_temperature_k(double value) {
+  _internal_set_temperature_k(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.star_t.temperature_k)
+}
+
+// double solar_masses = 3;
+inline void star_t::clear_solar_masses() {
+  solar_masses_ = 0;
+}
+inline double star_t::_internal_solar_masses() const {
+  return solar_masses_;
+}
+inline double star_t::solar_masses() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.star_t.solar_masses)
+  return _internal_solar_masses();
+}
+inline void star_t::_internal_set_solar_masses(double value) {
+  
+  solar_masses_ = value;
+}
+inline void star_t::set_solar_masses(double value) {
+  _internal_set_solar_masses(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.star_t.solar_masses)
+}
+
+// double solar_luminosities = 4;
+inline void star_t::clear_solar_luminosities() {
+  solar_luminosities_ = 0;
+}
+inline double star_t::_internal_solar_luminosities() const {
+  return solar_luminosities_;
+}
+inline double star_t::solar_luminosities() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.star_t.solar_luminosities)
+  return _internal_solar_luminosities();
+}
+inline void star_t::_internal_set_solar_luminosities(double value) {
+  
+  solar_luminosities_ = value;
+}
+inline void star_t::set_solar_luminosities(double value) {
+  _internal_set_solar_luminosities(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.star_t.solar_luminosities)
+}
+
+// double solar_radii = 5;
+inline void star_t::clear_solar_radii() {
+  solar_radii_ = 0;
+}
+inline double star_t::_internal_solar_radii() const {
+  return solar_radii_;
+}
+inline double star_t::solar_radii() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.star_t.solar_radii)
+  return _internal_solar_radii();
+}
+inline void star_t::_internal_set_solar_radii(double value) {
+  
+  solar_radii_ = value;
+}
+inline void star_t::set_solar_radii(double value) {
+  _internal_set_solar_radii(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.star_t.solar_radii)
 }
 
 // -------------------------------------------------------------------
@@ -3853,7 +4412,90 @@ inline void system_t::set_allocated_coord(::pb_message::hex_coord_t* coord) {
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.system_t.coord)
 }
 
-// repeated .pb_message.game_data.system_location_t permanent_locations = 3;
+// .pb_message.game_data.star_t star = 3;
+inline bool system_t::_internal_has_star() const {
+  return this != internal_default_instance() && star_ != nullptr;
+}
+inline bool system_t::has_star() const {
+  return _internal_has_star();
+}
+inline void system_t::clear_star() {
+  if (GetArena() == nullptr && star_ != nullptr) {
+    delete star_;
+  }
+  star_ = nullptr;
+}
+inline const ::pb_message::game_data::star_t& system_t::_internal_star() const {
+  const ::pb_message::game_data::star_t* p = star_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::star_t*>(
+      &::pb_message::game_data::_star_t_default_instance_);
+}
+inline const ::pb_message::game_data::star_t& system_t::star() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.star)
+  return _internal_star();
+}
+inline void system_t::unsafe_arena_set_allocated_star(
+    ::pb_message::game_data::star_t* star) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(star_);
+  }
+  star_ = star;
+  if (star) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.system_t.star)
+}
+inline ::pb_message::game_data::star_t* system_t::release_star() {
+  
+  ::pb_message::game_data::star_t* temp = star_;
+  star_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::star_t* system_t::unsafe_arena_release_star() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.system_t.star)
+  
+  ::pb_message::game_data::star_t* temp = star_;
+  star_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::star_t* system_t::_internal_mutable_star() {
+  
+  if (star_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::star_t>(GetArena());
+    star_ = p;
+  }
+  return star_;
+}
+inline ::pb_message::game_data::star_t* system_t::mutable_star() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.system_t.star)
+  return _internal_mutable_star();
+}
+inline void system_t::set_allocated_star(::pb_message::game_data::star_t* star) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete star_;
+  }
+  if (star) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(star);
+    if (message_arena != submessage_arena) {
+      star = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, star, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  star_ = star;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.system_t.star)
+}
+
+// repeated .pb_message.game_data.system_location_t permanent_locations = 4;
 inline int system_t::_internal_permanent_locations_size() const {
   return permanent_locations_.size();
 }
@@ -3892,7 +4534,7 @@ system_t::permanent_locations() const {
   return permanent_locations_;
 }
 
-// repeated .pb_message.game_data.system_location_t temporary_locations = 4;
+// repeated .pb_message.game_data.system_location_t temporary_locations = 5;
 inline int system_t::_internal_temporary_locations_size() const {
   return temporary_locations_.size();
 }
@@ -3929,6 +4571,86 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data:
 system_t::temporary_locations() const {
   // @@protoc_insertion_point(field_list:pb_message.game_data.system_t.temporary_locations)
   return temporary_locations_;
+}
+
+// double world_pos_x = 6;
+inline void system_t::clear_world_pos_x() {
+  world_pos_x_ = 0;
+}
+inline double system_t::_internal_world_pos_x() const {
+  return world_pos_x_;
+}
+inline double system_t::world_pos_x() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.world_pos_x)
+  return _internal_world_pos_x();
+}
+inline void system_t::_internal_set_world_pos_x(double value) {
+  
+  world_pos_x_ = value;
+}
+inline void system_t::set_world_pos_x(double value) {
+  _internal_set_world_pos_x(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.world_pos_x)
+}
+
+// double world_pos_y = 7;
+inline void system_t::clear_world_pos_y() {
+  world_pos_y_ = 0;
+}
+inline double system_t::_internal_world_pos_y() const {
+  return world_pos_y_;
+}
+inline double system_t::world_pos_y() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.world_pos_y)
+  return _internal_world_pos_y();
+}
+inline void system_t::_internal_set_world_pos_y(double value) {
+  
+  world_pos_y_ = value;
+}
+inline void system_t::set_world_pos_y(double value) {
+  _internal_set_world_pos_y(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.world_pos_y)
+}
+
+// int64 first_planet = 8;
+inline void system_t::clear_first_planet() {
+  first_planet_ = PROTOBUF_LONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::_internal_first_planet() const {
+  return first_planet_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::first_planet() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.first_planet)
+  return _internal_first_planet();
+}
+inline void system_t::_internal_set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  first_planet_ = value;
+}
+inline void system_t::set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_first_planet(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.first_planet)
+}
+
+// int64 last_planet = 9;
+inline void system_t::clear_last_planet() {
+  last_planet_ = PROTOBUF_LONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::_internal_last_planet() const {
+  return last_planet_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::last_planet() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.last_planet)
+  return _internal_last_planet();
+}
+inline void system_t::_internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  last_planet_ = value;
+}
+inline void system_t::set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_last_planet(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.last_planet)
 }
 
 // -------------------------------------------------------------------
@@ -4032,46 +4754,47 @@ inline void hex_t::set_province_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.province_id)
 }
 
-// repeated .pb_message.game_data.system_t systems = 3;
-inline int hex_t::_internal_systems_size() const {
-  return systems_.size();
+// int64 first_system = 3;
+inline void hex_t::clear_first_system() {
+  first_system_ = PROTOBUF_LONGLONG(0);
 }
-inline int hex_t::systems_size() const {
-  return _internal_systems_size();
+inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::_internal_first_system() const {
+  return first_system_;
 }
-inline void hex_t::clear_systems() {
-  systems_.Clear();
+inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::first_system() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.first_system)
+  return _internal_first_system();
 }
-inline ::pb_message::game_data::system_t* hex_t::mutable_systems(int index) {
-  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.systems)
-  return systems_.Mutable(index);
+inline void hex_t::_internal_set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  first_system_ = value;
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_t >*
-hex_t::mutable_systems() {
-  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.hex_t.systems)
-  return &systems_;
-}
-inline const ::pb_message::game_data::system_t& hex_t::_internal_systems(int index) const {
-  return systems_.Get(index);
-}
-inline const ::pb_message::game_data::system_t& hex_t::systems(int index) const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.systems)
-  return _internal_systems(index);
-}
-inline ::pb_message::game_data::system_t* hex_t::_internal_add_systems() {
-  return systems_.Add();
-}
-inline ::pb_message::game_data::system_t* hex_t::add_systems() {
-  // @@protoc_insertion_point(field_add:pb_message.game_data.hex_t.systems)
-  return _internal_add_systems();
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_t >&
-hex_t::systems() const {
-  // @@protoc_insertion_point(field_list:pb_message.game_data.hex_t.systems)
-  return systems_;
+inline void hex_t::set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_first_system(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.first_system)
 }
 
-// .pb_message.game_data.fleets_t fleets = 4;
+// int64 last_system = 4;
+inline void hex_t::clear_last_system() {
+  last_system_ = PROTOBUF_LONGLONG(0);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::_internal_last_system() const {
+  return last_system_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::last_system() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.last_system)
+  return _internal_last_system();
+}
+inline void hex_t::_internal_set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  
+  last_system_ = value;
+}
+inline void hex_t::set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_last_system(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.last_system)
+}
+
+// .pb_message.game_data.fleets_t fleets = 5;
 inline bool hex_t::_internal_has_fleets() const {
   return this != internal_default_instance() && fleets_ != nullptr;
 }
@@ -4677,11 +5400,28 @@ game_state_t::nations() const {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace game_data
 }  // namespace pb_message
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::pb_message::game_data::planet_type_t> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::planet_type_t>() {
+  return ::pb_message::game_data::planet_type_t_descriptor();
+}
+template <> struct is_proto_enum< ::pb_message::game_data::star_class_t> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::star_class_t>() {
+  return ::pb_message::game_data::star_class_t_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

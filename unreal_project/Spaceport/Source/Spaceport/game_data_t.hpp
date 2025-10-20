@@ -13,6 +13,15 @@
 #include <fstream>
 
 
+struct game_start_params
+{
+    // TODO
+
+    float habtitable_systems_per_hex_mean = 5.0f; // Must be >= 0.1.
+    float habtitable_systems_per_hex_std_dev = 0.8f;
+    int map_height = 11; // In hexes; must be an odd number >= 11.
+};
+
 struct game_data_t
 {
     game_data_t();
@@ -48,6 +57,12 @@ struct game_data_t
     {
         return {game_state_};
     }
+
+    void generate_galaxy(game_start_params const & params);
+
+    void day_tick();
+    void month_tick();
+    void year_tick();
 
     void save(std::filesystem::path path)
     {

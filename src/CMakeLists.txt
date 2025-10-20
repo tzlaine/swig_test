@@ -14,6 +14,7 @@ add_library(
     ${unreal_src_dir}/json2pb.cc
     ${unreal_src_dir}/base_types.cpp
     ${unreal_src_dir}/game_data.cpp
+    ${unreal_src_dir}/generate_galaxy.cpp
     ${unreal_src_dir}/base_types.pb.cc
     ${unreal_src_dir}/game_data.pb.cc
 )

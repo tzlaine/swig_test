@@ -45,29 +45,43 @@ message fleets_t
     map<int32, fleet_t> fleets = 1;
 }
 
+enum planet_type_t {
+    invalid_planet = 0;
+    rocky = 1;
+    gas_giant = 2;
+    ice_giant = 3;
+}
+
 message planet_t
 {
     int32 system_id = 1;
-    int32 water = 2;
-    int32 food = 3;
-    int32 enery = 4;
-    int32 metal = 5;
-    int32 fuel = 6;
-    int32 population = 7;
-    int32 infrastructure = 8;
-    int32 max_population = 9;
-    int32 owner = 10;
-    int32 original_owner = 11;
+    planet_type_t planet_type = 2;
+    double mass_kg = 3;
+    double radius_km = 4;
+    float orbit_au = 5;
+    float gravity_g = 6; // in G's
+    float axial_tilt_d = 7;
+    float day_h = 8;
+    int32 water = 10;
+    int32 food = 11;
+    int32 enery = 12;
+    int32 metal = 13;
+    int32 fuel = 14;
+    int32 population = 15;
+    int32 infrastructure = 16;
+    int32 max_population = 17;
+    int32 owner = 18;
+    int32 original_owner = 19;
     // TODO: language, culture, religion
-    // TODO: visual properties (incl. axial tilt)
-    fleet_t garrison = 12;
+    // TODO: visual properties (incl. rings)
+    fleet_t garrison = 20;
     // TODO: ground-to-space defenses
 }
 
 message location_object_t
 {
     fleet_t bases = 1;
-    planet_t planet = 2; // no planet if planet.system_id < 0
+    int64 planet_id = 2; // no planet if < 0
     // TODO: orbital position, if planet is nonempty
     // TODO: other kinds of things as well?
 }
@@ -78,29 +92,53 @@ message system_location_t
     fleets_t units = 2;
 }
 
+enum star_class_t {
+    invalid_star_class = 0;
+    o = 1;
+    b = 2;
+    a = 3;
+    f = 4;
+    g = 5;
+    k = 6;
+    m = 7;
+}
+
+message star_t
+{
+    star_class_t star_class = 1;
+    double temperature_k = 2;
+    double solar_masses = 3;
+    double solar_luminosities = 4;
+    double solar_radii = 5;
+}
+
 message system_t
 {
     string name = 1;
     hex_coord_t coord = 2;
-    // TODO: star visual properties
-    // TODO: position within hex
-    repeated system_location_t permanent_locations = 3;
-    repeated system_location_t temporary_locations = 4;
+    star_t star = 3;
+    repeated system_location_t permanent_locations = 4;
+    repeated system_location_t temporary_locations = 5;
+    double world_pos_x = 6;
+    double world_pos_y = 7;
+    int64 first_planet = 8;
+    int64 last_planet = 9;
 }
 
 message hex_t
 {
     hex_coord_t coord = 1;
     int32 province_id = 2;
-    repeated system_t systems = 3;
-    fleets_t fleets = 4;
+    int64 first_system = 3;
+    int64 last_system = 4;
+    fleets_t fleets = 5;
 }
 
 message province_t
 {
     int32 id = 1;
     int32 owner = 2;
-    repeated  hex_coord_t hex_coords = 3;
+    repeated hex_coord_t hex_coords = 3;
 }
 
 message nation_t

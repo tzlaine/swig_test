@@ -33,8 +33,8 @@ types = [
     ('void', 'void'),            #    // 0 is reserved for errors.
     ('double', 'double'),        #    TYPE_DOUBLE         = 1;
     ('float', 'float'),          #    TYPE_FLOAT          = 2;
-    ('void', 'void'),            #    TYPE_INT64          = 3;
-    ('void', 'void'),            #    TYPE_UINT64         = 4;
+    ('std::ptrdiff_t', 'int'),   #    TYPE_INT64          = 3;
+    ('std::size_t', 'uint'),     #    TYPE_UINT64         = 4;
     ('int', 'int'),              #    TYPE_INT32          = 5;
     ('void', 'void'),            #    TYPE_FIXED64        = 6;
     ('int', 'int'),              #    TYPE_FIXED32        = 7;

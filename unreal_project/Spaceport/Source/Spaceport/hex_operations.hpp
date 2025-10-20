@@ -225,7 +225,7 @@ constexpr int const max_hexes_at_radius[max_useful_hex_distance + 1] = {
 constexpr int const max_neighbors = max_hexes_at_radius[max_useful_hex_distance];
 
 // Static container for hex ids within R=6 of a central hex.  Note that max_neighbors ==
-// 1 + 1*6 + 2*6 + ... + 6*MAX_USEFUL_HEX_DISTANCE.
+// 1 + 1*6 + 2*6 + ... + 6*max_useful_hex_distance.
 typedef boost::container::static_vector<hex_coord_t, max_neighbors> neighbors_t;
 
 hex_coord_t const even_neighbor_offsets[max_neighbors] = {
