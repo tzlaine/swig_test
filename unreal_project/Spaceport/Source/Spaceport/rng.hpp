@@ -8,23 +8,88 @@
 #endif
 #include "pcg_random.hpp"
 
+#include <optional>
 #include <random>
 #include <ranges>
 
 
 namespace detail {
+    struct repeatable_seed_seq_from
+    {
+        using element_type = std::random_device::result_type;
+
+        repeatable_seed_seq_from() : device_(std::in_place) {}
+        repeatable_seed_seq_from(std::vector<element_type> seed) :
+            device_(), seed_(std::move(seed)), use_seed_(true), next_it_(seed_.begin())
+        {}
+
+        repeatable_seed_seq_from &
+        operator=(repeatable_seed_seq_from && other)
+        {
+            seed_ = std::move(other.seed_);
+            use_seed_ = other.use_seed_;
+            next_it_ = other.next_it_;
+            return *this;
+        }
+
+        template<typename I>
+        void generate(I f, I l)
+        {
+            if (use_seed_) {
+                for (; f != l; ++f, ++next_it_) {
+                    *f = *next_it_;
+                }
+            } else {
+                std::generate(f, l, [this] {
+                    auto const value = (*device_)();
+                    seed_.push_back(value);
+                    return value;
+                });
+            }
+        }
+
+        constexpr std::size_t size() const
+        {
+            return std::random_device::max();
+        }
+
+        std::vector<element_type> const & seed() const
+        {
+            return seed_;
+        }
+
+    private:
+        std::optional<std::random_device> device_;
+        std::vector<element_type> seed_;
+        bool use_seed_ = false;
+        std::vector<element_type>::const_iterator next_it_;
+    };
+
     inline struct rng_state
     {
         rng_state() :
-            pcg32_(pcg_extras::seed_seq_from<std::random_device>()),
-            pcg64_(pcg_extras::seed_seq_from<std::random_device>()),
-            unit_dist_(0.0, 1.0)
+            seeder_(), pcg32_(seeder_), pcg64_(seeder_), unit_dist_(0.0, 1.0)
         {}
 
+        repeatable_seed_seq_from seeder_;
         pcg32 pcg32_;
         pcg64 pcg64_;
         std::uniform_real_distribution<double> unit_dist_;
     } g_rng_state;
+}
+
+inline std::vector<unsigned int> const & rng_state_seed()
+{
+    return detail::g_rng_state.seeder_.seed();
+}
+
+inline void reset_rng_state(std::vector<unsigned int> seed)
+{
+    detail::g_rng_state.seeder_ =
+        detail::repeatable_seed_seq_from(std::move(seed));
+    detail::g_rng_state.pcg32_ = pcg32(detail::g_rng_state.seeder_);
+    detail::g_rng_state.pcg64_ = pcg64(detail::g_rng_state.seeder_);
+    detail::g_rng_state.unit_dist_ = std::uniform_real_distribution<double>();
 }
 
 template<template<typename> typename DistTemplate, typename T>
