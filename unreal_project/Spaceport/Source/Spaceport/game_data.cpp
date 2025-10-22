@@ -123,6 +123,36 @@ pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value)
     return retval;
 }
 
+pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& value)
+{
+    pb_message::game_data::planet_effect_t retval;
+    retval.set_name(value.name.c_str());
+    retval.set_description(value.description.c_str());
+    retval.set_target(static_cast< pb_message::game_data::planet_effect_target_t >(value.target));
+    retval.set_one_time_effect(value.one_time_effect);
+    retval.set_monthly_effect(value.monthly_effect);
+    retval.set_months_of_effect(value.months_of_effect);
+    retval.set_months_remaining(value.months_remaining);
+    retval.set_effects_are_permanent(value.effects_are_permanent);
+    retval.set_affects_cost(value.affects_cost);
+    return retval;
+}
+
+::planet_effect_t from_protobuf (const pb_message::game_data::planet_effect_t& msg)
+{
+    ::planet_effect_t retval;
+    retval.name = adobe::name_t(msg.name().c_str());
+    retval.description = adobe::name_t(msg.description().c_str());
+    retval.target = static_cast<std::remove_reference<decltype(retval.target)>::type>(msg.target());
+    retval.one_time_effect = msg.one_time_effect();
+    retval.monthly_effect = msg.monthly_effect();
+    retval.months_of_effect = msg.months_of_effect();
+    retval.months_remaining = msg.months_remaining();
+    retval.effects_are_permanent = msg.effects_are_permanent();
+    retval.affects_cost = msg.affects_cost();
+    return retval;
+}
+
 pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
 {
     pb_message::game_data::planet_t retval;
@@ -134,9 +164,15 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_gravity_g(value.gravity_g);
     retval.set_axial_tilt_d(value.axial_tilt_d);
     retval.set_day_h(value.day_h);
+    retval.set_surface_temperature_k(value.surface_temperature_k);
+    retval.set_magnetosphere_strength(value.magnetosphere_strength);
+    retval.set_atmopsheric_pressure(value.atmopsheric_pressure);
+    retval.set_o2_co2_suitability(value.o2_co2_suitability);
+    retval.set_growth_factor(value.growth_factor);
+    retval.set_atmosphere_type(static_cast< pb_message::game_data::atmosphere_type_t >(value.atmosphere_type));
     retval.set_water(value.water);
     retval.set_food(value.food);
-    retval.set_enery(value.enery);
+    retval.set_energy(value.energy);
     retval.set_metal(value.metal);
     retval.set_fuel(value.fuel);
     retval.set_population(value.population);
@@ -145,6 +181,9 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_owner(value.owner);
     retval.set_original_owner(value.original_owner);
     retval.mutable_garrison()->CopyFrom(to_protobuf(value.garrison));
+    for (const auto& x : value.effects) {
+        retval.add_effects()->CopyFrom(to_protobuf(x));
+    }
     return retval;
 }
 
@@ -159,9 +198,15 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.gravity_g = msg.gravity_g();
     retval.axial_tilt_d = msg.axial_tilt_d();
     retval.day_h = msg.day_h();
+    retval.surface_temperature_k = msg.surface_temperature_k();
+    retval.magnetosphere_strength = msg.magnetosphere_strength();
+    retval.atmopsheric_pressure = msg.atmopsheric_pressure();
+    retval.o2_co2_suitability = msg.o2_co2_suitability();
+    retval.growth_factor = msg.growth_factor();
+    retval.atmosphere_type = static_cast<std::remove_reference<decltype(retval.atmosphere_type)>::type>(msg.atmosphere_type());
     retval.water = msg.water();
     retval.food = msg.food();
-    retval.enery = msg.enery();
+    retval.energy = msg.energy();
     retval.metal = msg.metal();
     retval.fuel = msg.fuel();
     retval.population = msg.population();
@@ -170,6 +215,13 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.owner = msg.owner();
     retval.original_owner = msg.original_owner();
     retval.garrison = from_protobuf(msg.garrison());
+    {
+        retval.effects.resize(msg.effects_size());
+        auto it = retval.effects.begin();
+        for (const auto& x : msg.effects()) {
+            *it++ = from_protobuf(x);
+        }
+    }
     return retval;
 }
 

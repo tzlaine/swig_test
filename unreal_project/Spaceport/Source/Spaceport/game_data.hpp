@@ -14,10 +14,40 @@
 
 
 enum class planet_type_t {
-    invalid_planet = 0,
+    invalid_planet_type = 0,
     rocky = 1,
     gas_giant = 2,
     ice_giant = 3,
+};
+
+enum class atmosphere_type_t {
+    invalid_atmosphere_type = 0,
+    reduced_type_a = 1,
+    oxidized_type_b = 2,
+    carbon_rich_type_c = 3,
+    high_temperature = 4,
+    gas_giant_atmosphere = 5,
+    ice_giant_atmosphere = 6,
+};
+
+enum class planet_effect_target_t {
+    invalid_planet_effect_target = 0,
+    gravity = 1,
+    axial_tilt = 2,
+    day = 3,
+    surface_temperature = 4,
+    magnetosphere_strength = 5,
+    atmopsheric_pressure = 6,
+    o2_co2_suitability = 7,
+    growth_factor = 8,
+    water = 9,
+    food = 10,
+    energy = 11,
+    metal = 12,
+    fuel = 13,
+    population = 14,
+    infrastructure = 15,
+    max_population = 16,
 };
 
 enum class star_class_t {
@@ -71,6 +101,19 @@ struct fleets_t
     boost::container::flat_map<int, fleet_t> fleets;
 };
 
+struct planet_effect_t
+{
+    adobe::name_t name;
+    adobe::name_t description;
+    planet_effect_target_t target;
+    float one_time_effect;
+    float monthly_effect;
+    int months_of_effect;
+    int months_remaining;
+    bool effects_are_permanent;
+    bool affects_cost;
+};
+
 struct planet_t
 {
     int system_id;
@@ -81,9 +124,15 @@ struct planet_t
     float gravity_g;
     float axial_tilt_d;
     float day_h;
+    float surface_temperature_k;
+    float magnetosphere_strength;
+    float atmopsheric_pressure;
+    float o2_co2_suitability;
+    float growth_factor;
+    atmosphere_type_t atmosphere_type;
     int water;
     int food;
-    int enery;
+    int energy;
     int metal;
     int fuel;
     int population;
@@ -92,6 +141,7 @@ struct planet_t
     int owner;
     int original_owner;
     fleet_t garrison;
+    std::vector<planet_effect_t> effects;
 };
 
 struct location_object_t
@@ -177,6 +227,9 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
 
 pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value);
 ::fleets_t from_protobuf (const pb_message::game_data::fleets_t& msg);
+
+pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& value);
+::planet_effect_t from_protobuf (const pb_message::game_data::planet_effect_t& msg);
 
 pb_message::game_data::planet_t to_protobuf (const ::planet_t& value);
 ::planet_t from_protobuf (const pb_message::game_data::planet_t& msg);

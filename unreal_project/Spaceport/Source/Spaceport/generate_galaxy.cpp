@@ -1,4 +1,5 @@
 #include "constants.hpp"
+#include "effects.hpp"
 #include "generate_galaxy.hpp"
 #include "game_data_t.hpp"
 #include "rng.hpp"
@@ -39,8 +40,6 @@ namespace {
     };
 
     // See: https://en.wikipedia.org/wiki/Sun
-    constexpr double earth_to_sun_km = 150000000;
-    constexpr double sun_temperature_k = 5772.0;
 
     double degrees_to_radians(double d)
     {
@@ -111,6 +110,113 @@ namespace {
         return retval;
     }
 
+    float determine_growth_factor_and_effects(planet_t & planet)
+    {
+        if (planet.planet_type != planet_type_t::rocky)
+            return -1.0;
+
+        float retval = max_pop_growth_factor;
+
+        using namespace adobe::literals;
+
+        auto const record = [&](adobe::name_t effect_name,
+                                adobe::name_t effect_desc, float amount) {
+            retval += amount;
+            planet.effects.push_back(
+                onetime_growth_factor_effect(effect_name, effect_desc, amount));
+        };
+
+        auto const only_equatorial_band_habitable = [&] {
+            planet.effects.push_back(onetime_max_population_effect(
+                "only_equatorial_band_habitable"_name,
+                "only_equatorial_band_habitable_desc"_name,
+                only_equatorial_region_habitable_penalty *
+                planet.max_population));
+        };
+
+        // gravity
+        if (planet.gravity_g < 0.1f) {
+            record("very_low_grav"_name, "very_low_grav_desc"_name, -0.2);
+        } else if (planet.gravity_g < 0.9f) {
+            record("low_grav"_name, "low_grav_desc"_name,
+                   -0.1f * (1 - planet.gravity_g));
+        } else if (planet.gravity_g < 1.1f) {
+            // all good
+        } else if (planet.gravity_g < 1.3f) {
+            record("high_grav"_name, "high_grav_desc"_name,
+                   0.1 * (planet.gravity_g - 1.1f));
+        } else {
+            record("very_high_grav"_name, "very_high_grav_desc"_name,
+                   -(planet.gravity_g - 1.3f));
+        } 
+
+        // TODO: planet.orbit_au matters if there are seasons; too long a year
+        // will mean really hot summers, really cold winters.
+
+        // tilt
+        if (planet.axial_tilt_d < 5.0f) {
+            record("no_seasons"_name, "no_seasons_desc"_name, 0.1);
+        } else if (planet.axial_tilt_d < 15.0f) {
+            record("mild_seasons"_name, "mild_seasons_desc"_name, 0.05);
+        } else if (planet.axial_tilt_d < 30.0f) {
+            // normal seasons (no effect)
+        } else if (planet.axial_tilt_d < 45.0f) {
+            record("intense_seasons"_name, "intense_seasons_desc"_name, -0.05);
+        } else if (planet.axial_tilt_d < 60.0f) {
+            record("intense_seasons"_name, "intense_seasons_desc"_name, -0.05);
+            only_equatorial_band_habitable();
+        } else if (planet.axial_tilt_d < 75.0f) {
+            only_equatorial_band_habitable();
+        } else if (planet.axial_tilt_d < 85.0f) {
+            record("mild_seasons"_name, "mild_seasons_desc"_name, 0.05);
+            only_equatorial_band_habitable();
+        } else {
+            record("no_seasons"_name, "no_seasons_desc"_name, 0.1);
+            only_equatorial_band_habitable();
+        }
+
+        // day length
+        if (planet.day_h < 24.0f * 0.9f) {
+            record("short_days"_name, "short_days_desc"_name,
+                   -24.0 / planet.day_h * 0.1);
+        } else if (planet.day_h < 24.0f * 1.1f) {
+            // all good
+        } else if (planet.day_h < 24.0f * 0.9f) {
+            record("long_days"_name, "long_days_desc"_name,
+                   (planet.day_h - 24.0) * 0.05);
+        }
+
+        // TODO: magnetospheres!
+
+        // TODO: Atmospheric pressure
+        // 4-5 atmospheres nitrogen narcosis
+        // 7-8 atmospheres oxygen toxicity
+
+        // temperature
+        if (planet.surface_temperature_k < earth_temperature_k - 22) {
+            record("very_cold_avg_surface_temp"_name,
+                   "very_cold_avg_surface_temp_desc"_name,
+                   -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.03);
+        } else if (planet.surface_temperature_k < earth_temperature_k - 11) {
+            record("cold_avg_surface_temp"_name,
+                   "cold_avg_surface_temp_desc"_name,
+                   -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.01);
+        } else if (planet.surface_temperature_k < earth_temperature_k + 11) {
+            // all good
+        } else if (planet.surface_temperature_k < earth_temperature_k + 22) {
+            record("hot_avg_surface_temp"_name,
+                   "hot_avg_surface_temp_desc"_name,
+                   -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.01);
+        } else {
+            record("very_hot_avg_surface_temp"_name,
+                   "very_hot_avg_surface_temp_desc"_name,
+                   -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.03);
+        }
+
+        return retval;
+    }
+
+    // For reference:
     // Mercury 5427 kg/km^3 3.3e23 kg
     // Venus 5243 kg/km^3 4.87e24 kg
     // Earth 5514 kg/km^3 5.97e24 kg
@@ -125,12 +231,16 @@ namespace {
         // According to Google, planets < 0.3 Jupiter masses are rocky.
         constexpr double rockiness_mass_threshold = 5.7e26;
 
+        // TODO: Move these out of this function?
         std::gamma_distribution<double> day_dist(2, 1.8);
+        std::normal_distribution<double> rocky_magnetosphere_dist(1.0, 0.35);
+        std::normal_distribution<double> giant_magnetosphere_dist(4.0, 1.0);
+        std::gamma_distribution<double> o2_dist(1.5, 1);
         std::normal_distribution<double> tilt_dist(0.0, 30.0);
         std::normal_distribution<double> rocky_density_dist(5250.0, 400.0);
-        // also used for ice giants.
         std::normal_distribution<double> gas_giant_density_dist(1000.0, 150.0);
         std::normal_distribution<double> ice_giant_density_dist(1400.0, 150.0);
+        std::normal_distribution<double> atmos_dist(1.0, 0.2);
 
         // Arbitrary line between the gas giants and the ice giants, taken
         // from the boundary between the Saturn and Uranus orbits, and scaled
@@ -160,12 +270,77 @@ namespace {
         planet.axial_tilt_d =
             std::min(std::abs(random_number(tilt_dist)), 90.0);
 
-        // 15 is just a made up number.
+        // 15 is made up.
         planet.day_h = 15.0 * random_number(day_dist);
+
+        planet.surface_temperature_k =
+            system.star.temperature_k *
+            std::sqrt(system.star.solar_radii * sun_radius_km /
+                      (2 * planet.orbit_au * au_to_km));
+
+        planet.o2_co2_suitability = 0.0;
+        if (planet.planet_type == planet_type_t::rocky) {
+            if (random_unit_double() < prob_rocky_planet_has_magnetosphere) {
+                planet.magnetosphere_strength =
+                    std::min(0.0, random_number(rocky_magnetosphere_dist));
+            } else {
+                planet.magnetosphere_strength = 0.0;
+            }
+            // 50 is made up.
+            if (earth_temperature_k + 50 < planet.surface_temperature_k) {
+                planet.atmosphere_type = atmosphere_type_t::high_temperature;
+                // 5 is made up.
+                planet.atmopsheric_pressure = 5 * random_number(atmos_dist) *
+                    planet.mass_kg / earth_mass_kg;
+            } else if (planet.magnetosphere_strength < 0.01) {
+                double const no_mag_roll = random_unit_double();
+                if (no_mag_roll < prob_no_magnetosphere_rocky_planet_is_reduced) {
+                    planet.atmosphere_type =
+                        atmosphere_type_t::reduced_type_a;
+                    // 0.05 is made up.
+                    planet.atmopsheric_pressure =
+                        0.05 * random_number(atmos_dist) *
+                        planet.mass_kg / earth_mass_kg;
+                } else {
+                    planet.atmosphere_type =
+                        atmosphere_type_t::carbon_rich_type_c;
+                    // 0.2 is made up.
+                    planet.atmopsheric_pressure =
+                        0.2 * random_number(atmos_dist) *
+                        planet.mass_kg / earth_mass_kg;
+                }
+            } else {
+                planet.atmosphere_type = atmosphere_type_t::oxidized_type_b;
+                double const scale = o2_dist.max() - o2_dist.min();
+                planet.o2_co2_suitability =
+                    1.0 - random_number(o2_dist) / scale;
+                planet.atmopsheric_pressure = random_number(atmos_dist) *
+                    planet.mass_kg / earth_mass_kg;
+            }
+        } else {
+            planet.magnetosphere_strength =
+                random_number(giant_magnetosphere_dist);
+            if (planet.planet_type == planet_type_t::gas_giant) {
+                planet.atmosphere_type =
+                    atmosphere_type_t::gas_giant_atmosphere;
+                planet.atmopsheric_pressure = atmos_millions;
+            } else {
+                planet.atmosphere_type =
+                    atmosphere_type_t::ice_giant_atmosphere;
+                planet.atmopsheric_pressure = atmos_thousands;
+            }
+        }
+
+        // TODO: rings
+
+        planet.max_population = 0; // TODO
+
+        double const growth_factor =
+            determine_growth_factor_and_effects(planet);
 
         // TODO: resources
 
-        return false; // TODO: return habitability
+        return growth_factor_considered_habitable < growth_factor;
     }
 
     bool generage_system(
