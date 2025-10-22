@@ -1201,6 +1201,7 @@ class planet_effect_t PROTOBUF_FINAL :
     kMonthsRemainingFieldNumber = 7,
     kEffectsArePermanentFieldNumber = 8,
     kAffectsCostFieldNumber = 9,
+    kMultiplicativeFieldNumber = 10,
   };
   // string name = 1;
   void clear_name();
@@ -1297,6 +1298,15 @@ class planet_effect_t PROTOBUF_FINAL :
   void _internal_set_affects_cost(bool value);
   public:
 
+  // bool multiplicative = 10;
+  void clear_multiplicative();
+  bool multiplicative() const;
+  void set_multiplicative(bool value);
+  private:
+  bool _internal_multiplicative() const;
+  void _internal_set_multiplicative(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:pb_message.game_data.planet_effect_t)
  private:
   class _Internal;
@@ -1313,6 +1323,7 @@ class planet_effect_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::int32 months_remaining_;
   bool effects_are_permanent_;
   bool affects_cost_;
+  bool multiplicative_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -1431,8 +1442,8 @@ class planet_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kEffectsFieldNumber = 26,
-    kGarrisonFieldNumber = 25,
+    kEffectsFieldNumber = 27,
+    kGarrisonFieldNumber = 26,
     kSystemIdFieldNumber = 1,
     kPlanetTypeFieldNumber = 2,
     kMassKgFieldNumber = 3,
@@ -1445,20 +1456,21 @@ class planet_t PROTOBUF_FINAL :
     kMagnetosphereStrengthFieldNumber = 10,
     kAtmopshericPressureFieldNumber = 11,
     kO2Co2SuitabilityFieldNumber = 12,
-    kGrowthFactorFieldNumber = 13,
-    kAtmosphereTypeFieldNumber = 14,
-    kWaterFieldNumber = 15,
-    kFoodFieldNumber = 16,
-    kEnergyFieldNumber = 17,
-    kMetalFieldNumber = 18,
-    kFuelFieldNumber = 19,
-    kPopulationFieldNumber = 20,
-    kInfrastructureFieldNumber = 21,
-    kMaxPopulationFieldNumber = 22,
-    kOwnerFieldNumber = 23,
-    kOriginalOwnerFieldNumber = 24,
+    kOceanCoverageFieldNumber = 13,
+    kGrowthFactorFieldNumber = 14,
+    kAtmosphereTypeFieldNumber = 15,
+    kWaterFieldNumber = 16,
+    kFoodFieldNumber = 17,
+    kEnergyFieldNumber = 18,
+    kMetalFieldNumber = 19,
+    kFuelFieldNumber = 20,
+    kPopulationFieldNumber = 21,
+    kInfrastructureFieldNumber = 22,
+    kMaxPopulationFieldNumber = 23,
+    kOwnerFieldNumber = 24,
+    kOriginalOwnerFieldNumber = 25,
   };
-  // repeated .pb_message.game_data.planet_effect_t effects = 26;
+  // repeated .pb_message.game_data.planet_effect_t effects = 27;
   int effects_size() const;
   private:
   int _internal_effects_size() const;
@@ -1476,7 +1488,7 @@ class planet_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::planet_effect_t >&
       effects() const;
 
-  // .pb_message.game_data.fleet_t garrison = 25;
+  // .pb_message.game_data.fleet_t garrison = 26;
   bool has_garrison() const;
   private:
   bool _internal_has_garrison() const;
@@ -1602,7 +1614,16 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_o2_co2_suitability(float value);
   public:
 
-  // float growth_factor = 13;
+  // float ocean_coverage = 13;
+  void clear_ocean_coverage();
+  float ocean_coverage() const;
+  void set_ocean_coverage(float value);
+  private:
+  float _internal_ocean_coverage() const;
+  void _internal_set_ocean_coverage(float value);
+  public:
+
+  // float growth_factor = 14;
   void clear_growth_factor();
   float growth_factor() const;
   void set_growth_factor(float value);
@@ -1611,7 +1632,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_growth_factor(float value);
   public:
 
-  // .pb_message.game_data.atmosphere_type_t atmosphere_type = 14;
+  // .pb_message.game_data.atmosphere_type_t atmosphere_type = 15;
   void clear_atmosphere_type();
   ::pb_message::game_data::atmosphere_type_t atmosphere_type() const;
   void set_atmosphere_type(::pb_message::game_data::atmosphere_type_t value);
@@ -1620,7 +1641,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_atmosphere_type(::pb_message::game_data::atmosphere_type_t value);
   public:
 
-  // int32 water = 15;
+  // int32 water = 16;
   void clear_water();
   ::PROTOBUF_NAMESPACE_ID::int32 water() const;
   void set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1629,7 +1650,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 food = 16;
+  // int32 food = 17;
   void clear_food();
   ::PROTOBUF_NAMESPACE_ID::int32 food() const;
   void set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1638,7 +1659,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 energy = 17;
+  // int32 energy = 18;
   void clear_energy();
   ::PROTOBUF_NAMESPACE_ID::int32 energy() const;
   void set_energy(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1647,7 +1668,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_energy(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 metal = 18;
+  // int32 metal = 19;
   void clear_metal();
   ::PROTOBUF_NAMESPACE_ID::int32 metal() const;
   void set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1656,7 +1677,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 fuel = 19;
+  // int32 fuel = 20;
   void clear_fuel();
   ::PROTOBUF_NAMESPACE_ID::int32 fuel() const;
   void set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1665,7 +1686,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 population = 20;
+  // int32 population = 21;
   void clear_population();
   ::PROTOBUF_NAMESPACE_ID::int32 population() const;
   void set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1674,7 +1695,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 infrastructure = 21;
+  // int32 infrastructure = 22;
   void clear_infrastructure();
   ::PROTOBUF_NAMESPACE_ID::int32 infrastructure() const;
   void set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1683,7 +1704,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 max_population = 22;
+  // int32 max_population = 23;
   void clear_max_population();
   ::PROTOBUF_NAMESPACE_ID::int32 max_population() const;
   void set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1692,7 +1713,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 owner = 23;
+  // int32 owner = 24;
   void clear_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
   void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1701,7 +1722,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 original_owner = 24;
+  // int32 original_owner = 25;
   void clear_original_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner() const;
   void set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1731,6 +1752,7 @@ class planet_t PROTOBUF_FINAL :
   float magnetosphere_strength_;
   float atmopsheric_pressure_;
   float o2_co2_suitability_;
+  float ocean_coverage_;
   float growth_factor_;
   int atmosphere_type_;
   ::PROTOBUF_NAMESPACE_ID::int32 water_;
@@ -4152,6 +4174,26 @@ inline void planet_effect_t::set_affects_cost(bool value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.affects_cost)
 }
 
+// bool multiplicative = 10;
+inline void planet_effect_t::clear_multiplicative() {
+  multiplicative_ = false;
+}
+inline bool planet_effect_t::_internal_multiplicative() const {
+  return multiplicative_;
+}
+inline bool planet_effect_t::multiplicative() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.multiplicative)
+  return _internal_multiplicative();
+}
+inline void planet_effect_t::_internal_set_multiplicative(bool value) {
+  
+  multiplicative_ = value;
+}
+inline void planet_effect_t::set_multiplicative(bool value) {
+  _internal_set_multiplicative(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.multiplicative)
+}
+
 // -------------------------------------------------------------------
 
 // planet_t
@@ -4396,7 +4438,27 @@ inline void planet_t::set_o2_co2_suitability(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.o2_co2_suitability)
 }
 
-// float growth_factor = 13;
+// float ocean_coverage = 13;
+inline void planet_t::clear_ocean_coverage() {
+  ocean_coverage_ = 0;
+}
+inline float planet_t::_internal_ocean_coverage() const {
+  return ocean_coverage_;
+}
+inline float planet_t::ocean_coverage() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.ocean_coverage)
+  return _internal_ocean_coverage();
+}
+inline void planet_t::_internal_set_ocean_coverage(float value) {
+  
+  ocean_coverage_ = value;
+}
+inline void planet_t::set_ocean_coverage(float value) {
+  _internal_set_ocean_coverage(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.ocean_coverage)
+}
+
+// float growth_factor = 14;
 inline void planet_t::clear_growth_factor() {
   growth_factor_ = 0;
 }
@@ -4416,7 +4478,7 @@ inline void planet_t::set_growth_factor(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.growth_factor)
 }
 
-// .pb_message.game_data.atmosphere_type_t atmosphere_type = 14;
+// .pb_message.game_data.atmosphere_type_t atmosphere_type = 15;
 inline void planet_t::clear_atmosphere_type() {
   atmosphere_type_ = 0;
 }
@@ -4436,7 +4498,7 @@ inline void planet_t::set_atmosphere_type(::pb_message::game_data::atmosphere_ty
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.atmosphere_type)
 }
 
-// int32 water = 15;
+// int32 water = 16;
 inline void planet_t::clear_water() {
   water_ = 0;
 }
@@ -4456,7 +4518,7 @@ inline void planet_t::set_water(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.water)
 }
 
-// int32 food = 16;
+// int32 food = 17;
 inline void planet_t::clear_food() {
   food_ = 0;
 }
@@ -4476,7 +4538,7 @@ inline void planet_t::set_food(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.food)
 }
 
-// int32 energy = 17;
+// int32 energy = 18;
 inline void planet_t::clear_energy() {
   energy_ = 0;
 }
@@ -4496,7 +4558,7 @@ inline void planet_t::set_energy(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.energy)
 }
 
-// int32 metal = 18;
+// int32 metal = 19;
 inline void planet_t::clear_metal() {
   metal_ = 0;
 }
@@ -4516,7 +4578,7 @@ inline void planet_t::set_metal(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.metal)
 }
 
-// int32 fuel = 19;
+// int32 fuel = 20;
 inline void planet_t::clear_fuel() {
   fuel_ = 0;
 }
@@ -4536,7 +4598,7 @@ inline void planet_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.fuel)
 }
 
-// int32 population = 20;
+// int32 population = 21;
 inline void planet_t::clear_population() {
   population_ = 0;
 }
@@ -4556,7 +4618,7 @@ inline void planet_t::set_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.population)
 }
 
-// int32 infrastructure = 21;
+// int32 infrastructure = 22;
 inline void planet_t::clear_infrastructure() {
   infrastructure_ = 0;
 }
@@ -4576,7 +4638,7 @@ inline void planet_t::set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure)
 }
 
-// int32 max_population = 22;
+// int32 max_population = 23;
 inline void planet_t::clear_max_population() {
   max_population_ = 0;
 }
@@ -4596,7 +4658,7 @@ inline void planet_t::set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.max_population)
 }
 
-// int32 owner = 23;
+// int32 owner = 24;
 inline void planet_t::clear_owner() {
   owner_ = 0;
 }
@@ -4616,7 +4678,7 @@ inline void planet_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
-// int32 original_owner = 24;
+// int32 original_owner = 25;
 inline void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
@@ -4636,7 +4698,7 @@ inline void planet_t::set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// .pb_message.game_data.fleet_t garrison = 25;
+// .pb_message.game_data.fleet_t garrison = 26;
 inline bool planet_t::_internal_has_garrison() const {
   return this != internal_default_instance() && garrison_ != nullptr;
 }
@@ -4719,7 +4781,7 @@ inline void planet_t::set_allocated_garrison(::pb_message::game_data::fleet_t* g
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_t.garrison)
 }
 
-// repeated .pb_message.game_data.planet_effect_t effects = 26;
+// repeated .pb_message.game_data.planet_effect_t effects = 27;
 inline int planet_t::_internal_effects_size() const {
   return effects_.size();
 }

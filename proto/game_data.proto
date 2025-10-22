@@ -93,6 +93,7 @@ message planet_effect_t
     int32 months_remaining = 7;
     bool effects_are_permanent = 8;
     bool affects_cost = 9; // instead of directly affecting the stat
+    bool multiplicative = 10; // valid only for one-time effects
 }
 
 message planet_t
@@ -109,23 +110,24 @@ message planet_t
     float magnetosphere_strength = 10; // Earth-scaled (1.0 is like Earth)
     float atmopsheric_pressure = 11; // In "atmospheres" (1.0 is like Earth)
     float o2_co2_suitability = 12; // only applies when atmosphere_type is oxidized_type_b; Earth-scaled
-    float growth_factor = 13;
-    atmosphere_type_t atmosphere_type = 14;
-    int32 water = 15;
-    int32 food = 16;
-    int32 energy = 17;
-    int32 metal = 18;
-    int32 fuel = 19;
-    int32 population = 20;
-    int32 infrastructure = 21;
-    int32 max_population = 22;
-    int32 owner = 23;
-    int32 original_owner = 24;
+    float ocean_coverage = 13;
+    float growth_factor = 14;
+    atmosphere_type_t atmosphere_type = 15;
+    int32 water = 16;
+    int32 food = 17;
+    int32 energy = 18;
+    int32 metal = 19;
+    int32 fuel = 20;
+    int32 population = 21;
+    int32 infrastructure = 22;
+    int32 max_population = 23;
+    int32 owner = 24;
+    int32 original_owner = 25;
     // TODO: language, culture, religion
     // TODO: visual properties (incl. rings)
-    fleet_t garrison = 25;
+    fleet_t garrison = 26;
     // TODO: ground-to-space defenses
-    repeated planet_effect_t effects = 26;
+    repeated planet_effect_t effects = 27;
 }
 
 message location_object_t

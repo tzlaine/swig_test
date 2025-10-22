@@ -135,6 +135,7 @@ pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& val
     retval.set_months_remaining(value.months_remaining);
     retval.set_effects_are_permanent(value.effects_are_permanent);
     retval.set_affects_cost(value.affects_cost);
+    retval.set_multiplicative(value.multiplicative);
     return retval;
 }
 
@@ -150,6 +151,7 @@ pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& val
     retval.months_remaining = msg.months_remaining();
     retval.effects_are_permanent = msg.effects_are_permanent();
     retval.affects_cost = msg.affects_cost();
+    retval.multiplicative = msg.multiplicative();
     return retval;
 }
 
@@ -168,6 +170,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_magnetosphere_strength(value.magnetosphere_strength);
     retval.set_atmopsheric_pressure(value.atmopsheric_pressure);
     retval.set_o2_co2_suitability(value.o2_co2_suitability);
+    retval.set_ocean_coverage(value.ocean_coverage);
     retval.set_growth_factor(value.growth_factor);
     retval.set_atmosphere_type(static_cast< pb_message::game_data::atmosphere_type_t >(value.atmosphere_type));
     retval.set_water(value.water);
@@ -202,6 +205,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.magnetosphere_strength = msg.magnetosphere_strength();
     retval.atmopsheric_pressure = msg.atmopsheric_pressure();
     retval.o2_co2_suitability = msg.o2_co2_suitability();
+    retval.ocean_coverage = msg.ocean_coverage();
     retval.growth_factor = msg.growth_factor();
     retval.atmosphere_type = static_cast<std::remove_reference<decltype(retval.atmosphere_type)>::type>(msg.atmosphere_type());
     retval.water = msg.water();

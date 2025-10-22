@@ -112,6 +112,7 @@ struct planet_effect_t
     int months_remaining;
     bool effects_are_permanent;
     bool affects_cost;
+    bool multiplicative;
 };
 
 struct planet_t
@@ -128,6 +129,7 @@ struct planet_t
     float magnetosphere_strength;
     float atmopsheric_pressure;
     float o2_co2_suitability;
+    float ocean_coverage;
     float growth_factor;
     atmosphere_type_t atmosphere_type;
     int water;

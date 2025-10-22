@@ -130,8 +130,8 @@ namespace {
             planet.effects.push_back(onetime_max_population_effect(
                 "only_equatorial_band_habitable"_name,
                 "only_equatorial_band_habitable_desc"_name,
-                only_equatorial_region_habitable_penalty *
-                planet.max_population));
+                only_equatorial_region_habitable_factor,
+                multiplicative::yes));
         };
 
         // gravity
@@ -141,7 +141,7 @@ namespace {
             record("low_grav"_name, "low_grav_desc"_name,
                    -0.1f * (1 - planet.gravity_g));
         } else if (planet.gravity_g < 1.1f) {
-            // all good
+            // no effect
         } else if (planet.gravity_g < 1.3f) {
             record("high_grav"_name, "high_grav_desc"_name,
                    0.1 * (planet.gravity_g - 1.1f));
@@ -180,15 +180,97 @@ namespace {
             record("short_days"_name, "short_days_desc"_name,
                    -24.0 / planet.day_h * 0.1);
         } else if (planet.day_h < 24.0f * 1.1f) {
-            // all good
+            // no effect
         } else if (planet.day_h < 24.0f * 0.9f) {
             record("long_days"_name, "long_days_desc"_name,
                    (planet.day_h - 24.0) * 0.05);
         }
 
+        // TODO: The O2/CO2 mix of a planet should either be something you can
+        // adjust at the game start, or should perhaps require one of the
+        // earliest techs.
+
+        // O2 (making simplifying assumption of ignoring the CO2 part of this
+        // property)
+        constexpr double harmless_o2_threshold =
+            harmless_low_o2_percentage / earth_o2_percentage;
+        if (harmless_o2_threshold < planet.o2_co2_suitability) {
+            // no effect
+        } else if (effective_o2_percentage_la_paz_bolivia / earth_o2_percentage <
+                   planet.o2_co2_suitability) {
+            record("poor_o2_co2_suitab"_name,
+                   "poor_o2_co2_suitab_desc"_name,
+                   -(harmless_o2_threshold - planet.o2_co2_suitability) * 0.25);
+        } else if (effective_o2_percentage_aconcagua / earth_o2_percentage <
+                   planet.o2_co2_suitability) {
+            record("very_poor_o2_co2_suitab_hab_effect"_name,
+                   "very_poor_o2_co2_suitab_hab_effect_desc"_name,
+                   -(harmless_o2_threshold - planet.o2_co2_suitability) * 0.25);
+            planet.effects.push_back(onetime_max_population_effect(
+                "very_poor_o2_co2_suitab_pop_effect"_name,
+                "very_poor_o2_co2_suitab_pop_effect_desc"_name,
+                habs_and_masks_habitable_factor,
+                multiplicative::yes));
+            planet.effects.push_back(planet_effect_t{
+                    .name="very_poor_o2_co2_suitab_infra_cost_effect"_name,
+                    .description="very_poor_o2_co2_suitab_infra_cost_effect_desc"_name,
+                    .target=planet_effect_target_t::infrastructure,
+                    .one_time_effect=2,
+                    .monthly_effect=0,
+                    .months_of_effect=0,
+                    .months_remaining=0,
+                    .effects_are_permanent=true,
+                    .affects_cost=true,
+                    .multiplicative=true
+                });
+        } else if (effective_o2_percentage_mt_everest_peak / earth_o2_percentage <
+                   planet.o2_co2_suitability) {
+            record("marginal_o2_co2_suitab_hab_effect"_name,
+                   "marginal_o2_co2_suitab_hab_effect_desc"_name,
+                   -(harmless_o2_threshold - planet.o2_co2_suitability) * 0.25);
+            planet.effects.push_back(onetime_max_population_effect(
+                "marginal_o2_co2_suitab_pop_effect"_name,
+                "marginal_o2_co2_suitab_pop_effect_desc"_name,
+                habs_and_masks_habitable_factor,
+                multiplicative::yes));
+            planet.effects.push_back(planet_effect_t{
+                    .name="marginal_o2_co2_suitab_infra_cost_effect"_name,
+                    .description="marginal_o2_co2_suitab_infra_cost_effect_desc"_name,
+                    .target=planet_effect_target_t::infrastructure,
+                    .one_time_effect=2,
+                    .monthly_effect=0,
+                    .months_of_effect=0,
+                    .months_remaining=0,
+                    .effects_are_permanent=true,
+                    .affects_cost=true,
+                    .multiplicative=true
+                });
+        } else {
+            record("insufficient_o2_co2_suitab_hab_effect"_name,
+                   "insufficient_o2_co2_suitab_hab_effect_desc"_name, -0.25);
+            planet.effects.push_back(onetime_max_population_effect(
+                "insufficient_o2_co2_suitab_pop_effect"_name,
+                "insufficient_o2_co2_suitab_pop_effect_desc"_name,
+                habs_and_suits_habitable_factor,
+                multiplicative::yes));
+            planet.effects.push_back(planet_effect_t{
+                    .name="insufficient_o2_co2_suitab_infra_cost_effect"_name,
+                    .description="insufficient_o2_co2_suitab_infra_cost_effect_desc"_name,
+                    .target=planet_effect_target_t::infrastructure,
+                    .one_time_effect=4,
+                    .monthly_effect=0,
+                    .months_of_effect=0,
+                    .months_remaining=0,
+                    .effects_are_permanent=true,
+                    .affects_cost=true,
+                    .multiplicative=true
+                });
+        }
+
         // TODO: magnetospheres!
 
         // TODO: Atmospheric pressure
+        // < 1 should have effects similar to o2_co2_suitability above
         // 4-5 atmospheres nitrogen narcosis
         // 7-8 atmospheres oxygen toxicity
 
@@ -202,7 +284,7 @@ namespace {
                    "cold_avg_surface_temp_desc"_name,
                    -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.01);
         } else if (planet.surface_temperature_k < earth_temperature_k + 11) {
-            // all good
+            // no effect
         } else if (planet.surface_temperature_k < earth_temperature_k + 22) {
             record("hot_avg_surface_temp"_name,
                    "hot_avg_surface_temp_desc"_name,
@@ -241,6 +323,7 @@ namespace {
         std::normal_distribution<double> gas_giant_density_dist(1000.0, 150.0);
         std::normal_distribution<double> ice_giant_density_dist(1400.0, 150.0);
         std::normal_distribution<double> atmos_dist(1.0, 0.2);
+        std::normal_distribution<double> ocean_coverage_dist(0.7, 0.05);
 
         // Arbitrary line between the gas giants and the ice giants, taken
         // from the boundary between the Saturn and Uranus orbits, and scaled
@@ -333,7 +416,19 @@ namespace {
 
         // TODO: rings
 
-        planet.max_population = 0; // TODO
+        planet.ocean_coverage = random_number(ocean_coverage_dist);
+
+        if (planet.planet_type == planet_type_t::rocky) {
+            double const earth_pop_scale =
+                (planet.radius_km * planet.radius_km * planet.radius_km) *
+                planet.ocean_coverage /
+                (earth_radius_km * earth_radius_km * earth_radius_km) /
+                earth_ocean_coverage;
+            planet.max_population =
+                std::round(max_earth_pops * earth_pop_scale);
+        } else {
+            planet.max_population = 0;
+        }
 
         double const growth_factor =
             determine_growth_factor_and_effects(planet);
@@ -343,7 +438,7 @@ namespace {
         return growth_factor_considered_habitable < growth_factor;
     }
 
-    bool generage_system(
+    bool generate_system(
         system_t & system, std::vector<planet_t> & planets,
         hex_coord_t hc, point_2d hex_world_pos, int system_id)
     {
@@ -507,7 +602,7 @@ void generate_galaxy(game_start_params const & params,
                game_state.systems.size() - hex.first_system < 20u)) {
            ++system_id;
            game_state.systems.push_back(system_t());
-           if (generage_system(
+           if (generate_system(
                    game_state.systems.back(), game_state.planets,
                    hc, pos, system_id)) {
                ++habitable_systems_so_far;
