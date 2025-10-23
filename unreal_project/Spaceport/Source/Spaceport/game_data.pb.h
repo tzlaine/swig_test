@@ -225,6 +225,58 @@ inline bool planet_effect_target_t_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<planet_effect_target_t>(
     planet_effect_target_t_descriptor(), name, value);
 }
+enum planet_effect_mod_t : int {
+  invalid_planet_effect_mod = 0,
+  monthly = 1,
+  cost = 2,
+  planet_effect_mod_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  planet_effect_mod_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool planet_effect_mod_t_IsValid(int value);
+constexpr planet_effect_mod_t planet_effect_mod_t_MIN = invalid_planet_effect_mod;
+constexpr planet_effect_mod_t planet_effect_mod_t_MAX = cost;
+constexpr int planet_effect_mod_t_ARRAYSIZE = planet_effect_mod_t_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* planet_effect_mod_t_descriptor();
+template<typename T>
+inline const std::string& planet_effect_mod_t_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, planet_effect_mod_t>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function planet_effect_mod_t_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    planet_effect_mod_t_descriptor(), enum_t_value);
+}
+inline bool planet_effect_mod_t_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, planet_effect_mod_t* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<planet_effect_mod_t>(
+    planet_effect_mod_t_descriptor(), name, value);
+}
+enum effect_op_t : int {
+  invalid_effect_op = 0,
+  add = 1,
+  multiply = 2,
+  effect_op_t_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  effect_op_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool effect_op_t_IsValid(int value);
+constexpr effect_op_t effect_op_t_MIN = invalid_effect_op;
+constexpr effect_op_t effect_op_t_MAX = multiply;
+constexpr int effect_op_t_ARRAYSIZE = effect_op_t_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* effect_op_t_descriptor();
+template<typename T>
+inline const std::string& effect_op_t_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, effect_op_t>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function effect_op_t_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    effect_op_t_descriptor(), enum_t_value);
+}
+inline bool effect_op_t_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, effect_op_t* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<effect_op_t>(
+    effect_op_t_descriptor(), name, value);
+}
 enum star_class_t : int {
   invalid_star_class = 0,
   o = 1,
@@ -1194,14 +1246,12 @@ class planet_effect_t PROTOBUF_FINAL :
   enum : int {
     kNameFieldNumber = 1,
     kDescriptionFieldNumber = 2,
-    kTargetFieldNumber = 3,
-    kOneTimeEffectFieldNumber = 4,
-    kMonthlyEffectFieldNumber = 5,
-    kMonthsOfEffectFieldNumber = 6,
-    kMonthsRemainingFieldNumber = 7,
-    kEffectsArePermanentFieldNumber = 8,
-    kAffectsCostFieldNumber = 9,
-    kMultiplicativeFieldNumber = 10,
+    kAmountFieldNumber = 3,
+    kMonthsOfEffectFieldNumber = 4,
+    kMonthsRemainingFieldNumber = 5,
+    kTargetFieldNumber = 6,
+    kTargetModifiersFieldNumber = 7,
+    kOperationFieldNumber = 8,
   };
   // string name = 1;
   void clear_name();
@@ -1235,34 +1285,16 @@ class planet_effect_t PROTOBUF_FINAL :
   std::string* _internal_mutable_description();
   public:
 
-  // .pb_message.game_data.planet_effect_target_t target = 3;
-  void clear_target();
-  ::pb_message::game_data::planet_effect_target_t target() const;
-  void set_target(::pb_message::game_data::planet_effect_target_t value);
+  // float amount = 3;
+  void clear_amount();
+  float amount() const;
+  void set_amount(float value);
   private:
-  ::pb_message::game_data::planet_effect_target_t _internal_target() const;
-  void _internal_set_target(::pb_message::game_data::planet_effect_target_t value);
+  float _internal_amount() const;
+  void _internal_set_amount(float value);
   public:
 
-  // float one_time_effect = 4;
-  void clear_one_time_effect();
-  float one_time_effect() const;
-  void set_one_time_effect(float value);
-  private:
-  float _internal_one_time_effect() const;
-  void _internal_set_one_time_effect(float value);
-  public:
-
-  // float monthly_effect = 5;
-  void clear_monthly_effect();
-  float monthly_effect() const;
-  void set_monthly_effect(float value);
-  private:
-  float _internal_monthly_effect() const;
-  void _internal_set_monthly_effect(float value);
-  public:
-
-  // int32 months_of_effect = 6;
+  // int32 months_of_effect = 4;
   void clear_months_of_effect();
   ::PROTOBUF_NAMESPACE_ID::int32 months_of_effect() const;
   void set_months_of_effect(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1271,7 +1303,7 @@ class planet_effect_t PROTOBUF_FINAL :
   void _internal_set_months_of_effect(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 months_remaining = 7;
+  // int32 months_remaining = 5;
   void clear_months_remaining();
   ::PROTOBUF_NAMESPACE_ID::int32 months_remaining() const;
   void set_months_remaining(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1280,31 +1312,31 @@ class planet_effect_t PROTOBUF_FINAL :
   void _internal_set_months_remaining(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // bool effects_are_permanent = 8;
-  void clear_effects_are_permanent();
-  bool effects_are_permanent() const;
-  void set_effects_are_permanent(bool value);
+  // .pb_message.game_data.planet_effect_target_t target = 6;
+  void clear_target();
+  ::pb_message::game_data::planet_effect_target_t target() const;
+  void set_target(::pb_message::game_data::planet_effect_target_t value);
   private:
-  bool _internal_effects_are_permanent() const;
-  void _internal_set_effects_are_permanent(bool value);
+  ::pb_message::game_data::planet_effect_target_t _internal_target() const;
+  void _internal_set_target(::pb_message::game_data::planet_effect_target_t value);
   public:
 
-  // bool affects_cost = 9;
-  void clear_affects_cost();
-  bool affects_cost() const;
-  void set_affects_cost(bool value);
+  // uint32 target_modifiers = 7;
+  void clear_target_modifiers();
+  ::PROTOBUF_NAMESPACE_ID::uint32 target_modifiers() const;
+  void set_target_modifiers(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  bool _internal_affects_cost() const;
-  void _internal_set_affects_cost(bool value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_target_modifiers() const;
+  void _internal_set_target_modifiers(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // bool multiplicative = 10;
-  void clear_multiplicative();
-  bool multiplicative() const;
-  void set_multiplicative(bool value);
+  // .pb_message.game_data.effect_op_t operation = 8;
+  void clear_operation();
+  ::pb_message::game_data::effect_op_t operation() const;
+  void set_operation(::pb_message::game_data::effect_op_t value);
   private:
-  bool _internal_multiplicative() const;
-  void _internal_set_multiplicative(bool value);
+  ::pb_message::game_data::effect_op_t _internal_operation() const;
+  void _internal_set_operation(::pb_message::game_data::effect_op_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.planet_effect_t)
@@ -1316,14 +1348,12 @@ class planet_effect_t PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr description_;
-  int target_;
-  float one_time_effect_;
-  float monthly_effect_;
+  float amount_;
   ::PROTOBUF_NAMESPACE_ID::int32 months_of_effect_;
   ::PROTOBUF_NAMESPACE_ID::int32 months_remaining_;
-  bool effects_are_permanent_;
-  bool affects_cost_;
-  bool multiplicative_;
+  int target_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 target_modifiers_;
+  int operation_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -1442,35 +1472,36 @@ class planet_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kEffectsFieldNumber = 27,
-    kGarrisonFieldNumber = 26,
+    kEffectsFieldNumber = 28,
+    kGarrisonFieldNumber = 27,
     kSystemIdFieldNumber = 1,
     kPlanetTypeFieldNumber = 2,
     kMassKgFieldNumber = 3,
     kRadiusKmFieldNumber = 4,
     kOrbitAuFieldNumber = 5,
-    kGravityGFieldNumber = 6,
-    kAxialTiltDFieldNumber = 7,
-    kDayHFieldNumber = 8,
-    kSurfaceTemperatureKFieldNumber = 9,
-    kMagnetosphereStrengthFieldNumber = 10,
-    kAtmopshericPressureFieldNumber = 11,
-    kO2Co2SuitabilityFieldNumber = 12,
-    kOceanCoverageFieldNumber = 13,
-    kGrowthFactorFieldNumber = 14,
-    kAtmosphereTypeFieldNumber = 15,
-    kWaterFieldNumber = 16,
-    kFoodFieldNumber = 17,
-    kEnergyFieldNumber = 18,
-    kMetalFieldNumber = 19,
-    kFuelFieldNumber = 20,
-    kPopulationFieldNumber = 21,
-    kInfrastructureFieldNumber = 22,
-    kMaxPopulationFieldNumber = 23,
-    kOwnerFieldNumber = 24,
-    kOriginalOwnerFieldNumber = 25,
+    kOrbitalPeriodYFieldNumber = 6,
+    kGravityGFieldNumber = 7,
+    kAxialTiltDFieldNumber = 8,
+    kDayHFieldNumber = 9,
+    kSurfaceTemperatureKFieldNumber = 10,
+    kMagnetosphereStrengthFieldNumber = 11,
+    kAtmopshericPressureFieldNumber = 12,
+    kO2Co2SuitabilityFieldNumber = 13,
+    kOceanCoverageFieldNumber = 14,
+    kGrowthFactorFieldNumber = 15,
+    kAtmosphereTypeFieldNumber = 16,
+    kWaterFieldNumber = 17,
+    kFoodFieldNumber = 18,
+    kEnergyFieldNumber = 19,
+    kMetalFieldNumber = 20,
+    kFuelFieldNumber = 21,
+    kPopulationFieldNumber = 22,
+    kInfrastructureFieldNumber = 23,
+    kMaxPopulationFieldNumber = 24,
+    kOwnerFieldNumber = 25,
+    kOriginalOwnerFieldNumber = 26,
   };
-  // repeated .pb_message.game_data.planet_effect_t effects = 27;
+  // repeated .pb_message.game_data.planet_effect_t effects = 28;
   int effects_size() const;
   private:
   int _internal_effects_size() const;
@@ -1488,7 +1519,7 @@ class planet_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::planet_effect_t >&
       effects() const;
 
-  // .pb_message.game_data.fleet_t garrison = 26;
+  // .pb_message.game_data.fleet_t garrison = 27;
   bool has_garrison() const;
   private:
   bool _internal_has_garrison() const;
@@ -1551,7 +1582,16 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_orbit_au(float value);
   public:
 
-  // float gravity_g = 6;
+  // float orbital_period_y = 6;
+  void clear_orbital_period_y();
+  float orbital_period_y() const;
+  void set_orbital_period_y(float value);
+  private:
+  float _internal_orbital_period_y() const;
+  void _internal_set_orbital_period_y(float value);
+  public:
+
+  // float gravity_g = 7;
   void clear_gravity_g();
   float gravity_g() const;
   void set_gravity_g(float value);
@@ -1560,7 +1600,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_gravity_g(float value);
   public:
 
-  // float axial_tilt_d = 7;
+  // float axial_tilt_d = 8;
   void clear_axial_tilt_d();
   float axial_tilt_d() const;
   void set_axial_tilt_d(float value);
@@ -1569,7 +1609,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_axial_tilt_d(float value);
   public:
 
-  // float day_h = 8;
+  // float day_h = 9;
   void clear_day_h();
   float day_h() const;
   void set_day_h(float value);
@@ -1578,7 +1618,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_day_h(float value);
   public:
 
-  // float surface_temperature_k = 9;
+  // float surface_temperature_k = 10;
   void clear_surface_temperature_k();
   float surface_temperature_k() const;
   void set_surface_temperature_k(float value);
@@ -1587,7 +1627,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_surface_temperature_k(float value);
   public:
 
-  // float magnetosphere_strength = 10;
+  // float magnetosphere_strength = 11;
   void clear_magnetosphere_strength();
   float magnetosphere_strength() const;
   void set_magnetosphere_strength(float value);
@@ -1596,7 +1636,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_magnetosphere_strength(float value);
   public:
 
-  // float atmopsheric_pressure = 11;
+  // float atmopsheric_pressure = 12;
   void clear_atmopsheric_pressure();
   float atmopsheric_pressure() const;
   void set_atmopsheric_pressure(float value);
@@ -1605,7 +1645,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_atmopsheric_pressure(float value);
   public:
 
-  // float o2_co2_suitability = 12;
+  // float o2_co2_suitability = 13;
   void clear_o2_co2_suitability();
   float o2_co2_suitability() const;
   void set_o2_co2_suitability(float value);
@@ -1614,7 +1654,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_o2_co2_suitability(float value);
   public:
 
-  // float ocean_coverage = 13;
+  // float ocean_coverage = 14;
   void clear_ocean_coverage();
   float ocean_coverage() const;
   void set_ocean_coverage(float value);
@@ -1623,7 +1663,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_ocean_coverage(float value);
   public:
 
-  // float growth_factor = 14;
+  // float growth_factor = 15;
   void clear_growth_factor();
   float growth_factor() const;
   void set_growth_factor(float value);
@@ -1632,7 +1672,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_growth_factor(float value);
   public:
 
-  // .pb_message.game_data.atmosphere_type_t atmosphere_type = 15;
+  // .pb_message.game_data.atmosphere_type_t atmosphere_type = 16;
   void clear_atmosphere_type();
   ::pb_message::game_data::atmosphere_type_t atmosphere_type() const;
   void set_atmosphere_type(::pb_message::game_data::atmosphere_type_t value);
@@ -1641,7 +1681,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_atmosphere_type(::pb_message::game_data::atmosphere_type_t value);
   public:
 
-  // int32 water = 16;
+  // int32 water = 17;
   void clear_water();
   ::PROTOBUF_NAMESPACE_ID::int32 water() const;
   void set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1650,7 +1690,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 food = 17;
+  // int32 food = 18;
   void clear_food();
   ::PROTOBUF_NAMESPACE_ID::int32 food() const;
   void set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1659,7 +1699,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 energy = 18;
+  // int32 energy = 19;
   void clear_energy();
   ::PROTOBUF_NAMESPACE_ID::int32 energy() const;
   void set_energy(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1668,7 +1708,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_energy(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 metal = 19;
+  // int32 metal = 20;
   void clear_metal();
   ::PROTOBUF_NAMESPACE_ID::int32 metal() const;
   void set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1677,7 +1717,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 fuel = 20;
+  // int32 fuel = 21;
   void clear_fuel();
   ::PROTOBUF_NAMESPACE_ID::int32 fuel() const;
   void set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1686,7 +1726,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 population = 21;
+  // int32 population = 22;
   void clear_population();
   ::PROTOBUF_NAMESPACE_ID::int32 population() const;
   void set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1695,7 +1735,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 infrastructure = 22;
+  // int32 infrastructure = 23;
   void clear_infrastructure();
   ::PROTOBUF_NAMESPACE_ID::int32 infrastructure() const;
   void set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1704,7 +1744,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 max_population = 23;
+  // int32 max_population = 24;
   void clear_max_population();
   ::PROTOBUF_NAMESPACE_ID::int32 max_population() const;
   void set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1713,7 +1753,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 owner = 24;
+  // int32 owner = 25;
   void clear_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
   void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1722,7 +1762,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 original_owner = 25;
+  // int32 original_owner = 26;
   void clear_original_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner() const;
   void set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1745,6 +1785,7 @@ class planet_t PROTOBUF_FINAL :
   double mass_kg_;
   double radius_km_;
   float orbit_au_;
+  float orbital_period_y_;
   float gravity_g_;
   float axial_tilt_d_;
   float day_h_;
@@ -4034,67 +4075,27 @@ inline void planet_effect_t::set_allocated_description(std::string* description)
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_effect_t.description)
 }
 
-// .pb_message.game_data.planet_effect_target_t target = 3;
-inline void planet_effect_t::clear_target() {
-  target_ = 0;
+// float amount = 3;
+inline void planet_effect_t::clear_amount() {
+  amount_ = 0;
 }
-inline ::pb_message::game_data::planet_effect_target_t planet_effect_t::_internal_target() const {
-  return static_cast< ::pb_message::game_data::planet_effect_target_t >(target_);
+inline float planet_effect_t::_internal_amount() const {
+  return amount_;
 }
-inline ::pb_message::game_data::planet_effect_target_t planet_effect_t::target() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.target)
-  return _internal_target();
+inline float planet_effect_t::amount() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.amount)
+  return _internal_amount();
 }
-inline void planet_effect_t::_internal_set_target(::pb_message::game_data::planet_effect_target_t value) {
+inline void planet_effect_t::_internal_set_amount(float value) {
   
-  target_ = value;
+  amount_ = value;
 }
-inline void planet_effect_t::set_target(::pb_message::game_data::planet_effect_target_t value) {
-  _internal_set_target(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.target)
+inline void planet_effect_t::set_amount(float value) {
+  _internal_set_amount(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.amount)
 }
 
-// float one_time_effect = 4;
-inline void planet_effect_t::clear_one_time_effect() {
-  one_time_effect_ = 0;
-}
-inline float planet_effect_t::_internal_one_time_effect() const {
-  return one_time_effect_;
-}
-inline float planet_effect_t::one_time_effect() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.one_time_effect)
-  return _internal_one_time_effect();
-}
-inline void planet_effect_t::_internal_set_one_time_effect(float value) {
-  
-  one_time_effect_ = value;
-}
-inline void planet_effect_t::set_one_time_effect(float value) {
-  _internal_set_one_time_effect(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.one_time_effect)
-}
-
-// float monthly_effect = 5;
-inline void planet_effect_t::clear_monthly_effect() {
-  monthly_effect_ = 0;
-}
-inline float planet_effect_t::_internal_monthly_effect() const {
-  return monthly_effect_;
-}
-inline float planet_effect_t::monthly_effect() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.monthly_effect)
-  return _internal_monthly_effect();
-}
-inline void planet_effect_t::_internal_set_monthly_effect(float value) {
-  
-  monthly_effect_ = value;
-}
-inline void planet_effect_t::set_monthly_effect(float value) {
-  _internal_set_monthly_effect(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.monthly_effect)
-}
-
-// int32 months_of_effect = 6;
+// int32 months_of_effect = 4;
 inline void planet_effect_t::clear_months_of_effect() {
   months_of_effect_ = 0;
 }
@@ -4114,7 +4115,7 @@ inline void planet_effect_t::set_months_of_effect(::PROTOBUF_NAMESPACE_ID::int32
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.months_of_effect)
 }
 
-// int32 months_remaining = 7;
+// int32 months_remaining = 5;
 inline void planet_effect_t::clear_months_remaining() {
   months_remaining_ = 0;
 }
@@ -4134,64 +4135,64 @@ inline void planet_effect_t::set_months_remaining(::PROTOBUF_NAMESPACE_ID::int32
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.months_remaining)
 }
 
-// bool effects_are_permanent = 8;
-inline void planet_effect_t::clear_effects_are_permanent() {
-  effects_are_permanent_ = false;
+// .pb_message.game_data.planet_effect_target_t target = 6;
+inline void planet_effect_t::clear_target() {
+  target_ = 0;
 }
-inline bool planet_effect_t::_internal_effects_are_permanent() const {
-  return effects_are_permanent_;
+inline ::pb_message::game_data::planet_effect_target_t planet_effect_t::_internal_target() const {
+  return static_cast< ::pb_message::game_data::planet_effect_target_t >(target_);
 }
-inline bool planet_effect_t::effects_are_permanent() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.effects_are_permanent)
-  return _internal_effects_are_permanent();
+inline ::pb_message::game_data::planet_effect_target_t planet_effect_t::target() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.target)
+  return _internal_target();
 }
-inline void planet_effect_t::_internal_set_effects_are_permanent(bool value) {
+inline void planet_effect_t::_internal_set_target(::pb_message::game_data::planet_effect_target_t value) {
   
-  effects_are_permanent_ = value;
+  target_ = value;
 }
-inline void planet_effect_t::set_effects_are_permanent(bool value) {
-  _internal_set_effects_are_permanent(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.effects_are_permanent)
+inline void planet_effect_t::set_target(::pb_message::game_data::planet_effect_target_t value) {
+  _internal_set_target(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.target)
 }
 
-// bool affects_cost = 9;
-inline void planet_effect_t::clear_affects_cost() {
-  affects_cost_ = false;
+// uint32 target_modifiers = 7;
+inline void planet_effect_t::clear_target_modifiers() {
+  target_modifiers_ = 0u;
 }
-inline bool planet_effect_t::_internal_affects_cost() const {
-  return affects_cost_;
+inline ::PROTOBUF_NAMESPACE_ID::uint32 planet_effect_t::_internal_target_modifiers() const {
+  return target_modifiers_;
 }
-inline bool planet_effect_t::affects_cost() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.affects_cost)
-  return _internal_affects_cost();
+inline ::PROTOBUF_NAMESPACE_ID::uint32 planet_effect_t::target_modifiers() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.target_modifiers)
+  return _internal_target_modifiers();
 }
-inline void planet_effect_t::_internal_set_affects_cost(bool value) {
+inline void planet_effect_t::_internal_set_target_modifiers(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  affects_cost_ = value;
+  target_modifiers_ = value;
 }
-inline void planet_effect_t::set_affects_cost(bool value) {
-  _internal_set_affects_cost(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.affects_cost)
+inline void planet_effect_t::set_target_modifiers(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_target_modifiers(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.target_modifiers)
 }
 
-// bool multiplicative = 10;
-inline void planet_effect_t::clear_multiplicative() {
-  multiplicative_ = false;
+// .pb_message.game_data.effect_op_t operation = 8;
+inline void planet_effect_t::clear_operation() {
+  operation_ = 0;
 }
-inline bool planet_effect_t::_internal_multiplicative() const {
-  return multiplicative_;
+inline ::pb_message::game_data::effect_op_t planet_effect_t::_internal_operation() const {
+  return static_cast< ::pb_message::game_data::effect_op_t >(operation_);
 }
-inline bool planet_effect_t::multiplicative() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.multiplicative)
-  return _internal_multiplicative();
+inline ::pb_message::game_data::effect_op_t planet_effect_t::operation() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_effect_t.operation)
+  return _internal_operation();
 }
-inline void planet_effect_t::_internal_set_multiplicative(bool value) {
+inline void planet_effect_t::_internal_set_operation(::pb_message::game_data::effect_op_t value) {
   
-  multiplicative_ = value;
+  operation_ = value;
 }
-inline void planet_effect_t::set_multiplicative(bool value) {
-  _internal_set_multiplicative(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.multiplicative)
+inline void planet_effect_t::set_operation(::pb_message::game_data::effect_op_t value) {
+  _internal_set_operation(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_effect_t.operation)
 }
 
 // -------------------------------------------------------------------
@@ -4298,7 +4299,27 @@ inline void planet_t::set_orbit_au(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbit_au)
 }
 
-// float gravity_g = 6;
+// float orbital_period_y = 6;
+inline void planet_t::clear_orbital_period_y() {
+  orbital_period_y_ = 0;
+}
+inline float planet_t::_internal_orbital_period_y() const {
+  return orbital_period_y_;
+}
+inline float planet_t::orbital_period_y() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.orbital_period_y)
+  return _internal_orbital_period_y();
+}
+inline void planet_t::_internal_set_orbital_period_y(float value) {
+  
+  orbital_period_y_ = value;
+}
+inline void planet_t::set_orbital_period_y(float value) {
+  _internal_set_orbital_period_y(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbital_period_y)
+}
+
+// float gravity_g = 7;
 inline void planet_t::clear_gravity_g() {
   gravity_g_ = 0;
 }
@@ -4318,7 +4339,7 @@ inline void planet_t::set_gravity_g(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.gravity_g)
 }
 
-// float axial_tilt_d = 7;
+// float axial_tilt_d = 8;
 inline void planet_t::clear_axial_tilt_d() {
   axial_tilt_d_ = 0;
 }
@@ -4338,7 +4359,7 @@ inline void planet_t::set_axial_tilt_d(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.axial_tilt_d)
 }
 
-// float day_h = 8;
+// float day_h = 9;
 inline void planet_t::clear_day_h() {
   day_h_ = 0;
 }
@@ -4358,7 +4379,7 @@ inline void planet_t::set_day_h(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.day_h)
 }
 
-// float surface_temperature_k = 9;
+// float surface_temperature_k = 10;
 inline void planet_t::clear_surface_temperature_k() {
   surface_temperature_k_ = 0;
 }
@@ -4378,7 +4399,7 @@ inline void planet_t::set_surface_temperature_k(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.surface_temperature_k)
 }
 
-// float magnetosphere_strength = 10;
+// float magnetosphere_strength = 11;
 inline void planet_t::clear_magnetosphere_strength() {
   magnetosphere_strength_ = 0;
 }
@@ -4398,7 +4419,7 @@ inline void planet_t::set_magnetosphere_strength(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.magnetosphere_strength)
 }
 
-// float atmopsheric_pressure = 11;
+// float atmopsheric_pressure = 12;
 inline void planet_t::clear_atmopsheric_pressure() {
   atmopsheric_pressure_ = 0;
 }
@@ -4418,7 +4439,7 @@ inline void planet_t::set_atmopsheric_pressure(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.atmopsheric_pressure)
 }
 
-// float o2_co2_suitability = 12;
+// float o2_co2_suitability = 13;
 inline void planet_t::clear_o2_co2_suitability() {
   o2_co2_suitability_ = 0;
 }
@@ -4438,7 +4459,7 @@ inline void planet_t::set_o2_co2_suitability(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.o2_co2_suitability)
 }
 
-// float ocean_coverage = 13;
+// float ocean_coverage = 14;
 inline void planet_t::clear_ocean_coverage() {
   ocean_coverage_ = 0;
 }
@@ -4458,7 +4479,7 @@ inline void planet_t::set_ocean_coverage(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.ocean_coverage)
 }
 
-// float growth_factor = 14;
+// float growth_factor = 15;
 inline void planet_t::clear_growth_factor() {
   growth_factor_ = 0;
 }
@@ -4478,7 +4499,7 @@ inline void planet_t::set_growth_factor(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.growth_factor)
 }
 
-// .pb_message.game_data.atmosphere_type_t atmosphere_type = 15;
+// .pb_message.game_data.atmosphere_type_t atmosphere_type = 16;
 inline void planet_t::clear_atmosphere_type() {
   atmosphere_type_ = 0;
 }
@@ -4498,7 +4519,7 @@ inline void planet_t::set_atmosphere_type(::pb_message::game_data::atmosphere_ty
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.atmosphere_type)
 }
 
-// int32 water = 16;
+// int32 water = 17;
 inline void planet_t::clear_water() {
   water_ = 0;
 }
@@ -4518,7 +4539,7 @@ inline void planet_t::set_water(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.water)
 }
 
-// int32 food = 17;
+// int32 food = 18;
 inline void planet_t::clear_food() {
   food_ = 0;
 }
@@ -4538,7 +4559,7 @@ inline void planet_t::set_food(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.food)
 }
 
-// int32 energy = 18;
+// int32 energy = 19;
 inline void planet_t::clear_energy() {
   energy_ = 0;
 }
@@ -4558,7 +4579,7 @@ inline void planet_t::set_energy(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.energy)
 }
 
-// int32 metal = 19;
+// int32 metal = 20;
 inline void planet_t::clear_metal() {
   metal_ = 0;
 }
@@ -4578,7 +4599,7 @@ inline void planet_t::set_metal(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.metal)
 }
 
-// int32 fuel = 20;
+// int32 fuel = 21;
 inline void planet_t::clear_fuel() {
   fuel_ = 0;
 }
@@ -4598,7 +4619,7 @@ inline void planet_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.fuel)
 }
 
-// int32 population = 21;
+// int32 population = 22;
 inline void planet_t::clear_population() {
   population_ = 0;
 }
@@ -4618,7 +4639,7 @@ inline void planet_t::set_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.population)
 }
 
-// int32 infrastructure = 22;
+// int32 infrastructure = 23;
 inline void planet_t::clear_infrastructure() {
   infrastructure_ = 0;
 }
@@ -4638,7 +4659,7 @@ inline void planet_t::set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure)
 }
 
-// int32 max_population = 23;
+// int32 max_population = 24;
 inline void planet_t::clear_max_population() {
   max_population_ = 0;
 }
@@ -4658,7 +4679,7 @@ inline void planet_t::set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.max_population)
 }
 
-// int32 owner = 24;
+// int32 owner = 25;
 inline void planet_t::clear_owner() {
   owner_ = 0;
 }
@@ -4678,7 +4699,7 @@ inline void planet_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
-// int32 original_owner = 25;
+// int32 original_owner = 26;
 inline void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
@@ -4698,7 +4719,7 @@ inline void planet_t::set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// .pb_message.game_data.fleet_t garrison = 26;
+// .pb_message.game_data.fleet_t garrison = 27;
 inline bool planet_t::_internal_has_garrison() const {
   return this != internal_default_instance() && garrison_ != nullptr;
 }
@@ -4781,7 +4802,7 @@ inline void planet_t::set_allocated_garrison(::pb_message::game_data::fleet_t* g
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_t.garrison)
 }
 
-// repeated .pb_message.game_data.planet_effect_t effects = 27;
+// repeated .pb_message.game_data.planet_effect_t effects = 28;
 inline int planet_t::_internal_effects_size() const {
   return effects_.size();
 }
@@ -6314,6 +6335,16 @@ template <> struct is_proto_enum< ::pb_message::game_data::planet_effect_target_
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::planet_effect_target_t>() {
   return ::pb_message::game_data::planet_effect_target_t_descriptor();
+}
+template <> struct is_proto_enum< ::pb_message::game_data::planet_effect_mod_t> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::planet_effect_mod_t>() {
+  return ::pb_message::game_data::planet_effect_mod_t_descriptor();
+}
+template <> struct is_proto_enum< ::pb_message::game_data::effect_op_t> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::pb_message::game_data::effect_op_t>() {
+  return ::pb_message::game_data::effect_op_t_descriptor();
 }
 template <> struct is_proto_enum< ::pb_message::game_data::star_class_t> : ::std::true_type {};
 template <>

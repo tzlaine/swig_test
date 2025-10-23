@@ -8,26 +8,19 @@
 // knockon effects (e.g. changing o2_co2_suit. will need to create an effect
 // that adjusts max_pop).
 
-enum struct multiplicative : bool {
-    no,
-    yes
-};
-
 inline planet_effect_t onetime_growth_factor_effect(
     adobe::name_t name, adobe::name_t description, float amount,
-    multiplicative mult = multiplicative::no)
+    effect_op_t op = effect_op_t::add)
 {
     planet_effect_t retval{
         .name=name,
         .description=description,
-        .target=planet_effect_target_t::growth_factor,
-        .one_time_effect=amount,
-        .monthly_effect=0,
+        .amount=amount,
         .months_of_effect=0,
         .months_remaining=0,
-        .effects_are_permanent=true,
-        .affects_cost=false,
-        .multiplicative=(bool)mult
+        .target=planet_effect_target_t::growth_factor,
+        .target_modifiers=0,
+        .operation=op
     };
 
     return retval;
@@ -35,19 +28,17 @@ inline planet_effect_t onetime_growth_factor_effect(
 
 inline planet_effect_t onetime_max_population_effect(
     adobe::name_t name, adobe::name_t description, float amount,
-    multiplicative mult = multiplicative::no)
+    effect_op_t op = effect_op_t::add)
 {
     planet_effect_t retval{
         .name=name,
         .description=description,
-        .target=planet_effect_target_t::max_population,
-        .one_time_effect=amount,
-        .monthly_effect=0,
+        .amount=amount,
         .months_of_effect=0,
         .months_remaining=0,
-        .effects_are_permanent=true,
-        .affects_cost=false,
-        .multiplicative=(bool)mult
+        .target=planet_effect_target_t::max_population,
+        .target_modifiers=0,
+        .operation=op
     };
 
     return retval;

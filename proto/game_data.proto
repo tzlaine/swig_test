@@ -82,18 +82,29 @@ enum planet_effect_target_t {
     max_population = 16;
 }
 
+// NOTE: These are flags.
+enum planet_effect_mod_t {
+    invalid_planet_effect_mod = 0;
+    monthly = 1;   // Apply op monthly, rather than one time.
+    cost = 2;      // Applies to the cost of the target property, not the property itself.
+}
+
+enum effect_op_t {
+    invalid_effect_op = 0;
+    add = 1;
+    multiply = 2;
+}
+
 message planet_effect_t
 {
     string name = 1;
     string description = 2;
-    planet_effect_target_t target = 3;
-    float one_time_effect = 4;
-    float monthly_effect = 5;
-    int32 months_of_effect = 6;
-    int32 months_remaining = 7;
-    bool effects_are_permanent = 8;
-    bool affects_cost = 9; // instead of directly affecting the stat
-    bool multiplicative = 10; // valid only for one-time effects
+    float amount = 3;
+    int32 months_of_effect = 4;
+    int32 months_remaining = 5;
+    planet_effect_target_t target = 6;
+    uint32 target_modifiers = 7;
+    effect_op_t operation = 8;
 }
 
 message planet_t
@@ -103,31 +114,32 @@ message planet_t
     double mass_kg = 3;
     double radius_km = 4;
     float orbit_au = 5;
-    float gravity_g = 6; // in G's
-    float axial_tilt_d = 7;
-    float day_h = 8;
-    float surface_temperature_k = 9;
-    float magnetosphere_strength = 10; // Earth-scaled (1.0 is like Earth)
-    float atmopsheric_pressure = 11; // In "atmospheres" (1.0 is like Earth)
-    float o2_co2_suitability = 12; // only applies when atmosphere_type is oxidized_type_b; Earth-scaled
-    float ocean_coverage = 13;
-    float growth_factor = 14;
-    atmosphere_type_t atmosphere_type = 15;
-    int32 water = 16;
-    int32 food = 17;
-    int32 energy = 18;
-    int32 metal = 19;
-    int32 fuel = 20;
-    int32 population = 21;
-    int32 infrastructure = 22;
-    int32 max_population = 23;
-    int32 owner = 24;
-    int32 original_owner = 25;
+    float orbital_period_y = 6; // in Earth years
+    float gravity_g = 7; // in G's
+    float axial_tilt_d = 8;
+    float day_h = 9;
+    float surface_temperature_k = 10;
+    float magnetosphere_strength = 11; // Earth-scaled (1.0 is like Earth)
+    float atmopsheric_pressure = 12; // In "atmospheres" (1.0 is like Earth)
+    float o2_co2_suitability = 13; // only applies when atmosphere_type is oxidized_type_b; Earth-scaled
+    float ocean_coverage = 14;
+    float growth_factor = 15;
+    atmosphere_type_t atmosphere_type = 16;
+    int32 water = 17;
+    int32 food = 18;
+    int32 energy = 19;
+    int32 metal = 20;
+    int32 fuel = 21;
+    int32 population = 22;
+    int32 infrastructure = 23;
+    int32 max_population = 24;
+    int32 owner = 25;
+    int32 original_owner = 26;
     // TODO: language, culture, religion
     // TODO: visual properties (incl. rings)
-    fleet_t garrison = 26;
+    fleet_t garrison = 27;
     // TODO: ground-to-space defenses
-    repeated planet_effect_t effects = 27;
+    repeated planet_effect_t effects = 28;
 }
 
 message location_object_t

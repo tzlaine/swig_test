@@ -50,6 +50,18 @@ enum class planet_effect_target_t {
     max_population = 16,
 };
 
+enum class planet_effect_mod_t {
+    invalid_planet_effect_mod = 0,
+    monthly = 1,
+    cost = 2,
+};
+
+enum class effect_op_t {
+    invalid_effect_op = 0,
+    add = 1,
+    multiply = 2,
+};
+
 enum class star_class_t {
     invalid_star_class = 0,
     o = 1,
@@ -105,14 +117,12 @@ struct planet_effect_t
 {
     adobe::name_t name;
     adobe::name_t description;
-    planet_effect_target_t target;
-    float one_time_effect;
-    float monthly_effect;
+    float amount;
     int months_of_effect;
     int months_remaining;
-    bool effects_are_permanent;
-    bool affects_cost;
-    bool multiplicative;
+    planet_effect_target_t target;
+    unsigned int target_modifiers;
+    effect_op_t operation;
 };
 
 struct planet_t
@@ -122,6 +132,7 @@ struct planet_t
     double mass_kg;
     double radius_km;
     float orbit_au;
+    float orbital_period_y;
     float gravity_g;
     float axial_tilt_d;
     float day_h;

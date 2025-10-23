@@ -4,11 +4,17 @@
 #include <numbers>
 
 
-// non-province constants
-inline constexpr int no_province = -1;
-inline constexpr int off_map = -2;
-inline constexpr int galactic_bulge = -3;
-inline constexpr int galactic_center = -4;
+// symbolic values
+// provinces
+inline constexpr int prov_none = -1;
+inline constexpr int prov_off_map = -2;
+inline constexpr int prov_galactic_bulge = -3;
+inline constexpr int prov_galactic_center = -4;
+// atmospheric density
+inline constexpr double atmos_thousands = -1.0;
+inline constexpr double atmos_millions = -2.0;
+// growth factor
+inline constexpr double growth_uninhabitable = -1000.0;
 
 // game constants
 inline constexpr double max_pop_growth_factor = 0.5;
@@ -19,10 +25,6 @@ inline constexpr double habs_and_masks_habitable_factor = 0.25;
 inline constexpr double habs_and_suits_habitable_factor = 0.1;
 inline constexpr double growth_factor_considered_habitable = 0.2;
 inline constexpr int max_earth_pops = 5000;
-
-// atmospheric pressure symbolic values
-inline constexpr double atmos_thousands = -1.0;
-inline constexpr double atmos_millions = -2.0;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);
@@ -35,7 +37,9 @@ inline const double hex_height = 2 * sin_60;
 constexpr double G = 6.67e-11; // gravitaional constant, in N * m^2 / kg^2
 constexpr double sun_temperature_k = 5772.0;
 constexpr double sun_radius_km = 696342.0;
+constexpr double sun_mass_kg = 1.988416e30;
 constexpr double au_to_km = 149597870.7;
+constexpr double years_to_seconds = 31556952.0;
 constexpr double earth_temperature_k = 279; // in K, ignoring albedo
 constexpr double earth_mass_kg = 5.9722e24;
 constexpr double earth_gravity = 9.8; // in m / s^2

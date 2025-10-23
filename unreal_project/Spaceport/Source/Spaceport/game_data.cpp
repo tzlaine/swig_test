@@ -128,14 +128,12 @@ pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& val
     pb_message::game_data::planet_effect_t retval;
     retval.set_name(value.name.c_str());
     retval.set_description(value.description.c_str());
-    retval.set_target(static_cast< pb_message::game_data::planet_effect_target_t >(value.target));
-    retval.set_one_time_effect(value.one_time_effect);
-    retval.set_monthly_effect(value.monthly_effect);
+    retval.set_amount(value.amount);
     retval.set_months_of_effect(value.months_of_effect);
     retval.set_months_remaining(value.months_remaining);
-    retval.set_effects_are_permanent(value.effects_are_permanent);
-    retval.set_affects_cost(value.affects_cost);
-    retval.set_multiplicative(value.multiplicative);
+    retval.set_target(static_cast< pb_message::game_data::planet_effect_target_t >(value.target));
+    retval.set_target_modifiers(value.target_modifiers);
+    retval.set_operation(static_cast< pb_message::game_data::effect_op_t >(value.operation));
     return retval;
 }
 
@@ -144,14 +142,12 @@ pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& val
     ::planet_effect_t retval;
     retval.name = adobe::name_t(msg.name().c_str());
     retval.description = adobe::name_t(msg.description().c_str());
-    retval.target = static_cast<std::remove_reference<decltype(retval.target)>::type>(msg.target());
-    retval.one_time_effect = msg.one_time_effect();
-    retval.monthly_effect = msg.monthly_effect();
+    retval.amount = msg.amount();
     retval.months_of_effect = msg.months_of_effect();
     retval.months_remaining = msg.months_remaining();
-    retval.effects_are_permanent = msg.effects_are_permanent();
-    retval.affects_cost = msg.affects_cost();
-    retval.multiplicative = msg.multiplicative();
+    retval.target = static_cast<std::remove_reference<decltype(retval.target)>::type>(msg.target());
+    retval.target_modifiers = msg.target_modifiers();
+    retval.operation = static_cast<std::remove_reference<decltype(retval.operation)>::type>(msg.operation());
     return retval;
 }
 
@@ -163,6 +159,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_mass_kg(value.mass_kg);
     retval.set_radius_km(value.radius_km);
     retval.set_orbit_au(value.orbit_au);
+    retval.set_orbital_period_y(value.orbital_period_y);
     retval.set_gravity_g(value.gravity_g);
     retval.set_axial_tilt_d(value.axial_tilt_d);
     retval.set_day_h(value.day_h);
@@ -198,6 +195,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.mass_kg = msg.mass_kg();
     retval.radius_km = msg.radius_km();
     retval.orbit_au = msg.orbit_au();
+    retval.orbital_period_y = msg.orbital_period_y();
     retval.gravity_g = msg.gravity_g();
     retval.axial_tilt_d = msg.axial_tilt_d();
     retval.day_h = msg.day_h();
