@@ -1726,22 +1726,22 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 population = 22;
+  // float population = 22;
   void clear_population();
-  ::PROTOBUF_NAMESPACE_ID::int32 population() const;
-  void set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
+  float population() const;
+  void set_population(float value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_population() const;
-  void _internal_set_population(::PROTOBUF_NAMESPACE_ID::int32 value);
+  float _internal_population() const;
+  void _internal_set_population(float value);
   public:
 
-  // int32 infrastructure = 23;
+  // float infrastructure = 23;
   void clear_infrastructure();
-  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure() const;
-  void set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
+  float infrastructure() const;
+  void set_infrastructure(float value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_infrastructure() const;
-  void _internal_set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value);
+  float _internal_infrastructure() const;
+  void _internal_set_infrastructure(float value);
   public:
 
   // int32 max_population = 24;
@@ -1801,8 +1801,8 @@ class planet_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::int32 energy_;
   ::PROTOBUF_NAMESPACE_ID::int32 metal_;
   ::PROTOBUF_NAMESPACE_ID::int32 fuel_;
-  ::PROTOBUF_NAMESPACE_ID::int32 population_;
-  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_;
+  float population_;
+  float infrastructure_;
   ::PROTOBUF_NAMESPACE_ID::int32 max_population_;
   ::PROTOBUF_NAMESPACE_ID::int32 owner_;
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner_;
@@ -4619,42 +4619,42 @@ inline void planet_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.fuel)
 }
 
-// int32 population = 22;
+// float population = 22;
 inline void planet_t::clear_population() {
   population_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::_internal_population() const {
+inline float planet_t::_internal_population() const {
   return population_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::population() const {
+inline float planet_t::population() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.population)
   return _internal_population();
 }
-inline void planet_t::_internal_set_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void planet_t::_internal_set_population(float value) {
   
   population_ = value;
 }
-inline void planet_t::set_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void planet_t::set_population(float value) {
   _internal_set_population(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.population)
 }
 
-// int32 infrastructure = 23;
+// float infrastructure = 23;
 inline void planet_t::clear_infrastructure() {
   infrastructure_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::_internal_infrastructure() const {
+inline float planet_t::_internal_infrastructure() const {
   return infrastructure_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::infrastructure() const {
+inline float planet_t::infrastructure() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.infrastructure)
   return _internal_infrastructure();
 }
-inline void planet_t::_internal_set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void planet_t::_internal_set_infrastructure(float value) {
   
   infrastructure_ = value;
 }
-inline void planet_t::set_infrastructure(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void planet_t::set_infrastructure(float value) {
   _internal_set_infrastructure(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure)
 }

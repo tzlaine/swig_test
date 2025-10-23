@@ -148,8 +148,8 @@ struct planet_t
     int energy;
     int metal;
     int fuel;
-    int population;
-    int infrastructure;
+    float population;
+    float infrastructure;
     int max_population;
     int owner;
     int original_owner;

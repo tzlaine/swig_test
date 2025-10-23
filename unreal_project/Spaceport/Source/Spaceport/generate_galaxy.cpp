@@ -115,7 +115,7 @@ namespace {
         using namespace adobe::literals;
         using namespace std::literals;
 
-        float retval = max_pop_growth_factor;
+        float retval = base_pop_growth_factor;
 
         auto const record = [&](adobe::name_t effect_name,
                                 adobe::name_t effect_desc, float amount) {
@@ -432,6 +432,8 @@ namespace {
         std::normal_distribution<double> ice_giant_density_dist(1400.0, 150.0);
         std::normal_distribution<double> atmos_dist(1.0, 0.2);
         std::normal_distribution<double> ocean_coverage_dist(0.7, 0.05);
+        std::uniform_int_distribution<int> resource_dist(
+            min_resource_value, max_resource_value);
 
         // Arbitrary line between the gas giants and the ice giants, taken
         // from the boundary between the Saturn and Uranus orbits, and scaled
@@ -524,9 +526,8 @@ namespace {
 
         // TODO: rings
 
-        planet.ocean_coverage = random_number(ocean_coverage_dist);
-
         if (planet.planet_type == planet_type_t::rocky) {
+            planet.ocean_coverage = random_number(ocean_coverage_dist);
             double const earth_pop_scale =
                 (planet.radius_km * planet.radius_km * planet.radius_km) *
                 planet.ocean_coverage /
@@ -535,13 +536,74 @@ namespace {
             planet.max_population =
                 std::round(max_earth_pops * earth_pop_scale);
         } else {
+            planet.ocean_coverage = n_a;
             planet.max_population = 0;
         }
 
         double const growth_factor =
             determine_growth_factor_and_effects(planet);
 
-        // TODO: resources
+        auto clamp_res = [](int x) {
+            return std::clamp(min_resource_value, x, min_resource_value);
+        };
+
+        // This scale represents moons that a gas/ice giant has, which may
+        // have accessible surface resouces.
+        double const moon_factor = gas_giant_moon_resource_factor;
+
+        if (planet.planet_type == planet_type_t::rocky) {
+            if (planet.atmosphere_type == atmosphere_type_t::oxidized_type_b &&
+                growth_factor_considered_habitable < growth_factor) {
+                planet.water = max_resource_value;
+            } else {
+                planet.water = clamp_res(random_number(resource_dist));
+            }
+        } else {
+            planet.water = clamp_res(
+                moon_factor * random_number(resource_dist));
+        }
+
+        if (planet.planet_type == planet_type_t::rocky &&
+            planet.atmosphere_type == atmosphere_type_t::oxidized_type_b &&
+            growth_factor_considered_habitable < growth_factor) {
+            planet.food = clamp_res(random_number(resource_dist));
+        } else {
+            planet.food = 0;
+        }
+
+        planet.energy = 0;
+        if (planet.planet_type == planet_type_t::rocky) {
+            planet.energy = clamp_res(
+                energy_from_solar + energy_from_wind +
+                random_number(resource_dist));
+        } else if (planet.planet_type == planet_type_t::gas_giant) {
+            planet.energy = clamp_res(
+                2 * random_number(resource_dist));
+        } else {
+            planet.energy = n_a;
+        }
+
+        if (planet.planet_type == planet_type_t::rocky) {
+            double const scale = planet.magnetosphere_strength ?
+                planet.magnetosphere_strength : 1.0;
+            planet.metal = clamp_res(
+                scale * random_number(resource_dist));
+        } else {
+            planet.metal = clamp_res(
+                moon_factor * random_number(resource_dist));
+        }
+
+        if (planet.planet_type == planet_type_t::rocky) {
+            planet.fuel = clamp_res(random_number(resource_dist));
+        } else {
+            planet.fuel = clamp_res(
+                moon_factor * random_number(resource_dist));
+        }
+
+        planet.population = 0;
+        planet.infrastructure = 0;
+        planet.owner = -1;
+        planet.original_owner = -1;
 
         return growth_factor_considered_habitable < growth_factor;
     }

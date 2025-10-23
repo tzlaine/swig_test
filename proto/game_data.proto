@@ -130,8 +130,12 @@ message planet_t
     int32 energy = 19;
     int32 metal = 20;
     int32 fuel = 21;
-    int32 population = 22;
-    int32 infrastructure = 23;
+
+    // These two are floats because they grow over time; the effeective
+    // property is the truncated integral value though.
+    float population = 22;
+    float infrastructure = 23;
+
     int32 max_population = 24;
     int32 owner = 25;
     int32 original_owner = 26;

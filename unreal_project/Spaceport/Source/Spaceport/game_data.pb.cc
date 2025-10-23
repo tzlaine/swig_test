@@ -579,8 +579,8 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "ere_type\030\020 \001(\0162\'.pb_message.game_data.at"
   "mosphere_type_t\022\r\n\005water\030\021 \001(\005\022\014\n\004food\030\022"
   " \001(\005\022\016\n\006energy\030\023 \001(\005\022\r\n\005metal\030\024 \001(\005\022\014\n\004f"
-  "uel\030\025 \001(\005\022\022\n\npopulation\030\026 \001(\005\022\026\n\016infrast"
-  "ructure\030\027 \001(\005\022\026\n\016max_population\030\030 \001(\005\022\r\n"
+  "uel\030\025 \001(\005\022\022\n\npopulation\030\026 \001(\002\022\026\n\016infrast"
+  "ructure\030\027 \001(\002\022\026\n\016max_population\030\030 \001(\005\022\r\n"
   "\005owner\030\031 \001(\005\022\026\n\016original_owner\030\032 \001(\005\022/\n\010"
   "garrison\030\033 \001(\0132\035.pb_message.game_data.fl"
   "eet_t\0226\n\007effects\030\034 \003(\0132%.pb_message.game"
@@ -2771,18 +2771,18 @@ const char* planet_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 population = 22;
+      // float population = 22;
       case 22:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 176)) {
-          population_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 181)) {
+          population_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // int32 infrastructure = 23;
+      // float infrastructure = 23;
       case 23:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 184)) {
-          infrastructure_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 189)) {
+          infrastructure_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
       // int32 max_population = 24;
@@ -2981,16 +2981,16 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(21, this->_internal_fuel(), target);
   }
 
-  // int32 population = 22;
-  if (this->population() != 0) {
+  // float population = 22;
+  if (!(this->population() <= 0 && this->population() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(22, this->_internal_population(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(22, this->_internal_population(), target);
   }
 
-  // int32 infrastructure = 23;
-  if (this->infrastructure() != 0) {
+  // float infrastructure = 23;
+  if (!(this->infrastructure() <= 0 && this->infrastructure() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(23, this->_internal_infrastructure(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(23, this->_internal_infrastructure(), target);
   }
 
   // int32 max_population = 24;
@@ -3176,18 +3176,14 @@ size_t planet_t::ByteSizeLong() const {
         this->_internal_fuel());
   }
 
-  // int32 population = 22;
-  if (this->population() != 0) {
-    total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_population());
+  // float population = 22;
+  if (!(this->population() <= 0 && this->population() >= 0)) {
+    total_size += 2 + 4;
   }
 
-  // int32 infrastructure = 23;
-  if (this->infrastructure() != 0) {
-    total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_infrastructure());
+  // float infrastructure = 23;
+  if (!(this->infrastructure() <= 0 && this->infrastructure() >= 0)) {
+    total_size += 2 + 4;
   }
 
   // int32 max_population = 24;
@@ -3309,10 +3305,10 @@ void planet_t::MergeFrom(const planet_t& from) {
   if (from.fuel() != 0) {
     _internal_set_fuel(from._internal_fuel());
   }
-  if (from.population() != 0) {
+  if (!(from.population() <= 0 && from.population() >= 0)) {
     _internal_set_population(from._internal_population());
   }
-  if (from.infrastructure() != 0) {
+  if (!(from.infrastructure() <= 0 && from.infrastructure() >= 0)) {
     _internal_set_infrastructure(from._internal_infrastructure());
   }
   if (from.max_population() != 0) {

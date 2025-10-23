@@ -15,16 +15,23 @@ inline constexpr double atmos_thousands = -1.0;
 inline constexpr double atmos_millions = -2.0;
 // growth factor
 inline constexpr double growth_uninhabitable = -1000.0;
+// generic
+inline constexpr double n_a = -3.0; // UI should show "N/A" for this property
 
 // game constants
-inline constexpr double max_pop_growth_factor = 0.5;
+inline constexpr double base_pop_growth_factor = 0.25;
 inline constexpr double prob_rocky_planet_has_magnetosphere = 0.5;
 inline constexpr double prob_no_magnetosphere_rocky_planet_is_reduced = 0.5;
 inline constexpr double only_equatorial_region_habitable_factor = 0.5;
 inline constexpr double habs_and_masks_habitable_factor = 0.25;
 inline constexpr double habs_and_suits_habitable_factor = 0.1;
-inline constexpr double growth_factor_considered_habitable = 0.2;
+inline constexpr double growth_factor_considered_habitable = 0.1;
 inline constexpr int max_earth_pops = 5000;
+inline constexpr int min_resource_value = 0;
+inline constexpr int max_resource_value = 100;
+inline constexpr int energy_from_solar = 25;
+inline constexpr int energy_from_wind = 25;
+inline constexpr double gas_giant_moon_resource_factor = 0.1;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);
