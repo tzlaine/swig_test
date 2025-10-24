@@ -9,10 +9,8 @@ parser.add_argument('--desc-file', required=True, type=argparse.FileType('rb'),
                     help='Input proto description file (binary)')
 parser.add_argument('--namespace', type=str,
                     help='Namespace into which to place generated code (e.g. foo::bar).')
-parser.add_argument('--cpp-file', required=True, type=argparse.FileType('w'),
+parser.add_argument('--file-root', required=True,
                     help='Output .cpp file')
-parser.add_argument('--hpp-file', required=True, type=argparse.FileType('w'),
-                    help='Output .hpp file')
 parser.add_argument('--cs-file', type=argparse.FileType('w'),
                     help='Output .cs file')
 parser.add_argument('--cs-namespace', type=str,
@@ -22,6 +20,10 @@ args = parser.parse_args()
 from google.protobuf import descriptor_pb2
 import re
 import os
+
+cpp_file = open(args.file_root + '.cpp', 'w')
+hpp_file = open(args.file_root + '.hpp', 'w')
+formatters_file = open(args.file_root + '_formatters.hpp', 'w')
 
 proto_contents = args.proto_file.read()
 
@@ -90,17 +92,21 @@ def indent_str(i):
     return '    ' * i
 
 def indent(i):
-    args.cpp_file.write(indent_str(i))
-    args.hpp_file.write(indent_str(i))
+    cpp_file.write(indent_str(i))
+    hpp_file.write(indent_str(i))
+    formatters_file.write(indent_str(i))
 
 def newline():
-    args.cpp_file.write('\n')
-    args.hpp_file.write('\n')
+    cpp_file.write('\n')
+    hpp_file.write('\n')
+    formatters_file.write('\n')
 
 def add_header_comment_and_includes(proto_source, syntax, deps):
     cpp_deps = '\n'.join(map(lambda x: '#include <{}.hpp>'.format(x), deps))
+    #cpp_deps = '\n'.join(map(lambda x: '#include <{}'.format(x) + '_formatters.hpp>', deps))
+    formatters_deps = cpp_deps.replace('.hpp', '_formatters.hpp')
 
-    args.cpp_file.write('''// WARNING: Generated code.
+    cpp_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
 
 #ifndef BUILD_FOR_TEST
@@ -111,9 +117,9 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 {}
 
 
-'''.format(proto_source, syntax, os.path.basename(args.hpp_file.name), cpp_deps))
+'''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps))
 
-    args.hpp_file.write('''// WARNING: Generated code.
+    hpp_file.write('''// WARNING: Generated code.
 // This file was generated from {0} ({1})
 #pragma once
 
@@ -128,11 +134,24 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 
 '''.format(os.path.splitext(proto_source)[0], syntax, cpp_deps))
 
+    formatters_file.write('''// WARNING: Generated code.
+// This file was generated from {} ({})
+
+#include "{}"
+{}
+{}
+
+#include <format>
+
+
+'''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, formatters_deps))
+
 def open_namespace(namespace, depth=0):
     indent(depth)
     for name in namespace:
-        args.cpp_file.write('namespace {} {{ '.format(name))
-        args.hpp_file.write('namespace {} {{ '.format(name))
+        cpp_file.write('namespace {} {{ '.format(name))
+        hpp_file.write('namespace {} {{ '.format(name))
+        formatters_file.write('namespace {} {{ '.format(name))
     newline()
     return depth + (len(namespace) and 1 or 0)
 
@@ -140,18 +159,37 @@ def close_namespace(namespace, depth=0):
     indent(depth)
     newline()
     for name in namespace:
-        args.cpp_file.write('} ')
-        args.hpp_file.write('} ')
+        cpp_file.write('} ')
+        hpp_file.write('} ')
+        formatters_file.write('} ')
     newline()
 
 def handle_enum_descriptor_proto(enum_descriptor_proto, depth):
-    args.hpp_file.write('\n')
-    args.hpp_file.write('{}enum class {} {{\n'.format(indent_str(depth), enum_descriptor_proto.name))
+    hpp_file.write('\n')
+    hpp_file.write('{}enum class {} {{\n'.format(indent_str(depth), enum_descriptor_proto.name))
+    formatters_file.write('''template <>
+{0}struct std::formatter<{1}> : std::formatter<std::string_view> {{
+{0}    template <typename FormatContext>
+{0}    auto format({1} t, FormatContext & ctx) const {{
+{0}        std::string_view name;
+{0}        using namespace std::literals;
+{0}        switch (t) {{
+'''.format(indent_str(depth), enum_descriptor_proto.name))
     depth += 1
     for enum_value_descriptor_proto in enum_descriptor_proto.value:
-        args.hpp_file.write('{}{} = {},\n'.format(indent_str(depth), enum_value_descriptor_proto.name, enum_value_descriptor_proto.number))
+        hpp_file.write('{}{} = {},\n'.format(indent_str(depth), enum_value_descriptor_proto.name, enum_value_descriptor_proto.number))
+        if enum_value_descriptor_proto.name == f'invalid_{enum_descriptor_proto.name[:-2]}':
+            formatters_file.write('{0}        case {1}::{2}: name = "INVALID"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name))
+        else:
+            formatters_file.write('{0}        case {1}::{2}: name = "{2}"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name))
     depth -= 1
-    args.hpp_file.write('{}}};\n'.format(indent_str(depth)))
+    hpp_file.write('{}}};\n'.format(indent_str(depth)))
+    formatters_file.write('''{0}        }}
+{0}        return std::formatter<std::string_view>::format(name, ctx);
+{0}    }}
+{0}}};
+
+'''.format(indent_str(depth)))
 
     if args.cs_file:
         args.cs_file.write('\n')
@@ -256,10 +294,31 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
     if leaf_type in map_fields:
         key_type = field_type(map_fields[leaf_type].field[0], 'cpp')
         value_type = field_type(map_fields[leaf_type].field[1], 'cpp')
-        args.hpp_file.write('{}boost::container::flat_map<{}, {}> {};\n'.format(indent_str(depth), key_type, value_type, field_descriptor_proto.name))
+        hpp_file.write('{}boost::container::flat_map<{}, {}> {};\n'.format(indent_str(depth), key_type, value_type, field_descriptor_proto.name))
+        formatters_file.write('''{0}        out = std::format_to(out, " {1}={{");
+'''.format(indent_str(depth - 1), field_descriptor_proto.name))
+        formatters_file.write('''{0}        for (auto && [key, value] : x.{1}) {{
+'''.format(indent_str(depth - 1), field_descriptor_proto.name))
+        formatters_file.write('''{0}            out = std::format_to(out, " {{}}:{{}}", key, value);
+'''.format(indent_str(depth - 1)))
+        formatters_file.write('''{0}        }};
+{0}        out = std::format_to(out, " }}");
+'''.format(indent_str(depth - 1)))
     else:
         typename = field_type(field_descriptor_proto, 'cpp')
-        args.hpp_file.write('{}{} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
+        hpp_file.write('{}{} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
+        if repeated(field_descriptor_proto):
+            formatters_file.write('''{0}        out = std::format_to(out, " {1}=[");
+'''.format(indent_str(depth - 1), field_descriptor_proto.name))
+            formatters_file.write('''{0}        for (auto && e : x.{1}) {{
+'''.format(indent_str(depth - 1), field_descriptor_proto.name))
+            formatters_file.write('''{0}            out = std::format_to(out, " {{}}", e);
+'''.format(indent_str(depth - 1)))
+            formatters_file.write('''{0}        }};
+{0}        out = std::format_to(out, " ]");
+'''.format(indent_str(depth - 1)))
+        else:
+            formatters_file.write('{0}        out = std::format_to(out, " {1}={{}}", x.{1});\n'.format(indent_str(depth - 1), field_descriptor_proto.name))
     if args.cs_file:
         if leaf_type in map_fields:
             key_type = field_type(map_fields[leaf_type].field[0], 'csharp')
@@ -270,8 +329,19 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
             args.cs_file.write('{}public {} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
 
 def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, all_decl_data, map_fields):
-    args.hpp_file.write('\n')
-    args.hpp_file.write('{0}struct {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
+    hpp_file.write('\n')
+    hpp_file.write('{0}struct {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
+    formatters_file.write('''{0}template <>
+{0}struct std::formatter<{1}> {{
+{0}    constexpr auto parse(std::format_parse_context & ctx)
+{0}    {{ return ctx.begin(); }}
+{0}
+{0}    template <typename Ctx>
+{0}    auto format({1} const & x, Ctx & ctx) const {{
+{0}        auto out = ctx.out();
+{0}        out = std::format_to(out, "{1}(");
+
+'''.format(indent_str(depth), descriptor_proto.name))
     if args.cs_file:
         args.cs_file.write('\n')
         args.cs_file.write('{0}public class {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
@@ -295,7 +365,13 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     for field_descriptor_proto in descriptor_proto.field:
         declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields)
     depth -= 1
-    args.hpp_file.write('{}}};\n'.format(indent_str(depth)))
+    hpp_file.write('{}}};\n'.format(indent_str(depth)))
+    formatters_file.write('''
+{0}        return std::format_to(out, " )");
+{0}    }}
+{0}}};
+
+'''.format(indent_str(depth)))
     if args.cs_file:
         args.cs_file.write('{}}};\n'.format(indent_str(depth)))
 
@@ -312,7 +388,7 @@ def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     proto_ns = '::'.join(type_namespace(field_descriptor_proto, protobuf_namespace).split('.'))
     if repeated(field_descriptor_proto):
-        args.cpp_file.write('{0}for (const auto& x : value.{1}) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
+        cpp_file.write('{0}for (const auto& x : value.{1}) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
             key_field = map_fields[leaf_type].field[0]
@@ -321,57 +397,57 @@ def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
             if key_field.type is value_field.TYPE_STRING:
                 key_suffix = '.c_str()'
             if value_field.type is value_field.TYPE_MESSAGE:
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = to_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
+                cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = to_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field, 'cpp')
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first{4}] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type), key_suffix))
+                cpp_file.write('{0}(*retval.mutable_{1}())[x.first{4}] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type), key_suffix))
             else:
-                args.cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
+                cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-            args.cpp_file.write('{0}retval.add_{1}()->CopyFrom(to_protobuf(x));\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.add_{1}()->CopyFrom(to_protobuf(x));\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.add_{1}(static_cast< {2}::{3} >(x));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
+            cpp_file.write('{0}retval.add_{1}(static_cast< {2}::{3} >(x));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
-            args.cpp_file.write('{0}retval.add_{1}(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.add_{1}(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
-            args.cpp_file.write('{0}retval.add_{1}(x);\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.add_{1}(x);\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
     else:
         if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-            args.cpp_file.write('{0}retval.mutable_{1}()->CopyFrom(to_protobuf(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.mutable_{1}()->CopyFrom(to_protobuf(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.set_{1}(static_cast< {2}::{3} >(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
+            cpp_file.write('{0}retval.set_{1}(static_cast< {2}::{3} >(value.{1}));\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
-            args.cpp_file.write('{0}retval.set_{1}(value.{1}.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.set_{1}(value.{1}.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
-            args.cpp_file.write('{0}retval.set_{1}(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.set_{1}(value.{1});\n'.format(indent_str(depth), field_descriptor_proto.name))
 
 def define_cpp_to_pb_impl(decl_data, depth, map_fields):
-    args.cpp_file.write('''
+    cpp_file.write('''
 {0}{1}
 {0}{{
 '''.format(indent_str(depth), make_decl(decl_data, 'to+pb+cpp')))
     descriptor_proto = decl_data['descriptor_proto']
     depth += 1
-    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'to+pb+cpp')))
+    cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'to+pb+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
         define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields)
-    args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
+    cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
-    args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+    cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
 def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     user_ns = '::'.join(user_namespace)
     if repeated(field_descriptor_proto):
-        args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
+        cpp_file.write('{0}{{\n'.format(indent_str(depth)))
         depth += 1
         if leaf_type not in map_fields:
-            args.cpp_file.write('''{0}retval.{1}.resize(msg.{1}_size());
+            cpp_file.write('''{0}retval.{1}.resize(msg.{1}_size());
 {0}auto it = retval.{1}.begin();
 '''.format(indent_str(depth), field_descriptor_proto.name))
-        args.cpp_file.write('{0}for (const auto& x : msg.{1}()) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
+        cpp_file.write('{0}for (const auto& x : msg.{1}()) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
             key_field = map_fields[leaf_type].field[0]
@@ -380,75 +456,75 @@ def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
             if key_field.type is value_field.TYPE_STRING:
                 key_expr = 'adobe::name_t(x.first.c_str())'
             if value_field.type is value_field.TYPE_MESSAGE:
-                args.cpp_file.write('{0}retval.{1}[{2}] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
+                cpp_file.write('{0}retval.{1}[{2}] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
             elif value_field.type is value_field.TYPE_ENUM:
                 value_type = field_type(value_field, 'cpp')
-                args.cpp_file.write('{0}retval.{1}[{2}] = static_cast<std::remove_reference<decltype(retval.{1}[x.first])>::type>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
+                cpp_file.write('{0}retval.{1}[{2}] = static_cast<std::remove_reference<decltype(retval.{1}[x.first])>::type>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
             else:
-                args.cpp_file.write('{0}retval.{1}[{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
+                cpp_file.write('{0}retval.{1}[{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-            args.cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
+            cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
             value_type = field_type(field_descriptor_proto, 'cpp')
-            args.cpp_file.write('{0}*it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);\n'.format(indent_str(depth)))
+            cpp_file.write('{0}*it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
-            args.cpp_file.write('{0}*it++ = adobe::name_t(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}*it++ = adobe::name_t(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
-            args.cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}*it++ = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
     else:
         if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
-            args.cpp_file.write('{0}retval.{1} = from_protobuf(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.{1} = from_protobuf(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.{1} = static_cast<std::remove_reference<decltype(retval.{1})>::type>(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.{1} = static_cast<std::remove_reference<decltype(retval.{1})>::type>(msg.{1}());\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
-            args.cpp_file.write('{0}retval.{1} = adobe::name_t(msg.{1}().c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.{1} = adobe::name_t(msg.{1}().c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
-            args.cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.{1} = msg.{1}();\n'.format(indent_str(depth), field_descriptor_proto.name))
 
 def define_cpp_from_pb_impl(decl_data, depth, map_fields):
-    args.cpp_file.write('''
+    cpp_file.write('''
 {0}{1}
 {0}{{
 '''.format(indent_str(depth), make_decl(decl_data, 'from+pb+cpp')))
     descriptor_proto = decl_data['descriptor_proto']
     depth += 1
-    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+pb+cpp')))
+    cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+pb+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
         define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields)
-    args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
+    cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
-    args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+    cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
 def define_cpp_to_bin_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     if repeated(field_descriptor_proto):
-        args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
+        cpp_file.write('{0}{{\n'.format(indent_str(depth)))
         depth += 1
-        args.cpp_file.write('''{0}int length = static_cast<int>(value.{1}.size());
+        cpp_file.write('''{0}int length = static_cast<int>(value.{1}.size());
 {0}to_bin(length, bin);
 {0}for (const auto& x : value.{1}) {{
 '''.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
             value_field = map_fields[leaf_type].field[1]
-            args.cpp_file.write('''{0}to_bin(x.first, bin);
+            cpp_file.write('''{0}to_bin(x.first, bin);
 {0}to_bin(x.second, bin);
 '''.format(indent_str(depth)))
         else:
-            args.cpp_file.write('{0}to_bin(x, bin);\n'.format(indent_str(depth)))
+            cpp_file.write('{0}to_bin(x, bin);\n'.format(indent_str(depth)))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
     else:
-        args.cpp_file.write('{0}to_bin(value.{1}, bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
+        cpp_file.write('{0}to_bin(value.{1}, bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
 
 def define_cpp_to_bin_impl(decl_data, depth, map_fields):
-    args.cpp_file.write('''
+    cpp_file.write('''
 {0}{1}
 {0}{{
 '''.format(indent_str(depth), make_decl(decl_data, 'to+bin+cpp')))
@@ -457,72 +533,72 @@ def define_cpp_to_bin_impl(decl_data, depth, map_fields):
     for field_descriptor_proto in descriptor_proto.field:
         define_cpp_to_bin_impl_field(field_descriptor_proto, depth, map_fields)
     depth -= 1
-    args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+    cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
 def define_cpp_from_bin_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     field_type = field_element_type(field_descriptor_proto, 'cpp')
     if repeated(field_descriptor_proto):
-        args.cpp_file.write('{0}{{\n'.format(indent_str(depth)))
+        cpp_file.write('{0}{{\n'.format(indent_str(depth)))
         depth += 1
-        args.cpp_file.write('{0}int length = int_from_bin(bin);\n'.format(indent_str(depth)))
+        cpp_file.write('{0}int length = int_from_bin(bin);\n'.format(indent_str(depth)))
         if leaf_type not in map_fields:
-            args.cpp_file.write('{0}retval.{1}.resize(length);\n'.format(indent_str(depth), field_descriptor_proto.name))
-        args.cpp_file.write('{0}for (int i = 0; i < length; ++i) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.{1}.resize(length);\n'.format(indent_str(depth), field_descriptor_proto.name))
+        cpp_file.write('{0}for (int i = 0; i < length; ++i) {{\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth += 1
         if leaf_type in map_fields:
             key_field = map_fields[leaf_type].field[0]
             key_field_type = field_element_type(key_field, 'cpp')
             if key_field.type is key_field.TYPE_STRING:
-                args.cpp_file.write('{0}auto key = string_from_bin(bin);\n'.format(indent_str(depth)))
+                cpp_file.write('{0}auto key = string_from_bin(bin);\n'.format(indent_str(depth)))
             elif key_field.type is key_field.TYPE_ENUM:
-                args.cpp_file.write('{0}auto key = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), type_without_namespace(key_field, protobuf_namespace)))
+                cpp_file.write('{0}auto key = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), type_without_namespace(key_field, protobuf_namespace)))
             else:
-                args.cpp_file.write('{0}auto key = {1}_from_bin(bin);\n'.format(indent_str(depth), key_field_type))
+                cpp_file.write('{0}auto key = {1}_from_bin(bin);\n'.format(indent_str(depth), key_field_type))
             value_field = map_fields[leaf_type].field[1]
             value_field_type = field_element_type(value_field, 'cpp')
             if value_field.type is value_field.TYPE_MESSAGE:
-                args.cpp_file.write('{0}auto value = {2}_from_bin(bin);\n'.format(indent_str(depth), value_field_type, value_field_type.replace('::', '_')))
+                cpp_file.write('{0}auto value = {2}_from_bin(bin);\n'.format(indent_str(depth), value_field_type, value_field_type.replace('::', '_')))
             elif value_field.type is value_field.TYPE_STRING:
-                args.cpp_file.write('{0}auto value = string_from_bin(bin);\n'.format(indent_str(depth)))
+                cpp_file.write('{0}auto value = string_from_bin(bin);\n'.format(indent_str(depth)))
             elif value_field.type is value_field.TYPE_ENUM:
-                args.cpp_file.write('{0}auto value = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), to_cpp_namespace(type_without_namespace(value_field, protobuf_namespace))))
+                cpp_file.write('{0}auto value = enum_from_bin< {1} >(bin);\n'.format(indent_str(depth), to_cpp_namespace(type_without_namespace(value_field, protobuf_namespace))))
             else:
-                args.cpp_file.write('{0}auto value = {1}_from_bin(bin);\n'.format(indent_str(depth), value_field_type))
-            args.cpp_file.write('{0}retval.{1}[key] = value;\n'.format(indent_str(depth), field_descriptor_proto.name))
+                cpp_file.write('{0}auto value = {1}_from_bin(bin);\n'.format(indent_str(depth), value_field_type))
+            cpp_file.write('{0}retval.{1}[key] = value;\n'.format(indent_str(depth), field_descriptor_proto.name))
         else:
             if field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
-                args.cpp_file.write('{0}auto x = string_from_bin(bin);\n'.format(indent_str(depth)))
+                cpp_file.write('{0}auto x = string_from_bin(bin);\n'.format(indent_str(depth)))
             elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-                args.cpp_file.write('{0}auto x = enum_from_bin<std::remove_reference<decltype(retval.{1}[i])>::type>(bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
+                cpp_file.write('{0}auto x = enum_from_bin<std::remove_reference<decltype(retval.{1}[i])>::type>(bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
             else:
-                args.cpp_file.write('{0}auto x = {2}_from_bin(bin);\n'.format(indent_str(depth), field_type, field_type.replace('::', '_')))
-            args.cpp_file.write('{0}retval.{1}[i] = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
+                cpp_file.write('{0}auto x = {2}_from_bin(bin);\n'.format(indent_str(depth), field_type, field_type.replace('::', '_')))
+            cpp_file.write('{0}retval.{1}[i] = x;\n'.format(indent_str(depth), field_descriptor_proto.name))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
         depth -= 1
-        args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+        cpp_file.write('{0}}}\n'.format(indent_str(depth)))
     else:
         if field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
-            args.cpp_file.write('{0}retval.{1} = string_from_bin(bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
+            cpp_file.write('{0}retval.{1} = string_from_bin(bin);\n'.format(indent_str(depth), field_descriptor_proto.name))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            args.cpp_file.write('{0}retval.{1} = enum_from_bin<std::remove_reference<decltype(retval.{1})>::type>(bin);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
+            cpp_file.write('{0}retval.{1} = enum_from_bin<std::remove_reference<decltype(retval.{1})>::type>(bin);\n'.format(indent_str(depth), field_descriptor_proto.name, to_cpp_namespace(leaf_type)))
         else:
-            args.cpp_file.write('{0}retval.{1} = {2}_from_bin(bin);\n'.format(indent_str(depth), field_descriptor_proto.name, field_type.replace('::', '_')))
+            cpp_file.write('{0}retval.{1} = {2}_from_bin(bin);\n'.format(indent_str(depth), field_descriptor_proto.name, field_type.replace('::', '_')))
 
 def define_cpp_from_bin_impl(decl_data, depth, map_fields):
-    args.cpp_file.write('''
+    cpp_file.write('''
 {0}{1}
 {0}{{
 '''.format(indent_str(depth), make_decl(decl_data, 'from+bin+cpp')))
     descriptor_proto = decl_data['descriptor_proto']
     depth += 1
-    args.cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+bin+cpp')))
+    cpp_file.write('{0}{1} retval;\n'.format(indent_str(depth), make_return_type(decl_data, 'from+bin+cpp')))
     for field_descriptor_proto in descriptor_proto.field:
         define_cpp_from_bin_impl_field(field_descriptor_proto, depth, map_fields)
-    args.cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
+    cpp_file.write('{0}return retval;\n'.format(indent_str(depth)))
     depth -= 1
-    args.cpp_file.write('{0}}}\n'.format(indent_str(depth)))
+    cpp_file.write('{0}}}\n'.format(indent_str(depth)))
 
 def define_csharp_bin_size_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -800,7 +876,7 @@ public class convert
     close_namespace(user_namespace)
 
     if False:
-        args.cpp_file.write('''
+        cpp_file.write('''
 namespace {
 
     bool bool_from_bin (unsigned char*& bin)
@@ -897,12 +973,12 @@ namespace {
 ''')
 
     for i in range(len(all_decl_data)):
-        args.hpp_file.write('''
+        hpp_file.write('''
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+pb+cpp'), make_decl(all_decl_data[i], 'from+pb+cpp')))
         if False:
-            args.hpp_file.write('''
+            hpp_file.write('''
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+bin+cpp'), make_decl(all_decl_data[i], 'from+bin+cpp')))

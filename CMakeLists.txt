@@ -117,6 +117,7 @@ if (Python3_FOUND)
         set(generated_sources
             ${unreal_src_dir}/${file_root}.hpp
             ${unreal_src_dir}/${file_root}.cpp
+            ${unreal_src_dir}/${file_root}_formatters.hpp
         )
         set(python_generated_sources ${python_generated_sources} ${generated_sources})
 
@@ -132,14 +133,13 @@ if (Python3_FOUND)
                 ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                     --proto-file ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
                     --desc-file ${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
-                    --hpp-file ${unreal_src_dir}/${file_root}.hpp
-                    --cpp-file ${unreal_src_dir}/${file_root}.cpp
+                    --file-root ${unreal_src_dir}/${file_root}
                     ${ns_arg}
             DEPENDS
                 ${CMAKE_SOURCE_DIR}/src/protobuf_codegen.py
                 ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
                 make_desc_file_${file_root}
-            COMMENT "Create ${file_root}.{h,c}pp."
+            COMMENT "Create ${file_root}.{h,c}pp and formatters header."
             VERBATIM
         )
         add_custom_target(

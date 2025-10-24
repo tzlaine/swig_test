@@ -12,6 +12,7 @@
 /**************************************************************************************************/
 
 // stdc++
+#include <format>
 #include <functional>
 #include <iosfwd>
 #include <cstring>
@@ -383,6 +384,17 @@ struct hash<adobe::static_name_t> {
 public:
     inline std::size_t operator()(adobe::static_name_t const& name) const {
         return std::hash<adobe::name_t>()(name);
+    }
+};
+
+template <>
+struct formatter<adobe::name_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(adobe::name_t const & name, Ctx & ctx) const {
+        return std::format_to(ctx.out(), "\"{}\"", name.c_str());
     }
 };
 
