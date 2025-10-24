@@ -48,8 +48,8 @@ message fleets_t
 enum planet_type_t {
     invalid_planet_type = 0;
     rocky = 1;
-    gas_giant = 2;
-    ice_giant = 3;
+    gas_giant = 2;              // U"gas giant"
+    ice_giant = 3;              // U"ice giant"
 }
 
 enum atmosphere_type_t {

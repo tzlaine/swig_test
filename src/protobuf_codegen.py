@@ -164,28 +164,78 @@ def close_namespace(namespace, depth=0):
         formatters_file.write('} ')
     newline()
 
-def handle_enum_descriptor_proto(enum_descriptor_proto, depth):
-    hpp_file.write('\n')
-    hpp_file.write('{}enum class {} {{\n'.format(indent_str(depth), enum_descriptor_proto.name))
-    formatters_file.write('''template <>
-{0}struct std::formatter<{1}> : std::formatter<std::string_view> {{
-{0}    template <typename FormatContext>
-{0}    auto format({1} t, FormatContext & ctx) const {{
-{0}        std::string_view name;
-{0}        using namespace std::literals;
-{0}        switch (t) {{
-'''.format(indent_str(depth), enum_descriptor_proto.name))
-    depth += 1
+def write_formatter_switch(enum_descriptor_proto, depth, path, printing_for_user):
+    predicate = ''
+    if printing_for_user is not None:
+        predicate = printing_for_user and 'if (printing_for_user_) ' or 'if (!printing_for_user_) '
+    formatters_file.write('''{0}    {1}switch (t) {{
+'''.format(indent_str(depth), predicate))
+
+    index = 0
     for enum_value_descriptor_proto in enum_descriptor_proto.value:
-        hpp_file.write('{}{} = {},\n'.format(indent_str(depth), enum_value_descriptor_proto.name, enum_value_descriptor_proto.number))
+        new_path = path + [field_path_constant, index]
+        index += 1
         if enum_value_descriptor_proto.name == f'invalid_{enum_descriptor_proto.name[:-2]}':
             formatters_file.write('{0}        case {1}::{2}: name = "INVALID"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name))
         else:
-            formatters_file.write('{0}        case {1}::{2}: name = "{2}"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name))
+            string_to_print = enum_value_descriptor_proto.name
+            if printing_for_user is True and tuple(new_path) in special_comments:
+                string_to_print = special_comments[tuple(new_path)]
+            formatters_file.write('{0}        case {1}::{2}: name = "{3}"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name, string_to_print))
+
+    formatters_file.write('{0}    }}\n'.format(indent_str(depth)))
+
+def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
+    hpp_file.write('\n')
+    hpp_file.write('{}enum class {} {{\n'.format(indent_str(depth), enum_descriptor_proto.name))
+
+    # If we see even one U"foo" comment, we know we need to have two printing
+    # modes -- one for debug dumps, and one for users.
+    user_strings_available = False
+    for i in range(len(enum_descriptor_proto.value)):
+        if tuple(path + [field_path_constant, i]) in special_comments:
+            user_strings_available = True
+            break
+
+    formatters_file.write('''template <>
+{0}struct std::formatter<{1}> : std::formatter<std::string_view> {{
+'''.format(indent_str(depth), enum_descriptor_proto.name))
+    if user_strings_available:
+        formatters_file.write('''{0}    template<class ParseContext>
+{0}    constexpr auto parse(ParseContext & ctx) {{
+{0}        auto f = ctx.begin();
+{0}        auto const l = ctx.end();
+{0}        if (f != l && *f == 'u') {{
+{0}            ++f;
+{0}            printing_for_user_ = true;
+{0}        }}
+{0}        if (f != l && *f != '}}')
+{0}            throw std::format_error("Invalid format specifier.");
+{0}        return f;
+{0}    }}
+{0}    bool printing_for_user_ = false;
+'''.format(indent_str(depth)))
+    formatters_file.write('''{0}    template <typename FormatContext>
+{0}    auto format({1} t, FormatContext & ctx) const {{
+{0}        std::string_view name;
+{0}        using namespace std::literals;
+'''.format(indent_str(depth), enum_descriptor_proto.name))
+
+    depth += 1
+
+    for enum_value_descriptor_proto in enum_descriptor_proto.value:
+        hpp_file.write('{}{} = {},\n'.format(indent_str(depth), enum_value_descriptor_proto.name, enum_value_descriptor_proto.number))
+
+    if user_strings_available:
+        write_formatter_switch(enum_descriptor_proto, depth, path, True)
+        write_formatter_switch(enum_descriptor_proto, depth, path, False)
+    else:
+        write_formatter_switch(enum_descriptor_proto, depth, path, None)
+
     depth -= 1
-    hpp_file.write('{}}};\n'.format(indent_str(depth)))
-    formatters_file.write('''{0}        }}
-{0}        return std::formatter<std::string_view>::format(name, ctx);
+    hpp_file.write('{0}}};\n'.format(indent_str(depth)))
+
+    formatters_file.write('''{0}        return std::formatter<std::string_view>::format(name, ctx);
 {0}    }}
 {0}}};
 
@@ -289,7 +339,9 @@ def make_decl(decl_data, kind):
 def make_return_type(decl_data, kind):
     return make_decl_impl(decl_data, kind, True)
 
-def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
+def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, path):
+    # TODO if tuple(path) in special_comments:
+    # TODO     print(f'{field_descriptor_proto.name} has special comment {special_comments[tuple(path)]}')
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     if leaf_type in map_fields:
         key_type = field_type(map_fields[leaf_type].field[0], 'cpp')
@@ -328,7 +380,7 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields):
             typename = field_type(field_descriptor_proto, 'csharp')
             args.cs_file.write('{}public {} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
 
-def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, all_decl_data, map_fields):
+def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, all_decl_data, map_fields, path):
     hpp_file.write('\n')
     hpp_file.write('{0}struct {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
     formatters_file.write('''{0}template <>
@@ -347,10 +399,15 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
         args.cs_file.write('{0}public class {1}\n{0}{{\n'.format(indent_str(depth), descriptor_proto.name))
     depth += 1
 
+    index = 0
     for enum_descriptor_proto in descriptor_proto.enum_type:
-        handle_enum_descriptor_proto(enum_descriptor_proto, depth)
+        new_path = path + [enum_path_constant, index]
+        index += 1
+        handle_enum_descriptor_proto(enum_descriptor_proto, depth, new_path)
 
+    index = 0
     for descriptor in descriptor_proto.nested_type:
+        new_path = path + [message_path_constant, index]
         if map_field_entry_type(descriptor):
             field = None
             for f in descriptor_proto.field:
@@ -360,10 +417,14 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
             name = type_without_namespace(field, protobuf_namespace)
             map_fields[name] = descriptor
         else:
-            declare_descriptor_proto(descriptor, protobuf_namespace, user_namespace, depth, scope + [descriptor_proto.name], all_decl_data, map_fields)
+            declare_descriptor_proto(descriptor, protobuf_namespace, user_namespace, depth, scope + [descriptor_proto.name], all_decl_data, map_fields, new_path)
+        index += 1
 
+    index = 0
     for field_descriptor_proto in descriptor_proto.field:
-        declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields)
+        new_path = path + [field_path_constant, index]
+        index += 1
+        declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, new_path)
     depth -= 1
     hpp_file.write('{}}};\n'.format(indent_str(depth)))
     formatters_file.write('''
@@ -747,7 +808,24 @@ if args.cs_file and len(cs_namespace) == 0:
 
 file_descriptor_set = descriptor_pb2.FileDescriptorSet()
 file_descriptor_set.ParseFromString(args.desc_file.read())
-#print(file_descriptor_set)
+
+# First pass: gather special comments and apths to each.
+import re
+user_string_comment_regex = re.compile(r'U"(.+)"')
+special_comments = {}
+for field_descriptor_proto in file_descriptor_set.file:
+    source_code_info = field_descriptor_proto.source_code_info
+    for location in source_code_info.location:
+        if location.trailing_comments:
+            match_ = user_string_comment_regex.search(location.trailing_comments)
+            if match_:
+                special_comments[tuple(location.path)] = match_.group(1)
+
+message_path_constant = 4
+enum_path_constant = 5
+field_path_constant = 2
+
+# Second pass: this is the main effort.
 for field_descriptor_proto in file_descriptor_set.file:
     proto_source = field_descriptor_proto.name
     syntax = str(field_descriptor_proto.syntax)
@@ -772,13 +850,17 @@ namespace {} {{
 
     depth = open_namespace(user_namespace)
 
+    index = 0;
     for enum_descriptor_proto in field_descriptor_proto.enum_type:
-        handle_enum_descriptor_proto(enum_descriptor_proto, depth)
+        handle_enum_descriptor_proto(enum_descriptor_proto, depth, [enum_path_constant, index])
+        index += 1
 
     all_decl_data = []
     map_fields = {}
+    index = 0;
     for descriptor_proto in field_descriptor_proto.message_type:
-        declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, [], all_decl_data, map_fields)
+        declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, [], all_decl_data, map_fields, [message_path_constant, index])
+        index += 1
 
     if args.cs_file:
         args.cs_file.write('''

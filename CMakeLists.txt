@@ -106,6 +106,7 @@ if (Python3_FOUND)
                 protoc
                     --proto_path=${CMAKE_HOME_DIRECTORY}/proto
                     --descriptor_set_out=${CMAKE_CURRENT_BINARY_DIR}/${file_root}.desc
+                    --include_source_info
                     ${CMAKE_HOME_DIRECTORY}/proto/${file_root}.proto
             DEPENDS
                 install_python_protobuf

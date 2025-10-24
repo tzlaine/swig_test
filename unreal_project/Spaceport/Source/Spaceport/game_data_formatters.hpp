@@ -11,11 +11,30 @@
 
 template <>
 struct std::formatter<planet_type_t> : std::formatter<std::string_view> {
+    template<class ParseContext>
+    constexpr auto parse(ParseContext & ctx) {
+        auto f = ctx.begin();
+        auto const l = ctx.end();
+        if (f != l && *f == 'u') {
+            ++f;
+            printing_for_user_ = true;
+        }
+        if (f != l && *f != '}')
+            throw std::format_error("Invalid format specifier.");
+        return f;
+    }
+    bool printing_for_user_ = false;
     template <typename FormatContext>
     auto format(planet_type_t t, FormatContext & ctx) const {
         std::string_view name;
         using namespace std::literals;
-        switch (t) {
+        if (printing_for_user_) switch (t) {
+            case planet_type_t::invalid_planet_type: name = "INVALID"sv; break;
+            case planet_type_t::rocky: name = "rocky"sv; break;
+            case planet_type_t::gas_giant: name = "gas giant"sv; break;
+            case planet_type_t::ice_giant: name = "ice giant"sv; break;
+        }
+        if (!printing_for_user_) switch (t) {
             case planet_type_t::invalid_planet_type: name = "INVALID"sv; break;
             case planet_type_t::rocky: name = "rocky"sv; break;
             case planet_type_t::gas_giant: name = "gas_giant"sv; break;
