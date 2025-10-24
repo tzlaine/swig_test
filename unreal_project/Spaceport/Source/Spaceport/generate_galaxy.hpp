@@ -1,5 +1,6 @@
 #pragma once
 
+#include "constants.hpp"
 #include "game_data.hpp"
 
 #include <numbers>
@@ -23,7 +24,7 @@ inline point_2d operator-(point_2d pt1, point_2d pt2)
 inline bool within(point_2d pt1, point_2d pt2, double dist)
 {
     auto const delta = pt1 - pt2;
-    return (delta.x * delta.x + delta.y * delta.y) < (dist * dist + 0.1);
+    return (delta.x * delta.x + delta.y * delta.y + 0.001) < (dist * dist);
 }
 
 inline point_2d hex_position(hex_coord_t hc, int map_height)
@@ -52,6 +53,10 @@ namespace generation {
         bool generate_system(
             system_t & system, std::vector<planet_t> & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id);
+
+#if defined(BUILD_FOR_TEST)
+        inline thread_local bool g_skip_system_generation_for_testing = false;
+#endif
     }
 
     void generate_galaxy(game_start_params const & params,

@@ -31,6 +31,7 @@ if (Python3_EXECUTABLE)
 endif ()
 
 
+if (false)
 ########################################
 # graph
 ########################################
@@ -47,7 +48,6 @@ target_link_libraries(
     graph
 )
 
-if (false)
 add_dependencies(graph base_types_message_target graph_message_target)
 if (Python3_EXECUTABLE)
     add_dependencies(graph base_types_target graph_target)

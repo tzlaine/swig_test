@@ -10,6 +10,28 @@ include_directories(
     ${CMAKE_HOME_DIRECTORY}/googletest/googletest/include
 )
 
+add_executable(generation_tests generation_tests.cpp)
+
+target_link_libraries(
+    generation_tests
+    game_data
+    adobe_name
+    jansson
+    gtest
+    gtest_main
+)
+
+set_target_properties(
+    generation_tests
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    LIBARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+add_test(generation_tests ${CMAKE_BINARY_DIR}/generation_tests --gtest_catch_exceptions=1)
+
+if (false)
 add_executable(graph_tests graph_tests.cpp)
 
 target_link_libraries(
@@ -37,3 +59,4 @@ if (Python3_EXECUTABLE)
 endif ()
 
 add_test(graph_tests ${CMAKE_BINARY_DIR}/graph_tests --gtest_catch_exceptions=1)
+endif()

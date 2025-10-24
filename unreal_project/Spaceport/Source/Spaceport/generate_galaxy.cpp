@@ -251,7 +251,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         planet.atmopsheric_pressure < 1.0 ?
         planet.atmopsheric_pressure : 1.0;
     double const effective_o2 =
-        effective_o2 * atmospheric_pressure_factor;
+        planet.o2_co2_suitability * atmospheric_pressure_factor;
     if (harmless_o2_threshold < effective_o2) {
         // no effect
     } else if (effective_o2_percentage_la_paz_bolivia / earth_o2_percentage <
@@ -694,12 +694,14 @@ bool generation::detail::generate_system(
 void generation::generate_galaxy(game_start_params const & params,
                                  game_state_t & game_state)
 {
-    double const map_radius = params.map_height / 2.0;
-    double const bulge_radius = map_radius / 10.0;
+    // in world units
+    double const map_radius = params.map_height / 2.0 * hex_height;
+    // + hex_height/2 allows room for center hex
+    double const bulge_radius = map_radius / 10.0 + hex_height / 2.0;
 
+    // in hexes
     game_state.map_height = params.map_height;
-    game_state.map_width =
-        2 * int(std::ceil(map_radius * (hex_width / hex_height)));
+    game_state.map_width = params.map_height / (hex_width / hex_height);
     if (game_state.map_width % 2 == 0)
         ++game_state.map_width;
     game_state.hexes.resize(game_state.map_width * game_state.map_height);
@@ -720,8 +722,9 @@ void generation::generate_galaxy(game_start_params const & params,
    // TODO: The hexes can be generated in parallel; so can the individual
    // stars within the hex.
 
-   int hex_index = 0;
+   int hex_index = -1;
    for (auto & hex : game_state.hexes) {
+       ++hex_index;
        hex_coord_t const hc{
            hex_index % game_state.map_width, hex_index / game_state.map_width};
        hex.coord = hc;
@@ -741,19 +744,22 @@ void generation::generate_galaxy(game_start_params const & params,
        hex.province_id = prov_none;
        hex.first_system = game_state.systems.size();
 
+#if defined(BUILD_FOR_TEST)
+       if (detail::g_skip_system_generation_for_testing)
+           continue;
+#endif
+
        auto const habitable_systems =
            int(std::round(random_number(habitable_systems_dist)));
        int habitable_systems_so_far = 0;
-       int system_id = hex.first_system;
        while ((habitable_systems &&
                habitable_systems_so_far < habitable_systems) ||
               (!habitable_systems &&
                game_state.systems.size() - hex.first_system < 20u)) {
-           ++system_id;
            game_state.systems.push_back(system_t());
            if (detail::generate_system(
                    game_state.systems.back(), game_state.planets,
-                   hc, pos, system_id)) {
+                   hc, pos, hex.first_system + habitable_systems_so_far)) {
                ++habitable_systems_so_far;
            }
        }

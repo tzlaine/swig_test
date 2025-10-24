@@ -169,5 +169,5 @@ include_directories(
 add_definitions(-DBUILD_FOR_TEST)
 
 add_subdirectory(src)
-# TODO add_subdirectory(tests)
+add_subdirectory(tests)
 # TODO add_subdirectory(perf)
