@@ -273,7 +273,8 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         habs_and_masks_required("marginal_o2_co2_suitab"sv);
     } else {
         record("insufficient_o2_co2_suitab_hab_effect"_name,
-               "insufficient_o2_co2_suitab_hab_effect_desc"_name, -0.25);
+               "insufficient_o2_co2_suitab_hab_effect_desc"_name,
+               habs_and_suits_growth_modifier);
         habs_and_suits_required("insufficient_o2_co2_suitab"sv);
     }
 
@@ -281,48 +282,69 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     // above)
     if (4.0f < planet.atmopsheric_pressure) {
         record("high_press_n2_narcosis_hab_effect"_name,
-               "high_press_n2_narcosis_hab_effect_desc"_name, -1.0);
+               "high_press_n2_narcosis_hab_effect_desc"_name,
+               habs_and_suits_growth_modifier);
         habs_and_suits_required("high_press_n2_narcosis"sv);
     }
     if (7.0f < planet.atmopsheric_pressure) {
         record("very_high_press_o2_toxicity_hab_effect"_name,
-               "very_high_press_o2_toxicity_hab_effect_desc"_name, -1.0);
+               "very_high_press_o2_toxicity_hab_effect_desc"_name,
+               habs_and_suits_growth_modifier);
         habs_and_suits_required("very_high_press_o2_toxicity"sv);
     }
 
-    if (planet.magnetosphere_strength < 0.9) {
+    // magnetosphere
+    if (planet.magnetosphere_strength < 0.33) {
+        record("very_weak_magneto_hab_effect"_name,
+               "very_weak_magneto_hab_effect_desc"_name,
+               habs_and_suits_growth_modifier);
+        habs_and_suits_required("very_low_magneto"sv);
+    } else if (/*0.33 < */planet.magnetosphere_strength < 0.9) {
         record("weak_magneto_hab_effect"_name,
                "weak_magneto_hab_effect_desc"_name,
                -(1 - planet.magnetosphere_strength));
-        if (planet.magnetosphere_strength < 0.33)
+        if (planet.magnetosphere_strength < 0.67)
             habs_and_masks_required("low_magneto"sv);
-        else if (planet.magnetosphere_strength < 0.67)
-            habs_and_suits_required("very_low_magneto"sv);
+    } else if (/*0.9 < */planet.magnetosphere_strength < 1.1) {
+        // no effect
     } else if (1.1 < planet.magnetosphere_strength) {
         record("strong_magneto_hab_effect"_name,
                "strong_magneto_hab_effect_desc"_name,
-               (planet.magnetosphere_strength - 1.1) * 0.05);
+               (planet.magnetosphere_strength - 1.1) * 0.02);
     }
 
     // temperature
-    if (planet.surface_temperature_k < earth_temperature_k - 22) {
+    if (planet.surface_temperature_k < earth_temperature_k - 44) {
+        record("extremely_cold_avg_surface_temp"_name,
+               "extremely_cold_avg_surface_temp_desc"_name,
+               habs_and_suits_growth_modifier);
+        habs_and_suits_required("extremely_cold_avg_surface_temp"sv);
+    } else if (/*earth - 44 < */planet.surface_temperature_k < earth_temperature_k - 22) {
         record("very_cold_avg_surface_temp"_name,
                "very_cold_avg_surface_temp_desc"_name,
                -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.03);
-    } else if (planet.surface_temperature_k < earth_temperature_k - 11) {
+    } else if (/*earth - 22 < */planet.surface_temperature_k < earth_temperature_k - 11) {
         record("cold_avg_surface_temp"_name,
                "cold_avg_surface_temp_desc"_name,
                -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.01);
-    } else if (planet.surface_temperature_k < earth_temperature_k + 11) {
+    } else if (/*earth - 11 < */planet.surface_temperature_k < earth_temperature_k + 11) {
         // no effect
-    } else if (planet.surface_temperature_k < earth_temperature_k + 22) {
+    } else if (/*earth + 11 < */planet.surface_temperature_k < earth_temperature_k + 22) {
         record("hot_avg_surface_temp"_name,
                "hot_avg_surface_temp_desc"_name,
                -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.01);
-    } else {
+    } else if (/*earth + 22 < */planet.surface_temperature_k < earth_temperature_k + 33) {
         record("very_hot_avg_surface_temp"_name,
                "very_hot_avg_surface_temp_desc"_name,
                -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.03);
+    } else if (/*earth + 33 < */planet.surface_temperature_k < earth_temperature_k + 55) {
+        record("extremely_hot_avg_surface_temp"_name,
+               "extremely_hot_avg_surface_temp_desc"_name,
+               habs_and_suits_growth_modifier);
+        habs_and_suits_required("extremely_hot_avg_surface_temp"sv);
+    } else {
+        record("uninhabitably_hot_avg_surface_temp"_name,
+               "uninhabitably_hot_avg_surface_temp_desc"_name, growth_uninhabitable);
     }
 
     if (habs_and_masks_already_required &&

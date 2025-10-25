@@ -25,6 +25,7 @@ inline constexpr double prob_no_magnetosphere_rocky_planet_is_reduced = 0.5;
 inline constexpr double only_equatorial_region_habitable_factor = 0.5;
 inline constexpr double habs_and_masks_habitable_factor = 0.25;
 inline constexpr double habs_and_suits_habitable_factor = 0.1;
+inline constexpr double habs_and_suits_growth_modifier = -0.2;
 inline constexpr double growth_factor_considered_habitable = 0.1;
 inline constexpr int max_earth_pops = 5000;
 inline constexpr int min_resource_value = 0;
