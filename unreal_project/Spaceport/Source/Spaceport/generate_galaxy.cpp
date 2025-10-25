@@ -170,20 +170,30 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         only_equatorial_band_habitable();
     }
 
+    // TODO: Very long or very short days should have a negative effect on
+    // infrastructure cost, due to the need for so much special care for
+    // crops.  This only applies to non-habitat/suit situations obviously.
+
     // day length
     if (planet.day_h < 24.0f * 0.9f) {
         record("short_days"_name, "short_days_desc"_name,
                -24.0 / planet.day_h * 0.1);
     } else if (planet.day_h < 24.0f * 1.1f) {
         // no effect
-    } else if (planet.day_h < 24.0f * 0.9f) {
+    } else if (planet.day_h < 48.0f) {
         record("long_days"_name, "long_days_desc"_name,
-               (planet.day_h - 24.0) * 0.05);
+               -std::min((planet.day_h - 24.0) * 0.01, 0.1));
+    } else {
+        record("very_long_days"_name, "very_long_days_desc"_name,
+               -0.1 - std::min((planet.day_h - 48.0) * 0.01, 0.1));
     }
 
     // TODO: The O2/CO2 mix of a planet should either be something you can
     // adjust at the game start, or should perhaps require one of the
     // earliest techs.
+
+    // TODO: The use of hab+suit should obviate many other modifiers that
+    // would not apply to life entirely indoors.
 
     // These can come from multiple sources; don't replicate them.
     int habs_and_masks_already_required = 0;
@@ -211,8 +221,9 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         planet.effects.push_back(planet_effect_t{
                 .name=adobe::name_t(name_scratch.c_str()),
                 .description=adobe::name_t(desc_scratch.c_str()),
-                .amount=2,
+                .amount=habs_and_masks_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=flags(planet_effect_mod_t::cost),
                 .operation=effect_op_t::multiply
             });
         ++habs_and_masks_already_required;
@@ -236,8 +247,9 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         planet.effects.push_back(planet_effect_t{
                 .name=adobe::name_t(name_scratch.c_str()),
                 .description=adobe::name_t(desc_scratch.c_str()),
-                .amount=4,
+                .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=flags(planet_effect_mod_t::cost),
                 .operation=effect_op_t::multiply
             });
         ++habs_and_suits_already_required;
@@ -247,11 +259,8 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     // property)
     constexpr double harmless_o2_threshold =
         harmless_low_o2_percentage / earth_o2_percentage;
-    double const atmospheric_pressure_factor =
-        planet.atmopsheric_pressure < 1.0 ?
-        planet.atmopsheric_pressure : 1.0;
     double const effective_o2 =
-        planet.o2_co2_suitability * atmospheric_pressure_factor;
+        planet.o2_co2_suitability * planet.atmopsheric_pressure;
     if (harmless_o2_threshold < effective_o2) {
         // no effect
     } else if (effective_o2_percentage_la_paz_bolivia / earth_o2_percentage <
@@ -261,19 +270,19 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                -(harmless_o2_threshold - effective_o2) * 0.25);
     } else if (effective_o2_percentage_aconcagua / earth_o2_percentage <
                effective_o2) {
-        record("very_poor_o2_co2_suitab_hab_effect"_name,
-               "very_poor_o2_co2_suitab_hab_effect_desc"_name,
+        record("very_poor_o2_co2_suitab"_name,
+               "very_poor_o2_co2_suitab_desc"_name,
                -(harmless_o2_threshold - effective_o2) * 0.25);
         habs_and_masks_required("very_poor_o2_co2_suitab"sv);
     } else if (effective_o2_percentage_mt_everest_peak / earth_o2_percentage <
                effective_o2) {
-        record("marginal_o2_co2_suitab_hab_effect"_name,
-               "marginal_o2_co2_suitab_hab_effect_desc"_name,
+        record("marginal_o2_co2_suitab"_name,
+               "marginal_o2_co2_suitab_desc"_name,
                -(harmless_o2_threshold - effective_o2) * 0.25);
         habs_and_masks_required("marginal_o2_co2_suitab"sv);
     } else {
-        record("insufficient_o2_co2_suitab_hab_effect"_name,
-               "insufficient_o2_co2_suitab_hab_effect_desc"_name,
+        record("insufficient_o2_co2_suitab"_name,
+               "insufficient_o2_co2_suitab_desc"_name,
                habs_and_suits_growth_modifier);
         habs_and_suits_required("insufficient_o2_co2_suitab"sv);
     }
@@ -281,35 +290,35 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     // atmospheric pressure (< 1 cases handled with o2_co2_suitability
     // above)
     if (4.0f < planet.atmopsheric_pressure) {
-        record("high_press_n2_narcosis_hab_effect"_name,
-               "high_press_n2_narcosis_hab_effect_desc"_name,
+        record("high_press_n2_narcosis"_name,
+               "high_press_n2_narcosis_desc"_name,
                habs_and_suits_growth_modifier);
         habs_and_suits_required("high_press_n2_narcosis"sv);
     }
-    if (7.0f < planet.atmopsheric_pressure) {
-        record("very_high_press_o2_toxicity_hab_effect"_name,
-               "very_high_press_o2_toxicity_hab_effect_desc"_name,
+    if (7.0f < effective_o2) {
+        record("very_high_press_o2_toxicity"_name,
+               "very_high_press_o2_toxicity_desc"_name,
                habs_and_suits_growth_modifier);
         habs_and_suits_required("very_high_press_o2_toxicity"sv);
     }
 
     // magnetosphere
     if (planet.magnetosphere_strength < 0.33) {
-        record("very_weak_magneto_hab_effect"_name,
-               "very_weak_magneto_hab_effect_desc"_name,
+        record("very_weak_magneto"_name,
+               "very_weak_magneto_desc"_name,
                habs_and_suits_growth_modifier);
         habs_and_suits_required("very_low_magneto"sv);
     } else if (/*0.33 < */planet.magnetosphere_strength < 0.9) {
-        record("weak_magneto_hab_effect"_name,
-               "weak_magneto_hab_effect_desc"_name,
+        record("weak_magneto"_name,
+               "weak_magneto_desc"_name,
                -(1 - planet.magnetosphere_strength));
         if (planet.magnetosphere_strength < 0.67)
             habs_and_masks_required("low_magneto"sv);
     } else if (/*0.9 < */planet.magnetosphere_strength < 1.1) {
         // no effect
     } else if (1.1 < planet.magnetosphere_strength) {
-        record("strong_magneto_hab_effect"_name,
-               "strong_magneto_hab_effect_desc"_name,
+        record("strong_magneto"_name,
+               "strong_magneto_desc"_name,
                (planet.magnetosphere_strength - 1.1) * 0.02);
     }
 
