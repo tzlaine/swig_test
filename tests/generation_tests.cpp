@@ -454,25 +454,6 @@ TEST(generation_tests, growth_factor_and_effects)
         // TODO
     }
 
-    if (0) {
-        planet_t planet = earth;
-        // TODO: Change something.
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
-
-        dump(planet);
-        // TODO
-        std::cout << "result=" << result << "\n"
-                  << "# effect=" << planet.effects.size() << "\n";
-        for (auto const & e : planet.effects) {
-            dump(e);
-            std::cout << "\n";
-        }
-
-        // TODO: Check value of result.
-        // TODO: Check effects.
-    }
-
     // gas giant
     planet_t const a_gas_giant{
         .planet_type=planet_type_t::gas_giant,
