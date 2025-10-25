@@ -12,6 +12,23 @@
 
 using namespace adobe::literals;
 
+// TODO: Move these to a testing utility header?
+inline double eps = 0.000001; // tolerance for testing float closeness.
+
+template<typename T>
+void dump(T const & x)
+{
+    std::cout << std::format("{}", x) << "\n";
+}
+
+double truncate(double x, int decimal_places)
+{
+    if (decimal_places < 0)
+        return x;
+    double const factor = std::pow(10.0, decimal_places);
+    return std::trunc(x * factor) / factor;
+}
+
 void print_simple_hexes(std::ostream & os, game_state_t const & game_state)
 {
     for (int j = 0; j < game_state.map_height; ++j) {
@@ -97,12 +114,6 @@ NNNNNNNNNNNNNNNNN
     generation::detail::g_skip_system_generation_for_testing = false;
 }
 
-template<typename T>
-void dump(T const & x)
-{
-    std::cout << std::format("{}", x) << "\n";
-}
-
 TEST(generation_tests, growth_factor_and_effects)
 {
     // rocky
@@ -138,29 +149,113 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_EQ(result, base_pop_growth_factor);
         EXPECT_EQ(planet.effects.size(), 0u);
     }
+
+    // gravity
     {
         planet_t planet = earth;
-        // TODO: Change something.
+        planet.gravity_g = 0.05f;
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
-
-        // TODO
-        std::cout << "result=" << result << "\n"
-                  << "# effect=" << planet.effects.size() << "\n";
-        for (auto const & e : planet.effects) {
-            dump(e);
-            std::cout << "\n";
-        }
-
-        // TODO: Check value of result.
-        // TODO: Check effects.
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="very_low_grav"_name,
+            .description="very_low_grav_desc"_name,
+            .amount=-0.2,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
     }
     {
         planet_t planet = earth;
+        planet.gravity_g = 0.5f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="low_grav"_name,
+            .description="low_grav_desc"_name,
+            .amount=-0.05,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.gravity_g = 1.2f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + 0.01, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
+        planet_effect_t const expected{
+            .name="high_grav"_name,
+            .description="high_grav_desc"_name,
+            .amount=0.01,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.gravity_g = 1.5f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet.effects[0].amount = truncate(planet.effects[0].amount, 1);
+        planet_effect_t const expected{
+            .name="very_high_grav"_name,
+            .description="very_high_grav_desc"_name,
+            .amount=-0.2,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+
+    // tilt
+    {
+        // TODO
+    }
+
+    // day length
+    {
+        // TODO
+    }
+
+    // O2
+    {
+        // TODO
+    }
+
+    // atmospheric pressure
+    {
+        // TODO
+    }
+
+    // magnetosphere
+    {
+        // TODO
+    }
+
+    // temperature
+    {
+        // TODO
+    }
+
+    // Duplicate of habs_and_* effects
+    {
+        // TODO
+    }
+
+    if (0) {
+        planet_t planet = earth;
         // TODO: Change something.
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
 
+        dump(planet);
         // TODO
         std::cout << "result=" << result << "\n"
                   << "# effect=" << planet.effects.size() << "\n";
@@ -201,20 +296,14 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = a_gas_giant;
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
-
-        EXPECT_EQ(result, base_pop_growth_factor + growth_uninhabitable);
-        dump(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + growth_uninhabitable, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-
         planet_effect_t const expected{
             .name="uninhab_non_rocky_planet"_name,
             .description="uninhab_non_rocky_planet_desc"_name,
             .amount=-1000,
-            .months_of_effect=0,
-            .months_remaining=0,
             .target=planet_effect_target_t::growth_factor,
-            .target_modifiers=0,
-            .operation=effect_op_t::multiply};
+            .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
 
@@ -242,5 +331,18 @@ TEST(generation_tests, growth_factor_and_effects)
         .fuel=3,
         .max_population=0
     };
-
+    {
+        planet_t planet = an_ice_giant;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + growth_uninhabitable, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="uninhab_non_rocky_planet"_name,
+            .description="uninhab_non_rocky_planet_desc"_name,
+            .amount=-1000,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
 }
