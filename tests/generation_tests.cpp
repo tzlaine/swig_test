@@ -21,12 +21,12 @@ void dump(T const & x)
     std::cout << std::format("{}", x) << "\n";
 }
 
-double truncate(double x, int decimal_places)
+void truncate(float & x, int decimal_places)
 {
     if (decimal_places < 0)
-        return x;
-    double const factor = std::pow(10.0, decimal_places);
-    return std::trunc(x * factor) / factor;
+        return;
+    float const factor = std::pow(10.0, decimal_places);
+    x = std::trunc(x * factor) / factor;
 }
 
 void print_simple_hexes(std::ostream & os, game_state_t const & game_state)
@@ -188,7 +188,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + 0.01, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[0].amount, 2);
         planet_effect_t const expected{
             .name="high_grav"_name,
             .description="high_grav_desc"_name,
@@ -204,7 +204,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 1);
+        truncate(planet.effects[0].amount, 1);
         planet_effect_t const expected{
             .name="very_high_grav"_name,
             .description="very_high_grav_desc"_name,
@@ -227,7 +227,6 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor -0.2, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        //planet.effects[0].amount = truncate(planet.effects[0].amount, 1);
         planet_effect_t const expected{
             .name="short_days"_name,
             .description="short_days_desc"_name,
@@ -243,7 +242,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[0].amount, 2);
         planet_effect_t const expected{
             .name="long_days"_name,
             .description="long_days_desc"_name,
@@ -259,7 +258,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 1);
+        truncate(planet.effects[0].amount, 1);
         planet_effect_t const expected{
             .name="long_days"_name,
             .description="long_days_desc"_name,
@@ -275,7 +274,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.15, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[0].amount, 2);
         planet_effect_t const expected{
             .name="very_long_days"_name,
             .description="very_long_days_desc"_name,
@@ -291,7 +290,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 1);
+        truncate(planet.effects[0].amount, 1);
         planet_effect_t const expected{
             .name="very_long_days"_name,
             .description="very_long_days_desc"_name,
@@ -310,7 +309,7 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.045, 0.001);
         EXPECT_EQ(planet.effects.size(), 1u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 3);
+        truncate(planet.effects[0].amount, 3);
         planet_effect_t const expected{
             .name="poor_o2_co2_suitab"_name,
             .description="poor_o2_co2_suitab_desc"_name,
@@ -326,10 +325,10 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.12, 0.005);
         EXPECT_EQ(planet.effects.size(), 3u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
-        planet.effects[1].amount = truncate(planet.effects[1].amount, 2);
-        planet.effects[2].amount = truncate(planet.effects[2].amount, 2);
-        planet_effect_t const expected[3] = {
+        truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[1].amount, 2);
+        truncate(planet.effects[2].amount, 2);
+        planet_effect_t const expected[] = {
             {
                 .name="very_poor_o2_co2_suitab"_name,
                 .description="very_poor_o2_co2_suitab_desc"_name,
@@ -349,7 +348,7 @@ TEST(generation_tests, growth_factor_and_effects)
                 .description="very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
                 .amount=2,
                 .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=2u,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
                 .operation=effect_op_t::multiply
             },
         };
@@ -364,10 +363,10 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.14, 0.01);
         EXPECT_EQ(planet.effects.size(), 3u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
-        planet.effects[1].amount = truncate(planet.effects[1].amount, 2);
-        planet.effects[2].amount = truncate(planet.effects[2].amount, 2);
-        planet_effect_t const expected[3] = {
+        truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[1].amount, 2);
+        truncate(planet.effects[2].amount, 2);
+        planet_effect_t const expected[] = {
             {
                 .name="marginal_o2_co2_suitab"_name,
                 .description="marginal_o2_co2_suitab_desc"_name,
@@ -387,7 +386,7 @@ TEST(generation_tests, growth_factor_and_effects)
                 .description="marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
                 .amount=habs_and_masks_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=2u,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
                 .operation=effect_op_t::multiply
             },
         };
@@ -402,10 +401,10 @@ TEST(generation_tests, growth_factor_and_effects)
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, 0.01);
         EXPECT_EQ(planet.effects.size(), 3u);
-        planet.effects[0].amount = truncate(planet.effects[0].amount, 2);
-        planet.effects[1].amount = truncate(planet.effects[1].amount, 2);
-        planet.effects[2].amount = truncate(planet.effects[2].amount, 2);
-        planet_effect_t const expected[3] = {
+        truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[1].amount, 2);
+        truncate(planet.effects[2].amount, 2);
+        planet_effect_t const expected[] = {
             {
                 .name="insufficient_o2_co2_suitab"_name,
                 .description="insufficient_o2_co2_suitab_desc"_name,
@@ -425,7 +424,7 @@ TEST(generation_tests, growth_factor_and_effects)
                 .description="insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect_desc"_name,
                 .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=2u,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
                 .operation=effect_op_t::multiply
             },
         };
@@ -436,23 +435,333 @@ TEST(generation_tests, growth_factor_and_effects)
 
     // atmospheric pressure
     {
-        // TODO
+        planet_t planet = earth;
+        planet.atmopsheric_pressure = 5.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, 0.01);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[1].amount, 2);
+        truncate(planet.effects[2].amount, 2);
+        planet_effect_t const expected[] = {
+            {
+                .name="high_press_n2_narcosis"_name,
+                .description="high_press_n2_narcosis_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
+                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
+                .description="high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
+                .amount=habs_and_suits_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.atmopsheric_pressure = 8.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + 2 * habs_and_suits_growth_modifier, eps);
+        EXPECT_EQ(planet.effects.size(), 4u);
+        planet_effect_t const expected[] = {
+            {
+                .name="high_press_n2_narcosis"_name,
+                .description="high_press_n2_narcosis_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
+                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
+                .description="high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
+                .amount=habs_and_suits_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="very_high_press_o2_toxicity"_name,
+                .description="very_high_press_o2_toxicity_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+        EXPECT_EQ(planet.effects[3], expected[3]);
     }
 
     // magnetosphere
     {
-        // TODO
+        planet_t planet = earth;
+        planet.magnetosphere_strength = 0.25f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="very_weak_magneto"_name,
+                .description="very_weak_magneto_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="very_weak_magneto_habs_and_suits_pop_effect"_name,
+                .description="very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
+                .description="very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
+                .amount=habs_and_suits_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.magnetosphere_strength = 0.5f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.5, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="weak_magneto"_name,
+                .description="weak_magneto_desc"_name,
+                .amount=-0.5,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="weak_magneto_habs_and_masks_pop_effect"_name,
+                .description="weak_magneto_habs_and_masks_pop_effect_desc"_name,
+                .amount=habs_and_masks_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="weak_magneto_habs_and_masks_infra_cost_effect"_name,
+                .description="weak_magneto_habs_and_masks_infra_cost_effect_desc"_name,
+                .amount=habs_and_masks_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.magnetosphere_strength = 0.75f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.25, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected = {
+                .name="weak_magneto"_name,
+                .description="weak_magneto_desc"_name,
+                .amount=-0.25,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+        };
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.magnetosphere_strength = 1.6f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + 0.01, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        truncate(planet.effects[0].amount, 2);
+        planet_effect_t const expected = {
+            .name="strong_magneto"_name,
+            .description="strong_magneto_desc"_name,
+            .amount=0.01,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add
+        };
+        EXPECT_EQ(planet.effects[0], expected);
     }
 
     // temperature
     {
-        // TODO
+        planet_t planet = earth;
+        planet.surface_temperature_k = earth_temperature_k - 50;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="extremely_cold_avg_surface_temp"_name,
+                .description="extremely_cold_avg_surface_temp_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect"_name,
+                .description="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
+                .description="extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
+                .amount=habs_and_suits_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.surface_temperature_k = earth_temperature_k - 31;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.6, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        truncate(planet.effects[0].amount, 2);
+        planet_effect_t const expected = {
+            .name="very_cold_avg_surface_temp"_name,
+            .description="very_cold_avg_surface_temp_desc"_name,
+            .amount=-0.6,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add
+        };
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.surface_temperature_k = earth_temperature_k + 21;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        truncate(planet.effects[0].amount, 2);
+        planet_effect_t const expected = {
+            .name="hot_avg_surface_temp"_name,
+            .description="hot_avg_surface_temp_desc"_name,
+            .amount=-0.1,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add
+        };
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.surface_temperature_k = earth_temperature_k + 31;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.6, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        truncate(planet.effects[0].amount, 2);
+        planet_effect_t const expected = {
+            .name="very_hot_avg_surface_temp"_name,
+            .description="very_hot_avg_surface_temp_desc"_name,
+            .amount=-0.6,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add
+        };
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.surface_temperature_k = earth_temperature_k + 54;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="extremely_hot_avg_surface_temp"_name,
+                .description="extremely_hot_avg_surface_temp_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect"_name,
+                .description="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
+                .description="extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
+                .amount=habs_and_suits_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.surface_temperature_k = earth_temperature_k + 60;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + growth_uninhabitable, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        truncate(planet.effects[0].amount, 2);
+        planet_effect_t const expected = {
+            .name="uninhabitably_hot_avg_surface_temp"_name,
+            .description="uninhabitably_hot_avg_surface_temp_desc"_name,
+            .amount=growth_uninhabitable,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add
+        };
+        EXPECT_EQ(planet.effects[0], expected);
     }
 
-    // Duplicate of habs_and_* effects
-    {
-        // TODO
-    }
+    // TODO: Test that adding hab+suits after hab+masks removes the hab+masks.
 
     // gas giant
     planet_t const a_gas_giant{

@@ -307,13 +307,13 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         record("very_weak_magneto"_name,
                "very_weak_magneto_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("very_low_magneto"sv);
+        habs_and_suits_required("very_weak_magneto"sv);
     } else if (/*0.33 < */planet.magnetosphere_strength < 0.9) {
         record("weak_magneto"_name,
                "weak_magneto_desc"_name,
                -(1 - planet.magnetosphere_strength));
         if (planet.magnetosphere_strength < 0.67)
-            habs_and_masks_required("low_magneto"sv);
+            habs_and_masks_required("weak_magneto"sv);
     } else if (/*0.9 < */planet.magnetosphere_strength < 1.1) {
         // no effect
     } else if (1.1 < planet.magnetosphere_strength) {
@@ -363,6 +363,9 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 effect.name, "_habs_and_masks"sv).empty();
         });
     }
+
+    // TODO: Sort (stable-sort actually) the effects determined here by
+    // (target,target+modifiers) to make processing them later easier.
 
     return retval;
 }
