@@ -6,7 +6,9 @@
 
 
 #include <format>
-
+#if defined(BUILD_FOR_TEST)
+#include <iosfwd>
+#endif
 
 
 template <>
@@ -53,6 +55,10 @@ struct std::formatter<hex_coord_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, hex_coord_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 
 

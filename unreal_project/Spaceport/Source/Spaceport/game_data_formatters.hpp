@@ -6,7 +6,9 @@
 #include <base_types_formatters.hpp>
 
 #include <format>
-
+#if defined(BUILD_FOR_TEST)
+#include <iosfwd>
+#endif
 
 
 template <>
@@ -169,6 +171,10 @@ struct std::formatter<unit_design_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, unit_design_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<unit_t> {
@@ -187,6 +193,10 @@ struct std::formatter<unit_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, unit_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<fleet_t> {
@@ -213,6 +223,10 @@ struct std::formatter<fleet_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, fleet_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<fleets_t> {
@@ -224,15 +238,19 @@ struct std::formatter<fleets_t> {
         auto out = ctx.out();
         out = std::format_to(out, "fleets_t(");
 
-        out = std::format_to(out, " fleets={");
+        out = std::format_to(out, " fleets={{");
         for (auto && [key, value] : x.fleets) {
             out = std::format_to(out, " {}:{}", key, value);
         };
-        out = std::format_to(out, " }");
+        out = std::format_to(out, " }}");
 
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, fleets_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<planet_effect_t> {
@@ -256,6 +274,10 @@ struct std::formatter<planet_effect_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, planet_effect_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<planet_t> {
@@ -303,6 +325,10 @@ struct std::formatter<planet_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, planet_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<location_object_t> {
@@ -320,6 +346,10 @@ struct std::formatter<location_object_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, location_object_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<system_location_t> {
@@ -341,6 +371,10 @@ struct std::formatter<system_location_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, system_location_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<star_t> {
@@ -361,6 +395,10 @@ struct std::formatter<star_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, star_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<system_t> {
@@ -393,6 +431,10 @@ struct std::formatter<system_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, system_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<hex_t> {
@@ -413,6 +455,10 @@ struct std::formatter<hex_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, hex_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<province_t> {
@@ -435,6 +481,10 @@ struct std::formatter<province_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, province_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<nation_t> {
@@ -472,6 +522,10 @@ struct std::formatter<nation_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, nation_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 template <>
 struct std::formatter<game_state_t> {
@@ -509,6 +563,10 @@ struct std::formatter<game_state_t> {
         return std::format_to(out, " )");
     }
 };
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, game_state_t const & x)
+{ return os << std::format("{}", x); }
+#endif
 
 
 

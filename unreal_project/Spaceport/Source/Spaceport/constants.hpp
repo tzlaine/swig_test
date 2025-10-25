@@ -10,7 +10,7 @@ inline constexpr int prov_none = -1;
 inline constexpr int prov_off_map = -2;
 inline constexpr int prov_galactic_bulge = -3;
 inline constexpr int prov_galactic_center = -4;
-// atmospheric density
+// atmospheric pressure
 inline constexpr double atmos_thousands = -1.0;
 inline constexpr double atmos_millions = -2.0;
 // growth factor

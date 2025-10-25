@@ -511,6 +511,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
 
     double const growth_factor =
         determine_growth_factor_and_effects(planet);
+    planet.growth_factor = growth_factor;
 
     auto clamp_res = [](int x) {
         return std::clamp(min_resource_value, x, min_resource_value);

@@ -103,7 +103,6 @@ def newline():
 
 def add_header_comment_and_includes(proto_source, syntax, deps):
     cpp_deps = '\n'.join(map(lambda x: '#include <{}.hpp>'.format(x), deps))
-    #cpp_deps = '\n'.join(map(lambda x: '#include <{}'.format(x) + '_formatters.hpp>', deps))
     formatters_deps = cpp_deps.replace('.hpp', '_formatters.hpp')
 
     cpp_file.write('''// WARNING: Generated code.
@@ -126,6 +125,8 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 #include <{0}.pb.h>
 {2}
 
+#include <flags.hpp>
+
 #include <string>
 #include <vector>
 #include <adobe/name.hpp>
@@ -142,7 +143,9 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 {}
 
 #include <format>
-
+#if defined(BUILD_FOR_TEST)
+#include <iosfwd>
+#endif
 
 '''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, formatters_deps))
 
@@ -179,21 +182,27 @@ def write_formatter_switch(enum_descriptor_proto, depth, path, printing_for_user
             formatters_file.write('{0}        case {1}::{2}: name = "INVALID"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name))
         else:
             string_to_print = enum_value_descriptor_proto.name
-            if printing_for_user is True and tuple(new_path) in special_comments:
-                string_to_print = special_comments[tuple(new_path)]
+            if printing_for_user is True and tuple(new_path) in special_comments and \
+               special_comments[tuple(new_path)][0] == user_string_constant:
+                string_to_print = special_comments[tuple(new_path)][1]
             formatters_file.write('{0}        case {1}::{2}: name = "{3}"sv; break;\n'.format(indent_str(depth), enum_descriptor_proto.name, enum_value_descriptor_proto.name, string_to_print))
 
     formatters_file.write('{0}    }}\n'.format(indent_str(depth)))
 
 def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
     hpp_file.write('\n')
-    hpp_file.write('{}enum class {} {{\n'.format(indent_str(depth), enum_descriptor_proto.name))
+
+    flags_enum = tuple(path) in special_comments and special_comments[tuple(path)][0] == flags_enum_constant
+
+    hpp_file.write('''{}enum class {} {}{{
+'''.format(indent_str(depth), enum_descriptor_proto.name, flags_enum and ': unsigned int ' or ''))
 
     # If we see even one U"foo" comment, we know we need to have two printing
     # modes -- one for debug dumps, and one for users.
     user_strings_available = False
     for i in range(len(enum_descriptor_proto.value)):
-        if tuple(path + [field_path_constant, i]) in special_comments:
+        curr_path = tuple(path + [field_path_constant, i])
+        if curr_path in special_comments and special_comments[curr_path][0] == user_string_constant:
             user_strings_available = True
             break
 
@@ -223,8 +232,15 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
 
     depth += 1
 
+    first = True
+    ored_enumerators = ''
     for enum_value_descriptor_proto in enum_descriptor_proto.value:
         hpp_file.write('{}{} = {},\n'.format(indent_str(depth), enum_value_descriptor_proto.name, enum_value_descriptor_proto.number))
+        if first:
+            ored_enumerators = f'flags({enum_descriptor_proto.name}::{enum_value_descriptor_proto.name})'
+            first = False
+        else:
+            ored_enumerators += f' | {enum_descriptor_proto.name}::{enum_value_descriptor_proto.name}'
 
     if user_strings_available:
         write_formatter_switch(enum_descriptor_proto, depth, path, True)
@@ -233,7 +249,13 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
         write_formatter_switch(enum_descriptor_proto, depth, path, None)
 
     depth -= 1
-    hpp_file.write('{0}}};\n'.format(indent_str(depth)))
+    hpp_file.write('''{0}}};
+'''.format(indent_str(depth)))
+    if flags_enum:
+        hpp_file.write('''{0}template<> inline flags<{1}> all_flags<{1}>() {{ return {2}; }}
+{0}inline flags<{1}> operator|({1} x, {1} y) {{ return flags(x) | y; }}
+{0}inline flags<{1}> operator~({1} x) {{ return ~flags(x); }}
+'''.format(indent_str(depth), enum_descriptor_proto.name, ored_enumerators))
 
     formatters_file.write('''{0}        return std::formatter<std::string_view>::format(name, ctx);
 {0}    }}
@@ -347,14 +369,14 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, pa
         key_type = field_type(map_fields[leaf_type].field[0], 'cpp')
         value_type = field_type(map_fields[leaf_type].field[1], 'cpp')
         hpp_file.write('{}boost::container::flat_map<{}, {}> {};\n'.format(indent_str(depth), key_type, value_type, field_descriptor_proto.name))
-        formatters_file.write('''{0}        out = std::format_to(out, " {1}={{");
+        formatters_file.write('''{0}        out = std::format_to(out, " {1}={{{{");
 '''.format(indent_str(depth - 1), field_descriptor_proto.name))
         formatters_file.write('''{0}        for (auto && [key, value] : x.{1}) {{
 '''.format(indent_str(depth - 1), field_descriptor_proto.name))
         formatters_file.write('''{0}            out = std::format_to(out, " {{}}:{{}}", key, value);
 '''.format(indent_str(depth - 1)))
         formatters_file.write('''{0}        }};
-{0}        out = std::format_to(out, " }}");
+{0}        out = std::format_to(out, " }}}}");
 '''.format(indent_str(depth - 1)))
     else:
         typename = field_type(field_descriptor_proto, 'cpp')
@@ -426,13 +448,19 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
         index += 1
         declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, new_path)
     depth -= 1
-    hpp_file.write('{}}};\n'.format(indent_str(depth)))
+    hpp_file.write('''{0}    bool operator==({1} const &) const = default;
+{0}}};
+'''.format(indent_str(depth), descriptor_proto.name))
     formatters_file.write('''
 {0}        return std::format_to(out, " )");
 {0}    }}
 {0}}};
+#if defined(BUILD_FOR_TEST)
+{0}inline std::ostream & operator<<(std::ostream & os, {1} const & x)
+{0}{{ return os << std::format("{{}}", x); }}
+#endif
 
-'''.format(indent_str(depth)))
+'''.format(indent_str(depth), descriptor_proto.name))
     if args.cs_file:
         args.cs_file.write('{}}};\n'.format(indent_str(depth)))
 
@@ -809,17 +837,29 @@ if args.cs_file and len(cs_namespace) == 0:
 file_descriptor_set = descriptor_pb2.FileDescriptorSet()
 file_descriptor_set.ParseFromString(args.desc_file.read())
 
+user_string_constant = 0
+flags_enum_constant = 1
+
 # First pass: gather special comments and apths to each.
 import re
 user_string_comment_regex = re.compile(r'U"(.+)"')
+flags_enum_comment_regex = re.compile(r'(FLAGS)')
 special_comments = {}
 for field_descriptor_proto in file_descriptor_set.file:
     source_code_info = field_descriptor_proto.source_code_info
     for location in source_code_info.location:
+        if location.leading_comments:
+            #print('*' * 80)
+            #print('FOUND LEADING COMMENT {} at {}', location.leading_comments, tuple(location.path))
+            match_ = flags_enum_comment_regex.search(location.leading_comments)
+            if match_:
+                special_comments[tuple(location.path)] = (flags_enum_constant, match_.group(1))
         if location.trailing_comments:
+            # print('*' * 80)
+            # print('FOUND TRAILING COMMENT {} at {}', location.trailing_comments, tuple(location.path))
             match_ = user_string_comment_regex.search(location.trailing_comments)
             if match_:
-                special_comments[tuple(location.path)] = match_.group(1)
+                special_comments[tuple(location.path)] = (user_string_constant, match_.group(1))
 
 message_path_constant = 4
 enum_path_constant = 5

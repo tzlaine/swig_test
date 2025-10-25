@@ -82,7 +82,7 @@ enum planet_effect_target_t {
     max_population = 16;
 }
 
-// NOTE: These are flags.
+// FLAGS
 enum planet_effect_mod_t {
     invalid_planet_effect_mod = 0;
     monthly = 1;   // Apply op monthly, rather than one time.

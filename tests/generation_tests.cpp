@@ -10,6 +10,8 @@
 #include <strstream>
 
 
+using namespace adobe::literals;
+
 void print_simple_hexes(std::ostream & os, game_state_t const & game_state)
 {
     for (int j = 0; j < game_state.map_height; ++j) {
@@ -103,6 +105,7 @@ void dump(T const & x)
 
 TEST(generation_tests, growth_factor_and_effects)
 {
+    // rocky
     planet_t const earth{
         .planet_type=planet_type_t::rocky,
         .mass_kg=earth_mass_kg,
@@ -126,8 +129,6 @@ TEST(generation_tests, growth_factor_and_effects)
         .fuel=100,
         .max_population=100
     };
-
-    dump(earth); // TODO
 
     {
         // Earth had better have the base habitability, and no effects.
@@ -154,4 +155,92 @@ TEST(generation_tests, growth_factor_and_effects)
         // TODO: Check value of result.
         // TODO: Check effects.
     }
+    {
+        planet_t planet = earth;
+        // TODO: Change something.
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+
+        // TODO
+        std::cout << "result=" << result << "\n"
+                  << "# effect=" << planet.effects.size() << "\n";
+        for (auto const & e : planet.effects) {
+            dump(e);
+            std::cout << "\n";
+        }
+
+        // TODO: Check value of result.
+        // TODO: Check effects.
+    }
+
+    // gas giant
+    planet_t const a_gas_giant{
+        .planet_type=planet_type_t::gas_giant,
+        .mass_kg=earth_mass_kg * 1000,
+        .radius_km=earth_radius_km * 10,
+        .orbit_au=15,
+        .orbital_period_y=30,
+        .gravity_g=1000,
+        .axial_tilt_d=10,
+        .day_h=36,
+        .surface_temperature_k=earth_temperature_k / 2,
+        .magnetosphere_strength=5,
+        .atmopsheric_pressure=atmos_millions,
+        .o2_co2_suitability=n_a,
+        .ocean_coverage=n_a,
+        .growth_factor=base_pop_growth_factor,
+        .atmosphere_type=atmosphere_type_t::gas_giant_atmosphere,
+        .water=0,
+        .food=0,
+        .energy=3,
+        .metal=3,
+        .fuel=3,
+        .max_population=0
+    };
+    {
+        planet_t planet = a_gas_giant;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+
+        EXPECT_EQ(result, base_pop_growth_factor + growth_uninhabitable);
+        dump(planet);
+        EXPECT_EQ(planet.effects.size(), 1u);
+
+        planet_effect_t const expected{
+            .name="uninhab_non_rocky_planet"_name,
+            .description="uninhab_non_rocky_planet_desc"_name,
+            .amount=-1000,
+            .months_of_effect=0,
+            .months_remaining=0,
+            .target=planet_effect_target_t::growth_factor,
+            .target_modifiers=0,
+            .operation=effect_op_t::multiply};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+
+    // ice giant
+    planet_t const an_ice_giant{
+        .planet_type=planet_type_t::ice_giant,
+        .mass_kg=earth_mass_kg * 8 * 8 * 8,
+        .radius_km=earth_radius_km * 8,
+        .orbit_au=25,
+        .orbital_period_y=90,
+        .gravity_g=8 * 8 * 8,
+        .axial_tilt_d=10,
+        .day_h=12,
+        .surface_temperature_k=earth_temperature_k / 10,
+        .magnetosphere_strength=2,
+        .atmopsheric_pressure=atmos_thousands,
+        .o2_co2_suitability=n_a,
+        .ocean_coverage=n_a,
+        .growth_factor=base_pop_growth_factor,
+        .atmosphere_type=atmosphere_type_t::ice_giant_atmosphere,
+        .water=0,
+        .food=0,
+        .energy=3,
+        .metal=3,
+        .fuel=3,
+        .max_population=0
+    };
+
 }

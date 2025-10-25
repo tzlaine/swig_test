@@ -5,6 +5,8 @@
 #include <base_types.pb.h>
 
 
+#include <flags.hpp>
+
 #include <string>
 #include <vector>
 #include <adobe/name.hpp>
@@ -36,6 +38,7 @@ struct hex_coord_t
 {
     int x;
     int y;
+    bool operator==(hex_coord_t const &) const = default;
 };
 
 

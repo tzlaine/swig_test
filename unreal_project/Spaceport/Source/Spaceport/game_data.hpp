@@ -5,6 +5,8 @@
 #include <game_data.pb.h>
 #include <base_types.hpp>
 
+#include <flags.hpp>
+
 #include <string>
 #include <vector>
 #include <adobe/name.hpp>
@@ -50,11 +52,14 @@ enum class planet_effect_target_t {
     max_population = 16,
 };
 
-enum class planet_effect_mod_t {
+enum class planet_effect_mod_t : unsigned int {
     invalid_planet_effect_mod = 0,
     monthly = 1,
     cost = 2,
 };
+template<> inline flags<planet_effect_mod_t> all_flags<planet_effect_mod_t>() { return flags(planet_effect_mod_t::invalid_planet_effect_mod) | planet_effect_mod_t::monthly | planet_effect_mod_t::cost; }
+inline flags<planet_effect_mod_t> operator|(planet_effect_mod_t x, planet_effect_mod_t y) { return flags(x) | y; }
+inline flags<planet_effect_mod_t> operator~(planet_effect_mod_t x) { return ~flags(x); }
 
 enum class effect_op_t {
     invalid_effect_op = 0,
@@ -88,6 +93,7 @@ struct unit_design_t
     int attack;
     int defense;
     int ground_attack;
+    bool operator==(unit_design_t const &) const = default;
 };
 
 struct unit_t
@@ -95,6 +101,7 @@ struct unit_t
     int design_id;
     int design_owner;
     int health;
+    bool operator==(unit_t const &) const = default;
 };
 
 struct fleet_t
@@ -106,11 +113,13 @@ struct fleet_t
     int rounds;
     int missiles;
     int fighters;
+    bool operator==(fleet_t const &) const = default;
 };
 
 struct fleets_t
 {
     boost::container::flat_map<int, fleet_t> fleets;
+    bool operator==(fleets_t const &) const = default;
 };
 
 struct planet_effect_t
@@ -123,6 +132,7 @@ struct planet_effect_t
     planet_effect_target_t target;
     unsigned int target_modifiers;
     effect_op_t operation;
+    bool operator==(planet_effect_t const &) const = default;
 };
 
 struct planet_t
@@ -155,18 +165,21 @@ struct planet_t
     int original_owner;
     fleet_t garrison;
     std::vector<planet_effect_t> effects;
+    bool operator==(planet_t const &) const = default;
 };
 
 struct location_object_t
 {
     fleet_t bases;
     std::ptrdiff_t planet_id;
+    bool operator==(location_object_t const &) const = default;
 };
 
 struct system_location_t
 {
     std::vector<location_object_t> objects;
     fleets_t units;
+    bool operator==(system_location_t const &) const = default;
 };
 
 struct star_t
@@ -176,6 +189,7 @@ struct star_t
     double solar_masses;
     double solar_luminosities;
     double solar_radii;
+    bool operator==(star_t const &) const = default;
 };
 
 struct system_t
@@ -189,6 +203,7 @@ struct system_t
     double world_pos_y;
     std::ptrdiff_t first_planet;
     std::ptrdiff_t last_planet;
+    bool operator==(system_t const &) const = default;
 };
 
 struct hex_t
@@ -198,6 +213,7 @@ struct hex_t
     std::ptrdiff_t first_system;
     std::ptrdiff_t last_system;
     fleets_t fleets;
+    bool operator==(hex_t const &) const = default;
 };
 
 struct province_t
@@ -205,6 +221,7 @@ struct province_t
     int id;
     int owner;
     std::vector<hex_coord_t> hex_coords;
+    bool operator==(province_t const &) const = default;
 };
 
 struct nation_t
@@ -215,6 +232,7 @@ struct nation_t
     std::vector<unsigned int> fleets;
     std::vector<int> planets;
     bool defeated;
+    bool operator==(nation_t const &) const = default;
 };
 
 struct game_state_t
@@ -225,6 +243,7 @@ struct game_state_t
     std::vector<system_t> systems;
     std::vector<planet_t> planets;
     std::vector<nation_t> nations;
+    bool operator==(game_state_t const &) const = default;
 };
 
 
