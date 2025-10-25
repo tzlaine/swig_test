@@ -280,7 +280,7 @@ TEST(generation_tests, growth_factor_and_effects)
             {
                 .name="long_seasons_infra_cost_effect"_name,
                 .description="long_seasons_infra_cost_effect_desc"_name,
-                .amount=1.25,
+                .amount=agri_equip_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .operation=effect_op_t::multiply
             }
@@ -307,7 +307,7 @@ TEST(generation_tests, growth_factor_and_effects)
             {
                 .name="long_seasons_infra_cost_effect"_name,
                 .description="long_seasons_infra_cost_effect_desc"_name,
-                .amount=1.25,
+                .amount=agri_equip_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .operation=effect_op_t::multiply
             },
@@ -601,14 +601,25 @@ TEST(generation_tests, growth_factor_and_effects)
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor -0.2, eps);
-        EXPECT_EQ(planet.effects.size(), 1u);
-        planet_effect_t const expected{
-            .name="short_days"_name,
-            .description="short_days_desc"_name,
-            .amount=-0.2,
-            .target=planet_effect_target_t::growth_factor,
-            .operation=effect_op_t::add};
-        EXPECT_EQ(planet.effects[0], expected);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="short_days"_name,
+                .description="short_days_desc"_name,
+                .amount=-0.2,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="short_days_infra_cost_effect"_name,
+                .description="short_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
     }
     {
         planet_t planet = earth;
@@ -616,15 +627,25 @@ TEST(generation_tests, growth_factor_and_effects)
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
-        EXPECT_EQ(planet.effects.size(), 1u);
-        truncate(planet.effects[0].amount, 2);
-        planet_effect_t const expected{
-            .name="long_days"_name,
-            .description="long_days_desc"_name,
-            .amount=-0.05,
-            .target=planet_effect_target_t::growth_factor,
-            .operation=effect_op_t::add};
-        EXPECT_EQ(planet.effects[0], expected);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="long_days"_name,
+                .description="long_days_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_days_infra_cost_effect"_name,
+                .description="long_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
     }
     {
         planet_t planet = earth;
@@ -632,15 +653,25 @@ TEST(generation_tests, growth_factor_and_effects)
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
-        EXPECT_EQ(planet.effects.size(), 1u);
-        truncate(planet.effects[0].amount, 1);
-        planet_effect_t const expected{
-            .name="long_days"_name,
-            .description="long_days_desc"_name,
-            .amount=-0.1,
-            .target=planet_effect_target_t::growth_factor,
-            .operation=effect_op_t::add};
-        EXPECT_EQ(planet.effects[0], expected);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="long_days"_name,
+                .description="long_days_desc"_name,
+                .amount=-0.1,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_days_infra_cost_effect"_name,
+                .description="long_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
     }
     {
         planet_t planet = earth;
@@ -648,15 +679,25 @@ TEST(generation_tests, growth_factor_and_effects)
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.15, eps);
-        EXPECT_EQ(planet.effects.size(), 1u);
-        truncate(planet.effects[0].amount, 2);
-        planet_effect_t const expected{
-            .name="very_long_days"_name,
-            .description="very_long_days_desc"_name,
-            .amount=-0.15,
-            .target=planet_effect_target_t::growth_factor,
-            .operation=effect_op_t::add};
-        EXPECT_EQ(planet.effects[0], expected);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="very_long_days"_name,
+                .description="very_long_days_desc"_name,
+                .amount=-0.15,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="very_long_days_infra_cost_effect"_name,
+                .description="very_long_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
     }
     {
         planet_t planet = earth;
@@ -664,15 +705,25 @@ TEST(generation_tests, growth_factor_and_effects)
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
-        EXPECT_EQ(planet.effects.size(), 1u);
-        truncate(planet.effects[0].amount, 1);
-        planet_effect_t const expected{
-            .name="very_long_days"_name,
-            .description="very_long_days_desc"_name,
-            .amount=-0.2,
-            .target=planet_effect_target_t::growth_factor,
-            .operation=effect_op_t::add};
-        EXPECT_EQ(planet.effects[0], expected);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="very_long_days"_name,
+                .description="very_long_days_desc"_name,
+                .amount=-0.2,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="very_long_days_infra_cost_effect"_name,
+                .description="very_long_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
     }
 
     // O2

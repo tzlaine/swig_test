@@ -100,7 +100,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             planet.effects.push_back(planet_effect_t{
                     .name="long_seasons_infra_cost_effect"_name,
                     .description="long_seasons_infra_cost_effect_desc"_name,
-                    .amount=1.25,
+                    .amount=agri_equip_infra_cost_factor,
                     .target=planet_effect_target_t::infrastructure,
                     .operation=effect_op_t::multiply
                 });
@@ -156,7 +156,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             planet.effects.push_back(planet_effect_t{
                     .name="long_seasons_infra_cost_effect"_name,
                     .description="long_seasons_infra_cost_effect_desc"_name,
-                    .amount=1.25,
+                    .amount=agri_equip_infra_cost_factor,
                     .target=planet_effect_target_t::infrastructure,
                     .operation=effect_op_t::multiply
                 });
@@ -170,23 +170,41 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         only_equatorial_band_habitable();
     }
 
-    // TODO: Very long or very short days should have a negative effect on
-    // infrastructure cost, due to the need for so much special care for
-    // crops.  This only applies to non-habitat/suit situations obviously.
-
     // day length
     if (planet.day_h < 24.0f * 0.9f) {
         record("short_days"_name, "short_days_desc"_name,
                -24.0 / planet.day_h * 0.1);
+        planet.effects.push_back(planet_effect_t{
+                .name="short_days_infra_cost_effect"_name,
+                .description="short_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            });
     } else if (planet.day_h < 24.0f * 1.1f) {
         // no effect
     } else if (planet.day_h < 48.0f) {
         record("long_days"_name, "long_days_desc"_name,
                -std::min((planet.day_h - 24.0) * 0.01, 0.1));
+        planet.effects.push_back(planet_effect_t{
+                .name="long_days_infra_cost_effect"_name,
+                .description="long_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            });
     } else {
         record("very_long_days"_name, "very_long_days_desc"_name,
                -0.1 - std::min((planet.day_h - 48.0) * 0.01, 0.1));
+        planet.effects.push_back(planet_effect_t{
+                .name="very_long_days_infra_cost_effect"_name,
+                .description="very_long_days_infra_cost_effect_desc"_name,
+                .amount=agri_equip_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            });
     }
+    // TODO: Require habs+suits if the day is long enough?
 
     // TODO: The O2/CO2 mix of a planet should either be something you can
     // adjust at the game start, or should perhaps require one of the

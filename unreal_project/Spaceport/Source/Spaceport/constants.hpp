@@ -29,6 +29,7 @@ inline constexpr double habs_and_suits_habitable_factor = 0.1;
 inline constexpr double habs_and_suits_infra_cost_factor = 4.0;
 inline constexpr double habs_and_suits_growth_modifier = -0.2;
 inline constexpr double growth_factor_considered_habitable = 0.1;
+inline constexpr double agri_equip_infra_cost_factor = 2.0;
 inline constexpr int max_earth_pops = 5000;
 inline constexpr int min_resource_value = 0;
 inline constexpr int max_resource_value = 100;
