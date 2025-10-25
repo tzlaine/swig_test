@@ -1136,7 +1136,56 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_EQ(planet.effects[0], expected);
     }
 
-    // TODO: Test that adding hab+suits after hab+masks removes the hab+masks.
+    // Requiring hab+suits after requiring hab+masks removes the hab+masks
+    // requirement.
+    {
+        planet_t planet = earth;
+        planet.o2_co2_suitability = 0.45f;     // Requires habs+masks; comes first
+        planet.magnetosphere_strength = 0.25f; // Requires habs+suits
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.12 + habs_and_suits_growth_modifier, 0.005);
+        EXPECT_EQ(planet.effects.size(), 4u);
+        truncate(planet.effects[0].amount, 2);
+        truncate(planet.effects[1].amount, 2);
+        truncate(planet.effects[2].amount, 2);
+        truncate(planet.effects[3].amount, 2);
+        planet_effect_t const expected[] = {
+            {
+                .name="very_poor_o2_co2_suitab"_name,
+                .description="very_poor_o2_co2_suitab_desc"_name,
+                .amount=-0.12,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="very_weak_magneto"_name,
+                .description="very_weak_magneto_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
+                .description="very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
+                .amount=habs_and_suits_infra_cost_factor,
+                .target=planet_effect_target_t::infrastructure,
+                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="very_weak_magneto_habs_and_suits_pop_effect"_name,
+                .description="very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+        EXPECT_EQ(planet.effects[3], expected[3]);
+    }
 
     // gas giant
     planet_t const a_gas_giant{
