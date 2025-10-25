@@ -110,12 +110,12 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     } else if (/*30 < */planet.axial_tilt_d < 45.0f) {
         record("intense_seasons"_name, "intense_seasons_desc"_name, -0.05);
         if (planet.orbital_period_y < 0.8) {
-            record("short_intense_seasons"_name,
-                   "short_intense_seasons_desc"_name,
+            record("short_seasons"_name,
+                   "short_seasons_desc"_name,
                    0.025 * (1 - planet.orbital_period_y));
         } else if (1.2 < planet.orbital_period_y) {
-            record("long_intense_seasons"_name,
-                   "long_intense_seasons_desc"_name,
+            record("long_seasons"_name,
+                   "long_seasons_desc"_name,
                    -0.05 * planet.orbital_period_y);
             planet.effects.push_back(planet_effect_t{
                     .name="long_intense_seasons_infra_cost_effect"_name,
@@ -130,12 +130,12 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     } else if (/*45 < */planet.axial_tilt_d < 60.0f) {
         record("intense_seasons"_name, "intense_seasons_desc"_name, -0.05);
         if (planet.orbital_period_y < 0.8) {
-            record("short_intense_seasons"_name,
-                   "short_intense_seasons_desc"_name,
+            record("short_seasons"_name,
+                   "short_seasons_desc"_name,
                    0.025 * (1 - planet.orbital_period_y));
         } else if (1.2 < planet.orbital_period_y) {
-            record("long_intense_seasons"_name,
-                   "long_intense_seasons_desc"_name,
+            record("long_seasons"_name,
+                   "long_seasons_desc"_name,
                    -0.05 * planet.orbital_period_y);
             planet.effects.push_back(planet_effect_t{
                     .name="long_intense_seasons_infra_cost_effect"_name,

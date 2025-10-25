@@ -216,6 +216,381 @@ TEST(generation_tests, growth_factor_and_effects)
 
     // tilt
     {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 1.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + 0.05, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="no_seasons"_name,
+            .description="no_seasons_desc"_name,
+            .amount=0.05,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 10.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + 0.025, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="mild_seasons"_name,
+            .description="mild_seasons_desc"_name,
+            .amount=0.025,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 20.0f;
+        planet.orbital_period_y = 0.5f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor + 0.0125, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="short_seasons"_name,
+            .description="short_seasons_desc"_name,
+            .amount=0.0125,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 20.0f;
+        planet.orbital_period_y = 2.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="long_seasons"_name,
+                .description="long_seasons_desc"_name,
+                .amount=-0.1,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_seasons_infra_cost_effect"_name,
+                .description="long_seasons_infra_cost_effect_desc"_name,
+                .amount=1.25,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 20.0f;
+        planet.orbital_period_y = 4.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="long_seasons"_name,
+                .description="long_seasons_desc"_name,
+                .amount=-0.2,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_seasons_infra_cost_effect"_name,
+                .description="long_seasons_infra_cost_effect_desc"_name,
+                .amount=1.25,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="only_equatorial_band_habitable"_name,
+                .description="only_equatorial_band_habitable_desc"_name,
+                .amount=only_equatorial_region_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 40.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
+        EXPECT_EQ(planet.effects.size(), 1u);
+        planet_effect_t const expected{
+            .name="intense_seasons"_name,
+            .description="intense_seasons_desc"_name,
+            .amount=-0.05,
+            .target=planet_effect_target_t::growth_factor,
+            .operation=effect_op_t::add};
+        EXPECT_EQ(planet.effects[0], expected);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 40.0f;
+        planet.orbital_period_y = 0.5f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor  - 0.05 + 0.0125, eps);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="short_seasons"_name,
+                .description="short_seasons_desc"_name,
+                .amount=0.0125,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 40.0f;
+        planet.orbital_period_y = 1.3f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.065, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_seasons"_name,
+                .description="long_seasons_desc"_name,
+                .amount=-0.065,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_intense_seasons_infra_cost_effect"_name,
+                .description="long_intense_seasons_infra_cost_effect_desc"_name,
+                .amount=1.5,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 40.0f;
+        planet.orbital_period_y = 4.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.2, eps);
+        EXPECT_EQ(planet.effects.size(), 4u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_seasons"_name,
+                .description="long_seasons_desc"_name,
+                .amount=-0.2,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_intense_seasons_infra_cost_effect"_name,
+                .description="long_intense_seasons_infra_cost_effect_desc"_name,
+                .amount=1.5,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="only_equatorial_band_habitable"_name,
+                .description="only_equatorial_band_habitable_desc"_name,
+                .amount=only_equatorial_region_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+        EXPECT_EQ(planet.effects[3], expected[3]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 50.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
+        EXPECT_EQ(planet.effects.size(), 2u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="only_equatorial_band_habitable"_name,
+                .description="only_equatorial_band_habitable_desc"_name,
+                .amount=only_equatorial_region_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 50.0f;
+        planet.orbital_period_y = 0.5f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor  - 0.05 + 0.0125, eps);
+        EXPECT_EQ(planet.effects.size(), 3u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="short_seasons"_name,
+                .description="short_seasons_desc"_name,
+                .amount=0.0125,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="only_equatorial_band_habitable"_name,
+                .description="only_equatorial_band_habitable_desc"_name,
+                .amount=only_equatorial_region_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            },
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 50.0f;
+        planet.orbital_period_y = 1.3f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.065, eps);
+        EXPECT_EQ(planet.effects.size(), 4u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_seasons"_name,
+                .description="long_seasons_desc"_name,
+                .amount=-0.065,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_intense_seasons_infra_cost_effect"_name,
+                .description="long_intense_seasons_infra_cost_effect_desc"_name,
+                .amount=1.5,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="only_equatorial_band_habitable"_name,
+                .description="only_equatorial_band_habitable_desc"_name,
+                .amount=only_equatorial_region_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+        EXPECT_EQ(planet.effects[3], expected[3]);
+    }
+    {
+        planet_t planet = earth;
+        planet.axial_tilt_d = 50.0f;
+        planet.orbital_period_y = 4.0f;
+        double const result =
+            generation::detail::determine_growth_factor_and_effects(planet);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.2, eps);
+        EXPECT_EQ(planet.effects.size(), 4u);
+        planet_effect_t const expected[] = {
+            {
+                .name="intense_seasons"_name,
+                .description="intense_seasons_desc"_name,
+                .amount=-0.05,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_seasons"_name,
+                .description="long_seasons_desc"_name,
+                .amount=-0.2,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
+            },
+            {
+                .name="long_intense_seasons_infra_cost_effect"_name,
+                .description="long_intense_seasons_infra_cost_effect_desc"_name,
+                .amount=1.5,
+                .target=planet_effect_target_t::infrastructure,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="only_equatorial_band_habitable"_name,
+                .description="only_equatorial_band_habitable_desc"_name,
+                .amount=only_equatorial_region_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
+            }
+        };
+        EXPECT_EQ(planet.effects[0], expected[0]);
+        EXPECT_EQ(planet.effects[1], expected[1]);
+        EXPECT_EQ(planet.effects[2], expected[2]);
+        EXPECT_EQ(planet.effects[3], expected[3]);
+    }
+    {
         // TODO
     }
 
