@@ -1187,15 +1187,16 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_EQ(planet.effects[0], expected);
     }
 
-    // Requiring hab+suits after requiring hab+masks removes the hab+masks
-    // requirement.
+    // Requiring hab+suits wipes out other effects, except those based on
+    // gravity.
     {
         planet_t planet = earth;
-        planet.o2_co2_suitability = 0.45f;     // Requires habs+masks; comes first
-        planet.magnetosphere_strength = 0.25f; // Requires habs+suits
+        planet.o2_co2_suitability = 0.45f;     // Comes first.
+        planet.magnetosphere_strength = 0.25f; // Requires habs+suits.
+        planet.gravity_g = 0.50f;
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
-        EXPECT_NEAR(result, base_pop_growth_factor - 0.12 + habs_and_suits_growth_modifier, 0.005);
+        EXPECT_NEAR(result, base_pop_growth_factor - 0.05 + habs_and_suits_growth_modifier, 0.005);
         EXPECT_EQ(planet.effects.size(), 4u);
         truncate(planet.effects[0].amount, 2);
         truncate(planet.effects[1].amount, 2);
@@ -1203,16 +1204,16 @@ TEST(generation_tests, growth_factor_and_effects)
         truncate(planet.effects[3].amount, 2);
         planet_effect_t const expected[] = {
             {
-                .name="very_poor_o2_co2_suitab"_name,
-                .description="very_poor_o2_co2_suitab_desc"_name,
-                .amount=-0.12,
+                .name="very_weak_magneto"_name,
+                .description="very_weak_magneto_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
                 .target=planet_effect_target_t::growth_factor,
                 .operation=effect_op_t::add
             },
             {
-                .name="very_weak_magneto"_name,
-                .description="very_weak_magneto_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
+                .name="low_grav"_name,
+                .description="low_grav_desc"_name,
+                .amount=-0.05,
                 .target=planet_effect_target_t::growth_factor,
                 .operation=effect_op_t::add
             },

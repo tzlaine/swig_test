@@ -40,6 +40,10 @@ namespace {
     };
 }
 
+// MAINTENANCE NOTE: Any calls to the lambda habs_and_suits_required (but not
+// the masks one) should come before any other effects, since it clears out
+// all previous effects.  Any effects that affect colonists living in
+// habs+suits should come *after* all calls to habs_and_suits_required.
 float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 {
     using namespace adobe::literals;
@@ -66,22 +70,6 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         record("uninhab_non_rocky_planet"_name,
                "uninhab_non_rocky_planet_desc"_name, growth_uninhabitable);
         return retval;
-    }
-
-    // gravity
-    if (planet.gravity_g < 0.1f) {
-        record("very_low_grav"_name, "very_low_grav_desc"_name, -0.2);
-    } else if (planet.gravity_g < 0.9f) {
-        record("low_grav"_name, "low_grav_desc"_name,
-               -0.1f * (1 - planet.gravity_g));
-    } else if (planet.gravity_g < 1.1f) {
-        // no effect
-    } else if (planet.gravity_g < 1.3f) {
-        record("high_grav"_name, "high_grav_desc"_name,
-               0.1 * (planet.gravity_g - 1.1f));
-    } else {
-        record("very_high_grav"_name, "very_high_grav_desc"_name,
-               -(planet.gravity_g - 1.3f));
     }
 
     // tilt
@@ -206,12 +194,12 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     }
     // TODO: Require habs+suits if the day is long enough?
 
+    // TODO: Should hte day length effects apply to planets that are very
+    // highly tilted, like >= 75 deg?
+
     // TODO: The O2/CO2 mix of a planet should either be something you can
     // adjust at the game start, or should perhaps require one of the
     // earliest techs.
-
-    // TODO: The use of hab+suit should obviate many other modifiers that
-    // would not apply to life entirely indoors.
 
     // These can come from multiple sources; don't replicate them.
     int habs_and_masks_already_required = 0;
@@ -249,6 +237,12 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     auto const habs_and_suits_required = [&](std::string_view name_prefix) {
         if (habs_and_suits_already_required)
             return;
+
+        // Dump all previous effects.  Living in a hab+suit obviates almost
+        // all other effects.
+        planet.effects.clear();
+        retval = base_pop_growth_factor;
+
         name_scratch = name_prefix;
         name_scratch += "_habs_and_suits_pop_effect";
         desc_scratch = name_scratch;
@@ -299,33 +293,33 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                -(harmless_o2_threshold - effective_o2) * 0.25);
         habs_and_masks_required("marginal_o2_co2_suitab"sv);
     } else {
+        habs_and_suits_required("insufficient_o2_co2_suitab"sv);
         record("insufficient_o2_co2_suitab"_name,
                "insufficient_o2_co2_suitab_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("insufficient_o2_co2_suitab"sv);
     }
 
     // atmospheric pressure (< 1 cases handled with o2_co2_suitability
     // above)
     if (4.0f < planet.atmopsheric_pressure) {
+        habs_and_suits_required("high_press_n2_narcosis"sv);
         record("high_press_n2_narcosis"_name,
                "high_press_n2_narcosis_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("high_press_n2_narcosis"sv);
     }
     if (7.0f < effective_o2) {
+        habs_and_suits_required("very_high_press_o2_toxicity"sv);
         record("very_high_press_o2_toxicity"_name,
                "very_high_press_o2_toxicity_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("very_high_press_o2_toxicity"sv);
     }
 
     // magnetosphere
     if (planet.magnetosphere_strength < 0.33) {
+        habs_and_suits_required("very_weak_magneto"sv);
         record("very_weak_magneto"_name,
                "very_weak_magneto_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("very_weak_magneto"sv);
     } else if (/*0.33 < */planet.magnetosphere_strength < 0.9) {
         record("weak_magneto"_name,
                "weak_magneto_desc"_name,
@@ -342,10 +336,10 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 
     // temperature
     if (planet.surface_temperature_k < earth_temperature_k - 44) {
+        habs_and_suits_required("extremely_cold_avg_surface_temp"sv);
         record("extremely_cold_avg_surface_temp"_name,
                "extremely_cold_avg_surface_temp_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("extremely_cold_avg_surface_temp"sv);
     } else if (/*earth - 44 < */planet.surface_temperature_k < earth_temperature_k - 22) {
         record("very_cold_avg_surface_temp"_name,
                "very_cold_avg_surface_temp_desc"_name,
@@ -365,21 +359,29 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                "very_hot_avg_surface_temp_desc"_name,
                -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.03);
     } else if (/*earth + 33 < */planet.surface_temperature_k < earth_temperature_k + 55) {
+        habs_and_suits_required("extremely_hot_avg_surface_temp"sv);
         record("extremely_hot_avg_surface_temp"_name,
                "extremely_hot_avg_surface_temp_desc"_name,
                habs_and_suits_growth_modifier);
-        habs_and_suits_required("extremely_hot_avg_surface_temp"sv);
     } else {
         record("uninhabitably_hot_avg_surface_temp"_name,
                "uninhabitably_hot_avg_surface_temp_desc"_name, growth_uninhabitable);
     }
 
-    if (habs_and_masks_already_required &&
-        habs_and_suits_already_required) {
-        std::erase_if(planet.effects, [](auto const & effect) {
-            return !std::ranges::search(
-                effect.name, "_habs_and_masks"sv).empty();
-        });
+    // gravity
+    if (planet.gravity_g < 0.1f) {
+        record("very_low_grav"_name, "very_low_grav_desc"_name, -0.2);
+    } else if (planet.gravity_g < 0.9f) {
+        record("low_grav"_name, "low_grav_desc"_name,
+               -0.1f * (1 - planet.gravity_g));
+    } else if (planet.gravity_g < 1.1f) {
+        // no effect
+    } else if (planet.gravity_g < 1.3f) {
+        record("high_grav"_name, "high_grav_desc"_name,
+               0.1 * (planet.gravity_g - 1.1f));
+    } else {
+        record("very_high_grav"_name, "very_high_grav_desc"_name,
+               -(planet.gravity_g - 1.3f));
     }
 
     resort_effects(planet);
