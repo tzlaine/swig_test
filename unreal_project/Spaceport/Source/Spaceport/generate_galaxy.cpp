@@ -7,39 +7,6 @@
 #include <numbers>
 
 
-namespace {
-    // https://en.wikipedia.org/wiki/Stellar_classification
-
-    // All units are solar (solar masses, solar luminosities, etc.).
-    struct star_property_ranges_t
-    {
-        star_class_t class_;
-        double frequency_;
-        std::pair<double, double> temperature_;
-        std::pair<double, double> mass_;
-        std::pair<double, double> luminosity_;
-    };
-
-    // See: https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law
-    // Luminance formula: L = 4piR^2σT^4
-    // Simplified in terms of solar factors: R = T^-2L^0.5 = L^0.5 / T^2
-    double solar_radius(double L, double T)
-    {
-        return std::sqrt(L) / (T * T);
-    }
-
-    constexpr star_property_ranges_t star_properties[] = {
-        {star_class_t::invalid_star_class, 0.0, {}, {}, {}},
-        {star_class_t::o, 0.0000003, {33000, 1000000}, {16, 1000000}, {30000, 1000000}},
-        {star_class_t::b, 0.0012, {10000, 33000}, {2.1, 16}, {25, 30000}},
-        {star_class_t::a, 0.0061, {7300, 10000}, {1.4, 2.1}, {5, 25}},
-        {star_class_t::f, 0.03, {6000, 7300}, {1.04, 1.4}, {1.5, 5}},
-        {star_class_t::g, 0.076, {5300, 6000}, {0.8, 1.04}, {0.6, 1.5}},
-        {star_class_t::k, 0.12, {3900, 5300}, {0.45, 0.8}, {0.08, 0.6}},
-        {star_class_t::m, 0.76, {2300, 3900}, {0.08, 0.45}, {0.01, 0.08}}
-    };
-}
-
 // MAINTENANCE NOTE: Any calls to the lambda habs_and_suits_required (but not
 // the masks one) should come before any other effects, since it clears out
 // all previous effects.  Any effects that affect colonists living in
@@ -386,12 +353,11 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 
 // See: https://en.wikipedia.org/wiki/Sun
 
-star_t generation::detail::generate_star()
+// TODO: See if generating 100s or 1000s of rolls at once is faster.
+star_t generation::detail::generate_star(double roll/* = random_unit_double()*/)
 {
     star_t retval;
 
-    // TODO: See if generating 100s or 1000s of rolls at once is faster.
-    double roll = random_unit_double();
     auto it = std::ranges::find_if(
         star_properties,
         [&](auto const & elem) {

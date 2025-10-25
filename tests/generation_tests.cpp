@@ -1317,3 +1317,76 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_EQ(planet.effects[0], expected);
     }
 }
+
+TEST(generation_tests, generate_star)
+{
+    auto const & props = generation::detail::star_properties;
+
+    double accum = 0.0;
+    {
+        star_t const star = generation::detail::generate_star(0.0);
+        EXPECT_EQ(star.star_class, star_class_t::o);
+        EXPECT_LT(props[1].temperature_.first, star.temperature_k);
+        EXPECT_LT(star.temperature_k, props[1].temperature_.second);
+        EXPECT_LT(props[1].mass_.first, star.solar_masses);
+        EXPECT_LT(star.solar_masses, props[1].mass_.second);
+        EXPECT_LT(props[1].luminosity_.first, star.solar_luminosities);
+        EXPECT_LT(star.solar_luminosities, props[1].luminosity_.second);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.0000002);
+        EXPECT_EQ(star.star_class, star_class_t::o);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.0012);
+        EXPECT_EQ(star.star_class, star_class_t::b);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.0061);
+        EXPECT_EQ(star.star_class, star_class_t::a);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.03);
+        EXPECT_EQ(star.star_class, star_class_t::f);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.076);
+        EXPECT_EQ(star.star_class, star_class_t::g);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.12);
+        EXPECT_EQ(star.star_class, star_class_t::k);
+    }
+    {
+        star_t const star = generation::detail::generate_star(0.76);
+        EXPECT_EQ(star.star_class, star_class_t::m);
+    }
+    {
+        star_t const star = generation::detail::generate_star(1.0);
+        EXPECT_EQ(star.star_class, star_class_t::g);
+    }
+
+    {
+        int const n = 100000;
+        std::vector<star_t> stars(n);
+        std::ranges::generate(stars, [] {
+            return generation::detail::generate_star();
+        });
+
+        int counts[(int)star_class_t::m + 1] = {0};
+        for (auto const & s : stars) {
+            ++counts[(int)s.star_class];
+        }
+
+        EXPECT_EQ(counts[0], 0);
+        EXPECT_NEAR(1.0 * counts[1] / n, props[1].frequency_, 0.01);
+        EXPECT_NEAR(1.0 * counts[2] / n, props[2].frequency_, 0.01);
+        EXPECT_NEAR(1.0 * counts[3] / n, props[3].frequency_, 0.01);
+        EXPECT_NEAR(1.0 * counts[4] / n, props[4].frequency_, 0.01);
+        // Rolls that don't match anything in the table end up here, so this
+        // will always be an overcount.
+        EXPECT_NEAR(1.0 * counts[5] / n, props[5].frequency_, 0.2);
+        EXPECT_NEAR(1.0 * counts[6] / n, props[6].frequency_, 0.01);
+        EXPECT_NEAR(1.0 * counts[7] / n, props[7].frequency_, 0.01);
+    }
+}

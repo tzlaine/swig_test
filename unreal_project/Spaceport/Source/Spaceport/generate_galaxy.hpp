@@ -2,6 +2,7 @@
 
 #include "constants.hpp"
 #include "game_data.hpp"
+#include "rng.hpp"
 
 #include <numbers>
 
@@ -44,11 +45,43 @@ inline double degrees_to_radians(double d)
 
 namespace generation {
     namespace detail {
+        // https://en.wikipedia.org/wiki/Stellar_classification
+
+        // All units are solar (solar masses, solar luminosities, etc.).
+        struct star_property_ranges_t
+        {
+            star_class_t class_;
+            double frequency_;
+            std::pair<double, double> temperature_;
+            std::pair<double, double> mass_;
+            std::pair<double, double> luminosity_;
+        };
+
+        constexpr star_property_ranges_t star_properties[] = {
+            {star_class_t::invalid_star_class, 0.0, {}, {}, {}},
+            {star_class_t::o, 0.0000003, {33000, 1000000},
+             {16, 1000000}, {30000, 1000000}},
+            {star_class_t::b, 0.0012, {10000, 33000}, {2.1, 16}, {25, 30000}},
+            {star_class_t::a, 0.0061, {7300, 10000}, {1.4, 2.1}, {5, 25}},
+            {star_class_t::f, 0.03, {6000, 7300}, {1.04, 1.4}, {1.5, 5}},
+            {star_class_t::g, 0.076, {5300, 6000}, {0.8, 1.04}, {0.6, 1.5}},
+            {star_class_t::k, 0.12, {3900, 5300}, {0.45, 0.8}, {0.08, 0.6}},
+            {star_class_t::m, 0.76, {2300, 3900}, {0.08, 0.45}, {0.01, 0.08}}
+        };
+
+        // See: https://en.wikipedia.org/wiki/Stefan%E2%80%93Boltzmann_law
+        // Luminance formula: L = 4piR^2σT^4
+        // Simplified in terms of solar factors: R = T^-2L^0.5 = L^0.5 / T^2
+        inline double solar_radius(double L, double T)
+        {
+            return std::sqrt(L) / (T * T);
+        }
+
         float determine_growth_factor_and_effects(planet_t & planet);
 
         bool generate_planet(planet_t & planet, system_t const & system);
 
-        star_t generate_star();
+        star_t generate_star(double roll = random_unit_double());
 
         bool generate_system(
             system_t & system, std::vector<planet_t> & planets,
