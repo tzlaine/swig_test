@@ -1326,12 +1326,6 @@ TEST(generation_tests, generate_star)
     {
         star_t const star = generation::detail::generate_star(0.0);
         EXPECT_EQ(star.star_class, star_class_t::o);
-        EXPECT_LT(props[1].temperature_.first, star.temperature_k);
-        EXPECT_LT(star.temperature_k, props[1].temperature_.second);
-        EXPECT_LT(props[1].mass_.first, star.solar_masses);
-        EXPECT_LT(star.solar_masses, props[1].mass_.second);
-        EXPECT_LT(props[1].luminosity_.first, star.solar_luminosities);
-        EXPECT_LT(star.solar_luminosities, props[1].luminosity_.second);
     }
     {
         star_t const star = generation::detail::generate_star(0.0000002);
@@ -1375,7 +1369,14 @@ TEST(generation_tests, generate_star)
 
         int counts[(int)star_class_t::m + 1] = {0};
         for (auto const & s : stars) {
-            ++counts[(int)s.star_class];
+            int const index = (int)s.star_class;
+            ++counts[index];
+            EXPECT_LT(props[index].temperature_.first, s.temperature_k);
+            EXPECT_LT(s.temperature_k, props[index].temperature_.second);
+            EXPECT_LT(props[index].mass_.first, s.solar_masses);
+            EXPECT_LT(s.solar_masses, props[index].mass_.second);
+            EXPECT_LT(props[index].luminosity_.first, s.solar_luminosities);
+            EXPECT_LT(s.solar_luminosities, props[index].luminosity_.second);
         }
 
         EXPECT_EQ(counts[0], 0);
@@ -1383,9 +1384,11 @@ TEST(generation_tests, generate_star)
         EXPECT_NEAR(1.0 * counts[2] / n, props[2].frequency_, 0.01);
         EXPECT_NEAR(1.0 * counts[3] / n, props[3].frequency_, 0.01);
         EXPECT_NEAR(1.0 * counts[4] / n, props[4].frequency_, 0.01);
+
         // Rolls that don't match anything in the table end up here, so this
         // will always be an overcount.
         EXPECT_NEAR(1.0 * counts[5] / n, props[5].frequency_, 0.2);
+
         EXPECT_NEAR(1.0 * counts[6] / n, props[6].frequency_, 0.01);
         EXPECT_NEAR(1.0 * counts[7] / n, props[7].frequency_, 0.01);
     }
