@@ -62,3 +62,14 @@ namespace generation {
     void generate_galaxy(game_start_params const & params,
                          game_state_t & game_state);
 }
+
+// TODO: Move this.
+inline void resort_effects(planet_t & planet)
+{
+    std::stable_sort(
+        planet.effects.begin(), planet.effects.end(),
+        [](planet_effect_t const & a, planet_effect_t const & b) {
+            return std::pair((int)a.target, a.target_modifiers) <
+                std::pair((int)b.target, b.target_modifiers);
+        });
+}

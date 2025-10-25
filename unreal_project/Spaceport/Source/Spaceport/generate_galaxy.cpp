@@ -364,8 +364,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         });
     }
 
-    // TODO: Sort (stable-sort actually) the effects determined here by
-    // (target,target+modifiers) to make processing them later easier.
+    resort_effects(planet);
 
     return retval;
 }

@@ -712,18 +712,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="very_poor_o2_co2_suitab_habs_and_masks_pop_effect"_name,
-                .description="very_poor_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
-                .amount=0.25,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect"_name,
                 .description="very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
                 .amount=2,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="very_poor_o2_co2_suitab_habs_and_masks_pop_effect"_name,
+                .description="very_poor_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
+                .amount=0.25,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -750,18 +750,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="marginal_o2_co2_suitab_habs_and_masks_pop_effect"_name,
-                .description="marginal_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
-                .amount=habs_and_masks_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect"_name,
                 .description="marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
                 .amount=habs_and_masks_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="marginal_o2_co2_suitab_habs_and_masks_pop_effect"_name,
+                .description="marginal_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
+                .amount=habs_and_masks_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -788,18 +788,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="insufficient_o2_co2_suitab_habs_and_suits_pop_effect"_name,
-                .description="insufficient_o2_co2_suitab_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect"_name,
                 .description="insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect_desc"_name,
                 .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="insufficient_o2_co2_suitab_habs_and_suits_pop_effect"_name,
+                .description="insufficient_o2_co2_suitab_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -828,18 +828,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
-                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
                 .description="high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
                 .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
+                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -863,11 +863,11 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
-                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
+                .name="very_high_press_o2_toxicity"_name,
+                .description="very_high_press_o2_toxicity_desc"_name,
+                .amount=habs_and_suits_growth_modifier,
+                .target=planet_effect_target_t::growth_factor,
+                .operation=effect_op_t::add
             },
             {
                 .name="high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
@@ -878,11 +878,11 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::multiply
             },
             {
-                .name="very_high_press_o2_toxicity"_name,
-                .description="very_high_press_o2_toxicity_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
+                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
+                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
+                .operation=effect_op_t::multiply
             },
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
@@ -908,18 +908,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="very_weak_magneto_habs_and_suits_pop_effect"_name,
-                .description="very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
                 .description="very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
                 .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="very_weak_magneto_habs_and_suits_pop_effect"_name,
+                .description="very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -943,18 +943,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="weak_magneto_habs_and_masks_pop_effect"_name,
-                .description="weak_magneto_habs_and_masks_pop_effect_desc"_name,
-                .amount=habs_and_masks_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="weak_magneto_habs_and_masks_infra_cost_effect"_name,
                 .description="weak_magneto_habs_and_masks_infra_cost_effect_desc"_name,
                 .amount=habs_and_masks_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="weak_magneto_habs_and_masks_pop_effect"_name,
+                .description="weak_magneto_habs_and_masks_pop_effect_desc"_name,
+                .amount=habs_and_masks_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -1013,18 +1013,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect"_name,
-                .description="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
                 .description="extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
                 .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect"_name,
+                .description="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
@@ -1099,18 +1099,18 @@ TEST(generation_tests, growth_factor_and_effects)
                 .operation=effect_op_t::add
             },
             {
-                .name="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect"_name,
-                .description="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
-            {
                 .name="extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
                 .description="extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
                 .amount=habs_and_suits_infra_cost_factor,
                 .target=planet_effect_target_t::infrastructure,
                 .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
+                .operation=effect_op_t::multiply
+            },
+            {
+                .name="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect"_name,
+                .description="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
+                .amount=habs_and_suits_habitable_factor,
+                .target=planet_effect_target_t::max_population,
                 .operation=effect_op_t::multiply
             },
         };
