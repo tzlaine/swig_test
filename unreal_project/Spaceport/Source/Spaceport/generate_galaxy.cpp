@@ -202,15 +202,10 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     // earliest techs.
 
     // These can come from multiple sources; don't replicate them.
-    int habs_and_masks_already_required = 0;
     int habs_and_suits_already_required = 0;
     std::string name_scratch;
     std::string desc_scratch;
     auto const habs_and_masks_required = [&](std::string_view name_prefix) {
-        if (habs_and_masks_already_required ||
-            habs_and_suits_already_required) {
-            return;
-        }
         name_scratch = name_prefix;
         name_scratch += "_habs_and_masks_pop_effect";
         desc_scratch = name_scratch;
@@ -232,7 +227,6 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 .target_modifiers=flags(planet_effect_mod_t::cost),
                 .operation=effect_op_t::multiply
             });
-        ++habs_and_masks_already_required;
     };
     auto const habs_and_suits_required = [&](std::string_view name_prefix) {
         if (habs_and_suits_already_required)
@@ -264,6 +258,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 .target_modifiers=flags(planet_effect_mod_t::cost),
                 .operation=effect_op_t::multiply
             });
+
         ++habs_and_suits_already_required;
     };
 
