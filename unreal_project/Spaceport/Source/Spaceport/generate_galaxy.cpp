@@ -608,6 +608,55 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     return growth_factor_considered_habitable < growth_factor;
 }
 
+void generation::detail::generate_hex(hex_t & hex, int hex_index,
+                                      game_state_t & game_state,
+                                      game_start_params const & params,
+                                      double map_radius, double bulge_radius,
+                                      hex_coord_t center_hex,
+                                      point_2d center_hex_pos,
+                                      int habitable_systems)
+{
+    hex_coord_t const hc{
+        hex_index % game_state.map_width, hex_index / game_state.map_width};
+    hex.coord = hc;
+
+    auto const pos = hex_position(hc, game_state.map_height);
+    if (within(center_hex_pos, pos, bulge_radius)) {
+        if (hc == center_hex)
+            hex.province_id = prov_galactic_center;
+        else
+            hex.province_id = prov_galactic_bulge;
+        return;
+    } else if (!within(center_hex_pos, pos, map_radius)) {
+        hex.province_id = prov_off_map;
+        return;
+    }
+
+    hex.province_id = prov_none;
+    hex.first_system = game_state.systems.size();
+
+#if defined(BUILD_FOR_TEST)
+    hex.last_system = game_state.systems.size();
+    if (detail::g_skip_system_generation_for_testing)
+        return;
+#endif
+
+    int habitable_systems_so_far = 0;
+    while ((habitable_systems &&
+            habitable_systems_so_far < habitable_systems) ||
+           (!habitable_systems &&
+            game_state.systems.size() - hex.first_system < 20u)) {
+        game_state.systems.push_back(system_t());
+        if (detail::generate_system(
+                game_state.systems.back(), game_state.planets,
+                hc, pos, hex.first_system + habitable_systems_so_far)) {
+            ++habitable_systems_so_far;
+        }
+    }
+
+    hex.last_system = game_state.systems.size();
+}
+
 void generation::generate_galaxy(game_start_params const & params,
                                  game_state_t & game_state)
 {
@@ -623,14 +672,10 @@ void generation::generate_galaxy(game_start_params const & params,
         ++game_state.map_width;
     game_state.hexes.resize(game_state.map_width * game_state.map_height);
 
-    auto const hex_position_ =
-        [map_height = game_state.map_height](hex_coord_t hc) {
-            return ::hex_position(hc, map_height);
-        };
-
    hex_coord_t const center_hex{
        game_state.map_width / 2, game_state.map_height / 2};
-   point_2d const center_hex_pos = hex_position_(center_hex);
+   point_2d const center_hex_pos =
+       hex_position(center_hex, game_state.map_height);
 
    std::normal_distribution<double> habitable_systems_dist(
        params.habtitable_systems_per_hex_mean,
@@ -642,45 +687,10 @@ void generation::generate_galaxy(game_start_params const & params,
    int hex_index = -1;
    for (auto & hex : game_state.hexes) {
        ++hex_index;
-       hex_coord_t const hc{
-           hex_index % game_state.map_width, hex_index / game_state.map_width};
-       hex.coord = hc;
-
-       auto const pos = hex_position_(hc);
-       if (within(center_hex_pos, pos, bulge_radius)) {
-           if (hc == center_hex)
-               hex.province_id = prov_galactic_center;
-           else
-               hex.province_id = prov_galactic_bulge;
-           continue;
-       } else if (!within(center_hex_pos, pos, map_radius)) {
-           hex.province_id = prov_off_map;
-           continue;
-       }
-
-       hex.province_id = prov_none;
-       hex.first_system = game_state.systems.size();
-
-#if defined(BUILD_FOR_TEST)
-       if (detail::g_skip_system_generation_for_testing)
-           continue;
-#endif
-
        auto const habitable_systems =
            int(std::round(random_number(habitable_systems_dist)));
-       int habitable_systems_so_far = 0;
-       while ((habitable_systems &&
-               habitable_systems_so_far < habitable_systems) ||
-              (!habitable_systems &&
-               game_state.systems.size() - hex.first_system < 20u)) {
-           game_state.systems.push_back(system_t());
-           if (detail::generate_system(
-                   game_state.systems.back(), game_state.planets,
-                   hc, pos, hex.first_system + habitable_systems_so_far)) {
-               ++habitable_systems_so_far;
-           }
-       }
-
-       hex.last_system = game_state.systems.size();
+       detail::generate_hex(hex, hex_index, game_state, params,
+                            map_radius, bulge_radius,
+                            center_hex, center_hex_pos, habitable_systems);
    }
 }

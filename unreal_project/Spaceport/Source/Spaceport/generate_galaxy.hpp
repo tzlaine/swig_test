@@ -293,6 +293,14 @@ namespace generation {
                 &generate_system_planets);
         }
 
+        void generate_hex(hex_t & hex, int hex_index,
+                          game_state_t & game_state,
+                          game_start_params const & params,
+                          double map_radius, double bulge_radius,
+                          hex_coord_t center_hex,
+                          point_2d center_hex_pos,
+                          int habitable_systems);
+
 #if defined(BUILD_FOR_TEST)
         inline thread_local bool g_skip_system_generation_for_testing = false;
 #endif

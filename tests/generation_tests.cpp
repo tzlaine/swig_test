@@ -1678,3 +1678,12 @@ TEST(generation_tests, generate_planet)
         EXPECT_EQ(planet.original_owner, -1);
     }
 }
+
+#if 0
+TEST(generation_tests, generate_galaxy)
+{
+    game_start_params params;
+    game_state_t game_state;
+    generation::generate_galaxy(params, game_state);
+}
+#endif
