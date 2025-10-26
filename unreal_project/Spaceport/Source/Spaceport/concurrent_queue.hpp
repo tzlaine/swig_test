@@ -21,6 +21,16 @@ struct concurrent_queue
         return true;
     }
 
+    template<typename U>
+    void push(U && u)
+    {
+        {
+            std::unique_lock lock{m_};
+            q_.emplace_back((U &&)u);
+        }
+        cv_.notify_one();
+    }
+
     bool try_pop(T & t)
     {
         std::unique_lock lock{m_, std::try_to_lock};
