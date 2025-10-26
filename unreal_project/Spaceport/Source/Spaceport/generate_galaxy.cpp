@@ -476,7 +476,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     if (planet.planet_type == planet_type_t::rocky) {
         if (random_unit_double() < prob_rocky_planet_has_magnetosphere) {
             planet.magnetosphere_strength =
-                std::min(0.0, random_number(rocky_magnetosphere_dist));
+                std::max(0.0, random_number(rocky_magnetosphere_dist));
         } else {
             planet.magnetosphere_strength = 0.0;
         }
