@@ -114,16 +114,6 @@ namespace generation {
                 planet.system_id = system_id;
                 planet.orbit_au = *radii_it++;
                 planet.mass_kg = *masses_it++;
-
-                double const orbital_radius_m =
-                    1000.0 * planet.orbit_au * au_to_km;
-                double const orbital_period_s = std::sqrt(
-                    4 * std::numbers::pi * std::numbers::pi *
-                    orbital_radius_m * orbital_radius_m * orbital_radius_m /
-                    G * (system.star.solar_masses * sun_mass_kg +
-                         planet.mass_kg));
-                planet.orbital_period_y = orbital_period_s / years_to_seconds;
-
                 if (generate_planet(planet, system))
                     has_habitable_planet = true;
             }

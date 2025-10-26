@@ -390,14 +390,14 @@ star_t generation::detail::generate_star(double roll/* = random_unit_double()*/)
 }
 
 // For reference:
-// Mercury 5427 kg/km^3 3.3e23 kg
-// Venus 5243 kg/km^3 4.87e24 kg
-// Earth 5514 kg/km^3 5.97e24 kg
-// Mars 3934 kg/km^3 6.42e23 kg
-// Jupiter 1326 kg/km^3 1.90e27 kg
-// Saturn 687 kg/km^3 5.68e26 kg
-// Uranus 1270 kg/km^3 1.02e26 kg
-// Neptune 1638 kg/km^3 8.68e25 kg
+// Mercury 5427 kg/m^3 3.3e23 kg
+// Venus 5243 kg/m^3 4.87e24 kg
+// Earth 5514 kg/m^3 5.97e24 kg
+// Mars 3934 kg/m^3 6.42e23 kg
+// Jupiter 1326 kg/m^3 1.90e27 kg
+// Saturn 687 kg/m^3 5.68e26 kg
+// Uranus 1270 kg/m^3 1.02e26 kg
+// Neptune 1638 kg/m^3 8.68e25 kg
 
 bool generation::detail::generate_planet(planet_t & planet, system_t const & system)
 {
@@ -424,6 +424,16 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     double const ice_distance_au = 15.0 * system.star.solar_masses;
 
     double density = 0.0; // in kg/km^3
+#if defined(BUILD_FOR_TEST)
+    // Alow the test to optionally force a planet type.
+    if (planet.planet_type == planet_type_t::rocky)
+        density = random_number(rocky_density_dist);
+    else if (planet.planet_type == planet_type_t::gas_giant)
+        density = random_number(gas_giant_density_dist);
+    else if (planet.planet_type == planet_type_t::ice_giant)
+        density = random_number(ice_giant_density_dist);
+    if (density) {} else
+#endif
     if (planet.mass_kg < rockiness_mass_threshold) {
         density = random_number(rocky_density_dist);
         planet.planet_type = planet_type_t::rocky;
@@ -434,13 +444,13 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         density = random_number(ice_giant_density_dist);
         planet.planet_type = planet_type_t::ice_giant;
     }
-    double const volume = planet.mass_kg / density;
+    double const m3_per_km3 = 1e9;
+    double const volume = planet.mass_kg / (density * m3_per_km3);
 
     planet.radius_km = std::cbrt(0.75 * volume / std::numbers::pi);
 
-    // 1000 to convert to meters
-    double const surface_gravity =
-        G * planet.mass_kg / (planet.radius_km * 1000.0);
+    double const surface_gravity = G * planet.mass_kg /
+        (planet.radius_km * m_per_km * planet.radius_km * m_per_km);
     planet.gravity_g = surface_gravity / earth_gravity;
 
     planet.axial_tilt_d =
@@ -449,10 +459,18 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     // 15 is made up.
     planet.day_h = 15.0 * random_number(day_dist);
 
+    // Kepler's third law: T^2 = (4pi^2/GM)a^3
+    double const a = planet.orbit_au * km_per_au * m_per_km;
+    double const a3 = a * a * a;
+    double const M = system.star.solar_masses * sun_mass_kg;
+    planet.orbital_period_y =
+        std::sqrt(4 * std::numbers::pi * std::numbers::pi / (G * M) * a3) /
+        secs_per_year;
+
     planet.surface_temperature_k =
         system.star.temperature_k *
         std::sqrt(system.star.solar_radii * sun_radius_km /
-                  (2 * planet.orbit_au * au_to_km));
+                  (2 * planet.orbit_au * km_per_au));
 
     planet.o2_co2_suitability = 0.0;
     if (planet.planet_type == planet_type_t::rocky) {
@@ -560,11 +578,9 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         planet.energy = clamp_res(
             energy_from_solar + energy_from_wind +
             random_number(resource_dist));
-    } else if (planet.planet_type == planet_type_t::gas_giant) {
-        planet.energy = clamp_res(
-            2 * random_number(resource_dist));
     } else {
-        planet.energy = n_a;
+        planet.energy = clamp_res(
+            moon_factor * random_number(resource_dist));
     }
 
     if (planet.planet_type == planet_type_t::rocky) {

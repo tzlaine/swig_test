@@ -590,9 +590,6 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_EQ(planet.effects[2], expected[2]);
         EXPECT_EQ(planet.effects[3], expected[3]);
     }
-    {
-        // TODO
-    }
 
     // day length
     {
@@ -1444,5 +1441,240 @@ TEST(generation_tests, generate_system)
             std::cout << std::format("{:.3g} kg ", m);
         }
         std::cout << "\n";
+    }
+}
+
+TEST(generation_tests, generate_planet)
+{
+    // This function mostly does random rolls, so the tests below are just
+    // sanity checks.
+
+    system_t const system = {
+        .name=adobe::name_t(""),
+        .coord=hex_coord_t{0, 0},
+        .star=star_t{
+            .star_class=star_class_t::g,
+            .temperature_k=5650.598319840416,
+            .solar_masses=1.0063179632913541,
+            .solar_luminosities=0.9237603942316259,
+            .solar_radii=1.0028672334746918 },
+        .world_pos_x=0.8916085168659775,
+        .world_pos_y=18.538425888758375,
+        .first_planet=152,
+        .last_planet=158
+    };
+
+    std::pair<float, double> const planet_orbits_masses[7] = {
+        {0.221f, 1.93e+21},
+        {0.329f, 2.11e+23},
+        {0.688f, 1.51e+24},
+        {0.993f, 4.01e+22},
+        {3.66f, 1.83e+26},
+        {8.7f, 1.26e+26},
+        {20.3f, 1.94e+27}
+    };
+
+    for (int i = 0; i < 7 * 2; ++i) {
+        auto const orbit_mass = planet_orbits_masses[i % 7];
+        planet_t planet = {
+            .system_id = 0,
+            .mass_kg = orbit_mass.second,
+            .orbit_au = orbit_mass.first
+        };
+
+        bool const habitable =
+            generation::detail::generate_planet(planet, system);
+
+        EXPECT_GT(planet.planet_type, planet_type_t::invalid_planet_type);
+        EXPECT_LE(planet.planet_type, planet_type_t::ice_giant);
+
+        // These should be unchanged.
+        EXPECT_EQ(planet.mass_kg, orbit_mass.second);
+        EXPECT_EQ(planet.orbit_au, orbit_mass.first);
+
+        EXPECT_GT(planet.radius_km, 0.0);
+        EXPECT_GT(planet.orbital_period_y, 0.0);
+        EXPECT_GT(planet.gravity_g, 0.0);
+        EXPECT_GE(planet.axial_tilt_d, 0.0);
+        EXPECT_LE(planet.axial_tilt_d, 90.0);
+        EXPECT_GT(planet.day_h, 0.0);
+        EXPECT_GT(planet.surface_temperature_k, 0.0);
+        EXPECT_LT(planet.surface_temperature_k, 2000.0);
+        EXPECT_GE(planet.magnetosphere_strength, 0.0);
+        if (planet.atmopsheric_pressure != atmos_thousands &&
+            planet.atmopsheric_pressure != atmos_millions) {
+            EXPECT_GE(planet.atmopsheric_pressure, 0.0);
+        }
+        EXPECT_GE(planet.o2_co2_suitability, 0.0);
+        EXPECT_LE(planet.o2_co2_suitability, 1.0);
+        if (planet.ocean_coverage != n_a) {
+            EXPECT_GE(planet.ocean_coverage, 0.0);
+            EXPECT_LE(planet.ocean_coverage, 1.0);
+        }
+        EXPECT_GT(planet.atmosphere_type,
+                  atmosphere_type_t::invalid_atmosphere_type);
+        EXPECT_LE(planet.atmosphere_type,
+                  atmosphere_type_t::ice_giant_atmosphere);
+        EXPECT_GE(planet.water, 0);
+        EXPECT_LE(planet.water, 100);
+        EXPECT_GE(planet.food, 0);
+        EXPECT_LE(planet.food, 100);
+        EXPECT_GE(planet.energy, 0);
+        EXPECT_LE(planet.energy, 100);
+        EXPECT_GE(planet.metal, 0);
+        EXPECT_LE(planet.metal, 100);
+        EXPECT_GE(planet.fuel, 0);
+        EXPECT_LE(planet.fuel, 100);
+        EXPECT_EQ(planet.population, 0.0);
+        EXPECT_EQ(planet.infrastructure, 0.0);
+        EXPECT_EQ(planet.owner, -1);
+        EXPECT_EQ(planet.original_owner, -1);
+    }
+
+    {
+        planet_t planet = {
+            .system_id = 0,
+            .mass_kg = 6e24,
+            .orbit_au = 1
+        };
+
+        // forced planet type for test
+        planet.planet_type = planet_type_t::rocky;
+        bool const habitable =
+            generation::detail::generate_planet(planet, system);
+        // Make sure the testing-only forced-type logic works.
+        EXPECT_EQ(planet.planet_type, planet_type_t::rocky);
+
+        // These should be unchanged.
+        EXPECT_EQ(planet.mass_kg, 6e24);
+        EXPECT_EQ(planet.orbit_au, 1);
+
+        EXPECT_GT(planet.radius_km, 0.0);
+        EXPECT_GT(planet.orbital_period_y, 0.0);
+        EXPECT_GT(planet.gravity_g, 0.0);
+        EXPECT_GE(planet.axial_tilt_d, 0.0);
+        EXPECT_LE(planet.axial_tilt_d, 90.0);
+        EXPECT_GT(planet.day_h, 0.0);
+        EXPECT_NEAR(planet.surface_temperature_k, earth_temperature_k, 10);
+        EXPECT_GE(planet.magnetosphere_strength, 0.0);
+        EXPECT_LT(planet.magnetosphere_strength, 5.0);
+        EXPECT_GE(planet.atmopsheric_pressure, 0.0);
+        EXPECT_GE(planet.o2_co2_suitability, 0.0);
+        EXPECT_LE(planet.o2_co2_suitability, 1.0);
+        EXPECT_GE(planet.ocean_coverage, 0.0);
+        EXPECT_LE(planet.ocean_coverage, 1.0);
+        EXPECT_GT(planet.atmosphere_type,
+                  atmosphere_type_t::invalid_atmosphere_type);
+        EXPECT_LE(planet.atmosphere_type, atmosphere_type_t::high_temperature);
+        EXPECT_GE(planet.water, 0);
+        EXPECT_LE(planet.water, 100);
+        EXPECT_GE(planet.food, 0);
+        EXPECT_LE(planet.food, 100);
+        EXPECT_GE(planet.energy, 0);
+        EXPECT_LE(planet.energy, 100);
+        EXPECT_GE(planet.metal, 0);
+        EXPECT_LE(planet.metal, 100);
+        EXPECT_GE(planet.fuel, 0);
+        EXPECT_LE(planet.fuel, 100);
+        EXPECT_EQ(planet.population, 0.0);
+        EXPECT_EQ(planet.infrastructure, 0.0);
+        EXPECT_EQ(planet.owner, -1);
+        EXPECT_EQ(planet.original_owner, -1);
+    }
+
+    {
+        planet_t planet = {
+            .system_id = 0,
+            .mass_kg = 5.683e26,
+            .orbit_au = 9.5f
+        };
+
+        // forced planet type for test
+        planet.planet_type = planet_type_t::gas_giant;
+        bool const habitable =
+            generation::detail::generate_planet(planet, system);
+        // Make sure the testing-only forced-type logic works.
+        EXPECT_EQ(planet.planet_type, planet_type_t::gas_giant);
+
+        // These should be unchanged.
+        EXPECT_EQ(planet.mass_kg, 5.683e26);
+        EXPECT_EQ(planet.orbit_au, 9.5f);
+
+        EXPECT_GT(planet.radius_km, 0.0);
+        EXPECT_GT(planet.orbital_period_y, 0.0);
+        EXPECT_GT(planet.gravity_g, 0.0);
+        EXPECT_GE(planet.axial_tilt_d, 0.0);
+        EXPECT_LE(planet.axial_tilt_d, 90.0);
+        EXPECT_GT(planet.day_h, 0.0);
+        EXPECT_GT(planet.surface_temperature_k, 0.0);
+        EXPECT_LT(planet.surface_temperature_k, 2000.0);
+        EXPECT_GE(planet.magnetosphere_strength, 0.0);
+        EXPECT_EQ(planet.atmopsheric_pressure, atmos_millions);
+        EXPECT_GE(planet.o2_co2_suitability, 0.0);
+        EXPECT_LE(planet.o2_co2_suitability, 1.0);
+        EXPECT_EQ(planet.ocean_coverage, n_a);
+        EXPECT_EQ(planet.atmosphere_type,
+                  atmosphere_type_t::gas_giant_atmosphere);
+        EXPECT_GE(planet.water, 0);
+        EXPECT_LE(planet.water, 10);
+        EXPECT_EQ(planet.food, 0);
+        EXPECT_GE(planet.energy, 0);
+        EXPECT_LE(planet.energy, 10);
+        EXPECT_GE(planet.metal, 0);
+        EXPECT_LE(planet.metal, 10);
+        EXPECT_GE(planet.fuel, 0);
+        EXPECT_LE(planet.fuel, 10);
+        EXPECT_EQ(planet.population, 0.0);
+        EXPECT_EQ(planet.infrastructure, 0.0);
+        EXPECT_EQ(planet.owner, -1);
+        EXPECT_EQ(planet.original_owner, -1);
+    }
+
+    {
+        planet_t planet = {
+            .system_id = 0,
+            .mass_kg = 8.681e25,
+            .orbit_au = 19.2f
+        };
+
+        // forced planet type for test
+        planet.planet_type = planet_type_t::ice_giant;
+        bool const habitable =
+            generation::detail::generate_planet(planet, system);
+        // Make sure the testing-only forced-type logic works.
+        EXPECT_EQ(planet.planet_type, planet_type_t::ice_giant);
+
+        // These should be unchanged.
+        EXPECT_EQ(planet.mass_kg, 8.681e25);
+        EXPECT_EQ(planet.orbit_au, 19.2f);
+
+        EXPECT_GT(planet.radius_km, 0.0);
+        EXPECT_GT(planet.orbital_period_y, 0.0);
+        EXPECT_GT(planet.gravity_g, 0.0);
+        EXPECT_GE(planet.axial_tilt_d, 0.0);
+        EXPECT_LE(planet.axial_tilt_d, 90.0);
+        EXPECT_GT(planet.day_h, 0.0);
+        EXPECT_GT(planet.surface_temperature_k, 0.0);
+        EXPECT_LT(planet.surface_temperature_k, 2000.0);
+        EXPECT_GE(planet.magnetosphere_strength, 0.0);
+        EXPECT_EQ(planet.atmopsheric_pressure, atmos_thousands);
+        EXPECT_GE(planet.o2_co2_suitability, 0.0);
+        EXPECT_LE(planet.o2_co2_suitability, 1.0);
+        EXPECT_EQ(planet.ocean_coverage, n_a);
+        EXPECT_EQ(planet.atmosphere_type,
+                  atmosphere_type_t::ice_giant_atmosphere);
+        EXPECT_GE(planet.water, 0);
+        EXPECT_LE(planet.water, 10);
+        EXPECT_EQ(planet.food, 0);
+        EXPECT_GE(planet.energy, 0);
+        EXPECT_LE(planet.energy, 10);
+        EXPECT_GE(planet.metal, 0);
+        EXPECT_LE(planet.metal, 10);
+        EXPECT_GE(planet.fuel, 0);
+        EXPECT_LE(planet.fuel, 10);
+        EXPECT_EQ(planet.population, 0.0);
+        EXPECT_EQ(planet.infrastructure, 0.0);
+        EXPECT_EQ(planet.owner, -1);
+        EXPECT_EQ(planet.original_owner, -1);
     }
 }
