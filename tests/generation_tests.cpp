@@ -1393,3 +1393,56 @@ TEST(generation_tests, generate_star)
         EXPECT_NEAR(1.0 * counts[7] / n, props[7].frequency_, 0.01);
     }
 }
+
+// Nearly everything in this function is a random roll, so this is mostly for
+// eyeball debugging (getting a rough sense of the way planets are
+// distributed, etc.)
+TEST(generation_tests, generate_system)
+{
+    hex_coord_t const hc{0, 0};
+    int const map_height = 11;
+    auto const pos = hex_position(hc, map_height);
+    int const system_id = 0;
+
+    std::vector<planet_t> all_planets;
+
+    std::vector<double> radii;
+    std::vector<double> masses;
+    auto get_intermediate_values = [&](
+        system_t & s, int i, std::vector<double> const & r,
+        std::vector<double> const & m,
+        std::ranges::subrange<std::vector<planet_t>::iterator> ps) {
+        radii = std::move(r);
+        masses = std::move(m);
+        return false;
+    };
+
+    {
+        system_t system;
+        while (system.star.solar_luminosities < 0.8 || 1.2 < system.star.solar_luminosities) {
+            bool const inhabitable = generation::detail::generate_system_impl(
+                system, all_planets, hc, pos, system_id, get_intermediate_values);
+        }
+
+        dump(system);
+
+        std::cout << "\n";
+
+        EXPECT_NE(system.first_planet, system.last_planet);
+        std::cout << std::format("{} planets\n", system.last_planet - system.first_planet);
+
+        std::cout << "\n";
+
+        for (auto r : radii) {
+            std::cout << std::format("{:.3g} AU ", r);
+        }
+        std::cout << "\n";
+
+        std::cout << "\n";
+
+        for (auto m : masses) {
+            std::cout << std::format("{:.3g} kg ", m);
+        }
+        std::cout << "\n";
+    }
+}

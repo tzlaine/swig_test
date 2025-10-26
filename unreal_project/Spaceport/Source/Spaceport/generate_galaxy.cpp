@@ -528,7 +528,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     planet.growth_factor = growth_factor;
 
     auto clamp_res = [](int x) {
-        return std::clamp(min_resource_value, x, min_resource_value);
+        return std::clamp(x, min_resource_value, max_resource_value);
     };
 
     // This scale represents moons that a gas/ice giant has, which may
@@ -590,120 +590,6 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     planet.original_owner = -1;
 
     return growth_factor_considered_habitable < growth_factor;
-}
-
-bool generation::detail::generate_system(
-    system_t & system, std::vector<planet_t> & planets,
-    hex_coord_t hc, point_2d hex_world_pos, int system_id)
-{
-    // system.name = TODO;
-
-    system.coord = hc;
-    system.star = generate_star();
-
-    system.first_planet = planets.size();
-
-    // TODO: See if generating 100s or 1000s of rolls at once is faster.
-    double x_roll = random_unit_double();
-    double y_roll = hex_height * random_unit_double();
-
-    /* The (x,y) rolled above is mapped onto a rectangle that represents
-       all the locations within the hex.  Since a hex does not exactly
-       cover a rectangle, the left-side corners are snipped off and put on
-       the right to form the rectangle, as shown below.
-           
-       |-----|
-       |   \ | <- missing lower left segment of hex
-       |    \|
-       |    /|
-       |   / | <- missing upper left segment of hex
-       |-----|
-    */
-
-    if (0.5 < x_roll) {
-        if (hex_height / 2.0 < y_roll)
-            y_roll -= hex_height / 2.0;
-        else
-            y_roll += hex_height / 2.0;
-        x_roll -= 1.0;
-    }
-
-    // Now the corners on the left are at x=-0.5 to x=0.0; correct.
-    x_roll += 0.5;
-
-    // Change coord to be relative to hex center. TODO?
-    //x_roll -= hex_width / 2.0;
-    //y_roll -= hex_height / 2.0;
-
-    system.world_pos_x = hex_world_pos.x + x_roll;
-    system.world_pos_y = hex_world_pos.y + y_roll;
-
-    // 35 comes from Neptune's orbit at about 30AU, and adding a little.
-    // The * solar_masses is there because the size of the accretion disk
-    // that formed this system is vaguely proportional to the mass of the
-    // star.
-    double const protostar_disk_radius_au =
-        35.0 * system.star.solar_masses;
-    std::gamma_distribution<double> gamma_dist(1.0, 1.5);
-
-    std::vector<double> radii; // in AU
-    radii.push_back(0.25 * system.star.solar_masses);
-    while (radii.back() < protostar_disk_radius_au) {
-        double next_pos_au =
-            radii.back() * (1.0 + random_number(gamma_dist));
-        radii.push_back(next_pos_au);
-    }
-    radii.back() = std::min(radii.back(), protostar_disk_radius_au);
-
-    // Create area/masses for each planet.
-    // Also, replace radii with midpoint between near/far.
-    std::vector<double> masses(radii.size());
-    double sum_of_masses = 0.0;
-    std::transform(radii.begin(), radii.end() - 1, radii.begin() + 1,
-                   masses.begin(), [&](double & near, double far) {
-                       // Area of the accretion disk that was involved in
-                       // forming this planet.
-                       double const retval =
-                           std::numbers::pi * (far * far - near * near);
-                       sum_of_masses += retval;
-                       near = (near + far) / 2.0;
-                       return retval;
-                   });
-    radii.pop_back();
-
-    // Replace masses with fractions of sum of mass of all planets, then
-    // scale that to kg based on the Solar sytem.
-    std::transform(
-        masses.begin(), masses.end(), masses.begin(), [&](double mass) {
-            return mass / sum_of_masses *
-                mass_of_solar_system_planets_kg * system.star.solar_masses;
-        });
-
-    planets.resize(planets.size() + masses.size());
-    system.last_planet = planets.size();
-
-    std::ranges::subrange const system_planets(
-        planets.end() -  masses.size(), planets.end());
-    bool has_habitable_planet = false;
-    auto radii_it = radii.begin();
-    auto masses_it = masses.begin();
-    for (auto & planet : system_planets) {
-        planet.system_id = system_id;
-        planet.orbit_au = *radii_it++;
-        planet.mass_kg = *masses_it++;
-
-        double const orbital_radius_m = 1000.0 * planet.orbit_au * au_to_km;
-        double const orbital_period_s = std::sqrt(
-            4 * std::numbers::pi * std::numbers::pi *
-            orbital_radius_m * orbital_radius_m * orbital_radius_m /
-            G * (system.star.solar_masses * sun_mass_kg + planet.mass_kg));
-        planet.orbital_period_y = orbital_period_s / years_to_seconds;
-
-        if (generate_planet(planet, system))
-            has_habitable_planet = true;
-    }
-
-    return has_habitable_planet;
 }
 
 void generation::generate_galaxy(game_start_params const & params,
