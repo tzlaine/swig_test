@@ -1704,11 +1704,9 @@ TEST(generation_tests, generate_hex)
         game_state.systems.size());
 }
 
-#if 0
 TEST(generation_tests, generate_galaxy)
 {
     game_start_params params;
     game_state_t game_state;
     generation::generate_galaxy(params, game_state);
 }
-#endif
