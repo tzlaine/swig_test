@@ -33,6 +33,7 @@ enum class mission_t {
     build_starbase = 68,
     upgrade_base = 69,
 };
+inline auto operator<=>(mission_t x, mission_t y) { return (int)x <=> (int)y; }
 
 struct hex_coord_t
 {

@@ -256,6 +256,9 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
 {0}inline flags<{1}> operator|({1} x, {1} y) {{ return flags(x) | y; }}
 {0}inline flags<{1}> operator~({1} x) {{ return ~flags(x); }}
 '''.format(indent_str(depth), enum_descriptor_proto.name, ored_enumerators))
+    else:
+        hpp_file.write('''{0}inline auto operator<=>({1} x, {1} y) {{ return (int)x <=> (int)y; }}
+'''.format(indent_str(depth), enum_descriptor_proto.name))
 
     formatters_file.write('''{0}        return std::formatter<std::string_view>::format(name, ctx);
 {0}    }}

@@ -21,6 +21,7 @@ enum class planet_type_t {
     gas_giant = 2,
     ice_giant = 3,
 };
+inline auto operator<=>(planet_type_t x, planet_type_t y) { return (int)x <=> (int)y; }
 
 enum class atmosphere_type_t {
     invalid_atmosphere_type = 0,
@@ -31,6 +32,7 @@ enum class atmosphere_type_t {
     gas_giant_atmosphere = 5,
     ice_giant_atmosphere = 6,
 };
+inline auto operator<=>(atmosphere_type_t x, atmosphere_type_t y) { return (int)x <=> (int)y; }
 
 enum class planet_effect_target_t {
     invalid_planet_effect_target = 0,
@@ -51,6 +53,7 @@ enum class planet_effect_target_t {
     infrastructure = 15,
     max_population = 16,
 };
+inline auto operator<=>(planet_effect_target_t x, planet_effect_target_t y) { return (int)x <=> (int)y; }
 
 enum class planet_effect_mod_t : unsigned int {
     invalid_planet_effect_mod = 0,
@@ -66,6 +69,7 @@ enum class effect_op_t {
     add = 1,
     multiply = 2,
 };
+inline auto operator<=>(effect_op_t x, effect_op_t y) { return (int)x <=> (int)y; }
 
 enum class star_class_t {
     invalid_star_class = 0,
@@ -77,6 +81,7 @@ enum class star_class_t {
     k = 6,
     m = 7,
 };
+inline auto operator<=>(star_class_t x, star_class_t y) { return (int)x <=> (int)y; }
 
 struct unit_design_t
 {
