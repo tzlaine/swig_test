@@ -1679,6 +1679,31 @@ TEST(generation_tests, generate_planet)
     }
 }
 
+TEST(generation_tests, generate_hex)
+{
+    game_start_params const params = {};
+    int const first_hex_index = 3;
+    int const last_hex_index = 10;
+    int const habitable_systems_per_hex = 5;
+    game_state_t game_state;
+    auto const [map_radius, bulge_radius, center_hex, center_hex_pos] =
+        generation::detail::galaxy_shape(params, game_state);
+
+    for (int i = first_hex_index; i < last_hex_index; ++i) {
+        hex_t hex;
+        generation::detail::generate_hex(
+            hex, i, game_state, params, map_radius, bulge_radius, center_hex,
+            center_hex_pos, habitable_systems_per_hex);
+
+        EXPECT_LE((size_t)habitable_systems_per_hex,
+                  hex.last_system - hex.first_system);
+    }
+    std::cout << std::format(
+        "Generated {} habitable systems, {} systems total.\n",
+        (last_hex_index - first_hex_index) * habitable_systems_per_hex,
+        game_state.systems.size());
+}
+
 #if 0
 TEST(generation_tests, generate_galaxy)
 {

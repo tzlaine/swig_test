@@ -1,7 +1,6 @@
 #include "constants.hpp"
 #include "effects.hpp"
 #include "generate_galaxy.hpp"
-#include "game_data_t.hpp"
 #include "rng.hpp"
 
 #include <numbers>
@@ -583,6 +582,9 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
             moon_factor * random_number(resource_dist));
     }
 
+    // TODO: Give each hex a bias (+ive or -ive) for fuel and metal, since
+    // presence of heavy elements is stellar-neighborhood-dependent.
+
     if (planet.planet_type == planet_type_t::rocky) {
         double const scale = planet.magnetosphere_strength ?
             planet.magnetosphere_strength : 1.0;
@@ -660,22 +662,8 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
 void generation::generate_galaxy(game_start_params const & params,
                                  game_state_t & game_state)
 {
-    // in world units
-    double const map_radius = params.map_height / 2.0 * hex_height;
-    // + hex_height/2 allows room for center hex
-    double const bulge_radius = map_radius / 10.0 + hex_height / 2.0;
-
-    // in hexes
-    game_state.map_height = params.map_height;
-    game_state.map_width = params.map_height / (hex_width / hex_height);
-    if (game_state.map_width % 2 == 0)
-        ++game_state.map_width;
-    game_state.hexes.resize(game_state.map_width * game_state.map_height);
-
-   hex_coord_t const center_hex{
-       game_state.map_width / 2, game_state.map_height / 2};
-   point_2d const center_hex_pos =
-       hex_position(center_hex, game_state.map_height);
+    auto [map_radius, bulge_radius, center_hex, center_hex_pos] =
+        detail::galaxy_shape(params, game_state);
 
    std::normal_distribution<double> habitable_systems_dist(
        params.habtitable_systems_per_hex_mean,
