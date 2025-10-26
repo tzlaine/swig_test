@@ -643,6 +643,13 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
         return;
 #endif
 
+    // TODO: Since this is probabilistic, we can end up with a truly large
+    // number of systems in a single hex.  Consider clamping the number to
+    // something like 50 or 100.
+
+    // TODO: With a fairly large number of systems in a hex, also consider
+    // giving each of them a vertical coordinate.
+
     int habitable_systems_so_far = 0;
     while ((habitable_systems &&
             habitable_systems_so_far < habitable_systems) ||
