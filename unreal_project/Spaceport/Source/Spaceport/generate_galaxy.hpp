@@ -133,13 +133,64 @@ namespace generation {
 
         star_t generate_star(double roll = random_unit_double());
 
+#if !defined(BUILD_FOR_TEST)
+        // TODO: Call this with TEXT("star_names") and put the result
+        // somewhere central.
+        inline TArray<FName> get_string_table_keys(TCHAR table)
+        {
+            FStringTablePtr const string_table =
+                FStringTableRegistry::Get().FindStringTable(table);
+            TArray<FName> string_table_keys;
+            if (!string_table.IsValid())
+                return {};
+            string_table->GetKeys(string_table_keys);
+            return std::move(string_table_keys);
+        }
+
+        inline adobe::name_t new_star_name(
+            int index, TArray<FName> const & string_table_keys)
+        {
+            int const size = string_table_keys.Num();
+            if (!size)
+                return adobe::name_t("Invalid 'star_names' string table");
+
+            int const cycles = index / size;
+            bool const needs_new_prefix = cycles == 1;
+            if (1 < cycles)
+                return adobe::name_t("Ran out of star names");
+            index %= size;
+
+            FName const key = string_table_keys[random_int(0, size - 1)];
+            if (key.IsNone())
+                return adobe::name_t("Null key in 'star_names' string table");
+
+            FString const value = string_table->GetTableEntry(key).ToString();
+            std::string string_copy = TCHAR_TO_UTF8(*value);
+
+            if (needs_new_prefix) {
+                // TODO: Make a new system name by jamming the localized "New
+                // " on the front of this index's name.
+            }
+
+            return adobe::name_t(string_copy.c_str());
+        }
+#endif
+
         template<typename GenPlanetsFn>
         bool generate_system_impl(
             system_t & system, std::vector<planet_t> & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id,
             GenPlanetsFn && gen_planets)
         {
-            // system.name = TODO;
+#if !defined(BUILD_FOR_TEST)
+            // TODO: Consider only giving a star a name once it has a colony
+            // or other permanent assets in it.  Another possibility would be
+            // to only give habitable systems names.
+
+            // TODO: Need a stored star_name_string_table_keys somewhere.
+            // Create this with get_string_table_keys above.
+            system.name = new_star_name(system_id, star_name_string_table_keys);
+#endif
 
             system.coord = hc;
             system.star = generate_star();
