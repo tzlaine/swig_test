@@ -104,16 +104,7 @@ namespace generation {
         bool generate_planet(planet_t & planet, system_t const & system);
 
         using planets_scratch = std::vector<planet_t>;
-
-        struct system_scratch
-        {
-            system_t system_;
-            planets_scratch planets_;
-        };
-
-        void swap(system_scratch & l, int l_id, system_scratch & r, int r_id);
-
-        using hex_scratch = std::vector<system_scratch>;
+        using hex_scratch = std::vector<planets_scratch>;
 
         struct scratch_space
         {
@@ -132,7 +123,6 @@ namespace generation {
             auto radii_it = radii.begin();
             auto masses_it = masses.begin();
             for (auto & planet : system_planets) {
-                planet.system_id = system_id;
                 planet.orbit_au = *radii_it++;
                 planet.mass_kg = *masses_it++;
                 if (generate_planet(planet, system))

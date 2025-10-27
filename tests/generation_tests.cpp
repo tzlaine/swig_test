@@ -1690,6 +1690,7 @@ TEST(generation_tests, generate_hex)
     game_state_t game_state;
     auto const [map_radius, bulge_radius, center_hex, center_hex_pos] =
         generation::detail::galaxy_shape(params, game_state);
+    game_state.systems.resize(game_state.hexes.size() * systems_per_hex);
 
     for (int i = first_hex_index; i < last_hex_index; ++i) {
         hex_t hex;

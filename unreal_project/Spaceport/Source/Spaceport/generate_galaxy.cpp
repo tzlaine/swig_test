@@ -351,18 +351,6 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     return retval;
 }
 
-void generation::detail::swap(system_scratch & l, int l_id, system_scratch & r, int r_id)
-{
-    std::swap(l.system_, r.system_);
-    std::swap(l.planets_, r.planets_);
-    for (auto & planet : l.planets_) {
-        planet.system_id = r_id;
-    }
-    for (auto & planet : r.planets_) {
-        planet.system_id = l_id;
-    }
-}
-
 // See: https://en.wikipedia.org/wiki/Sun
 
 // TODO: See if generating 100s or 1000s of rolls at once is faster.
@@ -638,6 +626,9 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
         hex_index % game_state.map_width, hex_index / game_state.map_width};
     hex.coord = hc;
 
+    hex.first_system = hex_index * systems_per_hex;
+    hex.last_system = hex.first_system + systems_per_hex;
+
     auto const pos = hex_position(hc, game_state.map_height);
     if (within(center_hex_pos, pos, bulge_radius)) {
         if (hc == center_hex)
@@ -664,15 +655,14 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
 
     int first_uninhabitable_index = 0;
     for (int i = 0; i < systems_per_hex; ++i) {
-        auto & [system, planets] = scratch[i];
-        if (detail::generate_system(
-                system, planets, hc, pos, hex.first_system + i)) {
+        auto & planets = scratch[i];
+        int const system_index = hex.first_system + i;
+        if (detail::generate_system(game_state.systems[system_index], planets,
+                                    hc, pos, system_index)) {
             auto first_uninhabitable_it =
                 scratch.begin() + first_uninhabitable_index;
-            if (first_uninhabitable_it != scratch.end()) {
-                swap(*first_uninhabitable_it, first_uninhabitable_index,
-                     scratch[i], i);
-            }
+            if (first_uninhabitable_it != scratch.end())
+                std::swap(*first_uninhabitable_it, scratch[i]);
             ++first_uninhabitable_index;
         }
     }
@@ -680,9 +670,10 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     // If we happened not to generate enough habitable systems in the first
     // systems_per_hex generated systems, keep going as long as necessary.
     while (first_uninhabitable_index < habitable_systems) {
-        auto & [system, planets] = scratch[first_uninhabitable_index];
-        if (detail::generate_system(
-                system, planets, hc, pos, first_uninhabitable_index)) {
+        auto & planets = scratch[first_uninhabitable_index];
+        int const system_index = hex.first_system + first_uninhabitable_index;
+        if (detail::generate_system(game_state.systems[system_index], planets,
+                                    hc, pos, system_index)) {
             ++first_uninhabitable_index;
         }
     }
@@ -715,6 +706,7 @@ void generation::generate_galaxy(game_start_params const & params,
        params.habtitable_systems_per_hex_std_dev);
 
    detail::scratch_space scratch(game_state.hexes.size());
+   game_state.systems.resize(game_state.hexes.size() * systems_per_hex);
 
    std::atomic_int hexes_generated = 0;
 
@@ -744,23 +736,25 @@ void generation::generate_galaxy(game_start_params const & params,
    }
 
    hex_index = 0;
+   int system_id = 0;
    for (auto & hex : game_state.hexes) {
-       auto const & hex_scratch_ = scratch.hexes_[hex_index];
-
-       auto const prev_size = game_state.systems.size();
-       hex.first_system = prev_size;
-       game_state.systems.resize(prev_size + hex_scratch_.size());
-       hex.last_system = hex_scratch_.size();
-
-       auto system_it = game_state.systems.begin() + prev_size;
-       for (auto & [system, planets] : hex_scratch_) {
+       auto & hex_scratch_ = scratch.hexes_[hex_index];
+       auto system_it = game_state.systems.begin() + system_id;
+       for (auto & planets : hex_scratch_) {
            auto const prev_size = game_state.planets.size();
            game_state.planets.resize(prev_size + planets.size());
+           for (auto & planet : planets) {
+               planet.system_id = system_id;
+           }
            std::ranges::move(planets, game_state.planets.begin() + prev_size);
-           *system_it = std::move(system);
            system_it->first_planet = prev_size;
            system_it->last_planet = game_state.planets.size();
-           system_it++;
+           assert(game_state.planets[system_it->first_planet].system_id ==
+                  system_id);
+           assert(game_state.planets[system_it->last_planet - 1].system_id ==
+                  system_id);
+           ++system_it;
+           ++system_id;
        }
 
        ++hex_index;
