@@ -4,6 +4,9 @@
 #include "game_data_t.hpp"
 #include "rng.hpp"
 
+#include <boost/container/small_vector.hpp>
+
+#include <array>
 #include <numbers>
 
 
@@ -102,10 +105,30 @@ namespace generation {
 
         bool generate_planet(planet_t & planet, system_t const & system);
 
+        struct scratch_space
+        {
+            scratch_space(int n) : num_systems_(n), systems_(n) {}
+
+            using planets_type = boost::container::small_vector<planet_t, 8>;
+
+            struct system_scratch
+            {
+                system_t system_;
+                planets_type planets_;
+            };
+
+            std::atomic_int hexes_generated_ = 0;
+
+            // for all these, index is the hex's index % num_systems_.size()
+            std::vector<int> num_systems_;
+            std::vector<std::array<system_scratch, max_systems_per_hex>> systems_;
+        };
+
         inline bool generate_system_planets(
             system_t & system, int system_id, std::vector<double> const & radii,
             std::vector<double> const & masses,
-            std::ranges::subrange<std::vector<planet_t>::iterator> system_planets)
+            std::ranges::subrange<scratch_space::planets_type::iterator>
+            system_planets)
         {
             bool has_habitable_planet = false;
             auto radii_it = radii.begin();
@@ -168,7 +191,7 @@ namespace generation {
 
         template<typename GenPlanetsFn>
         bool generate_system_impl(
-            system_t & system, std::vector<planet_t> & planets,
+            system_t & system, scratch_space::planets_type & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id,
             GenPlanetsFn && gen_planets)
         {
@@ -184,8 +207,6 @@ namespace generation {
 
             system.coord = hc;
             system.star = generate_star();
-
-            system.first_planet = planets.size();
 
             // TODO: See if generating 100s or 1000s of rolls at once is faster.
             double x_roll = random_unit_double();
@@ -277,7 +298,6 @@ namespace generation {
                 });
 
             planets.resize(planets.size() + masses.size());
-            system.last_planet = planets.size();
 
             return gen_planets(
                 system, system_id, radii, masses,
@@ -285,7 +305,7 @@ namespace generation {
         }
 
         inline bool generate_system(
-            system_t & system, std::vector<planet_t> & planets,
+            system_t & system, scratch_space::planets_type & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id)
         {
             return generate_system_impl(
@@ -325,7 +345,8 @@ namespace generation {
                           double map_radius, double bulge_radius,
                           hex_coord_t center_hex,
                           point_2d center_hex_pos,
-                          int habitable_systems);
+                          int habitable_systems,
+                          scratch_space & scratch);
 
 #if defined(BUILD_FOR_TEST)
         inline bool g_skip_system_generation_for_testing = false;

@@ -1401,14 +1401,13 @@ TEST(generation_tests, generate_system)
     auto const pos = hex_position(hc, map_height);
     int const system_id = 0;
 
-    std::vector<planet_t> all_planets;
+    generation::detail::scratch_space::planets_type all_planets;
 
     std::vector<double> radii;
     std::vector<double> masses;
     auto get_intermediate_values = [&](
         system_t & s, int i, std::vector<double> const & r,
-        std::vector<double> const & m,
-        std::ranges::subrange<std::vector<planet_t>::iterator> ps) {
+        std::vector<double> const & m, auto ps) {
         radii = std::move(r);
         masses = std::move(m);
         return false;
@@ -1417,8 +1416,10 @@ TEST(generation_tests, generate_system)
     {
         system_t system;
         while (system.star.solar_luminosities < 0.8 || 1.2 < system.star.solar_luminosities) {
-            bool const inhabitable = generation::detail::generate_system_impl(
+            system.first_planet = all_planets.size();
+            generation::detail::generate_system_impl(
                 system, all_planets, hc, pos, system_id, get_intermediate_values);
+            system.last_planet = all_planets.size();
         }
 
         dump(system);
@@ -1689,11 +1690,13 @@ TEST(generation_tests, generate_hex)
     auto const [map_radius, bulge_radius, center_hex, center_hex_pos] =
         generation::detail::galaxy_shape(params, game_state);
 
+    generation::detail::scratch_space
+        scratch(last_hex_index - first_hex_index);
     for (int i = first_hex_index; i < last_hex_index; ++i) {
         hex_t hex;
         generation::detail::generate_hex(
             hex, i, game_state, params, map_radius, bulge_radius, center_hex,
-            center_hex_pos, habitable_systems_per_hex);
+            center_hex_pos, habitable_systems_per_hex, scratch);
 
         EXPECT_LE((size_t)habitable_systems_per_hex,
                   hex.last_system - hex.first_system);

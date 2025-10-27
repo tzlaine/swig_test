@@ -616,8 +616,17 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
                                       double map_radius, double bulge_radius,
                                       hex_coord_t center_hex,
                                       point_2d center_hex_pos,
-                                      int habitable_systems)
+                                      int habitable_systems,
+                                      scratch_space & scratch)
 {
+    int const scratch_hex_index = hex_index % scratch.num_systems_.size();
+
+    struct scope_increment {
+        scope_increment(scratch_space & scratch) : scratch_(scratch) {}
+        ~scope_increment() { ++scratch_.hexes_generated_; }
+        scratch_space & scratch_;
+    } _(scratch);
+
     hex_coord_t const hc{
         hex_index % game_state.map_width, hex_index / game_state.map_width};
     hex.coord = hc;
@@ -635,17 +644,11 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     }
 
     hex.province_id = prov_none;
-    hex.first_system = game_state.systems.size();
 
 #if defined(BUILD_FOR_TEST)
-    hex.last_system = game_state.systems.size();
     if (detail::g_skip_system_generation_for_testing)
         return;
 #endif
-
-    // TODO: Since this is probabilistic, we can end up with a truly large
-    // number of systems in a single hex.  Consider clamping the number to
-    // something like 50 or 100.
 
     // TODO: With a fairly large number of systems in a hex, also consider
     // giving each of them a vertical coordinate.
@@ -654,16 +657,20 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     while ((habitable_systems &&
             habitable_systems_so_far < habitable_systems) ||
            (!habitable_systems &&
-            game_state.systems.size() - hex.first_system < 20u)) {
-        game_state.systems.push_back(system_t());
+            scratch.num_systems_[scratch_hex_index] < 20)) {
+        int & curr_num_systems = scratch.num_systems_[scratch_hex_index];
+        // TODO: Ditch some of the uninhabitable systems from the scratch
+        // space to make room for generation of new systems.
+        if (curr_num_systems == max_systems_per_hex)
+            break;
+        auto & [system, planets] =
+            scratch.systems_[scratch_hex_index][curr_num_systems];
         if (detail::generate_system(
-                game_state.systems.back(), game_state.planets,
-                hc, pos, hex.first_system + habitable_systems_so_far)) {
+                system, planets, hc, pos,
+                hex.first_system + habitable_systems_so_far)) {
             ++habitable_systems_so_far;
         }
     }
-
-    hex.last_system = game_state.systems.size();
 }
 
 void generation::generate_galaxy(game_start_params const & params,
@@ -679,13 +686,69 @@ void generation::generate_galaxy(game_start_params const & params,
    // TODO: The hexes can be generated in parallel; so can the individual
    // stars within the hex.
 
-   int hex_index = -1;
+   double const max_mb_per_hex = 1.0 * max_systems_per_hex *
+       (sizeof(system_t) + sizeof(int) +
+        sizeof(detail::scratch_space::planets_type)) / 1024.0;
+
+   int const hexes_per_batch = (std::min<int>)(
+       max_mb_scratch_during_generation / max_mb_per_hex,
+       game_state.hexes.size());
+
+   int const total_hexes = game_state.hexes.size();
+
+   int hex_index = 0;
+   int batch_initial_hex_index = hex_index;
+   int hexes_remaining = total_hexes;
+   int hexes_this_batch = (std::min)(hexes_remaining, hexes_per_batch);
+   detail::scratch_space scratch(hexes_this_batch);
+   auto const commit_this_batch = [&](hex_t & hex) {
+       while (scratch.hexes_generated_.load() < hexes_this_batch) {
+           std::this_thread::sleep_for(std::chrono::milliseconds(10));
+       }
+
+       int curr_hex_index = batch_initial_hex_index;
+       for (auto & array : scratch.systems_) {
+           int const scratch_hex_index =
+               curr_hex_index % scratch.num_systems_.size();
+           int const num_systems = scratch.num_systems_[scratch_hex_index];
+           hex.first_system = game_state.systems.size();
+           auto const systems = std::ranges::subrange(
+               array.begin(), array.begin() + num_systems);
+           for (auto & sys : systems) {
+               game_state.systems.push_back(std::move(sys.system_));
+               auto & system = game_state.systems.back();
+               system.first_planet = game_state.planets.size();
+               system.last_planet = system.first_planet + sys.planets_.size();
+               game_state.planets.resize(
+                   game_state.planets.size() + sys.planets_.size());
+               auto const it = game_state.planets.begin() +
+                   system.first_planet;
+               std::ranges::move(sys.planets_, it);
+           }
+           hex.last_system = game_state.systems.size();
+           ++curr_hex_index;
+       }
+
+       batch_initial_hex_index = hex_index;
+       hexes_remaining -= hexes_this_batch;
+       hexes_this_batch = (std::min)(hexes_remaining, hexes_per_batch);
+       if (hexes_remaining <= 0)
+           return;
+
+       scratch.num_systems_.clear();
+       scratch.num_systems_.resize(hexes_this_batch);
+       scratch.systems_.clear();
+       scratch.systems_.resize(hexes_this_batch);
+   };
+
    for (auto & hex : game_state.hexes) {
-       ++hex_index;
        auto const habitable_systems =
            int(std::round(random_number(habitable_systems_dist)));
        detail::generate_hex(hex, hex_index, game_state, params,
                             map_radius, bulge_radius,
-                            center_hex, center_hex_pos, habitable_systems);
+                            center_hex, center_hex_pos,
+                            habitable_systems, scratch);
+       if (++hex_index == hexes_this_batch)
+           commit_this_batch(hex);
    }
 }

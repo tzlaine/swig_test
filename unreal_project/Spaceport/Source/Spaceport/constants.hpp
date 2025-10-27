@@ -36,6 +36,9 @@ inline constexpr int max_resource_value = 100;
 inline constexpr int energy_from_solar = 25;
 inline constexpr int energy_from_wind = 25;
 inline constexpr double gas_giant_moon_resource_factor = 0.1;
+inline constexpr int max_systems_per_hex = 50;
+inline constexpr int max_planets_per_system = 10;
+inline constexpr int max_mb_scratch_during_generation = 5000;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);
