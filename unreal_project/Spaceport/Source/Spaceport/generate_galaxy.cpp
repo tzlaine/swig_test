@@ -351,6 +351,18 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     return retval;
 }
 
+void generation::detail::swap(system_scratch & l, int l_id, system_scratch & r, int r_id)
+{
+    std::swap(l.system_, r.system_);
+    std::swap(l.planets_, r.planets_);
+    for (auto & planet : l.planets_) {
+        planet.system_id = r_id;
+    }
+    for (auto & planet : r.planets_) {
+        planet.system_id = l_id;
+    }
+}
+
 // See: https://en.wikipedia.org/wiki/Sun
 
 // TODO: See if generating 100s or 1000s of rolls at once is faster.
@@ -620,6 +632,8 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
                                       int habitable_systems,
                                       hex_scratch & scratch)
 {
+    assert(habitable_systems < systems_per_hex);
+
     hex_coord_t const hc{
         hex_index % game_state.map_width, hex_index / game_state.map_width};
     hex.coord = hc;
@@ -646,29 +660,34 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     // TODO: With a fairly large number of systems in a hex, also consider
     // giving each of them a vertical coordinate.
 
-    // TODO: Now that we put a limit on systems in a hex, should we make all
-    // hexes have exactly the limit of systems?
+    scratch.resize(systems_per_hex);
 
-    int habitable_systems_so_far = 0;
     int first_uninhabitable_index = 0;
-    while ((habitable_systems &&
-            habitable_systems_so_far < habitable_systems) ||
-           (!habitable_systems && scratch.size() < 20u)) {
-        scratch.resize(scratch.size() + 1);
-        auto & [system, planets] = scratch.back();
+    for (int i = 0; i < systems_per_hex; ++i) {
+        auto & [system, planets] = scratch[i];
         if (detail::generate_system(
-                system, planets, hc, pos,
-                hex.first_system + habitable_systems_so_far)) {
-            ++habitable_systems_so_far;
+                system, planets, hc, pos, hex.first_system + i)) {
             auto first_uninhabitable_it =
                 scratch.begin() + first_uninhabitable_index;
-            if (first_uninhabitable_it != scratch.end())
-                std::swap(*first_uninhabitable_it, scratch.back());
+            if (first_uninhabitable_it != scratch.end()) {
+                swap(*first_uninhabitable_it, first_uninhabitable_index,
+                     scratch[i], i);
+            }
             ++first_uninhabitable_index;
         }
     }
 
-#if 0 // Just a debug check.
+    // If we happened not to generate enough habitable systems in the first
+    // systems_per_hex generated systems, keep going as long as necessary.
+    while (first_uninhabitable_index < habitable_systems) {
+        auto & [system, planets] = scratch[first_uninhabitable_index];
+        if (detail::generate_system(
+                system, planets, hc, pos, first_uninhabitable_index)) {
+            ++first_uninhabitable_index;
+        }
+    }
+
+#if 0
     auto const first_uninhab = std::ranges::find_if(scratch, [](auto const & e) {
         return std::ranges::none_of(e.planets_, [] (auto const & e2) {
             return growth_factor_considered_habitable <= e2.growth_factor;
@@ -734,11 +753,7 @@ void generation::generate_galaxy(game_start_params const & params,
        hex.last_system = hex_scratch_.size();
 
        auto system_it = game_state.systems.begin() + prev_size;
-       std::ranges::subrange systems(
-           hex_scratch_.begin(),
-           hex_scratch_.begin() +
-           (std::min<int>)(hex_scratch_.size(), max_systems_per_hex));
-       for (auto & [system, planets] : systems) {
+       for (auto & [system, planets] : hex_scratch_) {
            auto const prev_size = game_state.planets.size();
            game_state.planets.resize(prev_size + planets.size());
            std::ranges::move(planets, game_state.planets.begin() + prev_size);

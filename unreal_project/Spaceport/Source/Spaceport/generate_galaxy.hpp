@@ -111,6 +111,8 @@ namespace generation {
             planets_scratch planets_;
         };
 
+        void swap(system_scratch & l, int l_id, system_scratch & r, int r_id);
+
         using hex_scratch = std::vector<system_scratch>;
 
         struct scratch_space
