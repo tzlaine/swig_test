@@ -1,6 +1,7 @@
 #pragma once
 
 #include "concurrent_queue.hpp"
+#include "constants.hpp"
 #include "game_data.hpp"
 #include "hex_operations.hpp"
 #include "logging.hpp"
@@ -18,9 +19,16 @@ struct game_start_params
     // TODO
 
     float habtitable_systems_per_hex_mean = 5.0f; // Must be >= 0.1.
-    float habtitable_systems_per_hex_std_dev = 0.8f;
+    float habtitable_systems_per_hex_plus_minus = 2.0f; // interpreted as 3 sigmas
+    int systems_per_hex = default_systems_per_hex; // total, not habitable
     int map_height = 11; // In hexes; must be an odd number >= 11.
 };
+
+// TODO: Move to a utility header
+inline double plus_minus_to_sigma(double plus_minus)
+{
+    return plus_minus / 3.0;
+}
 
 struct game_data_t
 {

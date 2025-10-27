@@ -620,14 +620,14 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
                                       int habitable_systems,
                                       hex_scratch & scratch)
 {
-    assert(habitable_systems < systems_per_hex);
+    assert(habitable_systems < params.systems_per_hex);
 
     hex_coord_t const hc{
         hex_index % game_state.map_width, hex_index / game_state.map_width};
     hex.coord = hc;
 
-    hex.first_system = hex_index * systems_per_hex;
-    hex.last_system = hex.first_system + systems_per_hex;
+    hex.first_system = hex_index * params.systems_per_hex;
+    hex.last_system = hex.first_system + params.systems_per_hex;
 
     auto const pos = hex_position(hc, game_state.map_height);
     if (within(center_hex_pos, pos, bulge_radius)) {
@@ -651,10 +651,10 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     // TODO: With a fairly large number of systems in a hex, also consider
     // giving each of them a vertical coordinate.
 
-    scratch.resize(systems_per_hex);
+    scratch.resize(params.systems_per_hex);
 
     int first_uninhabitable_index = 0;
-    for (int i = 0; i < systems_per_hex; ++i) {
+    for (int i = 0; i < params.systems_per_hex; ++i) {
         auto & planets = scratch[i];
         int const system_index = hex.first_system + i;
         if (detail::generate_system(game_state.systems[system_index], planets,
@@ -703,10 +703,10 @@ void generation::generate_galaxy(game_start_params const & params,
 
    std::normal_distribution<double> habitable_systems_dist(
        params.habtitable_systems_per_hex_mean,
-       params.habtitable_systems_per_hex_std_dev);
+       plus_minus_to_sigma(params.habtitable_systems_per_hex_plus_minus));
 
    detail::scratch_space scratch(game_state.hexes.size());
-   game_state.systems.resize(game_state.hexes.size() * systems_per_hex);
+   game_state.systems.resize(game_state.hexes.size() * params.systems_per_hex);
 
    std::atomic_int hexes_generated = 0;
 
