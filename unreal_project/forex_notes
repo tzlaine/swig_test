@@ -69,7 +69,7 @@ Ships:
 * The smallest ships have a bonus to their detection, stealth, and propulsion ratings.  The largest have maluses.
 * Transports should exit, and should be very soft targets.  You should have to produce them for resources just like other ships, a la HOI4.
 
-TODO: Increase the ship factors descibed above by 10, so that we can have increments in between (like transports, which should start with values lik 0-3 or something -- ewll below 10 defense).
+TODO: Increase the ship factors descibed above by 10, so that we can have increments in between (like transports, which should start with values like 0-3 or something -- well below 10 defense).
 
 Ship cost could be something like this:
 Hull cost (by volume, maybe) +
@@ -216,7 +216,12 @@ Combat:
 
 TODO
 
-* Bases at planets shold be able to be covered by planetary defenses.  If the base is in LPO, the defenses should "come around" every few turns, and fire at enemies.  If the base is a GSO, only the defenses on that side of the planet should be able to fire.  GSO bases can be supported then by numerous planetary batteries, and are relatively safer.  LPO bases are cheaper (TODO: and maybe cheaper to build at?).
+* Bases at planets should be able to be covered by planetary defenses.  If the
+  base is in LPO (like "LEO", but generic), the defenses should "come around"
+  every few turns, and fire at enemies.  If the base is a GSO, only the
+  defenses on that side of the planet should be able to fire.  GSO bases can
+  be supported then by numerous planetary batteries, and are relatively safer.
+  LPO bases are cheaper (TODO: and maybe cheaper to build at?).
 
 
 
@@ -228,33 +233,24 @@ ROADMAP:
 Phase 1:
 ========
 
-* Start screen: Continue, New Game, Options, Quit.  Only New Game and Quit should do anything.  New Game takes you straight to:
+* Start screen: Continue, New Game, Save Game, Load Game, Options, Quit.
+* New Game takes you straight to:
 * Initial map -- just gray neutral hexes, with a starting home hex selected at random.
-* Initial fleet contains 10 1's and a pair of 2's, plus a single colony ship.
-* Home hex contains the homeworld, with 15 billion people/15k development.
-* Home hex also contains a world with 3 billion people/3k development, and another one with 2 billion/2k development.
-* Initial build schedule: 0.5 1s every turn; 0.1 colony ship every 10 turns, 0.2 2s every turn.
-* Homeworld contains 15 divisions.  The other two contain 3 and 2 divisions, respectively.
+* Initial fleet contains 5 1's and a 2, plus a single colony ship.  TODO: And a lifter?
+* Home hex contains the homeworld, with 5 billion people/5k development.
+* Home hex also contains a world with 2 billion people/2k development, and another one with 1 billion/1k development.
+* Initial build schedule: 0.5 1s every year; 0.1 colony ship every year, 0.2 2s every year.  TODO: what about lifters?
+* Homeworld contains 5 divisions.  The other two contain 2 and 1 divisions, respectively.
 * Hexes are selectable, and you can see what's in each hex; all of the above units and build capability should be viewable.
-* A next turn button that advances the build progress one turn.
 
 Phase 2:
-========
-
-* Implement saving and loading.
-* Connect the Continue option from the start screen to loading the current game.
-* Every turn, Save the game state to the current file when (some of these won't be ready in this phase):
-  - The main map "Next Turn" button is clicked.
-  - The combat "Next Turn" button is clicked.
-
-Phase 3:
 ========
 
 * Implement supply determination.
 * Implement map views.  The first and only view will be to display supply.  This needs to work for any list of hexes, of course.
 * Implement a fleet interface.  This should include the ability to form fleets, merge and split them, and give right-click move orders to fleets.  There should also be buttons for missions.  For now, just engage and explore.
 
-Phase 4:
+Phase 2:
 ========
 
 * Implement the fleet explore mission.
@@ -262,19 +258,34 @@ Phase 4:
 * Implement the colony ship expand mission.
 * Implement fleet mission queue.
 
-Phase 4:
+Phase 3:
 ========
 
 - Implement tech screen.
 - Add a button for this somewhere in the main map HUD.
 
-Phase 5:
+Phase 4:
 ========
 
 - Implement build screen.
 - Add a button for this somewhere in the main map HUD.
 
-Phase 6:
+Phase 5:
 ========
 
-TODO
+- Scenarios
+
+- All scenarios assume a preexisting human empire that spanned most or all of
+  the galaxy.  The player and AI nations should sometimes encounter planets
+  that are already inhabited.  There should be parts of the galaxy that the
+  old empire never colonized.  In the populated scenario below, the player may
+  want to pick a nation on the edge of the colonized area, to avoid fighting
+  and have easy expansion opportunities; this is a trade-off with having
+  highly populated/developed planets nearby to conquer.
+
+- one scenario: long after the old empier; a truly an empty galaxy; everyone
+  has the same start
+
+- another scneario: there are existing nations (each a remnant of the old
+  empire) with which to compete; some nations should be much stronger than
+  others
