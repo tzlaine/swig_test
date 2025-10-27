@@ -2,6 +2,7 @@
 #include "effects.hpp"
 #include "generate_galaxy.hpp"
 #include "rng.hpp"
+#include "task_system.hpp"
 
 #include <numbers>
 
@@ -616,7 +617,8 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
                                       double map_radius, double bulge_radius,
                                       hex_coord_t center_hex,
                                       point_2d center_hex_pos,
-                                      int habitable_systems)
+                                      int habitable_systems,
+                                      hex_scratch & scratch)
 {
     hex_coord_t const hc{
         hex_index % game_state.map_width, hex_index / game_state.map_width};
@@ -635,10 +637,8 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     }
 
     hex.province_id = prov_none;
-    hex.first_system = game_state.systems.size();
 
 #if defined(BUILD_FOR_TEST)
-    hex.last_system = game_state.systems.size();
     if (detail::g_skip_system_generation_for_testing)
         return;
 #endif
@@ -653,21 +653,20 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     int habitable_systems_so_far = 0;
     while ((habitable_systems &&
             habitable_systems_so_far < habitable_systems) ||
-           (!habitable_systems &&
-            game_state.systems.size() - hex.first_system < 20u)) {
-        game_state.systems.push_back(system_t());
+           (!habitable_systems && scratch.size() < 20u)) {
+        scratch.resize(scratch.size() + 1);
+        auto & [system, planets] = scratch.back();
         if (detail::generate_system(
-                game_state.systems.back(), game_state.planets,
-                hc, pos, hex.first_system + habitable_systems_so_far)) {
+                system, planets, hc, pos,
+                hex.first_system + habitable_systems_so_far)) {
             ++habitable_systems_so_far;
         }
     }
-
-    hex.last_system = game_state.systems.size();
 }
 
 void generation::generate_galaxy(game_start_params const & params,
-                                 game_state_t & game_state)
+                                 game_state_t & game_state,
+                                 task_system * ts_ptr)
 {
     auto [map_radius, bulge_radius, center_hex, center_hex_pos] =
         detail::galaxy_shape(params, game_state);
@@ -679,13 +678,55 @@ void generation::generate_galaxy(game_start_params const & params,
    // TODO: The hexes can be generated in parallel; so can the individual
    // stars within the hex.
 
-   int hex_index = -1;
+   detail::scratch_space scratch(game_state.hexes.size());
+
+   std::atomic_int hexes_generated = 0;
+
+   std::unique_ptr<task_system> local_ts_ptr;
+   if (!ts_ptr)
+       local_ts_ptr.reset(new task_system(4));
+   task_system & ts = ts_ptr ? *ts_ptr : *local_ts_ptr;
+
+   int hex_index = 0;
    for (auto & hex : game_state.hexes) {
-       ++hex_index;
        auto const habitable_systems =
            int(std::round(random_number(habitable_systems_dist)));
-       detail::generate_hex(hex, hex_index, game_state, params,
-                            map_radius, bulge_radius,
-                            center_hex, center_hex_pos, habitable_systems);
+       auto & hex_scratch_ = scratch.hexes_[hex_index];
+       ts.async_exec(
+           [=, &hex, &game_state, &params, &hex_scratch_, &hexes_generated] {
+               detail::generate_hex(hex, hex_index, game_state, params,
+                                    map_radius, bulge_radius,
+                                    center_hex, center_hex_pos,
+                                    habitable_systems, hex_scratch_);
+               ++hexes_generated;
+           });
+       ++hex_index;
+   }
+
+   while (hexes_generated.load() < game_state.hexes.size()) {
+       std::this_thread::sleep_for(std::chrono::milliseconds(10));
+   }
+
+   hex_index = 0;
+   for (auto & hex : game_state.hexes) {
+       auto const & hex_scratch_ = scratch.hexes_[hex_index];
+
+       auto const prev_size = game_state.systems.size();
+       hex.first_system = prev_size;
+       game_state.systems.resize(prev_size + hex_scratch_.size());
+       hex.last_system = hex_scratch_.size();
+
+       auto system_it = game_state.systems.begin() + prev_size;
+       for (auto & [system, planets] : hex_scratch_) {
+           auto const prev_size = game_state.planets.size();
+           game_state.planets.resize(prev_size + planets.size());
+           std::ranges::move(planets, game_state.planets.begin() + prev_size);
+           *system_it = std::move(system);
+           system_it->first_planet = prev_size;
+           system_it->last_planet = game_state.planets.size();
+           system_it++;
+       }
+
+       ++hex_index;
    }
 }

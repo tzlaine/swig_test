@@ -5,8 +5,19 @@
 
 struct task_system
 {
-    task_system()
+    explicit task_system(int n = std::thread::hardware_concurrency()) : n_(n)
     {
+        if (n < 2) {
+            throw std::runtime_error(
+                "task_system requires at least two threads");
+        }
+
+        if (std::thread::hardware_concurrency() * 2 < n) {
+            throw std::runtime_error(
+                "you have hopelessly oversubscribed task_system; try sticking "
+                "to at most std::thread::hardware_concurrency() threads");
+        }
+
         threads_.reserve(n_);
         for (unsigned int j = 0; j < n_; ++j) {
             threads_.emplace_back([this, j] { run(j); });
@@ -48,8 +59,7 @@ private:
         }
     }
 
-    unsigned int const n_ = std::thread::hardware_concurrency();
-
+    unsigned int const n_;
     std::vector<std::thread> threads_;
     std::vector<concurrent_queue<std::function<void()>>> queues_{n_};
     std::atomic<unsigned int> index_{0u};

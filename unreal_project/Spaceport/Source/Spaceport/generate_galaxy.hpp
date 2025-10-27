@@ -9,6 +9,7 @@
 
 struct game_start_params;
 struct game_state_t;
+struct task_system;
 
 // TODO: Move these.
 struct point_2d
@@ -102,10 +103,28 @@ namespace generation {
 
         bool generate_planet(planet_t & planet, system_t const & system);
 
+        using planets_scratch = std::vector<planet_t>;
+
+        struct system_scratch
+        {
+            system_t system_;
+            planets_scratch planets_;
+        };
+
+        using hex_scratch = std::vector<system_scratch>;
+
+        struct scratch_space
+        {
+            scratch_space(int n) : hexes_(n) {}
+
+            // index is the hex's index
+            std::vector<hex_scratch> hexes_;
+        };
+
         inline bool generate_system_planets(
             system_t & system, int system_id, std::vector<double> const & radii,
             std::vector<double> const & masses,
-            std::ranges::subrange<std::vector<planet_t>::iterator> system_planets)
+            std::ranges::subrange<planets_scratch::iterator> system_planets)
         {
             bool has_habitable_planet = false;
             auto radii_it = radii.begin();
@@ -168,7 +187,7 @@ namespace generation {
 
         template<typename GenPlanetsFn>
         bool generate_system_impl(
-            system_t & system, std::vector<planet_t> & planets,
+            system_t & system, planets_scratch & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id,
             GenPlanetsFn && gen_planets)
         {
@@ -184,8 +203,6 @@ namespace generation {
 
             system.coord = hc;
             system.star = generate_star();
-
-            system.first_planet = planets.size();
 
             // TODO: See if generating 100s or 1000s of rolls at once is faster.
             double x_roll = random_unit_double();
@@ -277,7 +294,6 @@ namespace generation {
                 });
 
             planets.resize(planets.size() + masses.size());
-            system.last_planet = planets.size();
 
             return gen_planets(
                 system, system_id, radii, masses,
@@ -285,7 +301,7 @@ namespace generation {
         }
 
         inline bool generate_system(
-            system_t & system, std::vector<planet_t> & planets,
+            system_t & system, planets_scratch & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id)
         {
             return generate_system_impl(
@@ -325,7 +341,8 @@ namespace generation {
                           double map_radius, double bulge_radius,
                           hex_coord_t center_hex,
                           point_2d center_hex_pos,
-                          int habitable_systems);
+                          int habitable_systems,
+                          hex_scratch & scratch);
 
 #if defined(BUILD_FOR_TEST)
         inline bool g_skip_system_generation_for_testing = false;
@@ -333,7 +350,8 @@ namespace generation {
     }
 
     void generate_galaxy(game_start_params const & params,
-                         game_state_t & game_state);
+                         game_state_t & game_state,
+                         task_system * ts_ptr = nullptr);
 }
 
 // TODO: Move this.

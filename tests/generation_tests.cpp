@@ -1,6 +1,7 @@
 #include <game_data_t.hpp>
 #include <json2pb.h>
 #include <generate_galaxy.hpp>
+#include <task_system.hpp>
 
 #include <game_data_formatters.hpp>
 
@@ -1401,14 +1402,13 @@ TEST(generation_tests, generate_system)
     auto const pos = hex_position(hc, map_height);
     int const system_id = 0;
 
-    std::vector<planet_t> all_planets;
+    generation::detail::planets_scratch all_planets;
 
     std::vector<double> radii;
     std::vector<double> masses;
     auto get_intermediate_values = [&](
         system_t & s, int i, std::vector<double> const & r,
-        std::vector<double> const & m,
-        std::ranges::subrange<std::vector<planet_t>::iterator> ps) {
+        std::vector<double> const & m, auto ps) {
         radii = std::move(r);
         masses = std::move(m);
         return false;
@@ -1417,8 +1417,10 @@ TEST(generation_tests, generate_system)
     {
         system_t system;
         while (system.star.solar_luminosities < 0.8 || 1.2 < system.star.solar_luminosities) {
-            bool const inhabitable = generation::detail::generate_system_impl(
+            system.first_planet = all_planets.size();
+            generation::detail::generate_system_impl(
                 system, all_planets, hc, pos, system_id, get_intermediate_values);
+            system.last_planet = all_planets.size();
         }
 
         dump(system);
@@ -1691,12 +1693,13 @@ TEST(generation_tests, generate_hex)
 
     for (int i = first_hex_index; i < last_hex_index; ++i) {
         hex_t hex;
+        generation::detail::hex_scratch hex_scratch_;
         generation::detail::generate_hex(
             hex, i, game_state, params, map_radius, bulge_radius, center_hex,
-            center_hex_pos, habitable_systems_per_hex);
+            center_hex_pos, habitable_systems_per_hex, hex_scratch_);
 
         EXPECT_LE((size_t)habitable_systems_per_hex,
-                  hex.last_system - hex.first_system);
+                  hex_scratch_.size());
     }
     std::cout << std::format(
         "Generated {} habitable systems, {} systems total.\n",
@@ -1704,9 +1707,11 @@ TEST(generation_tests, generate_hex)
         game_state.systems.size());
 }
 
+task_system ts(4);
+
 TEST(generation_tests, generate_galaxy)
 {
     game_start_params params;
     game_state_t game_state;
-    generation::generate_galaxy(params, game_state);
+    generation::generate_galaxy(params, game_state, &ts);
 }
