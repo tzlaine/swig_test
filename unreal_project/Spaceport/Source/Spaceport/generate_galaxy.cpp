@@ -715,19 +715,31 @@ void generation::generate_galaxy(game_start_params const & params,
        local_ts_ptr.reset(new task_system(4));
    task_system & ts = ts_ptr ? *ts_ptr : *local_ts_ptr;
 
+   int const five_percent = game_state.hexes.size() / 20;
+
    int hex_index = 0;
    for (auto & hex : game_state.hexes) {
        auto const habitable_systems =
            int(std::round(random_number(habitable_systems_dist)));
        auto & hex_scratch_ = scratch.hexes_[hex_index];
-       ts.async_exec(
-           [=, &hex, &game_state, &params, &hex_scratch_, &hexes_generated] {
-               detail::generate_hex(hex, hex_index, game_state, params,
-                                    map_radius, bulge_radius,
-                                    center_hex, center_hex_pos,
-                                    habitable_systems, hex_scratch_);
-               ++hexes_generated;
-           });
+       ts.async_exec([=, &hex, &game_state, &params, &hex_scratch_,
+                      &hexes_generated, &ts] {
+           int const finished = hexes_generated.load();
+           // TODO: Hook this up to UI code, to show a janky-ass progress bar.
+           // There should probably e a therad dedicated just to reading off
+           // of a UI-update queue, and the code below should feed one end of
+           // a threadsafe queue that pushes updates to that thread.
+           if (finished == game_state.hexes.size()) {
+               ts.async_exec([] { std::cout << "\n"; });
+           } else if ((finished + 1) % five_percent == 0) {
+               ts.async_exec([] { std::cout << "*"; });
+           }
+           detail::generate_hex(hex, hex_index, game_state, params,
+                                map_radius, bulge_radius,
+                                center_hex, center_hex_pos,
+                                habitable_systems, hex_scratch_);
+           ++hexes_generated;
+       });
        ++hex_index;
    }
 
