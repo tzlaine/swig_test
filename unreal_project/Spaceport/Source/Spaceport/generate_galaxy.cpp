@@ -643,14 +643,14 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
         return;
 #endif
 
-    // TODO: Since this is probabilistic, we can end up with a truly large
-    // number of systems in a single hex.  Consider clamping the number to
-    // something like 50 or 100.
-
     // TODO: With a fairly large number of systems in a hex, also consider
     // giving each of them a vertical coordinate.
 
+    // TODO: Now that we put a limit on systems in a hex, should we make all
+    // hexes have exactly the limit of systems?
+
     int habitable_systems_so_far = 0;
+    int first_uninhabitable_index = 0;
     while ((habitable_systems &&
             habitable_systems_so_far < habitable_systems) ||
            (!habitable_systems && scratch.size() < 20u)) {
@@ -660,8 +660,28 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
                 system, planets, hc, pos,
                 hex.first_system + habitable_systems_so_far)) {
             ++habitable_systems_so_far;
+            auto first_uninhabitable_it =
+                scratch.begin() + first_uninhabitable_index;
+            if (first_uninhabitable_it != scratch.end())
+                std::swap(*first_uninhabitable_it, scratch.back());
+            ++first_uninhabitable_index;
         }
     }
+
+#if 0 // Just a debug check.
+    auto const first_uninhab = std::ranges::find_if(scratch, [](auto const & e) {
+        return std::ranges::none_of(e.planets_, [] (auto const & e2) {
+            return growth_factor_considered_habitable <= e2.growth_factor;
+        });
+    });
+    auto const first_inhab_after_first_uninhab =
+        std::find_if(first_uninhab, scratch.end(), [](auto const & e) {
+            return std::ranges::any_of(e.planets_, [] (auto const & e2) {
+                return growth_factor_considered_habitable <= e2.growth_factor;
+            });
+        });
+    assert(first_inhab_after_first_uninhab == scratch.end());
+#endif
 }
 
 void generation::generate_galaxy(game_start_params const & params,
@@ -674,9 +694,6 @@ void generation::generate_galaxy(game_start_params const & params,
    std::normal_distribution<double> habitable_systems_dist(
        params.habtitable_systems_per_hex_mean,
        params.habtitable_systems_per_hex_std_dev);
-
-   // TODO: The hexes can be generated in parallel; so can the individual
-   // stars within the hex.
 
    detail::scratch_space scratch(game_state.hexes.size());
 
@@ -717,7 +734,11 @@ void generation::generate_galaxy(game_start_params const & params,
        hex.last_system = hex_scratch_.size();
 
        auto system_it = game_state.systems.begin() + prev_size;
-       for (auto & [system, planets] : hex_scratch_) {
+       std::ranges::subrange systems(
+           hex_scratch_.begin(),
+           hex_scratch_.begin() +
+           (std::min<int>)(hex_scratch_.size(), max_systems_per_hex));
+       for (auto & [system, planets] : systems) {
            auto const prev_size = game_state.planets.size();
            game_state.planets.resize(prev_size + planets.size());
            std::ranges::move(planets, game_state.planets.begin() + prev_size);
