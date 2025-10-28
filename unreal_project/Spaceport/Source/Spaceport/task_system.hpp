@@ -12,7 +12,7 @@ struct task_system
                 "task_system requires at least two threads");
         }
 
-        if (std::thread::hardware_concurrency() * 2 < n) {
+        if ((int)std::thread::hardware_concurrency() * 2 < n) {
             throw std::runtime_error(
                 "you have hopelessly oversubscribed task_system; try sticking "
                 "to at most std::thread::hardware_concurrency() threads");

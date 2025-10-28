@@ -4,6 +4,9 @@
 #include "game_data_t.hpp"
 #include "rng.hpp"
 
+#include "Internationalization/StringTableCore.h"
+#include "Internationalization/StringTableRegistry.h"
+
 #include <numbers>
 
 
@@ -137,21 +140,27 @@ namespace generation {
 #if !defined(BUILD_FOR_TEST)
         // TODO: Call this with TEXT("star_names") and put the result
         // somewhere central.
-        inline TArray<FName> get_string_table_keys(TCHAR table)
+        inline std::vector<FTextKey> get_string_table_keys(TCHAR * table)
         {
-            FStringTablePtr const string_table =
+            auto const string_table =
                 FStringTableRegistry::Get().FindStringTable(table);
-            TArray<FName> string_table_keys;
             if (!string_table.IsValid())
                 return {};
-            string_table->GetKeys(string_table_keys);
-            return std::move(string_table_keys);
+
+            std::vector<FTextKey> retval;
+            string_table->EnumerateKeysAndSourceStrings(
+                [&](auto const & key, auto const &) {
+                    retval.push_back(key);
+                    return true;
+                });
+            return std::move(retval);
         }
 
         inline adobe::name_t new_star_name(
-            int index, TArray<FName> const & string_table_keys)
+            int index, FStringTablePtr const & string_table,
+            std::vector<FTextKey> const & string_table_keys)
         {
-            int const size = string_table_keys.Num();
+            int const size = string_table_keys.size();
             if (!size)
                 return adobe::name_t("Invalid 'star_names' string table");
 
@@ -161,12 +170,10 @@ namespace generation {
                 return adobe::name_t("Ran out of star names");
             index %= size;
 
-            FName const key = string_table_keys[random_int(0, size - 1)];
-            if (key.IsNone())
-                return adobe::name_t("Null key in 'star_names' string table");
-
-            FString const value = string_table->GetTableEntry(key).ToString();
-            std::string string_copy = TCHAR_TO_UTF8(*value);
+            FTextKey const key = string_table_keys[random_int(0, size - 1)];
+            FString value;
+            string_table->GetSourceString(key, value);
+            std::string string_copy(TCHAR_TO_UTF8(*value));
 
             if (needs_new_prefix) {
                 // TODO: Make a new system name by jamming the localized "New
@@ -190,7 +197,9 @@ namespace generation {
 
             // TODO: Need a stored star_name_string_table_keys somewhere.
             // Create this with get_string_table_keys above.
+#if 0
             system.name = new_star_name(system_id, star_name_string_table_keys);
+#endif
 #endif
 
             system.coord = hc;
