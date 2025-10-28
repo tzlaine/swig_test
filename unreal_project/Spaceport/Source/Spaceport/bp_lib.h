@@ -29,8 +29,11 @@ public:
     UFUNCTION(BlueprintPure, Category = "map_drag")
     static FVector map_drag_offset (APlayerController* pc);
 
-    UFUNCTION(BlueprintPure, Category = "map_drag")
+    UFUNCTION(BlueprintPure, Category = "menus")
     static bool continuable_game_available ();
+
+    UFUNCTION(BlueprintPure, Category = "menus")
+    static bool saved_games_available ();
 
 private:
     static FVector original_map_drag_intersection_;

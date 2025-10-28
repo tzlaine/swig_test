@@ -99,3 +99,9 @@ bool Ubp_lib::continuable_game_available ()
     // TODO: Look and see if there is a save file to resume.
     return false;
 }
+
+bool Ubp_lib::saved_games_available ()
+{
+    // TODO: Look and see if there are save files to load.
+    return false;
+}
