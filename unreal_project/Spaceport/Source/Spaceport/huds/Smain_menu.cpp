@@ -148,6 +148,7 @@ void Smain_menu::rebuild()
         .Text(loc_text(TEXT("exit_game")))];
     exit_game_bn_->connect([confirm = in_game_] {
         UE_LOG(LogTemp, Warning, TEXT("Outta here!"));
+        // TODO: Do something different in mp, if this user is not the host.
         if (confirm) {
             // TODO: pop up a confirmation dialog
             // if (!...)
