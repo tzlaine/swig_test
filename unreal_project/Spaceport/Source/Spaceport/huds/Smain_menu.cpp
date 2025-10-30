@@ -87,8 +87,9 @@ void Smain_menu::rebuild()
             UE_LOG(LogTemp, Warning, TEXT("Save Game"));
         });
     } else {
-        new_game_save_game_bn_->connect([] {
+        new_game_save_game_bn_->connect([this] {
             UE_LOG(LogTemp, Warning, TEXT("New Game"));
+            UGameplayStatics::OpenLevel(world(), TEXT("playing"), true);
         });
     }
 

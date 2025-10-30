@@ -18,6 +18,7 @@ public:
 
 protected:
     virtual void BeginPlay() override;
+    virtual void EndPlay(EEndPlayReason::Type reason) override;
 
     TSharedPtr<class Smain_menu> widget_;
 };

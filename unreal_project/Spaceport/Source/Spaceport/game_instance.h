@@ -5,6 +5,7 @@
 #include <AssetRegistry/AssetRegistryModule.h>
 #include <CoreMinimal.h>
 #include <Engine/GameInstance.h>
+#include <Engine/World.h>
 #include <Internationalization/StringTableRegistry.h>
 #include <Internationalization/StringTable.h>
 #include <Kismet/KismetSystemLibrary.h>
@@ -50,6 +51,11 @@ private:
     inline static Ugame_instance * self_ptr_ = nullptr;
 };
 
+inline UWorld * world()
+{
+    return Ugame_instance::get()->GetWorld();
+}
+
 inline FText loc_text(FTextKey const & key)
 {
     return Ugame_instance::get()->loc_text(key);
@@ -57,7 +63,7 @@ inline FText loc_text(FTextKey const & key)
 
 inline void quit_game()
 {
-    auto const world = Ugame_instance::get()->GetWorld();
+    auto const world = ::world();
     for (FConstPlayerControllerIterator it =
              world->GetPlayerControllerIterator();
          it;
