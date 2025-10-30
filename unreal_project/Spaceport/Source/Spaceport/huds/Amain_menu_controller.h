@@ -12,4 +12,8 @@ class Amain_menu_controller : public APlayerController
 
 public:
     void BeginPlay();
+
+    UFUNCTION(Server, Reliable)
+    void Server_new_sp_game();
+    void Server_new_sp_game_Implementation();
 };

@@ -12,7 +12,10 @@ class Amain_menu_game_mode : public AGameModeBase
 
 public:
     Amain_menu_game_mode(FObjectInitializer const & init);
-	
-protected:
+
     virtual void BeginPlay() override;
+
+    UFUNCTION(NetMulticast, Reliable)
+    void Multicast_new_sp_game();
+    void Multicast_new_sp_game_Implementation();
 };

@@ -1,6 +1,9 @@
 #include "Amain_menu_game_mode.h"
 #include "Amain_menu_hud.h"
 #include "Amain_menu_controller.h"
+#include "game_instance.h"
+
+#include <Kismet/GameplayStatics.h>
 
 
 Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
@@ -13,4 +16,9 @@ Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
 void Amain_menu_game_mode::BeginPlay()
 {
     Super::BeginPlay();
+}
+
+void Amain_menu_game_mode::Multicast_new_sp_game_Implementation()
+{
+    UGameplayStatics::OpenLevel(::world(), TEXT("playing"), true);
 }

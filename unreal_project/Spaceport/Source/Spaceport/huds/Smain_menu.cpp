@@ -1,5 +1,6 @@
 #include "Smain_menu.h"
 #include "game_instance.h"
+#include "Amain_menu_controller.h"
 #include "widgets/Sstyled_text_block.h"
 
 #include <SlateOptMacros.h>
@@ -89,7 +90,9 @@ void Smain_menu::rebuild()
     } else {
         new_game_save_game_bn_->connect([this] {
             UE_LOG(LogTemp, Warning, TEXT("New Game"));
-            UGameplayStatics::OpenLevel(world(), TEXT("playing"), true);
+            Amain_menu_controller * pc = Cast<Amain_menu_controller>(
+                UGameplayStatics::GetPlayerController(::world(), 0));
+            pc->Server_new_sp_game();
         });
     }
 
