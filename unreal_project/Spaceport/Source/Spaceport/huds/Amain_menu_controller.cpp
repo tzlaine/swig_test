@@ -14,7 +14,7 @@ void Amain_menu_controller::BeginPlay()
     SetShowMouseCursor(true);
 }
 
-void Amain_menu_controller::Server_new_game_Implementation(
+void Amain_menu_controller::server_new_game_Implementation(
     game_kind kind, FFilePath const & save)
 {
     Amain_menu_game_mode * gm =
@@ -23,5 +23,5 @@ void Amain_menu_controller::Server_new_game_Implementation(
         return;
     Ugame_instance::get()->game_kind(kind);
     Ugame_instance::get()->game_to_load(save);
-    gm->Multicast_new_game();
+    gm->multicast_new_game();
 }

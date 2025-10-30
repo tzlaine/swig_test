@@ -91,7 +91,7 @@ void Smain_menu::rebuild()
         new_game_save_game_bn_->connect([this] {
             Amain_menu_controller * pc = Cast<Amain_menu_controller>(
                 UGameplayStatics::GetPlayerController(::world(), 0));
-            pc->Server_new_game(game_kind::sp, FFilePath());
+            pc->server_new_game(game_kind::sp, FFilePath());
         });
     }
 
