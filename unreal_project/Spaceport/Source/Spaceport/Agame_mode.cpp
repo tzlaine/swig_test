@@ -23,7 +23,7 @@ Agame_mode::Agame_mode(FObjectInitializer const & init) :
 }
 
 void Agame_mode::start_sp_game()
-    {
+{
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
     if (load_path.empty()) {
         cast(GameState)->play_state_ = play_state::setup;
