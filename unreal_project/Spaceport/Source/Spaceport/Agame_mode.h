@@ -1,9 +1,20 @@
 #pragma once
 
+#include "game_data_t.hpp"
+
 #include <CoreMinimal.h>
 #include <GameFramework/GameModeBase.h>
 #include "Agame_mode.generated.h"
 
+
+UENUM(BlueprintType)
+enum class play_state : uint8 {
+    setup,            // SP, or game host in MP
+    waiting_for_game, // non-hosts in MP
+    playing,
+    paused,
+    ended
+};
 
 UCLASS()
 class Agame_mode : public AGameModeBase
@@ -12,7 +23,13 @@ class Agame_mode : public AGameModeBase
 
 public:
     Agame_mode(FObjectInitializer const & init);
-	
+
+    void start_sp_game();
+    // TODO void start_mp_game(TODO host);
+
 protected:
     virtual void BeginPlay() override;
+
+private:
+    game_data_t game_data_;
 };
