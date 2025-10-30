@@ -18,6 +18,8 @@ void Amain_menu_hud::BeginPlay()
 
 void Amain_menu_hud::EndPlay(EEndPlayReason::Type reason)
 {
+    Super::EndPlay(reason);
+
     GetWorld()->GetGameViewport()->RemoveViewportWidgetContent(
         widget_.ToSharedRef());
 }
