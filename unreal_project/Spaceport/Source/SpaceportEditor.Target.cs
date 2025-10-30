@@ -11,5 +11,6 @@ public class SpaceportEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V2;
                 bOverrideBuildEnvironment = true;
 		ExtraModuleNames.AddRange( new string[] { "Spaceport" } );
-	}
+		CppStandard = CppStandardVersion.Cpp20;
+    }
 }
