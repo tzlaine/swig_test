@@ -18,7 +18,7 @@ void Amain_menu_game_mode::BeginPlay()
     Super::BeginPlay();
 }
 
-void Amain_menu_game_mode::Multicast_new_sp_game_Implementation()
+void Amain_menu_game_mode::Multicast_new_game_Implementation()
 {
     UGameplayStatics::OpenLevel(::world(), TEXT("playing"), true);
 }

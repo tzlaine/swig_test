@@ -89,10 +89,9 @@ void Smain_menu::rebuild()
         });
     } else {
         new_game_save_game_bn_->connect([this] {
-            UE_LOG(LogTemp, Warning, TEXT("New Game"));
             Amain_menu_controller * pc = Cast<Amain_menu_controller>(
                 UGameplayStatics::GetPlayerController(::world(), 0));
-            pc->Server_new_sp_game();
+            pc->Server_new_game(game_kind::sp, FFilePath());
         });
     }
 

@@ -16,6 +16,6 @@ public:
     virtual void BeginPlay() override;
 
     UFUNCTION(NetMulticast, Reliable)
-    void Multicast_new_sp_game();
-    void Multicast_new_sp_game_Implementation();
+    void Multicast_new_game();
+    void Multicast_new_game_Implementation();
 };

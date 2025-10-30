@@ -2,6 +2,9 @@
 #include "Agame_state.h"
 #include "Amap_hud.h"
 #include "Aplayer_controller.h"
+#include "game_instance.h"
+
+#include <filesystem>
 
 
 Agame_mode::Agame_mode(FObjectInitializer const & init) :
@@ -13,13 +16,28 @@ Agame_mode::Agame_mode(FObjectInitializer const & init) :
 
 void Agame_mode::start_sp_game()
 {
-    if (Agame_state * gs = GetGameState<Agame_state>()) {
-        gs->play_state_ = play_state::setup;
-        gs->play_state_changed();
+    std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
+    if (load_path.empty()) {
+        if (Agame_state * gs = GetGameState<Agame_state>()) {
+            gs->play_state_ = play_state::setup;
+            gs->play_state_changed();
+        }
+    } else {
+        // TODO game_data_.load(load_path);
     }
+}
+
+void Agame_mode::start_mp_game()
+{
+    // TODO
 }
 
 void Agame_mode::BeginPlay()
 {
     Super::BeginPlay();
+
+    if (Ugame_instance::get()->game_kind() == game_kind::sp)
+        start_sp_game();
+    else
+        start_mp_game();
 }

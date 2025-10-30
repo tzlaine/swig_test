@@ -24,12 +24,11 @@ class Agame_mode : public AGameModeBase
 public:
     Agame_mode(FObjectInitializer const & init);
 
-    void start_sp_game();
-    // TODO void start_mp_game(TODO host);
-
-protected:
     virtual void BeginPlay() override;
 
 private:
+    void start_sp_game();
+    void start_mp_game();
+
     game_data_t game_data_;
 };

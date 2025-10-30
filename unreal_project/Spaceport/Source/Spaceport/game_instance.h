@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <cassert>
 
 #include <AssetRegistry/AssetRegistryModule.h>
@@ -12,6 +13,12 @@
 #include "game_instance.generated.h"
 
 
+UENUM(BlueprintType)
+enum class game_kind : uint8 {
+    sp,
+    mp
+};
+
 UCLASS()
 class SPACEPORT_API Ugame_instance : public UGameInstance
 {
@@ -22,6 +29,29 @@ public:
     {
         assert(!self_ptr_);
         self_ptr_ = this;
+    }
+
+    ::game_kind game_kind() const
+    {
+        return game_kind_;
+    }
+    void game_kind(::game_kind kind)
+    {
+        game_kind_ = kind;
+    }
+
+    std::filesystem::path const & game_to_load() const
+    {
+        return game_to_load_;
+    }
+    void game_to_load(FFilePath const & path)
+    {
+#if _MSC_VER
+        std::wstring s(*path.FilePath);
+#else
+        std::string s(TCHAR_TO_UTF8(*path.FilePath));
+#endif
+        game_to_load_ = std::filesystem::path(std::move(s));
     }
 
     UPROPERTY(EditAnywhere, Category = "Localization")
@@ -47,6 +77,8 @@ public:
 
 private:
     FName string_table_id_;
+    ::game_kind game_kind_;
+    std::filesystem::path game_to_load_;
 
     inline static Ugame_instance * self_ptr_ = nullptr;
 };
