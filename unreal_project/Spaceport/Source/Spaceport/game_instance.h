@@ -15,7 +15,7 @@ UCLASS()
 class SPACEPORT_API Ugame_instance : public UGameInstance
 {
     GENERATED_BODY()
-	
+
 public:
     Ugame_instance()
     {
