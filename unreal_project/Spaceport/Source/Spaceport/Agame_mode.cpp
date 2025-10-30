@@ -7,21 +7,27 @@
 #include <filesystem>
 
 
+namespace {
+    Agame_state * cast(AGameStateBase * base)
+    {
+        return Cast<Agame_state>(base);
+    }
+}
+
 Agame_mode::Agame_mode(FObjectInitializer const & init) :
     AGameModeBase(init)
 {
     HUDClass = Amap_hud::StaticClass();
     PlayerControllerClass = Aplayer_controller::StaticClass();
+    GameStateClass = Agame_state::StaticClass();
 }
 
 void Agame_mode::start_sp_game()
-{
+    {
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
     if (load_path.empty()) {
-        if (Agame_state * gs = GetGameState<Agame_state>()) {
-            gs->play_state_ = play_state::setup;
-            gs->play_state_changed();
-        }
+        cast(GameState)->play_state_ = play_state::setup;
+        cast(GameState)->play_state_changed();
     } else {
         // TODO game_data_.load(load_path);
     }

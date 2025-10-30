@@ -7,6 +7,8 @@
 #include "Agame_mode.generated.h"
 
 
+class Agame_state;
+
 UENUM(BlueprintType)
 enum class play_state : uint8 {
     setup,            // SP, or game host in MP
