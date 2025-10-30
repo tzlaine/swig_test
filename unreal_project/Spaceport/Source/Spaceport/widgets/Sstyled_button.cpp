@@ -11,7 +11,6 @@ void Sstyled_button::Construct(FArguments const & args_)
         *defaults.UButton_style_path_);
     SButton::FArguments args(args_);
     args.ButtonStyle(style.Object);
-    args.OnClicked(this, &Sstyled_button::trampoline);
     if (has_text) {
         args.ContentPadding(FMargin(4, 2));
         args.HAlign(HAlign_Center);
@@ -21,11 +20,4 @@ void Sstyled_button::Construct(FArguments const & args_)
 
     if (has_text)
         SButton::SetContent(SNew(Sstyled_text_block).Text(args._Text));
-}
-
-FReply Sstyled_button::trampoline()
-{
-    if (fn_)
-        fn_();
-    return FReply::Handled();
 }

@@ -72,89 +72,103 @@ void Smain_menu::rebuild()
 
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(continue_bn_, Sstyled_button)
-        .Text(loc_text(TEXT("continue_game")))];
-    continue_bn_->connect([] {
-        UE_LOG(LogTemp, Warning, TEXT("Continue"));
-    });
+        .Text(loc_text(TEXT("continue_game")))
+        .OnClicked_Lambda([] {
+            UE_LOG(LogTemp, Warning, TEXT("Continue"));
+            return FReply::Handled();
+        })];
 
     vbox_->AddSlot().FillHeight(1);
 
-    vbox_->AddSlot().AutoHeight()[
-        SAssignNew(new_game_save_game_bn_, Sstyled_button)
-        .Text(loc_text(in_game_ ? TEXT("save_game") : TEXT("new_game")))];
-
     if (in_game_) {
-        new_game_save_game_bn_->connect([] {
-            UE_LOG(LogTemp, Warning, TEXT("Save Game"));
-        });
+        vbox_->AddSlot().AutoHeight()[
+            SAssignNew(new_game_save_game_bn_, Sstyled_button)
+            .Text(loc_text(TEXT("save_game")))
+            .OnClicked_Lambda([] {
+                UE_LOG(LogTemp, Warning, TEXT("Save Game"));
+                return FReply::Handled();
+            })];
     } else {
-        new_game_save_game_bn_->connect([this] {
-            Amain_menu_controller * pc = Cast<Amain_menu_controller>(
-                UGameplayStatics::GetPlayerController(::world(), 0));
-            pc->server_new_game(game_kind::sp, FFilePath());
-        });
+        vbox_->AddSlot().AutoHeight()[
+            SAssignNew(new_game_save_game_bn_, Sstyled_button)
+            .Text(loc_text(TEXT("new_game")))
+            .OnClicked_Lambda([] {
+                UE_LOG(LogTemp, Warning, TEXT("New Game"));
+                Amain_menu_controller * pc = Cast<Amain_menu_controller>(
+                    UGameplayStatics::GetPlayerController(::world(), 0));
+                pc->server_new_game(game_kind::sp, FFilePath());
+                return FReply::Handled();
+            })];
     }
 
     vbox_->AddSlot().FillHeight(1);
 
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(load_game_bn_, Sstyled_button)
-        .Text(loc_text(TEXT("load_game")))];
-    load_game_bn_->connect([confirm = in_game_] {
-        UE_LOG(LogTemp, Warning, TEXT("Load Game"));
-        if (confirm) {
-            // TODO: pop up a confirmation dialog
-            // if (!...)
-            //     return;
-        }
-        // TODO: load game
-    });
+        .Text(loc_text(TEXT("load_game")))
+        .OnClicked_Lambda([confirm = in_game_] {
+            UE_LOG(LogTemp, Warning, TEXT("Load Game"));
+            if (confirm) {
+                // TODO: pop up a confirmation dialog
+                // if (!...)
+                //     return;
+            }
+            // TODO: load game
+            return FReply::Handled();
+        })];
 
     vbox_->AddSlot().FillHeight(1);
 
-    vbox_->AddSlot().AutoHeight()[
-        SAssignNew(multiplayer_exit_to_menu_bn_, Sstyled_button)
-        .Text(loc_text(in_game_ ? TEXT("exit_to_main_menu") :
-                       TEXT("multiplayer_game")))];
     if (in_game_) {
-        multiplayer_exit_to_menu_bn_->connect([] {
-            UE_LOG(LogTemp, Warning, TEXT("Exit to main menu"));
-            // TODO: pop up a confirmation dialog
-            // if (!...)
-            //     return;
-            // TODO: end game, return to start_screen level
-        });
+        vbox_->AddSlot().AutoHeight()[
+            SAssignNew(multiplayer_exit_to_menu_bn_, Sstyled_button)
+            .Text(loc_text(TEXT("exit_to_main_menu")))
+            .OnClicked_Lambda([] {
+                UE_LOG(LogTemp, Warning, TEXT("Exit to main menu"));
+                // TODO: pop up a confirmation dialog
+                // if (!...)
+                //     return;
+                // TODO: end game, return to start_screen level
+                return FReply::Handled();
+            })];
     } else {
-        multiplayer_exit_to_menu_bn_->connect([] {
-            UE_LOG(LogTemp, Warning, TEXT("Multiplayer Game"));
-            // TODO: open multiplayer setup hud
-        });
+        vbox_->AddSlot().AutoHeight()[
+            SAssignNew(multiplayer_exit_to_menu_bn_, Sstyled_button)
+            .Text(loc_text(TEXT("multiplayer_game")))
+            .OnClicked_Lambda([] {
+                UE_LOG(LogTemp, Warning, TEXT("Multiplayer Game"));
+                // TODO: open multiplayer setup hud
+                return FReply::Handled();
+            })];
     }
 
     vbox_->AddSlot().FillHeight(1);
 
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(options_bn_, Sstyled_button)
-        .Text(loc_text(TEXT("options")))];
-    options_bn_->connect([] {
-        UE_LOG(LogTemp, Warning, TEXT("Options"));
-    });
+        .Text(loc_text(TEXT("options")))
+        .OnClicked_Lambda([] {
+            UE_LOG(LogTemp, Warning, TEXT("Options"));
+            return FReply::Handled();
+        })];
 
     vbox_->AddSlot().FillHeight(3);
 
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(exit_game_bn_, Sstyled_button)
-        .Text(loc_text(TEXT("exit_game")))];
-    exit_game_bn_->connect([confirm = in_game_] {
-        UE_LOG(LogTemp, Warning, TEXT("Outta here!"));
-        // TODO: Do something different in mp, if this user is not the host.
-        if (confirm) {
-            // TODO: pop up a confirmation dialog
-            // if (!...)
-            //     return;
-        }
-        quit_game();
-    });
+        .Text(loc_text(TEXT("exit_game")))
+        .OnClicked_Lambda([confirm = in_game_] {
+            UE_LOG(LogTemp, Warning, TEXT("Outta here!"));
+            // TODO: Do something different in mp, if this user is not the
+            // host.
+            if (confirm) {
+                // TODO: pop up a confirmation dialog
+                // if (!...)
+                //     return;
+            }
+            quit_game();
+            return FReply::Handled();
+        })];
 }
 
 void Smain_menu::in_game(bool b)

@@ -14,13 +14,4 @@ public:
     using FArguments = SButton::FArguments;
 
     void Construct(FArguments const & args);
-
-    template<typename Fn>
-    void connect(Fn && fn)
-    { fn_ = fn; }
-
-private:
-    FReply trampoline();
-
-    std::function<void ()> fn_;
 };
