@@ -7,6 +7,7 @@
 #include <Engine/GameInstance.h>
 #include <Internationalization/StringTableRegistry.h>
 #include <Internationalization/StringTable.h>
+#include <Kismet/KismetSystemLibrary.h>
 #include "game_instance.generated.h"
 
 
@@ -52,4 +53,17 @@ private:
 inline FText loc_text(FTextKey const & key)
 {
     return Ugame_instance::get()->loc_text(key);
+}
+
+inline void quit_game()
+{
+    auto const world = Ugame_instance::get()->GetWorld();
+    for (FConstPlayerControllerIterator it =
+             world->GetPlayerControllerIterator();
+         it;
+         ++it) {
+        auto const controller = it->Get();
+        UKismetSystemLibrary::QuitGame(
+            world, controller, EQuitPreference::Quit, true);
+    }
 }
