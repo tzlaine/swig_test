@@ -21,9 +21,6 @@ public class Spaceport : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
-
-		// Uncomment if you are using Slate UI
 		PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		
 		// Uncomment if you are using online features
@@ -31,7 +28,7 @@ public class Spaceport : ModuleRules
 
 		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
 
-                CppStandard = CppStandardVersion.Cpp20;
+        CppStandard = CppStandardVersion.Cpp20;
 
         PublicIncludePaths.Add(Path.Combine(ModulePath, "../../../../", "boost_1_89_0"));
         PublicIncludePaths.Add(Path.Combine(ModulePath, "../../../../unreal_project/Spaceport/Source/Spaceport"));
