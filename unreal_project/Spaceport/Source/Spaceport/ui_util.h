@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Runtime/UMG/Public/UMG.h"
+#include <Engine/AssetManager.h>
+#include <Engine/StreamableManager.h>
+#include <Runtime/UMG/Public/UMG.h>
 
 #include <boost/function.hpp>
 
@@ -48,6 +50,19 @@ private:                                                                \
 
 
 namespace detail {
+
+    inline UFont * stream_default_font()
+    {
+        FStreamableManager & streamable_mgr =
+            UAssetManager::GetStreamableManager();
+        TSoftObjectPtr<UFont> font_ptr =
+            streamable_mgr.LoadSynchronous<UFont>(
+                FSoftObjectPath(
+                    TEXT("/Game/ui/fonts/futura_light_bt_Font.futura_light_bt_Font")));
+        if (font_ptr.IsValid())
+            return font_ptr.Get();
+        return nullptr;
+    }
 
     /** If there is an object class, strips it off. */
     inline void StripObjectClass( FString& PathName, bool bAssertOnBadPath = false )

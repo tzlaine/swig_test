@@ -4,8 +4,6 @@
 #include "widgets/Sstyled_text_block.h"
 
 #include <SlateOptMacros.h>
-#include <Engine/AssetManager.h>
-#include <Engine/StreamableManager.h>
 #include <Engine/Font.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SCanvas.h>
@@ -20,24 +18,9 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-namespace {
-    UFont * stream_title_font()
-    {
-        FStreamableManager & streamable_mgr =
-            UAssetManager::GetStreamableManager();
-        TSoftObjectPtr<UFont> font_ptr =
-            streamable_mgr.LoadSynchronous<UFont>(
-                FSoftObjectPath(
-                    TEXT("/Game/ui/fonts/futura_light_bt_Font.futura_light_bt_Font")));
-        if (font_ptr.IsValid())
-            return font_ptr.Get();
-        return nullptr;
-    }
-}
-
 void Smain_menu::Construct(FArguments const & args)
 {
-    UFont * title_font = stream_title_font();
+    UFont * title_font = detail::stream_default_font();
 
     in_game_ = args._in_game;
 
