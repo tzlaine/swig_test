@@ -5,6 +5,8 @@
 #include "Amain_menu_hud.generated.h"
 
 
+class Smain_menu;
+
 UCLASS()
 class Amain_menu_hud : public AHUD
 {
@@ -13,12 +15,12 @@ class Amain_menu_hud : public AHUD
 public:
     Amain_menu_hud(FObjectInitializer const & init);
 
-    // virtual void ShowHUD() override;
-    // virtual void DrawHUD() override;
+    void saves_available(bool b);
 
 protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(EEndPlayReason::Type reason) override;
 
-    TSharedPtr<class Smain_menu> widget_;
+    bool have_saves_ = false;
+    TSharedPtr<Smain_menu> widget_;
 };

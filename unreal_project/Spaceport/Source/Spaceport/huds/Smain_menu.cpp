@@ -121,7 +121,7 @@ void Smain_menu::rebuild()
 
     if (in_game_) {
         vbox_->AddSlot().AutoHeight()[
-            SAssignNew(multiplayer_exit_to_menu_bn_, Sstyled_button)
+            SNew(Sstyled_button)
             .Text(loc_text(TEXT("exit_to_main_menu")))
             .OnClicked_Lambda([] {
                 UE_LOG(LogTemp, Warning, TEXT("Exit to main menu"));
@@ -133,7 +133,7 @@ void Smain_menu::rebuild()
             })];
     } else {
         vbox_->AddSlot().AutoHeight()[
-            SAssignNew(multiplayer_exit_to_menu_bn_, Sstyled_button)
+            SNew(Sstyled_button)
             .Text(loc_text(TEXT("multiplayer_game")))
             .OnClicked_Lambda([] {
                 UE_LOG(LogTemp, Warning, TEXT("Multiplayer Game"));
@@ -145,7 +145,7 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().FillHeight(1);
 
     vbox_->AddSlot().AutoHeight()[
-        SAssignNew(options_bn_, Sstyled_button)
+        SNew(Sstyled_button)
         .Text(loc_text(TEXT("options")))
         .OnClicked_Lambda([] {
             UE_LOG(LogTemp, Warning, TEXT("Options"));
@@ -155,7 +155,7 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().FillHeight(3);
 
     vbox_->AddSlot().AutoHeight()[
-        SAssignNew(exit_game_bn_, Sstyled_button)
+        SNew(Sstyled_button)
         .Text(loc_text(TEXT("exit_game")))
         .OnClicked_Lambda([confirm = in_game_] {
             UE_LOG(LogTemp, Warning, TEXT("Outta here!"));
@@ -175,6 +175,12 @@ void Smain_menu::in_game(bool b)
 {
     in_game_ = b;
     rebuild();
+}
+
+void Smain_menu::saves_available(bool b)
+{
+    continue_bn_->SetEnabled(b);
+    load_game_bn_->SetEnabled(b);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

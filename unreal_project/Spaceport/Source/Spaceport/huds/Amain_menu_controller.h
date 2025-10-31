@@ -16,8 +16,4 @@ public:
     UFUNCTION(Server, Reliable)
     void server_new_game(game_kind kind, FFilePath const & save);
     void server_new_game_Implementation(game_kind kind, FFilePath const & save);
-
-    // TODO UFUNCTION(Server, Reliable)
-    // TODO void server_list_saves();
-    // TODO void server_list_saves_Implementation();
 };

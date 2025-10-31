@@ -19,6 +19,7 @@ public:
 
     void rebuild();
     void in_game(bool b);
+    void saves_available(bool b);
 
 private:
     TSharedPtr<SVerticalBox> vbox_;
@@ -26,9 +27,6 @@ private:
     TSharedPtr<Sstyled_button> continue_bn_;
     TSharedPtr<Sstyled_button> new_game_save_game_bn_;
     TSharedPtr<Sstyled_button> load_game_bn_;
-    TSharedPtr<Sstyled_button> multiplayer_exit_to_menu_bn_;
-    TSharedPtr<Sstyled_button> options_bn_;
-    TSharedPtr<Sstyled_button> exit_game_bn_;
 
     bool in_game_ = true;
 };
