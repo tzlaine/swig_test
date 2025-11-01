@@ -1,7 +1,7 @@
 #pragma once
 
 #include <CoreMinimal.h>
-#include <Engine/Classes/GameFramework/PlayerController.h>
+#include <GameFramework/PlayerController.h>
 #include "Aplayer_controller.generated.h"
 
 
