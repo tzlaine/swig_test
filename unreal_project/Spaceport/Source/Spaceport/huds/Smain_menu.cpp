@@ -4,7 +4,6 @@
 #include "widgets/Sstyled_text_block.h"
 
 #include <SlateOptMacros.h>
-#include <Engine/Font.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SCanvas.h>
 #include <Widgets/SOverlay.h>
@@ -42,7 +41,6 @@ void Smain_menu::Construct(FArguments const & args)
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.4, 0.45, 0.6, 0.8))
-        .Offset(FMargin(0, 0, 0, 3.556946))
         [SAssignNew(vbox_, SVerticalBox)]
     ];
 

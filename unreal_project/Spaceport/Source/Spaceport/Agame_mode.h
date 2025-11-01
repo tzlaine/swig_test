@@ -8,6 +8,7 @@
 
 
 class Agame_state;
+class Aplaying_hud;
 
 UENUM(BlueprintType)
 enum class play_state : uint8 {
@@ -29,6 +30,8 @@ public:
     virtual void BeginPlay() override;
 
 private:
+    Aplaying_hud * hud() const;
+
     void start_sp_game();
     void start_mp_game();
 
