@@ -12,4 +12,8 @@ class Aplayer_controller : public APlayerController
 
 public:
     void BeginPlay();
+
+    UFUNCTION(Server, Reliable)
+    void server_quit_to_menu();
+    void server_quit_to_menu_Implementation();
 };

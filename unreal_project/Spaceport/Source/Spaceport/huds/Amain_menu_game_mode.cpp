@@ -5,7 +5,6 @@
 #include "game_instance.h"
 
 #include <DirectoryWatcherModule.h>
-#include <Kismet/GameplayStatics.h>
 #include <Modules/ModuleManager.h>
 
 namespace {
@@ -36,13 +35,16 @@ namespace {
 Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
     AGameModeBase(init)
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode CTOR"));
     HUDClass = Amain_menu_hud::StaticClass();
     PlayerControllerClass = Amain_menu_controller::StaticClass();
     GameStateClass = Amain_menu_game_state::StaticClass();
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode CTOR"));
 }
 
 void Amain_menu_game_mode::BeginPlay()
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode::BeginPlay()"));
     Super::BeginPlay();
 
     TArray<FString> saves = find_save_files();
@@ -62,10 +64,12 @@ void Amain_menu_game_mode::BeginPlay()
             dir_watcher_handle_,
             IDirectoryWatcher::WatchOptions::IgnoreChangesInSubtree);
     }
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode::BeginPlay()"));
 }
 
 void Amain_menu_game_mode::EndPlay(EEndPlayReason::Type reason)
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode::EndPlay()"));
     Super::EndPlay(reason);
 
     if (!dir_watcher_ || !dir_watcher_handle_.IsValid())
@@ -73,11 +77,12 @@ void Amain_menu_game_mode::EndPlay(EEndPlayReason::Type reason)
 
     dir_watcher_->UnregisterDirectoryChangedCallback_Handle(
         watched_dir_, dir_watcher_handle_);
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode::EndPlay()"));
 }
 
 void Amain_menu_game_mode::multicast_new_game_Implementation()
 {
-    UGameplayStatics::OpenLevel(::world(), TEXT("playing"), true);
+    Ugame_instance::get()->load_playing_level();
 }
 
 void Amain_menu_game_mode::watched_dir_changed(

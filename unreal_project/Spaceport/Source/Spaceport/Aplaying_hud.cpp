@@ -23,7 +23,6 @@ namespace {
 
 Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : AHUD(init) {}
 
-
 void Aplaying_hud::saves_available(bool b)
 {
     have_saves_ = b;
@@ -55,18 +54,22 @@ void Aplaying_hud::hide_game_setup()
 
 void Aplaying_hud::BeginPlay()
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::BeginPlay()"));
     Super::BeginPlay();
 
     allocate_widgets();
     main_menu_->saves_available(have_saves_);
+    UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::BeginPlay()"));
 }
 
 void Aplaying_hud::EndPlay(EEndPlayReason::Type reason)
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::EndPlay()"));
     Super::EndPlay(reason);
 
     hide_main_menu();
     hide_game_setup();
+    UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::EndPlay()"));
 }
 
 void Aplaying_hud::allocate_widgets()

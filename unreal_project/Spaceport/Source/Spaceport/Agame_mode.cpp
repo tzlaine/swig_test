@@ -17,9 +17,28 @@ namespace {
 Agame_mode::Agame_mode(FObjectInitializer const & init) :
     AGameModeBase(init)
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode CTOR"));
     HUDClass = Aplaying_hud::StaticClass();
     PlayerControllerClass = Aplayer_controller::StaticClass();
     GameStateClass = Agame_state::StaticClass();
+    UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode CTOR"));
+}
+
+void Agame_mode::BeginPlay()
+{
+    UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::BeginPlay()"));
+    Super::BeginPlay();
+
+    if (Ugame_instance::get()->game_kind() == game_kind::sp)
+        start_sp_game();
+    else
+        start_mp_game();
+    UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::BeginPlay()"));
+}
+
+void Agame_mode::multicast_quit_to_menu_Implementation()
+{
+    Ugame_instance::get()->load_start_level();
 }
 
 Aplaying_hud * Agame_mode::hud() const
@@ -45,14 +64,4 @@ void Agame_mode::start_sp_game()
 void Agame_mode::start_mp_game()
 {
     // TODO
-}
-
-void Agame_mode::BeginPlay()
-{
-    Super::BeginPlay();
-
-    if (Ugame_instance::get()->game_kind() == game_kind::sp)
-        start_sp_game();
-    else
-        start_mp_game();
 }

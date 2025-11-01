@@ -9,6 +9,7 @@
 #include <Engine/World.h>
 #include <Internationalization/StringTableRegistry.h>
 #include <Internationalization/StringTable.h>
+#include <Kismet/GameplayStatics.h>
 #include <Kismet/KismetSystemLibrary.h>
 #include "game_instance.generated.h"
 
@@ -25,10 +26,21 @@ class SPACEPORT_API Ugame_instance : public UGameInstance
     GENERATED_BODY()
 
 public:
-    Ugame_instance()
+    Ugame_instance() :
+        start_level_(FString(TEXT("/Game/levels/start/start_screen.start_screen"))),
+        playing_level_(FString(TEXT("/Game/levels/playing.playing")))
     {
         assert(!self_ptr_);
         self_ptr_ = this;
+    }
+
+    void load_start_level()
+    {
+        UGameplayStatics::OpenLevelBySoftObjectPtr(GetWorld(), start_level_);
+    }
+    void load_playing_level()
+    {
+        UGameplayStatics::OpenLevelBySoftObjectPtr(GetWorld(), playing_level_);
     }
 
     ::game_kind game_kind() const
@@ -79,6 +91,9 @@ private:
     FName string_table_id_;
     ::game_kind game_kind_;
     std::filesystem::path game_to_load_;
+
+    TSoftObjectPtr<UWorld> start_level_;
+    TSoftObjectPtr<UWorld> playing_level_;
 
     inline static Ugame_instance * self_ptr_ = nullptr;
 };

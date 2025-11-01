@@ -1,4 +1,5 @@
 #include "Sgame_setup.h"
+#include "Aplayer_controller.h"
 #include "game_instance.h"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Sstyled_button.h"
@@ -51,8 +52,11 @@ void Sgame_setup::Construct(FArguments const & args)
                 +SHorizontalBox::Slot().FillWidth(2)[
                     SNew(Sstyled_button).Text(loc_text(TEXT("back")))
                     .OnClicked_Lambda([] {
-                        UE_LOG(LogTemp, Warning, TEXT("Go back!"));
-                        // TODO
+                        UE_LOG(LogTemp, Warning, TEXT("ENTER Back CLICK")); // TODO
+                        Aplayer_controller * pc = Cast<Aplayer_controller>(
+                            ::world()->GetFirstPlayerController());
+                        pc->server_quit_to_menu();
+                        UE_LOG(LogTemp, Warning, TEXT("EXIT Back CLICK")); // TODO
                         return FReply::Handled();
                     })
                 ]

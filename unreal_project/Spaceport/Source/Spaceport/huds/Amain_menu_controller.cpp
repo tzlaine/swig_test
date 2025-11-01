@@ -6,6 +6,7 @@
 
 void Amain_menu_controller::BeginPlay()
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_controller::BeginPlay()"));
     Super::BeginPlay();
 
     FInputModeUIOnly InputModeData;
@@ -13,6 +14,7 @@ void Amain_menu_controller::BeginPlay()
         EMouseLockMode::DoNotLock);
     SetInputMode(InputModeData);
     SetShowMouseCursor(true);
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_controller::BeginPlay()"));
 }
 
 void Amain_menu_controller::server_new_game_Implementation(

@@ -8,6 +8,7 @@ Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) : AHUD(init) {}
 
 void Amain_menu_hud::BeginPlay()
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
     Super::BeginPlay();
 
     widget_ = SNew(Smain_menu).in_game(false);
@@ -15,14 +16,17 @@ void Amain_menu_hud::BeginPlay()
 
     UGameViewportClient * viewport_client = GetWorld()->GetGameViewport();
     viewport_client->AddViewportWidgetContent(widget_.ToSharedRef());
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
 }
 
 void Amain_menu_hud::EndPlay(EEndPlayReason::Type reason)
 {
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::EndPlay()"));
     Super::EndPlay(reason);
 
     GetWorld()->GetGameViewport()->RemoveViewportWidgetContent(
         widget_.ToSharedRef());
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::EndPlay()"));
 }
 
 void Amain_menu_hud::saves_available(bool b)

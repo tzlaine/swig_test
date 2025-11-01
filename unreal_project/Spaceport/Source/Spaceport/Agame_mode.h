@@ -29,6 +29,10 @@ public:
 
     virtual void BeginPlay() override;
 
+    UFUNCTION(NetMulticast, Reliable)
+    void multicast_quit_to_menu();
+    void multicast_quit_to_menu_Implementation();
+
 private:
     Aplaying_hud * hud() const;
 

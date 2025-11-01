@@ -76,7 +76,7 @@ void Smain_menu::rebuild()
             .OnClicked_Lambda([] {
                 UE_LOG(LogTemp, Warning, TEXT("New Game"));
                 Amain_menu_controller * pc = Cast<Amain_menu_controller>(
-                    UGameplayStatics::GetPlayerController(::world(), 0));
+                    ::world()->GetFirstPlayerController());
                 pc->server_new_game(game_kind::sp, FFilePath());
                 return FReply::Handled();
             })];
