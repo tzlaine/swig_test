@@ -8,5 +8,7 @@ void Sstyled_text_block::Construct(FArguments const & args_)
         *defaults.UTextBlock_style_path_);
     STextBlock::FArguments args(args_);
     args.TextStyle(style.Object);
+    args.Font(
+        FSlateFontInfo(detail::stream_default_font(), defaults.font_size_));
     STextBlock::Construct(args);
 }
