@@ -1,8 +1,9 @@
 #include "Sgame_setup.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
-#include "widgets/Sstyled_text_block.h"
 #include "widgets/Sstyled_button.h"
+#include "widgets/Sstyled_spin_box.h"
+#include "widgets/Sstyled_text_block.h"
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
@@ -31,11 +32,18 @@ void Sgame_setup::Construct(FArguments const & args)
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.05, 0, 0.95, 0.125))[
             SNew(SVerticalBox)
+            +SVerticalBox::Slot().FillHeight(1)
+            +SVerticalBox::Slot().AutoHeight()[
+                SNew(Sstyled_text_block)
+                .Text(loc_text(TEXT("game_setup_title")))
+                .Font(FSlateFontInfo(title_font, 48))
+            ]
+            +SVerticalBox::Slot().FillHeight(1)
         ]
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.05, 0.125, 0.95, 0.875))[
-            SNew(SVerticalBox)
+            SAssignNew(vbox_, SVerticalBox)
         ]
 
         +SConstraintCanvas::Slot()
@@ -75,6 +83,49 @@ void Sgame_setup::Construct(FArguments const & args)
 
             +SVerticalBox::Slot().FillHeight(1)
         ]
+    ];
+
+    vbox_->AddSlot().MinSize(50).AutoHeight()[
+        SNew(SHorizontalBox)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_text_block)
+            .Text(loc_text(TEXT("setup_total_systems")))]
+        +SHorizontalBox::Slot().FillWidth(1)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_int_spin_box)
+            .MinValue(1)
+            .Value_Lambda([this]{ return params_.systems_per_hex;})
+            .MaxValue(1000)
+            .OnValueChanged_Lambda([this](int x) {
+                int const curr_min_value = (int)std::ceil(
+                    params_.habitable_systems_per_hex_mean +
+                    params_.habitable_systems_per_hex_plus_minus);
+                if (x < curr_min_value)
+                    x = curr_min_value;
+                params_.systems_per_hex = x;
+            })]
+    ];
+
+    vbox_->AddSlot().MinSize(50).AutoHeight()[
+        SNew(SHorizontalBox)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_text_block)
+            .Text(loc_text(TEXT("setup_galaxy_height")))]
+        +SHorizontalBox::Slot().FillWidth(1)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_int_spin_box)
+            .MinValue(11)
+            .Value_Lambda([this]{ return params_.map_height;})
+            .MaxValue(101)
+            .OnValueChanged_Lambda([this](int x) {
+                if (x == params_.map_height + 1)
+                    ++x;
+                else if (x == params_.map_height - 1)
+                    --x;
+                else if (x % 2 == 0)
+                    ++x;
+                params_.map_height = x;
+            })]
     ];
 }
 

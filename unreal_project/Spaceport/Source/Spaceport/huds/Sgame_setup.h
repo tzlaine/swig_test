@@ -1,9 +1,13 @@
 #pragma once
 
+#include "game_data_t.hpp"
+
 #include <CoreMinimal.h>
 #include <Widgets/SCompoundWidget.h>
 #include <Widgets/SBoxPanel.h>
 
+
+class Sstyled_int_spin_box;
 
 class Sgame_setup : public SCompoundWidget
 {
@@ -13,4 +17,9 @@ public:
     SLATE_END_ARGS()
 
     void Construct(FArguments const & args);
+
+private:
+    TSharedPtr<SVerticalBox> vbox_;
+
+    game_start_params params_;
 };
