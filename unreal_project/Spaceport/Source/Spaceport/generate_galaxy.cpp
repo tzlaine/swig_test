@@ -449,7 +449,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
 
     planet.radius_km = std::cbrt(0.75 * volume / std::numbers::pi);
 
-    double const surface_gravity = G * planet.mass_kg /
+    double const surface_gravity = G_ * planet.mass_kg /
         (planet.radius_km * m_per_km * planet.radius_km * m_per_km);
     planet.gravity_g = surface_gravity / earth_gravity;
 
@@ -464,7 +464,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     double const a3 = a * a * a;
     double const M = system.star.solar_masses * sun_mass_kg;
     planet.orbital_period_y =
-        std::sqrt(4 * std::numbers::pi * std::numbers::pi / (G * M) * a3) /
+        std::sqrt(4 * std::numbers::pi * std::numbers::pi / (G_ * M) * a3) /
         secs_per_year;
 
     planet.surface_temperature_k =

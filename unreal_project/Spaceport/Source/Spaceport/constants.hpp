@@ -46,7 +46,7 @@ inline constexpr double hex_width = 1.5;
 inline const double hex_height = 2 * sin_60;
 
 // (real-world) physical constants
-constexpr double G = 6.67e-11; // gravitaional constant, in N * m^2 / kg^2
+constexpr double G_ = 6.67e-11; // gravitaional constant, in N * m^2 / kg^2
 constexpr double sun_temperature_k = 5772.0;
 constexpr double sun_radius_km = 696342.0;
 constexpr double sun_mass_kg = 1.988416e30;
