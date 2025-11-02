@@ -32,7 +32,7 @@ inline ui_defaults_t const & ui_defaults()
 
     if (once) {
         retval.font_path_ = TEXT("/Game/ui/fonts/futura_light_bt_Font");
-        retval.font_size_ = 24;
+        retval.font_size_ = 28;
 
         retval.UButton_style_path_ = TEXT("/Game/ui/styles/button_style");
         retval.UCheckBox_style_path_ = TEXT("/Game/ui/styles/check_box_style");
