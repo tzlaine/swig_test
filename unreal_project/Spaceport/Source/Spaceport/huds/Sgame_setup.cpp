@@ -85,6 +85,51 @@ void Sgame_setup::Construct(FArguments const & args)
         ]
     ];
 
+    auto const adjust_total_for_inhab = [this] {
+        int const curr_min_value = (int)std::ceil(
+            params_.habitable_systems_per_hex_mean +
+            params_.habitable_systems_per_hex_plus_minus);
+        if (params_.systems_per_hex < curr_min_value)
+            params_.systems_per_hex = curr_min_value;
+    };
+
+    vbox_->AddSlot().MinSize(50).AutoHeight()[
+        SNew(SHorizontalBox)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_text_block)
+            .Text(loc_text(TEXT("setup_inhab_systems")))]
+        +SHorizontalBox::Slot().FillWidth(100)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_float_spin_box)
+            .MinValue(1.0)
+            .Value_Lambda([this] {
+                return params_.habitable_systems_per_hex_mean;})
+            .MaxValue(50.0)
+            .Delta(0.1)
+            .MaxFractionalDigits(1)
+            .OnValueChanged_Lambda([=, this](float x) {
+                params_.habitable_systems_per_hex_mean = x;
+                adjust_total_for_inhab();
+            })]
+        +SHorizontalBox::Slot().FillWidth(1)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_text_block)
+            .Text(loc_text(TEXT("plus_minus_about")))]
+        +SHorizontalBox::Slot().FillWidth(1)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_float_spin_box)
+            .MinValue(1.0)
+            .Value_Lambda([this] {
+                return params_.habitable_systems_per_hex_plus_minus;})
+            .MaxValue(10.0)
+            .Delta(0.1)
+            .MaxFractionalDigits(1)
+            .OnValueChanged_Lambda([=, this](float x) {
+                params_.habitable_systems_per_hex_plus_minus = x;
+                adjust_total_for_inhab();
+            })]
+    ];
+
     vbox_->AddSlot().MinSize(50).AutoHeight()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().AutoWidth()[
@@ -94,15 +139,11 @@ void Sgame_setup::Construct(FArguments const & args)
         +SHorizontalBox::Slot().AutoWidth()[
             SNew(Sstyled_int_spin_box)
             .MinValue(1)
-            .Value_Lambda([this]{ return params_.systems_per_hex;})
+            .Value_Lambda([=, this]{ return params_.systems_per_hex;})
             .MaxValue(1000)
-            .OnValueChanged_Lambda([this](int x) {
-                int const curr_min_value = (int)std::ceil(
-                    params_.habitable_systems_per_hex_mean +
-                    params_.habitable_systems_per_hex_plus_minus);
-                if (x < curr_min_value)
-                    x = curr_min_value;
+            .OnValueChanged_Lambda([=, this](int x) {
                 params_.systems_per_hex = x;
+                adjust_total_for_inhab();
             })]
     ];
 
