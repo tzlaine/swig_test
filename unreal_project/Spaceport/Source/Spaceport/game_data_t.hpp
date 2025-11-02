@@ -20,8 +20,8 @@ struct game_start_params
     // TODO: num players
     // TODO: options for development levels?
 
-    float habtitable_systems_per_hex_mean = 5.0f; // Must be >= 0.1.
-    float habtitable_systems_per_hex_plus_minus = 2.0f; // interpreted as 3 sigmas
+    float habitable_systems_per_hex_mean = 5.0f; // Must be >= 0.1.
+    float habitable_systems_per_hex_plus_minus = 2.0f; // interpreted as 3 sigmas
     int systems_per_hex = default_systems_per_hex; // total, not habitable
     int map_height = 11; // In hexes; must be an odd number >= 11.
 
