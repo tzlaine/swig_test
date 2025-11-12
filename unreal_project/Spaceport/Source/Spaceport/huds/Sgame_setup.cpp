@@ -23,6 +23,8 @@ void Sgame_setup::Construct(FArguments const & args)
 {
     UFont * title_font = detail::stream_default_font();
 
+    TSharedPtr<SVerticalBox> vbox;
+
     ChildSlot[
         SNew(SConstraintCanvas)
 
@@ -43,7 +45,7 @@ void Sgame_setup::Construct(FArguments const & args)
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.05, 0.125, 0.95, 0.875))[
-            SAssignNew(vbox_, SVerticalBox)
+            SAssignNew(vbox, SVerticalBox)
         ]
 
         +SConstraintCanvas::Slot()
@@ -93,7 +95,7 @@ void Sgame_setup::Construct(FArguments const & args)
             params_.systems_per_hex = curr_min_value;
     };
 
-    vbox_->AddSlot().MinSize(50).AutoHeight()[
+    vbox->AddSlot().MinSize(50).AutoHeight()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().AutoWidth()[
             SNew(Sstyled_text_block)
@@ -130,7 +132,7 @@ void Sgame_setup::Construct(FArguments const & args)
             })]
     ];
 
-    vbox_->AddSlot().MinSize(50).AutoHeight()[
+    vbox->AddSlot().MinSize(50).AutoHeight()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().AutoWidth()[
             SNew(Sstyled_text_block)
@@ -147,7 +149,7 @@ void Sgame_setup::Construct(FArguments const & args)
             })]
     ];
 
-    vbox_->AddSlot().MinSize(50).AutoHeight()[
+    vbox->AddSlot().MinSize(50).AutoHeight()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().AutoWidth()[
             SNew(Sstyled_text_block)

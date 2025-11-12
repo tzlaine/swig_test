@@ -19,7 +19,5 @@ public:
     void Construct(FArguments const & args);
 
 private:
-    TSharedPtr<SVerticalBox> vbox_;
-
     game_start_params params_;
 };

@@ -25,7 +25,6 @@ private:
     TSharedPtr<SVerticalBox> vbox_;
 
     TSharedPtr<Sstyled_button> continue_bn_;
-    TSharedPtr<Sstyled_button> new_game_save_game_bn_;
     TSharedPtr<Sstyled_button> load_game_bn_;
 
     bool in_game_ = true;

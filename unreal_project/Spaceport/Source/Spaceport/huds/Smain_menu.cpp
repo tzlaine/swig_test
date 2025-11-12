@@ -62,7 +62,7 @@ void Smain_menu::rebuild()
 
     if (in_game_) {
         vbox_->AddSlot().AutoHeight()[
-            SAssignNew(new_game_save_game_bn_, Sstyled_button)
+            SNew(Sstyled_button)
             .Text(loc_text(TEXT("save_game")))
             .OnClicked_Lambda([] {
                 UE_LOG(LogTemp, Warning, TEXT("Save Game"));
@@ -70,7 +70,7 @@ void Smain_menu::rebuild()
             })];
     } else {
         vbox_->AddSlot().AutoHeight()[
-            SAssignNew(new_game_save_game_bn_, Sstyled_button)
+            SNew(Sstyled_button)
             .Text(loc_text(TEXT("new_game")))
             .OnClicked_Lambda([] {
                 UE_LOG(LogTemp, Warning, TEXT("New Game"));
