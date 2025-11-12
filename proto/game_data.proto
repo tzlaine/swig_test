@@ -5,6 +5,18 @@ import "base_types.proto";
 package pb_message.game_data;
 
 
+message game_start_params_t
+{
+    // TODO: scenario
+    // TODO: num players
+    // TODO: options for development levels?
+
+    float habitable_systems_per_hex_mean = 1; // Must be >= 0.1.
+    float habitable_systems_per_hex_plus_minus = 2; // interpreted as 3 sigmas
+    int32 systems_per_hex = 3; // total, not habitable
+    int32 map_height = 4; // In hexes; must be an odd number >= 11.
+}
+
 message unit_design_t
 {
     int32 id = 1;

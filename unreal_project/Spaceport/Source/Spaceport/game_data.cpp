@@ -13,6 +13,26 @@
 
 
 
+pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_params_t& value)
+{
+    pb_message::game_data::game_start_params_t retval;
+    retval.set_habitable_systems_per_hex_mean(value.habitable_systems_per_hex_mean);
+    retval.set_habitable_systems_per_hex_plus_minus(value.habitable_systems_per_hex_plus_minus);
+    retval.set_systems_per_hex(value.systems_per_hex);
+    retval.set_map_height(value.map_height);
+    return retval;
+}
+
+::game_start_params_t from_protobuf (const pb_message::game_data::game_start_params_t& msg)
+{
+    ::game_start_params_t retval;
+    retval.habitable_systems_per_hex_mean = msg.habitable_systems_per_hex_mean();
+    retval.habitable_systems_per_hex_plus_minus = msg.habitable_systems_per_hex_plus_minus();
+    retval.systems_per_hex = msg.systems_per_hex();
+    retval.map_height = msg.map_height();
+    return retval;
+}
+
 pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value)
 {
     pb_message::game_data::unit_design_t retval;

@@ -52,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -70,6 +70,9 @@ extern fleets_tDefaultTypeInternal _fleets_t_default_instance_;
 class fleets_t_FleetsEntry_DoNotUse;
 class fleets_t_FleetsEntry_DoNotUseDefaultTypeInternal;
 extern fleets_t_FleetsEntry_DoNotUseDefaultTypeInternal _fleets_t_FleetsEntry_DoNotUse_default_instance_;
+class game_start_params_t;
+class game_start_params_tDefaultTypeInternal;
+extern game_start_params_tDefaultTypeInternal _game_start_params_t_default_instance_;
 class game_state_t;
 class game_state_tDefaultTypeInternal;
 extern game_state_tDefaultTypeInternal _game_state_t_default_instance_;
@@ -112,6 +115,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::pb_message::game_data::fleet_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleet_t>(Arena*);
 template<> ::pb_message::game_data::fleets_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleets_t>(Arena*);
 template<> ::pb_message::game_data::fleets_t_FleetsEntry_DoNotUse* Arena::CreateMaybeMessage<::pb_message::game_data::fleets_t_FleetsEntry_DoNotUse>(Arena*);
+template<> ::pb_message::game_data::game_start_params_t* Arena::CreateMaybeMessage<::pb_message::game_data::game_start_params_t>(Arena*);
 template<> ::pb_message::game_data::game_state_t* Arena::CreateMaybeMessage<::pb_message::game_data::game_state_t>(Arena*);
 template<> ::pb_message::game_data::hex_t* Arena::CreateMaybeMessage<::pb_message::game_data::hex_t>(Arena*);
 template<> ::pb_message::game_data::location_object_t* Arena::CreateMaybeMessage<::pb_message::game_data::location_object_t>(Arena*);
@@ -310,6 +314,176 @@ inline bool star_class_t_Parse(
 }
 // ===================================================================
 
+class game_start_params_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.game_start_params_t) */ {
+ public:
+  inline game_start_params_t() : game_start_params_t(nullptr) {}
+  virtual ~game_start_params_t();
+
+  game_start_params_t(const game_start_params_t& from);
+  game_start_params_t(game_start_params_t&& from) noexcept
+    : game_start_params_t() {
+    *this = ::std::move(from);
+  }
+
+  inline game_start_params_t& operator=(const game_start_params_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline game_start_params_t& operator=(game_start_params_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const game_start_params_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const game_start_params_t* internal_default_instance() {
+    return reinterpret_cast<const game_start_params_t*>(
+               &_game_start_params_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(game_start_params_t& a, game_start_params_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(game_start_params_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(game_start_params_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline game_start_params_t* New() const final {
+    return CreateMaybeMessage<game_start_params_t>(nullptr);
+  }
+
+  game_start_params_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<game_start_params_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const game_start_params_t& from);
+  void MergeFrom(const game_start_params_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(game_start_params_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.game_start_params_t";
+  }
+  protected:
+  explicit game_start_params_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kHabitableSystemsPerHexMeanFieldNumber = 1,
+    kHabitableSystemsPerHexPlusMinusFieldNumber = 2,
+    kSystemsPerHexFieldNumber = 3,
+    kMapHeightFieldNumber = 4,
+  };
+  // float habitable_systems_per_hex_mean = 1;
+  void clear_habitable_systems_per_hex_mean();
+  float habitable_systems_per_hex_mean() const;
+  void set_habitable_systems_per_hex_mean(float value);
+  private:
+  float _internal_habitable_systems_per_hex_mean() const;
+  void _internal_set_habitable_systems_per_hex_mean(float value);
+  public:
+
+  // float habitable_systems_per_hex_plus_minus = 2;
+  void clear_habitable_systems_per_hex_plus_minus();
+  float habitable_systems_per_hex_plus_minus() const;
+  void set_habitable_systems_per_hex_plus_minus(float value);
+  private:
+  float _internal_habitable_systems_per_hex_plus_minus() const;
+  void _internal_set_habitable_systems_per_hex_plus_minus(float value);
+  public:
+
+  // int32 systems_per_hex = 3;
+  void clear_systems_per_hex();
+  ::PROTOBUF_NAMESPACE_ID::int32 systems_per_hex() const;
+  void set_systems_per_hex(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_systems_per_hex() const;
+  void _internal_set_systems_per_hex(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 map_height = 4;
+  void clear_map_height();
+  ::PROTOBUF_NAMESPACE_ID::int32 map_height() const;
+  void set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_map_height() const;
+  void _internal_set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.game_start_params_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  float habitable_systems_per_hex_mean_;
+  float habitable_systems_per_hex_plus_minus_;
+  ::PROTOBUF_NAMESPACE_ID::int32 systems_per_hex_;
+  ::PROTOBUF_NAMESPACE_ID::int32 map_height_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class unit_design_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.unit_design_t) */ {
  public:
@@ -352,7 +526,7 @@ class unit_design_t PROTOBUF_FINAL :
                &_unit_design_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   friend void swap(unit_design_t& a, unit_design_t& b) {
     a.Swap(&b);
@@ -621,7 +795,7 @@ class unit_t PROTOBUF_FINAL :
                &_unit_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(unit_t& a, unit_t& b) {
     a.Swap(&b);
@@ -780,7 +954,7 @@ class fleet_t PROTOBUF_FINAL :
                &_fleet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(fleet_t& a, fleet_t& b) {
     a.Swap(&b);
@@ -972,7 +1146,7 @@ public:
   private:
   static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
     ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
-    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[3];
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[4];
   }
 
   public:
@@ -1022,7 +1196,7 @@ class fleets_t PROTOBUF_FINAL :
                &_fleets_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(fleets_t& a, fleets_t& b) {
     a.Swap(&b);
@@ -1173,7 +1347,7 @@ class planet_effect_t PROTOBUF_FINAL :
                &_planet_effect_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(planet_effect_t& a, planet_effect_t& b) {
     a.Swap(&b);
@@ -1401,7 +1575,7 @@ class planet_t PROTOBUF_FINAL :
                &_planet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(planet_t& a, planet_t& b) {
     a.Swap(&b);
@@ -1853,7 +2027,7 @@ class location_object_t PROTOBUF_FINAL :
                &_location_object_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(location_object_t& a, location_object_t& b) {
     a.Swap(&b);
@@ -2010,7 +2184,7 @@ class system_location_t PROTOBUF_FINAL :
                &_system_location_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(system_location_t& a, system_location_t& b) {
     a.Swap(&b);
@@ -2176,7 +2350,7 @@ class star_t PROTOBUF_FINAL :
                &_star_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(star_t& a, star_t& b) {
     a.Swap(&b);
@@ -2357,7 +2531,7 @@ class system_t PROTOBUF_FINAL :
                &_system_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(system_t& a, system_t& b) {
     a.Swap(&b);
@@ -2625,7 +2799,7 @@ class hex_t PROTOBUF_FINAL :
                &_hex_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(hex_t& a, hex_t& b) {
     a.Swap(&b);
@@ -2824,7 +2998,7 @@ class province_t PROTOBUF_FINAL :
                &_province_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(province_t& a, province_t& b) {
     a.Swap(&b);
@@ -2992,7 +3166,7 @@ class nation_t PROTOBUF_FINAL :
                &_nation_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(nation_t& a, nation_t& b) {
     a.Swap(&b);
@@ -3230,7 +3404,7 @@ class game_state_t PROTOBUF_FINAL :
                &_game_state_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(game_state_t& a, game_state_t& b) {
     a.Swap(&b);
@@ -3423,6 +3597,90 @@ class game_state_t PROTOBUF_FINAL :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// game_start_params_t
+
+// float habitable_systems_per_hex_mean = 1;
+inline void game_start_params_t::clear_habitable_systems_per_hex_mean() {
+  habitable_systems_per_hex_mean_ = 0;
+}
+inline float game_start_params_t::_internal_habitable_systems_per_hex_mean() const {
+  return habitable_systems_per_hex_mean_;
+}
+inline float game_start_params_t::habitable_systems_per_hex_mean() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_start_params_t.habitable_systems_per_hex_mean)
+  return _internal_habitable_systems_per_hex_mean();
+}
+inline void game_start_params_t::_internal_set_habitable_systems_per_hex_mean(float value) {
+  
+  habitable_systems_per_hex_mean_ = value;
+}
+inline void game_start_params_t::set_habitable_systems_per_hex_mean(float value) {
+  _internal_set_habitable_systems_per_hex_mean(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_start_params_t.habitable_systems_per_hex_mean)
+}
+
+// float habitable_systems_per_hex_plus_minus = 2;
+inline void game_start_params_t::clear_habitable_systems_per_hex_plus_minus() {
+  habitable_systems_per_hex_plus_minus_ = 0;
+}
+inline float game_start_params_t::_internal_habitable_systems_per_hex_plus_minus() const {
+  return habitable_systems_per_hex_plus_minus_;
+}
+inline float game_start_params_t::habitable_systems_per_hex_plus_minus() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_start_params_t.habitable_systems_per_hex_plus_minus)
+  return _internal_habitable_systems_per_hex_plus_minus();
+}
+inline void game_start_params_t::_internal_set_habitable_systems_per_hex_plus_minus(float value) {
+  
+  habitable_systems_per_hex_plus_minus_ = value;
+}
+inline void game_start_params_t::set_habitable_systems_per_hex_plus_minus(float value) {
+  _internal_set_habitable_systems_per_hex_plus_minus(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_start_params_t.habitable_systems_per_hex_plus_minus)
+}
+
+// int32 systems_per_hex = 3;
+inline void game_start_params_t::clear_systems_per_hex() {
+  systems_per_hex_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_start_params_t::_internal_systems_per_hex() const {
+  return systems_per_hex_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_start_params_t::systems_per_hex() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_start_params_t.systems_per_hex)
+  return _internal_systems_per_hex();
+}
+inline void game_start_params_t::_internal_set_systems_per_hex(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  systems_per_hex_ = value;
+}
+inline void game_start_params_t::set_systems_per_hex(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_systems_per_hex(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_start_params_t.systems_per_hex)
+}
+
+// int32 map_height = 4;
+inline void game_start_params_t::clear_map_height() {
+  map_height_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_start_params_t::_internal_map_height() const {
+  return map_height_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_start_params_t::map_height() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_start_params_t.map_height)
+  return _internal_map_height();
+}
+inline void game_start_params_t::_internal_set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  map_height_ = value;
+}
+inline void game_start_params_t::set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_map_height(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_start_params_t.map_height)
+}
+
+// -------------------------------------------------------------------
+
 // unit_design_t
 
 // int32 id = 1;
@@ -6285,6 +6543,8 @@ game_state_t::nations() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

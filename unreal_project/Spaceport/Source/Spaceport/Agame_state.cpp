@@ -9,6 +9,14 @@ void Agame_state::play_state_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("Client: play state changed to %s"),
            *UEnum::GetValueAsString(play_state_));
+    // TODO if (play_state_ == play_state::generating) Show "Generating Galaxy..." with progress bar.
+}
+
+void Agame_state::generation_percent_changed()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Client: galaxy generation at %d pct"),
+           generation_percent_complete_);
+    // TODO: Update progress bar
 }
 
 void Agame_state::GetLifetimeReplicatedProps(

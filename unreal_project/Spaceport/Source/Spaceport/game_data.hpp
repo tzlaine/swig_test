@@ -83,6 +83,15 @@ enum class star_class_t {
 };
 inline auto operator<=>(star_class_t x, star_class_t y) { return (int)x <=> (int)y; }
 
+struct game_start_params_t
+{
+    float habitable_systems_per_hex_mean;
+    float habitable_systems_per_hex_plus_minus;
+    int systems_per_hex;
+    int map_height;
+    bool operator==(game_start_params_t const &) const = default;
+};
+
 struct unit_design_t
 {
     int id;
@@ -252,6 +261,9 @@ struct game_state_t
 };
 
 
+
+pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_params_t& value);
+::game_start_params_t from_protobuf (const pb_message::game_data::game_start_params_t& msg);
 
 pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value);
 ::unit_design_t from_protobuf (const pb_message::game_data::unit_design_t& msg);

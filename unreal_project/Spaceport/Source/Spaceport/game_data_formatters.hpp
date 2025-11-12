@@ -145,6 +145,29 @@ struct std::formatter<star_class_t> : std::formatter<std::string_view> {
 };
 
 template <>
+struct std::formatter<game_start_params_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(game_start_params_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "game_start_params_t(");
+
+        out = std::format_to(out, " habitable_systems_per_hex_mean={}", x.habitable_systems_per_hex_mean);
+        out = std::format_to(out, " habitable_systems_per_hex_plus_minus={}", x.habitable_systems_per_hex_plus_minus);
+        out = std::format_to(out, " systems_per_hex={}", x.systems_per_hex);
+        out = std::format_to(out, " map_height={}", x.map_height);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, game_start_params_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<unit_design_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }

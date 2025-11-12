@@ -613,7 +613,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
 
 void generation::detail::generate_hex(hex_t & hex, int hex_index,
                                       game_state_t & game_state,
-                                      game_start_params const & params,
+                                      game_start_params_t const & params,
                                       double map_radius, double bulge_radius,
                                       hex_coord_t center_hex,
                                       point_2d center_hex_pos,
@@ -694,9 +694,11 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
 #endif
 }
 
-void generation::generate_galaxy(game_start_params const & params,
+void generation::generate_galaxy(game_start_params_t const & params,
                                  game_state_t & game_state,
-                                 task_system * ts_ptr)
+                                 task_system * ts_ptr,
+                                 concurrent_queue<int> * percent_complete,
+                                 std::atomic_bool * fully_complete)
 {
     auto [map_radius, bulge_radius, center_hex, center_hex_pos] =
         detail::galaxy_shape(params, game_state);
@@ -715,7 +717,8 @@ void generation::generate_galaxy(game_start_params const & params,
        local_ts_ptr.reset(new task_system(4));
    task_system & ts = ts_ptr ? *ts_ptr : *local_ts_ptr;
 
-   int const five_percent = game_state.hexes.size() / 20;
+   int const update_percentage = 5;
+   int const five_percent = game_state.hexes.size() * update_percentage / 100;
 
    int hex_index = 0;
    for (auto & hex : game_state.hexes) {
@@ -729,11 +732,8 @@ void generation::generate_galaxy(game_start_params const & params,
            // There should probably e a therad dedicated just to reading off
            // of a UI-update queue, and the code below should feed one end of
            // a threadsafe queue that pushes updates to that thread.
-           if (finished == game_state.hexes.size()) {
-               ts.async_exec([] { std::cout << "\n"; });
-           } else if ((finished + 1) % five_percent == 0) {
-               ts.async_exec([] { std::cout << "*"; });
-           }
+           if (percent_complete && (finished + 1) % five_percent == 0)
+               percent_complete->push(update_percentage);
            detail::generate_hex(hex, hex_index, game_state, params,
                                 map_radius, bulge_radius,
                                 center_hex, center_hex_pos,
@@ -746,6 +746,10 @@ void generation::generate_galaxy(game_start_params const & params,
    while (hexes_generated.load() < game_state.hexes.size()) {
        std::this_thread::sleep_for(std::chrono::milliseconds(10));
    }
+   if (percent_complete)
+       percent_complete->done();
+   if (fully_complete)
+       *fully_complete = true;
 
    hex_index = 0;
    int system_id = 0;

@@ -19,5 +19,5 @@ public:
     void Construct(FArguments const & args);
 
 private:
-    game_start_params params_;
+    game_start_params_t params_ = default_game_start_params();
 };

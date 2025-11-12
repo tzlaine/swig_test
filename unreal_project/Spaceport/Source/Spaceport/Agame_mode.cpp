@@ -22,6 +22,8 @@ Agame_mode::Agame_mode(FObjectInitializer const & init) :
     PlayerControllerClass = Aplayer_controller::StaticClass();
     GameStateClass = Agame_state::StaticClass();
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode CTOR"));
+
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 void Agame_mode::BeginPlay()
@@ -30,15 +32,52 @@ void Agame_mode::BeginPlay()
     Super::BeginPlay();
 
     if (Ugame_instance::get()->game_kind() == game_kind::sp)
-        start_sp_game();
+        ready_for_sp_game();
     else
-        start_mp_game();
+        ready_for_mp_game();
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::BeginPlay()"));
+}
+
+void Agame_mode::Tick(float secs)
+{
+    Super::Tick(secs);
+
+    if (cast(GameState)->play_state_ == play_state::generating) {
+        int percent_update = 0;
+        if (percent_complete_->try_pop(percent_update)) {
+            cast(GameState)->generation_percent_complete_ += percent_update;
+            cast(GameState)->generation_percent_changed();
+        }
+
+        if (generation_complete_)
+            start_play();
+    }
 }
 
 void Agame_mode::multicast_quit_to_menu_Implementation()
 {
     Ugame_instance::get()->load_start_level();
+}
+
+void Agame_mode::distribute_initial_game_state_Implementation(
+    TArray<uint8> const & params_)
+{
+    if (params_.IsEmpty()) {
+        start_play();
+        return;
+    }
+
+    cast(GameState)->play_state_ = play_state::generating;
+    cast(GameState)->play_state_changed();
+    cast(GameState)->generation_percent_complete_ = 0;
+    percent_complete_ = std::make_unique<concurrent_queue<int>>();
+
+    auto params = from_tarray<game_start_params_t>(params_);
+    generation_thread_ =
+        std::jthread([&, params = std::move(params), this] {
+            game_data_.generate_galaxy(
+                params, *percent_complete_, generation_complete_);
+        });
 }
 
 Aplaying_hud * Agame_mode::hud() const
@@ -48,7 +87,7 @@ Aplaying_hud * Agame_mode::hud() const
     return nullptr;
 }
 
-void Agame_mode::start_sp_game()
+void Agame_mode::ready_for_sp_game()
 {
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
     if (load_path.empty()) {
@@ -58,10 +97,19 @@ void Agame_mode::start_sp_game()
             hud_ptr->show_game_setup();
     } else {
         // TODO game_data_.load(load_path);
+        // TODO distribute_initial_game_state(TArray<uint8>{});
     }
 }
 
-void Agame_mode::start_mp_game()
+void Agame_mode::ready_for_mp_game()
 {
     // TODO
+}
+
+void Agame_mode::start_play()
+{
+    // TODO: Set starting data into an APlayerCharacter (I think?) for each
+    // player
+    cast(GameState)->play_state_ = play_state::playing;
+    cast(GameState)->play_state_changed();
 }

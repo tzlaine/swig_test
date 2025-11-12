@@ -12,8 +12,10 @@
 #include <numbers>
 
 
-struct game_start_params;
+struct game_start_params_t;
 struct game_state_t;
+template<typename T>
+struct concurrent_queue;
 struct task_system;
 
 // TODO: Move these.
@@ -312,7 +314,7 @@ namespace generation {
                 &generate_system_planets);
         }
 
-        inline auto galaxy_shape(game_start_params const & params,
+        inline auto galaxy_shape(game_start_params_t const & params,
                                  game_state_t & game_state)
         {
             // in world units
@@ -340,7 +342,7 @@ namespace generation {
 
         void generate_hex(hex_t & hex, int hex_index,
                           game_state_t & game_state,
-                          game_start_params const & params,
+                          game_start_params_t const & params,
                           double map_radius, double bulge_radius,
                           hex_coord_t center_hex,
                           point_2d center_hex_pos,
@@ -352,9 +354,11 @@ namespace generation {
 #endif
     }
 
-    void generate_galaxy(game_start_params const & params,
+    void generate_galaxy(game_start_params_t const & params,
                          game_state_t & game_state,
-                         task_system * ts_ptr = nullptr);
+                         task_system * ts_ptr = nullptr,
+                         concurrent_queue<int> * percent_complete = nullptr,
+                         std::atomic_bool * fully_complete = nullptr);
 }
 
 // TODO: Move this.

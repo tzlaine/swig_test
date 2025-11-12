@@ -16,4 +16,8 @@ public:
     UFUNCTION(Server, Reliable)
     void server_quit_to_menu();
     void server_quit_to_menu_Implementation();
+
+    UFUNCTION(Server, Reliable)
+    void server_start_game(TArray<uint8> const & params);
+    void server_start_game_Implementation(TArray<uint8> const & params);
 };

@@ -1,4 +1,5 @@
 #include "Sgame_setup.h"
+#include "Agame_mode.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
 #include "widgets/Sstyled_button.h"
@@ -73,9 +74,11 @@ void Sgame_setup::Construct(FArguments const & args)
 
                 +SHorizontalBox::Slot().FillWidth(2)[
                     SNew(Sstyled_button).Text(loc_text(TEXT("play")))
-                    .OnClicked_Lambda([] {
-                        UE_LOG(LogTemp, Warning, TEXT("Start game"));
-                        // TODO
+                    .OnClicked_Lambda([this] {
+                        TArray<uint8> params = to_tarray(params_);
+                        Aplayer_controller * pc = Cast<Aplayer_controller>(
+                            ::world()->GetFirstPlayerController());
+                        pc->server_start_game(params);
                         return FReply::Handled();
                     })
                 ]

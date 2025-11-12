@@ -14,21 +14,20 @@
 #include <fstream>
 
 
-struct game_start_params
+// TODO
+constexpr static int small_map_height = 11;
+constexpr static int medium_map_height = 21;
+constexpr static int large_map_height = 41;
+
+inline game_start_params_t default_game_start_params()
 {
-    // TODO: scenario
-    // TODO: num players
-    // TODO: options for development levels?
-
-    float habitable_systems_per_hex_mean = 5.0f; // Must be >= 0.1.
-    float habitable_systems_per_hex_plus_minus = 2.0f; // interpreted as 3 sigmas
-    int systems_per_hex = default_systems_per_hex; // total, not habitable
-    int map_height = 11; // In hexes; must be an odd number >= 11.
-
-    constexpr static int small_map_height = 11;
-    constexpr static int medium_map_height = 21;
-    constexpr static int large_map_height = 41;
-};
+    return {
+        .habitable_systems_per_hex_mean = 5.0f,
+        .habitable_systems_per_hex_plus_minus = 2.0f,
+        .systems_per_hex = default_systems_per_hex,
+        .map_height = 11
+    };
+}
 
 // TODO: Move to a utility header
 inline double plus_minus_to_sigma(double plus_minus)
@@ -73,7 +72,9 @@ struct game_data_t
         return {game_state_};
     }
 
-    void generate_galaxy(game_start_params const & params);
+    void generate_galaxy(game_start_params_t const & params,
+                         concurrent_queue<int> & percent_complete,
+                         std::atomic_bool & fully_complete);
 
     void day_tick();
     void month_tick();
