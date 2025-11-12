@@ -4,8 +4,10 @@
 #include "game_data_t.hpp"
 #include "rng.hpp"
 
+#if !defined(BUILD_FOR_TEST)
 #include "Internationalization/StringTableCore.h"
 #include "Internationalization/StringTableRegistry.h"
+#endif
 
 #include <numbers>
 
