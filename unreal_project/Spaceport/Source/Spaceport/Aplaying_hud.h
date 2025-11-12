@@ -7,6 +7,7 @@
 
 class Smain_menu;
 class Sgame_setup;
+class Sgenerating_galaxy;
 
 UCLASS()
 class Aplaying_hud : public AHUD
@@ -24,6 +25,10 @@ public:
     void show_game_setup();
     void hide_game_setup();
 
+    void show_generating_galaxy();
+    void hide_generating_galaxy();
+    void generating_percent_complete(int p);
+
 protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(EEndPlayReason::Type reason) override;
@@ -34,4 +39,5 @@ protected:
 
     TSharedPtr<Smain_menu> main_menu_;
     TSharedPtr<Sgame_setup> game_setup_;
+    TSharedPtr<Sgenerating_galaxy> generating_galaxy_;
 };

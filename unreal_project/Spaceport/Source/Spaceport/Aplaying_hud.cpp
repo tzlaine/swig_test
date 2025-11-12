@@ -2,6 +2,7 @@
 #include "game_instance.h"
 #include "huds/Smain_menu.h"
 #include "huds/Sgame_setup.h"
+#include "huds/Sgenerating_galaxy.h"
 
 #include <Widgets/SViewport.h>
 
@@ -52,6 +53,23 @@ void Aplaying_hud::hide_game_setup()
     hide(GetWorld(), game_setup_);
 }
 
+void Aplaying_hud::show_generating_galaxy()
+{
+    allocate_widgets();
+    show(GetWorld(), generating_galaxy_);
+}
+void Aplaying_hud::hide_generating_galaxy()
+{
+    allocate_widgets();
+    hide(GetWorld(), generating_galaxy_);
+}
+void Aplaying_hud::generating_percent_complete(int p)
+{
+    if (!generating_galaxy_)
+        return;
+    generating_galaxy_->percent_complete(p);
+}
+
 void Aplaying_hud::BeginPlay()
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::BeginPlay()"));
@@ -69,6 +87,7 @@ void Aplaying_hud::EndPlay(EEndPlayReason::Type reason)
 
     hide_main_menu();
     hide_game_setup();
+    hide_generating_galaxy();
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::EndPlay()"));
 }
 
@@ -78,4 +97,5 @@ void Aplaying_hud::allocate_widgets()
         return;
     main_menu_ = SNew(Smain_menu).in_game(true);
     game_setup_ = SNew(Sgame_setup);
+    generating_galaxy_ = SNew(Sgenerating_galaxy);
 }

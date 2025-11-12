@@ -47,10 +47,17 @@ void Agame_mode::Tick(float secs)
         if (percent_complete_->try_pop(percent_update)) {
             cast(GameState)->generation_percent_complete_ += percent_update;
             cast(GameState)->generation_percent_changed();
+            if (auto * hud_ptr = hud()) {
+                hud_ptr->generating_percent_complete(
+                    cast(GameState)->generation_percent_complete_);
+            }
         }
 
-        if (generation_complete_)
+        if (generation_complete_) {
             start_play();
+            if (auto * hud_ptr = hud())
+                hud_ptr->hide_generating_galaxy();
+        }
     }
 }
 
@@ -66,6 +73,9 @@ void Agame_mode::distribute_initial_game_state_Implementation(
         start_play();
         return;
     }
+
+    if (auto * hud_ptr = hud())
+        hud_ptr->show_generating_galaxy();
 
     cast(GameState)->play_state_ = play_state::generating;
     cast(GameState)->play_state_changed();
