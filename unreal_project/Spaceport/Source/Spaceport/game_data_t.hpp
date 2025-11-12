@@ -39,6 +39,7 @@ inline double plus_minus_to_sigma(double plus_minus)
 struct game_data_t
 {
     game_data_t();
+    ~game_data_t();
 
     hex_t const & hex(hex_coord_t hc) const
     {
