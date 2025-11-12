@@ -748,8 +748,6 @@ void generation::generate_galaxy(game_start_params_t const & params,
    }
    if (percent_complete)
        percent_complete->done();
-   if (fully_complete)
-       *fully_complete = true;
 
    hex_index = 0;
    int system_id = 0;
@@ -775,4 +773,7 @@ void generation::generate_galaxy(game_start_params_t const & params,
 
        ++hex_index;
    }
+
+   if (fully_complete)
+       *fully_complete = true;
 }
