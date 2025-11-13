@@ -292,7 +292,7 @@ public:
 
     // SetTeam via Name
     void SetTeamForPlayerController(
-        APlayerController * PlayerController, int team);
+        APlayerController * pc, int team);
 
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
@@ -326,9 +326,9 @@ private:
 
     Erepl_node_kind GetMappingPolicy(UClass * Class);
 
-    bool IsSpatialized(Erepl_node_kind Mapping) const
+    bool IsSpatialized(Erepl_node_kind k) const
     {
-        return Mapping >= Erepl_node_kind::static_spatial;
+        return Erepl_node_kind::static_spatial <= k;
     }
 
     TClassMap<Erepl_node_kind> ClassRepNodePolicies;

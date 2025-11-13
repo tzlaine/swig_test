@@ -608,27 +608,27 @@ void ULocusReplicationGraph::ChangeOwnerOfAnActor(
 }
 
 void ULocusReplicationGraph::SetTeamForPlayerController(
-    APlayerController * PlayerController, int NextTeam)
+    APlayerController * pc, int next_team)
 {
-    if (PlayerController) {
+    if (pc) {
         if (ULocusReplicationConnectionGraph * conn_mgr =
-                FindLocusConnectionGraph(PlayerController)) {
-            int CurrentTeam = conn_mgr->team;
-            if (CurrentTeam != NextTeam) {
-                if (CurrentTeam != no_team) {
+                FindLocusConnectionGraph(pc)) {
+            int curr_team = conn_mgr->team;
+            if (curr_team != next_team) {
+                if (curr_team != no_team) {
                     TeamConnectionListMap.RemoveConnectionFromTeam(
-                        CurrentTeam, conn_mgr);
+                        curr_team, conn_mgr);
                 }
 
-                if (NextTeam != no_team) {
+                if (next_team != no_team) {
                     TeamConnectionListMap.AddConnectionToTeam(
-                        NextTeam, conn_mgr);
+                        next_team, conn_mgr);
                 }
-                conn_mgr->team = NextTeam;
+                conn_mgr->team = next_team;
             }
         } else {
             pending_team_requests_.push_back(
-                team_request{NextTeam, PlayerController});
+                team_request{next_team, pc});
         }
     }
 }
