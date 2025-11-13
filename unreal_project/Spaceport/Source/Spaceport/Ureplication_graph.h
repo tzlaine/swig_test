@@ -38,6 +38,9 @@ DECLARE_LOG_CATEGORY_EXTERN(LogLocusReplicationGraph, Display, All);
 class AGameplayDebuggerCategoryReplicator;
 class ULocusReplicationConnectionGraph;
 
+// TODO: Move.
+inline constexpr int no_team = -1;
+
 // This is the main enum we use to route actors to the right replication node.
 // Each class maps to one enum.
 UENUM(BlueprintType)
@@ -132,21 +135,21 @@ public:
 
 
 struct FTeamConnectionListMap
-    : public TMap<FName, TArray<ULocusReplicationConnectionGraph *>>
+    : public TMap<int, TArray<ULocusReplicationConnectionGraph *>>
 {
 public:
     // Get array of connection managers for gathering actor list
     TArray<ULocusReplicationConnectionGraph *> *
-    GetConnectionArrayForTeam(FName team);
+    GetConnectionArrayForTeam(int team);
 
     // Add Connection to team, if there's no array, add one.
     void AddConnectionToTeam(
-        FName team, ULocusReplicationConnectionGraph * conn_mgr);
+        int team, ULocusReplicationConnectionGraph * conn_mgr);
 
     // Remove Connection from team, if there's no member of the team after
     // removal, remove array from the map
     void RemoveConnectionFromTeam(
-        FName team, ULocusReplicationConnectionGraph * conn_mgr);
+        int team, ULocusReplicationConnectionGraph * conn_mgr);
 };
 
 
@@ -192,7 +195,7 @@ public:
     UPROPERTY()
     class UReplicationGraphNode_AlwaysRelevant_ForTeam * TeamConnectionNode;
 
-    FName team = NAME_None;
+    int team = no_team;
 };
 
 UCLASS(Blueprintable)
@@ -274,7 +277,7 @@ public:
     UReplicationGraphNode_AlwaysRelevant_WithPending * AlwaysRelevantNode;
 
     // always relevant for all connection but in streaming level, so always
-    // relevant to connection who loaded key level TMap<FName,
+    // relevant to connection who loaded key level TMap<int,
     // FActorRepListRefView> AlwaysRelevantStreamingLevelActors; but this is
     // not needed as AlwaysRelevantNode already handle streaming level
 
@@ -289,7 +292,7 @@ public:
 
     // SetTeam via Name
     void SetTeamForPlayerController(
-        APlayerController * PlayerController, FName team);
+        APlayerController * PlayerController, int team);
 
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
@@ -317,7 +320,7 @@ public:
 private:
     struct team_request
     {
-        FName team;
+        int team;
         APlayerController * pc;
     };
 

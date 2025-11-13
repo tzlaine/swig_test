@@ -368,7 +368,7 @@ void ULocusReplicationGraph::InitConnectionGraphNodes(
     AddConnectionGraphNode(
         locus_conn_mgr->TeamConnectionNode, RepGraphConnection);
 
-    // don't care about team names as it's initial value is always  NAME_None
+    // don't care about team names as it's initial value is always no_team
 }
 
 void ULocusReplicationGraph::OnRemoveConnectionGraphNodes(
@@ -377,7 +377,7 @@ void ULocusReplicationGraph::OnRemoveConnectionGraphNodes(
     ULocusReplicationConnectionGraph * locus_conn_mgr =
         Cast<ULocusReplicationConnectionGraph>(RepGraphConnection);
     if (locus_conn_mgr) {
-        if (locus_conn_mgr->team != NAME_None) {
+        if (locus_conn_mgr->team != no_team) {
             TeamConnectionListMap.RemoveConnectionFromTeam(
                 locus_conn_mgr->team, locus_conn_mgr);
         }
@@ -608,19 +608,19 @@ void ULocusReplicationGraph::ChangeOwnerOfAnActor(
 }
 
 void ULocusReplicationGraph::SetTeamForPlayerController(
-    APlayerController * PlayerController, FName NextTeam)
+    APlayerController * PlayerController, int NextTeam)
 {
     if (PlayerController) {
         if (ULocusReplicationConnectionGraph * conn_mgr =
                 FindLocusConnectionGraph(PlayerController)) {
-            FName CurrentTeam = conn_mgr->team;
+            int CurrentTeam = conn_mgr->team;
             if (CurrentTeam != NextTeam) {
-                if (CurrentTeam != NAME_None) {
+                if (CurrentTeam != no_team) {
                     TeamConnectionListMap.RemoveConnectionFromTeam(
                         CurrentTeam, conn_mgr);
                 }
 
-                if (NextTeam != NAME_None) {
+                if (NextTeam != no_team) {
                     TeamConnectionListMap.AddConnectionToTeam(
                         NextTeam, conn_mgr);
                 }
@@ -788,7 +788,7 @@ void UReplicationGraphNode_AlwaysRelevant_ForTeam::
 {
     ULocusReplicationConnectionGraph * locus_conn_mgr =
         Cast<ULocusReplicationConnectionGraph>(&Params.ConnectionManager);
-    if (locus_conn_mgr && locus_conn_mgr->team != NAME_None) {
+    if (locus_conn_mgr && locus_conn_mgr->team != no_team) {
         ULocusReplicationGraph * ReplicationGraph =
             Cast<ULocusReplicationGraph>(GetOuter());
         if (TArray<ULocusReplicationConnectionGraph *> * TeamConnections =
@@ -827,13 +827,13 @@ void UReplicationGraphNode_AlwaysRelevant_ForTeam::
 }
 
 TArray<class ULocusReplicationConnectionGraph *> *
-FTeamConnectionListMap::GetConnectionArrayForTeam(FName team)
+FTeamConnectionListMap::GetConnectionArrayForTeam(int team)
 {
     return Find(team);
 }
 
 void FTeamConnectionListMap::AddConnectionToTeam(
-    FName team, ULocusReplicationConnectionGraph * conn_mgr)
+    int team, ULocusReplicationConnectionGraph * conn_mgr)
 {
     TArray<class ULocusReplicationConnectionGraph *> & TeamList =
         FindOrAdd(team);
@@ -841,7 +841,7 @@ void FTeamConnectionListMap::AddConnectionToTeam(
 }
 
 void FTeamConnectionListMap::RemoveConnectionFromTeam(
-    FName team, ULocusReplicationConnectionGraph * conn_mgr)
+    int team, ULocusReplicationConnectionGraph * conn_mgr)
 {
     if (TArray<class ULocusReplicationConnectionGraph *> * TeamList =
             Find(team)) {
