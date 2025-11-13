@@ -4,19 +4,19 @@
 // https://github.com/locus84/LocusReplicationGraph; their copyright follows.
 
 // MIT License
-// 
+//
 // Copyright(c) 2019 Locus
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files(the "Software"),
 // to deal in the Software without restriction, including without limitation
 // the rights to use, copy, modify, merge, publish , distribute, sublicense,
 // and / or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions :
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
@@ -25,53 +25,47 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#include <map>
+#include <vector>
+
 #include <CoreMinimal.h>
 #include <ReplicationGraph.h>
-#include "Ureplication_graph.generated.h"
+#include "Urepl_graph.generated.h"
 
-
-DECLARE_LOG_CATEGORY_EXTERN(LogLocusReplicationGraph, Display, All);
 
 // class UReplicationGraphNode_GridSpatialization2D;
 class AGameplayDebuggerCategoryReplicator;
-class ULocusReplicationConnectionGraph;
+class Urepl_graph_conn;
+
+// TODO: Move.
+inline constexpr int no_team = -1;
 
 // This is the main enum we use to route actors to the right replication node.
 // Each class maps to one enum.
 UENUM(BlueprintType)
-enum class EClassRepNodeMapping : uint8 {
-    // Does not route to any node. Special case when you want to control manual
-    // way.
-    NotRouted,
+enum class Erepl_node_kind : uint8 {
+    // Requires manual intervention.
+    none,
+
     // Routes to an AlwaysRelevantNode
-    RelevantAllConnections,
+    always,
     // Routes to an AlwaysRelevantNode_ForConnection node
-    RelevantOwnerConnection,
+    connection,
     // Routes to an AlwaysRelevantNode_ForTeam node
-    RelevantTeamConnection,
+    team,
 
     // ONLY SPATIALIZED Enums below here! See
-    // UReplicationGraphBase::IsSpatialized
+    // Urepl_graph::IsSpatialized
 
     // Routes to GridNode: these actors don't move and don't need to be updated
     // every frame.
-    Spatialize_Static,
+    static_spatial,
     // Routes to GridNode: these actors mode frequently and are updated once per
     // frame.
-    Spatialize_Dynamic,
+    dynamic_spatial,
     // Routes to GridNode: While dormant we treat as static. When flushed/not
     // dormant dynamic. Note this is for things that "move while not dormant".
-    Spatialize_Dormancy,
-};
-
-
-struct FTeamRequest
-{
-    FName TeamName;
-    APlayerController * Requestor;
-    FTeamRequest(FName InTeamName, APlayerController * PC) :
-        TeamName(InTeamName), Requestor(PC)
-    {}
+    dormant_spatial,
 };
 
 
@@ -83,10 +77,10 @@ struct FClassReplicationPolicyPreset
 public:
     // Class to set replication policy.
     UPROPERTY(EditAnywhere)
-    TSubclassOf<AActor> Class;
+    TSubclassOf<AActor> class_;
     // Policy to set.
     UPROPERTY(EditAnywhere)
-    EClassRepNodeMapping Policy;
+    Erepl_node_kind routing;
 };
 
 
@@ -98,7 +92,7 @@ struct FClassReplicationInfoPreset
 public:
     // Class of this Replication info is related
     UPROPERTY(EditAnywhere)
-    TSubclassOf<AActor> Class;
+    TSubclassOf<AActor> class_;
     // How much will distance affect to priority
     UPROPERTY(
         EditAnywhere,
@@ -128,35 +122,15 @@ public:
 
     FClassReplicationInfo CreateClassReplicationInfo()
     {
-        FClassReplicationInfo Info;
-        Info.DistancePriorityScale = DistancePriorityScale;
-        Info.StarvationPriorityScale = StarvationPriorityScale;
-        Info.SetCullDistanceSquared(CullDistanceSquared);
-        Info.ReplicationPeriodFrame = ReplicationPeriodFrame;
-        Info.ActorChannelFrameTimeout = ActorChannelFrameTimeout;
-        return Info;
+        FClassReplicationInfo retval;
+        retval.DistancePriorityScale = DistancePriorityScale;
+        retval.StarvationPriorityScale = StarvationPriorityScale;
+        retval.SetCullDistanceSquared(CullDistanceSquared);
+        retval.ReplicationPeriodFrame = ReplicationPeriodFrame;
+        retval.ActorChannelFrameTimeout = ActorChannelFrameTimeout;
+        return retval;
     }
 };
-
-
-struct FTeamConnectionListMap
-    : public TMap<FName, TArray<ULocusReplicationConnectionGraph *>>
-{
-public:
-    // Get array of connection managers for gathering actor list
-    TArray<ULocusReplicationConnectionGraph *> *
-    GetConnectionArrayForTeam(FName TeamName);
-
-    // Add Connection to team, if there's no array, add one.
-    void AddConnectionToTeam(
-        FName TeamName, ULocusReplicationConnectionGraph * ConnManager);
-
-    // Remove Connection from team, if there's no member of the team after
-    // removal, remove array from the map
-    void RemoveConnectionFromTeam(
-        FName TeamName, ULocusReplicationConnectionGraph * ConnManager);
-};
-
 
 UCLASS()
 class UReplicationGraphNode_AlwaysRelevant_WithPending
@@ -166,7 +140,7 @@ class UReplicationGraphNode_AlwaysRelevant_WithPending
 
 public:
     UReplicationGraphNode_AlwaysRelevant_WithPending();
-    virtual void PrepareForReplication() override;
+    void PrepareForReplication() override;
 };
 
 UCLASS()
@@ -177,7 +151,7 @@ class UReplicationGraphNode_AlwaysRelevant_ForTeam
 
 public:
     // Gather up other team member's list
-    virtual void GatherActorListsForConnection(
+    void GatherActorListsForConnection(
         FConnectionGatherActorListParameters const & Params) override;
 
     // Function that calls parent ActorList's GatherActorList...
@@ -188,7 +162,7 @@ public:
 // ReplicationConnectionGraph that holds team information and connection
 // specific nodes.
 UCLASS()
-class ULocusReplicationConnectionGraph : public UNetReplicationGraphConnection
+class Urepl_graph_conn : public UNetReplicationGraphConnection
 {
     GENERATED_BODY()
 
@@ -200,11 +174,11 @@ public:
     UPROPERTY()
     class UReplicationGraphNode_AlwaysRelevant_ForTeam * TeamConnectionNode;
 
-    FName TeamName = NAME_None;
+    int team = no_team;
 };
 
 UCLASS(Blueprintable)
-class ULocusReplicationGraph : public UReplicationGraph
+class Urepl_graph : public UReplicationGraph
 {
     GENERATED_BODY()
 
@@ -245,33 +219,32 @@ public:
     TArray<FClassReplicationInfoPreset> ReplicationInfoSettings;
 
 public:
-    ULocusReplicationGraph();
+    Urepl_graph();
 
     // Set up Enums for each uclass of entire actor
-    virtual void InitGlobalActorClassSettings() override;
+    void InitGlobalActorClassSettings() override;
 
     // initialize global node, like gridnode
-    virtual void InitGlobalGraphNodes() override;
+    void InitGlobalGraphNodes() override;
 
     // initialize per connection node, like always relevant node
-    virtual void InitConnectionGraphNodes(
+    void InitConnectionGraphNodes(
         UNetReplicationGraphConnection * RepGraphConnection) override;
     // deinitialize per connection node
     virtual void OnRemoveConnectionGraphNodes(
         UNetReplicationGraphConnection * RepGraphConnection);
 
     // override to make notification when a connection manager is removed
-    virtual void
-    RemoveClientConnection(UNetConnection * NetConnection) override;
+    void RemoveClientConnection(UNetConnection * NetConnection) override;
 
     // routng actor add/removal
-    virtual void RouteAddNetworkActorToNodes(
+    void RouteAddNetworkActorToNodes(
         FNewReplicatedActorInfo const & ActorInfo,
         FGlobalActorReplicationInfo & GlobalInfo) override;
-    virtual void RouteRemoveNetworkActorToNodes(
+    void RouteRemoveNetworkActorToNodes(
         FNewReplicatedActorInfo const & ActorInfo) override;
 
-    virtual void ResetGameWorldState() override;
+    void ResetGameWorldState() override;
 
     // gridnode for spatialization handling
     UPROPERTY()
@@ -282,7 +255,7 @@ public:
     UReplicationGraphNode_AlwaysRelevant_WithPending * AlwaysRelevantNode;
 
     // always relevant for all connection but in streaming level, so always
-    // relevant to connection who loaded key level TMap<FName,
+    // relevant to connection who loaded key level TMap<int,
     // FActorRepListRefView> AlwaysRelevantStreamingLevelActors; but this is
     // not needed as AlwaysRelevantNode already handle streaming level
 
@@ -293,25 +266,23 @@ public:
     RemoveDependentActor(AActor * ReplicatorActor, AActor * DependentActor);
 
     // Change Owner of an actor that is relevant to connection specific
-    void ChangeOwnerOfAnActor(AActor * ActorToChange, AActor * NewOwner);
+    void change_owner_to(AActor * ActorToChange, AActor * NewOwner);
 
     // SetTeam via Name
-    void SetTeamForPlayerController(
-        APlayerController * PlayerController, FName TeamName);
+    void set_team_for(APlayerController * pc, int team);
 
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
-        EClassRepNodeMapping Policy,
+        Erepl_node_kind routing,
         FNewReplicatedActorInfo const & ActorInfo,
         FGlobalActorReplicationInfo & GlobalInfo);
     void RouteRemoveNetworkActorToConnectionNodes(
-        EClassRepNodeMapping Policy, FNewReplicatedActorInfo const & ActorInfo);
+        Erepl_node_kind routing, FNewReplicatedActorInfo const & ActorInfo);
 
     // handle pending team requests and notifies
-    void HandlePendingActorsAndTeamRequests();
+    void process_pendings();
 
-    ULocusReplicationConnectionGraph *
-    FindLocusConnectionGraph(AActor const * Actor);
+    Urepl_graph_conn * find_connection_graph(AActor const * a);
 
     // Just copy-pasted from ShooterGame
 #if 0 // WITH_GAMEPLAY_DEBUGGER
@@ -320,21 +291,27 @@ public:
         APlayerController * OldOwner);
 #endif
 
-    void PrintRepNodePolicies();
+    void print_rep_node_kinds();
 
 private:
-    EClassRepNodeMapping GetMappingPolicy(UClass * Class);
-
-    bool IsSpatialized(EClassRepNodeMapping Mapping) const
+    struct team_request
     {
-        return Mapping >= EClassRepNodeMapping::Spatialize_Static;
+        int team;
+        APlayerController * pc;
+    };
+
+    Erepl_node_kind routing_for(UClass * class_);
+
+    static bool spatial(Erepl_node_kind k)
+    {
+        return Erepl_node_kind::static_spatial <= k;
     }
 
-    TClassMap<EClassRepNodeMapping> ClassRepNodePolicies;
+    TClassMap<Erepl_node_kind> class_to_routing_;
 
     friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
-    FTeamConnectionListMap TeamConnectionListMap;
 
-    TArray<AActor *> PendingConnectionActors;
-    TArray<FTeamRequest> PendingTeamRequests;
+    std::map<int, std::vector<Urepl_graph_conn *>> team_to_conn_;
+    std::vector<AActor *> pending_actors_;
+    std::vector<team_request> pending_team_requests_;
 };
