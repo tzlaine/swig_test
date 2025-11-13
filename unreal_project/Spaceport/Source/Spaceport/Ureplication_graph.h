@@ -25,6 +25,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#include <map>
 #include <vector>
 
 #include <CoreMinimal.h>
@@ -36,7 +37,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogLocusReplicationGraph, Display, All);
 
 // class UReplicationGraphNode_GridSpatialization2D;
 class AGameplayDebuggerCategoryReplicator;
-class ULocusReplicationConnectionGraph;
+class Urepl_graph_conn;
 
 // TODO: Move.
 inline constexpr int no_team = -1;
@@ -133,7 +134,7 @@ public:
     }
 };
 
-
+#if 0
 struct FTeamConnectionListMap
     : public TMap<int, TArray<ULocusReplicationConnectionGraph *>>
 {
@@ -151,7 +152,7 @@ public:
     void RemoveConnectionFromTeam(
         int team, ULocusReplicationConnectionGraph * conn_mgr);
 };
-
+#endif
 
 UCLASS()
 class UReplicationGraphNode_AlwaysRelevant_WithPending
@@ -182,8 +183,9 @@ public:
 
 // ReplicationConnectionGraph that holds team information and connection
 // specific nodes.
+// TODO: -> team_nodes
 UCLASS()
-class ULocusReplicationConnectionGraph : public UNetReplicationGraphConnection
+class Urepl_graph_conn : public UNetReplicationGraphConnection
 {
     GENERATED_BODY()
 
@@ -305,7 +307,7 @@ public:
     // handle pending team requests and notifies
     void HandlePendingActorsAndTeamRequests();
 
-    ULocusReplicationConnectionGraph *
+    Urepl_graph_conn *
     FindLocusConnectionGraph(AActor const * Actor);
 
     // Just copy-pasted from ShooterGame
@@ -334,8 +336,8 @@ private:
     TClassMap<Erepl_node_kind> ClassRepNodePolicies;
 
     friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
-    FTeamConnectionListMap TeamConnectionListMap;
 
+    std::map<int, std::vector<Urepl_graph_conn *>> team_to_conn_;
     std::vector<AActor *> pending_actors_;
     std::vector<team_request> pending_team_requests_;
 };

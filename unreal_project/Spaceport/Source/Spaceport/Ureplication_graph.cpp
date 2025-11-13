@@ -36,12 +36,27 @@
 #endif
 
 
+namespace {
+    void remove_connection_from_team(
+        std::map<int, std::vector<Urepl_graph_conn *>> & map,
+        int team, Urepl_graph_conn * conn)
+    {
+        auto const it = map.find(team);
+        if (it == map.end())
+            return;
+        auto & [_, vec] = *it;
+        std::erase(vec, conn);
+        if (vec.empty())
+            map.erase(it);
+    }
+}
+
 DEFINE_LOG_CATEGORY(LogLocusReplicationGraph);
 
 ULocusReplicationGraph::ULocusReplicationGraph()
 {
     ReplicationConnectionManagerClass =
-        ULocusReplicationConnectionGraph::StaticClass();
+        Urepl_graph_conn::StaticClass();
 
     FClassReplicationInfoPreset PawnClassRepInfo;
     PawnClassRepInfo.Class = APawn::StaticClass();
@@ -348,25 +363,25 @@ void ULocusReplicationGraph::InitConnectionGraphNodes(
 
     // UE_LOG(LogLocusReplicationGraph, Warning, TEXT("InitConnection : %s"),
     // *RepGraphConnection->NetConnection->PlayerController->GetName());
-    ULocusReplicationConnectionGraph * locus_conn_mgr =
-        Cast<ULocusReplicationConnectionGraph>(RepGraphConnection);
-    if (!locus_conn_mgr) {
+    Urepl_graph_conn * conn =
+        Cast<Urepl_graph_conn>(RepGraphConnection);
+    if (!conn) {
         UE_LOG(
             LogLocusReplicationGraph,
             Warning,
             TEXT("Unrecognized ConnectionDriver class, Expected "
-                 "ULocusReplicationConnectionGraph"));
+                 "Urepl_graph_conn"));
     }
 
-    locus_conn_mgr->AlwaysRelevantForConnectionNode =
+    conn->AlwaysRelevantForConnectionNode =
         CreateNewNode<UReplicationGraphNode_AlwaysRelevant_ForConnection>();
     AddConnectionGraphNode(
-        locus_conn_mgr->AlwaysRelevantForConnectionNode, RepGraphConnection);
+        conn->AlwaysRelevantForConnectionNode, RepGraphConnection);
 
-    locus_conn_mgr->TeamConnectionNode =
+    conn->TeamConnectionNode =
         CreateNewNode<UReplicationGraphNode_AlwaysRelevant_ForTeam>();
     AddConnectionGraphNode(
-        locus_conn_mgr->TeamConnectionNode, RepGraphConnection);
+        conn->TeamConnectionNode, RepGraphConnection);
 
     // don't care about team names as it's initial value is always no_team
 }
@@ -374,12 +389,11 @@ void ULocusReplicationGraph::InitConnectionGraphNodes(
 void ULocusReplicationGraph::OnRemoveConnectionGraphNodes(
     UNetReplicationGraphConnection * RepGraphConnection)
 {
-    ULocusReplicationConnectionGraph * locus_conn_mgr =
-        Cast<ULocusReplicationConnectionGraph>(RepGraphConnection);
-    if (locus_conn_mgr) {
-        if (locus_conn_mgr->team != no_team) {
-            TeamConnectionListMap.RemoveConnectionFromTeam(
-                locus_conn_mgr->team, locus_conn_mgr);
+    Urepl_graph_conn * conn =
+        Cast<Urepl_graph_conn>(RepGraphConnection);
+    if (conn) {
+        if (conn->team != no_team) {
+            remove_connection_from_team(team_to_conn_, conn->team, conn);
         }
     }
 }
@@ -517,9 +531,9 @@ void ULocusReplicationGraph::ResetGameWorldState()
     auto EmptyConnectionNode =
         [](TArray<UNetReplicationGraphConnection *> & Connections) {
             for (UNetReplicationGraphConnection * conn_mgr : Connections) {
-                if (ULocusReplicationConnectionGraph * locus_conn_mgr =
-                        Cast<ULocusReplicationConnectionGraph>(conn_mgr)) {
-                    locus_conn_mgr->AlwaysRelevantForConnectionNode
+                if (Urepl_graph_conn * conn =
+                        Cast<Urepl_graph_conn>(conn_mgr)) {
+                    conn->AlwaysRelevantForConnectionNode
                         ->NotifyResetAllNetworkActors();
                 }
             }
@@ -529,7 +543,7 @@ void ULocusReplicationGraph::ResetGameWorldState()
     EmptyConnectionNode(Connections);
 
     // as connection does not destroyed, we keep it
-    // TeamConnectionListMap.Reset();
+    // team_to_conn_.clear();
 }
 
 // Since we listen to global (static) events, we need to watch out for cross
@@ -611,19 +625,18 @@ void ULocusReplicationGraph::SetTeamForPlayerController(
     APlayerController * pc, int next_team)
 {
     if (pc) {
-        if (ULocusReplicationConnectionGraph * conn_mgr =
+        if (Urepl_graph_conn * conn_mgr =
                 FindLocusConnectionGraph(pc)) {
             int curr_team = conn_mgr->team;
             if (curr_team != next_team) {
                 if (curr_team != no_team) {
-                    TeamConnectionListMap.RemoveConnectionFromTeam(
+                    remove_connection_from_team(team_to_conn_,
                         curr_team, conn_mgr);
                 }
 
-                if (next_team != no_team) {
-                    TeamConnectionListMap.AddConnectionToTeam(
-                        next_team, conn_mgr);
-                }
+                if (next_team != no_team)
+                    team_to_conn_[next_team].push_back(conn_mgr);
+
                 conn_mgr->team = next_team;
             }
         } else {
@@ -638,7 +651,7 @@ void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
     const FNewReplicatedActorInfo & ActorInfo,
     FGlobalActorReplicationInfo & GlobalInfo)
 {
-    if (ULocusReplicationConnectionGraph * conn_mgr =
+    if (Urepl_graph_conn * conn_mgr =
             FindLocusConnectionGraph(ActorInfo.GetActor())) {
         switch (Policy) {
         case Erepl_node_kind::connection: {
@@ -662,7 +675,7 @@ void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
 void ULocusReplicationGraph::RouteRemoveNetworkActorToConnectionNodes(
     Erepl_node_kind Policy, const FNewReplicatedActorInfo & ActorInfo)
 {
-    if (ULocusReplicationConnectionGraph * conn_mgr =
+    if (Urepl_graph_conn * conn_mgr =
             FindLocusConnectionGraph(ActorInfo.GetActor())) {
         switch (Policy) {
         case Erepl_node_kind::connection: {
@@ -716,13 +729,13 @@ void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
 }
 
 
-class ULocusReplicationConnectionGraph *
+class Urepl_graph_conn *
 ULocusReplicationGraph::FindLocusConnectionGraph(const AActor * Actor)
 {
     if (Actor) {
         if (UNetConnection * NetConnection = Actor->GetNetConnection()) {
-            if (ULocusReplicationConnectionGraph * conn_mgr =
-                    Cast<ULocusReplicationConnectionGraph>(
+            if (Urepl_graph_conn * conn_mgr =
+                    Cast<Urepl_graph_conn>(
                         FindOrAddConnectionManager(NetConnection))) {
                 return conn_mgr;
             }
@@ -736,14 +749,14 @@ void ULocusReplicationGraph::OnGameplayDebuggerOwnerChange(
     AGameplayDebuggerCategoryReplicator * Debugger,
     APlayerController * OldOwner)
 {
-    if (ULocusReplicationConnectionGraph * conn_mgr =
+    if (Urepl_graph_conn * conn_mgr =
             FindLocusConnectionGraph(OldOwner)) {
         FNewReplicatedActorInfo ActorInfo(Debugger);
         conn_mgr->AlwaysRelevantForConnectionNode->NotifyRemoveNetworkActor(
             ActorInfo);
     }
 
-    if (ULocusReplicationConnectionGraph * conn_mgr =
+    if (Urepl_graph_conn * conn_mgr =
             FindLocusConnectionGraph(Debugger->GetReplicationOwner())) {
         FNewReplicatedActorInfo ActorInfo(Debugger);
         conn_mgr->AlwaysRelevantForConnectionNode->NotifyAddNetworkActor(
@@ -786,16 +799,14 @@ void UReplicationGraphNode_AlwaysRelevant_ForTeam::
     GatherActorListsForConnection(
         const FConnectionGatherActorListParameters & Params)
 {
-    ULocusReplicationConnectionGraph * locus_conn_mgr =
-        Cast<ULocusReplicationConnectionGraph>(&Params.ConnectionManager);
-    if (locus_conn_mgr && locus_conn_mgr->team != no_team) {
+    Urepl_graph_conn * conn =
+        Cast<Urepl_graph_conn>(&Params.ConnectionManager);
+    if (conn && conn->team != no_team) {
         ULocusReplicationGraph * ReplicationGraph =
             Cast<ULocusReplicationGraph>(GetOuter());
-        if (TArray<ULocusReplicationConnectionGraph *> * TeamConnections =
-                ReplicationGraph->TeamConnectionListMap
-                    .GetConnectionArrayForTeam(locus_conn_mgr->team)) {
-            for (ULocusReplicationConnectionGraph * TeamMember :
-                 *TeamConnections) {
+        auto const it = ReplicationGraph->team_to_conn_.find(conn->team);
+        if (it != ReplicationGraph->team_to_conn_.end()) {
+            for (Urepl_graph_conn * TeamMember : it->second) {
                 // we call parent
                 TeamMember->TeamConnectionNode
                     ->GatherActorListsForConnectionDefault(Params);
@@ -826,6 +837,7 @@ void UReplicationGraphNode_AlwaysRelevant_ForTeam::
     Super::GatherActorListsForConnection(Params);
 }
 
+#if 0
 TArray<class ULocusReplicationConnectionGraph *> *
 FTeamConnectionListMap::GetConnectionArrayForTeam(int team)
 {
@@ -852,7 +864,7 @@ void FTeamConnectionListMap::RemoveConnectionFromTeam(
         }
     }
 }
-
+#endif
 
 // console commands copied from shooter repgraph
 //  ------------------------------------------------------------------------------
