@@ -25,6 +25,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#include <vector>
+
 #include <CoreMinimal.h>
 #include <ReplicationGraph.h>
 #include "Ureplication_graph.generated.h"
@@ -62,16 +64,6 @@ enum class EClassRepNodeMapping : uint8 {
     // Routes to GridNode: While dormant we treat as static. When flushed/not
     // dormant dynamic. Note this is for things that "move while not dormant".
     Spatialize_Dormancy,
-};
-
-
-struct FTeamRequest
-{
-    FName TeamName;
-    APlayerController * Requestor;
-    FTeamRequest(FName InTeamName, APlayerController * PC) :
-        TeamName(InTeamName), Requestor(PC)
-    {}
 };
 
 
@@ -145,16 +137,16 @@ struct FTeamConnectionListMap
 public:
     // Get array of connection managers for gathering actor list
     TArray<ULocusReplicationConnectionGraph *> *
-    GetConnectionArrayForTeam(FName TeamName);
+    GetConnectionArrayForTeam(FName team);
 
     // Add Connection to team, if there's no array, add one.
     void AddConnectionToTeam(
-        FName TeamName, ULocusReplicationConnectionGraph * ConnManager);
+        FName team, ULocusReplicationConnectionGraph * ConnManager);
 
     // Remove Connection from team, if there's no member of the team after
     // removal, remove array from the map
     void RemoveConnectionFromTeam(
-        FName TeamName, ULocusReplicationConnectionGraph * ConnManager);
+        FName team, ULocusReplicationConnectionGraph * ConnManager);
 };
 
 
@@ -200,7 +192,7 @@ public:
     UPROPERTY()
     class UReplicationGraphNode_AlwaysRelevant_ForTeam * TeamConnectionNode;
 
-    FName TeamName = NAME_None;
+    FName team = NAME_None;
 };
 
 UCLASS(Blueprintable)
@@ -297,7 +289,7 @@ public:
 
     // SetTeam via Name
     void SetTeamForPlayerController(
-        APlayerController * PlayerController, FName TeamName);
+        APlayerController * PlayerController, FName team);
 
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
@@ -323,6 +315,12 @@ public:
     void PrintRepNodePolicies();
 
 private:
+    struct FTeamRequest
+    {
+        FName team;
+        APlayerController * pc;
+    };
+
     EClassRepNodeMapping GetMappingPolicy(UClass * Class);
 
     bool IsSpatialized(EClassRepNodeMapping Mapping) const
@@ -335,6 +333,6 @@ private:
     friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
     FTeamConnectionListMap TeamConnectionListMap;
 
-    TArray<AActor *> PendingConnectionActors;
-    TArray<FTeamRequest> PendingTeamRequests;
+    std::vector<AActor *> PendingConnectionActors;
+    std::vector<FTeamRequest> PendingTeamRequests;
 };
