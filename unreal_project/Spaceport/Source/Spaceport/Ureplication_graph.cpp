@@ -4,19 +4,19 @@
 // https://github.com/locus84/LocusReplicationGraph; their copyright follows.
 
 // MIT License
-// 
+//
 // Copyright(c) 2019 Locus
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files(the "Software"),
 // to deal in the Software without restriction, including without limitation
 // the rights to use, copy, modify, merge, publish , distribute, sublicense,
 // and / or sell copies of the Software, and to permit persons to whom the
 // Software is furnished to do so, subject to the following conditions :
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
@@ -107,25 +107,25 @@ void ULocusReplicationGraph::InitGlobalActorClassSettings()
 {
     Super::InitGlobalActorClassSettings();
 
-    auto AddInfo = [&](UClass * Class, EClassRepNodeMapping Mapping) {
+    auto AddInfo = [&](UClass * Class, Erepl_node_kind Mapping) {
         ClassRepNodePolicies.Set(Class, Mapping);
     };
 
     AddInfo(
         AReplicationGraphDebugActor::StaticClass(),
-        EClassRepNodeMapping::NotRouted); // Not needed. Replicated special case
-                                          // inside RepGraph
+        Erepl_node_kind::none); // Not needed. Replicated special case
+                                    // inside RepGraph
     AddInfo(
         AInfo::StaticClass(),
-        EClassRepNodeMapping::RelevantAllConnections); // Non spatialized,
-                                                       // relevant to all
+        Erepl_node_kind::always); // Non spatialized,
+                                  // relevant to all
     AddInfo(
         ALevelScriptActor::StaticClass(),
-        EClassRepNodeMapping::NotRouted); // Not needed
-#if 0 // WITH_GAMEPLAY_DEBUGGER
+        Erepl_node_kind::none); // Not needed
+#if 0                               // WITH_GAMEPLAY_DEBUGGER
     AddInfo(
         AGameplayDebuggerCategoryReplicator::StaticClass(),
-        EClassRepNodeMapping::RelevantOwnerConnection); // Only owner connection
+        Erepl_node_kind::connection); // Only owner connection
                                                         // viable
 #endif
 
@@ -197,12 +197,12 @@ void ULocusReplicationGraph::InitGlobalActorClassSettings()
         }
 
         if (ShouldSpatialize(ActorCDO)) {
-            AddInfo(Class, EClassRepNodeMapping::Spatialize_Dynamic);
+            AddInfo(Class, Erepl_node_kind::dynamic_spatial);
         } else if (
             ActorCDO->bAlwaysRelevant && !ActorCDO->bOnlyRelevantToOwner) {
-            AddInfo(Class, EClassRepNodeMapping::RelevantAllConnections);
+            AddInfo(Class, Erepl_node_kind::always);
         } else if (ActorCDO->bOnlyRelevantToOwner) {
-            AddInfo(Class, EClassRepNodeMapping::RelevantOwnerConnection);
+            AddInfo(Class, Erepl_node_kind::connection);
         }
 
         // TODO:: currently missing feature, !bAlwaysRelevant &&
@@ -255,16 +255,16 @@ void ULocusReplicationGraph::InitGlobalActorClassSettings()
     // Print out what we came up with
     UE_LOG(LogLocusReplicationGraph, Log, TEXT(""));
     UE_LOG(LogLocusReplicationGraph, Log, TEXT("Class Routing Map: "));
-    UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("EClassRepNodeMapping"));
+    UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
     for (auto ClassMapIt = ClassRepNodePolicies.CreateIterator(); ClassMapIt;
          ++ClassMapIt) {
         UClass * Class =
             CastChecked<UClass>(ClassMapIt.Key().ResolveObjectPtr());
-        const EClassRepNodeMapping Mapping = ClassMapIt.Value();
+        const Erepl_node_kind Mapping = ClassMapIt.Value();
 
         // Only print if different than native class
         UClass * ParentNativeClass = GetParentNativeClass(Class);
-        const EClassRepNodeMapping * ParentMapping =
+        const Erepl_node_kind * ParentMapping =
             ClassRepNodePolicies.Get(ParentNativeClass);
         if (ParentMapping && Class != ParentNativeClass &&
             Mapping == *ParentMapping) {
@@ -431,35 +431,34 @@ void ULocusReplicationGraph::RouteAddNetworkActorToNodes(
     const FNewReplicatedActorInfo & ActorInfo,
     FGlobalActorReplicationInfo & GlobalInfo)
 {
-    EClassRepNodeMapping Policy = GetMappingPolicy(ActorInfo.Class);
+    Erepl_node_kind Policy = GetMappingPolicy(ActorInfo.Class);
     switch (Policy) {
-    case EClassRepNodeMapping::NotRouted: {
+    case Erepl_node_kind::none: {
         break;
     }
 
-    case EClassRepNodeMapping::RelevantAllConnections: {
+    case Erepl_node_kind::always: {
         AlwaysRelevantNode->NotifyAddNetworkActor(ActorInfo);
         break;
     }
 
-    case EClassRepNodeMapping::RelevantOwnerConnection:
-    case EClassRepNodeMapping::RelevantTeamConnection: {
+    case Erepl_node_kind::connection:
+    case Erepl_node_kind::team: {
         RouteAddNetworkActorToConnectionNodes(Policy, ActorInfo, GlobalInfo);
         break;
     }
 
-    case EClassRepNodeMapping::Spatialize_Static: {
+    case Erepl_node_kind::static_spatial: {
         GridNode->AddActor_Static(ActorInfo, GlobalInfo);
         break;
-
     }
 
-    case EClassRepNodeMapping::Spatialize_Dynamic: {
+    case Erepl_node_kind::dynamic_spatial: {
         GridNode->AddActor_Dynamic(ActorInfo, GlobalInfo);
         break;
     }
 
-    case EClassRepNodeMapping::Spatialize_Dormancy: {
+    case Erepl_node_kind::dormant_spatial: {
         GridNode->AddActor_Dormancy(ActorInfo, GlobalInfo);
         break;
     }
@@ -469,35 +468,35 @@ void ULocusReplicationGraph::RouteAddNetworkActorToNodes(
 void ULocusReplicationGraph::RouteRemoveNetworkActorToNodes(
     const FNewReplicatedActorInfo & ActorInfo)
 {
-    EClassRepNodeMapping Policy = GetMappingPolicy(ActorInfo.Class);
+    Erepl_node_kind Policy = GetMappingPolicy(ActorInfo.Class);
 
     switch (Policy) {
-    case EClassRepNodeMapping::NotRouted: {
+    case Erepl_node_kind::none: {
         break;
     }
 
-    case EClassRepNodeMapping::RelevantAllConnections: {
+    case Erepl_node_kind::always: {
         AlwaysRelevantNode->NotifyRemoveNetworkActor(ActorInfo);
         break;
     }
 
-    case EClassRepNodeMapping::RelevantOwnerConnection:
-    case EClassRepNodeMapping::RelevantTeamConnection: {
+    case Erepl_node_kind::connection:
+    case Erepl_node_kind::team: {
         RouteRemoveNetworkActorToConnectionNodes(Policy, ActorInfo);
         break;
     }
 
-    case EClassRepNodeMapping::Spatialize_Static: {
+    case Erepl_node_kind::static_spatial: {
         GridNode->RemoveActor_Static(ActorInfo);
         break;
     }
 
-    case EClassRepNodeMapping::Spatialize_Dynamic: {
+    case Erepl_node_kind::dynamic_spatial: {
         GridNode->RemoveActor_Dynamic(ActorInfo);
         break;
     }
 
-    case EClassRepNodeMapping::Spatialize_Dormancy: {
+    case Erepl_node_kind::dormant_spatial: {
         GridNode->RemoveActor_Dormancy(ActorInfo);
         break;
     }
@@ -587,8 +586,8 @@ void ULocusReplicationGraph::RemoveDependentActor(
 void ULocusReplicationGraph::ChangeOwnerOfAnActor(
     AActor * ActorToChange, AActor * NewOwner)
 {
-    EClassRepNodeMapping Policy = GetMappingPolicy(ActorToChange->GetClass());
-    if (!ActorToChange || Policy == EClassRepNodeMapping::NotRouted ||
+    Erepl_node_kind Policy = GetMappingPolicy(ActorToChange->GetClass());
+    if (!ActorToChange || Policy == Erepl_node_kind::none ||
         IsSpatialized(Policy)) {
         // Policy doesn't matter for chaning owner
         return;
@@ -635,19 +634,19 @@ void ULocusReplicationGraph::SetTeamForPlayerController(
 }
 
 void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
-    EClassRepNodeMapping Policy,
+    Erepl_node_kind Policy,
     const FNewReplicatedActorInfo & ActorInfo,
     FGlobalActorReplicationInfo & GlobalInfo)
 {
     if (ULocusReplicationConnectionGraph * ConnManager =
             FindLocusConnectionGraph(ActorInfo.GetActor())) {
         switch (Policy) {
-        case EClassRepNodeMapping::RelevantOwnerConnection: {
+        case Erepl_node_kind::connection: {
             ConnManager->AlwaysRelevantForConnectionNode->NotifyAddNetworkActor(
                 ActorInfo);
             break;
         }
-        case EClassRepNodeMapping::RelevantTeamConnection: {
+        case Erepl_node_kind::team: {
             ConnManager->TeamConnectionNode->NotifyAddNetworkActor(ActorInfo);
             break;
         }
@@ -661,17 +660,17 @@ void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
 
 
 void ULocusReplicationGraph::RouteRemoveNetworkActorToConnectionNodes(
-    EClassRepNodeMapping Policy, const FNewReplicatedActorInfo & ActorInfo)
+    Erepl_node_kind Policy, const FNewReplicatedActorInfo & ActorInfo)
 {
     if (ULocusReplicationConnectionGraph * ConnManager =
             FindLocusConnectionGraph(ActorInfo.GetActor())) {
         switch (Policy) {
-        case EClassRepNodeMapping::RelevantOwnerConnection: {
+        case Erepl_node_kind::connection: {
             ConnManager->AlwaysRelevantForConnectionNode
                 ->NotifyRemoveNetworkActor(ActorInfo);
             break;
         }
-        case EClassRepNodeMapping::RelevantTeamConnection: {
+        case Erepl_node_kind::team: {
             ConnManager->TeamConnectionNode->NotifyRemoveNetworkActor(
                 ActorInfo);
             break;
@@ -704,7 +703,7 @@ void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
             if (Actor && Actor->IsValidLowLevel()) {
                 if (UNetConnection * Connection = Actor->GetNetConnection()) {
                     // if failed, it will automatically re-added to pending list
-                    EClassRepNodeMapping Policy =
+                    Erepl_node_kind Policy =
                         GetMappingPolicy(Actor->GetClass());
                     FGlobalActorReplicationInfo & GlobalInfo =
                         GlobalActorReplicationInfoMap.Get(Actor);
@@ -755,7 +754,7 @@ void ULocusReplicationGraph::OnGameplayDebuggerOwnerChange(
 
 void ULocusReplicationGraph::PrintRepNodePolicies()
 {
-    UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("EClassRepNodeMapping"));
+    UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
     if (!Enum) {
         return;
     }
@@ -767,7 +766,7 @@ void ULocusReplicationGraph::PrintRepNodePolicies()
     for (auto It = ClassRepNodePolicies.CreateIterator(); It; ++It) {
         FObjectKey ObjKey = It.Key();
 
-        EClassRepNodeMapping Mapping = It.Value();
+        Erepl_node_kind Mapping = It.Value();
 
         GLog->Logf(
             TEXT("%-40s --> %s"),
@@ -776,11 +775,10 @@ void ULocusReplicationGraph::PrintRepNodePolicies()
     }
 }
 
-EClassRepNodeMapping ULocusReplicationGraph::GetMappingPolicy(UClass * Class)
+Erepl_node_kind ULocusReplicationGraph::GetMappingPolicy(UClass * Class)
 {
-    EClassRepNodeMapping * PolicyPtr = ClassRepNodePolicies.Get(Class);
-    EClassRepNodeMapping Policy =
-        PolicyPtr ? *PolicyPtr : EClassRepNodeMapping::NotRouted;
+    Erepl_node_kind * PolicyPtr = ClassRepNodePolicies.Get(Class);
+    Erepl_node_kind Policy = PolicyPtr ? *PolicyPtr : Erepl_node_kind::none;
     return Policy;
 }
 

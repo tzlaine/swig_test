@@ -41,29 +41,29 @@ class ULocusReplicationConnectionGraph;
 // This is the main enum we use to route actors to the right replication node.
 // Each class maps to one enum.
 UENUM(BlueprintType)
-enum class EClassRepNodeMapping : uint8 {
-    // Does not route to any node. Special case when you want to control manual
-    // way.
-    NotRouted,
+enum class Erepl_node_kind : uint8 {
+    // Requires manual intervention.
+    none,
+
     // Routes to an AlwaysRelevantNode
-    RelevantAllConnections,
+    always,
     // Routes to an AlwaysRelevantNode_ForConnection node
-    RelevantOwnerConnection,
+    connection,
     // Routes to an AlwaysRelevantNode_ForTeam node
-    RelevantTeamConnection,
+    team,
 
     // ONLY SPATIALIZED Enums below here! See
-    // UReplicationGraphBase::IsSpatialized
+    // ULocusReplicationGraph::IsSpatialized
 
     // Routes to GridNode: these actors don't move and don't need to be updated
     // every frame.
-    Spatialize_Static,
+    static_spatial,
     // Routes to GridNode: these actors mode frequently and are updated once per
     // frame.
-    Spatialize_Dynamic,
+    dynamic_spatial,
     // Routes to GridNode: While dormant we treat as static. When flushed/not
     // dormant dynamic. Note this is for things that "move while not dormant".
-    Spatialize_Dormancy,
+    dormant_spatial,
 };
 
 
@@ -78,7 +78,7 @@ public:
     TSubclassOf<AActor> Class;
     // Policy to set.
     UPROPERTY(EditAnywhere)
-    EClassRepNodeMapping Policy;
+    Erepl_node_kind Policy;
 };
 
 
@@ -293,11 +293,11 @@ public:
 
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
-        EClassRepNodeMapping Policy,
+        Erepl_node_kind Policy,
         FNewReplicatedActorInfo const & ActorInfo,
         FGlobalActorReplicationInfo & GlobalInfo);
     void RouteRemoveNetworkActorToConnectionNodes(
-        EClassRepNodeMapping Policy, FNewReplicatedActorInfo const & ActorInfo);
+        Erepl_node_kind Policy, FNewReplicatedActorInfo const & ActorInfo);
 
     // handle pending team requests and notifies
     void HandlePendingActorsAndTeamRequests();
@@ -321,14 +321,14 @@ private:
         APlayerController * pc;
     };
 
-    EClassRepNodeMapping GetMappingPolicy(UClass * Class);
+    Erepl_node_kind GetMappingPolicy(UClass * Class);
 
-    bool IsSpatialized(EClassRepNodeMapping Mapping) const
+    bool IsSpatialized(Erepl_node_kind Mapping) const
     {
-        return Mapping >= EClassRepNodeMapping::Spatialize_Static;
+        return Mapping >= Erepl_node_kind::static_spatial;
     }
 
-    TClassMap<EClassRepNodeMapping> ClassRepNodePolicies;
+    TClassMap<Erepl_node_kind> ClassRepNodePolicies;
 
     friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
     FTeamConnectionListMap TeamConnectionListMap;
