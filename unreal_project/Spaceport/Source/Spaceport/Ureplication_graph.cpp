@@ -629,7 +629,7 @@ void ULocusReplicationGraph::SetTeamForPlayerController(
             }
         } else {
             PendingTeamRequests.push_back(
-                FTeamRequest{NextTeam, PlayerController});
+                team_request{NextTeam, PlayerController});
         }
     }
 }
@@ -689,7 +689,7 @@ void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
     if (!PendingTeamRequests.empty()) {
         std::vector TempRequests = std::move(PendingTeamRequests);
 
-        for (FTeamRequest & Request : TempRequests) {
+        for (auto & Request : TempRequests) {
             if (Request.pc && Request.pc->IsValidLowLevel()) {
                 // if failed, it will automatically re-added to pending list
                 SetTeamForPlayerController(Request.pc, Request.team);

@@ -315,7 +315,7 @@ public:
     void PrintRepNodePolicies();
 
 private:
-    struct FTeamRequest
+    struct team_request
     {
         FName team;
         APlayerController * pc;
@@ -334,5 +334,5 @@ private:
     FTeamConnectionListMap TeamConnectionListMap;
 
     std::vector<AActor *> PendingConnectionActors;
-    std::vector<FTeamRequest> PendingTeamRequests;
+    std::vector<team_request> PendingTeamRequests;
 };
