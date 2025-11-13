@@ -33,8 +33,6 @@
 #include "Ureplication_graph.generated.h"
 
 
-DECLARE_LOG_CATEGORY_EXTERN(LogLocusReplicationGraph, Display, All);
-
 // class UReplicationGraphNode_GridSpatialization2D;
 class AGameplayDebuggerCategoryReplicator;
 class Urepl_graph_conn;
@@ -134,26 +132,6 @@ public:
     }
 };
 
-#if 0
-struct FTeamConnectionListMap
-    : public TMap<int, TArray<ULocusReplicationConnectionGraph *>>
-{
-public:
-    // Get array of connection managers for gathering actor list
-    TArray<ULocusReplicationConnectionGraph *> *
-    GetConnectionArrayForTeam(int team);
-
-    // Add Connection to team, if there's no array, add one.
-    void AddConnectionToTeam(
-        int team, ULocusReplicationConnectionGraph * conn_mgr);
-
-    // Remove Connection from team, if there's no member of the team after
-    // removal, remove array from the map
-    void RemoveConnectionFromTeam(
-        int team, ULocusReplicationConnectionGraph * conn_mgr);
-};
-#endif
-
 UCLASS()
 class UReplicationGraphNode_AlwaysRelevant_WithPending
     : public UReplicationGraphNode_ActorList
@@ -183,7 +161,6 @@ public:
 
 // ReplicationConnectionGraph that holds team information and connection
 // specific nodes.
-// TODO: -> team_nodes
 UCLASS()
 class Urepl_graph_conn : public UNetReplicationGraphConnection
 {
