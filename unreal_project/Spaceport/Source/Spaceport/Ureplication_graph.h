@@ -140,7 +140,7 @@ class UReplicationGraphNode_AlwaysRelevant_WithPending
 
 public:
     UReplicationGraphNode_AlwaysRelevant_WithPending();
-    virtual void PrepareForReplication() override;
+    void PrepareForReplication() override;
 };
 
 UCLASS()
@@ -151,7 +151,7 @@ class UReplicationGraphNode_AlwaysRelevant_ForTeam
 
 public:
     // Gather up other team member's list
-    virtual void GatherActorListsForConnection(
+    void GatherActorListsForConnection(
         FConnectionGatherActorListParameters const & Params) override;
 
     // Function that calls parent ActorList's GatherActorList...
@@ -222,30 +222,30 @@ public:
     ULocusReplicationGraph();
 
     // Set up Enums for each uclass of entire actor
-    virtual void InitGlobalActorClassSettings() override;
+    void InitGlobalActorClassSettings() override;
 
     // initialize global node, like gridnode
-    virtual void InitGlobalGraphNodes() override;
+    void InitGlobalGraphNodes() override;
 
     // initialize per connection node, like always relevant node
-    virtual void InitConnectionGraphNodes(
+    void InitConnectionGraphNodes(
         UNetReplicationGraphConnection * RepGraphConnection) override;
     // deinitialize per connection node
     virtual void OnRemoveConnectionGraphNodes(
         UNetReplicationGraphConnection * RepGraphConnection);
 
     // override to make notification when a connection manager is removed
-    virtual void
+    void
     RemoveClientConnection(UNetConnection * NetConnection) override;
 
     // routng actor add/removal
-    virtual void RouteAddNetworkActorToNodes(
+    void RouteAddNetworkActorToNodes(
         FNewReplicatedActorInfo const & ActorInfo,
         FGlobalActorReplicationInfo & GlobalInfo) override;
-    virtual void RouteRemoveNetworkActorToNodes(
+    void RouteRemoveNetworkActorToNodes(
         FNewReplicatedActorInfo const & ActorInfo) override;
 
-    virtual void ResetGameWorldState() override;
+    void ResetGameWorldState() override;
 
     // gridnode for spatialization handling
     UPROPERTY()
