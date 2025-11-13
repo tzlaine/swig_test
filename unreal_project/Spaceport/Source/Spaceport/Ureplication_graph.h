@@ -336,6 +336,6 @@ private:
     friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
     FTeamConnectionListMap TeamConnectionListMap;
 
-    std::vector<AActor *> PendingConnectionActors;
-    std::vector<team_request> PendingTeamRequests;
+    std::vector<AActor *> pending_actors_;
+    std::vector<team_request> pending_team_requests_;
 };

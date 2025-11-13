@@ -510,8 +510,8 @@ void ULocusReplicationGraph::ResetGameWorldState()
     Super::ResetGameWorldState();
 
     // all actor will be destroyed. just reset it.
-    PendingConnectionActors.clear();
-    PendingTeamRequests.clear();
+    pending_actors_.clear();
+    pending_team_requests_.clear();
 #pragma warning(push)
 #pragma warning(disable : 4458)
     auto EmptyConnectionNode =
@@ -627,7 +627,7 @@ void ULocusReplicationGraph::SetTeamForPlayerController(
                 conn_mgr->team = NextTeam;
             }
         } else {
-            PendingTeamRequests.push_back(
+            pending_team_requests_.push_back(
                 team_request{NextTeam, PlayerController});
         }
     }
@@ -654,7 +654,7 @@ void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
     } else if (ActorInfo.Actor->GetNetOwner()) {
         // this actor is not yet ready. add to pending array to handle pending
         // route
-        PendingConnectionActors.push_back(ActorInfo.GetActor());
+        pending_actors_.push_back(ActorInfo.GetActor());
     }
 }
 
@@ -679,14 +679,14 @@ void ULocusReplicationGraph::RouteRemoveNetworkActorToConnectionNodes(
     } else if (ActorInfo.Actor->GetNetOwner()) {
         // this actor is not yet ready. but doesn't matter the pending array
         // contains the actor or not
-        std::erase(PendingConnectionActors, ActorInfo.GetActor());
+        std::erase(pending_actors_, ActorInfo.GetActor());
     }
 }
 
 void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
 {
-    if (!PendingTeamRequests.empty()) {
-        std::vector TempRequests = std::move(PendingTeamRequests);
+    if (!pending_team_requests_.empty()) {
+        std::vector TempRequests = std::move(pending_team_requests_);
 
         for (auto & Request : TempRequests) {
             if (Request.pc && Request.pc->IsValidLowLevel()) {
@@ -696,8 +696,8 @@ void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
         }
     }
 
-    if (!PendingConnectionActors.empty()) {
-        std::vector TempActors = std::move(PendingConnectionActors);
+    if (!pending_actors_.empty()) {
+        std::vector TempActors = std::move(pending_actors_);
 
         for (AActor * Actor : TempActors) {
             if (Actor && Actor->IsValidLowLevel()) {
