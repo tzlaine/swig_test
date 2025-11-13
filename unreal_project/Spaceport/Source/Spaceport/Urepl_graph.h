@@ -267,7 +267,7 @@ public:
     RemoveDependentActor(AActor * ReplicatorActor, AActor * DependentActor);
 
     // Change Owner of an actor that is relevant to connection specific
-    void ChangeOwnerOfAnActor(AActor * ActorToChange, AActor * NewOwner);
+    void change_owner_to(AActor * ActorToChange, AActor * NewOwner);
 
     // SetTeam via Name
     void set_team_for(
@@ -282,10 +282,10 @@ public:
         Erepl_node_kind routing, FNewReplicatedActorInfo const & ActorInfo);
 
     // handle pending team requests and notifies
-    void HandlePendingActorsAndTeamRequests();
+    void process_pendings();
 
     Urepl_graph_conn *
-    FindConnectionGraph(AActor const * Actor);
+    find_connection_graph(AActor const * a);
 
     // Just copy-pasted from ShooterGame
 #if 0 // WITH_GAMEPLAY_DEBUGGER
@@ -294,7 +294,7 @@ public:
         APlayerController * OldOwner);
 #endif
 
-    void PrintRepNodePolicies();
+    void print_rep_node_kinds();
 
 private:
     struct team_request
@@ -305,12 +305,12 @@ private:
 
     Erepl_node_kind routing_for(UClass * class_);
 
-    bool IsSpatialized(Erepl_node_kind k) const
+    static bool spatial(Erepl_node_kind k)
     {
         return Erepl_node_kind::static_spatial <= k;
     }
 
-    TClassMap<Erepl_node_kind> ClassRepNodePolicies;
+    TClassMap<Erepl_node_kind> class_to_routing_;
 
     friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
 
