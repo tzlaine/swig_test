@@ -141,12 +141,12 @@ public:
 
     // Add Connection to team, if there's no array, add one.
     void AddConnectionToTeam(
-        FName team, ULocusReplicationConnectionGraph * ConnManager);
+        FName team, ULocusReplicationConnectionGraph * conn_mgr);
 
     // Remove Connection from team, if there's no member of the team after
     // removal, remove array from the map
     void RemoveConnectionFromTeam(
-        FName team, ULocusReplicationConnectionGraph * ConnManager);
+        FName team, ULocusReplicationConnectionGraph * conn_mgr);
 };
 
 
