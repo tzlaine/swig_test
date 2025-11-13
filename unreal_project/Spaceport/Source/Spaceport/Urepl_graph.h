@@ -77,10 +77,10 @@ struct FClassReplicationPolicyPreset
 public:
     // Class to set replication policy.
     UPROPERTY(EditAnywhere)
-    TSubclassOf<AActor> Class;
+    TSubclassOf<AActor> class_;
     // Policy to set.
     UPROPERTY(EditAnywhere)
-    Erepl_node_kind Policy;
+    Erepl_node_kind routing;
 };
 
 
@@ -92,7 +92,7 @@ struct FClassReplicationInfoPreset
 public:
     // Class of this Replication info is related
     UPROPERTY(EditAnywhere)
-    TSubclassOf<AActor> Class;
+    TSubclassOf<AActor> class_;
     // How much will distance affect to priority
     UPROPERTY(
         EditAnywhere,
@@ -122,13 +122,13 @@ public:
 
     FClassReplicationInfo CreateClassReplicationInfo()
     {
-        FClassReplicationInfo Info;
-        Info.DistancePriorityScale = DistancePriorityScale;
-        Info.StarvationPriorityScale = StarvationPriorityScale;
-        Info.SetCullDistanceSquared(CullDistanceSquared);
-        Info.ReplicationPeriodFrame = ReplicationPeriodFrame;
-        Info.ActorChannelFrameTimeout = ActorChannelFrameTimeout;
-        return Info;
+        FClassReplicationInfo retval;
+        retval.DistancePriorityScale = DistancePriorityScale;
+        retval.StarvationPriorityScale = StarvationPriorityScale;
+        retval.SetCullDistanceSquared(CullDistanceSquared);
+        retval.ReplicationPeriodFrame = ReplicationPeriodFrame;
+        retval.ActorChannelFrameTimeout = ActorChannelFrameTimeout;
+        return retval;
     }
 };
 
@@ -270,22 +270,22 @@ public:
     void ChangeOwnerOfAnActor(AActor * ActorToChange, AActor * NewOwner);
 
     // SetTeam via Name
-    void SetTeamForPlayerController(
+    void set_team_for(
         APlayerController * pc, int team);
 
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
-        Erepl_node_kind Policy,
+        Erepl_node_kind routing,
         FNewReplicatedActorInfo const & ActorInfo,
         FGlobalActorReplicationInfo & GlobalInfo);
     void RouteRemoveNetworkActorToConnectionNodes(
-        Erepl_node_kind Policy, FNewReplicatedActorInfo const & ActorInfo);
+        Erepl_node_kind routing, FNewReplicatedActorInfo const & ActorInfo);
 
     // handle pending team requests and notifies
     void HandlePendingActorsAndTeamRequests();
 
     Urepl_graph_conn *
-    FindLocusConnectionGraph(AActor const * Actor);
+    FindConnectionGraph(AActor const * Actor);
 
     // Just copy-pasted from ShooterGame
 #if 0 // WITH_GAMEPLAY_DEBUGGER
@@ -303,7 +303,7 @@ private:
         APlayerController * pc;
     };
 
-    Erepl_node_kind GetMappingPolicy(UClass * Class);
+    Erepl_node_kind routing_for(UClass * class_);
 
     bool IsSpatialized(Erepl_node_kind k) const
     {
