@@ -1,4 +1,4 @@
-#include "Ureplication_graph.h"
+#include "Urepl_graph.h"
 
 // Adapted from replication graph from
 // https://github.com/locus84/LocusReplicationGraph; their copyright follows.
@@ -52,7 +52,7 @@ namespace {
     }
 }
 
-ULocusReplicationGraph::ULocusReplicationGraph()
+Urepl_graph::Urepl_graph()
 {
     ReplicationConnectionManagerClass = Urepl_graph_conn::StaticClass();
 
@@ -116,7 +116,7 @@ const UClass * GetParentNativeClass(const UClass * Class)
     return Class;
 }
 
-void ULocusReplicationGraph::InitGlobalActorClassSettings()
+void Urepl_graph::InitGlobalActorClassSettings()
 {
     Super::InitGlobalActorClassSettings();
 
@@ -318,11 +318,11 @@ void ULocusReplicationGraph::InitGlobalActorClassSettings()
 
 #if 0 // WITH_GAMEPLAY_DEBUGGER
     AGameplayDebuggerCategoryReplicator::NotifyDebuggerOwnerChange.AddUObject(
-        this, &ULocusReplicationGraph::OnGameplayDebuggerOwnerChange);
+        this, &Urepl_graph::OnGameplayDebuggerOwnerChange);
 #endif
 }
 
-void ULocusReplicationGraph::InitGlobalGraphNodes()
+void Urepl_graph::InitGlobalGraphNodes()
 {
     // -----------------------------------------------
     //	Spatial Actors
@@ -347,7 +347,7 @@ void ULocusReplicationGraph::InitGlobalGraphNodes()
     AddGlobalGraphNode(AlwaysRelevantNode);
 }
 
-void ULocusReplicationGraph::InitConnectionGraphNodes(
+void Urepl_graph::InitConnectionGraphNodes(
     UNetReplicationGraphConnection * RepGraphConnection)
 {
     Super::InitConnectionGraphNodes(RepGraphConnection);
@@ -375,7 +375,7 @@ void ULocusReplicationGraph::InitConnectionGraphNodes(
     // don't care about team names as it's initial value is always no_team
 }
 
-void ULocusReplicationGraph::OnRemoveConnectionGraphNodes(
+void Urepl_graph::OnRemoveConnectionGraphNodes(
     UNetReplicationGraphConnection * RepGraphConnection)
 {
     Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(RepGraphConnection);
@@ -386,7 +386,7 @@ void ULocusReplicationGraph::OnRemoveConnectionGraphNodes(
     }
 }
 
-void ULocusReplicationGraph::RemoveClientConnection(
+void Urepl_graph::RemoveClientConnection(
     UNetConnection * NetConnection)
 {
     // we completely override super function
@@ -429,7 +429,7 @@ void ULocusReplicationGraph::RemoveClientConnection(
     }
 }
 
-void ULocusReplicationGraph::RouteAddNetworkActorToNodes(
+void Urepl_graph::RouteAddNetworkActorToNodes(
     const FNewReplicatedActorInfo & ActorInfo,
     FGlobalActorReplicationInfo & GlobalInfo)
 {
@@ -467,7 +467,7 @@ void ULocusReplicationGraph::RouteAddNetworkActorToNodes(
     };
 }
 
-void ULocusReplicationGraph::RouteRemoveNetworkActorToNodes(
+void Urepl_graph::RouteRemoveNetworkActorToNodes(
     const FNewReplicatedActorInfo & ActorInfo)
 {
     Erepl_node_kind Policy = GetMappingPolicy(ActorInfo.Class);
@@ -507,7 +507,7 @@ void ULocusReplicationGraph::RouteRemoveNetworkActorToNodes(
 
 // this function will be called seamless map transition
 // as all actors will be removed in silly order, we have to deal with it
-void ULocusReplicationGraph::ResetGameWorldState()
+void Urepl_graph::ResetGameWorldState()
 {
     Super::ResetGameWorldState();
 
@@ -544,7 +544,7 @@ void ULocusReplicationGraph::ResetGameWorldState()
 #define CHECK_WORLDS(X)
 #endif
 
-void ULocusReplicationGraph::AddDependentActor(
+void Urepl_graph::AddDependentActor(
     AActor * ReplicatorActor, AActor * DependentActor)
 {
     if (ReplicatorActor && DependentActor) {
@@ -566,7 +566,7 @@ void ULocusReplicationGraph::AddDependentActor(
     }
 }
 
-void ULocusReplicationGraph::RemoveDependentActor(
+void Urepl_graph::RemoveDependentActor(
     AActor * ReplicatorActor, AActor * DependentActor)
 {
     if (ReplicatorActor && DependentActor) {
@@ -585,7 +585,7 @@ void ULocusReplicationGraph::RemoveDependentActor(
     }
 }
 
-void ULocusReplicationGraph::ChangeOwnerOfAnActor(
+void Urepl_graph::ChangeOwnerOfAnActor(
     AActor * ActorToChange, AActor * NewOwner)
 {
     Erepl_node_kind Policy = GetMappingPolicy(ActorToChange->GetClass());
@@ -609,7 +609,7 @@ void ULocusReplicationGraph::ChangeOwnerOfAnActor(
         Policy, FNewReplicatedActorInfo(ActorToChange), GlobalInfo);
 }
 
-void ULocusReplicationGraph::SetTeamForPlayerController(
+void Urepl_graph::SetTeamForPlayerController(
     APlayerController * pc, int next_team)
 {
     if (pc) {
@@ -632,7 +632,7 @@ void ULocusReplicationGraph::SetTeamForPlayerController(
     }
 }
 
-void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
+void Urepl_graph::RouteAddNetworkActorToConnectionNodes(
     Erepl_node_kind Policy,
     const FNewReplicatedActorInfo & ActorInfo,
     FGlobalActorReplicationInfo & GlobalInfo)
@@ -658,7 +658,7 @@ void ULocusReplicationGraph::RouteAddNetworkActorToConnectionNodes(
 }
 
 
-void ULocusReplicationGraph::RouteRemoveNetworkActorToConnectionNodes(
+void Urepl_graph::RouteRemoveNetworkActorToConnectionNodes(
     Erepl_node_kind Policy, const FNewReplicatedActorInfo & ActorInfo)
 {
     if (Urepl_graph_conn * conn =
@@ -681,7 +681,7 @@ void ULocusReplicationGraph::RouteRemoveNetworkActorToConnectionNodes(
     }
 }
 
-void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
+void Urepl_graph::HandlePendingActorsAndTeamRequests()
 {
     if (!pending_team_requests_.empty()) {
         std::vector TempRequests = std::move(pending_team_requests_);
@@ -715,7 +715,7 @@ void ULocusReplicationGraph::HandlePendingActorsAndTeamRequests()
 
 
 class Urepl_graph_conn *
-ULocusReplicationGraph::FindLocusConnectionGraph(const AActor * Actor)
+Urepl_graph::FindLocusConnectionGraph(const AActor * Actor)
 {
     if (Actor) {
         if (UNetConnection * NetConnection = Actor->GetNetConnection()) {
@@ -729,7 +729,7 @@ ULocusReplicationGraph::FindLocusConnectionGraph(const AActor * Actor)
 }
 
 #if 0 // WITH_GAMEPLAY_DEBUGGER
-void ULocusReplicationGraph::OnGameplayDebuggerOwnerChange(
+void Urepl_graph::OnGameplayDebuggerOwnerChange(
     AGameplayDebuggerCategoryReplicator * Debugger,
     APlayerController * OldOwner)
 {
@@ -749,7 +749,7 @@ void ULocusReplicationGraph::OnGameplayDebuggerOwnerChange(
 }
 #endif
 
-void ULocusReplicationGraph::PrintRepNodePolicies()
+void Urepl_graph::PrintRepNodePolicies()
 {
     UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
     if (!Enum) {
@@ -772,7 +772,7 @@ void ULocusReplicationGraph::PrintRepNodePolicies()
     }
 }
 
-Erepl_node_kind ULocusReplicationGraph::GetMappingPolicy(UClass * Class)
+Erepl_node_kind Urepl_graph::GetMappingPolicy(UClass * Class)
 {
     Erepl_node_kind * PolicyPtr = ClassRepNodePolicies.Get(Class);
     Erepl_node_kind Policy = PolicyPtr ? *PolicyPtr : Erepl_node_kind::none;
@@ -785,8 +785,8 @@ void UReplicationGraphNode_AlwaysRelevant_ForTeam::
 {
     Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(&Params.ConnectionManager);
     if (conn && conn->team != no_team) {
-        ULocusReplicationGraph * ReplicationGraph =
-            Cast<ULocusReplicationGraph>(GetOuter());
+        Urepl_graph * ReplicationGraph =
+            Cast<Urepl_graph>(GetOuter());
         auto const it = ReplicationGraph->team_to_conn_.find(conn->team);
         if (it != ReplicationGraph->team_to_conn_.end()) {
             for (Urepl_graph_conn * TeamMember : it->second) {
@@ -808,8 +808,8 @@ UReplicationGraphNode_AlwaysRelevant_WithPending::
 
 void UReplicationGraphNode_AlwaysRelevant_WithPending::PrepareForReplication()
 {
-    ULocusReplicationGraph * ReplicationGraph =
-        Cast<ULocusReplicationGraph>(GetOuter());
+    Urepl_graph * ReplicationGraph =
+        Cast<Urepl_graph>(GetOuter());
     ReplicationGraph->HandlePendingActorsAndTeamRequests();
 }
 
@@ -828,7 +828,7 @@ FAutoConsoleCommandWithWorldAndArgs ShooterPrintRepNodePoliciesCmd(
     TEXT("Prints how actor classes are routed to RepGraph nodes"),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda(
         [](const TArray<FString> & Args, UWorld * World) {
-            for (TObjectIterator<ULocusReplicationGraph> It; It; ++It) {
+            for (TObjectIterator<Urepl_graph> It; It; ++It) {
                 It->PrintRepNodePolicies();
             }
         }));

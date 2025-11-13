@@ -30,7 +30,7 @@
 
 #include <CoreMinimal.h>
 #include <ReplicationGraph.h>
-#include "Ureplication_graph.generated.h"
+#include "Urepl_graph.generated.h"
 
 
 // class UReplicationGraphNode_GridSpatialization2D;
@@ -55,7 +55,7 @@ enum class Erepl_node_kind : uint8 {
     team,
 
     // ONLY SPATIALIZED Enums below here! See
-    // ULocusReplicationGraph::IsSpatialized
+    // Urepl_graph::IsSpatialized
 
     // Routes to GridNode: these actors don't move and don't need to be updated
     // every frame.
@@ -178,7 +178,7 @@ public:
 };
 
 UCLASS(Blueprintable)
-class ULocusReplicationGraph : public UReplicationGraph
+class Urepl_graph : public UReplicationGraph
 {
     GENERATED_BODY()
 
@@ -219,7 +219,7 @@ public:
     TArray<FClassReplicationInfoPreset> ReplicationInfoSettings;
 
 public:
-    ULocusReplicationGraph();
+    Urepl_graph();
 
     // Set up Enums for each uclass of entire actor
     void InitGlobalActorClassSettings() override;
