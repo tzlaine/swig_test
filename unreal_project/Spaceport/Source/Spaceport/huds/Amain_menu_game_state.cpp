@@ -10,6 +10,9 @@ void Amain_menu_game_state::saves_changed()
     UE_LOG(LogTemp, Warning, TEXT("List of saves changed to: %s"),
            *FString::Join(saves_, TEXT(", ")));
 
+    if (HasAuthority())
+        return;
+
     auto * const hud =
         GetWorld()->GetFirstPlayerController()->GetHUD<Amain_menu_hud>();
     hud->saves_available(!saves_.IsEmpty());
