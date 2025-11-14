@@ -37,6 +37,8 @@
 class AGameplayDebuggerCategoryReplicator;
 class Urepl_graph_conn;
 
+// NOTE: Console commands for the rep graph plugin are: net.RepGraph.*
+
 // TODO: Move.
 inline constexpr int no_team = -1;
 
