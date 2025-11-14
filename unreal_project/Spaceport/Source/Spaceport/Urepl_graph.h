@@ -325,3 +325,11 @@ private:
     std::vector<AActor *> pending_actors_;
     std::vector<team_request> pending_team_requests_;
 };
+
+inline const bool repl_graph_in_use = [] {
+    UReplicationDriver::CreateReplicationDriverDelegate().BindLambda(
+        [](UNetDriver *, FURL const &, UWorld *) -> UReplicationDriver * {
+            return NewObject<Urepl_graph>(GetTransientPackage());
+        });
+    return true;
+}();
