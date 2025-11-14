@@ -242,14 +242,12 @@ void Urepl_graph::InitGlobalActorClassSettings()
     // Set FClassReplicationInfo based on legacy settings from all replicated
     // classes
     for (UClass * repl_class : all_repl_classes) {
-        if (FClassReplGraphInfo * info =
-                class_repl_infos.FindByPredicate(
-                    [&](FClassReplGraphInfo const & Info) {
-                        return repl_class->IsChildOf(Info.class_.Get());
-                    })) {
+        if (FClassReplGraphInfo * info = class_repl_infos.FindByPredicate(
+                [&](FClassReplGraphInfo const & Info) {
+                    return repl_class->IsChildOf(Info.class_.Get());
+                })) {
             // duplicated or set included child will be ignored
-            if (info->class_.Get() == repl_class ||
-                info->IncludeChildClasses) {
+            if (info->class_.Get() == repl_class || info->IncludeChildClasses) {
                 continue;
             }
         }
