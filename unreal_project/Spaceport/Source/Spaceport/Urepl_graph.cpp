@@ -50,70 +50,74 @@ namespace {
         if (vec.empty())
             map.erase(it);
     }
+
+    void populate_class_repl_info(
+        FClassReplicationInfo & info,
+        UClass * class_,
+        bool spatial,
+        float server_max_tick_rate)
+    {
+        // TODO: Visibility should be based on detection and stealth numbers
+        // for the actors in question; follow something along the lines of the
+        // Google response to "ue5 c++ how to use replicatioon graphs to
+        // implement units with different detection radii" for a possible
+        // approach.
+        AActor * cdo = class_->GetDefaultObject<AActor>();
+        if (spatial) {
+            info.SetCullDistanceSquared(cdo->NetCullDistanceSquared);
+            UE_LOG(
+                LogReplicationGraph,
+                Log,
+                TEXT("Setting cull distance for %s to %f (%f)"),
+                *class_->GetName(),
+                info.GetCullDistanceSquared(),
+                FMath::Sqrt(info.GetCullDistanceSquared()));
+        }
+
+        info.ReplicationPeriodFrame = std::max(
+            (uint32)FMath::RoundToFloat(
+                server_max_tick_rate / cdo->NetUpdateFrequency),
+            1u);
+
+        UClass * native_class = class_;
+        while (!native_class->IsNative() && native_class->GetSuperClass() &&
+               native_class->GetSuperClass() != AActor::StaticClass()) {
+            native_class = native_class->GetSuperClass();
+        }
+
+        UE_LOG(
+            LogReplicationGraph,
+            Log,
+            TEXT("Setting replication period for %s (%s) to %d frames (%.2f)"),
+            *class_->GetName(),
+            *native_class->GetName(),
+            info.ReplicationPeriodFrame,
+            cdo->NetUpdateFrequency);
+    }
+
+    UClass const * parent_native_class_of(UClass const * class_)
+    {
+        while (class_ && !class_->IsNative()) {
+            class_ = class_->GetSuperClass();
+        }
+        return class_;
+    }
 }
 
 Urepl_graph::Urepl_graph()
 {
     ReplicationConnectionManagerClass = Urepl_graph_conn::StaticClass();
 
-    FClassReplicationInfoPreset PawnClassRepInfo;
-    PawnClassRepInfo.class_ = APawn::StaticClass();
-    PawnClassRepInfo.DistancePriorityScale = 1.f;
-    PawnClassRepInfo.StarvationPriorityScale = 1.f;
-    PawnClassRepInfo.ActorChannelFrameTimeout = 4;
+    FClassReplGraphInfo repl_info;
+    repl_info.class_ = APawn::StaticClass();
+    repl_info.DistancePriorityScale = 1.f;
+    repl_info.StarvationPriorityScale = 1.f;
+    repl_info.ActorChannelFrameTimeout = 4;
     // small size of cull distance squard leads inconsistant cull because of
     // distance between actual character and viewposition keep it bigger than
     // distance between actual pawn and viewer
-    PawnClassRepInfo.CullDistanceSquared = 15000.f * 15000.f;
-    ReplicationInfoSettings.Add(PawnClassRepInfo);
-}
-
-void InitClassReplicationInfo(
-    FClassReplicationInfo & Info,
-    UClass * class_,
-    bool bSpatialize,
-    float ServerMaxTickRate)
-{
-    AActor * cdo = class_->GetDefaultObject<AActor>();
-    if (bSpatialize) {
-        Info.SetCullDistanceSquared(cdo->NetCullDistanceSquared);
-        UE_LOG(
-            LogReplicationGraph,
-            Log,
-            TEXT("Setting cull distance for %s to %f (%f)"),
-            *class_->GetName(),
-            Info.GetCullDistanceSquared(),
-            FMath::Sqrt(Info.GetCullDistanceSquared()));
-    }
-
-    Info.ReplicationPeriodFrame = FMath::Max<uint32>(
-        (uint32)FMath::RoundToFloat(
-            ServerMaxTickRate / cdo->NetUpdateFrequency),
-        1);
-
-    UClass * NativeClass = class_;
-    while (!NativeClass->IsNative() && NativeClass->GetSuperClass() &&
-           NativeClass->GetSuperClass() != AActor::StaticClass()) {
-        NativeClass = NativeClass->GetSuperClass();
-    }
-
-    UE_LOG(
-        LogReplicationGraph,
-        Log,
-        TEXT("Setting replication period for %s (%s) to %d frames (%.2f)"),
-        *class_->GetName(),
-        *NativeClass->GetName(),
-        Info.ReplicationPeriodFrame,
-        cdo->NetUpdateFrequency);
-}
-
-const UClass * GetParentNativeClass(const UClass * class_)
-{
-    while (class_ && !class_->IsNative()) {
-        class_ = class_->GetSuperClass();
-    }
-
-    return class_;
+    repl_info.CullDistanceSquared = 15000.f * 15000.f;
+    class_repl_infos_.Add(repl_info);
 }
 
 void Urepl_graph::InitGlobalActorClassSettings()
@@ -140,20 +144,19 @@ void Urepl_graph::InitGlobalActorClassSettings()
         Erepl_node_kind::connection); // Only owner connection viable
 #endif
 
-    for (FClassReplicationPolicyPreset PolicyBP : ReplicationPolicySettings) {
-        if (PolicyBP.class_) {
-            add_routing(PolicyBP.class_, PolicyBP.routing);
-        }
+    for (FClassReplGraphRouting routing : class_routings_) {
+        if (!routing.class_)
+            continue;
+        add_routing(routing.class_, routing.routing);
     }
 
-    // this does contains all replicated class except GetIsReplicated is false
-    // actor if someone need to make replication work, mark it as replicated
-    // and control it over replication graph
-    TArray<UClass *> AllReplicatedClasses;
+    // this contains all replicated classes except those for which
+    // GetIsReplicated() is false
+    TArray<UClass *> all_repl_classes;
 
     // Iterate all class
-    for (TObjectIterator<UClass> It; It; ++It) {
-        UClass * class_ = *It;
+    for (TObjectIterator<UClass> it; it; ++it) {
+        UClass * class_ = *it;
         AActor * actor_cdo = Cast<AActor>(class_->GetDefaultObject());
 
         if (!actor_cdo || !actor_cdo->GetIsReplicated())
@@ -169,19 +172,19 @@ void Urepl_graph::InitGlobalActorClassSettings()
         // This is a replicated class. Save this off for the second pass below
         // --------------------------------------------------------------------
 
-        AllReplicatedClasses.Add(class_);
+        all_repl_classes.Add(class_);
 
         // Skip if already in the map (added explicitly)
         if (class_to_routing_.Contains(class_, false))
             continue;
 
-        auto ShouldSpatialize = [](const AActor * cdo) {
+        auto ShouldSpatialize = [](AActor const * cdo) {
             return cdo->GetIsReplicated() &&
                    (!(cdo->bAlwaysRelevant || cdo->bOnlyRelevantToOwner ||
                       cdo->bNetUseOwnerRelevancy));
         };
 
-        auto GetLegacyDebugStr = [](const AActor * cdo) {
+        auto GetLegacyDebugStr = [](AActor const * cdo) {
             return FString::Printf(
                 TEXT("%s [%d/%d/%d]"),
                 *cdo->GetClass()->GetName(),
@@ -218,15 +221,13 @@ void Urepl_graph::InitGlobalActorClassSettings()
         // bOnlyRelevantToOwner -> only owner see this but is spatialized
     }
 
-    TArray<FClassReplicationInfoPreset> ValidClassReplicationInfoPreset;
+    TArray<FClassReplGraphInfo> class_repl_infos;
     // custom setting
-    for (FClassReplicationInfoPreset & ReplicationInfoBP :
-         ReplicationInfoSettings) {
-        if (ReplicationInfoBP.class_) {
+    for (FClassReplGraphInfo & repl_info : class_repl_infos_) {
+        if (repl_info.class_) {
             GlobalActorReplicationInfoMap.SetClassInfo(
-                ReplicationInfoBP.class_,
-                ReplicationInfoBP.CreateClassReplicationInfo());
-            ValidClassReplicationInfoPreset.Add(ReplicationInfoBP);
+                repl_info.class_, repl_info.class_repl_info());
+            class_repl_infos.Add(repl_info);
         }
     }
 
@@ -235,26 +236,26 @@ void Urepl_graph::InitGlobalActorClassSettings()
 
     // Set FClassReplicationInfo based on legacy settings from all replicated
     // classes
-    for (UClass * ReplicatedClass : AllReplicatedClasses) {
-        if (FClassReplicationInfoPreset * Preset =
-                ValidClassReplicationInfoPreset.FindByPredicate(
-                    [&](const FClassReplicationInfoPreset & Info) {
-                        return ReplicatedClass->IsChildOf(Info.class_.Get());
+    for (UClass * repl_class : all_repl_classes) {
+        if (FClassReplGraphInfo * info =
+                class_repl_infos.FindByPredicate(
+                    [&](FClassReplGraphInfo const & Info) {
+                        return repl_class->IsChildOf(Info.class_.Get());
                     })) {
             // duplicated or set included child will be ignored
-            if (Preset->class_.Get() == ReplicatedClass ||
-                Preset->IncludeChildClasses) {
+            if (info->class_.Get() == repl_class ||
+                info->IncludeChildClasses) {
                 continue;
             }
         }
 
-        FClassReplicationInfo ClassInfo;
-        InitClassReplicationInfo(
-            ClassInfo,
-            ReplicatedClass,
-            spatial(class_to_routing_.GetChecked(ReplicatedClass)),
+        FClassReplicationInfo class_info;
+        populate_class_repl_info(
+            class_info,
+            repl_class,
+            spatial(class_to_routing_.GetChecked(repl_class)),
             NetDriver->NetServerMaxTickRate);
-        GlobalActorReplicationInfoMap.SetClassInfo(ReplicatedClass, ClassInfo);
+        GlobalActorReplicationInfoMap.SetClassInfo(repl_class, class_info);
     }
 
 
@@ -264,13 +265,13 @@ void Urepl_graph::InitGlobalActorClassSettings()
     UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
     for (auto it = class_to_routing_.CreateIterator(); it; ++it) {
         UClass * class_ = CastChecked<UClass>(it.Key().ResolveObjectPtr());
-        const Erepl_node_kind routing = it.Value();
+        Erepl_node_kind const routing = it.Value();
 
         // Only print if different than native class
-        UClass * ParentNativeClass = GetParentNativeClass(class_);
-        const Erepl_node_kind * parent_routing =
-            class_to_routing_.Get(ParentNativeClass);
-        if (parent_routing && class_ != ParentNativeClass &&
+        UClass * parent_native_class = GetParentNativeClass(class_);
+        Erepl_node_kind const * parent_routing =
+            class_to_routing_.Get(parent_native_class);
+        if (parent_routing && class_ != parent_native_class &&
             routing == *parent_routing) {
             continue;
         }
@@ -279,26 +280,24 @@ void Urepl_graph::InitGlobalActorClassSettings()
             Log,
             TEXT("  %s (%s) -> %s"),
             *class_->GetName(),
-            *GetNameSafe(ParentNativeClass),
+            *GetNameSafe(parent_native_class),
             *Enum->GetNameStringByValue(static_cast<uint32>(routing)));
     }
 
     UE_LOG(LogReplicationGraph, Log, TEXT(""));
     UE_LOG(LogReplicationGraph, Log, TEXT("Class Settings Map: "));
-    for (auto ClassRepInfoIt =
-             GlobalActorReplicationInfoMap.CreateClassMapIterator();
-         ClassRepInfoIt;
-         ++ClassRepInfoIt) {
-        const UClass * class_ =
-            CastChecked<UClass>(ClassRepInfoIt.Key().ResolveObjectPtr());
-        const FClassReplicationInfo & ClassInfo = ClassRepInfoIt.Value();
+    for (auto it = GlobalActorReplicationInfoMap.CreateClassMapIterator(); it;
+         ++it) {
+        UClass const * class_ =
+            CastChecked<UClass>(it.Key().ResolveObjectPtr());
+        FClassReplicationInfo const & class_info = it.Value();
         UE_LOG(
             LogReplicationGraph,
             Log,
             TEXT("  %s (%s) -> %s"),
             *class_->GetName(),
-            *GetNameSafe(GetParentNativeClass(class_)),
-            *ClassInfo.BuildDebugStringDelta());
+            *GetNameSafe(parent_native_class_of(class_)),
+            *class_info.BuildDebugStringDelta());
     }
 
     // Rep destruct infos based on CVar value
@@ -337,13 +336,13 @@ void Urepl_graph::InitGlobalGraphNodes()
 }
 
 void Urepl_graph::InitConnectionGraphNodes(
-    UNetReplicationGraphConnection * RepGraphConnection)
+    UNetReplicationGraphConnection * repl_graph_conn)
 {
-    Super::InitConnectionGraphNodes(RepGraphConnection);
+    Super::InitConnectionGraphNodes(repl_graph_conn);
 
     // UE_LOG(LogReplicationGraph, Warning, TEXT("InitConnection : %s"),
-    // *RepGraphConnection->NetConnection->PlayerController->GetName());
-    Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(RepGraphConnection);
+    // *repl_graph_conn->NetConnection->PlayerController->GetName());
+    Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(repl_graph_conn);
     if (!conn) {
         UE_LOG(
             LogReplicationGraph,
@@ -355,19 +354,19 @@ void Urepl_graph::InitConnectionGraphNodes(
     conn->AlwaysRelevantForConnectionNode =
         CreateNewNode<UReplicationGraphNode_AlwaysRelevant_ForConnection>();
     AddConnectionGraphNode(
-        conn->AlwaysRelevantForConnectionNode, RepGraphConnection);
+        conn->AlwaysRelevantForConnectionNode, repl_graph_conn);
 
     conn->TeamConnectionNode =
         CreateNewNode<UReplicationGraphNode_AlwaysRelevant_ForTeam>();
-    AddConnectionGraphNode(conn->TeamConnectionNode, RepGraphConnection);
+    AddConnectionGraphNode(conn->TeamConnectionNode, repl_graph_conn);
 
     // don't care about team names as it's initial value is always no_team
 }
 
 void Urepl_graph::OnRemoveConnectionGraphNodes(
-    UNetReplicationGraphConnection * RepGraphConnection)
+    UNetReplicationGraphConnection * repl_graph_conn)
 {
-    Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(RepGraphConnection);
+    Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(repl_graph_conn);
     if (conn) {
         if (conn->team != no_team) {
             remove_connection_from_team(team_to_conn_, conn->team, conn);
@@ -375,7 +374,7 @@ void Urepl_graph::OnRemoveConnectionGraphNodes(
     }
 }
 
-void Urepl_graph::RemoveClientConnection(UNetConnection * NetConnection)
+void Urepl_graph::RemoveClientConnection(UNetConnection * net_conn)
 {
     // we completely override super function
 
@@ -390,7 +389,7 @@ void Urepl_graph::RemoveClientConnection(UNetConnection * NetConnection)
                 Connections[idx];
             repCheck(ConnectionManager);
 
-            if (ConnectionManager->NetConnection == NetConnection) {
+            if (ConnectionManager->NetConnection == net_conn) {
                 ensure(!found);
                 // Nofity this to handle something - remove from team list
                 OnRemoveConnectionGraphNodes(ConnectionManager);
@@ -418,53 +417,53 @@ void Urepl_graph::RemoveClientConnection(UNetConnection * NetConnection)
 }
 
 void Urepl_graph::RouteAddNetworkActorToNodes(
-    const FNewReplicatedActorInfo & ActorInfo,
-    FGlobalActorReplicationInfo & GlobalInfo)
+    FNewReplicatedActorInfo const & actor_info,
+    FGlobalActorReplicationInfo & global_info)
 {
-    Erepl_node_kind routing = routing_for(ActorInfo.Class);
+    Erepl_node_kind routing = routing_for(actor_info.Class);
     switch (routing) {
     case Erepl_node_kind::none: break;
     case Erepl_node_kind::always:
-        AlwaysRelevantNode->NotifyAddNetworkActor(ActorInfo);
+        AlwaysRelevantNode->NotifyAddNetworkActor(actor_info);
         break;
     case Erepl_node_kind::connection:
     case Erepl_node_kind::team:
-        RouteAddNetworkActorToConnectionNodes(routing, ActorInfo, GlobalInfo);
+        RouteAddNetworkActorToConnectionNodes(routing, actor_info, global_info);
         break;
     case Erepl_node_kind::static_spatial:
-        GridNode->AddActor_Static(ActorInfo, GlobalInfo);
+        GridNode->AddActor_Static(actor_info, global_info);
         break;
     case Erepl_node_kind::dynamic_spatial:
-        GridNode->AddActor_Dynamic(ActorInfo, GlobalInfo);
+        GridNode->AddActor_Dynamic(actor_info, global_info);
         break;
     case Erepl_node_kind::dormant_spatial:
-        GridNode->AddActor_Dormancy(ActorInfo, GlobalInfo);
+        GridNode->AddActor_Dormancy(actor_info, global_info);
         break;
     };
 }
 
 void Urepl_graph::RouteRemoveNetworkActorToNodes(
-    const FNewReplicatedActorInfo & ActorInfo)
+    FNewReplicatedActorInfo const & actor_info)
 {
-    Erepl_node_kind routing = routing_for(ActorInfo.Class);
+    Erepl_node_kind routing = routing_for(actor_info.Class);
 
     switch (routing) {
     case Erepl_node_kind::none: break;
     case Erepl_node_kind::always:
-        AlwaysRelevantNode->NotifyRemoveNetworkActor(ActorInfo);
+        AlwaysRelevantNode->NotifyRemoveNetworkActor(actor_info);
         break;
     case Erepl_node_kind::connection:
     case Erepl_node_kind::team:
-        RouteRemoveNetworkActorToConnectionNodes(routing, ActorInfo);
+        RouteRemoveNetworkActorToConnectionNodes(routing, actor_info);
         break;
     case Erepl_node_kind::static_spatial:
-        GridNode->RemoveActor_Static(ActorInfo);
+        GridNode->RemoveActor_Static(actor_info);
         break;
     case Erepl_node_kind::dynamic_spatial:
-        GridNode->RemoveActor_Dynamic(ActorInfo);
+        GridNode->RemoveActor_Dynamic(actor_info);
         break;
     case Erepl_node_kind::dormant_spatial:
-        GridNode->RemoveActor_Dormancy(ActorInfo);
+        GridNode->RemoveActor_Dormancy(actor_info);
         break;
     };
 }
@@ -549,27 +548,26 @@ void Urepl_graph::RemoveDependentActor(
     }
 }
 
-void Urepl_graph::change_owner_to(AActor * ActorToChange, AActor * NewOwner)
+void Urepl_graph::change_owner_to(AActor * a, AActor * owner)
 {
-    Erepl_node_kind routing = routing_for(ActorToChange->GetClass());
-    if (!ActorToChange || routing == Erepl_node_kind::none ||
-        spatial(routing)) {
+    Erepl_node_kind routing = routing_for(a->GetClass());
+    if (!a || routing == Erepl_node_kind::none || spatial(routing)) {
         // routing doesn't matter for chaning owner
         return;
     }
 
     // remove from previous connection specific nodes.
     RouteRemoveNetworkActorToConnectionNodes(
-        routing, FNewReplicatedActorInfo(ActorToChange));
+        routing, FNewReplicatedActorInfo(a));
 
     // change owner safely
-    ActorToChange->SetOwner(NewOwner);
+    a->SetOwner(owner);
 
     // re-route to connection specific nodes with new owner
-    FGlobalActorReplicationInfo & GlobalInfo =
-        GlobalActorReplicationInfoMap.Get(ActorToChange);
+    FGlobalActorReplicationInfo & global_info =
+        GlobalActorReplicationInfoMap.Get(a);
     RouteAddNetworkActorToConnectionNodes(
-        routing, FNewReplicatedActorInfo(ActorToChange), GlobalInfo);
+        routing, FNewReplicatedActorInfo(a), global_info);
 }
 
 void Urepl_graph::set_team_for(APlayerController * pc, int next_team)
@@ -595,44 +593,46 @@ void Urepl_graph::set_team_for(APlayerController * pc, int next_team)
 
 void Urepl_graph::RouteAddNetworkActorToConnectionNodes(
     Erepl_node_kind routing,
-    const FNewReplicatedActorInfo & ActorInfo,
-    FGlobalActorReplicationInfo & GlobalInfo)
+    FNewReplicatedActorInfo const & actor_info,
+    FGlobalActorReplicationInfo & global_info)
 {
-    if (Urepl_graph_conn * conn = find_connection_graph(ActorInfo.GetActor())) {
+    if (Urepl_graph_conn * conn =
+            find_connection_graph(actor_info.GetActor())) {
         switch (routing) {
         case Erepl_node_kind::connection:
             conn->AlwaysRelevantForConnectionNode->NotifyAddNetworkActor(
-                ActorInfo);
+                actor_info);
             break;
         case Erepl_node_kind::team:
-            conn->TeamConnectionNode->NotifyAddNetworkActor(ActorInfo);
+            conn->TeamConnectionNode->NotifyAddNetworkActor(actor_info);
             break;
         };
-    } else if (ActorInfo.Actor->GetNetOwner()) {
+    } else if (actor_info.Actor->GetNetOwner()) {
         // this actor is not yet ready. add to pending array to handle pending
         // route
-        pending_actors_.push_back(ActorInfo.GetActor());
+        pending_actors_.push_back(actor_info.GetActor());
     }
 }
 
 
 void Urepl_graph::RouteRemoveNetworkActorToConnectionNodes(
-    Erepl_node_kind routing, const FNewReplicatedActorInfo & ActorInfo)
+    Erepl_node_kind routing, FNewReplicatedActorInfo const & actor_info)
 {
-    if (Urepl_graph_conn * conn = find_connection_graph(ActorInfo.GetActor())) {
+    if (Urepl_graph_conn * conn =
+            find_connection_graph(actor_info.GetActor())) {
         switch (routing) {
         case Erepl_node_kind::connection:
             conn->AlwaysRelevantForConnectionNode->NotifyRemoveNetworkActor(
-                ActorInfo);
+                actor_info);
             break;
         case Erepl_node_kind::team:
-            conn->TeamConnectionNode->NotifyRemoveNetworkActor(ActorInfo);
+            conn->TeamConnectionNode->NotifyRemoveNetworkActor(actor_info);
             break;
         };
-    } else if (ActorInfo.Actor->GetNetOwner()) {
+    } else if (actor_info.Actor->GetNetOwner()) {
         // this actor is not yet ready. but doesn't matter the pending array
         // contains the actor or not
-        std::erase(pending_actors_, ActorInfo.GetActor());
+        std::erase(pending_actors_, actor_info.GetActor());
     }
 }
 
@@ -657,10 +657,10 @@ void Urepl_graph::process_pendings()
                 if (UNetConnection * Connection = Actor->GetNetConnection()) {
                     // if failed, it will automatically re-added to pending list
                     Erepl_node_kind routing = routing_for(Actor->GetClass());
-                    FGlobalActorReplicationInfo & GlobalInfo =
+                    FGlobalActorReplicationInfo & global_info =
                         GlobalActorReplicationInfoMap.Get(Actor);
                     RouteAddNetworkActorToConnectionNodes(
-                        routing, FNewReplicatedActorInfo(Actor), GlobalInfo);
+                        routing, FNewReplicatedActorInfo(Actor), global_info);
                 }
             }
         }
@@ -668,14 +668,14 @@ void Urepl_graph::process_pendings()
 }
 
 
-class Urepl_graph_conn * Urepl_graph::find_connection_graph(const AActor * a)
+Urepl_graph_conn * Urepl_graph::find_connection_graph(AActor const * a)
 {
     if (!a)
         return nullptr;
 
-    if (UNetConnection * NetConnection = a->GetNetConnection()) {
-        if (Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(
-                FindOrAddConnectionManager(NetConnection))) {
+    if (UNetConnection * net_conn = a->GetNetConnection()) {
+        if (Urepl_graph_conn * conn =
+                Cast<Urepl_graph_conn>(FindOrAddConnectionManager(net_conn))) {
             return conn;
         }
     }
@@ -685,72 +685,68 @@ class Urepl_graph_conn * Urepl_graph::find_connection_graph(const AActor * a)
 
 #if 0 // WITH_GAMEPLAY_DEBUGGER
 void Urepl_graph::OnGameplayDebuggerOwnerChange(
-    AGameplayDebuggerCategoryReplicator * Debugger,
-    APlayerController * OldOwner)
+    AGameplayDebuggerCategoryReplicator * debugger,
+    APlayerController * pc)
 {
-    if (Urepl_graph_conn * conn =
-            find_connection_graph(OldOwner)) {
-        FNewReplicatedActorInfo ActorInfo(Debugger);
+    if (Urepl_graph_conn * conn = find_connection_graph(pc)) {
+        FNewReplicatedActorInfo actor_info(debugger);
         conn->AlwaysRelevantForConnectionNode->NotifyRemoveNetworkActor(
-            ActorInfo);
+            actor_info);
     }
 
     if (Urepl_graph_conn * conn =
-            find_connection_graph(Debugger->GetReplicationOwner())) {
-        FNewReplicatedActorInfo ActorInfo(Debugger);
+            find_connection_graph(debugger->GetReplicationOwner())) {
+        FNewReplicatedActorInfo actor_info(debugger);
         conn->AlwaysRelevantForConnectionNode->NotifyAddNetworkActor(
-            ActorInfo);
+            actor_info);
     }
 }
 #endif
 
 void Urepl_graph::print_rep_node_kinds()
 {
-    UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
-    if (!Enum) {
+    UEnum * enum_ = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
+    if (!enum_)
         return;
-    }
 
     GLog->Logf(TEXT("===================================="));
     GLog->Logf(TEXT("Shooter Replication Routing Policies"));
     GLog->Logf(TEXT("===================================="));
 
-    for (auto It = class_to_routing_.CreateIterator(); It; ++It) {
-        FObjectKey ObjKey = It.Key();
+    for (auto it = class_to_routing_.CreateIterator(); it; ++it) {
+        FObjectKey ObjKey = it.Key();
 
-        Erepl_node_kind routing = It.Value();
+        Erepl_node_kind routing = it.Value();
 
         GLog->Logf(
             TEXT("%-40s --> %s"),
             *GetNameSafe(ObjKey.ResolveObjectPtr()),
-            *Enum->GetNameStringByValue(static_cast<uint32>(routing)));
+            *enum_->GetNameStringByValue(static_cast<uint32>(routing)));
     }
 }
 
 Erepl_node_kind Urepl_graph::routing_for(UClass * class_)
 {
-    Erepl_node_kind * PolicyPtr = class_to_routing_.Get(class_);
-    Erepl_node_kind routing = PolicyPtr ? *PolicyPtr : Erepl_node_kind::none;
-    return routing;
+    auto * const ptr = class_to_routing_.Get(class_);
+    return ptr ? *ptr : Erepl_node_kind::none;
 }
 
 void UReplicationGraphNode_AlwaysRelevant_ForTeam::
     GatherActorListsForConnection(
-        const FConnectionGatherActorListParameters & Params)
+        FConnectionGatherActorListParameters const & params)
 {
-    Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(&Params.ConnectionManager);
+    Urepl_graph_conn * conn = Cast<Urepl_graph_conn>(&params.ConnectionManager);
     if (conn && conn->team != no_team) {
-        Urepl_graph * ReplicationGraph = Cast<Urepl_graph>(GetOuter());
-        auto const it = ReplicationGraph->team_to_conn_.find(conn->team);
-        if (it != ReplicationGraph->team_to_conn_.end()) {
-            for (Urepl_graph_conn * TeamMember : it->second) {
-                // we call parent
-                TeamMember->TeamConnectionNode
-                    ->GatherActorListsForConnectionDefault(Params);
+        Urepl_graph * repl_graph = Cast<Urepl_graph>(GetOuter());
+        auto const it = repl_graph->team_to_conn_.find(conn->team);
+        if (it != repl_graph->team_to_conn_.end()) {
+            for (Urepl_graph_conn * team_conn : it->second) {
+                team_conn->TeamConnectionNode
+                    ->GatherActorListsForConnectionDefault(params);
             }
         }
     } else {
-        Super::GatherActorListsForConnection(Params);
+        Super::GatherActorListsForConnection(params);
     }
 }
 
@@ -762,15 +758,14 @@ UReplicationGraphNode_AlwaysRelevant_WithPending::
 
 void UReplicationGraphNode_AlwaysRelevant_WithPending::PrepareForReplication()
 {
-    Urepl_graph * ReplicationGraph = Cast<Urepl_graph>(GetOuter());
-    ReplicationGraph->process_pendings();
+    Cast<Urepl_graph>(GetOuter())->process_pendings();
 }
 
 void UReplicationGraphNode_AlwaysRelevant_ForTeam::
     GatherActorListsForConnectionDefault(
-        const FConnectionGatherActorListParameters & Params)
+        FConnectionGatherActorListParameters const & params)
 {
-    Super::GatherActorListsForConnection(Params);
+    Super::GatherActorListsForConnection(params);
 }
 
 // console commands copied from shooter repgraph
@@ -780,9 +775,9 @@ FAutoConsoleCommandWithWorldAndArgs ShooterPrintRepNodePoliciesCmd(
     TEXT("ReplGraph.PrintRouting"),
     TEXT("Prints how actor classes are routed to RepGraph nodes"),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda(
-        [](const TArray<FString> & Args, UWorld * World) {
-            for (TObjectIterator<Urepl_graph> It; It; ++It) {
-                It->print_rep_node_kinds();
+        [](TArray<FString> const & args, UWorld *) {
+            for (TObjectIterator<Urepl_graph> it; it; ++it) {
+                it->print_rep_node_kinds();
             }
         }));
 
@@ -791,22 +786,21 @@ FAutoConsoleCommandWithWorldAndArgs ChangeFrequencyBucketsCmd(
     TEXT("ReplGraph.FrequencyBuckets"),
     TEXT("Resets frequency bucket count."),
     FConsoleCommandWithWorldAndArgsDelegate::CreateLambda(
-        [](const TArray<FString> & Args, UWorld * World) {
-            int32 Buckets = 1;
-            if (Args.Num() > 0) {
-                LexTryParseString<int32>(Buckets, *Args[0]);
-            }
+        [](TArray<FString> const & args, UWorld *) {
+            int32 buckets = 1;
+            if (!args.IsEmpty())
+                LexTryParseString<int32>(buckets, *args[0]);
 
             UE_LOG(
                 LogReplicationGraph,
                 Display,
                 TEXT("Setting Frequency Buckets to %d"),
-                Buckets);
+                buckets);
             for (TObjectIterator<
-                     UReplicationGraphNode_ActorListFrequencyBuckets> It;
-                 It;
-                 ++It) {
-                UReplicationGraphNode_ActorListFrequencyBuckets * Node = *It;
-                Node->SetNonStreamingCollectionSize(Buckets);
+                     UReplicationGraphNode_ActorListFrequencyBuckets> it;
+                 it;
+                 ++it) {
+                UReplicationGraphNode_ActorListFrequencyBuckets * Node = *it;
+                Node->SetNonStreamingCollectionSize(buckets);
             }
         }));

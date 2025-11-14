@@ -54,8 +54,7 @@ enum class Erepl_node_kind : uint8 {
     // Routes to an AlwaysRelevantNode_ForTeam node
     team,
 
-    // ONLY SPATIALIZED Enums below here! See
-    // Urepl_graph::IsSpatialized
+    // ONLY SPATIALIZED Enums below here! See Urepl_graph::spatial()
 
     // Routes to GridNode: these actors don't move and don't need to be updated
     // every frame.
@@ -70,7 +69,7 @@ enum class Erepl_node_kind : uint8 {
 
 
 USTRUCT(BlueprintType)
-struct FClassReplicationPolicyPreset
+struct FClassReplGraphRouting
 {
     GENERATED_BODY()
 
@@ -85,7 +84,7 @@ public:
 
 
 USTRUCT(BlueprintType)
-struct FClassReplicationInfoPreset
+struct FClassReplGraphInfo
 {
     GENERATED_BODY()
 
@@ -120,7 +119,7 @@ public:
     UPROPERTY(EditAnywhere)
     bool IncludeChildClasses = true;
 
-    FClassReplicationInfo CreateClassReplicationInfo()
+    FClassReplicationInfo class_repl_info()
     {
         FClassReplicationInfo retval;
         retval.DistancePriorityScale = DistancePriorityScale;
@@ -143,6 +142,15 @@ public:
     void PrepareForReplication() override;
 };
 
+// The use of "team" in this file is somewhat misleading.  It comes from the
+// original Locus code.  In this version of things, the "team" is just the ID
+// of a single nation; there are no actual teams as such.  Each player that is
+// allied with a nation with ID N gets added to team N.  The actors visible to
+// a given player are the actors they control directly -- since those are in
+// their "team", plus the actors in the various teams/nations with whom they
+// are allied.  Outside of this, the rules for spatially-relevant visibility
+// apply.
+
 UCLASS()
 class UReplicationGraphNode_AlwaysRelevant_ForTeam
     : public UReplicationGraphNode_ActorList
@@ -155,7 +163,7 @@ public:
         FConnectionGatherActorListParameters const & Params) override;
 
     // Function that calls parent ActorList's GatherActorList...
-    virtual void GatherActorListsForConnectionDefault(
+    void GatherActorListsForConnectionDefault(
         FConnectionGatherActorListParameters const & Params);
 };
 
@@ -172,7 +180,7 @@ public:
         AlwaysRelevantForConnectionNode;
 
     UPROPERTY()
-    class UReplicationGraphNode_AlwaysRelevant_ForTeam * TeamConnectionNode;
+    UReplicationGraphNode_AlwaysRelevant_ForTeam * TeamConnectionNode;
 
     int team = no_team;
 };
@@ -213,10 +221,10 @@ public:
     bool EnableSpatialRebuilds = false;
 
     UPROPERTY(EditDefaultsOnly)
-    TArray<FClassReplicationPolicyPreset> ReplicationPolicySettings;
+    TArray<FClassReplGraphRouting> class_routings_;
 
     UPROPERTY(EditDefaultsOnly)
-    TArray<FClassReplicationInfoPreset> ReplicationInfoSettings;
+    TArray<FClassReplGraphInfo> class_repl_infos_;
 
 public:
     Urepl_graph();
@@ -229,20 +237,20 @@ public:
 
     // initialize per connection node, like always relevant node
     void InitConnectionGraphNodes(
-        UNetReplicationGraphConnection * RepGraphConnection) override;
+        UNetReplicationGraphConnection * repl_graph_conn) override;
     // deinitialize per connection node
-    virtual void OnRemoveConnectionGraphNodes(
-        UNetReplicationGraphConnection * RepGraphConnection);
+    void OnRemoveConnectionGraphNodes(
+        UNetReplicationGraphConnection * repl_graph_conn);
 
     // override to make notification when a connection manager is removed
-    void RemoveClientConnection(UNetConnection * NetConnection) override;
+    void RemoveClientConnection(UNetConnection * net_conn) override;
 
     // routng actor add/removal
     void RouteAddNetworkActorToNodes(
-        FNewReplicatedActorInfo const & ActorInfo,
-        FGlobalActorReplicationInfo & GlobalInfo) override;
+        FNewReplicatedActorInfo const & actor_info,
+        FGlobalActorReplicationInfo & global_info) override;
     void RouteRemoveNetworkActorToNodes(
-        FNewReplicatedActorInfo const & ActorInfo) override;
+        FNewReplicatedActorInfo const & actor_info) override;
 
     void ResetGameWorldState() override;
 
@@ -266,7 +274,7 @@ public:
     RemoveDependentActor(AActor * ReplicatorActor, AActor * DependentActor);
 
     // Change Owner of an actor that is relevant to connection specific
-    void change_owner_to(AActor * ActorToChange, AActor * NewOwner);
+    void change_owner_to(AActor * a, AActor * owner);
 
     // SetTeam via Name
     void set_team_for(APlayerController * pc, int team);
@@ -274,10 +282,10 @@ public:
     // to handle actors that has no connection at addnofity execution
     void RouteAddNetworkActorToConnectionNodes(
         Erepl_node_kind routing,
-        FNewReplicatedActorInfo const & ActorInfo,
-        FGlobalActorReplicationInfo & GlobalInfo);
+        FNewReplicatedActorInfo const & actor_info,
+        FGlobalActorReplicationInfo & global_info);
     void RouteRemoveNetworkActorToConnectionNodes(
-        Erepl_node_kind routing, FNewReplicatedActorInfo const & ActorInfo);
+        Erepl_node_kind routing, FNewReplicatedActorInfo const & actor_info);
 
     // handle pending team requests and notifies
     void process_pendings();
@@ -287,8 +295,8 @@ public:
     // Just copy-pasted from ShooterGame
 #if 0 // WITH_GAMEPLAY_DEBUGGER
     void OnGameplayDebuggerOwnerChange(
-        AGameplayDebuggerCategoryReplicator * Debugger,
-        APlayerController * OldOwner);
+        AGameplayDebuggerCategoryReplicator * debugger,
+        APlayerController * pc);
 #endif
 
     void print_rep_node_kinds();
