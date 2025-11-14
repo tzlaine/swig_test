@@ -183,21 +183,6 @@ void Urepl_graph::InitGlobalActorClassSettings()
         if (class_to_routing_.Contains(class_, false))
             continue;
 
-        auto ShouldSpatialize = [](AActor const * cdo) {
-            return cdo->GetIsReplicated() &&
-                   (!(cdo->bAlwaysRelevant || cdo->bOnlyRelevantToOwner ||
-                      cdo->bNetUseOwnerRelevancy));
-        };
-
-        auto GetLegacyDebugStr = [](AActor const * cdo) {
-            return FString::Printf(
-                TEXT("%s [%d/%d/%d]"),
-                *cdo->GetClass()->GetName(),
-                cdo->bAlwaysRelevant,
-                cdo->bOnlyRelevantToOwner,
-                cdo->bNetUseOwnerRelevancy);
-        };
-
         // Only handle this class if it differs from its super. There is no need
         // to put every child class explicitly in the graph class mapping
         UClass * SuperClass = class_->GetSuperClass();
@@ -213,7 +198,9 @@ void Urepl_graph::InitGlobalActorClassSettings()
             }
         }
 
-        if (ShouldSpatialize(actor_cdo)) {
+        if (actor_cdo->GetIsReplicated() &&
+            !actor_cdo->bAlwaysRelevant && !actor_cdo->bOnlyRelevantToOwner &&
+            !actor_cdo->bNetUseOwnerRelevancy) {
             add_routing(class_, Erepl_node_kind::dynamic_spatial);
         } else if (
             actor_cdo->bAlwaysRelevant && !actor_cdo->bOnlyRelevantToOwner) {
@@ -222,7 +209,7 @@ void Urepl_graph::InitGlobalActorClassSettings()
             add_routing(class_, Erepl_node_kind::connection);
         }
 
-        // TODO:: currently missing feature, !bAlwaysRelevant &&
+        // TODO: currently missing feature, !bAlwaysRelevant &&
         // bOnlyRelevantToOwner -> only owner see this but is spatialized
     }
 
