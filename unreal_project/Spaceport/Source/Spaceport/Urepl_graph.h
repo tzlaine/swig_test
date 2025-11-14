@@ -81,7 +81,7 @@ public:
     TSubclassOf<AActor> class_;
     // Policy to set.
     UPROPERTY(EditAnywhere)
-    Erepl_node_kind routing;
+    Erepl_node_kind routing = Erepl_node_kind::none;
 };
 
 
