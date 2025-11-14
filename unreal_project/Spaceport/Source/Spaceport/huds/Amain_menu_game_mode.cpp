@@ -39,6 +39,10 @@ Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
     HUDClass = Amain_menu_hud::StaticClass();
     PlayerControllerClass = Amain_menu_controller::StaticClass();
     GameStateClass = Amain_menu_game_state::StaticClass();
+
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = true;
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode CTOR"));
 }
 

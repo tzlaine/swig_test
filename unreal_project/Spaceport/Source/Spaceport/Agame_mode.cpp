@@ -24,6 +24,9 @@ Agame_mode::Agame_mode(FObjectInitializer const & init) :
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode CTOR"));
 
     PrimaryActorTick.bCanEverTick = true;
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = true;
 }
 
 void Agame_mode::BeginPlay()

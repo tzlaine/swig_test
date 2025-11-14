@@ -26,6 +26,8 @@ class Amain_menu_game_state : public AGameStateBase
     GENERATED_BODY()
 
 public:
+    Amain_menu_game_state();
+
     UFUNCTION()
     void saves_changed();
     UPROPERTY(ReplicatedUsing = saves_changed, BlueprintReadOnly,

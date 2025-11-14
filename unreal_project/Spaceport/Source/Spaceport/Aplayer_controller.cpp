@@ -10,6 +10,13 @@ namespace {
     }
 }
 
+Aplayer_controller::Aplayer_controller()
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = true;
+}
+
 void Aplayer_controller::BeginPlay()
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Aplayer_controller::BeginPlay()"));

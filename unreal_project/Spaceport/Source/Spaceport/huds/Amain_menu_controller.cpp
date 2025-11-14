@@ -4,6 +4,13 @@
 #include "game_instance.h"
 
 
+Amain_menu_controller::Amain_menu_controller()
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = true;
+}
+
 void Amain_menu_controller::BeginPlay()
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_controller::BeginPlay()"));

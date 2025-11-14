@@ -5,6 +5,13 @@
 #include <Net/UnrealNetwork.h>
 
 
+Agame_state::Agame_state()
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = false;
+}
+
 void Agame_state::play_state_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("Client: play state changed to %s"),

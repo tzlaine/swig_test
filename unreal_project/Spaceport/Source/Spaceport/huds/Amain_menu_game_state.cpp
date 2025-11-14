@@ -5,6 +5,13 @@
 #include <Net/UnrealNetwork.h>
 
 
+Amain_menu_game_state::Amain_menu_game_state()
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = false;
+}
+
 void Amain_menu_game_state::saves_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("List of saves changed to: %s"),

@@ -13,6 +13,8 @@ class Agame_state : public AGameStateBase
     GENERATED_BODY()
 
 public:
+    Agame_state();
+
     UPROPERTY(ReplicatedUsing = play_state_changed, BlueprintReadOnly,
               Category = "Game State")
     play_state play_state_ = play_state::setup;

@@ -11,6 +11,8 @@ class Amain_menu_controller : public APlayerController
     GENERATED_BODY()
 
 public:
+    Amain_menu_controller();
+
     void BeginPlay();
 
     UFUNCTION(Server, Reliable)

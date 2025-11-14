@@ -11,6 +11,8 @@ class Aplayer_controller : public APlayerController
     GENERATED_BODY()
 
 public:
+    Aplayer_controller();
+
     void BeginPlay();
 
     UFUNCTION(Server, Reliable)
