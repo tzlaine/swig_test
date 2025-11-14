@@ -106,6 +106,8 @@ namespace {
 
 Urepl_graph::Urepl_graph()
 {
+    UE_LOG(LogReplicationGraph, Log, TEXT("YAY 1! *************************"));
+
     ReplicationConnectionManagerClass = Urepl_graph_conn::StaticClass();
 
     FClassReplGraphInfo repl_info;
@@ -122,6 +124,9 @@ Urepl_graph::Urepl_graph()
 
 void Urepl_graph::InitGlobalActorClassSettings()
 {
+    // TODO
+    UE_LOG(LogReplicationGraph, Log, TEXT("YAY 2! *************************"));
+
     Super::InitGlobalActorClassSettings();
 
     auto add_routing = [&](UClass * class_, Erepl_node_kind routing) {
