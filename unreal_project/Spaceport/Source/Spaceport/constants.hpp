@@ -41,6 +41,7 @@ inline constexpr int default_systems_per_hex = 100;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);
+inline const double epsilon = 1.0e-3;
 
 // These assume a hex's corners are 1.0 from the center.
 inline constexpr double hex_width = 1.5;

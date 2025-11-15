@@ -11,6 +11,8 @@
 
 
 class Aplayer_controller;
+class Agame_actor;
+struct game_state_t;
 
 UCLASS()
 class Uvisibility_repl_graph_node : public UReplicationGraphNode
@@ -20,10 +22,11 @@ class Uvisibility_repl_graph_node : public UReplicationGraphNode
 public:
     Uvisibility_repl_graph_node();
 
-    void map_and_players(
-        FBox2D extents_box,
-        std::span<Aplayer_controller *> players,
-        double max_detection_radius_before_stealth);
+    void new_game(
+        game_state_t const & game_state,
+        std::span<Aplayer_controller *> players);
+
+    void update_detection_range(game_state_t const & game_state);
 
     void insert_alliance(int nation_id_1, int nation_id_2)
     {
@@ -55,11 +58,11 @@ private:
         return std::ranges::find(players_, pc) - players_.begin();
     }
 
-    void add_to_cells(AActor * a, Aplayer_controller const * owner);
+    void add_to_cells(Agame_actor * a, Aplayer_controller const * owner);
 
     void set_allied(int nation_id_1, int nation_id_2, bool value);
 
-    FIntPoint cell_pos(AActor * a) const
+    FIntPoint cell_pos(AActor const * a) const
     {
         auto const loc = a->GetActorLocation() - bias_;
         int const x = int(loc.X / cell_size);
@@ -69,18 +72,21 @@ private:
         return FIntPoint(x, y);
     }
 
-    // Positions of elements here correspond to he top-level indices used in
-    // actors_ and cells_.
+    // Positions of elements here correspond to the top-level indices used in
+    // allied_, all_actors_, and cells_.  Those other vectors have
+    // players_.size() + 1 elements, so failed pc_to_index() calls (which find
+    // .end()) will have a valid index there.
     std::vector<Aplayer_controller const *> players_;
-    
-    std::vector<uint8> allied_; // size() is players_.size() * players_.size()
+
+    std::vector<std::vector<int>> allied_;
 
     struct actors
     {
-        std::vector<AActor *> actors_;
-        std::vector<AActor *> removed_actors_;
+        std::vector<Agame_actor *> actors_;
+        std::vector<Agame_actor *> removed_actors_;
     };
 
+    // last element's .actors_ sorted by nation owner ID
     std::vector<actors> all_actors_;
 
     std::vector<FIntPoint> max_radius_offsets_;
@@ -90,7 +96,7 @@ private:
         // TODO: Fleet actors specifically?  Maybe one vec of fleets, and
         // another of systems?  Systems can spot fleets, but not vice
         // versa....
-        std::vector<AActor *> actors_;
+        std::vector<Agame_actor *> actors_;
     };
 
     cell const & cell_for(FIntPoint pos, int player_index) const
@@ -110,6 +116,8 @@ private:
     // cells are all in positive space.  Subtracting this bias from all actor
     // positions puts them all in positive space.
     FVector bias_;
+
+    double max_detection_radius_before_stealth_ = 0.0;
 
     inline static double const cell_size = 4.0;
 };

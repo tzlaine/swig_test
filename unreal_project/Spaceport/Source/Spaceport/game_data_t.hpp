@@ -63,6 +63,11 @@ inline box_2d world_map_extent(game_state_t const & game_state)
     return box_2d{point_2d{min_x, min_y}, point_2d{max_x, max_y}};
 }
 
+inline double max_detection_radius_before_stealth(game_state_t const & game_state)
+{
+    return 3.0; // TODO
+}
+
 struct game_data_t
 {
     game_data_t();
@@ -73,11 +78,6 @@ struct game_data_t
         auto const i = hex_index_t(hc, game_state_->map_width);
         assert(i < (int)game_state_->hexes.size());
         return game_state_->hexes[i];
-    }
-
-    box_2d world_map_extent() const
-    {
-        return ::world_map_extent(*game_state_);
     }
 
     std::vector<hex_t> const & hexes() const
