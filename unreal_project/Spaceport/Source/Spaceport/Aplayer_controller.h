@@ -1,9 +1,13 @@
 #pragma once
 
+#include "constants.hpp"
+
 #include <CoreMinimal.h>
 #include <GameFramework/PlayerController.h>
 #include "Aplayer_controller.generated.h"
 
+
+class Agame_mode;
 
 UCLASS()
 class Aplayer_controller : public APlayerController
@@ -22,4 +26,11 @@ public:
     UFUNCTION(Server, Reliable)
     void server_start_game(TArray<uint8> const & params);
     void server_start_game_Implementation(TArray<uint8> const & params);
+
+    int nation_id() const { return nation_id_; }
+
+private:
+    int nation_id_ = nation_none;
+
+    friend Agame_mode;
 };
