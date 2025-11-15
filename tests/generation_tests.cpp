@@ -78,6 +78,45 @@ NNNNNNXNNNNNN
 )";
 
         EXPECT_EQ(oss.str(), expected);
+
+        // TODO: Should probably go with tests for game_data_t.
+        box_2d const extent = world_map_extent(game_state);
+        {
+            point_2d const hex_center =
+                hex_position(hex_coord_t{0, 0}, game_state.map_height);
+            EXPECT_LE(extent.min_.x, hex_center.x - 1.0);
+            EXPECT_LE(hex_center.x + 1.0, extent.max_.x);
+            EXPECT_LE(extent.min_.y, hex_center.y - sin_60);
+            EXPECT_LE(hex_center.y + sin_60, extent.max_.y);
+        }
+        {
+            point_2d const hex_center = hex_position(
+                hex_coord_t{game_state.map_width - 1, 0},
+                game_state.map_height);
+            EXPECT_LE(extent.min_.x, hex_center.x - 1.0);
+            EXPECT_LE(hex_center.x + 1.0, extent.max_.x);
+            EXPECT_LE(extent.min_.y, hex_center.y - sin_60);
+            EXPECT_LE(hex_center.y + sin_60, extent.max_.y);
+        }
+        {
+            point_2d const hex_center = hex_position(
+                hex_coord_t{0, game_state.map_height - 1},
+                game_state.map_height);
+            EXPECT_LE(extent.min_.x, hex_center.x - 1.0);
+            EXPECT_LE(hex_center.x + 1.0, extent.max_.x);
+            EXPECT_LE(extent.min_.y, hex_center.y - sin_60);
+            EXPECT_LE(hex_center.y + sin_60, extent.max_.y);
+        }
+        {
+            point_2d const hex_center = hex_position(
+                hex_coord_t{
+                    game_state.map_width - 1, game_state.map_height - 1},
+                game_state.map_height);
+            EXPECT_LE(extent.min_.x, hex_center.x - 1.0);
+            EXPECT_LE(hex_center.x + 1.0, extent.max_.x);
+            EXPECT_LE(extent.min_.y, hex_center.y - sin_60);
+            EXPECT_LE(hex_center.y + sin_60, extent.max_.y);
+        }
     }
 
     {

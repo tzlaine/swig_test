@@ -21,6 +21,12 @@ inline bool within(point_2d pt1, point_2d pt2, double dist)
     return (delta.x * delta.x + delta.y * delta.y + 0.001) < (dist * dist);
 }
 
+struct box_2d
+{
+    point_2d min_;
+    point_2d max_;
+};
+
 inline point_2d hex_position(hex_coord_t hc, int map_height)
 {
     point_2d retval;

@@ -5,6 +5,7 @@
 #include "game_data.hpp"
 #include "hex_operations.hpp"
 #include "logging.hpp"
+#include "map_util.hpp"
 
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
@@ -35,6 +36,33 @@ inline double plus_minus_to_sigma(double plus_minus)
     return plus_minus / 3.0;
 }
 
+inline box_2d world_map_extent(game_state_t const & game_state)
+{
+    point_2d hex_centers[4] = {
+        hex_position(hex_coord_t{0, 0}, game_state.map_height),
+        hex_position(
+            hex_coord_t{game_state.map_width - 1, 0}, game_state.map_height),
+        hex_position(
+            hex_coord_t{0, game_state.map_height - 1}, game_state.map_height),
+        hex_position(
+            hex_coord_t{game_state.map_width - 1, game_state.map_height - 1},
+            game_state.map_height)};
+
+    if ((game_state.map_width - 1 + 1000) % 2 == 1)
+        hex_centers[1].y += sin_60;
+
+    double const min_x =
+        std::ranges::min(hex_centers, std::less{}, &point_2d::x).x - 1.0;
+    double const max_x =
+        std::ranges::max(hex_centers, std::less{}, &point_2d::x).x + 1.0;
+    double const min_y =
+        std::ranges::min(hex_centers, std::less{}, &point_2d::y).y - sin_60;
+    double const max_y =
+        std::ranges::max(hex_centers, std::less{}, &point_2d::y).y + sin_60;
+
+    return box_2d{point_2d{min_x, min_y}, point_2d{max_x, max_y}};
+}
+
 struct game_data_t
 {
     game_data_t();
@@ -45,6 +73,11 @@ struct game_data_t
         auto const i = hex_index_t(hc, game_state_->map_width);
         assert(i < (int)game_state_->hexes.size());
         return game_state_->hexes[i];
+    }
+
+    box_2d world_map_extent() const
+    {
+        return ::world_map_extent(*game_state_);
     }
 
     std::vector<hex_t> const & hexes() const
