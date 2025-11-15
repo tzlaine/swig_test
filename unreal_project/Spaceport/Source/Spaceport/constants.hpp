@@ -16,6 +16,7 @@ inline constexpr double atmos_millions = -2.0;
 // growth factor
 inline constexpr double growth_uninhabitable = -1000.0;
 // generic
+inline constexpr int nation_none = -1;
 inline constexpr double n_a = -3.0; // UI should show "N/A" for this property
 
 // game constants
