@@ -35,6 +35,8 @@
 #include "GameplayDebuggerCategoryReplicator.h"
 #endif
 
+#include <cassert>
+
 
 namespace {
     void remove_connection_from_team(
@@ -110,16 +112,23 @@ Urepl_graph::Urepl_graph()
 
     ReplicationConnectionManagerClass = Urepl_graph_conn::StaticClass();
 
+#if 0 // Seems unnecessary for Spaceport
     FClassReplGraphInfo repl_info;
     repl_info.class_ = APawn::StaticClass();
     repl_info.DistancePriorityScale = 1.f;
     repl_info.StarvationPriorityScale = 1.f;
     repl_info.ActorChannelFrameTimeout = 4;
     // small size of cull distance squard leads inconsistant cull because of
-    // distance between actual character and viewposition keep it bigger than
+    // distance between actual character and viewposition; keep it bigger than
     // distance between actual pawn and viewer
     repl_info.CullDistanceSquared = 15000.f * 15000.f;
-    class_repl_infos_.Add(repl_info);
+    explicit_classes_.Add(repl_info);
+#endif
+
+    // TODO: Add explicit class settings to explicit_classes_.
+
+    assert(std::ranges::none_of(
+        explicit_classes_, [](auto const & e) { return !e.class_; }));
 }
 
 void Urepl_graph::InitGlobalActorClassSettings()
@@ -149,10 +158,9 @@ void Urepl_graph::InitGlobalActorClassSettings()
         Erepl_node_kind::connection); // Only owner connection viable
 #endif
 
-    for (FClassReplGraphRouting routing : class_routings_) {
-        if (!routing.class_)
-            continue;
-        add_routing(routing.class_, routing.routing);
+    for (auto const & [class_, repl_info, routing] : explicit_classes_) {
+        GlobalActorReplicationInfoMap.SetClassInfo(class_, repl_info);
+        add_routing(class_, routing);
     }
 
     // this contains all replicated classes except those for which
@@ -198,8 +206,8 @@ void Urepl_graph::InitGlobalActorClassSettings()
             }
         }
 
-        if (actor_cdo->GetIsReplicated() &&
-            !actor_cdo->bAlwaysRelevant && !actor_cdo->bOnlyRelevantToOwner &&
+        if (actor_cdo->GetIsReplicated() && !actor_cdo->bAlwaysRelevant &&
+            !actor_cdo->bOnlyRelevantToOwner &&
             !actor_cdo->bNetUseOwnerRelevancy) {
             add_routing(class_, Erepl_node_kind::dynamic_spatial);
         } else if (
@@ -213,30 +221,21 @@ void Urepl_graph::InitGlobalActorClassSettings()
         // bOnlyRelevantToOwner -> only owner see this but is spatialized
     }
 
-    TArray<FClassReplGraphInfo> class_repl_infos;
-    // custom setting
-    for (FClassReplGraphInfo & repl_info : class_repl_infos_) {
-        if (repl_info.class_) {
-            GlobalActorReplicationInfoMap.SetClassInfo(
-                repl_info.class_, repl_info.class_repl_info());
-            class_repl_infos.Add(repl_info);
-        }
-    }
-
     UReplicationGraphNode_ActorListFrequencyBuckets::DefaultSettings.ListSize =
         12;
 
     // Set FClassReplicationInfo based on legacy settings from all replicated
     // classes
     for (UClass * repl_class : all_repl_classes) {
-        if (FClassReplGraphInfo * info = class_repl_infos.FindByPredicate(
-                [&](FClassReplGraphInfo const & Info) {
-                    return repl_class->IsChildOf(Info.class_.Get());
-                })) {
+        auto const it = std::ranges::find_if(
+            explicit_classes_, [repl_class](auto const & e) {
+                return repl_class->IsChildOf(e.class_.Get());
+            });
+        if (it != explicit_classes_.end()) {
             // duplicated or set included child will be ignored
-            if (info->class_.Get() == repl_class || info->IncludeChildClasses) {
+            if (it->class_.Get() == repl_class ||
+                it->repl_info_.include_child_classes)
                 continue;
-            }
         }
 
         FClassReplicationInfo class_info;
@@ -349,8 +348,6 @@ void Urepl_graph::InitConnectionGraphNodes(
     conn->TeamConnectionNode =
         CreateNewNode<UReplicationGraphNode_AlwaysRelevant_ForTeam>();
     AddConnectionGraphNode(conn->TeamConnectionNode, repl_graph_conn);
-
-    // don't care about team names as it's initial value is always no_team
 }
 
 void Urepl_graph::OnRemoveConnectionGraphNodes(

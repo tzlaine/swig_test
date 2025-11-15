@@ -44,7 +44,7 @@ inline constexpr int no_team = -1;
 
 // This is the main enum we use to route actors to the right replication node.
 // Each class maps to one enum.
-UENUM(BlueprintType)
+UENUM()
 enum class Erepl_node_kind : uint8 {
     // Requires manual intervention.
     none,
@@ -67,70 +67,6 @@ enum class Erepl_node_kind : uint8 {
     // Routes to GridNode: While dormant we treat as static. When flushed/not
     // dormant dynamic. Note this is for things that "move while not dormant".
     dormant_spatial,
-};
-
-
-USTRUCT(BlueprintType)
-struct FClassReplGraphRouting
-{
-    GENERATED_BODY()
-
-public:
-    // Class to set replication policy.
-    UPROPERTY(EditAnywhere)
-    TSubclassOf<AActor> class_;
-    // Policy to set.
-    UPROPERTY(EditAnywhere)
-    Erepl_node_kind routing = Erepl_node_kind::none;
-};
-
-
-USTRUCT(BlueprintType)
-struct FClassReplGraphInfo
-{
-    GENERATED_BODY()
-
-public:
-    // Class of this Replication info is related
-    UPROPERTY(EditAnywhere)
-    TSubclassOf<AActor> class_;
-    // How much will distance affect to priority
-    UPROPERTY(
-        EditAnywhere,
-        meta =
-            (ClampMin = "0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
-    float DistancePriorityScale = 1.f;
-    // How much will stavation affect to priority
-    UPROPERTY(
-        EditAnywhere,
-        meta =
-            (ClampMin = "0.0", ClampMax = "1.0", UIMin = "0.0", UIMax = "1.0"))
-    float StarvationPriorityScale = 1.f;
-    // Cull distance that overrides NetCullDistance (Warning : IsNetRelevantFor
-    // will not be called in this system)
-    UPROPERTY(EditAnywhere, meta = (ClampMin = "0.0", UIMin = "0.0"))
-    float CullDistanceSquared = 0.f;
-    // Server frame count per actual replication
-    UPROPERTY(EditAnywhere, meta = (ClampMin = "0.0", UIMin = "0.0"))
-    uint8 ReplicationPeriodFrame = 1;
-    // How long will this actor channel stay alive even after it's being out of
-    // relevancy
-    UPROPERTY(EditAnywhere, meta = (ClampMin = "0.0", UIMin = "0.0"))
-    uint8 ActorChannelFrameTimeout = 4;
-    // Whether this setting overrides all child classes or not
-    UPROPERTY(EditAnywhere)
-    bool IncludeChildClasses = true;
-
-    FClassReplicationInfo class_repl_info()
-    {
-        FClassReplicationInfo retval;
-        retval.DistancePriorityScale = DistancePriorityScale;
-        retval.StarvationPriorityScale = StarvationPriorityScale;
-        retval.SetCullDistanceSquared(CullDistanceSquared);
-        retval.ReplicationPeriodFrame = ReplicationPeriodFrame;
-        retval.ActorChannelFrameTimeout = ActorChannelFrameTimeout;
-        return retval;
-    }
 };
 
 UCLASS()
@@ -187,7 +123,7 @@ public:
     int team = no_team;
 };
 
-UCLASS(Blueprintable)
+UCLASS()
 class Urepl_graph : public UReplicationGraph
 {
     GENERATED_BODY()
@@ -221,12 +157,6 @@ public:
     // Should spatial grid rebuilt upon detecting an actor that is out of bias?
     UPROPERTY(EditDefaultsOnly)
     bool EnableSpatialRebuilds = false;
-
-    UPROPERTY(EditDefaultsOnly)
-    TArray<FClassReplGraphRouting> class_routings_;
-
-    UPROPERTY(EditDefaultsOnly)
-    TArray<FClassReplGraphInfo> class_repl_infos_;
 
 public:
     Urepl_graph();
@@ -324,6 +254,21 @@ private:
     std::map<int, std::vector<Urepl_graph_conn *>> team_to_conn_;
     std::vector<AActor *> pending_actors_;
     std::vector<team_request> pending_team_requests_;
+
+    // TODO: FClassReplicationInfo necessary?
+    struct class_repl_info : FClassReplicationInfo
+    {
+        bool include_child_classes = true;
+    };
+
+    struct explicit_class
+    {
+        TSubclassOf<AActor> class_;
+        class_repl_info repl_info_;
+        Erepl_node_kind routing = Erepl_node_kind::none;
+    };
+
+    std::vector<explicit_class> explicit_classes_;
 };
 
 inline const bool repl_graph_in_use = [] {
