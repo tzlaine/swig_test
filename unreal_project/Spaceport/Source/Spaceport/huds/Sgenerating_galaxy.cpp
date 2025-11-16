@@ -37,7 +37,7 @@ void Sgenerating_galaxy::Construct(FArguments const & args)
                 .Font(FSlateFontInfo(title_font, 48))
             ]
             +SVerticalBox::Slot().FillHeight(1)
-            +SVerticalBox::Slot().VAlign(VAlign_Fill)[
+            +SVerticalBox::Slot().MinHeight(80).VAlign(VAlign_Fill)[
                 SAssignNew(bar_, Sstyled_progress_bar).Percent(0.0f)
             ]
             +SVerticalBox::Slot().FillHeight(2)
