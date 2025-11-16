@@ -120,6 +120,42 @@ struct model
             save_queue_.try_push(std::pair(game_state(), std::move(path)));
     }
 
+    void load(std::filesystem::path path)
+    {
+        if (!std::filesystem::exists(path)) {
+            UE_LOG(
+                general,
+                Error,
+                TEXT("Could not load save file from %s; file does not exist."),
+                *FSTRINGIZE(path));
+            return;
+        }
+
+        std::ifstream ifs(path, std::ios::binary);
+        if (!ifs) {
+            UE_LOG(
+                general,
+                Error,
+                TEXT("Could not load save file from %s; file exists, but could "
+                     "not be opened."),
+                *FSTRINGIZE(path));
+            return;
+        }
+
+        pb_message::game_data::game_state_t as_protobuf;
+        if (!as_protobuf.ParseFromIstream(&ifs)) {
+            UE_LOG(
+                general,
+                Error,
+                TEXT("Could not load save file from %s; file exists, but "
+                     "deserialization failed."),
+                *FSTRINGIZE(path));
+            return;
+        }
+        game_state_ = boost::shared_ptr<game_state_t>(
+            new game_state_t(from_protobuf(as_protobuf)));
+    }
+
 private:
     // This must be called at the top of every mutating member function.
     void copy_before_write()
@@ -171,16 +207,24 @@ private:
             serialized_bytes_.clear();
             as_protobuf.SerializeToString(&serialized_bytes_);
 
-            std::ofstream ofs(path, std::ios::binary);
+            auto temp_path = path;
+            temp_path += "_temp";
+            std::ofstream ofs(temp_path, std::ios::binary);
+
             if (!ofs) {
                 UE_LOG(general, Error,
                        TEXT("Unable to open save file %s for writing."), *FSTRINGIZE(path));
+                continue;
             }
             ofs.write(serialized_bytes_.data(), serialized_bytes_.size());
             if (!ofs) {
                 UE_LOG(general, Error,
                        TEXT("Unable to write contents to save file %s."), *FSTRINGIZE(path));
+                continue;
             }
+            ofs.close();
+
+            std::filesystem::rename(temp_path, path);
         }
     }
 };

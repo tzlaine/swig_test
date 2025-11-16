@@ -33,6 +33,7 @@ endmacro()
 add_executable_and_test(flags_tests)
 add_executable_and_test(formatter_tests)
 add_executable_and_test(generation_tests)
+add_executable_and_test(model_tests)
 add_executable_and_test(
     dir_watcher_tests
     ${CMAKE_SOURCE_DIR}/unreal_project/Spaceport/Source/Spaceport/dir_watcher.cpp)
