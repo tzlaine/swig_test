@@ -1,7 +1,8 @@
 #pragma once
 
+#include "dir_watcher.h"
+
 #include <CoreMinimal.h>
-#include <IDirectoryWatcher.h>
 #include <GameFramework/GameModeBase.h>
 #include "Amain_menu_game_mode.generated.h"
 
@@ -22,9 +23,5 @@ public:
     void multicast_new_game_Implementation();
 
 private:
-    void watched_dir_changed(TArray<FFileChangeData> const & FileChanges);
-
-    FString watched_dir_;
-    IDirectoryWatcher * dir_watcher_ = nullptr;
-    FDelegateHandle dir_watcher_handle_;
+    void saves_dir_changed(std::vector<Ffile_change> changes);
 };

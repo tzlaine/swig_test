@@ -1,7 +1,8 @@
 #pragma once
 
+#include "dir_watcher.h"
+
 #include <CoreMinimal.h>
-#include <IDirectoryWatcher.h>
 #include <GameFramework/GameStateBase.h>
 #include "Amain_menu_game_state.generated.h"
 
@@ -38,7 +39,7 @@ public:
     void save_file_changes_changed();
     UPROPERTY(ReplicatedUsing = save_file_changes_changed, BlueprintReadOnly,
               Category = "Game State")
-    TArray<Freplicable_FFileChangeData> save_file_changes_;
+    TArray<Ffile_change> save_file_changes_;
 
 protected:
     virtual void GetLifetimeReplicatedProps(

@@ -1,6 +1,9 @@
 #pragma once
 
+#include "dir_watcher.h"
+
 #include <filesystem>
+#include <functional>
 #include <cassert>
 
 #include <AssetRegistry/AssetRegistryModule.h>
@@ -32,6 +35,37 @@ public:
     {
         assert(!self_ptr_);
         self_ptr_ = this;
+    }
+
+    void
+    watch_save_game_dir(std::function<void(std::vector<Ffile_change>)> callback)
+    {
+        assert(callback);
+        FString const dir = FPaths::ProjectSavedDir() + TEXT("SaveGames/");
+        UE_LOG(LogTemp, Log, TEXT("Watching save dir %s for changes"), *dir);
+        auto const & dir_chars = dir.GetCharArray();
+        std::filesystem::path const dir_path(
+            dir_chars.GetData(), dir_chars.GetData() + dir_chars.Num());
+
+        unwatch_save_game_dir();
+        dir_watcher_ = std::make_unique<dir_watcher>();
+        dir_watcher_cb_ = callback;
+        dir_watcher_->watch(dir_path);
+        GetWorld()->GetTimerManager().SetTimer(
+            dir_watch_updates_handle_,
+            this,
+            &Ugame_instance::dir_watch_update,
+            0.5f,
+            true);
+    }
+    void unwatch_save_game_dir()
+    {
+        if (dir_watch_updates_handle_.IsValid()) {
+            GetWorld()->GetTimerManager().ClearTimer(
+                dir_watch_updates_handle_);
+        }
+        dir_watcher_.reset();
+        UE_LOG(LogTemp, Log, TEXT("No longer watching save dir for changes"));
     }
 
     void load_start_level()
@@ -94,6 +128,16 @@ private:
 
     TSoftObjectPtr<UWorld> start_level_;
     TSoftObjectPtr<UWorld> playing_level_;
+
+    void dir_watch_update()
+    {
+        auto results = dir_watcher_->get_pending_results();
+        if (!results.empty())
+            dir_watcher_cb_(std::move(results));
+    }
+    std::unique_ptr<dir_watcher> dir_watcher_;
+    FTimerHandle dir_watch_updates_handle_;
+    std::function<void(std::vector<Ffile_change>)> dir_watcher_cb_;
 
     inline static Ugame_instance * self_ptr_ = nullptr;
 };

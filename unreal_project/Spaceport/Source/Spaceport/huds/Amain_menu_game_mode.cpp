@@ -4,8 +4,6 @@
 #include "Amain_menu_controller.h"
 #include "game_instance.h"
 
-#include <DirectoryWatcherModule.h>
-#include <Modules/ModuleManager.h>
 
 namespace {
     Amain_menu_game_state * cast(AGameStateBase * base)
@@ -16,6 +14,7 @@ namespace {
     TArray<FString> find_save_files()
     {
         FString dir = FPaths::ProjectSavedDir() + TEXT("SaveGames/");
+        UE_LOG(LogTemp, Warning, TEXT("Searching saves dir %s for files"), *dir);
         TArray<FString> saves;
         IFileManager::Get().FindFiles(saves, *dir, TEXT("*.sav"));
         return std::move(saves);
@@ -55,19 +54,9 @@ void Amain_menu_game_mode::BeginPlay()
     cast(GameState)->saves_ = std::move(saves);
     cast(GameState)->saves_changed();
 
-    FDirectoryWatcherModule & mod =
-        FModuleManager::LoadModuleChecked<FDirectoryWatcherModule>(
-            TEXT("DirectoryWatcher"));
-    dir_watcher_ = mod.Get();
-    if (dir_watcher_) {
-        watched_dir_ = FPaths::ProjectSavedDir() + TEXT("SaveGames/");
-        dir_watcher_->RegisterDirectoryChangedCallback_Handle(
-            watched_dir_,
-            IDirectoryWatcher::FDirectoryChanged::CreateUObject(
-                this, &Amain_menu_game_mode::watched_dir_changed),
-            dir_watcher_handle_,
-            IDirectoryWatcher::WatchOptions::IgnoreChangesInSubtree);
-    }
+    Ugame_instance::get()->watch_save_game_dir([this](auto changes) {
+        saves_dir_changed(std::move(changes));
+    });
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode::BeginPlay()"));
 }
 
@@ -76,11 +65,7 @@ void Amain_menu_game_mode::EndPlay(EEndPlayReason::Type reason)
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode::EndPlay()"));
     Super::EndPlay(reason);
 
-    if (!dir_watcher_ || !dir_watcher_handle_.IsValid())
-        return;
-
-    dir_watcher_->UnregisterDirectoryChangedCallback_Handle(
-        watched_dir_, dir_watcher_handle_);
+    Ugame_instance::get()->unwatch_save_game_dir();
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode::EndPlay()"));
 }
 
@@ -89,36 +74,26 @@ void Amain_menu_game_mode::multicast_new_game_Implementation()
     Ugame_instance::get()->load_playing_level();
 }
 
-void Amain_menu_game_mode::watched_dir_changed(
-    TArray<FFileChangeData> const & changes)
+void Amain_menu_game_mode::saves_dir_changed(
+    std::vector<Ffile_change> changes)
 {
-    for (FFileChangeData const & c : changes) {
+    for (auto const & c : changes) {
         UE_LOG(LogTemp, Log, TEXT("File change detected: %s, Change Type: %d"),
-               *c.Filename, (int)c.Action);
+               *c.file, (int)c.kind);
     }
 
-    TArray<FString> saves = find_save_files();
-    cast(GameState)->saves_ = std::move(saves);
-    cast(GameState)->saves_changed();
-
-    auto const it = std::find_if(
-        begin(changes), end(changes),
+    auto const it = std::ranges::find_if(
+        changes,
         [](auto const & e) {
-            return e.Action == FFileChangeData::FCA_RescanRequired;
+            return e.kind == Efile_change_kind::rescan_required;
         });
-    if (it == end(changes)) {
-        cast(GameState)->save_file_changes_.SetNum(changes.Num());
-        std::transform(begin(changes), end(changes),
-                       end(cast(GameState)->save_file_changes_),
-                       [](auto & e) {
-                           return Freplicable_FFileChangeData{
-                               std::move(e.Filename), (uint8)e.Action};
-                       });
+    if (it == changes.end()) {
+        cast(GameState)->save_file_changes_.SetNum(changes.size());
+        std::ranges::move(changes, begin(cast(GameState)->save_file_changes_));
         cast(GameState)->save_file_changes_changed();
     } else {
-        cast(GameState)->save_file_changes_.SetNum(1);
-        cast(GameState)->save_file_changes_[0] = Freplicable_FFileChangeData{
-            std::move(it->Filename), (uint8)it->Action};
-        cast(GameState)->save_file_changes_changed();
+        TArray<FString> saves = find_save_files();
+        cast(GameState)->saves_ = std::move(saves);
+        cast(GameState)->saves_changed();
     }
 }
