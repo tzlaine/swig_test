@@ -2,19 +2,19 @@
 #include "Spaceport.h"
 #endif
 
-#include "game_data_t.hpp"
+#include "model.hpp"
 #include "generate_galaxy.hpp"
 #include "rng.hpp"
 
 
-game_data_t::game_data_t () : save_thread_(&game_data_t::save_worker, this) {}
+model::model () : save_thread_(&model::save_worker, this) {}
 
-game_data_t::~game_data_t ()
+model::~model ()
 {
     save_queue_.done();
 }
 
-void game_data_t::generate_galaxy(game_start_params_t const & params,
+void model::generate_galaxy(game_start_params_t const & params,
                                   concurrent_queue<int> & percent_complete,
                                   std::atomic_bool & fully_complete)
 {
@@ -23,14 +23,14 @@ void game_data_t::generate_galaxy(game_start_params_t const & params,
         params, *game_state_, nullptr, &percent_complete, &fully_complete);
 }
 
-void game_data_t::day_tick()
+void model::day_tick()
 {
 }
 
-void game_data_t::month_tick()
+void model::month_tick()
 {
 }
 
-void game_data_t::year_tick()
+void model::year_tick()
 {
 }

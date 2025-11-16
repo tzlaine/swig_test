@@ -68,10 +68,10 @@ inline double max_detection_radius_before_stealth(game_state_t const & game_stat
     return 3.0; // TODO
 }
 
-struct game_data_t
+struct model
 {
-    game_data_t();
-    ~game_data_t();
+    model();
+    ~model();
 
     hex_t const & hex(hex_coord_t hc) const
     {

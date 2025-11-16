@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game_data_t.hpp"
+#include "model.hpp"
 
 
 namespace detail {
@@ -18,7 +18,7 @@ namespace detail {
     supply_relevant_contents_t find_supply_relevant_contents (
         hex_t const & hex,
         int nation_id,
-        game_data_t const & game_data
+        model const & m
     );
 
 }
@@ -57,5 +57,5 @@ bool supply_point (int nation_id, hex_t const & hex, std::vector<hex_t> const & 
 
 std::vector<supply_grid_t> find_supply_grids (
     int nation_id,
-    game_data_t const & game_data
+    model const & m
 );

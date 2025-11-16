@@ -96,7 +96,7 @@ namespace {
 detail::supply_relevant_contents_t detail::find_supply_relevant_contents (
     hex_t const & hex,
     int nation_id,
-    game_data_t const & game_data
+    model const & m
 ) {
     supply_relevant_contents_t retval = {0};
 
@@ -108,7 +108,7 @@ detail::supply_relevant_contents_t detail::find_supply_relevant_contents (
                 if (team && part_of_team(fixture.base.owner, *team) ||
                     fixture.base.owner == nation_id) {
                     ++retval.friendly_bases;
-                } else if (team && game_data.at_war_with(team->name, fixture.base.owner) ||
+                } else if (team && m.at_war_with(team->name, fixture.base.owner) ||
                     fixture.base.owner != nation_id) {
                     ++retval.enemy_bases;
                 }
@@ -126,7 +126,7 @@ detail::supply_relevant_contents_t detail::find_supply_relevant_contents (
                     ++retval.friendly_ships;
                 else
                     ++retval.friendly_units;
-            } else if (team && game_data.at_war_with(team->name, unit.owner) ||
+            } else if (team && m.at_war_with(team->name, unit.owner) ||
                 fleet_nation_id != nation_id) {
                 if (ship)
                     ++retval.friendly_ships;
@@ -189,14 +189,14 @@ bool supply_point (int nation_id, hex_t const & hex)
 
 std::vector<supply_grid_t> find_supply_grids (
     int nation_id,
-    game_data_t const & game_data
+    model const & m
 ) {
     std::vector<supply_grid_t> retval;
 
 #if 0 // TODO
-    auto const team = game_data.team(nation_id, start_data);
+    auto const team = m.team(nation_id, start_data);
 
-    auto const & game_map = game_data.map();
+    auto const & game_map = m.map();
 
     auto const nz_nation_id = start_data.nation_id("NZ"_name);
 
@@ -220,7 +220,7 @@ std::vector<supply_grid_t> find_supply_grids (
                 nation_id,
                 team,
                 start_data,
-                game_data,
+                m,
                 nz_nation_id
             );
             supply_hex_it->supply_source = supply_source(nation_id, h, game_map);

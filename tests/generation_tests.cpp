@@ -1,4 +1,4 @@
-#include <game_data_t.hpp>
+#include <model.hpp>
 #include <json2pb.h>
 #include <generate_galaxy.hpp>
 #include <task_system.hpp>
@@ -79,7 +79,7 @@ NNNNNNXNNNNNN
 
         EXPECT_EQ(oss.str(), expected);
 
-        // TODO: Should probably go with tests for game_data_t.
+        // TODO: Should probably go with tests for model.
         box_2d const extent = world_map_extent(game_state);
         {
             point_2d const hex_center =

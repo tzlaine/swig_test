@@ -1,5 +1,5 @@
 #include <start_data_t.hpp>
-#include <game_data_t.hpp>
+#include <model.hpp>
 #include <visual_config_t.hpp>
 #include <json2pb.h>
 #include <gtest/gtest.h>
@@ -30,7 +30,7 @@ TEST(start_data_tests, test_init_scenario)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    game_data_t game_data(start_data);
+    model game_data(start_data);
 }
 
 #if 0

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game_data_t.hpp"
+#include "model.hpp"
 
 #include <CoreMinimal.h>
 #include <GameFramework/GameModeBase.h>
@@ -73,5 +73,5 @@ private:
     std::atomic_bool generation_complete_ = false;
 
     // playing the game
-    game_data_t game_data_;
+    model model_;
 };

@@ -1,5 +1,5 @@
 #include <start_data_t.hpp>
-#include <game_data_t.hpp>
+#include <model.hpp>
 #include <visual_config_t.hpp>
 #include <json2pb.h>
 #include <graph.hpp>
@@ -24,7 +24,7 @@ TEST(graph_tests, supply_source)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    game_data_t game_data(start_data);
+    model game_data(start_data);
 
     auto const & map = game_data.map();
     auto const width = map.width;
@@ -134,7 +134,7 @@ TEST(graph_tests, find_supply_relevant_contents)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    game_data_t game_data(start_data);
+    model game_data(start_data);
 
     auto const & map = game_data.map();
     auto const width = map.width;
@@ -365,7 +365,7 @@ TEST(graph_tests, find_supply_grids)
     start_data.init_nations(nations_json_string);
     start_data.init_scenario(scenario_json_string, get_map_str, get_oob_str);
 
-    game_data_t game_data(start_data);
+    model game_data(start_data);
 
     auto const nation_id = start_data.nation_id("KLI"_name);
 

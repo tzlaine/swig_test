@@ -88,7 +88,7 @@ void Agame_mode::distribute_initial_game_state_Implementation(
     auto params = from_tarray<game_start_params_t>(params_);
     generation_thread_ =
         std::jthread([&, params = std::move(params), this] {
-            game_data_.generate_galaxy(
+            model_.generate_galaxy(
                 params, *percent_complete_, generation_complete_);
         });
 }
@@ -109,7 +109,7 @@ void Agame_mode::ready_for_sp_game()
         if (auto * hud_ptr = hud())
             hud_ptr->show_game_setup();
     } else {
-        // TODO game_data_.load(load_path);
+        // TODO model_.load(load_path);
         // TODO distribute_initial_game_state(TArray<uint8>{});
     }
 }

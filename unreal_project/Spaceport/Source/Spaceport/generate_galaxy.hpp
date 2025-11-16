@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game_data_t.hpp"
+#include "model.hpp"
 #include "map_util.hpp"
 #include "rng.hpp"
 

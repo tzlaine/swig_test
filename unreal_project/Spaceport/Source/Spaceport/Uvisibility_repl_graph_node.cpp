@@ -2,7 +2,7 @@
 
 #include "Agame_actor.h"
 #include "Aplayer_controller.h"
-#include "game_data_t.hpp"
+#include "model.hpp"
 
 
 namespace {
