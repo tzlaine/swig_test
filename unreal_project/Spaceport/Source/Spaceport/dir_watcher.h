@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <vector>
 
+#if defined(_MSC_VER)
+
 #if defined(BUILD_FOR_TEST)
 #define WIN32_LEAN_AND_MEAN
 #define UNICODE
@@ -21,12 +23,14 @@
 #define uint8 unsigned char
 #define FString std::wstring
 #else
-#if defined(_MSC_VER)
 #include <Windows/WindowsHWrapper.h>
-#else
-#error "dir_watcher has no implementation for this platform."
-#endif
 #include "dir_watcher.generated.h"
+#endif
+
+#else
+
+#error "dir_watcher has no implementation for this platform."
+
 #endif
 
 
