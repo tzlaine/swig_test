@@ -3,11 +3,31 @@
 #include <filesystem>
 #include <vector>
 
+#if defined(BUILD_FOR_TEST)
+#define WIN32_LEAN_AND_MEAN
+#define UNICODE
+#define _UNICODE
+#include <Windows.h>
+#if defined(min)
+#undef min
+#endif
+#if defined(max)
+#undef max
+#endif
+#define UENUM(_)
+#define USTRUCT(_)
+#define GENERATED_BODY()
+#define UPROPERTY(_)
+#define uint8 unsigned char
+#define FString std::wstring
+#else
 #if defined(_MSC_VER)
 #include <Windows/WindowsHWrapper.h>
+#else
+#error "dir_watcher has no implementation for this platform."
 #endif
-
 #include "dir_watcher.generated.h"
+#endif
 
 
 UENUM(BlueprintType)
@@ -43,6 +63,7 @@ struct dir_watcher
     void reset();
 
 private:
+#if defined(_MSC_VER)
     void process_changes(unsigned int err, unsigned int bytes);
 
     static void w32_callback(DWORD err, DWORD bytes, LPOVERLAPPED overlapped)
@@ -51,7 +72,6 @@ private:
         this_->process_changes((unsigned int)err, (unsigned int)bytes);
     }
 
-#if defined(_MSC_VER)
     std::filesystem::path dir_;
     std::vector<std::byte> buf_;
     std::vector<std::byte> buf2_;
@@ -61,5 +81,7 @@ private:
     bool buf_dirty_ = true;
     bool done_ = false;
     bool reset_called_ = false;
+#else
+    // TODO
 #endif
 };

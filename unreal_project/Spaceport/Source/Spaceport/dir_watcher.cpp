@@ -1,6 +1,6 @@
 #include "dir_watcher.h"
 
-#include <Logging/LogMacros.h>
+#include <logging.hpp>
 
 
 namespace {
@@ -18,8 +18,7 @@ dir_watcher::dir_watcher() : buf_(max_buf_size), buf2_(buf_.size())
 
 dir_watcher::~dir_watcher()
 {
-    if (handle_ != INVALID_HANDLE_VALUE)
-        CloseHandle(handle_);
+    reset();
 }
 
 bool dir_watcher::watch(std::filesystem::path const & dir)

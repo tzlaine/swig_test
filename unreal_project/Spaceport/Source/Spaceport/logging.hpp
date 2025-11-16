@@ -5,6 +5,7 @@
 
 #if defined(BUILD_FOR_TEST)
 #define UE_LOG(category, verbosity, message, ...)
+#define UE_CLOG(cond, category, verbosity, message, ...)
 #define FSTRINGIZE(x)
 #else
 #include <Logging/StructuredLog.h>

@@ -11,7 +11,7 @@ include_directories(
 )
 
 macro (add_executable_and_test target)
-    add_executable(${target} ${target}.cpp)
+    add_executable(${target} ${target}.cpp ${ARGN})
     target_link_libraries(
         ${target}
         game_data
@@ -33,6 +33,9 @@ endmacro()
 add_executable_and_test(flags_tests)
 add_executable_and_test(formatter_tests)
 add_executable_and_test(generation_tests)
+add_executable_and_test(
+    dir_watcher_tests
+    ${CMAKE_SOURCE_DIR}/unreal_project/Spaceport/Source/Spaceport/dir_watcher.cpp)
 
 if (false)
 add_executable_and_test(graph_tests)
