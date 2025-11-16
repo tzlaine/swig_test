@@ -58,11 +58,11 @@ TEST(dir_watcher_tests, adds_only)
     std::vector<Ffile_change> changes = w.get_pending_results();
     EXPECT_EQ(changes.size(), 3u);
 
-    EXPECT_EQ(changes[0].file, f_1.c_str());
+    EXPECT_EQ(changes[0].file, L"f_1");
     EXPECT_EQ(changes[0].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[1].file, f_2.c_str());
+    EXPECT_EQ(changes[1].file, L"f_2");
     EXPECT_EQ(changes[1].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[2].file, f_3.c_str());
+    EXPECT_EQ(changes[2].file, L"f_3");
     EXPECT_EQ(changes[2].kind, Efile_change_kind::added);
 }
 
@@ -93,11 +93,11 @@ TEST(dir_watcher_tests, modifies_only)
     std::vector<Ffile_change> changes = w.get_pending_results();
     EXPECT_EQ(changes.size(), 3u);
 
-    EXPECT_EQ(changes[0].file, f_1.c_str());
+    EXPECT_EQ(changes[0].file, L"f_1");
     EXPECT_EQ(changes[0].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[1].file, f_2.c_str());
+    EXPECT_EQ(changes[1].file, L"f_2");
     EXPECT_EQ(changes[1].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[2].file, f_3.c_str());
+    EXPECT_EQ(changes[2].file, L"f_3");
     EXPECT_EQ(changes[2].kind, Efile_change_kind::modified);
 }
 
@@ -127,11 +127,11 @@ TEST(dir_watcher_tests, removes_only)
     std::vector<Ffile_change> changes = w.get_pending_results();
     EXPECT_EQ(changes.size(), 3u);
 
-    EXPECT_EQ(changes[0].file, f_1.c_str());
+    EXPECT_EQ(changes[0].file, L"f_1");
     EXPECT_EQ(changes[0].kind, Efile_change_kind::removed);
-    EXPECT_EQ(changes[1].file, f_2.c_str());
+    EXPECT_EQ(changes[1].file, L"f_2");
     EXPECT_EQ(changes[1].kind, Efile_change_kind::removed);
-    EXPECT_EQ(changes[2].file, f_3.c_str());
+    EXPECT_EQ(changes[2].file, L"f_3");
     EXPECT_EQ(changes[2].kind, Efile_change_kind::removed);
 }
 
@@ -160,17 +160,17 @@ TEST(dir_watcher_tests, adds_and_modifies)
     std::vector<Ffile_change> changes = w.get_pending_results();
     EXPECT_EQ(changes.size(), 6u);
 
-    EXPECT_EQ(changes[0].file, f_1.c_str());
+    EXPECT_EQ(changes[0].file, L"f_1");
     EXPECT_EQ(changes[0].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[1].file, f_2.c_str());
+    EXPECT_EQ(changes[1].file, L"f_2");
     EXPECT_EQ(changes[1].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[2].file, f_3.c_str());
+    EXPECT_EQ(changes[2].file, L"f_3");
     EXPECT_EQ(changes[2].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[3].file, f_3.c_str());
+    EXPECT_EQ(changes[3].file, L"f_3");
     EXPECT_EQ(changes[3].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[4].file, f_2.c_str());
+    EXPECT_EQ(changes[4].file, L"f_2");
     EXPECT_EQ(changes[4].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[5].file, f_1.c_str());
+    EXPECT_EQ(changes[5].file, L"f_1");
     EXPECT_EQ(changes[5].kind, Efile_change_kind::modified);
 }
 
@@ -202,23 +202,23 @@ TEST(dir_watcher_tests, adds_modifies_and_removes)
     std::vector<Ffile_change> changes = w.get_pending_results();
     EXPECT_EQ(changes.size(), 9u);
 
-    EXPECT_EQ(changes[0].file, f_1.c_str());
+    EXPECT_EQ(changes[0].file, L"f_1");
     EXPECT_EQ(changes[0].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[1].file, f_2.c_str());
+    EXPECT_EQ(changes[1].file, L"f_2");
     EXPECT_EQ(changes[1].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[2].file, f_3.c_str());
+    EXPECT_EQ(changes[2].file, L"f_3");
     EXPECT_EQ(changes[2].kind, Efile_change_kind::added);
-    EXPECT_EQ(changes[3].file, f_3.c_str());
+    EXPECT_EQ(changes[3].file, L"f_3");
     EXPECT_EQ(changes[3].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[4].file, f_2.c_str());
+    EXPECT_EQ(changes[4].file, L"f_2");
     EXPECT_EQ(changes[4].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[5].file, f_1.c_str());
+    EXPECT_EQ(changes[5].file, L"f_1");
     EXPECT_EQ(changes[5].kind, Efile_change_kind::modified);
-    EXPECT_EQ(changes[6].file, f_1.c_str());
+    EXPECT_EQ(changes[6].file, L"f_1");
     EXPECT_EQ(changes[6].kind, Efile_change_kind::removed);
-    EXPECT_EQ(changes[7].file, f_2.c_str());
+    EXPECT_EQ(changes[7].file, L"f_2");
     EXPECT_EQ(changes[7].kind, Efile_change_kind::removed);
-    EXPECT_EQ(changes[8].file, f_3.c_str());
+    EXPECT_EQ(changes[8].file, L"f_3");
     EXPECT_EQ(changes[8].kind, Efile_change_kind::removed);
 }
 
@@ -252,23 +252,23 @@ TEST(dir_watcher_tests, multipe_rounds_of_adds_modifies_and_removes)
         std::vector<Ffile_change> changes = w.get_pending_results();
         EXPECT_EQ(changes.size(), 9u);
 
-        EXPECT_EQ(changes[0].file, f_1.c_str());
+        EXPECT_EQ(changes[0].file, L"f_1");
         EXPECT_EQ(changes[0].kind, Efile_change_kind::added);
-        EXPECT_EQ(changes[1].file, f_2.c_str());
+        EXPECT_EQ(changes[1].file, L"f_2");
         EXPECT_EQ(changes[1].kind, Efile_change_kind::added);
-        EXPECT_EQ(changes[2].file, f_3.c_str());
+        EXPECT_EQ(changes[2].file, L"f_3");
         EXPECT_EQ(changes[2].kind, Efile_change_kind::added);
-        EXPECT_EQ(changes[3].file, f_3.c_str());
+        EXPECT_EQ(changes[3].file, L"f_3");
         EXPECT_EQ(changes[3].kind, Efile_change_kind::modified);
-        EXPECT_EQ(changes[4].file, f_2.c_str());
+        EXPECT_EQ(changes[4].file, L"f_2");
         EXPECT_EQ(changes[4].kind, Efile_change_kind::modified);
-        EXPECT_EQ(changes[5].file, f_1.c_str());
+        EXPECT_EQ(changes[5].file, L"f_1");
         EXPECT_EQ(changes[5].kind, Efile_change_kind::modified);
-        EXPECT_EQ(changes[6].file, f_1.c_str());
+        EXPECT_EQ(changes[6].file, L"f_1");
         EXPECT_EQ(changes[6].kind, Efile_change_kind::removed);
-        EXPECT_EQ(changes[7].file, f_2.c_str());
+        EXPECT_EQ(changes[7].file, L"f_2");
         EXPECT_EQ(changes[7].kind, Efile_change_kind::removed);
-        EXPECT_EQ(changes[8].file, f_3.c_str());
+        EXPECT_EQ(changes[8].file, L"f_3");
         EXPECT_EQ(changes[8].kind, Efile_change_kind::removed);
     }
 }

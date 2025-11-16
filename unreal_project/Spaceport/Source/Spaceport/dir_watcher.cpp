@@ -227,9 +227,9 @@ void dir_watcher::process_changes(unsigned int err, unsigned int bytes)
         }
 
         if (change_kind != Efile_change_kind::unknown) {
-            auto const path = dir_ / std::filesystem::path(std::move(name));
+            auto const file = std::filesystem::path(std::move(name));
             changes_.push_back(
-                Ffile_change{FString(path.c_str()), change_kind});
+                Ffile_change{FString(file.c_str()), change_kind});
         }
 
         if (info->NextEntryOffset == 0)
