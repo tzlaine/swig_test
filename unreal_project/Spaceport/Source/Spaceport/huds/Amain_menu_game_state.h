@@ -7,20 +7,6 @@
 #include "Amain_menu_game_state.generated.h"
 
 
-USTRUCT(BlueprintType)
-struct Freplicable_FFileChangeData
-{
-    GENERATED_BODY()
-
-    UPROPERTY(BlueprintReadOnly)
-    FString file;
-
-    UPROPERTY(BlueprintReadOnly)
-    uint8 action;
-
-    bool operator==(Freplicable_FFileChangeData const &) const = default;
-};
-
 UCLASS()
 class Amain_menu_game_state : public AGameStateBase
 {
