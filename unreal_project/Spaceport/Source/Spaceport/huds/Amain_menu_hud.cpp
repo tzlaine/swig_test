@@ -1,6 +1,8 @@
 #include "Amain_menu_hud.h"
+#include "Amain_menu_game_state.h"
 #include "Smain_menu.h"
 
+#include <Kismet/GameplayStatics.h>
 #include <Widgets/SViewport.h>
 
 
@@ -10,6 +12,11 @@ void Amain_menu_hud::BeginPlay()
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
     Super::BeginPlay();
+
+    if (auto * gs = Cast<Amain_menu_game_state>(
+            UGameplayStatics::GetGameState(GetWorld()))) {
+        have_saves_ = !gs->saves_.IsEmpty();
+    }
 
     widget_ = SNew(Smain_menu).in_game(false);
     widget_->saves_available(have_saves_);
