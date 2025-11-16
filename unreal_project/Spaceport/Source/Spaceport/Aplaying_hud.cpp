@@ -11,14 +11,14 @@ namespace {
     template<typename T>
     void show(UWorld * w, TSharedPtr<T> & widget)
     {
-        w->GetGameViewport()->AddViewportWidgetContent(
-            widget.ToSharedRef());
+        if (auto * viewport = w->GetGameViewport())
+            viewport->AddViewportWidgetContent(widget.ToSharedRef());
     }
     template<typename T>
     void hide(UWorld * w, TSharedPtr<T> & widget)
     {
-        w->GetGameViewport()->RemoveViewportWidgetContent(
-            widget.ToSharedRef());
+        if (auto * viewport = w->GetGameViewport())
+            viewport->RemoveViewportWidgetContent(widget.ToSharedRef());
     }
 }
 

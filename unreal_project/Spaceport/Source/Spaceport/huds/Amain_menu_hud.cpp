@@ -15,7 +15,8 @@ void Amain_menu_hud::BeginPlay()
     widget_->saves_available(have_saves_);
 
     UGameViewportClient * viewport_client = GetWorld()->GetGameViewport();
-    viewport_client->AddViewportWidgetContent(widget_.ToSharedRef());
+    if (viewport_client)
+        viewport_client->AddViewportWidgetContent(widget_.ToSharedRef());
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
 }
 
@@ -24,8 +25,8 @@ void Amain_menu_hud::EndPlay(EEndPlayReason::Type reason)
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::EndPlay()"));
     Super::EndPlay(reason);
 
-    GetWorld()->GetGameViewport()->RemoveViewportWidgetContent(
-        widget_.ToSharedRef());
+    if (auto * viewport = GetWorld()->GetGameViewport())
+        viewport->RemoveViewportWidgetContent(widget_.ToSharedRef());
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::EndPlay()"));
 }
 
