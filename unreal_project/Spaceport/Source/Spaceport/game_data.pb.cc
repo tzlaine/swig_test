@@ -619,7 +619,7 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "\0226\n\007effects\030\034 \003(\0132%.pb_message.game_data"
   ".planet_effect_t\"T\n\021location_object_t\022,\n"
   "\005bases\030\001 \001(\0132\035.pb_message.game_data.flee"
-  "t_t\022\021\n\tplanet_id\030\002 \001(\003\"|\n\021system_locatio"
+  "t_t\022\021\n\tplanet_id\030\002 \001(\004\"|\n\021system_locatio"
   "n_t\0228\n\007objects\030\001 \003(\0132\'.pb_message.game_d"
   "ata.location_object_t\022-\n\005units\030\002 \001(\0132\036.p"
   "b_message.game_data.fleets_t\"\236\001\n\006star_t\022"
@@ -634,10 +634,10 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "location_t\022D\n\023temporary_locations\030\005 \003(\0132"
   "\'.pb_message.game_data.system_location_t"
   "\022\023\n\013world_pos_x\030\006 \001(\001\022\023\n\013world_pos_y\030\007 \001"
-  "(\001\022\024\n\014first_planet\030\010 \001(\003\022\023\n\013last_planet\030"
-  "\t \001(\003\"\237\001\n\005hex_t\022&\n\005coord\030\001 \001(\0132\027.pb_mess"
+  "(\001\022\024\n\014first_planet\030\010 \001(\004\022\023\n\013last_planet\030"
+  "\t \001(\004\"\237\001\n\005hex_t\022&\n\005coord\030\001 \001(\0132\027.pb_mess"
   "age.hex_coord_t\022\023\n\013province_id\030\002 \001(\005\022\024\n\014"
-  "first_system\030\003 \001(\003\022\023\n\013last_system\030\004 \001(\003\022"
+  "first_system\030\003 \001(\004\022\023\n\013last_system\030\004 \001(\004\022"
   ".\n\006fleets\030\005 \001(\0132\036.pb_message.game_data.f"
   "leets_t\"T\n\nprovince_t\022\n\n\002id\030\001 \001(\005\022\r\n\005own"
   "er\030\002 \001(\005\022+\n\nhex_coords\030\003 \003(\0132\027.pb_messag"
@@ -3740,7 +3740,7 @@ void location_object_t::Clear() {
     delete bases_;
   }
   bases_ = nullptr;
-  planet_id_ = PROTOBUF_LONGLONG(0);
+  planet_id_ = PROTOBUF_ULONGLONG(0);
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3759,7 +3759,7 @@ const char* location_object_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int64 planet_id = 2;
+      // uint64 planet_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           planet_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -3802,10 +3802,10 @@ failure:
         1, _Internal::bases(this), target, stream);
   }
 
-  // int64 planet_id = 2;
+  // uint64 planet_id = 2;
   if (this->planet_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_planet_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_planet_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3831,10 +3831,10 @@ size_t location_object_t::ByteSizeLong() const {
         *bases_);
   }
 
-  // int64 planet_id = 2;
+  // uint64 planet_id = 2;
   if (this->planet_id() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_planet_id());
   }
 
@@ -4641,14 +4641,14 @@ const char* system_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ptr += sizeof(double);
         } else goto handle_unusual;
         continue;
-      // int64 first_planet = 8;
+      // uint64 first_planet = 8;
       case 8:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
           first_planet_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int64 last_planet = 9;
+      // uint64 last_planet = 9;
       case 9:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
           last_planet_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -4737,16 +4737,16 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(7, this->_internal_world_pos_y(), target);
   }
 
-  // int64 first_planet = 8;
+  // uint64 first_planet = 8;
   if (this->first_planet() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(8, this->_internal_first_planet(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(8, this->_internal_first_planet(), target);
   }
 
-  // int64 last_planet = 9;
+  // uint64 last_planet = 9;
   if (this->last_planet() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(9, this->_internal_last_planet(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(9, this->_internal_last_planet(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4810,17 +4810,17 @@ size_t system_t::ByteSizeLong() const {
     total_size += 1 + 8;
   }
 
-  // int64 first_planet = 8;
+  // uint64 first_planet = 8;
   if (this->first_planet() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_first_planet());
   }
 
-  // int64 last_planet = 9;
+  // uint64 last_planet = 9;
   if (this->last_planet() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_last_planet());
   }
 
@@ -5046,14 +5046,14 @@ const char* hex_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int64 first_system = 3;
+      // uint64 first_system = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           first_system_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int64 last_system = 4;
+      // uint64 last_system = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           last_system_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -5109,16 +5109,16 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_province_id(), target);
   }
 
-  // int64 first_system = 3;
+  // uint64 first_system = 3;
   if (this->first_system() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_first_system(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_first_system(), target);
   }
 
-  // int64 last_system = 4;
+  // uint64 last_system = 4;
   if (this->last_system() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(4, this->_internal_last_system(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_last_system(), target);
   }
 
   // .pb_message.game_data.fleets_t fleets = 5;
@@ -5159,17 +5159,17 @@ size_t hex_t::ByteSizeLong() const {
         *fleets_);
   }
 
-  // int64 first_system = 3;
+  // uint64 first_system = 3;
   if (this->first_system() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_first_system());
   }
 
-  // int64 last_system = 4;
+  // uint64 last_system = 4;
   if (this->last_system() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_last_system());
   }
 

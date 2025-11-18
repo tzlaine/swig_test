@@ -94,16 +94,23 @@ namespace detail {
         uint8_t buf[64];
         uint8_t * out = buf;
 
-        if constexpr (std::is_enum_v<T>) {
+        if constexpr (std::is_same_v<T, bool>) {
+            buf[0] = x;
+            detail::count_or_write<Op>(retval, buf, 1, os);
+        } else if constexpr (std::is_enum_v<T>) {
             auto const underlying = static_cast<std::underlying_type_t<T>>(x);
             retval += detail::serialize_impl<Op, FieldOp>(
                 underlying, field_number, os);
         } else if constexpr (std::is_integral_v<T>) {
             static_assert(
-                sizeof(T) == 4u, "only ints and unsigned ints supported.");
+                sizeof(T) == 4u || (sizeof(T) == 8u && !std::is_signed_v<T>),
+                "only 32-bit ints and unsigned ints, plus 64-bit unsigned "
+                "ints, supported");
             if constexpr (FieldOp == ser_field_op::write)
                 out = os::WriteVarint32ToArray(field_number, out);
-            if constexpr (std::is_signed_v<T>)
+            if constexpr (sizeof(T) == 8u)
+                out = os::WriteVarint64ToArray(x, out);
+            else if constexpr (std::is_signed_v<T>)
                 out = os::WriteVarint32SignExtendedToArray(x, out);
             else
                 out = os::WriteVarint32ToArray(x, out);
@@ -322,19 +329,38 @@ namespace detail {
             src, reinterpret_cast<std::byte const *>(in) - src.data());
     }
 
+    // a specialization is generated for each Protobuf message type
+    template<typename T>
+    std::span<std::byte const>
+    deserialize_message_impl(T & x, std::span<std::byte const> src);
+
     template<typename T>
     std::span<std::byte const>
     deserialize_impl(T & x, std::span<std::byte const> src)
     {
-        if constexpr (std::is_enum_v<T>) {
+        if constexpr (std::is_same_v<T, bool>) {
+            if (src.empty()) {
+                throw failed_deserialization(
+                    "Encountered end of input while reading a bool.");
+            }
+            auto const b = (uint32_t)src.front();
+            if (b != 1 && b != 0) {
+                throw failed_deserialization(std::format(
+                    "Encountered unexpected value{} reading a bool.", b));
+            }
+            x = (bool)b;
+            return src.last(src.size() - 1);
+        } else if constexpr (std::is_enum_v<T>) {
             std::underlying_type_t<T> underlying;
             src = detail::deserialize_impl(underlying, src);
             x = static_cast<T>(underlying);
             return src;
         } else if constexpr (std::is_integral_v<T>) {
             static_assert(
-                sizeof(T) == 4u, "only ints and unsigned ints supported.");
-            if constexpr (std::is_signed_v<T>) {
+                sizeof(T) == 4u || (sizeof(T) == 8u && !std::is_signed_v<T>),
+                "only 32-bit ints and unsigned ints, plus 64-bit unsigned "
+                "ints, supported");
+            if constexpr (std::is_signed_v<T> || sizeof(T) == 8u) {
                 uint64_t temp;
                 src = detail::read_varint(temp, src);
                 x = static_cast<T>(temp);
@@ -362,6 +388,8 @@ namespace detail {
             x = adobe::name_t(str.c_str());
             return detail::advance(src, size);
         } else if constexpr (is_vector_v<T>) {
+            // TODO: Add try/catch, and add info on which element failed (here
+            // and for map).
             uint32_t size = 0;
             src = detail::read_varint(size, src);
             x.reserve(size);
@@ -386,7 +414,7 @@ namespace detail {
             return src;
         } else {
             // generated for each Protobuf message type
-            return deserialize_message_impl(x, src);
+            return detail::deserialize_message_impl(x, src);
         }
     }
 

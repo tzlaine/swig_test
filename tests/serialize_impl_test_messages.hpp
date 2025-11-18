@@ -11,7 +11,6 @@
 #include <strstream>
 
 
-// clang-format off
 namespace detail::by_hand {
     enum class mission_t {
         no_mission = 0,
@@ -31,7 +30,10 @@ namespace detail::by_hand {
         build_starbase = 68,
         upgrade_base = 69,
     };
-    inline auto operator<=>(mission_t x, mission_t y) { return (int)x <=> (int)y; }
+    inline auto operator<=>(mission_t x, mission_t y)
+    {
+        return (int)x <=> (int)y;
+    }
 
     struct unit_t
     {
@@ -54,8 +56,8 @@ namespace detail::by_hand {
     };
 
     template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t
-    serialize_message_impl(unit_t const & x, int field_number, std::ostream * os)
+    std::ptrdiff_t serialize_message_impl(
+        unit_t const & x, int field_number, std::ostream * os)
     {
         std::ptrdiff_t retval = 0;
 
@@ -66,9 +68,12 @@ namespace detail::by_hand {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
 
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.design_id, 1, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.design_owner, 2, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.health, 3, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.design_id, 1, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(
+            x.design_owner, 2, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.health, 3, os);
 
         retval += detail::serialize_message_end<Op>(os);
 
@@ -76,8 +81,8 @@ namespace detail::by_hand {
     }
 
     template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t
-    serialize_message_impl(fleet_t const & x, int field_number, std::ostream * os)
+    std::ptrdiff_t serialize_message_impl(
+        fleet_t const & x, int field_number, std::ostream * os)
     {
         std::ptrdiff_t retval = 0;
 
@@ -89,72 +94,101 @@ namespace detail::by_hand {
         }
 
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.mission, 2, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.units, 3, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 4, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 5, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 6, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 7, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.mission, 2, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.units, 3, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 4, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 5, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 6, os);
+        retval +=
+            detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 7, os);
 
         retval += detail::serialize_message_end<Op>(os);
 
         return retval;
     }
+}
 
-    inline std::span<std::byte const>
-    deserialize_message_impl(unit_t & x, std::span<std::byte const> src)
+namespace detail {
+    template<>
+    inline std::span<std::byte const> deserialize_message_impl<by_hand::unit_t>(
+        by_hand::unit_t & x, std::span<std::byte const> src)
     {
         using namespace std::literals;
-        constexpr auto this_message_name = "fleet_t"sv;
-        constexpr std::array<std::string_view, 4> field_names = {{"<UNKOWN_FIELD>"sv,
-                "design_id"sv, "design_owner"sv, "health"sv}};
-        std::array<int, 3> expected_field_numbers = {{
-                1, 2, 3}};
+        constexpr auto this_message_name = "unit_t"sv;
+        constexpr std::array<std::string_view, 4> field_names = {
+            {"<UNKOWN_FIELD>"sv, "design_id"sv, "design_owner"sv, "health"sv}};
+        std::array<int, 3> expected_field_numbers = {{1, 2, 3}};
 
         constexpr int lo_field_number = 1;
         constexpr int hi_field_number = 3;
 
-        auto read_field = [] (unit_t & x, int i, std::span<std::byte const> src) {
-            switch (i) {
-            case 1: return detail::deserialize_impl(x.design_id, src);
-            case 2: return detail::deserialize_impl(x.design_owner, src);
-            case 3: return detail::deserialize_impl(x.health, src);
-            default: return src; // unreachable
-            }
-        };
+        auto read_field =
+            [](by_hand::unit_t & x, int i, std::span<std::byte const> src) {
+                switch (i) {
+                case 1: return detail::deserialize_impl(x.design_id, src);
+                case 2: return detail::deserialize_impl(x.design_owner, src);
+                case 3: return detail::deserialize_impl(x.health, src);
+                default: return src; // unreachable
+                }
+            };
 
-        return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
-            x, src, this_message_name, field_names, expected_field_numbers, read_field);
+        return detail::
+            deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+                x,
+                src,
+                this_message_name,
+                field_names,
+                expected_field_numbers,
+                read_field);
     }
 
+    template<>
     inline std::span<std::byte const>
-    deserialize_message_impl(fleet_t & x, std::span<std::byte const> src)
+    deserialize_message_impl<by_hand::fleet_t>(
+        by_hand::fleet_t & x, std::span<std::byte const> src)
     {
         using namespace std::literals;
         constexpr auto this_message_name = "fleet_t"sv;
-        constexpr std::array<std::string_view, 8> field_names = {{"<UNKOWN_FIELD>"sv,
-                "id"sv, "mission"sv, "units"sv, "fuel"sv, "rounds"sv, "missiles"sv, "fighters"sv}};
-        std::array<int, 7> expected_field_numbers = {{
-                1, 2, 3, 4, 5, 6, 7}};
+        constexpr std::array<std::string_view, 8> field_names = {
+            {"<UNKOWN_FIELD>"sv,
+             "id"sv,
+             "mission"sv,
+             "units"sv,
+             "fuel"sv,
+             "rounds"sv,
+             "missiles"sv,
+             "fighters"sv}};
+        std::array<int, 7> expected_field_numbers = {{1, 2, 3, 4, 5, 6, 7}};
 
         constexpr int lo_field_number = 1;
         constexpr int hi_field_number = 7;
 
-        auto read_field = [] (fleet_t & x, int i, std::span<std::byte const> src) {
-            switch (i) {
-            case 1: return detail::deserialize_impl(x.id, src);
-            case 2: return detail::deserialize_impl(x.mission, src);
-            case 3: return detail::deserialize_impl(x.units, src);
-            case 4: return detail::deserialize_impl(x.fuel, src);
-            case 5: return detail::deserialize_impl(x.rounds, src);
-            case 6: return detail::deserialize_impl(x.missiles, src);
-            case 7: return detail::deserialize_impl(x.fighters, src);
-            default: return src; // unreachable
-            }
-        };
+        auto read_field =
+            [](by_hand::fleet_t & x, int i, std::span<std::byte const> src) {
+                switch (i) {
+                case 1: return detail::deserialize_impl(x.id, src);
+                case 2: return detail::deserialize_impl(x.mission, src);
+                case 3: return detail::deserialize_impl(x.units, src);
+                case 4: return detail::deserialize_impl(x.fuel, src);
+                case 5: return detail::deserialize_impl(x.rounds, src);
+                case 6: return detail::deserialize_impl(x.missiles, src);
+                case 7: return detail::deserialize_impl(x.fighters, src);
+                default: return src; // unreachable
+                }
+            };
 
-        return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
-            x, src, this_message_name, field_names, expected_field_numbers, read_field);
+        return detail::
+            deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+                x,
+                src,
+                this_message_name,
+                field_names,
+                expected_field_numbers,
+                read_field);
     }
 }
-// clang-format on

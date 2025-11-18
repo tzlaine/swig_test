@@ -161,7 +161,7 @@ message planet_t
 message location_object_t
 {
     fleet_t bases = 1;
-    int64 planet_id = 2; // no planet if < 0
+    uint64 planet_id = 2; // no planet if < 0
     // TODO: orbital position, if planet is nonempty
     // TODO: other kinds of things as well?
 }
@@ -201,16 +201,16 @@ message system_t
     repeated system_location_t temporary_locations = 5;
     double world_pos_x = 6;
     double world_pos_y = 7;
-    int64 first_planet = 8;
-    int64 last_planet = 9;
+    uint64 first_planet = 8;
+    uint64 last_planet = 9;
 }
 
 message hex_t
 {
     hex_coord_t coord = 1;
     int32 province_id = 2;
-    int64 first_system = 3;
-    int64 last_system = 4;
+    uint64 first_system = 3;
+    uint64 last_system = 4;
     fleets_t fleets = 5;
 }
 

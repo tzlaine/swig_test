@@ -185,7 +185,7 @@ struct planet_t
 struct location_object_t
 {
     fleet_t bases;
-    std::ptrdiff_t planet_id;
+    std::size_t planet_id;
     bool operator==(location_object_t const &) const = default;
 };
 
@@ -215,8 +215,8 @@ struct system_t
     std::vector<system_location_t> temporary_locations;
     double world_pos_x;
     double world_pos_y;
-    std::ptrdiff_t first_planet;
-    std::ptrdiff_t last_planet;
+    std::size_t first_planet;
+    std::size_t last_planet;
     bool operator==(system_t const &) const = default;
 };
 
@@ -224,8 +224,8 @@ struct hex_t
 {
     hex_coord_t coord;
     int province_id;
-    std::ptrdiff_t first_system;
-    std::ptrdiff_t last_system;
+    std::size_t first_system;
+    std::size_t last_system;
     fleets_t fleets;
     bool operator==(hex_t const &) const = default;
 };

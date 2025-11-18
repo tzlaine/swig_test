@@ -24,6 +24,7 @@ import os
 cpp_file = open(args.file_root + '.cpp', 'w')
 hpp_file = open(args.file_root + '.hpp', 'w')
 formatters_file = open(args.file_root + '_formatters.hpp', 'w')
+serialization_file = open(args.file_root + '_serialization.hpp', 'w')
 
 proto_contents = args.proto_file.read()
 
@@ -95,15 +96,18 @@ def indent(i):
     cpp_file.write(indent_str(i))
     hpp_file.write(indent_str(i))
     formatters_file.write(indent_str(i))
+    serialization_file.write(indent_str(i))
 
 def newline():
     cpp_file.write('\n')
     hpp_file.write('\n')
     formatters_file.write('\n')
+    serialization_file.write('\n')
 
 def add_header_comment_and_includes(proto_source, syntax, deps):
     cpp_deps = '\n'.join(map(lambda x: '#include <{}.hpp>'.format(x), deps))
     formatters_deps = cpp_deps.replace('.hpp', '_formatters.hpp')
+    serialization_deps = cpp_deps.replace('.hpp', '_serialization.hpp')
 
     cpp_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
@@ -148,6 +152,21 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 #endif
 
 '''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, formatters_deps))
+
+    serialization_file.write('''// WARNING: Generated code.
+// This file was generated from {} ({})
+
+#include "{}"
+{}
+{}
+
+#include <serialization.hpp>
+#if defined(BUILD_FOR_TEST)
+#include <iosfwd>
+#endif
+
+namespace detail {{
+'''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, serialization_deps))
 
 def open_namespace(namespace, depth=0):
     indent(depth)
@@ -446,10 +465,14 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
         index += 1
 
     index = 0
+    this_message_name = descriptor_proto.name
+    this_message_fields = []
     for field_descriptor_proto in descriptor_proto.field:
         new_path = path + [field_path_constant, index]
         index += 1
         declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, new_path)
+        this_message_fields.append((field_descriptor_proto.name, field_descriptor_proto.number))
+    print_serialization(depth, this_message_name, this_message_fields)
     depth -= 1
     hpp_file.write('''{0}    bool operator==({1} const &) const = default;
 {0}}};
@@ -475,6 +498,74 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
         'descriptor_proto': descriptor_proto
     }
     all_decl_data.append(decl_data)
+
+def print_serialization(depth, this_message_name, this_message_fields):
+    serialize_ops = '\n'.join(map(lambda tup: f'{indent_str(depth)}    retval += detail::serialize_impl<Op, ser_field_op::write>(x.{tup[0]}, {tup[1]}, os);', this_message_fields))
+
+    serialization_file.write('''{0}template<ser_op Op, ser_field_op FieldOp>
+{0}std::ptrdiff_t serialize_message_impl({1} const & x, int field_number, std::ostream * os)
+{0}{{
+{0}    std::ptrdiff_t retval = 0;
+{0}
+{0}    if constexpr (FieldOp == ser_field_op::write) {{
+{0}        uint8_t buf[16];
+{0}        uint8_t * out = buf;
+{0}        out = os::WriteVarint32ToArray(field_number, out);
+{0}        detail::count_or_write<Op>(retval, buf, out - buf, os);
+{0}    }}
+{0}
+{2}
+{0}
+{0}    retval += detail::serialize_message_end<Op>(os);
+{0}
+{0}    return retval;
+{0}}}
+'''.format(indent_str(depth), this_message_name, serialize_ops))
+
+    fields_dict = {}
+    for tup in this_message_fields:
+        fields_dict[tup[1]] = tup[0]
+
+    lo = min(map(lambda tup: tup[1], this_message_fields))
+    hi = max(map(lambda tup: tup[1], this_message_fields))
+
+    unknown_name = '<UNKOWN_FIELD>'
+
+    field_names = []
+    for i in range(1, hi + 1):
+        name = unknown_name
+        if i in fields_dict:
+            name = fields_dict[i]
+        field_names.append(f'"{name}"sv')
+    field_names = ', '.join(field_names)
+
+    field_numbers = ', '.join(map(lambda tup: f'{tup[1]}', this_message_fields))
+    deserialize_ops = '\n'.join(map(lambda tup: f'{indent_str(depth)}        case {tup[1]}: return detail::deserialize_impl(x.{tup[0]}, src);', this_message_fields))
+
+    serialization_file.write('''{0}template<> inline std::span<std::byte const> deserialize_message_impl<{1}>({1} & x, std::span<std::byte const> src)
+{0}{{
+{0}    using namespace std::literals;
+{0}    constexpr auto this_message_name = "{1}"sv;
+{0}    constexpr std::array<std::string_view, {2}> field_names = {{{{"<UNKOWN_FIELD>"sv,
+{0}      {3}}}}};
+{0}    std::array<int, {4}> expected_field_numbers = {{{{
+{0}      {5}}}}};
+{0}
+{0}    constexpr int lo_field_number = {6};
+{0}    constexpr int hi_field_number = {7};
+{0}
+{0}    auto read_field = [] ({1} & x, int i, std::span<std::byte const> src) {{
+{0}        switch (i) {{
+{8}
+{0}        default: return src; // unreachable
+{0}        }}
+{0}    }};
+{0}
+{0}    return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+{0}        x, src, this_message_name, field_names, expected_field_numbers, read_field);
+{0}}}
+
+'''.format(indent_str(depth), this_message_name, hi + 1, field_names, len(fields_dict), field_numbers, lo, hi, deserialize_ops))
 
 def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
@@ -997,6 +1088,8 @@ public class convert
     }
 
 ''')
+
+    serialization_file.write('}\n')
 
     close_namespace(user_namespace)
 

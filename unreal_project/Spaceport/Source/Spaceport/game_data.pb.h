@@ -2119,13 +2119,13 @@ class location_object_t PROTOBUF_FINAL :
       ::pb_message::game_data::fleet_t* bases);
   ::pb_message::game_data::fleet_t* unsafe_arena_release_bases();
 
-  // int64 planet_id = 2;
+  // uint64 planet_id = 2;
   void clear_planet_id();
-  ::PROTOBUF_NAMESPACE_ID::int64 planet_id() const;
-  void set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 planet_id() const;
+  void set_planet_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int64 _internal_planet_id() const;
-  void _internal_set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_planet_id() const;
+  void _internal_set_planet_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.location_object_t)
@@ -2136,7 +2136,7 @@ class location_object_t PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::pb_message::game_data::fleet_t* bases_;
-  ::PROTOBUF_NAMESPACE_ID::int64 planet_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 planet_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -2718,22 +2718,22 @@ class system_t PROTOBUF_FINAL :
   void _internal_set_world_pos_y(double value);
   public:
 
-  // int64 first_planet = 8;
+  // uint64 first_planet = 8;
   void clear_first_planet();
-  ::PROTOBUF_NAMESPACE_ID::int64 first_planet() const;
-  void set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 first_planet() const;
+  void set_first_planet(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int64 _internal_first_planet() const;
-  void _internal_set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_first_planet() const;
+  void _internal_set_first_planet(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // int64 last_planet = 9;
+  // uint64 last_planet = 9;
   void clear_last_planet();
-  ::PROTOBUF_NAMESPACE_ID::int64 last_planet() const;
-  void set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 last_planet() const;
+  void set_last_planet(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int64 _internal_last_planet() const;
-  void _internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_last_planet() const;
+  void _internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.system_t)
@@ -2750,8 +2750,8 @@ class system_t PROTOBUF_FINAL :
   ::pb_message::game_data::star_t* star_;
   double world_pos_x_;
   double world_pos_y_;
-  ::PROTOBUF_NAMESPACE_ID::int64 first_planet_;
-  ::PROTOBUF_NAMESPACE_ID::int64 last_planet_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 first_planet_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 last_planet_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -2912,22 +2912,22 @@ class hex_t PROTOBUF_FINAL :
       ::pb_message::game_data::fleets_t* fleets);
   ::pb_message::game_data::fleets_t* unsafe_arena_release_fleets();
 
-  // int64 first_system = 3;
+  // uint64 first_system = 3;
   void clear_first_system();
-  ::PROTOBUF_NAMESPACE_ID::int64 first_system() const;
-  void set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 first_system() const;
+  void set_first_system(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int64 _internal_first_system() const;
-  void _internal_set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_first_system() const;
+  void _internal_set_first_system(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // int64 last_system = 4;
+  // uint64 last_system = 4;
   void clear_last_system();
-  ::PROTOBUF_NAMESPACE_ID::int64 last_system() const;
-  void set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 last_system() const;
+  void set_last_system(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int64 _internal_last_system() const;
-  void _internal_set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_last_system() const;
+  void _internal_set_last_system(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
   // int32 province_id = 2;
@@ -2948,8 +2948,8 @@ class hex_t PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::pb_message::hex_coord_t* coord_;
   ::pb_message::game_data::fleets_t* fleets_;
-  ::PROTOBUF_NAMESPACE_ID::int64 first_system_;
-  ::PROTOBUF_NAMESPACE_ID::int64 last_system_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 first_system_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 last_system_;
   ::PROTOBUF_NAMESPACE_ID::int32 province_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
@@ -5186,22 +5186,22 @@ inline void location_object_t::set_allocated_bases(::pb_message::game_data::flee
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.location_object_t.bases)
 }
 
-// int64 planet_id = 2;
+// uint64 planet_id = 2;
 inline void location_object_t::clear_planet_id() {
-  planet_id_ = PROTOBUF_LONGLONG(0);
+  planet_id_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 location_object_t::_internal_planet_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 location_object_t::_internal_planet_id() const {
   return planet_id_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 location_object_t::planet_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 location_object_t::planet_id() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.location_object_t.planet_id)
   return _internal_planet_id();
 }
-inline void location_object_t::_internal_set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void location_object_t::_internal_set_planet_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   planet_id_ = value;
 }
-inline void location_object_t::set_planet_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void location_object_t::set_planet_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_planet_id(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.location_object_t.planet_id)
 }
@@ -5780,42 +5780,42 @@ inline void system_t::set_world_pos_y(double value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.world_pos_y)
 }
 
-// int64 first_planet = 8;
+// uint64 first_planet = 8;
 inline void system_t::clear_first_planet() {
-  first_planet_ = PROTOBUF_LONGLONG(0);
+  first_planet_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::_internal_first_planet() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 system_t::_internal_first_planet() const {
   return first_planet_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::first_planet() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 system_t::first_planet() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.first_planet)
   return _internal_first_planet();
 }
-inline void system_t::_internal_set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void system_t::_internal_set_first_planet(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   first_planet_ = value;
 }
-inline void system_t::set_first_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void system_t::set_first_planet(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_first_planet(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.first_planet)
 }
 
-// int64 last_planet = 9;
+// uint64 last_planet = 9;
 inline void system_t::clear_last_planet() {
-  last_planet_ = PROTOBUF_LONGLONG(0);
+  last_planet_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::_internal_last_planet() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 system_t::_internal_last_planet() const {
   return last_planet_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 system_t::last_planet() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 system_t::last_planet() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.last_planet)
   return _internal_last_planet();
 }
-inline void system_t::_internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void system_t::_internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   last_planet_ = value;
 }
-inline void system_t::set_last_planet(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void system_t::set_last_planet(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_last_planet(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.last_planet)
 }
@@ -5921,42 +5921,42 @@ inline void hex_t::set_province_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.province_id)
 }
 
-// int64 first_system = 3;
+// uint64 first_system = 3;
 inline void hex_t::clear_first_system() {
-  first_system_ = PROTOBUF_LONGLONG(0);
+  first_system_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::_internal_first_system() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 hex_t::_internal_first_system() const {
   return first_system_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::first_system() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 hex_t::first_system() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.first_system)
   return _internal_first_system();
 }
-inline void hex_t::_internal_set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void hex_t::_internal_set_first_system(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   first_system_ = value;
 }
-inline void hex_t::set_first_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void hex_t::set_first_system(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_first_system(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.first_system)
 }
 
-// int64 last_system = 4;
+// uint64 last_system = 4;
 inline void hex_t::clear_last_system() {
-  last_system_ = PROTOBUF_LONGLONG(0);
+  last_system_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::_internal_last_system() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 hex_t::_internal_last_system() const {
   return last_system_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int64 hex_t::last_system() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 hex_t::last_system() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.last_system)
   return _internal_last_system();
 }
-inline void hex_t::_internal_set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void hex_t::_internal_set_last_system(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   last_system_ = value;
 }
-inline void hex_t::set_last_system(::PROTOBUF_NAMESPACE_ID::int64 value) {
+inline void hex_t::set_last_system(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_last_system(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.last_system)
 }
