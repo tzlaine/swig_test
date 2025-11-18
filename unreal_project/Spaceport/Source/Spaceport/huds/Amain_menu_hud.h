@@ -23,8 +23,8 @@ public:
     void escape_pressed() override;
 
 protected:
-    virtual void BeginPlay() override;
-    virtual void EndPlay(EEndPlayReason::Type reason) override;
+    void BeginPlay() override;
+    void EndPlay(EEndPlayReason::Type reason) override;
 
     void have_saves(bool b);
 

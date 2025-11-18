@@ -46,8 +46,8 @@ class Agame_mode : public AGameModeBase
 public:
     Agame_mode(FObjectInitializer const & init);
 
-    virtual void BeginPlay() override;
-    virtual void Tick(float secs) override;
+    void BeginPlay() override;
+    void Tick(float secs) override;
 
     UFUNCTION(NetMulticast, Reliable)
     void multicast_quit_to_menu();

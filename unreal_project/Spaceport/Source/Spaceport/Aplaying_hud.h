@@ -34,8 +34,8 @@ public:
     void generating_percent_update(int p);
 
 protected:
-    virtual void BeginPlay() override;
-    virtual void EndPlay(EEndPlayReason::Type reason) override;
+    void BeginPlay() override;
+    void EndPlay(EEndPlayReason::Type reason) override;
 
     void allocate_widgets();
 

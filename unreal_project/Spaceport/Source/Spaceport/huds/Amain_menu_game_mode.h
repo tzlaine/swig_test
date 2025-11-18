@@ -15,8 +15,8 @@ class Amain_menu_game_mode : public AGameModeBase
 public:
     Amain_menu_game_mode(FObjectInitializer const & init);
 
-    virtual void BeginPlay() override;
-    virtual void EndPlay(EEndPlayReason::Type reason) override;
+    void BeginPlay() override;
+    void EndPlay(EEndPlayReason::Type reason) override;
 
     UFUNCTION(NetMulticast, Reliable)
     void multicast_new_game();
