@@ -159,7 +159,8 @@ void Smain_menu::in_game(bool b)
 
 void Smain_menu::saves_available(bool b)
 {
-    continue_bn_->SetEnabled(b);
+    if (!in_game_)
+        continue_bn_->SetEnabled(b);
     load_game_bn_->SetEnabled(b);
 }
 

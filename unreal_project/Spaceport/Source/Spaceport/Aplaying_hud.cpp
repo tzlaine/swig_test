@@ -3,6 +3,7 @@
 #include "huds/Smain_menu.h"
 #include "huds/Sgame_setup.h"
 #include "huds/Sgenerating_galaxy.h"
+#include "utility.hpp"
 
 #include <Widgets/SViewport.h>
 
@@ -31,10 +32,20 @@ void Aplaying_hud::saves_available(bool b)
         main_menu_->saves_available(b);
 }
 
+void Aplaying_hud::toggle_main_menu()
+{
+    if (main_menu_up_)
+        hide_main_menu();
+    else
+        show_main_menu();
+    main_menu_up_ = !main_menu_up_;
+}
 void Aplaying_hud::show_main_menu()
 {
     allocate_widgets();
     show(GetWorld(), main_menu_);
+    TArray<FString> saves = find_save_files();
+    saves_available(!saves.IsEmpty());
 }
 void Aplaying_hud::hide_main_menu()
 {

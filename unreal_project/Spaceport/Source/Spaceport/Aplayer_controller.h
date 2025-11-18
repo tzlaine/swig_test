@@ -7,6 +7,8 @@
 #include "Aplayer_controller.generated.h"
 
 
+class UInputMappingContext;
+class UInputAction;
 class Agame_mode;
 
 UCLASS()
@@ -17,7 +19,8 @@ class Aplayer_controller : public APlayerController
 public:
     Aplayer_controller();
 
-    void BeginPlay();
+    void BeginPlay() override;
+    void SetupInputComponent() override;
 
     UFUNCTION(Server, Reliable)
     void server_quit_to_menu();
@@ -31,6 +34,9 @@ public:
 
 private:
     int nation_id_ = nation_none;
+
+    TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
+    TSoftObjectPtr<UInputAction> menu_toggle_action_;
 
     friend Agame_mode;
 };

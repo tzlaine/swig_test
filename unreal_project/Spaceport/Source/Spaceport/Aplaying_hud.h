@@ -19,6 +19,7 @@ public:
 
     void saves_available(bool b);
 
+    void toggle_main_menu();
     void show_main_menu();
     void hide_main_menu();
 
@@ -38,6 +39,7 @@ protected:
     bool have_saves_ = false;
 
     TSharedPtr<Smain_menu> main_menu_;
+    bool main_menu_up_ = false;
     TSharedPtr<Sgame_setup> game_setup_;
     TSharedPtr<Sgenerating_galaxy> generating_galaxy_;
 };

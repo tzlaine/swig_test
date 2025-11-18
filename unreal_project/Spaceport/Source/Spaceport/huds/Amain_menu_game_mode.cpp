@@ -3,6 +3,7 @@
 #include "Amain_menu_hud.h"
 #include "Amain_menu_controller.h"
 #include "game_instance.h"
+#include "utility.hpp"
 
 
 namespace {
@@ -10,25 +11,6 @@ namespace {
     {
         return Cast<Amain_menu_game_state>(base);
     }
-
-    TArray<FString> find_save_files()
-    {
-        FString dir = FPaths::ProjectSavedDir() + TEXT("SaveGames/");
-        UE_LOG(LogTemp, Warning, TEXT("Searching saves dir %s for files"), *dir);
-        TArray<FString> saves;
-        IFileManager::Get().FindFiles(saves, *dir, TEXT("*.sav"));
-        return std::move(saves);
-    }
-
-    // TODO: Move to some utility header.
-    template<typename T>
-    T * begin(TArray<T> & a) { return a.GetData(); }
-    template<typename T>
-    T * end(TArray<T> & a) { return a.GetData() + a.Num(); }
-    template<typename T>
-    T const * begin(TArray<T> const & a) { return a.GetData(); }
-    template<typename T>
-    T const * end(TArray<T> const & a) { return a.GetData() + a.Num(); }
 }
 
 Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
