@@ -518,41 +518,29 @@ namespace detail {
 
         return src;
     }
-
-    // These two are for top-level messages.
-    template<typename T>
-    std::ptrdiff_t serialized_size(T const & x)
-    {
-        return detail::serialize_impl<false, false>(x, 0, nullptr);
-    }
-    template<typename T>
-    void serialize(T const & x, std::ostream * os)
-    {
-        return detail::serialize_impl<true, false>(x, 0, os);
-    }
 }
 
 template<typename T>
 std::ptrdiff_t serialized_size(T const & x)
 {
-    return detail::serialized_size(x);
+    return detail::
+        serialize_impl<detail::ser_op::count, detail::ser_field_op::dont_write>(
+            x, 0, nullptr);
 }
 
 template<typename T>
 void serialize_message(T const & x, std::filesystem::path const & path)
 {
-    if (!std::filesystem::exists(path)) {
-        throw std::runtime_error(
-            std::format("serialize_message(): Path {} does not exist.", path));
-    }
     std::ofstream ofs(path, std::ios::binary);
     if (!ofs) {
         throw std::runtime_error(std::format(
             "serialize_message(): Path {} exists, but could not be opened for "
             "writing.",
-            path));
+            path.generic_string()));
     }
-    detail::serialize(x, &ofs);
+    detail::
+        serialize_impl<detail::ser_op::write, detail::ser_field_op::dont_write>(
+            x, 0, &ofs);
 }
 
 template<typename T>
@@ -560,7 +548,8 @@ void deserialize_message(T & x, std::filesystem::path const & path)
 {
     if (!std::filesystem::exists(path)) {
         throw std::runtime_error(std::format(
-            "deserialize_message(): Path {} does not exist.", path));
+            "deserialize_message(): Path {} does not exist.",
+            path.generic_string()));
     }
     try {
         memmap mm(path);
@@ -568,9 +557,8 @@ void deserialize_message(T & x, std::filesystem::path const & path)
     } catch (failed_memmap const & e) {
         throw failed_deserialization(std::format(
             "deserialize_message(): Path {} exists, but could not be memmapped "
-            "for "
-            "reading. ({})",
-            path,
+            "for reading. ({})",
+            path.generic_string(),
             e.what()));
     }
 }

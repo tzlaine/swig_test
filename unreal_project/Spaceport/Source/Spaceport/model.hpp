@@ -6,6 +6,8 @@
 #include "hex_operations.hpp"
 #include "logging.hpp"
 #include "map_util.hpp"
+#include "game_data_serialization.hpp"
+
 
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
@@ -122,38 +124,8 @@ struct model
 
     void load(std::filesystem::path path)
     {
-        if (!std::filesystem::exists(path)) {
-            UE_LOG(
-                general,
-                Error,
-                TEXT("Could not load save file from %s; file does not exist."),
-                *FSTRINGIZE(path));
-            return;
-        }
-
-        std::ifstream ifs(path, std::ios::binary);
-        if (!ifs) {
-            UE_LOG(
-                general,
-                Error,
-                TEXT("Could not load save file from %s; file exists, but could "
-                     "not be opened."),
-                *FSTRINGIZE(path));
-            return;
-        }
-
-        pb_message::game_data::game_state_t as_protobuf;
-        if (!as_protobuf.ParseFromIstream(&ifs)) {
-            UE_LOG(
-                general,
-                Error,
-                TEXT("Could not load save file from %s; file exists, but "
-                     "deserialization failed."),
-                *FSTRINGIZE(path));
-            return;
-        }
-        game_state_ = boost::shared_ptr<game_state_t>(
-            new game_state_t(from_protobuf(as_protobuf)));
+        game_state_ = boost::shared_ptr<game_state_t>(new game_state_t);
+        deserialize_message(*game_state_, path);
     }
 
 private:
@@ -197,33 +169,9 @@ private:
         while (save_queue_.pop(save_state_and_path)) {
             auto [save_state, path] = save_state_and_path;
             reset_saving saving_reseter(saving_);
-
-            pb_message::game_data::game_state_t as_protobuf;
-            {
-                reset_save_state save_state_reseter(save_state);
-                as_protobuf = to_protobuf(*save_state);
-            }
-
-            serialized_bytes_.clear();
-            as_protobuf.SerializeToString(&serialized_bytes_);
-
             auto temp_path = path;
             temp_path += "_temp";
-            std::ofstream ofs(temp_path, std::ios::binary);
-
-            if (!ofs) {
-                UE_LOG(general, Error,
-                       TEXT("Unable to open save file %s for writing."), *FSTRINGIZE(path));
-                continue;
-            }
-            ofs.write(serialized_bytes_.data(), serialized_bytes_.size());
-            if (!ofs) {
-                UE_LOG(general, Error,
-                       TEXT("Unable to write contents to save file %s."), *FSTRINGIZE(path));
-                continue;
-            }
-            ofs.close();
-
+            serialize_message(*save_state, temp_path);
             std::filesystem::rename(temp_path, path);
         }
     }
