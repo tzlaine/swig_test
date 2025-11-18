@@ -5,17 +5,9 @@
 
 #if defined(_MSC_VER)
 
+#include "windows.hpp"
+
 #if defined(BUILD_FOR_TEST)
-#define WIN32_LEAN_AND_MEAN
-#define UNICODE
-#define _UNICODE
-#include <Windows.h>
-#if defined(min)
-#undef min
-#endif
-#if defined(max)
-#undef max
-#endif
 #define UENUM(_)
 #define USTRUCT(_)
 #define GENERATED_BODY()
@@ -23,7 +15,6 @@
 #define uint8 unsigned char
 #define FString std::wstring
 #else
-#include <Windows/WindowsHWrapper.h>
 #include "dir_watcher.generated.h"
 #endif
 

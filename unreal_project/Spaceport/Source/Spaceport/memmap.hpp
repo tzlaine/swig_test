@@ -2,21 +2,7 @@
 
 #if defined(_MSC_VER)
 
-#if defined(BUILD_FOR_TEST)
-#define WIN32_LEAN_AND_MEAN
-#define UNICODE
-#define _UNICODE
-#include <Windows.h>
-#if defined(min)
-#undef min
-#endif
-#if defined(max)
-#undef max
-#endif
-#else
-#include <Windows/WindowsHWrapper.h>
-#endif
-
+#include "windows.hpp"
 #include <fileapi.h>
 
 #else
