@@ -677,21 +677,6 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
             ++first_uninhabitable_index;
         }
     }
-
-#if 0
-    auto const first_uninhab = std::ranges::find_if(scratch, [](auto const & e) {
-        return std::ranges::none_of(e.planets_, [] (auto const & e2) {
-            return growth_factor_considered_habitable <= e2.growth_factor;
-        });
-    });
-    auto const first_inhab_after_first_uninhab =
-        std::find_if(first_uninhab, scratch.end(), [](auto const & e) {
-            return std::ranges::any_of(e.planets_, [] (auto const & e2) {
-                return growth_factor_considered_habitable <= e2.growth_factor;
-            });
-        });
-    assert(first_inhab_after_first_uninhab == scratch.end());
-#endif
 }
 
 void generation::generate_galaxy(game_start_params_t const & params,
