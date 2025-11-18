@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Agame_state_base.h"
 #include "Agame_mode.h"
 
 #include <CoreMinimal.h>
@@ -8,7 +9,7 @@
 
 
 UCLASS()
-class Agame_state : public AGameStateBase
+class Agame_state : public Agame_state_base
 {
     GENERATED_BODY()
 
@@ -22,6 +23,6 @@ public:
     void play_state_changed();
 
 protected:
-    virtual void GetLifetimeReplicatedProps(
+    void GetLifetimeReplicatedProps(
         TArray<FLifetimeProperty> & props) const override;
 };

@@ -5,12 +5,7 @@
 #include <Net/UnrealNetwork.h>
 
 
-Agame_state::Agame_state()
-{
-    bReplicates = true;
-    bAlwaysRelevant = true;
-    bOnlyRelevantToOwner = false;
-}
+Agame_state::Agame_state() {}
 
 void Agame_state::play_state_changed()
 {

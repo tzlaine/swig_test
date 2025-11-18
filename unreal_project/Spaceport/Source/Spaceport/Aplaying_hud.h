@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Ahud_base.h"
+
 #include <CoreMinimal.h>
 #include <GameFramework/HUD.h>
 #include "Aplaying_hud.generated.h"
@@ -10,16 +12,17 @@ class Sgame_setup;
 class Sgenerating_galaxy;
 
 UCLASS()
-class Aplaying_hud : public AHUD
+class Aplaying_hud : public Ahud_base
 {
     GENERATED_BODY()
 
 public:
     Aplaying_hud(FObjectInitializer const & init);
 
-    void have_saves(bool b);
+    void saves_list(TArray<FString> const & saves) override;
+    void saves_changed(TArray<Ffile_change> const & changes) override;
+    void escape_pressed() override;
 
-    void toggle_main_menu();
     void show_main_menu();
     void hide_main_menu();
 

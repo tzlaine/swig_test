@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dir_watcher.h"
+#include "Agame_state_base.h"
 
 #include <CoreMinimal.h>
 #include <GameFramework/GameStateBase.h>
@@ -8,26 +9,10 @@
 
 
 UCLASS()
-class Amain_menu_game_state : public AGameStateBase
+class Amain_menu_game_state : public Agame_state_base
 {
     GENERATED_BODY()
 
 public:
     Amain_menu_game_state();
-
-    UFUNCTION()
-    void saves_changed();
-    UPROPERTY(ReplicatedUsing = saves_changed, BlueprintReadOnly,
-              Category = "Game State")
-    TArray<FString> saves_;
-
-    UFUNCTION()
-    void save_file_changes_changed();
-    UPROPERTY(ReplicatedUsing = save_file_changes_changed, BlueprintReadOnly,
-              Category = "Game State")
-    TArray<Ffile_change> save_file_changes_;
-
-protected:
-    virtual void GetLifetimeReplicatedProps(
-        TArray<FLifetimeProperty> & props) const override;
 };

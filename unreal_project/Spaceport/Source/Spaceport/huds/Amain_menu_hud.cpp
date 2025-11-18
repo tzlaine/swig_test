@@ -1,5 +1,5 @@
 #include "Amain_menu_hud.h"
-#include "Amain_menu_game_state.h"
+#include "Agame_state_base.h"
 #include "Smain_menu.h"
 #include "utility.hpp"
 
@@ -7,7 +7,9 @@
 #include <Widgets/SViewport.h>
 
 
-Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) : AHUD(init) {}
+Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) :
+    Ahud_base(init)
+{}
 
 void Amain_menu_hud::saves_list(TArray<FString> const & saves)
 {
@@ -17,14 +19,10 @@ void Amain_menu_hud::saves_list(TArray<FString> const & saves)
 
 void Amain_menu_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
-    bool saves = false;
-    if (auto * gs = Cast<Amain_menu_game_state>(
-            UGameplayStatics::GetGameState(GetWorld()))) {
-        saves = !gs->saves_.IsEmpty();
-    }
-    have_saves(saves);
     // TODO: Notify the save/load ui
 }
+
+void Amain_menu_hud::escape_pressed() {}
 
 void Amain_menu_hud::BeginPlay()
 {
@@ -32,7 +30,7 @@ void Amain_menu_hud::BeginPlay()
     Super::BeginPlay();
 
     bool saves = false;
-    if (auto * gs = Cast<Amain_menu_game_state>(
+    if (auto * gs = Cast<Agame_state_base>(
             UGameplayStatics::GetGameState(GetWorld()))) {
         saves = !gs->saves_.IsEmpty();
     }
