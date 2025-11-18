@@ -77,9 +77,16 @@ namespace generation {
 
         bool generate_planet(planet_t & planet, system_t const & system);
 
-        using planets_scratch = std::vector<planet_t>;
-        using hex_scratch = std::vector<planets_scratch>;
-
+        struct system_scratch
+        {
+            using iterator = std::vector<planet_t>::iterator;
+            std::vector<planet_t> planets_;
+        };
+        struct hex_scratch
+        {
+            using iterator = std::vector<system_scratch>::iterator;
+            std::vector<system_scratch> systems_;
+        };
         struct scratch_space
         {
             scratch_space(int n) : hexes_(n) {}
@@ -91,7 +98,7 @@ namespace generation {
         inline bool generate_system_planets(
             system_t & system, int system_id, std::vector<double> const & radii,
             std::vector<double> const & masses,
-            std::ranges::subrange<planets_scratch::iterator> system_planets)
+            std::ranges::subrange<system_scratch::iterator> system_planets)
         {
             bool has_habitable_planet = false;
             auto radii_it = radii.begin();
@@ -157,7 +164,7 @@ namespace generation {
 
         template<typename GenPlanetsFn>
         bool generate_system_impl(
-            system_t & system, planets_scratch & planets,
+            system_t & system, system_scratch & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id,
             GenPlanetsFn && gen_planets)
         {
@@ -265,15 +272,15 @@ namespace generation {
                         mass_of_solar_system_planets_kg * system.star.solar_masses;
                 });
 
-            planets.resize(planets.size() + masses.size());
+            planets.planets_.resize(masses.size());
 
             return gen_planets(
                 system, system_id, radii, masses,
-                std::ranges::subrange(planets.end() -  masses.size(), planets.end()));
+                std::ranges::subrange(planets.planets_));
         }
 
         inline bool generate_system(
-            system_t & system, planets_scratch & planets,
+            system_t & system, system_scratch & planets,
             hex_coord_t hc, point_2d hex_world_pos, int system_id)
         {
             return generate_system_impl(
