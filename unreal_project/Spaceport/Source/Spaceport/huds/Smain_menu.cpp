@@ -17,6 +17,10 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
+Smain_menu::Smain_menu() :
+    animation_curve_(FString(TEXT("/Game/sigmoid_curve.sigmoid_curve")))
+{}
+
 void Smain_menu::Construct(FArguments const & args)
 {
     UFont * title_font = detail::stream_default_font();
@@ -44,6 +48,8 @@ void Smain_menu::Construct(FArguments const & args)
     ];
 
     rebuild();
+
+    SetRenderOpacity(in_game_ ? 0 : 1);
 }
 
 void Smain_menu::rebuild()
@@ -169,9 +175,28 @@ bool Smain_menu::cancelable()
     return true;
 }
 
-void Smain_menu::cancel(UWorld * w)
+void Smain_menu::show(UWorld * w)
 {
-    hide(w);
+    Shud_widget_base::show(w);
+    animation_curve_.LoadSynchronous();
+    animation_t_ = 0.0f;
+    SetRenderOpacity(0);
+}
+
+void Smain_menu::Tick(FGeometry const & g, double t, float dt)
+{
+    Shud_widget_base::Tick(g, t, dt);
+    if (animation_t_ < 0.0f || !animation_curve_)
+        return;
+
+    UE_LOG(LogTemp, Warning, TEXT("animating")); // TODO
+
+    animation_t_ += dt;
+    float const animation_alpha = std::min(animation_t_ / animation_dur_, 1.0f);
+    float const animated_value = animation_curve_->GetFloatValue(animation_alpha);
+    SetRenderOpacity(animated_value);
+    if (animation_dur_ < animation_t_)
+        animation_t_ = -1.0f;
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

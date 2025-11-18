@@ -16,7 +16,6 @@ public:
 
     virtual bool cancelable();
     virtual void cancel(UWorld * w);
-
-    void show(UWorld * w);
-    void hide(UWorld * w);
+    virtual void show(UWorld * w);
+    virtual void hide(UWorld * w);
 };
