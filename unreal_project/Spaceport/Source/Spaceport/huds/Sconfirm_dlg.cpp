@@ -28,52 +28,48 @@ void Sconfirm_dlg::Construct(FArguments const & args)
         +SConstraintCanvas::Slot().Anchors(FAnchors(0, 0, 1, 1))[
             SNew(SImage).ColorAndOpacity(FSlateColor(FColor(0, 0, 0, 200)))]
 
-        +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.3, 0.3, 0.7, 0.7))[
-            SNew(SVerticalBox)
-            +SVerticalBox::Slot().FillHeight(2)
+        +SConstraintCanvas::Slot().Anchors(FAnchors(0.3, 0.3, 0.7, 0.7))[
+            SNew(SBorder).Padding(50.0f)[ // TODO: Create a styled border for dialogs.
 
-            +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
-                SNew(Sstyled_text_block)
-                .Text(loc_text(args._title))
-                .Font(FSlateFontInfo(title_font, 48))
-            ]
+                SNew(SVerticalBox)
+                +SVerticalBox::Slot().FillHeight(2)
 
-            +SVerticalBox::Slot().FillHeight(1)
+                +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
+                    SNew(Sstyled_text_block)
+                    .Text(loc_text(args._title))
+                    .Font(FSlateFontInfo(title_font, 48))]
 
-            +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
-                SNew(Sstyled_text_block).Text(loc_text(args._message))
-            ]
+                +SVerticalBox::Slot().FillHeight(1)
 
-            +SVerticalBox::Slot().FillHeight(2)
+                +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
+                    SNew(Sstyled_text_block).Text(loc_text(args._message))]
 
-            +SVerticalBox::Slot().AutoHeight()[
-                SNew(SHorizontalBox)
+                +SVerticalBox::Slot().FillHeight(2)
 
-                +SHorizontalBox::Slot().FillWidth(10)
+                +SVerticalBox::Slot().AutoHeight()[
+                    SNew(SHorizontalBox)
 
-                +SHorizontalBox::Slot().AutoWidth()[
-                    SNew(Sstyled_button).Text(loc_text(args._yes_button))
-                    .OnClicked_Lambda([this] {
-                        *result_ptr_ = result::yes;
-                        return FReply::Handled();
-                    })
-                ]
+                    +SHorizontalBox::Slot().FillWidth(10)
 
-                +SHorizontalBox::Slot().FillWidth(0.5)
+                    +SHorizontalBox::Slot().AutoWidth()[
+                        SNew(Sstyled_button).Text(loc_text(args._yes_button))
+                        .OnClicked_Lambda([this] {
+                            *result_ptr_ = result::yes;
+                            return FReply::Handled();
+                        })]
 
-                +SHorizontalBox::Slot().AutoWidth()[
-                    SNew(Sstyled_button).Text(loc_text(args._no_button))
-                    .OnClicked_Lambda([this] {
-                        *result_ptr_ = result::no;
-                        return FReply::Handled();
-                    })
-                ]
+                    +SHorizontalBox::Slot().FillWidth(0.5)
 
-                +SHorizontalBox::Slot().FillWidth(10)
-            ]
-        ]
-    ];
+                    +SHorizontalBox::Slot().AutoWidth()[
+                        SNew(Sstyled_button).Text(loc_text(args._no_button))
+                        .OnClicked_Lambda([this] {
+                            *result_ptr_ = result::no;
+                            return FReply::Handled();
+                        })]
+
+                    +SHorizontalBox::Slot().FillWidth(10)]
+
+                +SVerticalBox::Slot().FillHeight(2)]]];
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
