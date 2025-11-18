@@ -462,7 +462,7 @@ namespace detail {
                     L"Encountered unexpected end of messagebefore reading all "
                     L"the expected fields while reading a {}.",
                     wthis_message_name);
-                UE_LOG(general, Log, *FSTRINGIZE(msg));
+                UE_LOG(general, Log, TEXT("{}"), *FSTRINGIZE(msg));
                 read_end_field_number = true;
                 break;
             }

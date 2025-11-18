@@ -5,6 +5,10 @@
 #define UNICODE
 #define _UNICODE
 #include <Windows.h>
+#else
+#include <Windows/WindowsHWrapper.h>
+#endif
+
 #if defined(min)
 #undef min
 #endif
@@ -19,7 +23,4 @@
 #endif
 #if defined(far)
 #undef far
-#endif
-#else
-#include <Windows/WindowsHWrapper.h>
 #endif

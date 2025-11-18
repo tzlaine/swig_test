@@ -77,7 +77,7 @@ inline memmap::memmap(std::filesystem::path path) : path_(std::move(path))
             "memmap: Failed to get file size from Win32 HANDLE to {}.",
             path_.generic_string()));
     }
-    if (std::numeric_limits<size_t>::max() < file_size.QuadPart) {
+    if (std::numeric_limits<std::ptrdiff_t>::max() < file_size.QuadPart) {
         throw failed_memmap(std::format(
             "memmap: Size of file {} is greater than a 64-bit int.",
             path_.generic_string()));
