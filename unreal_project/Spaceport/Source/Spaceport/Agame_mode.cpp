@@ -48,12 +48,8 @@ void Agame_mode::Tick(float secs)
     if (cast(GameState)->play_state_ == play_state::generating) {
         int percent_update = 0;
         if (percent_complete_->try_pop(percent_update)) {
-            cast(GameState)->generation_percent_complete_ += percent_update;
-            cast(GameState)->generation_percent_changed();
-            if (auto * hud_ptr = hud()) {
-                hud_ptr->generating_percent_complete(
-                    cast(GameState)->generation_percent_complete_);
-            }
+            if (auto * hud_ptr = hud())
+                hud_ptr->generating_percent_update(percent_update);
         }
 
         if (generation_complete_) {
@@ -82,7 +78,6 @@ void Agame_mode::distribute_initial_game_state_Implementation(
 
     cast(GameState)->play_state_ = play_state::generating;
     cast(GameState)->play_state_changed();
-    cast(GameState)->generation_percent_complete_ = 0;
     percent_complete_ = std::make_unique<concurrent_queue<int>>();
 
     auto params = from_tarray<game_start_params_t>(params_);

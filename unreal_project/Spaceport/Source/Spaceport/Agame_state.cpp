@@ -18,12 +18,6 @@ void Agame_state::play_state_changed()
            *UEnum::GetValueAsString(play_state_));
 }
 
-void Agame_state::generation_percent_changed()
-{
-    UE_LOG(LogTemp, Warning, TEXT("Client: galaxy generation at %d pct"),
-           generation_percent_complete_);
-}
-
 void Agame_state::GetLifetimeReplicatedProps(
     TArray<FLifetimeProperty> & OutLifetimeProps) const
 {

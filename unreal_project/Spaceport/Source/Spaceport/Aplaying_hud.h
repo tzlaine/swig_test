@@ -28,7 +28,7 @@ public:
 
     void show_generating_galaxy();
     void hide_generating_galaxy();
-    void generating_percent_complete(int p);
+    void generating_percent_update(int p);
 
 protected:
     virtual void BeginPlay() override;
@@ -42,4 +42,5 @@ protected:
     bool main_menu_up_ = false;
     TSharedPtr<Sgame_setup> game_setup_;
     TSharedPtr<Sgenerating_galaxy> generating_galaxy_;
+    int generating_progress_ = 0;
 };

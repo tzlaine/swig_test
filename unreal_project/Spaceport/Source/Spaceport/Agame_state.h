@@ -21,12 +21,6 @@ public:
     UFUNCTION()
     void play_state_changed();
 
-    UPROPERTY(ReplicatedUsing = generation_percent_changed, BlueprintReadOnly,
-              Category = "Game State")
-    int generation_percent_complete_ = 0;
-    UFUNCTION()
-    void generation_percent_changed();
-
 protected:
     virtual void GetLifetimeReplicatedProps(
         TArray<FLifetimeProperty> & props) const override;

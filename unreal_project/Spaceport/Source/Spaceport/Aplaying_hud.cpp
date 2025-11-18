@@ -68,17 +68,19 @@ void Aplaying_hud::show_generating_galaxy()
 {
     allocate_widgets();
     show(GetWorld(), generating_galaxy_);
+    generating_progress_ = 0;
 }
 void Aplaying_hud::hide_generating_galaxy()
 {
     allocate_widgets();
     hide(GetWorld(), generating_galaxy_);
 }
-void Aplaying_hud::generating_percent_complete(int p)
+void Aplaying_hud::generating_percent_update(int u)
 {
     if (!generating_galaxy_)
         return;
-    generating_galaxy_->percent_complete(p);
+    generating_progress_ += u;
+    generating_galaxy_->percent_complete(generating_progress_);
 }
 
 void Aplaying_hud::BeginPlay()
