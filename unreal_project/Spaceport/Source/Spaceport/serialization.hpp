@@ -10,6 +10,7 @@
 #include <array>
 #include <exception>
 #include <filesystem>
+#include <ranges>
 #include <string_view>
 #include <type_traits>
 #include <vector>
@@ -36,7 +37,7 @@ private:
     void rebuild_msg()
     {
         msg_ = "Deserialization failed.  Context:\n";
-        for (auto const & part : std::views::reverse(msg_parts_)) {
+        for (auto const & part : msg_parts_ | std::views::reverse) {
             msg_ += "  ";
             msg_ += part;
             if (msg_.back() != '\n')
