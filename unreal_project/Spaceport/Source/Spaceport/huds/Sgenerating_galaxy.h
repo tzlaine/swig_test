@@ -1,12 +1,14 @@
 #pragma once
 
+#include "Shud_widget_base.h"
+
 #include <CoreMinimal.h>
 #include <Widgets/SCompoundWidget.h>
 #include <Widgets/SBoxPanel.h>
 
 class Sstyled_progress_bar;
 
-class Sgenerating_galaxy : public SCompoundWidget
+class Sgenerating_galaxy : public Shud_widget_base
 {
 public:
     SLATE_BEGIN_ARGS(Sgenerating_galaxy)

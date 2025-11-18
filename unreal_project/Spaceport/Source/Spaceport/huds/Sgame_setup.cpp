@@ -62,10 +62,8 @@ void Sgame_setup::Construct(FArguments const & args)
 
                 +SHorizontalBox::Slot().FillWidth(2)[
                     SNew(Sstyled_button).Text(loc_text(TEXT("back")))
-                    .OnClicked_Lambda([] {
-                        Aplayer_controller * pc = Cast<Aplayer_controller>(
-                            ::world()->GetFirstPlayerController());
-                        pc->server_quit_to_menu();
+                    .OnClicked_Lambda([this] {
+                        back();
                         return FReply::Handled();
                     })
                 ]
@@ -171,6 +169,23 @@ void Sgame_setup::Construct(FArguments const & args)
                 params_.map_height = x;
             })]
     ];
+}
+
+bool Sgame_setup::cancelable()
+{
+    return true;
+}
+
+void Sgame_setup::cancel(UWorld *)
+{
+    back();
+}
+
+void Sgame_setup::back()
+{
+    Aplayer_controller * pc = Cast<Aplayer_controller>(
+        ::world()->GetFirstPlayerController());
+    pc->server_quit_to_menu();
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

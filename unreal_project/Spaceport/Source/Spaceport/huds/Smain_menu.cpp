@@ -164,4 +164,14 @@ void Smain_menu::have_saves(bool b)
     continue_bn_->SetEnabled(b);
 }
 
+bool Smain_menu::cancelable()
+{
+    return true;
+}
+
+void Smain_menu::cancel(UWorld * w)
+{
+    hide(w);
+}
+
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

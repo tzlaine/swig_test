@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Shud_widget_base.h"
 #include "widgets/Sstyled_button.h"
 
 #include <CoreMinimal.h>
@@ -7,7 +8,7 @@
 #include <Widgets/SBoxPanel.h>
 
 
-class Smain_menu : public SCompoundWidget
+class Smain_menu : public Shud_widget_base
 {
 public:
     SLATE_BEGIN_ARGS(Smain_menu)
@@ -20,6 +21,9 @@ public:
     void rebuild();
     void in_game(bool b);
     void have_saves(bool b);
+
+    bool cancelable() override;
+    void cancel(UWorld * w) override;
 
 private:
     TSharedPtr<SVerticalBox> vbox_;
