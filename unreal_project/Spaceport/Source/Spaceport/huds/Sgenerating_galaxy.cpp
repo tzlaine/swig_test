@@ -34,7 +34,8 @@ void Sgenerating_galaxy::Construct(FArguments const & args)
             +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
                 SNew(Sstyled_text_block)
                 .Text(loc_text(TEXT("generating_galaxy")))
-                .Font(FSlateFontInfo(title_font, 48))
+                .Font(FSlateFontInfo(title_font,
+                                     ui_defaults().title_font_size_))
             ]
             +SVerticalBox::Slot().FillHeight(1)
             +SVerticalBox::Slot().MinHeight(80).VAlign(VAlign_Fill)[

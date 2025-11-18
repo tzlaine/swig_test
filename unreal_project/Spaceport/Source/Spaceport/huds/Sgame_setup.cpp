@@ -39,7 +39,8 @@ void Sgame_setup::Construct(FArguments const & args)
             +SVerticalBox::Slot().AutoHeight()[
                 SNew(Sstyled_text_block)
                 .Text(loc_text(TEXT("game_setup_title")))
-                .Font(FSlateFontInfo(title_font, 48))
+                .Font(FSlateFontInfo(title_font,
+                                     ui_defaults().title_font_size_))
             ]
             +SVerticalBox::Slot().FillHeight(1)
         ]

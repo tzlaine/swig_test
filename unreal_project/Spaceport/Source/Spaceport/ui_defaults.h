@@ -8,6 +8,7 @@ struct ui_defaults_t
 {
     FString font_path_;
     int32 font_size_;
+    int32 title_font_size_;
 
     FString UButton_style_path_;
     FString UCheckBox_style_path_;
@@ -33,6 +34,7 @@ inline ui_defaults_t const & ui_defaults()
     if (once) {
         retval.font_path_ = TEXT("/Game/ui/fonts/futura_light_bt_Font");
         retval.font_size_ = 28;
+        retval.title_font_size_ = 48;
 
         retval.UButton_style_path_ = TEXT("/Game/ui/styles/button_style");
         retval.UCheckBox_style_path_ = TEXT("/Game/ui/styles/check_box_style");

@@ -56,7 +56,8 @@ void Smain_menu::Construct(FArguments const & args)
         .Anchors(FAnchors(0.2, 0.2, 0.8, 0.2))
         .Offset(FMargin(0, 0, 0, 154.654633))
         [SNew(STextBlock)
-            .Font(FSlateFontInfo(title_font, 96))
+            .Font(FSlateFontInfo(title_font,
+                                 ui_defaults().title_font_size_ * 2))
             .Text(NSLOCTEXT("strings", "main_menu_game_title",
                             "F    O    R    E    X"))
             .Justification(ETextJustify::Center)]
