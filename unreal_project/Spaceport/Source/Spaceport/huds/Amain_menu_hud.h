@@ -6,6 +6,7 @@
 
 
 class Smain_menu;
+struct Ffile_change;
 
 UCLASS()
 class Amain_menu_hud : public AHUD
@@ -15,12 +16,15 @@ class Amain_menu_hud : public AHUD
 public:
     Amain_menu_hud(FObjectInitializer const & init);
 
-    void saves_available(bool b);
+    void saves_list(TArray<FString> const & saves);
+    void saves_changed(TArray<Ffile_change> const & changes);
 
 protected:
     virtual void BeginPlay() override;
     virtual void EndPlay(EEndPlayReason::Type reason) override;
 
-    bool have_saves_ = false;
+    void have_saves(bool b);
+
+    bool have_saves_ = false; // TODO: Remove?
     TSharedPtr<Smain_menu> widget_;
 };

@@ -11,10 +11,14 @@ void call_real_soon(FTimerHandle& timer, T* t_ptr, void (T::*member_ptr)())
 inline TArray<FString> find_save_files()
 {
     FString dir = FPaths::ProjectSavedDir() + TEXT("SaveGames/");
-    UE_LOG(LogTemp, Warning, TEXT("Searching saves dir %s for files"), *dir);
     TArray<FString> saves;
     IFileManager::Get().FindFiles(saves, *dir, TEXT("*.sav"));
     return std::move(saves);
+}
+
+inline bool have_any_save_files()
+{
+    return !find_save_files().IsEmpty();
 }
 
 // TODO: Move to some utility header.

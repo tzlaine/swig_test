@@ -17,20 +17,22 @@ void Amain_menu_game_state::saves_changed()
     UE_LOG(LogTemp, Warning, TEXT("List of saves changed to: %s"),
            *FString::Join(saves_, TEXT(", ")));
 
-    if (HasAuthority())
-        return;
-
-    auto * const hud =
-        GetWorld()->GetFirstPlayerController()->GetHUD<Amain_menu_hud>();
-    hud->saves_available(!saves_.IsEmpty());
-
-    // TODO: Notify save/load dialog.
+    if (auto * pc = GetWorld()->GetFirstPlayerController()) {
+        if (auto * const hud = pc->GetHUD<Amain_menu_hud>()) {
+            hud->saves_list(saves_);
+        }
+    }
 }
 
 void Amain_menu_game_state::save_file_changes_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("List of save file changes changed"));
-    // TODO: Notify save/load dialog.
+
+    if (auto * pc = GetWorld()->GetFirstPlayerController()) {
+        if (auto * const hud = pc->GetHUD<Amain_menu_hud>()) {
+            hud->saves_changed(save_file_changes_);
+        }
+    }
 }
 
 void Amain_menu_game_state::GetLifetimeReplicatedProps(

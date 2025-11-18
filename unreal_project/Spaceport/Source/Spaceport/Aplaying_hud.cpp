@@ -25,11 +25,11 @@ namespace {
 
 Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : AHUD(init) {}
 
-void Aplaying_hud::saves_available(bool b)
+void Aplaying_hud::have_saves(bool b)
 {
     have_saves_ = b;
     if (main_menu_)
-        main_menu_->saves_available(b);
+        main_menu_->have_saves(b);
 }
 
 void Aplaying_hud::toggle_main_menu()
@@ -44,8 +44,9 @@ void Aplaying_hud::show_main_menu()
 {
     allocate_widgets();
     show(GetWorld(), main_menu_);
-    TArray<FString> saves = find_save_files();
-    saves_available(!saves.IsEmpty());
+    have_saves(have_any_save_files());
+    // TODO: Sign up for dir watching while the main menu is up; cancel it
+    // afterward.
 }
 void Aplaying_hud::hide_main_menu()
 {
@@ -89,7 +90,7 @@ void Aplaying_hud::BeginPlay()
     Super::BeginPlay();
 
     allocate_widgets();
-    main_menu_->saves_available(have_saves_);
+    main_menu_->have_saves(have_saves_);
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::BeginPlay()"));
 }
 

@@ -17,7 +17,7 @@ class Aplaying_hud : public AHUD
 public:
     Aplaying_hud(FObjectInitializer const & init);
 
-    void saves_available(bool b);
+    void have_saves(bool b);
 
     void toggle_main_menu();
     void show_main_menu();
@@ -36,7 +36,7 @@ protected:
 
     void allocate_widgets();
 
-    bool have_saves_ = false;
+    bool have_saves_ = false; // TODO: Remove?
 
     TSharedPtr<Smain_menu> main_menu_;
     bool main_menu_up_ = false;

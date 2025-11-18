@@ -19,7 +19,7 @@ public:
 
     void rebuild();
     void in_game(bool b);
-    void saves_available(bool b);
+    void have_saves(bool b);
 
 private:
     TSharedPtr<SVerticalBox> vbox_;
