@@ -233,7 +233,7 @@ namespace generation {
             // thickness that follows 1/R, where R is radius from the star.
             // This means the area under 1/R is the relative amount of mass
             // used in a Rnear to Rfar slice of the disk.  The multiplication
-            // at the end is simly there so that the effect is not so
+            // at the end is simply there so that the effect is not so
             // dramatic.
             auto const disk_curve_area_under = [](double near, double far) {
                 return (std::log(far) - std::log(near)) * 0.5;
