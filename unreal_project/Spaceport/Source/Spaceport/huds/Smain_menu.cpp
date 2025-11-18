@@ -159,9 +159,9 @@ void Smain_menu::in_game(bool b)
 
 void Smain_menu::have_saves(bool b)
 {
-    if (!in_game_)
-        continue_bn_->SetEnabled(b);
-    load_game_bn_->SetEnabled(b);
+    if (in_game_)
+        return;
+    continue_bn_->SetEnabled(b);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

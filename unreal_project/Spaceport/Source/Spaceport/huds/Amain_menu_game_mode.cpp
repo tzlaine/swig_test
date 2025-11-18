@@ -64,18 +64,9 @@ void Amain_menu_game_mode::saves_dir_changed(
                *c.file, (int)c.kind);
     }
 
-    auto const it = std::ranges::find_if(
-        changes,
-        [](auto const & e) {
-            return e.kind == Efile_change_kind::rescan_required;
-        });
-    if (it == changes.end()) {
-        cast(GameState)->save_file_changes_.SetNum(changes.size());
-        std::ranges::move(changes, begin(cast(GameState)->save_file_changes_));
-        cast(GameState)->save_file_changes_changed();
-    } else {
-        TArray<FString> saves = find_save_files();
-        cast(GameState)->saves_ = std::move(saves);
-        cast(GameState)->saves_changed();
-    }
+    cast(GameState)->saves_ = find_save_files();
+    cast(GameState)->saves_changed();
+    cast(GameState)->save_file_changes_.SetNum(changes.size());
+    std::ranges::move(changes, begin(cast(GameState)->save_file_changes_));
+    cast(GameState)->save_file_changes_changed();
 }

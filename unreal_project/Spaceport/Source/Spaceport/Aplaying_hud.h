@@ -36,8 +36,6 @@ protected:
 
     void allocate_widgets();
 
-    bool have_saves_ = false; // TODO: Remove?
-
     TSharedPtr<Smain_menu> main_menu_;
     bool main_menu_up_ = false;
     TSharedPtr<Sgame_setup> game_setup_;

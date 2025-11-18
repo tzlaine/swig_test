@@ -17,7 +17,12 @@ void Amain_menu_hud::saves_list(TArray<FString> const & saves)
 
 void Amain_menu_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
-    have_saves(have_any_save_files());
+    bool saves = false;
+    if (auto * gs = Cast<Amain_menu_game_state>(
+            UGameplayStatics::GetGameState(GetWorld()))) {
+        saves = !gs->saves_.IsEmpty();
+    }
+    have_saves(saves);
     // TODO: Notify the save/load ui
 }
 
@@ -26,13 +31,14 @@ void Amain_menu_hud::BeginPlay()
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
     Super::BeginPlay();
 
+    bool saves = false;
     if (auto * gs = Cast<Amain_menu_game_state>(
             UGameplayStatics::GetGameState(GetWorld()))) {
-        have_saves_ = !gs->saves_.IsEmpty();
+        saves = !gs->saves_.IsEmpty();
     }
 
     widget_ = SNew(Smain_menu).in_game(false);
-    widget_->have_saves(have_saves_);
+    widget_->have_saves(saves);
 
     UGameViewportClient * viewport_client = GetWorld()->GetGameViewport();
     if (viewport_client)
@@ -52,7 +58,6 @@ void Amain_menu_hud::EndPlay(EEndPlayReason::Type reason)
 
 void Amain_menu_hud::have_saves(bool b)
 {
-    have_saves_ = b;
     if (widget_)
         widget_->have_saves(b);
 }

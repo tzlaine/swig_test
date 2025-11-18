@@ -25,6 +25,5 @@ protected:
 
     void have_saves(bool b);
 
-    bool have_saves_ = false; // TODO: Remove?
     TSharedPtr<Smain_menu> widget_;
 };

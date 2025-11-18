@@ -27,7 +27,6 @@ Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : AHUD(init) {}
 
 void Aplaying_hud::have_saves(bool b)
 {
-    have_saves_ = b;
     if (main_menu_)
         main_menu_->have_saves(b);
 }
@@ -90,7 +89,6 @@ void Aplaying_hud::BeginPlay()
     Super::BeginPlay();
 
     allocate_widgets();
-    main_menu_->have_saves(have_saves_);
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::BeginPlay()"));
 }
 
