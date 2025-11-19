@@ -2,7 +2,6 @@
 #include "Agame_state_base.h"
 #include "game_instance.h"
 #include "utility.hpp"
-#include "huds/Shud_widget_base.h"
 #include "huds/Sgame_setup.h"
 #include "huds/Sgenerating_galaxy.h"
 #include "huds/Smain_menu.h"
@@ -11,6 +10,19 @@
 
 
 Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_base(init) {}
+
+void Aplaying_hud::Tick(float DeltaTime)
+{
+    if (!confirm_dlg_)
+        return;
+
+    if (confirm_dlg_result_ != Sconfirm_dlg::result::waiting_for_user) {
+        if (confirm_dlg_result_ == Sconfirm_dlg::result::yes)
+            action_after_confirmation_();
+        hide_modal(modal_stack_.back());
+        confirm_dlg_.Reset();
+    }
+}
 
 void Aplaying_hud::saves_list(TArray<FString> const & saves)
 {
@@ -46,6 +58,25 @@ void Aplaying_hud::escape_pressed()
 #endif
 
     show_main_menu();
+}
+
+void Aplaying_hud::do_after_confirming(std::function<void()> action,
+                                       FString title,
+                                       FString message,
+                                       FString yes_button,
+                                       FString no_button)
+{
+    check(action); // TODO: Change other asserts to check() throughout.
+    check(!confirm_dlg_);
+    action_after_confirmation_ = std::move(action);
+    confirm_dlg_result_ = Sconfirm_dlg::result::waiting_for_user;
+    confirm_dlg_ = SNew(Sconfirm_dlg)
+                       .title(std::move(title))
+                       .message(std::move(message))
+                       .yes_button(std::move(yes_button))
+                       .no_button(std::move(no_button))
+                       .result_ptr(&confirm_dlg_result_);
+    show_modal(confirm_dlg_.Get());
 }
 
 void Aplaying_hud::show_main_menu()
