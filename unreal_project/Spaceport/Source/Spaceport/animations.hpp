@@ -17,7 +17,8 @@ struct animation
         FString const & curve_object_path,
         float dur,
         std::function<void(float)> apply_value) :
-        curve_(curve_object_path), apply_value_(std::move(apply_value)),
+        curve_(curve_object_path),
+        apply_value_(std::move(apply_value)),
         dur_(dur)
     {
         assert(0.0f < dur);
@@ -59,6 +60,24 @@ private:
 
 struct animations
 {
+private:
+    struct then_enabler
+    {
+        void then(animation anim)
+        {
+            using namespace adobe::literals;
+            int const inserting_at_index = (int)this_->animations_.size();
+            this_->insert(""_name, std::move(anim));
+            this_->animations_[just_inserted_index_].run_next_index_ =
+                inserting_at_index;
+        }
+
+        animations * this_ = nullptr;
+        int just_inserted_index_ = 0;
+    };
+    friend then_enabler;
+
+public:
     animations() = default;
     animations(animations const &) = delete;
     animations & operator=(animations const &) = delete;
@@ -67,7 +86,9 @@ struct animations
 
     void start(adobe::name_t name)
     {
-        for (auto & [name_, anim] : animations_) {
+        using namespace adobe::literals;
+        assert(name != ""_name);
+        for (auto & [name_, anim, _] : animations_) {
             if (name_ == name) {
                 anim.start();
                 break;
@@ -77,19 +98,31 @@ struct animations
 
     void update(float dt)
     {
-        for (auto & [name, anim] : animations_) {
-            if (anim.running())
+        for (auto & [name, anim, next] : animations_) {
+            if (anim.running()) {
                 anim.update(dt);
+                if (!anim.running() && 0 < next)
+                    animations_[next].anim_.start();
+            }
         }
     }
 
-    void insert(adobe::name_t name, animation anim)
+    then_enabler insert(adobe::name_t name, animation anim)
     {
-        animations_.emplace_back(name, std::move(anim));
-        animations_.back().second.running_count_ = &running_count_;
+        int const inserting_at_index = (int)animations_.size();
+        animations_.push_back(animation_info{name, std::move(anim), -1});
+        animations_.back().anim_.running_count_ = &running_count_;
+        return {this, inserting_at_index};
     }
 
 private:
-    std::vector<std::pair<adobe::name_t, animation>> animations_;
+    struct animation_info
+    {
+        adobe::name_t name_;
+        animation anim_;
+        int run_next_index_ = -1;
+    };
+
+    std::vector<animation_info> animations_;
     int running_count_ = 0;
 };
