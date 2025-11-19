@@ -4,7 +4,6 @@
 
 #include <filesystem>
 #include <functional>
-#include <cassert>
 
 #include <AssetRegistry/AssetRegistryModule.h>
 #include <CoreMinimal.h>
@@ -33,14 +32,13 @@ public:
         start_level_(FString(TEXT("/Game/levels/start/start_screen.start_screen"))),
         playing_level_(FString(TEXT("/Game/levels/playing.playing")))
     {
-        assert(!self_ptr_);
         self_ptr_ = this;
     }
 
     void
     watch_save_game_dir(std::function<void(std::vector<Ffile_change>)> callback)
     {
-        assert(callback);
+        check(callback);
         FString const dir = FPaths::ProjectSavedDir() + TEXT("SaveGames/");
         UE_LOG(LogTemp, Log, TEXT("Watching save dir %s for changes"), *dir);
         auto const & dir_chars = dir.GetCharArray();

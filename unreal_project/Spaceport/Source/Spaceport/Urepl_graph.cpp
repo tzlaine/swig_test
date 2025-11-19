@@ -35,8 +35,6 @@
 #include "GameplayDebuggerCategoryReplicator.h"
 #endif
 
-#include <cassert>
-
 
 namespace {
     void remove_connection_from_team(
@@ -127,7 +125,7 @@ Urepl_graph::Urepl_graph()
 
     // TODO: Add explicit class settings to explicit_classes_.
 
-    assert(std::ranges::none_of(
+    check(std::ranges::none_of(
         explicit_classes_, [](auto const & e) { return !e.class_; }));
 }
 

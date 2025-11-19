@@ -242,7 +242,7 @@ void Uvisibility_repl_graph_node::add_to_cells(
 void Uvisibility_repl_graph_node::set_allied(
     int nation_id_1, int nation_id_2, bool value)
 {
-    assert(nation_id_1 != nation_id_2);
+    check(nation_id_1 != nation_id_2);
 
     auto const change_alliance_status =
         [value](auto & allies, int other_nation) {

@@ -20,7 +20,7 @@ void Sconfirm_dlg::Construct(FArguments const & args)
     UFont * title_font = detail::stream_default_font();
 
     result_ptr_ = args._result_ptr;
-    assert(result_ptr_);
+    check(result_ptr_);
 
     ChildSlot[
         SNew(SConstraintCanvas)

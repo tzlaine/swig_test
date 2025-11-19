@@ -1,7 +1,5 @@
 #include "Shud_widget_base.h"
 
-#include <cassert>
-
 #include <Engine/World.h>
 #include <Engine/GameViewportClient.h>
 #include <Widgets/SViewport.h>

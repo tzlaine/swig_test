@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <vector>
-#include <cassert>
 
 #include <adobe/name.hpp>
 
@@ -21,7 +20,7 @@ struct animation
         apply_value_(std::move(apply_value)),
         dur_(dur)
     {
-        assert(0.0f < dur);
+        check(0.0f < dur);
     }
 
     bool running() const { return 0.0f <= t_; }
@@ -87,7 +86,7 @@ public:
     void start(adobe::name_t name)
     {
         using namespace adobe::literals;
-        assert(name != ""_name);
+        check(name != ""_name);
         for (auto & [name_, anim, _] : animations_) {
             if (name_ == name) {
                 anim.start();

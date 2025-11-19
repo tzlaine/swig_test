@@ -66,7 +66,7 @@ void Aplaying_hud::do_after_confirming(std::function<void()> action,
                                        FString yes_button,
                                        FString no_button)
 {
-    check(action); // TODO: Change other asserts to check() throughout.
+    check(action);
     check(!confirm_dlg_);
     action_after_confirmation_ = std::move(action);
     confirm_dlg_result_ = Sconfirm_dlg::result::waiting_for_user;
