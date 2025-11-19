@@ -18,6 +18,11 @@ void Sstyled_button::Construct(FArguments const & args_)
     }
     SButton::Construct(args);
 
-    if (has_text)
-        SButton::SetContent(SNew(Sstyled_text_block).Text(args._Text));
+    if (has_text) {
+        auto text = SNew(Sstyled_text_block).Text(args._Text);
+        auto with_padding =
+            SNew(SVerticalBox) +
+            SVerticalBox::Slot().Padding(10.0f).HAlign(HAlign_Center)[text];
+        SButton::SetContent(with_padding);
+    }
 }
