@@ -15,11 +15,19 @@
 #include <Widgets/Text/STextBlock.h>
 
 
+using namespace adobe::literals;
+
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-Smain_menu::Smain_menu() :
-    animation_curve_(FString(TEXT("/Game/sigmoid_curve.sigmoid_curve")))
-{}
+Smain_menu::Smain_menu()
+{
+    anims_.insert(
+        "fadein"_name,
+        animation(
+            FString(TEXT("/Game/sigmoid_curve.sigmoid_curve")),
+            0.1,
+            [this](float value) { SetRenderOpacity(value); }));
+}
 
 void Smain_menu::Construct(FArguments const & args)
 {
@@ -178,25 +186,16 @@ bool Smain_menu::cancelable()
 void Smain_menu::show(UWorld * w)
 {
     Shud_widget_base::show(w);
-    animation_curve_.LoadSynchronous();
-    animation_t_ = 0.0f;
-    SetRenderOpacity(0);
+    anims_.start("fadein"_name);
 }
 
 void Smain_menu::Tick(FGeometry const & g, double t, float dt)
 {
     Shud_widget_base::Tick(g, t, dt);
-    if (animation_t_ < 0.0f || !animation_curve_)
+    if (!anims_.need_update())
         return;
 
-    UE_LOG(LogTemp, Warning, TEXT("animating")); // TODO
-
-    animation_t_ += dt;
-    float const animation_alpha = std::min(animation_t_ / animation_dur_, 1.0f);
-    float const animated_value = animation_curve_->GetFloatValue(animation_alpha);
-    SetRenderOpacity(animated_value);
-    if (animation_dur_ < animation_t_)
-        animation_t_ = -1.0f;
+    anims_.update(dt);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

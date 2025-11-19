@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Shud_widget_base.h"
+#include "animations.hpp"
 #include "widgets/Sstyled_button.h"
 
 #include <CoreMinimal.h>
@@ -35,9 +36,7 @@ private:
     TSharedPtr<Sstyled_button> continue_bn_;
     TSharedPtr<Sstyled_button> load_game_bn_;
 
-    TSoftObjectPtr<UCurveFloat> animation_curve_;
-    float animation_t_ = -1.0f;
-    float animation_dur_ = 0.1;
+    animations anims_;
 
     bool in_game_ = true;
 };
