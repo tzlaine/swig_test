@@ -1443,7 +1443,7 @@ TEST(generation_tests, generate_system)
     auto const pos = hex_position(hc, map_height);
     int const system_id = 0;
 
-    generation::detail::planets_scratch all_planets;
+    generation::detail::system_scratch all_planets;
 
     std::vector<double> radii;
     std::vector<double> masses;
@@ -1458,10 +1458,10 @@ TEST(generation_tests, generate_system)
     {
         system_t system;
         while (system.star.solar_luminosities < 0.8 || 1.2 < system.star.solar_luminosities) {
-            system.first_planet = all_planets.size();
+            system.first_planet = all_planets.planets_.size();
             generation::detail::generate_system_impl(
                 system, all_planets, hc, pos, system_id, get_intermediate_values);
-            system.last_planet = all_planets.size();
+            system.last_planet = all_planets.planets_.size();
         }
 
         dump(system);
@@ -1742,7 +1742,7 @@ TEST(generation_tests, generate_hex)
             center_hex_pos, habitable_systems_per_hex, hex_scratch_);
 
         EXPECT_LE((size_t)habitable_systems_per_hex,
-                  hex_scratch_.size());
+                  hex_scratch_.systems_.size());
     }
     std::cout << std::format(
         "Generated {} habitable systems, {} systems total.\n",
