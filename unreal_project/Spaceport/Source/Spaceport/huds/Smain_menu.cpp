@@ -1,6 +1,8 @@
 #include "Smain_menu.h"
 #include "game_instance.h"
 #include "Amain_menu_controller.h"
+#include "Aplayer_controller.h"
+#include "Aplaying_hud.h"
 #include "widgets/Sstyled_text_block.h"
 
 #include <SlateOptMacros.h>
@@ -18,6 +20,15 @@
 using namespace adobe::literals;
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
+namespace {
+    Aplaying_hud * playing_hud()
+    {
+        auto * pc = Cast<Aplayer_controller>(
+            ::world()->GetFirstPlayerController());
+        return Cast<Aplaying_hud>(pc->GetHUD());
+    }
+}
 
 Smain_menu::Smain_menu()
 {
@@ -67,8 +78,13 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(continue_bn_, Sstyled_button)
         .Text(loc_text(TEXT("continue_game")))
-        .OnClicked_Lambda([] {
-            UE_LOG(LogTemp, Warning, TEXT("Continue"));
+        .OnClicked_Lambda([in_game = in_game_] {
+            if (in_game) {
+                if (auto * hud = playing_hud())
+                    hud->escape_pressed();
+            } else {
+                // TODO: Load most recent save.
+            }
             return FReply::Handled();
         })];
 
@@ -79,7 +95,7 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("save_game")))
             .OnClicked_Lambda([] {
-                UE_LOG(LogTemp, Warning, TEXT("Save Game"));
+                // TODO
                 return FReply::Handled();
             })];
     } else {
@@ -87,7 +103,6 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("new_game")))
             .OnClicked_Lambda([] {
-                UE_LOG(LogTemp, Warning, TEXT("New Game"));
                 Amain_menu_controller * pc = Cast<Amain_menu_controller>(
                     ::world()->GetFirstPlayerController());
                 pc->server_new_game(game_kind::sp, FFilePath());
@@ -100,14 +115,11 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(load_game_bn_, Sstyled_button)
         .Text(loc_text(TEXT("load_game")))
-        .OnClicked_Lambda([confirm = in_game_] {
-            UE_LOG(LogTemp, Warning, TEXT("Load Game"));
-            if (confirm) {
-                // TODO: pop up a confirmation dialog
-                // if (!...)
-                //     return;
+        .OnClicked_Lambda([in_game = in_game_] {
+            if (in_game) {
+                // TODO
             }
-            // TODO: load game
+            // TODO
             return FReply::Handled();
         })];
 
@@ -118,11 +130,11 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("exit_to_main_menu")))
             .OnClicked_Lambda([] {
-                UE_LOG(LogTemp, Warning, TEXT("Exit to main menu"));
-                // TODO: pop up a confirmation dialog
-                // if (!...)
-                //     return;
-                // TODO: end game, return to start_screen level
+                playing_hud()->do_after_confirming([]{
+                    Aplayer_controller * pc = Cast<Aplayer_controller>(
+                        ::world()->GetFirstPlayerController());
+                    pc->server_quit_to_menu();
+                });
                 return FReply::Handled();
             })];
     } else {
@@ -130,7 +142,6 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("multiplayer_game")))
             .OnClicked_Lambda([] {
-                UE_LOG(LogTemp, Warning, TEXT("Multiplayer Game"));
                 // TODO: open multiplayer setup hud
                 return FReply::Handled();
             })];
@@ -142,7 +153,7 @@ void Smain_menu::rebuild()
         SNew(Sstyled_button)
         .Text(loc_text(TEXT("options")))
         .OnClicked_Lambda([] {
-            UE_LOG(LogTemp, Warning, TEXT("Options"));
+            // TODO
             return FReply::Handled();
         })];
 
@@ -151,16 +162,13 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().AutoHeight()[
         SNew(Sstyled_button)
         .Text(loc_text(TEXT("exit_game")))
-        .OnClicked_Lambda([confirm = in_game_] {
-            UE_LOG(LogTemp, Warning, TEXT("Outta here!"));
+        .OnClicked_Lambda([in_game = in_game_] {
             // TODO: Do something different in mp, if this user is not the
             // host.
-            if (confirm) {
-                // TODO: pop up a confirmation dialog
-                // if (!...)
-                //     return;
-            }
-            quit_game();
+            if (in_game)
+                playing_hud()->do_after_confirming([]{quit_game();});
+            else
+                quit_game();
             return FReply::Handled();
         })];
 }
