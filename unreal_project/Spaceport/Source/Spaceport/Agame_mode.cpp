@@ -118,3 +118,11 @@ void Agame_mode::ready_for_mp_game()
 {
     // TODO
 }
+
+void Agame_mode::start_play()
+{
+    cast(GameState)->play_state_ = play_state::playing;
+    cast(GameState)->play_state_changed();
+
+    // TODO: Spawn actors; show map UI (side panel, etc.).
+}

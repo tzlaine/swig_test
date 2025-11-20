@@ -25,11 +25,3 @@ void Agame_mode_base::load_and_start_game_Implementation(
     Ugame_instance::get()->game_to_load(std::filesystem::path(*filename));
     multicast_load_playing();
 }
-
-void Agame_mode_base::start_play()
-{
-    cast(GameState)->play_state_ = play_state::playing;
-    cast(GameState)->play_state_changed();
-
-    // TODO: Spawn actors; show map UI (side panel, etc.).
-}

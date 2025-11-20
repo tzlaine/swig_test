@@ -16,12 +16,6 @@ class Agame_state_base : public AGameStateBase
 public:
     Agame_state_base();
 
-    UPROPERTY(ReplicatedUsing = play_state_changed, BlueprintReadOnly,
-              Category = "Game State")
-    play_state play_state_ = play_state::setup;
-    UFUNCTION()
-    void play_state_changed();
-
     UFUNCTION()
     void saves_changed();
     UPROPERTY(ReplicatedUsing = saves_changed, BlueprintReadOnly,

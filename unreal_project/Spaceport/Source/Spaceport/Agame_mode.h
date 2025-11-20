@@ -48,6 +48,7 @@ private:
 
     void ready_for_sp_game();
     void ready_for_mp_game();
+    void start_play();
 
     // generating the galaxy
     std::jthread generation_thread_;

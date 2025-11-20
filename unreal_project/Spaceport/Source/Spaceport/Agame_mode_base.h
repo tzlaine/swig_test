@@ -24,7 +24,5 @@ public:
     void load_and_start_game_Implementation(FString const & filename);
 
 protected:
-    void start_play();
-
     model model_;
 };

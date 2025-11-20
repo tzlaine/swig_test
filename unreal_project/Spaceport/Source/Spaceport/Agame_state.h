@@ -15,6 +15,12 @@ class Agame_state : public Agame_state_base
 public:
     Agame_state();
 
+    UPROPERTY(ReplicatedUsing = play_state_changed, BlueprintReadOnly,
+              Category = "Game State")
+    play_state play_state_ = play_state::setup;
+    UFUNCTION()
+    void play_state_changed();
+
 protected:
     void GetLifetimeReplicatedProps(
         TArray<FLifetimeProperty> & props) const override;
