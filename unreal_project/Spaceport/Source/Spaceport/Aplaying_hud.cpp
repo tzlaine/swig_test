@@ -9,95 +9,21 @@
 #include <Widgets/SViewport.h>
 
 
-Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_base(init) {}
-
-void Aplaying_hud::Tick(float DeltaTime)
+Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_base(init)
 {
-    if (!confirm_dlg_)
-        return;
-
-    if (confirm_dlg_result_ != Sconfirm_dlg::result::waiting_for_user) {
-        if (confirm_dlg_result_ == Sconfirm_dlg::result::yes)
-            action_after_confirmation_();
-        hide_modal(modal_stack_.back());
-        confirm_dlg_.Reset();
-    }
+    in_game(true);
 }
 
 void Aplaying_hud::saves_list(TArray<FString> const & saves)
 {
-    if (main_menu_)
-        main_menu_->have_saves(!saves.IsEmpty());
+    if (main_menu())
+        main_menu()->have_saves(!saves.IsEmpty());
     // TODO: Notify save/load ui
 }
 
 void Aplaying_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
     // TODO: Notify save/load ui
-}
-
-void Aplaying_hud::escape_pressed()
-{
-    if (!modal_stack_.empty()) {
-        if (modal_stack_.back()->cancelable()) {
-            modal_stack_.back()->cancel(GetWorld());
-            hide_modal(modal_stack_.back());
-        }
-        return;
-    }
-
-#if 0 // TODO
-    if (nonmodal_dialog_with_focus) {
-        if (nonmodal_dialog_with_focus->cancelable()) {
-            nonmodal_dialog_with_focus->cancel(GetWorld());
-            nonmodal_dialog_with_focus->hide();
-            nonmodal_dialog_with_focus = nullptr; // TODO: Move focus to the next one?
-            return;
-        }
-    }
-#endif
-
-    show_main_menu();
-}
-
-void Aplaying_hud::do_after_confirming(std::function<void()> action,
-                                       FString title,
-                                       FString message,
-                                       FString yes_button,
-                                       FString no_button)
-{
-    check(action);
-    check(!confirm_dlg_);
-    action_after_confirmation_ = std::move(action);
-    confirm_dlg_result_ = Sconfirm_dlg::result::waiting_for_user;
-    confirm_dlg_ = SNew(Sconfirm_dlg)
-                       .title(std::move(title))
-                       .message(std::move(message))
-                       .yes_button(std::move(yes_button))
-                       .no_button(std::move(no_button))
-                       .result_ptr(&confirm_dlg_result_);
-    show_modal(confirm_dlg_.Get());
-}
-
-void Aplaying_hud::show_main_menu()
-{
-    allocate_widgets();
-    show_modal(main_menu_.Get());
-
-    bool saves = false;
-    if (auto * gs = Cast<Agame_state_base>(
-            UGameplayStatics::GetGameState(GetWorld()))) {
-        saves = !gs->saves_.IsEmpty();
-    }
-    main_menu_->have_saves(saves);
-
-    // TODO: Sign up for dir watching while the main menu is up; cancel it
-    // afterward.  The results should go to the save/load ui.
-}
-void Aplaying_hud::hide_main_menu()
-{
-    allocate_widgets();
-    hide_modal(main_menu_.Get());
 }
 
 void Aplaying_hud::show_game_setup()
@@ -132,44 +58,23 @@ void Aplaying_hud::generating_percent_update(int u)
 
 void Aplaying_hud::BeginPlay()
 {
-    UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::BeginPlay()"));
     Super::BeginPlay();
-
+    UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::BeginPlay()"));
     allocate_widgets();
-
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::BeginPlay()"));
 }
 
 void Aplaying_hud::EndPlay(EEndPlayReason::Type reason)
 {
-    UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::EndPlay()"));
     Super::EndPlay(reason);
-
-    for (auto * widget : modal_stack_) {
-        widget->hide(GetWorld());
-    }
-    modal_stack_.clear();
-
+    UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::EndPlay()"));
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::EndPlay()"));
 }
 
 void Aplaying_hud::allocate_widgets()
 {
-    if (main_menu_)
+    if (game_setup_)
         return;
-    main_menu_ = SNew(Smain_menu).in_game(true);
     game_setup_ = SNew(Sgame_setup);
     generating_galaxy_ = SNew(Sgenerating_galaxy);
-}
-
-void Aplaying_hud::show_modal(Shud_widget_base * widget)
-{
-    widget->show(GetWorld());
-    modal_stack_.push_back(widget);
-}
-
-void Aplaying_hud::hide_modal(Shud_widget_base * widget)
-{
-    widget->hide(GetWorld());
-    std::erase(modal_stack_, widget);
 }

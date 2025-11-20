@@ -20,7 +20,6 @@ public:
 
     void saves_list(TArray<FString> const & saves) override;
     void saves_changed(TArray<Ffile_change> const & changes) override;
-    void escape_pressed() override;
 
 protected:
     void BeginPlay() override;

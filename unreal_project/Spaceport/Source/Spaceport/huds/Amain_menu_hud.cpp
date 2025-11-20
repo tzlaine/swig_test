@@ -9,7 +9,9 @@
 
 Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) :
     Ahud_base(init)
-{}
+{
+    in_game(false);
+}
 
 void Amain_menu_hud::saves_list(TArray<FString> const & saves)
 {
@@ -21,8 +23,6 @@ void Amain_menu_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
     // TODO: Notify the save/load ui
 }
-
-void Amain_menu_hud::escape_pressed() {}
 
 void Amain_menu_hud::BeginPlay()
 {
