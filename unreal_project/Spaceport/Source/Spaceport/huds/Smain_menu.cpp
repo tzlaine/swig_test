@@ -4,6 +4,8 @@
 #include "Aplayer_controller.h"
 #include "Aplaying_hud.h"
 #include "widgets/Sstyled_text_block.h"
+#include "text/grapheme_break.hpp"
+#include "text/beman_utf_view/utf_view.hpp"
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
@@ -46,6 +48,8 @@ void Smain_menu::Construct(FArguments const & args)
 
     in_game_ = args._in_game;
 
+    TSharedPtr<SHorizontalBox> title_hbox;
+
     ChildSlot[
         SNew(SConstraintCanvas)
 
@@ -54,13 +58,15 @@ void Smain_menu::Construct(FArguments const & args)
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.2, 0.2, 0.8, 0.2))
-        .Offset(FMargin(0, 0, 0, 154.654633))
-        [SNew(STextBlock)
-            .Font(FSlateFontInfo(title_font,
-                                 ui_defaults().title_font_size_ * 2))
-            .Text(NSLOCTEXT("strings", "main_menu_game_title",
-                            "F    O    R    E    X"))
-            .Justification(ETextJustify::Center)]
+        .Offset(FMargin(0, 0, 0, 155))[
+            SNew(SHorizontalBox)
+            +SHorizontalBox::Slot().FillWidth(5)
+
+            +SHorizontalBox::Slot().FillWidth(90)[
+                SAssignNew(title_hbox, SHorizontalBox)]
+
+            +SHorizontalBox::Slot().FillWidth(5)
+        ]
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.4, 0.45, 0.6, 0.8))
@@ -68,6 +74,29 @@ void Smain_menu::Construct(FArguments const & args)
     ];
 
     rebuild();
+
+    FString game_title = loc_text(TEXT("main_menu_game_title")).ToString();
+    auto const * const title_first = &*game_title.begin();
+    auto const * const title_last = title_first + game_title.Len();
+    auto r = std::ranges::subrange(title_first, title_last) |
+             beman::utf_view::to_utf32;
+    auto cp_first = r.begin();
+    auto const cp_last = r.end();
+    while (cp_first != cp_last) {
+        if (cp_first != r.begin())
+            title_hbox->AddSlot().FillWidth(1);
+        auto grapheme_last = text::next_grapheme_break(cp_first, cp_last);
+        auto str = FString(
+            grapheme_last.base() - cp_first.base(), cp_first.base());
+        title_hbox->AddSlot().AutoWidth()[
+            SNew(Sstyled_text_block)
+            .Text(FText::FromString(str))
+            .Font(FSlateFontInfo(title_font,
+                                 ui_defaults().title_font_size_ * 2))];
+        cp_first = grapheme_last;
+        if (cp_first != cp_last)
+            title_hbox->AddSlot().FillWidth(1);
+    }
 
     SetRenderOpacity(in_game_ ? 0 : 1);
 }
