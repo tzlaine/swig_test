@@ -3,6 +3,7 @@
 #include "Aplaying_hud.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
+#include "utility.hpp"
 
 #include <filesystem>
 
@@ -14,8 +15,7 @@ namespace {
     }
 }
 
-Agame_mode::Agame_mode(FObjectInitializer const & init) :
-    AGameModeBase(init)
+Agame_mode::Agame_mode(FObjectInitializer const & init) : Agame_mode_base(init)
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode CTOR"));
     HUDClass = Aplaying_hud::StaticClass();
@@ -31,9 +31,8 @@ Agame_mode::Agame_mode(FObjectInitializer const & init) :
 
 void Agame_mode::BeginPlay()
 {
-    UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::BeginPlay()"));
     Super::BeginPlay();
-
+    UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::BeginPlay()"));
     if (Ugame_instance::get()->game_kind() == game_kind::sp)
         ready_for_sp_game();
     else
@@ -88,7 +87,13 @@ void Agame_mode::distribute_initial_game_state_Implementation(
         });
 }
 
-Aplaying_hud * Agame_mode::hud() const
+void Agame_mode::save_game(FString const & filename)
+{
+    std::filesystem::path path(*filename);
+    model_.save(std::move(path));
+}
+
+Aplaying_hud * Agame_mode::hud() const // TODO: Remove.
 {
     if (auto * const pc = GetWorld()->GetFirstPlayerController())
         return Cast<Aplaying_hud>(pc->GetHUD());
@@ -104,20 +109,12 @@ void Agame_mode::ready_for_sp_game()
         if (auto * hud_ptr = hud())
             hud_ptr->show_game_setup();
     } else {
-        // TODO model_.load(load_path);
-        // TODO distribute_initial_game_state(TArray<uint8>{});
+        model_.load(load_path);
+        distribute_initial_game_state(TArray<uint8>{});
     }
 }
 
 void Agame_mode::ready_for_mp_game()
 {
     // TODO
-}
-
-void Agame_mode::start_play()
-{
-    // TODO: Set starting data into an APlayerCharacter (I think?) for each
-    // player
-    cast(GameState)->play_state_ = play_state::playing;
-    cast(GameState)->play_state_changed();
 }

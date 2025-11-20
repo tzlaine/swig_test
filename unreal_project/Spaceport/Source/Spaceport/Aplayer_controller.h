@@ -29,6 +29,10 @@ public:
     void server_start_game(TArray<uint8> const & params);
     void server_start_game_Implementation(TArray<uint8> const & params);
 
+    UFUNCTION(Server, Reliable)
+    void server_save_game(FString const & filename);
+    void server_save_game_Implementation(FString const & filename);
+
     int nation_id() const { return nation_id_; }
 
 private:

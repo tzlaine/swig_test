@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Agame_state_base.h"
-#include "Agame_mode.h"
 
 #include <CoreMinimal.h>
 #include <GameFramework/GameStateBase.h>
@@ -15,12 +14,6 @@ class Agame_state : public Agame_state_base
 
 public:
     Agame_state();
-
-    UPROPERTY(ReplicatedUsing = play_state_changed, BlueprintReadOnly,
-              Category = "Game State")
-    play_state play_state_ = play_state::setup;
-    UFUNCTION()
-    void play_state_changed();
 
 protected:
     void GetLifetimeReplicatedProps(

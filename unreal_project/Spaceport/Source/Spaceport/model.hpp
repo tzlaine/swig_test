@@ -122,7 +122,7 @@ struct model
             save_queue_.try_push(std::pair(game_state(), std::move(path)));
     }
 
-    void load(std::filesystem::path path)
+    void load(std::filesystem::path const & path)
     {
         game_state_ = boost::shared_ptr<game_state_t>(new game_state_t);
         deserialize_message(*game_state_, path);

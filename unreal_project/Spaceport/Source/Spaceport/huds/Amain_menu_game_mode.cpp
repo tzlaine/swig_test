@@ -14,7 +14,7 @@ namespace {
 }
 
 Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
-    AGameModeBase(init)
+    Agame_mode_base(init)
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode CTOR"));
     HUDClass = Amain_menu_hud::StaticClass();
@@ -49,11 +49,6 @@ void Amain_menu_game_mode::EndPlay(EEndPlayReason::Type reason)
 
     Ugame_instance::get()->unwatch_save_game_dir();
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_game_mode::EndPlay()"));
-}
-
-void Amain_menu_game_mode::multicast_new_game_Implementation()
-{
-    Ugame_instance::get()->load_playing_level();
 }
 
 void Amain_menu_game_mode::saves_dir_changed(

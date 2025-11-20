@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Agame_mode_base.h"
 #include "dir_watcher.h"
 
 #include <CoreMinimal.h>
@@ -8,7 +9,7 @@
 
 
 UCLASS()
-class Amain_menu_game_mode : public AGameModeBase
+class Amain_menu_game_mode : public Agame_mode_base
 {
     GENERATED_BODY()
 
@@ -17,10 +18,6 @@ public:
 
     void BeginPlay() override;
     void EndPlay(EEndPlayReason::Type reason) override;
-
-    UFUNCTION(NetMulticast, Reliable)
-    void multicast_new_game();
-    void multicast_new_game_Implementation();
 
 private:
     void saves_dir_changed(std::vector<Ffile_change> changes);

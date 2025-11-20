@@ -88,14 +88,9 @@ public:
     {
         return game_to_load_;
     }
-    void game_to_load(FFilePath const & path)
+    void game_to_load(std::filesystem::path path)
     {
-#if _MSC_VER
-        std::wstring s(*path.FilePath);
-#else
-        std::string s(TCHAR_TO_UTF8(*path.FilePath));
-#endif
-        game_to_load_ = std::filesystem::path(std::move(s));
+        game_to_load_ = std::move(path);
     }
 
     UPROPERTY(EditAnywhere, Category = "Localization")

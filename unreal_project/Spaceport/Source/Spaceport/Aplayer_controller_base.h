@@ -21,6 +21,10 @@ public:
     void BeginPlay() override;
     void SetupInputComponent() override;
 
+    UFUNCTION(Server, Reliable)
+    void server_load_game(FString const & filename);
+    void server_load_game_Implementation(FString const & filename);
+
 private:
     TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
     TSoftObjectPtr<UInputAction> menu_toggle_action_;

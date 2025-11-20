@@ -1,6 +1,7 @@
 #include "Aplayer_controller_base.h"
-// TODO
-#include "Aplaying_hud.h"
+#include "Ahud_base.h"
+#include "Agame_mode_base.h"
+#include "utility.hpp"
 
 #include <EnhancedInputComponent.h>
 #include <EnhancedInputSubsystems.h>
@@ -9,14 +10,6 @@
 #include <Engine/LocalPlayer.h>
 #include <Engine/World.h>
 
-
-namespace {
-    // TODO: Also need a hud base, instead of using just this.
-    Aplaying_hud * cast(AHUD * base)
-    {
-        return Cast<Aplaying_hud>(base);
-    }
-}
 
 Aplayer_controller_base::Aplayer_controller_base() :
     input_mapping_ctx_(FString(TEXT("/Game/ui/input/input_mapping_context.input_mapping_context"))),
@@ -40,9 +33,8 @@ void Aplayer_controller_base::BeginPlay()
     UInputMappingContext * imc = input_mapping_ctx_.LoadSynchronous();
 
     if (ULocalPlayer * local_player = GetLocalPlayer()) {
-        if (UEnhancedInputLocalPlayerSubsystem * input_sys =
-                local_player
-                    ->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
+        if (auto * input_sys =
+            local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
             if (imc)
                 input_sys->AddMappingContext(imc, 0);
         }
@@ -55,15 +47,24 @@ void Aplayer_controller_base::SetupInputComponent()
 
     EnableInput(this);
 
-    if (UEnhancedInputComponent * eic =
-            Cast<UEnhancedInputComponent>(InputComponent)) {
+    if (auto * eic = Cast<UEnhancedInputComponent>(InputComponent)) {
         UInputAction * menu_toggle = menu_toggle_action_.LoadSynchronous();
         if (menu_toggle) {
             eic->BindActionInstanceLambda(
                 menu_toggle, ETriggerEvent::Started, [this](auto const &) {
-                    if (auto * hud = cast(GetHUD()))
+                    if (auto * hud = hud_base(GetHUD()))
                         hud->escape_pressed();
                 });
         }
     }
+}
+
+void Aplayer_controller_base::server_load_game_Implementation(
+    FString const & filename)
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    if (!gm)
+        return;
+
+    gm->load_and_start_game(filename);
 }

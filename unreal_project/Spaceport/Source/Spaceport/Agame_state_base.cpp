@@ -11,6 +11,12 @@ Agame_state_base::Agame_state_base()
     bOnlyRelevantToOwner = false;
 }
 
+void Agame_state_base::play_state_changed()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Client: play state changed to %s"),
+           *UEnum::GetValueAsString(play_state_));
+}
+
 void Agame_state_base::saves_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("List of saves changed to: %s"),
@@ -38,6 +44,7 @@ void Agame_state_base::GetLifetimeReplicatedProps(
     TArray<FLifetimeProperty> & OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(Agame_state_base, play_state_);
     DOREPLIFETIME(Agame_state_base, saves_);
     DOREPLIFETIME(Agame_state_base, save_file_changes_);
 }

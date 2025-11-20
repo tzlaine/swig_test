@@ -2,6 +2,7 @@
 #include "Agame_mode.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
+#include "utility.hpp"
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_spin_box.h"
 #include "widgets/Sstyled_text_block.h"
@@ -75,7 +76,7 @@ void Sgame_setup::Construct(FArguments const & args)
                     SNew(Sstyled_button).Text(loc_text(TEXT("play")))
                     .OnClicked_Lambda([this] {
                         TArray<uint8> params = to_tarray(params_);
-                        Aplayer_controller * pc = Cast<Aplayer_controller>(
+                        auto * pc = Cast<Aplayer_controller>(
                             ::world()->GetFirstPlayerController());
                         pc->server_start_game(params);
                         return FReply::Handled();
@@ -184,7 +185,7 @@ void Sgame_setup::cancel(UWorld *)
 
 void Sgame_setup::back()
 {
-    Aplayer_controller * pc = Cast<Aplayer_controller>(
+    auto * pc = Cast<Aplayer_controller>(
         ::world()->GetFirstPlayerController());
     pc->server_quit_to_menu();
 }

@@ -1,5 +1,5 @@
 #include "Smain_menu.h"
-#include "game_instance.h"
+#include "utility.hpp"
 #include "Amain_menu_controller.h"
 #include "Aplayer_controller.h"
 #include "Aplaying_hud.h"
@@ -22,15 +22,6 @@
 using namespace adobe::literals;
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
-
-namespace {
-    Aplaying_hud * playing_hud()
-    {
-        auto * pc = Cast<Aplayer_controller>(
-            ::world()->GetFirstPlayerController());
-        return Cast<Aplaying_hud>(pc->GetHUD());
-    }
-}
 
 Smain_menu::Smain_menu()
 {
@@ -133,7 +124,7 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("new_game")))
             .OnClicked_Lambda([] {
-                Amain_menu_controller * pc = Cast<Amain_menu_controller>(
+                auto * pc = Cast<Amain_menu_controller>(
                     ::world()->GetFirstPlayerController());
                 pc->server_new_game(game_kind::sp, FFilePath());
                 return FReply::Handled();
@@ -148,8 +139,11 @@ void Smain_menu::rebuild()
         .OnClicked_Lambda([in_game = in_game_] {
             if (in_game) {
                 // TODO
+            } else {
+                auto * pc = Cast<Aplayer_controller_base>(
+                    ::world()->GetFirstPlayerController());
+                pc->server_load_game(TEXT("FILENAME."));
             }
-            // TODO
             return FReply::Handled();
         })];
 
@@ -161,7 +155,7 @@ void Smain_menu::rebuild()
             .Text(loc_text(TEXT("exit_to_main_menu")))
             .OnClicked_Lambda([] {
                 playing_hud()->do_after_confirming([]{
-                    Aplayer_controller * pc = Cast<Aplayer_controller>(
+                    auto * pc = Cast<Aplayer_controller>(
                         ::world()->GetFirstPlayerController());
                     pc->server_quit_to_menu();
                 });

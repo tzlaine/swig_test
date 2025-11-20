@@ -1,12 +1,14 @@
 #pragma once
 
+#include "Aplayer_controller_base.h"
+
 #include <CoreMinimal.h>
 #include <GameFramework/PlayerController.h>
 #include "Amain_menu_controller.generated.h"
 
 
 UCLASS()
-class Amain_menu_controller : public APlayerController
+class Amain_menu_controller : public Aplayer_controller_base
 {
     GENERATED_BODY()
 
