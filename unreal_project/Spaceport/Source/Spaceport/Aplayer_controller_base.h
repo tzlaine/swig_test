@@ -22,6 +22,10 @@ public:
     void SetupInputComponent() override;
 
     UFUNCTION(Server, Reliable)
+    void server_req_save_files();
+    void server_req_save_files_Implementation();
+
+    UFUNCTION(Server, Reliable)
     void server_load_game(FString const & filename);
     void server_load_game_Implementation(FString const & filename);
 

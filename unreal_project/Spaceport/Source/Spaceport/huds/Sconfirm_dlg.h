@@ -18,6 +18,7 @@ public:
         {}
     SLATE_ARGUMENT(FString, title)
     SLATE_ARGUMENT(FString, message)
+    SLATE_ARGUMENT(FText, message_as_text)
     SLATE_ARGUMENT(FString, yes_button)
     SLATE_ARGUMENT(FString, no_button)
     SLATE_ARGUMENT(result *, result_ptr)
@@ -25,6 +26,9 @@ public:
 
     void Construct(FArguments const & args);
 
+    bool cancelable() override;
+
 private:
     result * result_ptr_ = nullptr;
+    bool cancelable_ = false;
 };

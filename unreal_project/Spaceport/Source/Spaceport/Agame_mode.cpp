@@ -47,13 +47,13 @@ void Agame_mode::Tick(float secs)
     if (cast(GameState)->play_state_ == play_state::generating) {
         int percent_update = 0;
         if (percent_complete_->try_pop(percent_update)) {
-            if (auto * hud_ptr = hud())
+            if (auto * hud_ptr = playing_hud())
                 hud_ptr->generating_percent_update(percent_update);
         }
 
         if (generation_complete_) {
             start_play();
-            if (auto * hud_ptr = hud())
+            if (auto * hud_ptr = playing_hud())
                 hud_ptr->hide_generating_galaxy();
         }
     }
@@ -72,7 +72,7 @@ void Agame_mode::distribute_initial_game_state_Implementation(
         return;
     }
 
-    if (auto * hud_ptr = hud())
+    if (auto * hud_ptr = playing_hud())
         hud_ptr->show_generating_galaxy();
 
     cast(GameState)->play_state_ = play_state::generating;
@@ -89,15 +89,9 @@ void Agame_mode::distribute_initial_game_state_Implementation(
 
 void Agame_mode::save_game(FString const & filename)
 {
-    std::filesystem::path path(*filename);
-    model_.save(std::move(path));
-}
-
-Aplaying_hud * Agame_mode::hud() const // TODO: Remove.
-{
-    if (auto * const pc = GetWorld()->GetFirstPlayerController())
-        return Cast<Aplaying_hud>(pc->GetHUD());
-    return nullptr;
+    auto f = to_path(filename);
+    f += TEXT(".sav");
+    model_.save(save_dir_path() / f);
 }
 
 void Agame_mode::ready_for_sp_game()
@@ -106,11 +100,20 @@ void Agame_mode::ready_for_sp_game()
     if (load_path.empty()) {
         cast(GameState)->play_state_ = play_state::setup;
         cast(GameState)->play_state_changed();
-        if (auto * hud_ptr = hud())
+        if (auto * hud_ptr = playing_hud())
             hud_ptr->show_game_setup();
     } else {
-        model_.load(load_path);
-        distribute_initial_game_state(TArray<uint8>{});
+        try {
+            model_.load(load_path);
+            distribute_initial_game_state(TArray<uint8>{});
+        } catch (failed_deserialization const & e) {
+            FText message = FText::Format(
+                loc_text(TEXT("load_game_failed_message")),
+                FText::FromString(FString(e.what())));
+            Ugame_instance::get()->defer_notification(
+                level::start, TEXT("load_game_failed"), std::move(message));
+            multicast_quit_to_menu();
+        }
     }
 }
 

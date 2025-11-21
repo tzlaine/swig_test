@@ -23,6 +23,8 @@ public:
     void load_and_start_game(FString const & filename);
     void load_and_start_game_Implementation(FString const & filename);
 
+    void publish_save_files();
+
 protected:
     model model_;
 };

@@ -178,7 +178,7 @@ bool Sgame_setup::cancelable()
     return true;
 }
 
-void Sgame_setup::cancel(UWorld *)
+void Sgame_setup::cancel()
 {
     back();
 }

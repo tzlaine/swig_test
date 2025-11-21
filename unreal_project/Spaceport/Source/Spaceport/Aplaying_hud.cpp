@@ -16,37 +16,37 @@ Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_base(init)
 
 void Aplaying_hud::saves_list(TArray<FString> const & saves)
 {
+    Ahud_base::saves_list(saves);
     if (main_menu())
         main_menu()->have_saves(!saves.IsEmpty());
-    // TODO: Notify save/load ui
 }
 
 void Aplaying_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
-    // TODO: Notify save/load ui
+    Ahud_base::saves_changed(changes);
 }
 
 void Aplaying_hud::show_game_setup()
 {
     allocate_widgets();
-    show_modal(game_setup_.Get());
+    show_modal(game_setup_);
 }
 void Aplaying_hud::hide_game_setup()
 {
     allocate_widgets();
-    hide_modal(game_setup_.Get());
+    hide_modal(game_setup_);
 }
 
 void Aplaying_hud::show_generating_galaxy()
 {
     allocate_widgets();
-    show_modal(generating_galaxy_.Get());
+    show_modal(generating_galaxy_);
     generating_progress_ = 0;
 }
 void Aplaying_hud::hide_generating_galaxy()
 {
     allocate_widgets();
-    hide_modal(generating_galaxy_.Get());
+    hide_modal(generating_galaxy_);
 }
 void Aplaying_hud::generating_percent_update(int u)
 {
@@ -61,6 +61,7 @@ void Aplaying_hud::BeginPlay()
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::BeginPlay()"));
     allocate_widgets();
+    show_deferred_notifications(level::playing);
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::BeginPlay()"));
 }
 

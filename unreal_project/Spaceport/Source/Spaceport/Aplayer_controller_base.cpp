@@ -59,6 +59,15 @@ void Aplayer_controller_base::SetupInputComponent()
     }
 }
 
+void Aplayer_controller_base::server_req_save_files_Implementation()
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    if (!gm)
+        return;
+
+    gm->publish_save_files();
+}
+
 void Aplayer_controller_base::server_load_game_Implementation(
     FString const & filename)
 {

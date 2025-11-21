@@ -2,6 +2,7 @@
 
 #include "dir_watcher.h"
 
+#include <array>
 #include <filesystem>
 #include <functional>
 
@@ -21,6 +22,11 @@ UENUM(BlueprintType)
 enum class game_kind : uint8 {
     sp,
     mp
+};
+
+enum class level {
+    start,
+    playing
 };
 
 UCLASS()
@@ -94,6 +100,21 @@ public:
         game_to_load_ = std::move(path);
     }
 
+    struct deferred_notification
+    {
+        FString title_;
+        FText msg_;
+    };
+    std::vector<deferred_notification> deferred_notifications(level l)
+    {
+        return std::move(deferred_notifications_[(int)l]);
+    }
+    void defer_notification(level l, FString title, FText msg)
+    {
+        deferred_notifications_[(int)l].emplace_back(
+            std::move(title), std::move(msg));
+    }
+
     UPROPERTY(EditAnywhere, Category = "Localization")
     TSoftObjectPtr<UStringTable> string_table_;
 
@@ -132,6 +153,8 @@ private:
     std::unique_ptr<dir_watcher> dir_watcher_;
     FTimerHandle dir_watch_updates_handle_;
     std::function<void(std::vector<Ffile_change>)> dir_watcher_cb_;
+
+    std::array<std::vector<deferred_notification>, 2> deferred_notifications_;
 
     inline static Ugame_instance * self_ptr_ = nullptr;
 };

@@ -28,7 +28,7 @@ public:
     void have_saves(bool b);
 
     bool cancelable() override;
-    void show(UWorld * w) override;
+    void show() override;
 
 private:
     TSharedPtr<SVerticalBox> vbox_;

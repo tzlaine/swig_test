@@ -15,7 +15,7 @@ public:
     void Construct(FArguments const & args);
 
     virtual bool cancelable();
-    virtual void cancel(UWorld * w);
-    virtual void show(UWorld * w);
-    virtual void hide(UWorld * w);
+    virtual void cancel();
+    virtual void show();
+    virtual void hide();
 };

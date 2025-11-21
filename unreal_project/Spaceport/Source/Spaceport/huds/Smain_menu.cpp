@@ -99,12 +99,12 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(continue_bn_, Sstyled_button)
         .Text(loc_text(TEXT("continue_game")))
-        .OnClicked_Lambda([in_game = in_game_] {
+        .OnClicked_Lambda([in_game = in_game_, this] {
             if (in_game) {
-                if (auto * hud = playing_hud())
-                    hud->escape_pressed();
+                hide();
             } else {
-                // TODO: Load most recent save.
+                if (auto * pc = main_menu_controller())
+                    pc->server_load_newest_game();
             }
             return FReply::Handled();
         })];
@@ -116,7 +116,8 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("save_game")))
             .OnClicked_Lambda([] {
-                // TODO
+                if (auto * hud = hud_base())
+                    hud->show_save_load_dlg(true);
                 return FReply::Handled();
             })];
     } else {
@@ -124,9 +125,8 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("new_game")))
             .OnClicked_Lambda([] {
-                auto * pc = Cast<Amain_menu_controller>(
-                    ::world()->GetFirstPlayerController());
-                pc->server_new_game(game_kind::sp, FFilePath());
+                if (auto * pc = main_menu_controller())
+                    pc->server_new_game(game_kind::sp, FFilePath());
                 return FReply::Handled();
             })];
     }
@@ -136,14 +136,9 @@ void Smain_menu::rebuild()
     vbox_->AddSlot().AutoHeight()[
         SAssignNew(load_game_bn_, Sstyled_button)
         .Text(loc_text(TEXT("load_game")))
-        .OnClicked_Lambda([in_game = in_game_] {
-            if (in_game) {
-                // TODO
-            } else {
-                auto * pc = Cast<Aplayer_controller_base>(
-                    ::world()->GetFirstPlayerController());
-                pc->server_load_game(TEXT("FILENAME."));
-            }
+        .OnClicked_Lambda([] {
+            if (auto * hud = hud_base())
+                hud->show_save_load_dlg(false);
             return FReply::Handled();
         })];
 
@@ -155,9 +150,8 @@ void Smain_menu::rebuild()
             .Text(loc_text(TEXT("exit_to_main_menu")))
             .OnClicked_Lambda([] {
                 playing_hud()->do_after_confirming([]{
-                    auto * pc = Cast<Aplayer_controller>(
-                        ::world()->GetFirstPlayerController());
-                    pc->server_quit_to_menu();
+                    if (auto * pc = player_controller())
+                        pc->server_quit_to_menu();
                 });
                 return FReply::Handled();
             })];
@@ -212,12 +206,12 @@ void Smain_menu::have_saves(bool b)
 
 bool Smain_menu::cancelable()
 {
-    return true;
+    return in_game_;
 }
 
-void Smain_menu::show(UWorld * w)
+void Smain_menu::show()
 {
-    Shud_widget_base::show(w);
+    Shud_widget_base::show();
     anims_.start("fadein"_name);
 }
 

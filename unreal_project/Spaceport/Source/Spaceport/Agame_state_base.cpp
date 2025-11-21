@@ -18,22 +18,16 @@ void Agame_state_base::saves_changed()
     UE_LOG(LogTemp, Warning, TEXT("List of saves changed to: %s"),
            *FString::Join(saves_, TEXT(", ")));
 
-    if (auto * pc = GetWorld()->GetFirstPlayerController()) {
-        if (auto * const hud = pc->GetHUD<Ahud_base>()) {
-            hud->saves_list(saves_);
-        }
-    }
+    if (auto * const hud = hud_base())
+        hud->saves_list(saves_);
 }
 
 void Agame_state_base::save_file_changes_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("List of save file changes changed"));
 
-    if (auto * pc = GetWorld()->GetFirstPlayerController()) {
-        if (auto * const hud = pc->GetHUD<Ahud_base>()) {
-            hud->saves_changed(save_file_changes_);
-        }
-    }
+    if (auto * const hud = hud_base())
+        hud->saves_changed(save_file_changes_);
 }
 
 void Agame_state_base::GetLifetimeReplicatedProps(

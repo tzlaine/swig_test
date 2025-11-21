@@ -15,19 +15,20 @@ Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) :
 
 void Amain_menu_hud::saves_list(TArray<FString> const & saves)
 {
+    Ahud_base::saves_list(saves);
     have_saves(!saves.IsEmpty());
-    // TODO: Notify the save/load ui
 }
 
 void Amain_menu_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
-    // TODO: Notify the save/load ui
+    Ahud_base::saves_changed(changes);
 }
 
 void Amain_menu_hud::BeginPlay()
 {
-    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
     Super::BeginPlay();
+
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
 
     bool saves = false;
     if (auto * gs = Cast<Agame_state_base>(
@@ -37,20 +38,17 @@ void Amain_menu_hud::BeginPlay()
 
     widget_ = SNew(Smain_menu).in_game(false);
     widget_->have_saves(saves);
+    show_modal(widget_);
+    show_deferred_notifications(level::start);
 
-    UGameViewportClient * viewport_client = GetWorld()->GetGameViewport();
-    if (viewport_client)
-        viewport_client->AddViewportWidgetContent(widget_.ToSharedRef());
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
 }
 
 void Amain_menu_hud::EndPlay(EEndPlayReason::Type reason)
 {
-    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::EndPlay()"));
     Super::EndPlay(reason);
-
-    if (auto * viewport = GetWorld()->GetGameViewport())
-        viewport->RemoveViewportWidgetContent(widget_.ToSharedRef());
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::EndPlay()"));
+    hide_modal(widget_);
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::EndPlay()"));
 }
 

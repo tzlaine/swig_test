@@ -19,6 +19,10 @@ public:
     void BeginPlay() override;
     void EndPlay(EEndPlayReason::Type reason) override;
 
+    UFUNCTION(NetMulticast, Reliable)
+    void load_and_start_newest_game();
+    void load_and_start_game_Implementation();
+
 private:
     void saves_dir_changed(std::vector<Ffile_change> changes);
 };

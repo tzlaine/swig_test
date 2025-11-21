@@ -36,12 +36,10 @@ struct failed_deserialization : std::exception
 private:
     void rebuild_msg()
     {
-        msg_ = "Deserialization failed.  Context:\n";
+        msg_ = "Deserialization failed.  Context:";
         for (auto const & part : msg_parts_ | std::views::reverse) {
-            msg_ += "  ";
+            msg_ += "\n  ";
             msg_ += part;
-            if (msg_.back() != '\n')
-                msg_ += '\n';
         }
     }
 
@@ -547,7 +545,7 @@ template<typename T>
 void deserialize_message(T & x, std::filesystem::path const & path)
 {
     if (!std::filesystem::exists(path)) {
-        throw std::runtime_error(std::format(
+        throw failed_deserialization(std::format(
             "deserialize_message(): Path {} does not exist.",
             path.generic_string()));
     }

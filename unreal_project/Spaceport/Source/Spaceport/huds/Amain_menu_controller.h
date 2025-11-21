@@ -20,4 +20,8 @@ public:
     UFUNCTION(Server, Reliable)
     void server_new_game(game_kind kind, FFilePath const & save);
     void server_new_game_Implementation(game_kind kind, FFilePath const & save);
+
+    UFUNCTION(Server, Reliable)
+    void server_load_newest_game();
+    void server_load_newest_game_Implementation();
 };

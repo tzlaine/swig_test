@@ -20,7 +20,7 @@ public:
     void Construct(FArguments const & args);
 
     bool cancelable() override;
-    void cancel(UWorld * w) override;
+    void cancel() override;
 
 private:
     void back();

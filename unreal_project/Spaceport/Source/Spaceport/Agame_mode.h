@@ -44,8 +44,6 @@ public:
     void save_game(FString const & filename);
 
 private:
-    Aplaying_hud * hud() const;
-
     void ready_for_sp_game();
     void ready_for_mp_game();
     void start_play();
