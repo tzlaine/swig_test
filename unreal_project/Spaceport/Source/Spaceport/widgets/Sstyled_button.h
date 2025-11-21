@@ -5,8 +5,6 @@
 
 #include <Widgets/Input/SButton.h>
 
-#include <functional>
-
 
 class Sstyled_button : public SButton
 {
