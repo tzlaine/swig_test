@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Shud_widget_base.h"
+#include "widgets/Sstyled_list_view.h"
 
 #include <CoreMinimal.h>
 #include <Widgets/Views/SListView.h>
@@ -35,7 +36,7 @@ private:
 
     TSharedPtr<Sstyled_editable_text_box> edit_;
     TArray<item_data> items_;
-    TSharedPtr<SListView<item_data>> list_box_;
+    TSharedPtr<Sstyled_list_view<item_data>> list_box_;
     TSharedPtr<Sstyled_button> action_button_;
 
     bool saving_ = false;

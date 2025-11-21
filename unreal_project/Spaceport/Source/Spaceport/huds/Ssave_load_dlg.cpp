@@ -118,8 +118,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                 ]
 
                 +SVerticalBox::Slot().FillHeight(70).HAlign(HAlign_Fill)[
-                    SAssignNew(list_box_, SListView<item_data>) // TODO: Use a styled one.
-                    .ItemHeight(24) // TODO
+                    SAssignNew(list_box_, Sstyled_list_view<item_data>)
+                    .ItemHeight(ui_defaults().font_size_)
                     .ListItemsSource(&items_)
                     .OnGenerateRow_Lambda(&make_row)
                     .SelectionMode(ESelectionMode::Single)
