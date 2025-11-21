@@ -60,8 +60,15 @@ void Smain_menu::Construct(FArguments const & args)
         ]
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.4, 0.45, 0.6, 0.8))
-        [SAssignNew(vbox_, SVerticalBox)]
+            .Anchors(FAnchors(0.4, 0.35, 0.6, 0.85))[
+               SNew(SBorder).Padding(50.0f)[ // TODO: Use a styled one.
+                   SNew(SVerticalBox)
+                   +SVerticalBox::Slot().FillHeight(1)
+                   +SVerticalBox::Slot().AutoHeight()[
+                       SAssignNew(vbox_, SVerticalBox)]
+                   +SVerticalBox::Slot().FillHeight(1)
+                   ]
+                ]
     ];
 
     rebuild();
