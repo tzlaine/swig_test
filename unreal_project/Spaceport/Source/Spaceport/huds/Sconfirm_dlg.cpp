@@ -48,7 +48,6 @@ void Sconfirm_dlg::Construct(FArguments const & args)
 
                 +SVerticalBox::Slot().FillHeight(1)
 
-                // TODO: Use a styled multiline text block.
                 +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
                     SNew(Sstyled_text_block).AutoWrapText(true).Text(message_as_text)]
 
