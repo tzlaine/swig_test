@@ -20,8 +20,6 @@ struct ui_defaults_t
     FString UScrollBar_style_path_;
     FString UScrollBox_style_path_;
     FString UTextBlock_style_path_;
-
-    FSlateColor UComboBoxString_USpinBox_foreground_color_;
 };
 
 #ifndef USER_DEFINED_UI_DEFAULTS
@@ -46,8 +44,6 @@ inline ui_defaults_t const & ui_defaults()
         retval.UScrollBar_style_path_ = TEXT("/Game/ui/styles/scroll_bar_style");
         retval.UScrollBox_style_path_ = TEXT("/Game/ui/styles/scroll_box_style");
         retval.UTextBlock_style_path_ = TEXT("/Game/ui/styles/text_block_style");
-
-        retval.UComboBoxString_USpinBox_foreground_color_ = FLinearColor::White;
 
         once = false;
     }
