@@ -6,6 +6,7 @@
 #include <adobe/name.hpp>
 
 #include <CoreMinimal.h>
+#include <Curves/CurveFloat.h>
 
 
 struct animations;

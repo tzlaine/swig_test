@@ -4,6 +4,8 @@
 #include "Aplayer_controller.h"
 #include "Aplaying_hud.h"
 
+#include <HAL/FileManager.h>
+
 
 inline constexpr float meters = 100.0f;
 

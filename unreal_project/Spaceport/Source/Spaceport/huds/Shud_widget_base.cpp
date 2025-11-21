@@ -1,4 +1,5 @@
 #include "Shud_widget_base.h"
+#include "game_instance.h"
 
 #include <Engine/World.h>
 #include <Engine/GameViewportClient.h>

@@ -7,6 +7,7 @@
 
 #include <AssetRegistry/AssetRegistryModule.h>
 #include <CoreMinimal.h>
+#include <TimerManager.h>
 #include <Engine/GameInstance.h>
 #include <Engine/World.h>
 #include <Internationalization/StringTableRegistry.h>

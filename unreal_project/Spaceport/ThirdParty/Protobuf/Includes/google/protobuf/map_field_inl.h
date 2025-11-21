@@ -242,7 +242,7 @@ template <typename Derived, typename Key, typename T,
 bool MapField<Derived, Key, T, kKeyFieldType, kValueFieldType,
               default_enum_value>::DeleteMapValue(const MapKey& map_key) {
   const Key& key = UnwrapMapKey<Key>(map_key);
-  return MutableMap()->erase(key);
+  return !!MutableMap()->erase(key);
 }
 
 template <typename Derived, typename Key, typename T,

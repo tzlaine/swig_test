@@ -1,6 +1,7 @@
 #include "Agame_mode_base.h"
 #include "Agame_state_base.h"
 #include "game_instance.h"
+#include "utility.hpp"
 
 
 namespace {
