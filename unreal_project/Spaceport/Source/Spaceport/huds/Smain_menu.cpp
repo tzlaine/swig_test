@@ -92,6 +92,11 @@ void Smain_menu::Construct(FArguments const & args)
     SetRenderOpacity(in_game_ ? 0 : 1);
 }
 
+// TODO: Stop the arrow navigation from leaving the current dialog.
+// Currently, if you hit the down arrow from the list box in Ssave_load_dlg,
+// you'll go off the end of the list, onto the nearest button, then off of
+// that to the buttons in the main menu *underneath*.
+
 void Smain_menu::rebuild()
 {
     vbox_->ClearChildren();
