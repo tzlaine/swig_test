@@ -3,6 +3,7 @@
 #include "utility.hpp"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Sstyled_button.h"
+#include "widgets/Sstyled_editable_text_box.h"
 
 #include <format>
 
@@ -102,7 +103,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                 +SVerticalBox::Slot().FillHeight(5)
 
                 +SVerticalBox::Slot().FillHeight(15).HAlign(HAlign_Fill)[
-                    SAssignNew(edit_, SEditableTextBox) // TODO: Use a styled one.
+                    SAssignNew(edit_, Sstyled_editable_text_box)
                     .OnTextCommitted_Lambda(
                         [do_action, this](FText const & text, ETextCommit::Type type) {
                             if (type != ETextCommit::OnEnter)

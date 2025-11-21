@@ -8,6 +8,7 @@
 
 class SEditableTextBox;
 class Sstyled_button;
+class Sstyled_editable_text_box;
 
 class Ssave_load_dlg : public Shud_widget_base
 {
@@ -32,7 +33,7 @@ private:
 
     FString filename_;
 
-    TSharedPtr<SEditableTextBox> edit_;
+    TSharedPtr<Sstyled_editable_text_box> edit_;
     TArray<item_data> items_;
     TSharedPtr<SListView<item_data>> list_box_;
     TSharedPtr<Sstyled_button> action_button_;
