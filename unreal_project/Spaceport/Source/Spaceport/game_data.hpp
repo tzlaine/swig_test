@@ -179,6 +179,7 @@ struct planet_t
     int original_owner;
     fleet_t garrison;
     std::vector<planet_effect_t> effects;
+    float orbital_pos_r;
     bool operator==(planet_t const &) const = default;
 };
 

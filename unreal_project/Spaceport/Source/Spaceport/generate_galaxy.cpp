@@ -608,6 +608,8 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     planet.owner = -1;
     planet.original_owner = -1;
 
+    planet.orbital_pos_r = float(random_unit_double() * 2 * std::numbers::pi);
+
     return growth_factor_considered_habitable < growth_factor;
 }
 

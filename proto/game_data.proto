@@ -156,6 +156,8 @@ message planet_t
     fleet_t garrison = 27;
     // TODO: ground-to-space defenses
     repeated planet_effect_t effects = 28;
+
+    float orbital_pos_r = 29;
 }
 
 message location_object_t

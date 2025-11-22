@@ -1674,6 +1674,7 @@ class planet_t PROTOBUF_FINAL :
     kMaxPopulationFieldNumber = 24,
     kOwnerFieldNumber = 25,
     kOriginalOwnerFieldNumber = 26,
+    kOrbitalPosRFieldNumber = 29,
   };
   // repeated .pb_message.game_data.planet_effect_t effects = 28;
   int effects_size() const;
@@ -1945,6 +1946,15 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // float orbital_pos_r = 29;
+  void clear_orbital_pos_r();
+  float orbital_pos_r() const;
+  void set_orbital_pos_r(float value);
+  private:
+  float _internal_orbital_pos_r() const;
+  void _internal_set_orbital_pos_r(float value);
+  public:
+
   // @@protoc_insertion_point(class_scope:pb_message.game_data.planet_t)
  private:
   class _Internal;
@@ -1980,6 +1990,7 @@ class planet_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::int32 max_population_;
   ::PROTOBUF_NAMESPACE_ID::int32 owner_;
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner_;
+  float orbital_pos_r_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -5097,6 +5108,26 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data:
 planet_t::effects() const {
   // @@protoc_insertion_point(field_list:pb_message.game_data.planet_t.effects)
   return effects_;
+}
+
+// float orbital_pos_r = 29;
+inline void planet_t::clear_orbital_pos_r() {
+  orbital_pos_r_ = 0;
+}
+inline float planet_t::_internal_orbital_pos_r() const {
+  return orbital_pos_r_;
+}
+inline float planet_t::orbital_pos_r() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.orbital_pos_r)
+  return _internal_orbital_pos_r();
+}
+inline void planet_t::_internal_set_orbital_pos_r(float value) {
+  
+  orbital_pos_r_ = value;
+}
+inline void planet_t::set_orbital_pos_r(float value) {
+  _internal_set_orbital_pos_r(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbital_pos_r)
 }
 
 // -------------------------------------------------------------------

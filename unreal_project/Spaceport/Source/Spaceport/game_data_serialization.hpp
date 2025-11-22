@@ -358,6 +358,7 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.original_owner, 26, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.garrison, 27, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.effects, 28, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.orbital_pos_r, 29, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -367,13 +368,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "planet_t"sv;
-        constexpr std::array<std::string_view, 29> field_names = {{"<UNKOWN_FIELD>"sv,
-          "system_id"sv, "planet_type"sv, "mass_kg"sv, "radius_km"sv, "orbit_au"sv, "orbital_period_y"sv, "gravity_g"sv, "axial_tilt_d"sv, "day_h"sv, "surface_temperature_k"sv, "magnetosphere_strength"sv, "atmopsheric_pressure"sv, "o2_co2_suitability"sv, "ocean_coverage"sv, "growth_factor"sv, "atmosphere_type"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "population"sv, "infrastructure"sv, "max_population"sv, "owner"sv, "original_owner"sv, "garrison"sv, "effects"sv}};
-        std::array<int, 28> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28}};
+        constexpr std::array<std::string_view, 30> field_names = {{"<UNKOWN_FIELD>"sv,
+          "system_id"sv, "planet_type"sv, "mass_kg"sv, "radius_km"sv, "orbit_au"sv, "orbital_period_y"sv, "gravity_g"sv, "axial_tilt_d"sv, "day_h"sv, "surface_temperature_k"sv, "magnetosphere_strength"sv, "atmopsheric_pressure"sv, "o2_co2_suitability"sv, "ocean_coverage"sv, "growth_factor"sv, "atmosphere_type"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "population"sv, "infrastructure"sv, "max_population"sv, "owner"sv, "original_owner"sv, "garrison"sv, "effects"sv, "orbital_pos_r"sv}};
+        std::array<int, 29> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 28;
+        constexpr int hi_field_number = 29;
     
         auto read_field = [] (planet_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -405,6 +406,7 @@ namespace detail {
             case 26: return detail::deserialize_impl(x.original_owner, src);
             case 27: return detail::deserialize_impl(x.garrison, src);
             case 28: return detail::deserialize_impl(x.effects, src);
+            case 29: return detail::deserialize_impl(x.orbital_pos_r, src);
             default: return src; // unreachable
             }
         };

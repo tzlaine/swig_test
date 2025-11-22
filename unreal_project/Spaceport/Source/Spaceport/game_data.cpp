@@ -204,6 +204,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     for (const auto& x : value.effects) {
         retval.add_effects()->CopyFrom(to_protobuf(x));
     }
+    retval.set_orbital_pos_r(value.orbital_pos_r);
     return retval;
 }
 
@@ -244,6 +245,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
             *it++ = from_protobuf(x);
         }
     }
+    retval.orbital_pos_r = msg.orbital_pos_r();
     return retval;
 }
 

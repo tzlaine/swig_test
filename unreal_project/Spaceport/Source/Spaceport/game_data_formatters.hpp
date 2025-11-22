@@ -344,6 +344,7 @@ struct std::formatter<planet_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " orbital_pos_r={}", x.orbital_pos_r);
 
         return std::format_to(out, " )");
     }
