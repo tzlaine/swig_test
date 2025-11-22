@@ -4,8 +4,11 @@
 #include "Aplayer_controller.h"
 #include "Aplaying_hud.h"
 #include "huds/Amain_menu_controller.h"
+#include "text/beman_utf_view/utf_view.hpp"
 
+#include <algorithm>
 #include <filesystem>
+#include <string>
 
 #include <HAL/FileManager.h>
 
@@ -55,6 +58,64 @@ inline FString to_fstring(std::filesystem::path const & p)
 #error "to_fstring(std::filesystem::path const & s) needs an implementation for this platform"
 #endif
 }
+
+inline std::string to_string(FString::ElementType const * p)
+{
+    auto utf8 = beman::utf_view::null_term(p) | beman::utf_view::to_utf8;
+    std::string retval;
+    for (auto c : utf8) {
+        retval += c;
+    }
+    return retval;
+}
+
+inline std::string to_string(FString const & s)
+{
+    auto utf8 =
+        std::ranges::subrange(*s, *s + s.Len()) | beman::utf_view::to_utf8;
+    std::string retval;
+    for (auto c : utf8) {
+        retval += c;
+    }
+    return retval;
+}
+
+template<>
+struct std::formatter<FString>
+{
+    constexpr auto parse(std::format_parse_context & ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename Ctx>
+    auto format(FString const & s, Ctx & ctx) const
+    {
+        auto utf8 =
+            std::ranges::subrange(*s, *s + s.Len()) | beman::utf_view::to_utf8;
+        return std::ranges::copy(utf8, ctx.out()).out;
+    }
+};
+
+template<>
+struct std::formatter<FName>
+{
+    constexpr auto parse(std::format_parse_context & ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename Ctx>
+    auto format(FName const & n, Ctx & ctx) const
+    {
+        using char_type = FString::ElementType;
+        char_type buf[FName::StringBufferSize + 1];
+        char_type const * const last = buf + n.ToString(buf);
+        auto utf8 =
+            std::ranges::subrange(buf, last) | beman::utf_view::to_utf8;
+        return std::ranges::copy(utf8, ctx.out()).out;
+    }
+};
 
 template<typename T>
 T * begin(TArray<T> & a)

@@ -1216,9 +1216,11 @@ namespace detail {
 #if 0
 template <exposition_only_code_unit ToType>
 inline constexpr detail::to_utf_impl<to_utf_view_error_kind::replacement, ToType> to_utf;
+#endif
 
 inline constexpr detail::to_utf_impl<to_utf_view_error_kind::replacement, char8_t> to_utf8;
 
+#if 0
 inline constexpr detail::to_utf_impl<to_utf_view_error_kind::replacement, char16_t> to_utf16;
 #endif
 inline constexpr detail::to_utf_impl<to_utf_view_error_kind::replacement, char32_t> to_utf32;
