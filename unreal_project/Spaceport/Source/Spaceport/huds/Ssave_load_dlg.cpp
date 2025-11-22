@@ -19,6 +19,318 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
+/* Star notes:
+
+   The available star materials are: blue_map_star, blue_white_map_star,
+   white_map_star, yellow_map_star_{1,2}, red_map_star_{1-3}
+
+   Horizontal lense flare textures: T_LensFlare_{1-4,7}.  These are best used
+   on the brightest stars.
+
+   - Burst_Intensity: 0.5-20 for non-horizontal lense flares; 20.0-40.0 for
+     horizontal lens flares (scaled partly by star brightness, adjusted by
+     linear randomness)
+
+   - Texture_Main_Flare: set to one of the T_LensFlare_{1-7}
+
+   - Halo_Size: if horizontal lens flare is in use: 0.1-0.4, linear; 0.1-0.25,
+     linear otherwise
+
+   Terran planet notes:
+   - Axial tilt should be used to set the planet's rotation.
+
+   - Use_Directional_Light: Set to true
+   - Light_Source_Directional: Set to some directional light with rotation 0,0,90
+   - Night Brightness: Set to 0.01
+   - Continents_Position: 0-? dist?
+   - Continents_Spread: 1-10 dist: highest near 1, tapering to 10
+   - Continents_Distortion: 0.5-1.5, normal dist
+   - Continents_Distortion_Scale: 2-6, normal dist
+   - Plains/Mountains_Transition: 0.5-1.5, normal dist
+   - Plains/Mountains_Transition_Contrast: 0.5-1.5, normal dist
+
+   TODO: For these four, it might be best to come up with some preset,
+   self-consistent sets of four colors each.  (It may need to include cloud,
+   atmosphere and city tints.)
+
+   - Color_Mountains_{1,2}: Should be vaguely dun colored (default
+     is linear E6C29EFF,74693AFF)
+
+   - Color_Plains_{1,2}: Should be greenish (default is linear
+     416B35FF,1F4C12FF)
+
+   - T_Mountains: one of
+     /Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/T_PlanetTexture_Color_N.T_PlanetTexture_Color_N,
+     where N is int [1,9].
+   - T_Plains: one of the textures above; ok if they're the same.
+
+   - Sea_Level: 0.0 - 1.0, should be based on %land.
+
+   - Oceans_Color_Transition: 0.25-1, mode should be 0.5
+
+   - Oceans_Color_{1,2,3}: Should be blue, obvs. (default is linear
+     1A9B88FF,0C1C34FF,05070FFF)
+
+   - Ice_Poles_Weight: 0.4-0.6, Ice_Coverage: 0.1-0.5 these should not be rng,
+     but based on planet surface temp
+
+   - CLouds_Speed: 0.0001-0.005, should be based on extreme weather properties
+     of planet generation.  Leave it at the lowest vaue unless the planet has
+     extreme weather.
+
+   - Clouds_Opacity: 0.0-4.0, should be left at 2-4 unless there is low water;
+     0-2 is only for arid planets
+
+   - Clouds_Shadow_Offset: Set to 6.0
+
+   - Under_Clouds_Brightness: Set to 0.5
+
+   - Clouds_Color: should be whitish, but should also match the overall
+     palette of the planet (default is 6D7884FF)
+
+   - Clouds_Twilight_Color_1: should be slightly darker than Clouds_Color (use
+     linear 5A5549FF; BP default is FFD167FF)
+
+   - Clouds_Twilight_Color_1: this is the tint on the night-side of the
+     day/night transition band (use linear 653602FF; BP default is DA3D0AFF)
+
+   - Atmosphere_Direct_Brightness: 0-0.1 should be 0.1 for most planets; arid
+     planets should be less (maybe scale this with 1-%land)
+
+   - Atmosphere_Edge_Brightness: 0-1.0 should be 0.1 for most planets; arid
+     planets should be less (maybe scale this with 1-%land)
+
+   - Atmosphere_Color: Interpolate this between linear white and linear
+     2F73E0FF, based on O2 suitability
+
+   - City_Lights_Extent: 0.0-1.0, should be based on pop
+
+   - City_Lights_Halo: Set to 0 for uncolonized, 0.005 otherwise
+
+   - City_Lights_Intensity: 0.0-20.0, should be based on infrastructure
+
+   - City_Lights_Color: Interpolate this between linear white and linear
+     4EA7FFFF, based on O2 suitability
+
+   TODO: Rings!
+ */
+
+/* Gas giant planet notes:
+   - Global_Tile_Ratio: 0.1-0.9, linear distribution
+   - Scattering_Color: TODO
+   - Night_Color: Set to linear 02020300
+   - Sunset_Color_1: TODO
+   - Sunset_Color_2: TODO
+   - Equator_Clouds_Color_{1,2,3,4}: TODO
+   - Tropics_Clouds_Color_{1,2,3,4}: TODO
+   - Deep_Clouds_Color_{1,2,3,4}: TODO
+   - Poles_Color_{1,2,3,4}:TODO
+
+   - Rings_Opacity: Set to 1.0 if rings are present, 0.0 otherwise.
+   - Inner_Radius: 1.25-2.0, gamma dist (mode near 1.5)
+
+   - Outer_Radius (actually used as thickness, not outer radius): 0.4-2.5,
+     Inner_Radius implies higher Outer_Radius, but then add some linear
+     dist-based randomness
+
+   - Edge_Hardness: 0.75-20.0, linear dist
+   - Frequency: 1.25-4.0, linear dist
+   - Position: 0.0-10, linear dist
+   - Dark_Side_Brightness: Set to 0.01
+   - Rings_Color_{1,2,3}: TODO
+   - Rings_Scattering_Color: Set to Rings_Color_3
+ */
+
+#include <boost/type_index.hpp>
+#include "game_data.hpp"
+#include "rng.hpp"
+#include "text/beman_utf_view/utf_view.hpp"
+
+inline ADirectionalLight * directional_light(UWorld * w)
+{
+    if (!w)
+        return nullptr;
+    for (TActorIterator<ADirectionalLight> it(w); it; ++it) {
+        return *it;
+    }
+    return nullptr;
+}
+
+#if 0
+enum class star_class_t {
+    invalid_star_class = 0,
+    o = 1,
+    b = 2,
+    a = 3,
+    f = 4,
+    g = 5,
+    k = 6,
+    m = 7,
+};
+struct star_t
+{
+    star_class_t star_class;
+    double temperature_k;
+    double solar_masses;
+    double solar_luminosities;
+    double solar_radii;
+    bool operator==(star_t const &) const = default;
+};
+#endif
+
+// TODO: Aplanet_actor?
+void set_map_star_visible_params(
+    AStaticMeshActor * star_actor, star_t const & star)
+{
+    check(star_class_t::invalid_star_class < star.star_class);
+    check(star.star_class <= star_class_t::m);
+
+    FName texture_name;
+    switch (star.star_class) {
+    case star_class_t::o:
+        texture_name =
+            TEXT("/Game/levels/star_materials/blue_map_star.blue_map_star");
+        break;
+    case star_class_t::b:
+    case star_class_t::a:
+        texture_name = TEXT(
+            "/Game/levels/star_materials/"
+            "blue_white_map_star.blue_white_map_star");
+        break;
+    case star_class_t::f:
+        texture_name =
+            TEXT("/Game/levels/star_materials/white_map_star.white_map_star");
+        break;
+    case star_class_t::g:
+    case star_class_t::k: {
+        texture_name = *FString::Printf(
+            TEXT("/Game/levels/star_materials/"
+                 "yellow_map_star_{}.yellow_map_star_{}"),
+            random_int(0, 1));
+        break;
+    }
+    case star_class_t::m: {
+        texture_name = *FString::Printf(
+            TEXT("/Game/levels/star_materials/red_map_star_{}.red_map_star_{}"),
+            random_int(0, 2));
+        break;
+    }
+    }
+
+    FString material_path = FString::Printf(TEXT("Material'{}'"), texture_name);
+    ConstructorHelpers::FObjectFinder<UMaterial> material_finder(*material_path);
+    if (!material_finder.Succeeded()) {
+        throw std::runtime_error(
+            std::format("Could not load base material {}", material_path));
+    }
+    UMaterialInterface * base_material = material_finder.Object;
+
+    // TODO: Put this somewhere outside this function, so can memoize the
+    // material finder operation above.
+    TMap<FName, UMaterialInterface *> base_materials;
+    base_materials[texture_name] = base_material;
+
+    UMaterialInstanceDynamic * instance =
+        UMaterialInstanceDynamic::Create(base_material, star_actor);
+
+    // TODO: Memoize these looked-up textures too.
+    TSoftObjectPtr<UTexture> texture_loader(FString(TEXT("T_LensFlare_5")));
+    UTexture * texture = texture_loader.LoadSynchronous();
+
+    instance->SetScalarParameterValue(TEXT("Burst_Intensity"), 20.0f);
+    instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
+    instance->SetScalarParameterValue(TEXT("Halo_Size"), 0.2f);
+
+    star_actor->GetStaticMeshComponent()->SetMaterial(0, instance);
+}
+
+template<typename T>
+void set_property(AActor * a, FName name, T value)
+{
+    FProperty * const p = a->GetClass()->FindPropertyByName(name);
+    if (!p) {
+        throw std::runtime_error(std::format(
+            "Actor {} does not have property {}.", a->GetName(), name));
+    }
+
+    T * const ptr = p->ContainerPtrToValuePtr<T>(a);
+    if (!ptr) {
+        throw std::runtime_error(std::format(
+            "Could not get property {} of type {} from actor {}.",
+            name,
+            boost::typeindex::type_id<T>().pretty_name(),
+            a->GetName()));
+    }
+
+    *ptr = std::move(value);
+}
+
+// TODO: Aplanet_actor?
+void set_habitable_planet_params(AActor * planet)
+{
+    check(planet);
+
+    // fixed values
+
+    // Global
+    ADirectionalLight * const light = directional_light(planet->GetWorld());
+    if (!light) {
+        throw std::runtime_error(std::format(
+            "Could not get pointer to the current level's directional light."));
+    }
+
+    set_property(planet, TEXT("Shader_Complexity"), 4);
+    set_property(planet, TEXT("Use_Directional_Light"), true);
+    set_property(planet, TEXT("Use_Directional_Light"), light);
+    set_property(planet, TEXT("Night_Brightness"), 0.1);
+
+    // computed values
+
+    // Continents
+    set_property(planet, TEXT("Continents_Position"), 0.0); // TODO: values
+    set_property(planet, TEXT("Continents_Spread"), 1.0);
+    set_property(planet, TEXT("Continents_Distortion"), 1.0);
+    set_property(planet, TEXT("Continents_Distortion_Scale"), 4.0);
+    set_property(planet, TEXT("Plains/Mountains_Transition"), 1.0);
+    set_property(planet, TEXT("Plains/Mountains_Transition_Contrast"), 1.0);
+
+    set_property(
+        planet, TEXT("Color_Mountains_1"), FLinearColor(0xE6, 0xC2, 0x9E));
+    set_property(
+        planet, TEXT("Color_Mountains_2"), FLinearColor(0x74, 0x69, 0x3A));
+    set_property(
+        planet, TEXT("Color_Plains_1"), FLinearColor(0x41, 0x6B, 0x35));
+    set_property(
+        planet, TEXT("Color_Plains_2"), FLinearColor(0x1F, 0x4C, 0x12));
+
+    FString mountains_tex_name = FString::Printf(
+        TEXT("/Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/"
+             "T_PlanetTexture_Color_{}.T_PlanetTexture_Color_{}"),
+        1);
+    TSoftObjectPtr<UTexture> mountains_tex_loader(mountains_tex_name);
+    UTexture * mountains_tex = mountains_tex_loader.LoadSynchronous();
+    if (!mountains_tex) {
+        throw std::runtime_error(
+            std::format("Could not get a pointer to the texture {}",
+            mountains_tex_name));
+    }
+
+    FString plains_tex_name = FString::Printf(
+        TEXT("/Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/"
+             "T_PlanetTexture_Color_{}.T_PlanetTexture_Color_{}"),
+        2);
+    TSoftObjectPtr<UTexture> plains_tex_loader(plains_tex_name);
+    UTexture * plains_tex = plains_tex_loader.LoadSynchronous();
+    if (!mountains_tex) {
+        throw std::runtime_error(
+            std::format("Could not get a pointer to the texture {}",
+            plains_tex_name));
+    }
+
+    set_property(planet, TEXT("T_Mountains"), mountains_tex);
+    set_property(planet, TEXT("T_Plains"), plains_tex);
+}
+
 namespace {
     TSharedRef<ITableRow> make_row(
         Ssave_load_dlg::item_data data,
