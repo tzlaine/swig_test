@@ -148,42 +148,65 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 inline ADirectionalLight * directional_light(UWorld * w)
 {
-    if (!w)
-        return nullptr;
+    check(w);
     for (TActorIterator<ADirectionalLight> it(w); it; ++it) {
         return *it;
     }
-    return nullptr;
+    throw std::runtime_error(
+        "Could not get pointer to the current level's directional light.");
+    return nullptr; // unreachable
 }
 
-#if 0
-enum class star_class_t {
-    invalid_star_class = 0,
-    o = 1,
-    b = 2,
-    a = 3,
-    f = 4,
-    g = 5,
-    k = 6,
-    m = 7,
-};
-struct star_t
+struct loaded_textures
 {
-    star_class_t star_class;
-    double temperature_k;
-    double solar_masses;
-    double solar_luminosities;
-    double solar_radii;
-    bool operator==(star_t const &) const = default;
+    UTexture * get(FString name)
+    {
+        if (textures_.Contains(name))
+            return textures_[name];
+        TSoftObjectPtr<UTexture> loader(name);
+        UTexture * retval = loader.LoadSynchronous();
+        if (!retval) {
+            throw std::runtime_error(
+                std::format("Could not get a pointer to texture {}", name));
+        }
+        return textures_[name] = retval;
+    }
+
+private:
+    TMap<FString, UTexture *> textures_;
 };
-#endif
+
+struct loaded_material_interfaces
+{
+    UMaterialInterface * get(FName name)
+    {
+        if (textures_.Contains(name))
+            return textures_[name];
+        FString material_path = FString::Printf(TEXT("Material'{}'"), name);
+        ConstructorHelpers::FObjectFinder<UMaterial> finder(*material_path);
+        if (!finder.Succeeded()) {
+            throw std::runtime_error(
+                std::format("Could not load base material {}", material_path));
+        }
+        return textures_[name] = finder.Object;
+    }
+
+private:
+    TMap<FName, UMaterialInterface *> textures_;
+};
 
 // TODO: Aplanet_actor?
-void set_map_star_visible_params(
-    AStaticMeshActor * star_actor, star_t const & star)
+void configure_map_star(
+    AStaticMeshActor * star_actor,
+    system_t const & system,
+    star_t const & star,
+    loaded_textures & textures,
+    loaded_material_interfaces & material_interfaces)
 {
     check(star_class_t::invalid_star_class < star.star_class);
     check(star.star_class <= star_class_t::m);
+
+    star_actor->SetActorLocation(FVector(system.world_pos_x, system.world_pos_y, 0));
 
     FName texture_name;
     switch (star.star_class) {
@@ -217,25 +240,11 @@ void set_map_star_visible_params(
     }
     }
 
-    FString material_path = FString::Printf(TEXT("Material'{}'"), texture_name);
-    ConstructorHelpers::FObjectFinder<UMaterial> material_finder(*material_path);
-    if (!material_finder.Succeeded()) {
-        throw std::runtime_error(
-            std::format("Could not load base material {}", material_path));
-    }
-    UMaterialInterface * base_material = material_finder.Object;
-
-    // TODO: Put this somewhere outside this function, so can memoize the
-    // material finder operation above.
-    TMap<FName, UMaterialInterface *> base_materials;
-    base_materials[texture_name] = base_material;
-
+    UMaterialInterface * base_material = material_interfaces.get(texture_name);
     UMaterialInstanceDynamic * instance =
         UMaterialInstanceDynamic::Create(base_material, star_actor);
 
-    // TODO: Memoize these looked-up textures too.
-    TSoftObjectPtr<UTexture> texture_loader(FString(TEXT("T_LensFlare_5")));
-    UTexture * texture = texture_loader.LoadSynchronous();
+    UTexture * texture = textures.get(FString(TEXT("T_LensFlare_5")));
 
     instance->SetScalarParameterValue(TEXT("Burst_Intensity"), 20.0f);
     instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
@@ -266,69 +275,73 @@ void set_property(AActor * a, FName name, T value)
 }
 
 // TODO: Aplanet_actor?
-void set_habitable_planet_params(AActor * planet)
+// TODO: For very cold planets that get terraformed, use the BP_Planet_Ice
+// blueprint from Space_Creator, and reduce the ice over time, as the planet
+// is terraformed.  After the terraforming has gotten close enough to
+// Earthlike conditions common, change it to use the BP_Planet_Terran
+// blueprint, keeping the properties that they have in common.
+void configure_habitable_planet(
+    AActor * planet_actor, planet_t const & planet, loaded_textures & textures)
 {
-    check(planet);
+    check(planet_actor);
+
+    FQuat tilt_rot(
+        FVector(1, 0, 0), FMath::DegreesToRadians(planet.axial_tilt_d));
+    // Rotation, relative to the directional light, based on the planet's
+    // current position within its orbit.
+    FQuat rot_from_position(FVector(0, 0, 1), planet.orbital_pos_r);
+    planet_actor->SetActorRotation(tilt_rot * rot_from_position);
 
     // fixed values
 
     // Global
-    ADirectionalLight * const light = directional_light(planet->GetWorld());
-    if (!light) {
-        throw std::runtime_error(std::format(
-            "Could not get pointer to the current level's directional light."));
-    }
+    ADirectionalLight * const light =
+        directional_light(planet_actor->GetWorld());
 
-    set_property(planet, TEXT("Shader_Complexity"), 4);
-    set_property(planet, TEXT("Use_Directional_Light"), true);
-    set_property(planet, TEXT("Use_Directional_Light"), light);
-    set_property(planet, TEXT("Night_Brightness"), 0.1);
+    set_property(planet_actor, TEXT("Shader_Complexity"), 4);
+    set_property(planet_actor, TEXT("Use_Directional_Light"), true);
+    set_property(planet_actor, TEXT("Use_Directional_Light"), light);
+    set_property(planet_actor, TEXT("Night_Brightness"), 0.1);
 
     // computed values
 
     // Continents
-    set_property(planet, TEXT("Continents_Position"), 0.0); // TODO: values
-    set_property(planet, TEXT("Continents_Spread"), 1.0);
-    set_property(planet, TEXT("Continents_Distortion"), 1.0);
-    set_property(planet, TEXT("Continents_Distortion_Scale"), 4.0);
-    set_property(planet, TEXT("Plains/Mountains_Transition"), 1.0);
-    set_property(planet, TEXT("Plains/Mountains_Transition_Contrast"), 1.0);
+    set_property(
+        planet_actor, TEXT("Continents_Position"), 0.0); // TODO: values
+    set_property(planet_actor, TEXT("Continents_Spread"), 1.0);
+    set_property(planet_actor, TEXT("Continents_Distortion"), 1.0);
+    set_property(planet_actor, TEXT("Continents_Distortion_Scale"), 4.0);
+    set_property(planet_actor, TEXT("Plains/Mountains_Transition"), 1.0);
+    set_property(
+        planet_actor, TEXT("Plains/Mountains_Transition_Contrast"), 1.0);
 
     set_property(
-        planet, TEXT("Color_Mountains_1"), FLinearColor(0xE6, 0xC2, 0x9E));
+        planet_actor,
+        TEXT("Color_Mountains_1"),
+        FLinearColor(0xE6, 0xC2, 0x9E));
     set_property(
-        planet, TEXT("Color_Mountains_2"), FLinearColor(0x74, 0x69, 0x3A));
+        planet_actor,
+        TEXT("Color_Mountains_2"),
+        FLinearColor(0x74, 0x69, 0x3A));
     set_property(
-        planet, TEXT("Color_Plains_1"), FLinearColor(0x41, 0x6B, 0x35));
+        planet_actor, TEXT("Color_Plains_1"), FLinearColor(0x41, 0x6B, 0x35));
     set_property(
-        planet, TEXT("Color_Plains_2"), FLinearColor(0x1F, 0x4C, 0x12));
+        planet_actor, TEXT("Color_Plains_2"), FLinearColor(0x1F, 0x4C, 0x12));
 
     FString mountains_tex_name = FString::Printf(
         TEXT("/Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/"
              "T_PlanetTexture_Color_{}.T_PlanetTexture_Color_{}"),
         1);
-    TSoftObjectPtr<UTexture> mountains_tex_loader(mountains_tex_name);
-    UTexture * mountains_tex = mountains_tex_loader.LoadSynchronous();
-    if (!mountains_tex) {
-        throw std::runtime_error(
-            std::format("Could not get a pointer to the texture {}",
-            mountains_tex_name));
-    }
+    UTexture * mountains_tex = textures.get(mountains_tex_name);
 
     FString plains_tex_name = FString::Printf(
         TEXT("/Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/"
              "T_PlanetTexture_Color_{}.T_PlanetTexture_Color_{}"),
         2);
-    TSoftObjectPtr<UTexture> plains_tex_loader(plains_tex_name);
-    UTexture * plains_tex = plains_tex_loader.LoadSynchronous();
-    if (!mountains_tex) {
-        throw std::runtime_error(
-            std::format("Could not get a pointer to the texture {}",
-            plains_tex_name));
-    }
+    UTexture * plains_tex = textures.get(plains_tex_name);
 
-    set_property(planet, TEXT("T_Mountains"), mountains_tex);
-    set_property(planet, TEXT("T_Plains"), plains_tex);
+    set_property(planet_actor, TEXT("T_Mountains"), mountains_tex);
+    set_property(planet_actor, TEXT("T_Plains"), plains_tex);
 }
 
 namespace {
