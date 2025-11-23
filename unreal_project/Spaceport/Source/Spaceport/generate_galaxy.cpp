@@ -297,7 +297,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     }
 
     // temperature
-    if (planet.surface_temperature_k < earth_temperature_k - 44) {
+    if (planet.surface_temperature_k < min_habitable_nonsuit_temp_k) {
         habs_and_suits_required("extremely_cold_avg_surface_temp"sv);
         record("extremely_cold_avg_surface_temp"_name,
                "extremely_cold_avg_surface_temp_desc"_name,
@@ -320,7 +320,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         record("very_hot_avg_surface_temp"_name,
                "very_hot_avg_surface_temp_desc"_name,
                -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.03);
-    } else if (/*earth + 33 < */planet.surface_temperature_k < earth_temperature_k + 55) {
+    } else if (/*earth + 33 < */planet.surface_temperature_k < max_habitable_temp_k) {
         habs_and_suits_required("extremely_hot_avg_surface_temp"sv);
         record("extremely_hot_avg_surface_temp"_name,
                "extremely_hot_avg_surface_temp_desc"_name,
