@@ -2,6 +2,7 @@
 
 #include "logging.hpp"
 #include "memmap.hpp"
+#include "sparse_vector.hpp"
 
 #include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
@@ -54,6 +55,11 @@ namespace detail {
     constexpr bool is_vector_v<std::vector<T>> = true;
 
     template<typename T>
+    constexpr bool is_sparse_vector_v = false;
+    template<typename T>
+    constexpr bool is_sparse_vector_v<sparse_vector<T>> = true;
+
+    template<typename T>
     constexpr bool is_map_v = false;
     template<typename K, typename V>
     constexpr bool is_map_v<boost::container::flat_map<K, V>> = true;
@@ -61,7 +67,7 @@ namespace detail {
     using os = google::protobuf::io::CodedOutputStream;
     using is = google::protobuf::io::CodedInputStream;
 
-    enum struct ser_op { write, count };
+    enum struct ser_op { write, count, write_sparse, count_sparse };
     enum struct ser_field_op { write, dont_write };
 
     template<ser_op Op, typename Char>
@@ -71,7 +77,7 @@ namespace detail {
         int size,
         std::ostream * os)
     {
-        if constexpr (Op == ser_op::write)
+        if constexpr (Op == ser_op::write || Op == ser_op::write_sparse)
             os->write(reinterpret_cast<char const *>(data), size);
         else
             bytes_written += size;
@@ -83,6 +89,12 @@ namespace detail {
     static size_t VarintSize64(uint64 value);
     static size_t VarintSize32SignExtended(int32 value);
 #endif
+
+    template<ser_op Op>
+    constexpr bool sparse()
+    {
+        return Op == write_sparse || Op == count_sparse;
+    }
 
     template<ser_op Op, ser_field_op FieldOp, typename T>
     std::ptrdiff_t
@@ -142,9 +154,20 @@ namespace detail {
         } else if constexpr (is_vector_v<T>) {
             if constexpr (FieldOp == ser_field_op::write)
                 out = os::WriteVarint32ToArray(field_number, out);
-            out = os::WriteVarint32ToArray(x.size(), out);
+            int size = x.size();
+            if constexpr (detail::sparse<Op>()) {
+                size = std::ranges::count_if(x, [](auto const & e) {
+                    return e != typename T::value_type{};
+                });
+            }
+            out = os::WriteVarint32ToArray(size, out);
             detail::count_or_write<Op>(retval, buf, out - buf, os);
+            int i = 0;
             for (auto const & e : x) {
+                if constexpr (detail::sparse<Op>()) {
+                    out = os::WriteVarint32ToArray(i++, out);
+                    detail::count_or_write<Op>(retval, buf, out - buf, os);
+                }
                 retval += detail::serialize_impl<Op, ser_field_op::dont_write>(
                     e, 0, os);
             }
@@ -396,6 +419,20 @@ namespace detail {
             for (int i = 0; i < (int)size; ++i) {
                 src = detail::deserialize_impl(e, src);
                 x.push_back(std::move(e));
+            }
+            return src;
+        } else if constexpr (is_sparse_vector_v<T>) {
+            // TODO: Add try/catch, and add info on which element failed (here
+            // and for map).
+            uint32_t size = 0;
+            src = detail::read_varint(size, src);
+            x.reserve(size);
+            uint32_t index = 0;
+            typename T::value_type e;
+            for (int i = 0; i < (int)size; ++i) {
+                src = detail::read_varint(index, src);
+                src = detail::deserialize_impl(e, src);
+                x.emplace_back(index, std::move(e));
             }
             return src;
         } else if constexpr (is_map_v<T>) {
