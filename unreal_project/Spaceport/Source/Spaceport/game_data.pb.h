@@ -52,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[17]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -82,6 +82,9 @@ extern hex_tDefaultTypeInternal _hex_t_default_instance_;
 class location_object_t;
 class location_object_tDefaultTypeInternal;
 extern location_object_tDefaultTypeInternal _location_object_t_default_instance_;
+class nation_and_object_id_t;
+class nation_and_object_id_tDefaultTypeInternal;
+extern nation_and_object_id_tDefaultTypeInternal _nation_and_object_id_t_default_instance_;
 class nation_t;
 class nation_tDefaultTypeInternal;
 extern nation_tDefaultTypeInternal _nation_t_default_instance_;
@@ -119,6 +122,7 @@ template<> ::pb_message::game_data::game_start_params_t* Arena::CreateMaybeMessa
 template<> ::pb_message::game_data::game_state_t* Arena::CreateMaybeMessage<::pb_message::game_data::game_state_t>(Arena*);
 template<> ::pb_message::game_data::hex_t* Arena::CreateMaybeMessage<::pb_message::game_data::hex_t>(Arena*);
 template<> ::pb_message::game_data::location_object_t* Arena::CreateMaybeMessage<::pb_message::game_data::location_object_t>(Arena*);
+template<> ::pb_message::game_data::nation_and_object_id_t* Arena::CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(Arena*);
 template<> ::pb_message::game_data::nation_t* Arena::CreateMaybeMessage<::pb_message::game_data::nation_t>(Arena*);
 template<> ::pb_message::game_data::planet_effect_t* Arena::CreateMaybeMessage<::pb_message::game_data::planet_effect_t>(Arena*);
 template<> ::pb_message::game_data::planet_t* Arena::CreateMaybeMessage<::pb_message::game_data::planet_t>(Arena*);
@@ -314,6 +318,154 @@ inline bool star_class_t_Parse(
 }
 // ===================================================================
 
+class nation_and_object_id_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.nation_and_object_id_t) */ {
+ public:
+  inline nation_and_object_id_t() : nation_and_object_id_t(nullptr) {}
+  virtual ~nation_and_object_id_t();
+
+  nation_and_object_id_t(const nation_and_object_id_t& from);
+  nation_and_object_id_t(nation_and_object_id_t&& from) noexcept
+    : nation_and_object_id_t() {
+    *this = ::std::move(from);
+  }
+
+  inline nation_and_object_id_t& operator=(const nation_and_object_id_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline nation_and_object_id_t& operator=(nation_and_object_id_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const nation_and_object_id_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const nation_and_object_id_t* internal_default_instance() {
+    return reinterpret_cast<const nation_and_object_id_t*>(
+               &_nation_and_object_id_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(nation_and_object_id_t& a, nation_and_object_id_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(nation_and_object_id_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(nation_and_object_id_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline nation_and_object_id_t* New() const final {
+    return CreateMaybeMessage<nation_and_object_id_t>(nullptr);
+  }
+
+  nation_and_object_id_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<nation_and_object_id_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const nation_and_object_id_t& from);
+  void MergeFrom(const nation_and_object_id_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(nation_and_object_id_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.nation_and_object_id_t";
+  }
+  protected:
+  explicit nation_and_object_id_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNationIdFieldNumber = 1,
+    kObjectIdFieldNumber = 2,
+  };
+  // int32 nation_id = 1;
+  void clear_nation_id();
+  ::PROTOBUF_NAMESPACE_ID::int32 nation_id() const;
+  void set_nation_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_nation_id() const;
+  void _internal_set_nation_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 object_id = 2;
+  void clear_object_id();
+  ::PROTOBUF_NAMESPACE_ID::int32 object_id() const;
+  void set_object_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_object_id() const;
+  void _internal_set_object_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.nation_and_object_id_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::int32 nation_id_;
+  ::PROTOBUF_NAMESPACE_ID::int32 object_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class game_start_params_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.game_start_params_t) */ {
  public:
@@ -356,7 +508,7 @@ class game_start_params_t PROTOBUF_FINAL :
                &_game_start_params_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   friend void swap(game_start_params_t& a, game_start_params_t& b) {
     a.Swap(&b);
@@ -526,7 +678,7 @@ class unit_design_t PROTOBUF_FINAL :
                &_unit_design_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(unit_design_t& a, unit_design_t& b) {
     a.Swap(&b);
@@ -598,38 +750,37 @@ class unit_design_t PROTOBUF_FINAL :
 
   enum : int {
     kIdFieldNumber = 1,
-    kOwnerFieldNumber = 2,
-    kHullFieldNumber = 3,
-    kArmorFieldNumber = 4,
-    kPropulsionFieldNumber = 5,
-    kWeaponsFieldNumber = 6,
-    kShieldsFieldNumber = 7,
-    kDetectionFieldNumber = 8,
-    kStealthFieldNumber = 9,
-    kAutomationFieldNumber = 10,
-    kAttackFieldNumber = 11,
-    kDefenseFieldNumber = 12,
-    kGroundAttackFieldNumber = 13,
+    kHullFieldNumber = 2,
+    kArmorFieldNumber = 3,
+    kPropulsionFieldNumber = 4,
+    kWeaponsFieldNumber = 5,
+    kShieldsFieldNumber = 6,
+    kDetectionFieldNumber = 7,
+    kStealthFieldNumber = 8,
+    kAutomationFieldNumber = 9,
+    kAttackFieldNumber = 10,
+    kDefenseFieldNumber = 11,
+    kGroundAttackFieldNumber = 12,
   };
-  // int32 id = 1;
+  // .pb_message.game_data.nation_and_object_id_t id = 1;
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
   void clear_id();
-  ::PROTOBUF_NAMESPACE_ID::int32 id() const;
-  void set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::pb_message::game_data::nation_and_object_id_t& id() const;
+  ::pb_message::game_data::nation_and_object_id_t* release_id();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_id();
+  void set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_id() const;
-  void _internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_id() const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_mutable_id();
   public:
+  void unsafe_arena_set_allocated_id(
+      ::pb_message::game_data::nation_and_object_id_t* id);
+  ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_id();
 
-  // int32 owner = 2;
-  void clear_owner();
-  ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
-  void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_owner() const;
-  void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // int32 hull = 3;
+  // int32 hull = 2;
   void clear_hull();
   ::PROTOBUF_NAMESPACE_ID::int32 hull() const;
   void set_hull(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -638,7 +789,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_hull(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 armor = 4;
+  // int32 armor = 3;
   void clear_armor();
   ::PROTOBUF_NAMESPACE_ID::int32 armor() const;
   void set_armor(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -647,7 +798,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_armor(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 propulsion = 5;
+  // int32 propulsion = 4;
   void clear_propulsion();
   ::PROTOBUF_NAMESPACE_ID::int32 propulsion() const;
   void set_propulsion(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -656,7 +807,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_propulsion(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 weapons = 6;
+  // int32 weapons = 5;
   void clear_weapons();
   ::PROTOBUF_NAMESPACE_ID::int32 weapons() const;
   void set_weapons(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -665,7 +816,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_weapons(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 shields = 7;
+  // int32 shields = 6;
   void clear_shields();
   ::PROTOBUF_NAMESPACE_ID::int32 shields() const;
   void set_shields(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -674,7 +825,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_shields(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 detection = 8;
+  // int32 detection = 7;
   void clear_detection();
   ::PROTOBUF_NAMESPACE_ID::int32 detection() const;
   void set_detection(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -683,7 +834,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_detection(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 stealth = 9;
+  // int32 stealth = 8;
   void clear_stealth();
   ::PROTOBUF_NAMESPACE_ID::int32 stealth() const;
   void set_stealth(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -692,7 +843,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_stealth(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 automation = 10;
+  // int32 automation = 9;
   void clear_automation();
   ::PROTOBUF_NAMESPACE_ID::int32 automation() const;
   void set_automation(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -701,7 +852,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_automation(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 attack = 11;
+  // int32 attack = 10;
   void clear_attack();
   ::PROTOBUF_NAMESPACE_ID::int32 attack() const;
   void set_attack(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -710,7 +861,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_attack(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 defense = 12;
+  // int32 defense = 11;
   void clear_defense();
   ::PROTOBUF_NAMESPACE_ID::int32 defense() const;
   void set_defense(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -719,7 +870,7 @@ class unit_design_t PROTOBUF_FINAL :
   void _internal_set_defense(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 ground_attack = 13;
+  // int32 ground_attack = 12;
   void clear_ground_attack();
   ::PROTOBUF_NAMESPACE_ID::int32 ground_attack() const;
   void set_ground_attack(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -735,8 +886,7 @@ class unit_design_t PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::int32 id_;
-  ::PROTOBUF_NAMESPACE_ID::int32 owner_;
+  ::pb_message::game_data::nation_and_object_id_t* id_;
   ::PROTOBUF_NAMESPACE_ID::int32 hull_;
   ::PROTOBUF_NAMESPACE_ID::int32 armor_;
   ::PROTOBUF_NAMESPACE_ID::int32 propulsion_;
@@ -795,7 +945,7 @@ class unit_t PROTOBUF_FINAL :
                &_unit_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(unit_t& a, unit_t& b) {
     a.Swap(&b);
@@ -866,29 +1016,28 @@ class unit_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kDesignIdFieldNumber = 1,
-    kDesignOwnerFieldNumber = 2,
-    kHealthFieldNumber = 3,
+    kIdFieldNumber = 1,
+    kHealthFieldNumber = 2,
   };
-  // int32 design_id = 1;
-  void clear_design_id();
-  ::PROTOBUF_NAMESPACE_ID::int32 design_id() const;
-  void set_design_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // .pb_message.game_data.nation_and_object_id_t id = 1;
+  bool has_id() const;
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_design_id() const;
-  void _internal_set_design_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  bool _internal_has_id() const;
   public:
-
-  // int32 design_owner = 2;
-  void clear_design_owner();
-  ::PROTOBUF_NAMESPACE_ID::int32 design_owner() const;
-  void set_design_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
+  void clear_id();
+  const ::pb_message::game_data::nation_and_object_id_t& id() const;
+  ::pb_message::game_data::nation_and_object_id_t* release_id();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_id();
+  void set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_design_owner() const;
-  void _internal_set_design_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_id() const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_mutable_id();
   public:
+  void unsafe_arena_set_allocated_id(
+      ::pb_message::game_data::nation_and_object_id_t* id);
+  ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_id();
 
-  // int32 health = 3;
+  // int32 health = 2;
   void clear_health();
   ::PROTOBUF_NAMESPACE_ID::int32 health() const;
   void set_health(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -904,8 +1053,7 @@ class unit_t PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::int32 design_id_;
-  ::PROTOBUF_NAMESPACE_ID::int32 design_owner_;
+  ::pb_message::game_data::nation_and_object_id_t* id_;
   ::PROTOBUF_NAMESPACE_ID::int32 health_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
@@ -954,7 +1102,7 @@ class fleet_t PROTOBUF_FINAL :
                &_fleet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(fleet_t& a, fleet_t& b) {
     a.Swap(&b);
@@ -1031,6 +1179,8 @@ class fleet_t PROTOBUF_FINAL :
     kFuelFieldNumber = 4,
     kRoundsFieldNumber = 5,
     kMissilesFieldNumber = 6,
+    kWorldPosXFieldNumber = 8,
+    kWorldPosYFieldNumber = 9,
     kFightersFieldNumber = 7,
   };
   // repeated .pb_message.game_data.unit_t units = 3;
@@ -1051,14 +1201,23 @@ class fleet_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::unit_t >&
       units() const;
 
-  // uint32 id = 1;
-  void clear_id();
-  ::PROTOBUF_NAMESPACE_ID::uint32 id() const;
-  void set_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  // .pb_message.game_data.nation_and_object_id_t id = 1;
+  bool has_id() const;
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_id() const;
-  void _internal_set_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  bool _internal_has_id() const;
   public:
+  void clear_id();
+  const ::pb_message::game_data::nation_and_object_id_t& id() const;
+  ::pb_message::game_data::nation_and_object_id_t* release_id();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_id();
+  void set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id);
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_id() const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_mutable_id();
+  public:
+  void unsafe_arena_set_allocated_id(
+      ::pb_message::game_data::nation_and_object_id_t* id);
+  ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_id();
 
   // .pb_message.mission_t mission = 2;
   void clear_mission();
@@ -1096,6 +1255,24 @@ class fleet_t PROTOBUF_FINAL :
   void _internal_set_missiles(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // double world_pos_x = 8;
+  void clear_world_pos_x();
+  double world_pos_x() const;
+  void set_world_pos_x(double value);
+  private:
+  double _internal_world_pos_x() const;
+  void _internal_set_world_pos_x(double value);
+  public:
+
+  // double world_pos_y = 9;
+  void clear_world_pos_y();
+  double world_pos_y() const;
+  void set_world_pos_y(double value);
+  private:
+  double _internal_world_pos_y() const;
+  void _internal_set_world_pos_y(double value);
+  public:
+
   // int32 fighters = 7;
   void clear_fighters();
   ::PROTOBUF_NAMESPACE_ID::int32 fighters() const;
@@ -1113,11 +1290,13 @@ class fleet_t PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::unit_t > units_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 id_;
+  ::pb_message::game_data::nation_and_object_id_t* id_;
   int mission_;
   float fuel_;
   ::PROTOBUF_NAMESPACE_ID::int32 rounds_;
   ::PROTOBUF_NAMESPACE_ID::int32 missiles_;
+  double world_pos_x_;
+  double world_pos_y_;
   ::PROTOBUF_NAMESPACE_ID::int32 fighters_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
@@ -1146,7 +1325,7 @@ public:
   private:
   static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
     ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
-    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[4];
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[5];
   }
 
   public:
@@ -1196,7 +1375,7 @@ class fleets_t PROTOBUF_FINAL :
                &_fleets_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(fleets_t& a, fleets_t& b) {
     a.Swap(&b);
@@ -1347,7 +1526,7 @@ class planet_effect_t PROTOBUF_FINAL :
                &_planet_effect_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(planet_effect_t& a, planet_effect_t& b) {
     a.Swap(&b);
@@ -1575,7 +1754,7 @@ class planet_t PROTOBUF_FINAL :
                &_planet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(planet_t& a, planet_t& b) {
     a.Swap(&b);
@@ -1646,8 +1825,8 @@ class planet_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kEffectsFieldNumber = 28,
-    kGarrisonFieldNumber = 27,
+    kEffectsFieldNumber = 29,
+    kGarrisonFieldNumber = 28,
     kSystemIdFieldNumber = 1,
     kPlanetTypeFieldNumber = 2,
     kMassKgFieldNumber = 3,
@@ -1671,12 +1850,12 @@ class planet_t PROTOBUF_FINAL :
     kFuelFieldNumber = 21,
     kPopulationFieldNumber = 22,
     kInfrastructureFieldNumber = 23,
-    kMaxPopulationFieldNumber = 24,
-    kOwnerFieldNumber = 25,
-    kOriginalOwnerFieldNumber = 26,
-    kOrbitalPosRFieldNumber = 29,
+    kOrbitalPosRFieldNumber = 24,
+    kMaxPopulationFieldNumber = 25,
+    kOwnerFieldNumber = 26,
+    kOriginalOwnerFieldNumber = 27,
   };
-  // repeated .pb_message.game_data.planet_effect_t effects = 28;
+  // repeated .pb_message.game_data.planet_effect_t effects = 29;
   int effects_size() const;
   private:
   int _internal_effects_size() const;
@@ -1694,7 +1873,7 @@ class planet_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::planet_effect_t >&
       effects() const;
 
-  // .pb_message.game_data.fleet_t garrison = 27;
+  // .pb_message.game_data.fleet_t garrison = 28;
   bool has_garrison() const;
   private:
   bool _internal_has_garrison() const;
@@ -1919,7 +2098,16 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_infrastructure(float value);
   public:
 
-  // int32 max_population = 24;
+  // float orbital_pos_r = 24;
+  void clear_orbital_pos_r();
+  float orbital_pos_r() const;
+  void set_orbital_pos_r(float value);
+  private:
+  float _internal_orbital_pos_r() const;
+  void _internal_set_orbital_pos_r(float value);
+  public:
+
+  // int32 max_population = 25;
   void clear_max_population();
   ::PROTOBUF_NAMESPACE_ID::int32 max_population() const;
   void set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1928,7 +2116,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 owner = 25;
+  // int32 owner = 26;
   void clear_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
   void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -1937,22 +2125,13 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 original_owner = 26;
+  // int32 original_owner = 27;
   void clear_original_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner() const;
   void set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
   ::PROTOBUF_NAMESPACE_ID::int32 _internal_original_owner() const;
   void _internal_set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // float orbital_pos_r = 29;
-  void clear_orbital_pos_r();
-  float orbital_pos_r() const;
-  void set_orbital_pos_r(float value);
-  private:
-  float _internal_orbital_pos_r() const;
-  void _internal_set_orbital_pos_r(float value);
   public:
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.planet_t)
@@ -1987,10 +2166,10 @@ class planet_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::int32 fuel_;
   float population_;
   float infrastructure_;
+  float orbital_pos_r_;
   ::PROTOBUF_NAMESPACE_ID::int32 max_population_;
   ::PROTOBUF_NAMESPACE_ID::int32 owner_;
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner_;
-  float orbital_pos_r_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -2038,7 +2217,7 @@ class location_object_t PROTOBUF_FINAL :
                &_location_object_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(location_object_t& a, location_object_t& b) {
     a.Swap(&b);
@@ -2195,7 +2374,7 @@ class system_location_t PROTOBUF_FINAL :
                &_system_location_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(system_location_t& a, system_location_t& b) {
     a.Swap(&b);
@@ -2361,7 +2540,7 @@ class star_t PROTOBUF_FINAL :
                &_star_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(star_t& a, star_t& b) {
     a.Swap(&b);
@@ -2542,7 +2721,7 @@ class system_t PROTOBUF_FINAL :
                &_system_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(system_t& a, system_t& b) {
     a.Swap(&b);
@@ -2810,7 +2989,7 @@ class hex_t PROTOBUF_FINAL :
                &_hex_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(hex_t& a, hex_t& b) {
     a.Swap(&b);
@@ -2882,7 +3061,6 @@ class hex_t PROTOBUF_FINAL :
 
   enum : int {
     kCoordFieldNumber = 1,
-    kFleetsFieldNumber = 5,
     kFirstSystemFieldNumber = 3,
     kLastSystemFieldNumber = 4,
     kProvinceIdFieldNumber = 2,
@@ -2904,24 +3082,6 @@ class hex_t PROTOBUF_FINAL :
   void unsafe_arena_set_allocated_coord(
       ::pb_message::hex_coord_t* coord);
   ::pb_message::hex_coord_t* unsafe_arena_release_coord();
-
-  // .pb_message.game_data.fleets_t fleets = 5;
-  bool has_fleets() const;
-  private:
-  bool _internal_has_fleets() const;
-  public:
-  void clear_fleets();
-  const ::pb_message::game_data::fleets_t& fleets() const;
-  ::pb_message::game_data::fleets_t* release_fleets();
-  ::pb_message::game_data::fleets_t* mutable_fleets();
-  void set_allocated_fleets(::pb_message::game_data::fleets_t* fleets);
-  private:
-  const ::pb_message::game_data::fleets_t& _internal_fleets() const;
-  ::pb_message::game_data::fleets_t* _internal_mutable_fleets();
-  public:
-  void unsafe_arena_set_allocated_fleets(
-      ::pb_message::game_data::fleets_t* fleets);
-  ::pb_message::game_data::fleets_t* unsafe_arena_release_fleets();
 
   // uint64 first_system = 3;
   void clear_first_system();
@@ -2958,7 +3118,6 @@ class hex_t PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::pb_message::hex_coord_t* coord_;
-  ::pb_message::game_data::fleets_t* fleets_;
   ::PROTOBUF_NAMESPACE_ID::uint64 first_system_;
   ::PROTOBUF_NAMESPACE_ID::uint64 last_system_;
   ::PROTOBUF_NAMESPACE_ID::int32 province_id_;
@@ -3009,7 +3168,7 @@ class province_t PROTOBUF_FINAL :
                &_province_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(province_t& a, province_t& b) {
     a.Swap(&b);
@@ -3080,11 +3239,10 @@ class province_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kHexCoordsFieldNumber = 3,
+    kHexCoordsFieldNumber = 2,
     kIdFieldNumber = 1,
-    kOwnerFieldNumber = 2,
   };
-  // repeated .pb_message.hex_coord_t hex_coords = 3;
+  // repeated .pb_message.hex_coord_t hex_coords = 2;
   int hex_coords_size() const;
   private:
   int _internal_hex_coords_size() const;
@@ -3102,23 +3260,23 @@ class province_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::hex_coord_t >&
       hex_coords() const;
 
-  // int32 id = 1;
+  // .pb_message.game_data.nation_and_object_id_t id = 1;
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
   void clear_id();
-  ::PROTOBUF_NAMESPACE_ID::int32 id() const;
-  void set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::pb_message::game_data::nation_and_object_id_t& id() const;
+  ::pb_message::game_data::nation_and_object_id_t* release_id();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_id();
+  void set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_id() const;
-  void _internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_id() const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_mutable_id();
   public:
-
-  // int32 owner = 2;
-  void clear_owner();
-  ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
-  void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_owner() const;
-  void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
+  void unsafe_arena_set_allocated_id(
+      ::pb_message::game_data::nation_and_object_id_t* id);
+  ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_id();
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.province_t)
  private:
@@ -3128,8 +3286,7 @@ class province_t PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::hex_coord_t > hex_coords_;
-  ::PROTOBUF_NAMESPACE_ID::int32 id_;
-  ::PROTOBUF_NAMESPACE_ID::int32 owner_;
+  ::pb_message::game_data::nation_and_object_id_t* id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -3177,7 +3334,7 @@ class nation_t PROTOBUF_FINAL :
                &_nation_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(nation_t& a, nation_t& b) {
     a.Swap(&b);
@@ -3250,10 +3407,13 @@ class nation_t PROTOBUF_FINAL :
   enum : int {
     kUnitDesignsFieldNumber = 2,
     kProvincesFieldNumber = 3,
-    kFleetsFieldNumber = 4,
+    kMapFleetsFieldNumber = 4,
     kPlanetsFieldNumber = 5,
+    kForeignDesignsSeenFieldNumber = 6,
+    kHexesSeenFieldNumber = 7,
+    kSystemsSeenFieldNumber = 8,
     kIdFieldNumber = 1,
-    kDefeatedFieldNumber = 6,
+    kDefeatedFieldNumber = 9,
   };
   // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
   int unit_designs_size() const;
@@ -3291,27 +3451,23 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::province_t >&
       provinces() const;
 
-  // repeated uint32 fleets = 4;
-  int fleets_size() const;
+  // repeated .pb_message.game_data.fleet_t map_fleets = 4;
+  int map_fleets_size() const;
   private:
-  int _internal_fleets_size() const;
+  int _internal_map_fleets_size() const;
   public:
-  void clear_fleets();
+  void clear_map_fleets();
+  ::pb_message::game_data::fleet_t* mutable_map_fleets(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >*
+      mutable_map_fleets();
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_fleets(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
-      _internal_fleets() const;
-  void _internal_add_fleets(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
-      _internal_mutable_fleets();
+  const ::pb_message::game_data::fleet_t& _internal_map_fleets(int index) const;
+  ::pb_message::game_data::fleet_t* _internal_add_map_fleets();
   public:
-  ::PROTOBUF_NAMESPACE_ID::uint32 fleets(int index) const;
-  void set_fleets(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value);
-  void add_fleets(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
-      fleets() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
-      mutable_fleets();
+  const ::pb_message::game_data::fleet_t& map_fleets(int index) const;
+  ::pb_message::game_data::fleet_t* add_map_fleets();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >&
+      map_fleets() const;
 
   // repeated int32 planets = 5;
   int planets_size() const;
@@ -3335,6 +3491,68 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_planets();
 
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 6;
+  int foreign_designs_seen_size() const;
+  private:
+  int _internal_foreign_designs_seen_size() const;
+  public:
+  void clear_foreign_designs_seen();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_foreign_designs_seen(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+      mutable_foreign_designs_seen();
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_foreign_designs_seen(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_add_foreign_designs_seen();
+  public:
+  const ::pb_message::game_data::nation_and_object_id_t& foreign_designs_seen(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* add_foreign_designs_seen();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+      foreign_designs_seen() const;
+
+  // repeated int32 hexes_seen = 7;
+  int hexes_seen_size() const;
+  private:
+  int _internal_hexes_seen_size() const;
+  public:
+  void clear_hexes_seen();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_hexes_seen(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      _internal_hexes_seen() const;
+  void _internal_add_hexes_seen(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      _internal_mutable_hexes_seen();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::int32 hexes_seen(int index) const;
+  void set_hexes_seen(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
+  void add_hexes_seen(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      hexes_seen() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      mutable_hexes_seen();
+
+  // repeated int32 systems_seen = 8;
+  int systems_seen_size() const;
+  private:
+  int _internal_systems_seen_size() const;
+  public:
+  void clear_systems_seen();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_systems_seen(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      _internal_systems_seen() const;
+  void _internal_add_systems_seen(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      _internal_mutable_systems_seen();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::int32 systems_seen(int index) const;
+  void set_systems_seen(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
+  void add_systems_seen(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      systems_seen() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      mutable_systems_seen();
+
   // int32 id = 1;
   void clear_id();
   ::PROTOBUF_NAMESPACE_ID::int32 id() const;
@@ -3344,7 +3562,7 @@ class nation_t PROTOBUF_FINAL :
   void _internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // bool defeated = 6;
+  // bool defeated = 9;
   void clear_defeated();
   bool defeated() const;
   void set_defeated(bool value);
@@ -3362,10 +3580,14 @@ class nation_t PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::unit_design_t > unit_designs_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::province_t > provinces_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 > fleets_;
-  mutable std::atomic<int> _fleets_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t > map_fleets_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > planets_;
   mutable std::atomic<int> _planets_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_seen_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > hexes_seen_;
+  mutable std::atomic<int> _hexes_seen_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > systems_seen_;
+  mutable std::atomic<int> _systems_seen_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
   bool defeated_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -3415,7 +3637,7 @@ class game_state_t PROTOBUF_FINAL :
                &_game_state_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(game_state_t& a, game_state_t& b) {
     a.Swap(&b);
@@ -3608,6 +3830,50 @@ class game_state_t PROTOBUF_FINAL :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// nation_and_object_id_t
+
+// int32 nation_id = 1;
+inline void nation_and_object_id_t::clear_nation_id() {
+  nation_id_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_and_object_id_t::_internal_nation_id() const {
+  return nation_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_and_object_id_t::nation_id() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_and_object_id_t.nation_id)
+  return _internal_nation_id();
+}
+inline void nation_and_object_id_t::_internal_set_nation_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  nation_id_ = value;
+}
+inline void nation_and_object_id_t::set_nation_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_nation_id(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_and_object_id_t.nation_id)
+}
+
+// int32 object_id = 2;
+inline void nation_and_object_id_t::clear_object_id() {
+  object_id_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_and_object_id_t::_internal_object_id() const {
+  return object_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_and_object_id_t::object_id() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_and_object_id_t.object_id)
+  return _internal_object_id();
+}
+inline void nation_and_object_id_t::_internal_set_object_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  object_id_ = value;
+}
+inline void nation_and_object_id_t::set_object_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_object_id(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_and_object_id_t.object_id)
+}
+
+// -------------------------------------------------------------------
+
 // game_start_params_t
 
 // float habitable_systems_per_hex_mean = 1;
@@ -3694,47 +3960,90 @@ inline void game_start_params_t::set_map_height(::PROTOBUF_NAMESPACE_ID::int32 v
 
 // unit_design_t
 
-// int32 id = 1;
+// .pb_message.game_data.nation_and_object_id_t id = 1;
+inline bool unit_design_t::_internal_has_id() const {
+  return this != internal_default_instance() && id_ != nullptr;
+}
+inline bool unit_design_t::has_id() const {
+  return _internal_has_id();
+}
 inline void unit_design_t::clear_id() {
-  id_ = 0;
+  if (GetArena() == nullptr && id_ != nullptr) {
+    delete id_;
+  }
+  id_ = nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_design_t::_internal_id() const {
-  return id_;
+inline const ::pb_message::game_data::nation_and_object_id_t& unit_design_t::_internal_id() const {
+  const ::pb_message::game_data::nation_and_object_id_t* p = id_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::nation_and_object_id_t*>(
+      &::pb_message::game_data::_nation_and_object_id_t_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_design_t::id() const {
+inline const ::pb_message::game_data::nation_and_object_id_t& unit_design_t::id() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.unit_design_t.id)
   return _internal_id();
 }
-inline void unit_design_t::_internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  id_ = value;
+inline void unit_design_t::unsafe_arena_set_allocated_id(
+    ::pb_message::game_data::nation_and_object_id_t* id) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(id_);
+  }
+  id_ = id;
+  if (id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.unit_design_t.id)
 }
-inline void unit_design_t::set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.id)
+inline ::pb_message::game_data::nation_and_object_id_t* unit_design_t::release_id() {
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* unit_design_t::unsafe_arena_release_id() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.unit_design_t.id)
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* unit_design_t::_internal_mutable_id() {
+  
+  if (id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(GetArena());
+    id_ = p;
+  }
+  return id_;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* unit_design_t::mutable_id() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.unit_design_t.id)
+  return _internal_mutable_id();
+}
+inline void unit_design_t::set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete id_;
+  }
+  if (id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(id);
+    if (message_arena != submessage_arena) {
+      id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  id_ = id;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.unit_design_t.id)
 }
 
-// int32 owner = 2;
-inline void unit_design_t::clear_owner() {
-  owner_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_design_t::_internal_owner() const {
-  return owner_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_design_t::owner() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_design_t.owner)
-  return _internal_owner();
-}
-inline void unit_design_t::_internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  owner_ = value;
-}
-inline void unit_design_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_owner(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.owner)
-}
-
-// int32 hull = 3;
+// int32 hull = 2;
 inline void unit_design_t::clear_hull() {
   hull_ = 0;
 }
@@ -3754,7 +4063,7 @@ inline void unit_design_t::set_hull(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.hull)
 }
 
-// int32 armor = 4;
+// int32 armor = 3;
 inline void unit_design_t::clear_armor() {
   armor_ = 0;
 }
@@ -3774,7 +4083,7 @@ inline void unit_design_t::set_armor(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.armor)
 }
 
-// int32 propulsion = 5;
+// int32 propulsion = 4;
 inline void unit_design_t::clear_propulsion() {
   propulsion_ = 0;
 }
@@ -3794,7 +4103,7 @@ inline void unit_design_t::set_propulsion(::PROTOBUF_NAMESPACE_ID::int32 value) 
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.propulsion)
 }
 
-// int32 weapons = 6;
+// int32 weapons = 5;
 inline void unit_design_t::clear_weapons() {
   weapons_ = 0;
 }
@@ -3814,7 +4123,7 @@ inline void unit_design_t::set_weapons(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.weapons)
 }
 
-// int32 shields = 7;
+// int32 shields = 6;
 inline void unit_design_t::clear_shields() {
   shields_ = 0;
 }
@@ -3834,7 +4143,7 @@ inline void unit_design_t::set_shields(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.shields)
 }
 
-// int32 detection = 8;
+// int32 detection = 7;
 inline void unit_design_t::clear_detection() {
   detection_ = 0;
 }
@@ -3854,7 +4163,7 @@ inline void unit_design_t::set_detection(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.detection)
 }
 
-// int32 stealth = 9;
+// int32 stealth = 8;
 inline void unit_design_t::clear_stealth() {
   stealth_ = 0;
 }
@@ -3874,7 +4183,7 @@ inline void unit_design_t::set_stealth(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.stealth)
 }
 
-// int32 automation = 10;
+// int32 automation = 9;
 inline void unit_design_t::clear_automation() {
   automation_ = 0;
 }
@@ -3894,7 +4203,7 @@ inline void unit_design_t::set_automation(::PROTOBUF_NAMESPACE_ID::int32 value) 
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.automation)
 }
 
-// int32 attack = 11;
+// int32 attack = 10;
 inline void unit_design_t::clear_attack() {
   attack_ = 0;
 }
@@ -3914,7 +4223,7 @@ inline void unit_design_t::set_attack(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.attack)
 }
 
-// int32 defense = 12;
+// int32 defense = 11;
 inline void unit_design_t::clear_defense() {
   defense_ = 0;
 }
@@ -3934,7 +4243,7 @@ inline void unit_design_t::set_defense(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.unit_design_t.defense)
 }
 
-// int32 ground_attack = 13;
+// int32 ground_attack = 12;
 inline void unit_design_t::clear_ground_attack() {
   ground_attack_ = 0;
 }
@@ -3958,47 +4267,90 @@ inline void unit_design_t::set_ground_attack(::PROTOBUF_NAMESPACE_ID::int32 valu
 
 // unit_t
 
-// int32 design_id = 1;
-inline void unit_t::clear_design_id() {
-  design_id_ = 0;
+// .pb_message.game_data.nation_and_object_id_t id = 1;
+inline bool unit_t::_internal_has_id() const {
+  return this != internal_default_instance() && id_ != nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_t::_internal_design_id() const {
-  return design_id_;
+inline bool unit_t::has_id() const {
+  return _internal_has_id();
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_t::design_id() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.design_id)
-  return _internal_design_id();
+inline void unit_t::clear_id() {
+  if (GetArena() == nullptr && id_ != nullptr) {
+    delete id_;
+  }
+  id_ = nullptr;
 }
-inline void unit_t::_internal_set_design_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline const ::pb_message::game_data::nation_and_object_id_t& unit_t::_internal_id() const {
+  const ::pb_message::game_data::nation_and_object_id_t* p = id_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::nation_and_object_id_t*>(
+      &::pb_message::game_data::_nation_and_object_id_t_default_instance_);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& unit_t::id() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.id)
+  return _internal_id();
+}
+inline void unit_t::unsafe_arena_set_allocated_id(
+    ::pb_message::game_data::nation_and_object_id_t* id) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(id_);
+  }
+  id_ = id;
+  if (id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.unit_t.id)
+}
+inline ::pb_message::game_data::nation_and_object_id_t* unit_t::release_id() {
   
-  design_id_ = value;
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline void unit_t::set_design_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_design_id(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.design_id)
+inline ::pb_message::game_data::nation_and_object_id_t* unit_t::unsafe_arena_release_id() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.unit_t.id)
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* unit_t::_internal_mutable_id() {
+  
+  if (id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(GetArena());
+    id_ = p;
+  }
+  return id_;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* unit_t::mutable_id() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.unit_t.id)
+  return _internal_mutable_id();
+}
+inline void unit_t::set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete id_;
+  }
+  if (id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(id);
+    if (message_arena != submessage_arena) {
+      id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  id_ = id;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.unit_t.id)
 }
 
-// int32 design_owner = 2;
-inline void unit_t::clear_design_owner() {
-  design_owner_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_t::_internal_design_owner() const {
-  return design_owner_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 unit_t::design_owner() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.unit_t.design_owner)
-  return _internal_design_owner();
-}
-inline void unit_t::_internal_set_design_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  design_owner_ = value;
-}
-inline void unit_t::set_design_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_design_owner(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.unit_t.design_owner)
-}
-
-// int32 health = 3;
+// int32 health = 2;
 inline void unit_t::clear_health() {
   health_ = 0;
 }
@@ -4022,24 +4374,87 @@ inline void unit_t::set_health(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // fleet_t
 
-// uint32 id = 1;
+// .pb_message.game_data.nation_and_object_id_t id = 1;
+inline bool fleet_t::_internal_has_id() const {
+  return this != internal_default_instance() && id_ != nullptr;
+}
+inline bool fleet_t::has_id() const {
+  return _internal_has_id();
+}
 inline void fleet_t::clear_id() {
-  id_ = 0u;
+  if (GetArena() == nullptr && id_ != nullptr) {
+    delete id_;
+  }
+  id_ = nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 fleet_t::_internal_id() const {
-  return id_;
+inline const ::pb_message::game_data::nation_and_object_id_t& fleet_t::_internal_id() const {
+  const ::pb_message::game_data::nation_and_object_id_t* p = id_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::nation_and_object_id_t*>(
+      &::pb_message::game_data::_nation_and_object_id_t_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 fleet_t::id() const {
+inline const ::pb_message::game_data::nation_and_object_id_t& fleet_t::id() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.fleet_t.id)
   return _internal_id();
 }
-inline void fleet_t::_internal_set_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
-  id_ = value;
+inline void fleet_t::unsafe_arena_set_allocated_id(
+    ::pb_message::game_data::nation_and_object_id_t* id) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(id_);
+  }
+  id_ = id;
+  if (id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.fleet_t.id)
 }
-inline void fleet_t::set_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.id)
+inline ::pb_message::game_data::nation_and_object_id_t* fleet_t::release_id() {
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* fleet_t::unsafe_arena_release_id() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.fleet_t.id)
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* fleet_t::_internal_mutable_id() {
+  
+  if (id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(GetArena());
+    id_ = p;
+  }
+  return id_;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* fleet_t::mutable_id() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.fleet_t.id)
+  return _internal_mutable_id();
+}
+inline void fleet_t::set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete id_;
+  }
+  if (id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(id);
+    if (message_arena != submessage_arena) {
+      id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  id_ = id;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.fleet_t.id)
 }
 
 // .pb_message.mission_t mission = 2;
@@ -4179,6 +4594,46 @@ inline void fleet_t::_internal_set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value
 inline void fleet_t::set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_fighters(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.fighters)
+}
+
+// double world_pos_x = 8;
+inline void fleet_t::clear_world_pos_x() {
+  world_pos_x_ = 0;
+}
+inline double fleet_t::_internal_world_pos_x() const {
+  return world_pos_x_;
+}
+inline double fleet_t::world_pos_x() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.fleet_t.world_pos_x)
+  return _internal_world_pos_x();
+}
+inline void fleet_t::_internal_set_world_pos_x(double value) {
+  
+  world_pos_x_ = value;
+}
+inline void fleet_t::set_world_pos_x(double value) {
+  _internal_set_world_pos_x(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.world_pos_x)
+}
+
+// double world_pos_y = 9;
+inline void fleet_t::clear_world_pos_y() {
+  world_pos_y_ = 0;
+}
+inline double fleet_t::_internal_world_pos_y() const {
+  return world_pos_y_;
+}
+inline double fleet_t::world_pos_y() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.fleet_t.world_pos_y)
+  return _internal_world_pos_y();
+}
+inline void fleet_t::_internal_set_world_pos_y(double value) {
+  
+  world_pos_y_ = value;
+}
+inline void fleet_t::set_world_pos_y(double value) {
+  _internal_set_world_pos_y(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.world_pos_y)
 }
 
 // -------------------------------------------------------------------
@@ -4928,7 +5383,27 @@ inline void planet_t::set_infrastructure(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure)
 }
 
-// int32 max_population = 24;
+// float orbital_pos_r = 24;
+inline void planet_t::clear_orbital_pos_r() {
+  orbital_pos_r_ = 0;
+}
+inline float planet_t::_internal_orbital_pos_r() const {
+  return orbital_pos_r_;
+}
+inline float planet_t::orbital_pos_r() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.orbital_pos_r)
+  return _internal_orbital_pos_r();
+}
+inline void planet_t::_internal_set_orbital_pos_r(float value) {
+  
+  orbital_pos_r_ = value;
+}
+inline void planet_t::set_orbital_pos_r(float value) {
+  _internal_set_orbital_pos_r(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbital_pos_r)
+}
+
+// int32 max_population = 25;
 inline void planet_t::clear_max_population() {
   max_population_ = 0;
 }
@@ -4948,7 +5423,7 @@ inline void planet_t::set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.max_population)
 }
 
-// int32 owner = 25;
+// int32 owner = 26;
 inline void planet_t::clear_owner() {
   owner_ = 0;
 }
@@ -4968,7 +5443,7 @@ inline void planet_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
-// int32 original_owner = 26;
+// int32 original_owner = 27;
 inline void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
@@ -4988,7 +5463,7 @@ inline void planet_t::set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// .pb_message.game_data.fleet_t garrison = 27;
+// .pb_message.game_data.fleet_t garrison = 28;
 inline bool planet_t::_internal_has_garrison() const {
   return this != internal_default_instance() && garrison_ != nullptr;
 }
@@ -5071,7 +5546,7 @@ inline void planet_t::set_allocated_garrison(::pb_message::game_data::fleet_t* g
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_t.garrison)
 }
 
-// repeated .pb_message.game_data.planet_effect_t effects = 28;
+// repeated .pb_message.game_data.planet_effect_t effects = 29;
 inline int planet_t::_internal_effects_size() const {
   return effects_.size();
 }
@@ -5108,26 +5583,6 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data:
 planet_t::effects() const {
   // @@protoc_insertion_point(field_list:pb_message.game_data.planet_t.effects)
   return effects_;
-}
-
-// float orbital_pos_r = 29;
-inline void planet_t::clear_orbital_pos_r() {
-  orbital_pos_r_ = 0;
-}
-inline float planet_t::_internal_orbital_pos_r() const {
-  return orbital_pos_r_;
-}
-inline float planet_t::orbital_pos_r() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.orbital_pos_r)
-  return _internal_orbital_pos_r();
-}
-inline void planet_t::_internal_set_orbital_pos_r(float value) {
-  
-  orbital_pos_r_ = value;
-}
-inline void planet_t::set_orbital_pos_r(float value) {
-  _internal_set_orbital_pos_r(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbital_pos_r)
 }
 
 // -------------------------------------------------------------------
@@ -5992,134 +6447,94 @@ inline void hex_t::set_last_system(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.hex_t.last_system)
 }
 
-// .pb_message.game_data.fleets_t fleets = 5;
-inline bool hex_t::_internal_has_fleets() const {
-  return this != internal_default_instance() && fleets_ != nullptr;
+// -------------------------------------------------------------------
+
+// province_t
+
+// .pb_message.game_data.nation_and_object_id_t id = 1;
+inline bool province_t::_internal_has_id() const {
+  return this != internal_default_instance() && id_ != nullptr;
 }
-inline bool hex_t::has_fleets() const {
-  return _internal_has_fleets();
+inline bool province_t::has_id() const {
+  return _internal_has_id();
 }
-inline void hex_t::clear_fleets() {
-  if (GetArena() == nullptr && fleets_ != nullptr) {
-    delete fleets_;
+inline void province_t::clear_id() {
+  if (GetArena() == nullptr && id_ != nullptr) {
+    delete id_;
   }
-  fleets_ = nullptr;
+  id_ = nullptr;
 }
-inline const ::pb_message::game_data::fleets_t& hex_t::_internal_fleets() const {
-  const ::pb_message::game_data::fleets_t* p = fleets_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::fleets_t*>(
-      &::pb_message::game_data::_fleets_t_default_instance_);
+inline const ::pb_message::game_data::nation_and_object_id_t& province_t::_internal_id() const {
+  const ::pb_message::game_data::nation_and_object_id_t* p = id_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::nation_and_object_id_t*>(
+      &::pb_message::game_data::_nation_and_object_id_t_default_instance_);
 }
-inline const ::pb_message::game_data::fleets_t& hex_t::fleets() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.hex_t.fleets)
-  return _internal_fleets();
+inline const ::pb_message::game_data::nation_and_object_id_t& province_t::id() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.id)
+  return _internal_id();
 }
-inline void hex_t::unsafe_arena_set_allocated_fleets(
-    ::pb_message::game_data::fleets_t* fleets) {
+inline void province_t::unsafe_arena_set_allocated_id(
+    ::pb_message::game_data::nation_and_object_id_t* id) {
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(fleets_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(id_);
   }
-  fleets_ = fleets;
-  if (fleets) {
+  id_ = id;
+  if (id) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.hex_t.fleets)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.province_t.id)
 }
-inline ::pb_message::game_data::fleets_t* hex_t::release_fleets() {
+inline ::pb_message::game_data::nation_and_object_id_t* province_t::release_id() {
   
-  ::pb_message::game_data::fleets_t* temp = fleets_;
-  fleets_ = nullptr;
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
   if (GetArena() != nullptr) {
     temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
   return temp;
 }
-inline ::pb_message::game_data::fleets_t* hex_t::unsafe_arena_release_fleets() {
-  // @@protoc_insertion_point(field_release:pb_message.game_data.hex_t.fleets)
+inline ::pb_message::game_data::nation_and_object_id_t* province_t::unsafe_arena_release_id() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.province_t.id)
   
-  ::pb_message::game_data::fleets_t* temp = fleets_;
-  fleets_ = nullptr;
+  ::pb_message::game_data::nation_and_object_id_t* temp = id_;
+  id_ = nullptr;
   return temp;
 }
-inline ::pb_message::game_data::fleets_t* hex_t::_internal_mutable_fleets() {
+inline ::pb_message::game_data::nation_and_object_id_t* province_t::_internal_mutable_id() {
   
-  if (fleets_ == nullptr) {
-    auto* p = CreateMaybeMessage<::pb_message::game_data::fleets_t>(GetArena());
-    fleets_ = p;
+  if (id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(GetArena());
+    id_ = p;
   }
-  return fleets_;
+  return id_;
 }
-inline ::pb_message::game_data::fleets_t* hex_t::mutable_fleets() {
-  // @@protoc_insertion_point(field_mutable:pb_message.game_data.hex_t.fleets)
-  return _internal_mutable_fleets();
+inline ::pb_message::game_data::nation_and_object_id_t* province_t::mutable_id() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.province_t.id)
+  return _internal_mutable_id();
 }
-inline void hex_t::set_allocated_fleets(::pb_message::game_data::fleets_t* fleets) {
+inline void province_t::set_allocated_id(::pb_message::game_data::nation_and_object_id_t* id) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   if (message_arena == nullptr) {
-    delete fleets_;
+    delete id_;
   }
-  if (fleets) {
+  if (id) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(fleets);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(id);
     if (message_arena != submessage_arena) {
-      fleets = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, fleets, submessage_arena);
+      id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, id, submessage_arena);
     }
     
   } else {
     
   }
-  fleets_ = fleets;
-  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.hex_t.fleets)
+  id_ = id;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.province_t.id)
 }
 
-// -------------------------------------------------------------------
-
-// province_t
-
-// int32 id = 1;
-inline void province_t::clear_id() {
-  id_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 province_t::_internal_id() const {
-  return id_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 province_t::id() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.id)
-  return _internal_id();
-}
-inline void province_t::_internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  id_ = value;
-}
-inline void province_t::set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.id)
-}
-
-// int32 owner = 2;
-inline void province_t::clear_owner() {
-  owner_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 province_t::_internal_owner() const {
-  return owner_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 province_t::owner() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.province_t.owner)
-  return _internal_owner();
-}
-inline void province_t::_internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  owner_ = value;
-}
-inline void province_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_owner(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.province_t.owner)
-}
-
-// repeated .pb_message.hex_coord_t hex_coords = 3;
+// repeated .pb_message.hex_coord_t hex_coords = 2;
 inline int province_t::_internal_hex_coords_size() const {
   return hex_coords_.size();
 }
@@ -6257,51 +6672,43 @@ nation_t::provinces() const {
   return provinces_;
 }
 
-// repeated uint32 fleets = 4;
-inline int nation_t::_internal_fleets_size() const {
-  return fleets_.size();
+// repeated .pb_message.game_data.fleet_t map_fleets = 4;
+inline int nation_t::_internal_map_fleets_size() const {
+  return map_fleets_.size();
 }
-inline int nation_t::fleets_size() const {
-  return _internal_fleets_size();
+inline int nation_t::map_fleets_size() const {
+  return _internal_map_fleets_size();
 }
-inline void nation_t::clear_fleets() {
-  fleets_.Clear();
+inline void nation_t::clear_map_fleets() {
+  map_fleets_.Clear();
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 nation_t::_internal_fleets(int index) const {
-  return fleets_.Get(index);
+inline ::pb_message::game_data::fleet_t* nation_t::mutable_map_fleets(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.map_fleets)
+  return map_fleets_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 nation_t::fleets(int index) const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.fleets)
-  return _internal_fleets(index);
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >*
+nation_t::mutable_map_fleets() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.map_fleets)
+  return &map_fleets_;
 }
-inline void nation_t::set_fleets(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  fleets_.Set(index, value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.fleets)
+inline const ::pb_message::game_data::fleet_t& nation_t::_internal_map_fleets(int index) const {
+  return map_fleets_.Get(index);
 }
-inline void nation_t::_internal_add_fleets(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  fleets_.Add(value);
+inline const ::pb_message::game_data::fleet_t& nation_t::map_fleets(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.map_fleets)
+  return _internal_map_fleets(index);
 }
-inline void nation_t::add_fleets(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _internal_add_fleets(value);
-  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.fleets)
+inline ::pb_message::game_data::fleet_t* nation_t::_internal_add_map_fleets() {
+  return map_fleets_.Add();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
-nation_t::_internal_fleets() const {
-  return fleets_;
+inline ::pb_message::game_data::fleet_t* nation_t::add_map_fleets() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.map_fleets)
+  return _internal_add_map_fleets();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
-nation_t::fleets() const {
-  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.fleets)
-  return _internal_fleets();
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
-nation_t::_internal_mutable_fleets() {
-  return &fleets_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
-nation_t::mutable_fleets() {
-  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.fleets)
-  return _internal_mutable_fleets();
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >&
+nation_t::map_fleets() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.map_fleets)
+  return map_fleets_;
 }
 
 // repeated int32 planets = 5;
@@ -6351,7 +6758,140 @@ nation_t::mutable_planets() {
   return _internal_mutable_planets();
 }
 
-// bool defeated = 6;
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 6;
+inline int nation_t::_internal_foreign_designs_seen_size() const {
+  return foreign_designs_seen_.size();
+}
+inline int nation_t::foreign_designs_seen_size() const {
+  return _internal_foreign_designs_seen_size();
+}
+inline void nation_t::clear_foreign_designs_seen() {
+  foreign_designs_seen_.Clear();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_foreign_designs_seen(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.foreign_designs_seen)
+  return foreign_designs_seen_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+nation_t::mutable_foreign_designs_seen() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.foreign_designs_seen)
+  return &foreign_designs_seen_;
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_foreign_designs_seen(int index) const {
+  return foreign_designs_seen_.Get(index);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::foreign_designs_seen(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.foreign_designs_seen)
+  return _internal_foreign_designs_seen(index);
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_add_foreign_designs_seen() {
+  return foreign_designs_seen_.Add();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::add_foreign_designs_seen() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.foreign_designs_seen)
+  return _internal_add_foreign_designs_seen();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+nation_t::foreign_designs_seen() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.foreign_designs_seen)
+  return foreign_designs_seen_;
+}
+
+// repeated int32 hexes_seen = 7;
+inline int nation_t::_internal_hexes_seen_size() const {
+  return hexes_seen_.size();
+}
+inline int nation_t::hexes_seen_size() const {
+  return _internal_hexes_seen_size();
+}
+inline void nation_t::clear_hexes_seen() {
+  hexes_seen_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_hexes_seen(int index) const {
+  return hexes_seen_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::hexes_seen(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.hexes_seen)
+  return _internal_hexes_seen(index);
+}
+inline void nation_t::set_hexes_seen(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
+  hexes_seen_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.hexes_seen)
+}
+inline void nation_t::_internal_add_hexes_seen(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  hexes_seen_.Add(value);
+}
+inline void nation_t::add_hexes_seen(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_add_hexes_seen(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.hexes_seen)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::_internal_hexes_seen() const {
+  return hexes_seen_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::hexes_seen() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.hexes_seen)
+  return _internal_hexes_seen();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::_internal_mutable_hexes_seen() {
+  return &hexes_seen_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::mutable_hexes_seen() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.hexes_seen)
+  return _internal_mutable_hexes_seen();
+}
+
+// repeated int32 systems_seen = 8;
+inline int nation_t::_internal_systems_seen_size() const {
+  return systems_seen_.size();
+}
+inline int nation_t::systems_seen_size() const {
+  return _internal_systems_seen_size();
+}
+inline void nation_t::clear_systems_seen() {
+  systems_seen_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_systems_seen(int index) const {
+  return systems_seen_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::systems_seen(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.systems_seen)
+  return _internal_systems_seen(index);
+}
+inline void nation_t::set_systems_seen(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
+  systems_seen_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.systems_seen)
+}
+inline void nation_t::_internal_add_systems_seen(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  systems_seen_.Add(value);
+}
+inline void nation_t::add_systems_seen(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_add_systems_seen(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.systems_seen)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::_internal_systems_seen() const {
+  return systems_seen_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::systems_seen() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.systems_seen)
+  return _internal_systems_seen();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::_internal_mutable_systems_seen() {
+  return &systems_seen_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::mutable_systems_seen() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.systems_seen)
+  return _internal_mutable_systems_seen();
+}
+
+// bool defeated = 9;
 inline void nation_t::clear_defeated() {
   defeated_ = false;
 }
@@ -6574,6 +7114,8 @@ game_state_t::nations() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -83,6 +83,13 @@ enum class star_class_t {
 };
 inline auto operator<=>(star_class_t x, star_class_t y) { return (int)x <=> (int)y; }
 
+struct nation_and_object_id_t
+{
+    int nation_id;
+    int object_id;
+    bool operator==(nation_and_object_id_t const &) const = default;
+};
+
 struct game_start_params_t
 {
     float habitable_systems_per_hex_mean;
@@ -94,8 +101,7 @@ struct game_start_params_t
 
 struct unit_design_t
 {
-    int id;
-    int owner;
+    nation_and_object_id_t id;
     int hull;
     int armor;
     int propulsion;
@@ -112,21 +118,22 @@ struct unit_design_t
 
 struct unit_t
 {
-    int design_id;
-    int design_owner;
+    nation_and_object_id_t id;
     int health;
     bool operator==(unit_t const &) const = default;
 };
 
 struct fleet_t
 {
-    unsigned int id;
+    nation_and_object_id_t id;
     mission_t mission;
     std::vector<unit_t> units;
     float fuel;
     int rounds;
     int missiles;
     int fighters;
+    double world_pos_x;
+    double world_pos_y;
     bool operator==(fleet_t const &) const = default;
 };
 
@@ -174,12 +181,12 @@ struct planet_t
     int fuel;
     float population;
     float infrastructure;
+    float orbital_pos_r;
     int max_population;
     int owner;
     int original_owner;
     fleet_t garrison;
     std::vector<planet_effect_t> effects;
-    float orbital_pos_r;
     bool operator==(planet_t const &) const = default;
 };
 
@@ -227,14 +234,12 @@ struct hex_t
     int province_id;
     std::size_t first_system;
     std::size_t last_system;
-    fleets_t fleets;
     bool operator==(hex_t const &) const = default;
 };
 
 struct province_t
 {
-    int id;
-    int owner;
+    nation_and_object_id_t id;
     std::vector<hex_coord_t> hex_coords;
     bool operator==(province_t const &) const = default;
 };
@@ -244,8 +249,11 @@ struct nation_t
     int id;
     std::vector<unit_design_t> unit_designs;
     std::vector<province_t> provinces;
-    std::vector<unsigned int> fleets;
+    std::vector<fleet_t> map_fleets;
     std::vector<int> planets;
+    std::vector<nation_and_object_id_t> foreign_designs_seen;
+    std::vector<int> hexes_seen;
+    std::vector<int> systems_seen;
     bool defeated;
     bool operator==(nation_t const &) const = default;
 };
@@ -262,6 +270,9 @@ struct game_state_t
 };
 
 
+
+pb_message::game_data::nation_and_object_id_t to_protobuf (const ::nation_and_object_id_t& value);
+::nation_and_object_id_t from_protobuf (const pb_message::game_data::nation_and_object_id_t& msg);
 
 pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_params_t& value);
 ::game_start_params_t from_protobuf (const pb_message::game_data::game_start_params_t& msg);

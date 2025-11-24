@@ -13,6 +13,22 @@
 
 
 
+pb_message::game_data::nation_and_object_id_t to_protobuf (const ::nation_and_object_id_t& value)
+{
+    pb_message::game_data::nation_and_object_id_t retval;
+    retval.set_nation_id(value.nation_id);
+    retval.set_object_id(value.object_id);
+    return retval;
+}
+
+::nation_and_object_id_t from_protobuf (const pb_message::game_data::nation_and_object_id_t& msg)
+{
+    ::nation_and_object_id_t retval;
+    retval.nation_id = msg.nation_id();
+    retval.object_id = msg.object_id();
+    return retval;
+}
+
 pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_params_t& value)
 {
     pb_message::game_data::game_start_params_t retval;
@@ -36,8 +52,7 @@ pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_param
 pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value)
 {
     pb_message::game_data::unit_design_t retval;
-    retval.set_id(value.id);
-    retval.set_owner(value.owner);
+    retval.mutable_id()->CopyFrom(to_protobuf(value.id));
     retval.set_hull(value.hull);
     retval.set_armor(value.armor);
     retval.set_propulsion(value.propulsion);
@@ -55,8 +70,7 @@ pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value)
 ::unit_design_t from_protobuf (const pb_message::game_data::unit_design_t& msg)
 {
     ::unit_design_t retval;
-    retval.id = msg.id();
-    retval.owner = msg.owner();
+    retval.id = from_protobuf(msg.id());
     retval.hull = msg.hull();
     retval.armor = msg.armor();
     retval.propulsion = msg.propulsion();
@@ -74,8 +88,7 @@ pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value)
 pb_message::game_data::unit_t to_protobuf (const ::unit_t& value)
 {
     pb_message::game_data::unit_t retval;
-    retval.set_design_id(value.design_id);
-    retval.set_design_owner(value.design_owner);
+    retval.mutable_id()->CopyFrom(to_protobuf(value.id));
     retval.set_health(value.health);
     return retval;
 }
@@ -83,8 +96,7 @@ pb_message::game_data::unit_t to_protobuf (const ::unit_t& value)
 ::unit_t from_protobuf (const pb_message::game_data::unit_t& msg)
 {
     ::unit_t retval;
-    retval.design_id = msg.design_id();
-    retval.design_owner = msg.design_owner();
+    retval.id = from_protobuf(msg.id());
     retval.health = msg.health();
     return retval;
 }
@@ -92,7 +104,7 @@ pb_message::game_data::unit_t to_protobuf (const ::unit_t& value)
 pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
 {
     pb_message::game_data::fleet_t retval;
-    retval.set_id(value.id);
+    retval.mutable_id()->CopyFrom(to_protobuf(value.id));
     retval.set_mission(static_cast< pb_message::mission_t >(value.mission));
     for (const auto& x : value.units) {
         retval.add_units()->CopyFrom(to_protobuf(x));
@@ -101,13 +113,15 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
     retval.set_rounds(value.rounds);
     retval.set_missiles(value.missiles);
     retval.set_fighters(value.fighters);
+    retval.set_world_pos_x(value.world_pos_x);
+    retval.set_world_pos_y(value.world_pos_y);
     return retval;
 }
 
 ::fleet_t from_protobuf (const pb_message::game_data::fleet_t& msg)
 {
     ::fleet_t retval;
-    retval.id = msg.id();
+    retval.id = from_protobuf(msg.id());
     retval.mission = static_cast<std::remove_reference<decltype(retval.mission)>::type>(msg.mission());
     {
         retval.units.resize(msg.units_size());
@@ -120,6 +134,8 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
     retval.rounds = msg.rounds();
     retval.missiles = msg.missiles();
     retval.fighters = msg.fighters();
+    retval.world_pos_x = msg.world_pos_x();
+    retval.world_pos_y = msg.world_pos_y();
     return retval;
 }
 
@@ -197,6 +213,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_fuel(value.fuel);
     retval.set_population(value.population);
     retval.set_infrastructure(value.infrastructure);
+    retval.set_orbital_pos_r(value.orbital_pos_r);
     retval.set_max_population(value.max_population);
     retval.set_owner(value.owner);
     retval.set_original_owner(value.original_owner);
@@ -204,7 +221,6 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     for (const auto& x : value.effects) {
         retval.add_effects()->CopyFrom(to_protobuf(x));
     }
-    retval.set_orbital_pos_r(value.orbital_pos_r);
     return retval;
 }
 
@@ -234,6 +250,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.fuel = msg.fuel();
     retval.population = msg.population();
     retval.infrastructure = msg.infrastructure();
+    retval.orbital_pos_r = msg.orbital_pos_r();
     retval.max_population = msg.max_population();
     retval.owner = msg.owner();
     retval.original_owner = msg.original_owner();
@@ -245,7 +262,6 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
             *it++ = from_protobuf(x);
         }
     }
-    retval.orbital_pos_r = msg.orbital_pos_r();
     return retval;
 }
 
@@ -364,7 +380,6 @@ pb_message::game_data::hex_t to_protobuf (const ::hex_t& value)
     retval.set_province_id(value.province_id);
     retval.set_first_system(value.first_system);
     retval.set_last_system(value.last_system);
-    retval.mutable_fleets()->CopyFrom(to_protobuf(value.fleets));
     return retval;
 }
 
@@ -375,15 +390,13 @@ pb_message::game_data::hex_t to_protobuf (const ::hex_t& value)
     retval.province_id = msg.province_id();
     retval.first_system = msg.first_system();
     retval.last_system = msg.last_system();
-    retval.fleets = from_protobuf(msg.fleets());
     return retval;
 }
 
 pb_message::game_data::province_t to_protobuf (const ::province_t& value)
 {
     pb_message::game_data::province_t retval;
-    retval.set_id(value.id);
-    retval.set_owner(value.owner);
+    retval.mutable_id()->CopyFrom(to_protobuf(value.id));
     for (const auto& x : value.hex_coords) {
         retval.add_hex_coords()->CopyFrom(to_protobuf(x));
     }
@@ -393,8 +406,7 @@ pb_message::game_data::province_t to_protobuf (const ::province_t& value)
 ::province_t from_protobuf (const pb_message::game_data::province_t& msg)
 {
     ::province_t retval;
-    retval.id = msg.id();
-    retval.owner = msg.owner();
+    retval.id = from_protobuf(msg.id());
     {
         retval.hex_coords.resize(msg.hex_coords_size());
         auto it = retval.hex_coords.begin();
@@ -415,11 +427,20 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.provinces) {
         retval.add_provinces()->CopyFrom(to_protobuf(x));
     }
-    for (const auto& x : value.fleets) {
-        retval.add_fleets(x);
+    for (const auto& x : value.map_fleets) {
+        retval.add_map_fleets()->CopyFrom(to_protobuf(x));
     }
     for (const auto& x : value.planets) {
         retval.add_planets(x);
+    }
+    for (const auto& x : value.foreign_designs_seen) {
+        retval.add_foreign_designs_seen()->CopyFrom(to_protobuf(x));
+    }
+    for (const auto& x : value.hexes_seen) {
+        retval.add_hexes_seen(x);
+    }
+    for (const auto& x : value.systems_seen) {
+        retval.add_systems_seen(x);
     }
     retval.set_defeated(value.defeated);
     return retval;
@@ -444,16 +465,37 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         }
     }
     {
-        retval.fleets.resize(msg.fleets_size());
-        auto it = retval.fleets.begin();
-        for (const auto& x : msg.fleets()) {
-            *it++ = x;
+        retval.map_fleets.resize(msg.map_fleets_size());
+        auto it = retval.map_fleets.begin();
+        for (const auto& x : msg.map_fleets()) {
+            *it++ = from_protobuf(x);
         }
     }
     {
         retval.planets.resize(msg.planets_size());
         auto it = retval.planets.begin();
         for (const auto& x : msg.planets()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.foreign_designs_seen.resize(msg.foreign_designs_seen_size());
+        auto it = retval.foreign_designs_seen.begin();
+        for (const auto& x : msg.foreign_designs_seen()) {
+            *it++ = from_protobuf(x);
+        }
+    }
+    {
+        retval.hexes_seen.resize(msg.hexes_seen_size());
+        auto it = retval.hexes_seen.begin();
+        for (const auto& x : msg.hexes_seen()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.systems_seen.resize(msg.systems_seen_size());
+        auto it = retval.systems_seen.begin();
+        for (const auto& x : msg.systems_seen()) {
             *it++ = x;
         }
     }

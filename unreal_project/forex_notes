@@ -224,6 +224,54 @@ TODO
   LPO bases are cheaper (TODO: and maybe cheaper to build at?).
 
 
+Visibility of Other Nations' Data
+=================================
+
+Visibility levels:
+owner - can see everything
+allied - can see most/all properties
+known - can see some properties
+unknown - doesn't even know the thing exists
+
+All visibility levels besides unknown can see IDs; we won't keep repeating
+those below.
+
+A hex must be scouted to move from unknown to known.  When it is scouted, this
+does not also scout the systems in the hex; those must be scouted individually
+as well.
+
+fleet: allied sees all; known sees just the units
+
+unit: allied sees all; known sees only the design id and design owner
+
+design: allied sees all; known sees only owner and hull (owner may or may not
+be known); encounters with a certain design may fill in some/all of the
+numbers
+
+planet_effect: allied sees all; known sees only the permanent effects
+
+planet: allied sees all; known sees only permanent things like planet_type
+through ocean_coverage, the permanent effects part of growth_factor and
+max_population, and a range of values for pop and infra (curr. owner too,
+obvs.) intel is required to see about resources
+
+location_object: TODO
+
+system_location: TODO, but in-system fleets should be harder to detect, due to
+the star, stations and planets
+
+star: everyone can see everything, once they've found the system it's in
+
+system: allied sees all; known sees only name, coord, star,
+permanent_locations, world_pos_*, *_planet
+
+hex: everyone sees everything (within the limitations above)
+
+province: TODO
+
+nation: allied see all; known cannot see unit designs it has not seen before,
+except via intel(?), and cannotsee anything else (except "defeated") unless
+they can scout it individually on the map, as described above.
 
 
 ROADMAP:

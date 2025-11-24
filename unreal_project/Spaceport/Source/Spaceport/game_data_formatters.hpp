@@ -145,6 +145,27 @@ struct std::formatter<star_class_t> : std::formatter<std::string_view> {
 };
 
 template <>
+struct std::formatter<nation_and_object_id_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(nation_and_object_id_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "nation_and_object_id_t(");
+
+        out = std::format_to(out, " nation_id={}", x.nation_id);
+        out = std::format_to(out, " object_id={}", x.object_id);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, nation_and_object_id_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<game_start_params_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }
@@ -178,7 +199,6 @@ struct std::formatter<unit_design_t> {
         out = std::format_to(out, "unit_design_t(");
 
         out = std::format_to(out, " id={}", x.id);
-        out = std::format_to(out, " owner={}", x.owner);
         out = std::format_to(out, " hull={}", x.hull);
         out = std::format_to(out, " armor={}", x.armor);
         out = std::format_to(out, " propulsion={}", x.propulsion);
@@ -209,8 +229,7 @@ struct std::formatter<unit_t> {
         auto out = ctx.out();
         out = std::format_to(out, "unit_t(");
 
-        out = std::format_to(out, " design_id={}", x.design_id);
-        out = std::format_to(out, " design_owner={}", x.design_owner);
+        out = std::format_to(out, " id={}", x.id);
         out = std::format_to(out, " health={}", x.health);
 
         return std::format_to(out, " )");
@@ -242,6 +261,8 @@ struct std::formatter<fleet_t> {
         out = std::format_to(out, " rounds={}", x.rounds);
         out = std::format_to(out, " missiles={}", x.missiles);
         out = std::format_to(out, " fighters={}", x.fighters);
+        out = std::format_to(out, " world_pos_x={}", x.world_pos_x);
+        out = std::format_to(out, " world_pos_y={}", x.world_pos_y);
 
         return std::format_to(out, " )");
     }
@@ -335,6 +356,7 @@ struct std::formatter<planet_t> {
         out = std::format_to(out, " fuel={}", x.fuel);
         out = std::format_to(out, " population={}", x.population);
         out = std::format_to(out, " infrastructure={}", x.infrastructure);
+        out = std::format_to(out, " orbital_pos_r={}", x.orbital_pos_r);
         out = std::format_to(out, " max_population={}", x.max_population);
         out = std::format_to(out, " owner={}", x.owner);
         out = std::format_to(out, " original_owner={}", x.original_owner);
@@ -344,7 +366,6 @@ struct std::formatter<planet_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " orbital_pos_r={}", x.orbital_pos_r);
 
         return std::format_to(out, " )");
     }
@@ -474,7 +495,6 @@ struct std::formatter<hex_t> {
         out = std::format_to(out, " province_id={}", x.province_id);
         out = std::format_to(out, " first_system={}", x.first_system);
         out = std::format_to(out, " last_system={}", x.last_system);
-        out = std::format_to(out, " fleets={}", x.fleets);
 
         return std::format_to(out, " )");
     }
@@ -495,7 +515,6 @@ struct std::formatter<province_t> {
         out = std::format_to(out, "province_t(");
 
         out = std::format_to(out, " id={}", x.id);
-        out = std::format_to(out, " owner={}", x.owner);
         out = std::format_to(out, " hex_coords=[");
         for (auto && e : x.hex_coords) {
             out = std::format_to(out, " {}", e);
@@ -531,13 +550,28 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " fleets=[");
-        for (auto && e : x.fleets) {
+        out = std::format_to(out, " map_fleets=[");
+        for (auto && e : x.map_fleets) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
         out = std::format_to(out, " planets=[");
         for (auto && e : x.planets) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " foreign_designs_seen=[");
+        for (auto && e : x.foreign_designs_seen) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " hexes_seen=[");
+        for (auto && e : x.hexes_seen) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " systems_seen=[");
+        for (auto && e : x.systems_seen) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");

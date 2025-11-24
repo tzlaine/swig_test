@@ -5,6 +5,12 @@ import "base_types.proto";
 package pb_message.game_data;
 
 
+message nation_and_object_id_t
+{
+    int32 nation_id = 1;
+    int32 object_id = 2;
+}
+
 message game_start_params_t
 {
     // TODO: scenario
@@ -19,37 +25,37 @@ message game_start_params_t
 
 message unit_design_t
 {
-    int32 id = 1;
-    int32 owner = 2;
-    int32 hull = 3;
-    int32 armor = 4;
-    int32 propulsion = 5;
-    int32 weapons = 6;
-    int32 shields = 7;
-    int32 detection = 8;
-    int32 stealth = 9;
-    int32 automation = 10;
-    int32 attack = 11;
-    int32 defense = 12;
-    int32 ground_attack = 13;
+    nation_and_object_id_t id = 1;
+    int32 hull = 2;
+    int32 armor = 3;
+    int32 propulsion = 4;
+    int32 weapons = 5;
+    int32 shields = 6;
+    int32 detection = 7;
+    int32 stealth = 8;
+    int32 automation = 9;
+    int32 attack = 10;
+    int32 defense = 11;
+    int32 ground_attack = 12;
 }
 
 message unit_t
 {
-    int32 design_id = 1;
-    int32 design_owner = 2;
-    int32 health = 3; // <= design.defense
+    nation_and_object_id_t id = 1;
+    int32 health = 2; // <= design.defense
 }
 
 message fleet_t
 {
-    uint32 id = 1;
+    nation_and_object_id_t id = 1;
     pb_message.mission_t mission = 2;
     repeated unit_t units = 3;
     float fuel = 4;
     int32 rounds = 5;
     int32 missiles = 6;
     int32 fighters = 7;
+    double world_pos_x = 8; // unused when in a system
+    double world_pos_y = 9;
 }
 
 message fleets_t
@@ -148,16 +154,15 @@ message planet_t
     float population = 22;
     float infrastructure = 23;
 
-    int32 max_population = 24;
-    int32 owner = 25;
-    int32 original_owner = 26;
+    float orbital_pos_r = 24;
+    int32 max_population = 25;
+    int32 owner = 26;
+    int32 original_owner = 27;
     // TODO: language, culture, religion
     // TODO: visual properties (incl. rings)
-    fleet_t garrison = 27;
+    fleet_t garrison = 28;
     // TODO: ground-to-space defenses
-    repeated planet_effect_t effects = 28;
-
-    float orbital_pos_r = 29;
+    repeated planet_effect_t effects = 29;
 }
 
 message location_object_t
@@ -213,14 +218,12 @@ message hex_t
     int32 province_id = 2;
     uint64 first_system = 3;
     uint64 last_system = 4;
-    fleets_t fleets = 5;
 }
 
 message province_t
 {
-    int32 id = 1;
-    int32 owner = 2;
-    repeated hex_coord_t hex_coords = 3;
+    nation_and_object_id_t id = 1;
+    repeated hex_coord_t hex_coords = 2;
 }
 
 message nation_t
@@ -228,9 +231,12 @@ message nation_t
     int32 id = 1;
     repeated unit_design_t unit_designs = 2;
     repeated province_t provinces = 3;
-    repeated uint32 fleets = 4;
+    repeated fleet_t map_fleets = 4;
     repeated int32 planets = 5;
-    bool defeated = 6;
+    repeated nation_and_object_id_t foreign_designs_seen = 6;
+    repeated int32 hexes_seen = 7;
+    repeated int32 systems_seen = 8;
+    bool defeated = 9;
 }
 
 message game_state_t
