@@ -67,7 +67,7 @@ namespace detail {
     using os = google::protobuf::io::CodedOutputStream;
     using is = google::protobuf::io::CodedInputStream;
 
-    enum struct ser_op { write, count, write_sparse, count_sparse };
+    enum struct ser_op { write, count };
     enum struct ser_field_op { write, dont_write };
 
     template<ser_op Op, typename Char>
@@ -77,7 +77,7 @@ namespace detail {
         int size,
         std::ostream * os)
     {
-        if constexpr (Op == ser_op::write || Op == ser_op::write_sparse)
+        if constexpr (Op == ser_op::write)
             os->write(reinterpret_cast<char const *>(data), size);
         else
             bytes_written += size;
@@ -89,12 +89,6 @@ namespace detail {
     static size_t VarintSize64(uint64 value);
     static size_t VarintSize32SignExtended(int32 value);
 #endif
-
-    template<ser_op Op>
-    constexpr bool sparse()
-    {
-        return Op == write_sparse || Op == count_sparse;
-    }
 
     template<ser_op Op, ser_field_op FieldOp, typename T>
     std::ptrdiff_t
@@ -154,20 +148,9 @@ namespace detail {
         } else if constexpr (is_vector_v<T>) {
             if constexpr (FieldOp == ser_field_op::write)
                 out = os::WriteVarint32ToArray(field_number, out);
-            int size = x.size();
-            if constexpr (detail::sparse<Op>()) {
-                size = std::ranges::count_if(x, [](auto const & e) {
-                    return e != typename T::value_type{};
-                });
-            }
-            out = os::WriteVarint32ToArray(size, out);
+            out = os::WriteVarint32ToArray(x.size(), out);
             detail::count_or_write<Op>(retval, buf, out - buf, os);
-            int i = 0;
             for (auto const & e : x) {
-                if constexpr (detail::sparse<Op>()) {
-                    out = os::WriteVarint32ToArray(i++, out);
-                    detail::count_or_write<Op>(retval, buf, out - buf, os);
-                }
                 retval += detail::serialize_impl<Op, ser_field_op::dont_write>(
                     e, 0, os);
             }
