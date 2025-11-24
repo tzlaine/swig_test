@@ -12,8 +12,8 @@
 
 namespace detail {
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(game_start_params_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(game_start_params_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -59,8 +59,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(unit_design_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(unit_design_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -124,8 +124,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(unit_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(unit_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -169,8 +169,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(fleet_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(fleet_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -222,8 +222,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(fleets_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(fleets_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -263,8 +263,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(planet_effect_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(planet_effect_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -318,8 +318,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(planet_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(planet_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -415,8 +415,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(location_object_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(location_object_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -458,8 +458,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(system_location_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(system_location_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -501,8 +501,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(star_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(star_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -550,8 +550,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(system_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(system_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -607,8 +607,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(hex_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(hex_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -656,8 +656,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(province_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(province_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -701,8 +701,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(nation_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(nation_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     
@@ -752,8 +752,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(game_state_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(game_state_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     

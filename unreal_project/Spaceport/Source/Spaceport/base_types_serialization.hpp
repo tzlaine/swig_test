@@ -12,8 +12,8 @@
 
 namespace detail {
 
-    template<ser_op Op, ser_field_op FieldOp>
-    std::ptrdiff_t serialize_message_impl(hex_coord_t const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(hex_coord_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
     

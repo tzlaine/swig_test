@@ -50,6 +50,23 @@ private:
 };
 
 namespace detail {
+#if !defined(BUILD_FOR_TEST)
+    struct ostream_tarray_facade
+    {
+        ostream_tarray_facade(TArray<uint8> & target) : target_(&target) {}
+
+        void write(char const * ptr, std::ptrdiff_t size)
+        {
+            std::ptrdiff_t prev_size = target_->Num();
+            target_->SetNum(prev_size + size);
+            std::memcpy(target_->GetData() + prev_size, ptr, size);
+        }
+
+    private:
+        TArray<uint8> * target_;
+    };
+#endif
+
     template<typename T>
     constexpr bool is_vector_v = false;
     template<typename T>
@@ -71,12 +88,12 @@ namespace detail {
     enum struct ser_op { write, count };
     enum struct ser_field_op { write, dont_write };
 
-    template<ser_op Op, typename Char>
+    template<ser_op Op, typename Char, typename OStream>
     void count_or_write(
         std::ptrdiff_t & bytes_written,
         Char const * data,
         int size,
-        std::ostream * os)
+        OStream * os)
     {
         if constexpr (Op == ser_op::write)
             os->write(reinterpret_cast<char const *>(data), size);
@@ -91,9 +108,8 @@ namespace detail {
     static size_t VarintSize32SignExtended(int32 value);
 #endif
 
-    template<ser_op Op, ser_field_op FieldOp, typename T>
-    std::ptrdiff_t
-    serialize_impl(T const & x, int field_number, std::ostream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename T, typename OStream>
+    std::ptrdiff_t serialize_impl(T const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
 
@@ -440,8 +456,8 @@ namespace detail {
 
     // These two should only be called from within generated overloads of
     // serialize_message_impl().
-    template<ser_op Op>
-    std::ptrdiff_t serialize_message_end(std::ostream * os)
+    template<ser_op Op, typename OStream>
+    std::ptrdiff_t serialize_message_end(OStream * os)
     {
         std::ptrdiff_t retval = 0;
         uint8_t buf[8];
@@ -538,12 +554,9 @@ namespace detail {
         return src;
     }
 
-    template<typename T>
+    template<typename T, typename OStream>
     std::ptrdiff_t serialize_sparse(
-        int nation_id,
-        std::vector<T> const & x,
-        int field_number,
-        std::ostream * os)
+        int nation_id, std::vector<T> const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
 
@@ -569,8 +582,9 @@ namespace detail {
         return retval;
     }
 
-    inline std::ptrdiff_t serialize_for_client(
-        int nation_id, game_state_t const & x, std::ostream * os)
+    template<typename OStream>
+    std::ptrdiff_t
+    serialize_for_client(int nation_id, game_state_t const & x, OStream * os)
     {
         std::ptrdiff_t retval = 0;
 

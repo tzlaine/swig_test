@@ -66,7 +66,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumu32::value_1, 7, nullptr)));
+                enumu32::value_1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -77,7 +77,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumu32::value_1, 700, nullptr)));
+                enumu32::value_1, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -88,7 +88,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumu32::value_2, 7, nullptr)));
+                enumu32::value_2, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -99,7 +99,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumu32::value_2, 700, nullptr)));
+                enumu32::value_2, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -110,7 +110,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumu32::value_3, 7, nullptr)));
+                enumu32::value_3, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -121,7 +121,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumu32::value_3, 700, nullptr)));
+                enumu32::value_3, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -133,7 +133,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumi32::value_1, 7, nullptr)));
+                enumi32::value_1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -144,7 +144,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumi32::value_1, 700, nullptr)));
+                enumi32::value_1, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -155,7 +155,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumi32::value_2, 7, nullptr)));
+                enumi32::value_2, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -166,7 +166,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumi32::value_2, 700, nullptr)));
+                enumi32::value_2, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -177,7 +177,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumi32::value_3, 7, nullptr)));
+                enumi32::value_3, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -188,7 +188,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                enumi32::value_3, 700, nullptr)));
+                enumi32::value_3, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -201,7 +201,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumu32::value_1, 7, nullptr)));
+                enumu32::value_1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -212,7 +212,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumu32::value_1, 700, nullptr)));
+                enumu32::value_1, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -223,7 +223,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumu32::value_2, 7, nullptr)));
+                enumu32::value_2, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -234,7 +234,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumu32::value_2, 700, nullptr)));
+                enumu32::value_2, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -245,7 +245,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumu32::value_3, 7, nullptr)));
+                enumu32::value_3, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -256,7 +256,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumu32::value_3, 700, nullptr)));
+                enumu32::value_3, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -268,7 +268,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumi32::value_1, 7, nullptr)));
+                enumi32::value_1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -279,7 +279,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumi32::value_1, 700, nullptr)));
+                enumi32::value_1, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -290,7 +290,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumi32::value_2, 7, nullptr)));
+                enumi32::value_2, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -301,7 +301,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumi32::value_2, 700, nullptr)));
+                enumi32::value_2, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -312,7 +312,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumi32::value_3, 7, nullptr)));
+                enumi32::value_3, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -323,7 +323,7 @@ TEST(serialization_tests, serialize_impl_enums_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                enumi32::value_3, 700, nullptr)));
+                enumi32::value_3, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -340,7 +340,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                0, 1, nullptr)));
+                0, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -350,7 +350,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                0, 7, nullptr)));
+                0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -360,7 +360,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                1, 7, nullptr)));
+                1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -370,7 +370,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                -1, 7, nullptr)));
+                -1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -380,7 +380,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                10000, 700, nullptr)));
+                10000, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -390,7 +390,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                -10000, 700, nullptr)));
+                -10000, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -402,7 +402,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                0, 1, nullptr)));
+                0, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -412,7 +412,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                0, 7, nullptr)));
+                0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -422,7 +422,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                1, 7, nullptr)));
+                1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -432,7 +432,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                -1, 7, nullptr)));
+                -1, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -443,7 +443,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                10000, 700, nullptr)));
+                10000, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -454,7 +454,7 @@ TEST(serialization_tests, serialize_impl_ints_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                -10000, 700, nullptr)));
+                -10000, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -471,7 +471,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                0.f, 1, nullptr)));
+                0.f, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -481,7 +481,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                0.f, 7, nullptr)));
+                0.f, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -491,7 +491,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                1.f, 7, nullptr)));
+                1.f, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -501,7 +501,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                -1.f, 7, nullptr)));
+                -1.f, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -511,7 +511,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                10000.f, 700, nullptr)));
+                10000.f, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -521,7 +521,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                -10000.f, 700, nullptr)));
+                -10000.f, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -533,7 +533,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                0.f, 1, nullptr)));
+                0.f, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -543,7 +543,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                0.f, 7, nullptr)));
+                0.f, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -553,7 +553,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                1.f, 7, nullptr)));
+                1.f, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -563,7 +563,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                -1.f, 7, nullptr)));
+                -1.f, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -574,7 +574,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                10000.f, 700, nullptr)));
+                10000.f, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -585,7 +585,7 @@ TEST(serialization_tests, serialize_impl_float_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                -10000.f, 700, nullptr)));
+                -10000.f, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -602,7 +602,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                0.0, 1, nullptr)));
+                0.0, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -612,7 +612,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                0.0, 7, nullptr)));
+                0.0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -622,7 +622,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                1.0, 7, nullptr)));
+                1.0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -632,7 +632,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                -1.0, 7, nullptr)));
+                -1.0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -642,7 +642,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                10000.0, 700, nullptr)));
+                10000.0, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -652,7 +652,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                -10000.0, 700, nullptr)));
+                -10000.0, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -664,7 +664,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                0.0, 1, nullptr)));
+                0.0, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -674,7 +674,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                0.0, 7, nullptr)));
+                0.0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -684,7 +684,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                1.0, 7, nullptr)));
+                1.0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -694,7 +694,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                -1.0, 7, nullptr)));
+                -1.0, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -705,7 +705,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                10000.0, 700, nullptr)));
+                10000.0, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -716,7 +716,7 @@ TEST(serialization_tests, serialize_impl_double_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                -10000.0, 700, nullptr)));
+                -10000.0, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -734,7 +734,7 @@ TEST(serialization_tests, serialize_impl_string_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                ""sv, 1, nullptr)));
+                ""sv, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -744,7 +744,7 @@ TEST(serialization_tests, serialize_impl_string_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                ""sv, 7, nullptr)));
+                ""sv, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -754,7 +754,7 @@ TEST(serialization_tests, serialize_impl_string_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                ""sv, 700, nullptr)));
+                ""sv, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -765,7 +765,7 @@ TEST(serialization_tests, serialize_impl_string_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                "some text"sv, 7, nullptr)));
+                "some text"sv, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::ostringstream oss(std::ios::binary);
@@ -776,7 +776,7 @@ TEST(serialization_tests, serialize_impl_string_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                "some text"sv, 700, nullptr)));
+                "some text"sv, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -796,7 +796,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 1, nullptr)));
+                v, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v;
@@ -807,7 +807,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v;
@@ -818,7 +818,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v({1, 2, 3, 4, 5});
@@ -829,7 +829,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v({1, 2, 3, 4, 5});
@@ -840,7 +840,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     // double
     {
@@ -852,7 +852,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 1, nullptr)));
+                v, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v;
@@ -863,7 +863,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v;
@@ -874,7 +874,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v({1.0, 2.0, 3.0, 4.0, 5.0});
@@ -885,7 +885,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v({1.0, 2.0, 3.0, 4.0, 5.0});
@@ -896,7 +896,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     // vector<int>
     {
@@ -908,7 +908,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 1, nullptr)));
+                v, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v;
@@ -919,7 +919,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v;
@@ -930,7 +930,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -944,7 +944,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -958,7 +958,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -972,7 +972,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -986,7 +986,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1000,7 +1000,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1014,7 +1014,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1028,7 +1028,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1042,7 +1042,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -1056,7 +1056,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 1, nullptr)));
+                v, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v;
@@ -1067,7 +1067,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v;
@@ -1078,7 +1078,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v({1, 2, 3, 4, 5});
@@ -1089,7 +1089,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<int> v({1, 2, 3, 4, 5});
@@ -1100,7 +1100,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     // double
     {
@@ -1112,7 +1112,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 1, nullptr)));
+                v, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v;
@@ -1123,7 +1123,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v;
@@ -1134,7 +1134,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v({1.0, 2.0, 3.0, 4.0, 5.0});
@@ -1145,7 +1145,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<double> v({1.0, 2.0, 3.0, 4.0, 5.0});
@@ -1156,7 +1156,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     // vector<int>
     {
@@ -1168,7 +1168,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 1, nullptr)));
+                v, 1, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v;
@@ -1179,7 +1179,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v;
@@ -1190,7 +1190,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1204,7 +1204,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1218,7 +1218,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1232,7 +1232,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1246,7 +1246,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1260,7 +1260,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1274,7 +1274,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1288,7 +1288,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 7, nullptr)));
+                v, 7, (std::ostringstream *)nullptr)));
     }
     {
         std::vector<std::vector<int>> v(
@@ -1302,7 +1302,7 @@ TEST(serialization_tests, serialize_impl_vec_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                v, 700, nullptr)));
+                v, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -1322,7 +1322,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 1, nullptr)));
+                m, 1, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m;
@@ -1333,7 +1333,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m;
@@ -1344,7 +1344,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1361,7 +1361,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1378,7 +1378,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     // double
     {
@@ -1390,7 +1390,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 1, nullptr)));
+                m, 1, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, double> m;
@@ -1401,7 +1401,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, double> m;
@@ -1412,7 +1412,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1429,7 +1429,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1446,7 +1446,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     // vector<int>
     {
@@ -1458,7 +1458,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 1, nullptr)));
+                m, 1, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m;
@@ -1469,7 +1469,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m;
@@ -1480,7 +1480,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1494,7 +1494,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1508,7 +1508,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1522,7 +1522,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1536,7 +1536,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1550,7 +1550,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1564,7 +1564,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1578,7 +1578,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1592,7 +1592,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -1606,7 +1606,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 1, nullptr)));
+                m, 1, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m;
@@ -1617,7 +1617,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m;
@@ -1628,7 +1628,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1645,7 +1645,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1662,7 +1662,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     // double
     {
@@ -1674,7 +1674,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 1, nullptr)));
+                m, 1, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, double> m;
@@ -1685,7 +1685,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, double> m;
@@ -1696,7 +1696,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1713,7 +1713,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, int> m({
@@ -1730,7 +1730,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     // vector<int>
     {
@@ -1742,7 +1742,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 1, nullptr)));
+                m, 1, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m;
@@ -1753,7 +1753,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m;
@@ -1764,7 +1764,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1778,7 +1778,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1792,7 +1792,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1806,7 +1806,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1820,7 +1820,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1834,7 +1834,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1848,7 +1848,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1862,7 +1862,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 7, nullptr)));
+                m, 7, (std::ostringstream *)nullptr)));
     }
     {
         boost::container::flat_map<std::string_view, std::vector<int>> m(
@@ -1876,7 +1876,7 @@ TEST(serialization_tests, serialize_impl_map_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                m, 700, nullptr)));
+                m, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -1897,7 +1897,7 @@ TEST(serialization_tests, serialize_impl_nonnested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -1911,7 +1911,7 @@ TEST(serialization_tests, serialize_impl_nonnested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -1925,7 +1925,7 @@ TEST(serialization_tests, serialize_impl_nonnested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -1940,7 +1940,7 @@ TEST(serialization_tests, serialize_impl_nonnested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -1954,7 +1954,7 @@ TEST(serialization_tests, serialize_impl_nonnested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -1968,7 +1968,7 @@ TEST(serialization_tests, serialize_impl_nonnested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 }
 
@@ -2001,7 +2001,7 @@ TEST(serialization_tests, serialize_impl_nested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -2020,7 +2020,7 @@ TEST(serialization_tests, serialize_impl_nested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -2039,7 +2039,7 @@ TEST(serialization_tests, serialize_impl_nested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     // without field
@@ -2059,7 +2059,7 @@ TEST(serialization_tests, serialize_impl_nested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -2078,7 +2078,7 @@ TEST(serialization_tests, serialize_impl_nested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 
     {
@@ -2097,6 +2097,6 @@ TEST(serialization_tests, serialize_impl_nested_message_counts)
         EXPECT_EQ(
             bytes_written,
             (serialize_impl<ser_op::count, ser_field_op::dont_write>(
-                x, 700, nullptr)));
+                x, 700, (std::ostringstream *)nullptr)));
     }
 }
