@@ -9,6 +9,7 @@
 #endif
 
 #include "model.hpp"
+#include "serialization.hpp"
 #include "generate_galaxy.hpp"
 #include "rng.hpp"
 
@@ -19,6 +20,22 @@ model::~model ()
 {
     save_queue_.done();
 }
+
+#if !defined(BUILD_FOR_TEST)
+TArray<uint8> model::serialize_for_client(int nation_id) const
+{
+    check(game_state_);
+    // TODO: Make a stream facade that writes to a TArray instead of making
+    // all these copies.
+    std::ostringstream oss;
+    std::ptrdiff_t bytes =
+        detail::serialize_for_client(nation_id, *game_state_, &oss);
+    TArray<uint8> retval;
+    retval.SetNum(bytes);
+    std::ranges::copy(oss.str(), retval.GetData());
+    return std::move(retval);
+}
+#endif
 
 void model::generate_galaxy(
     game_start_params_t const & params,

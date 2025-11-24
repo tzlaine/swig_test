@@ -107,6 +107,10 @@ struct model
         return {game_state_};
     }
 
+#if !defined(BUILD_FOR_TEST)
+    TArray<uint8> serialize_for_client(int nation_id) const;
+#endif
+
     void generate_galaxy(game_start_params_t const & params,
                          concurrent_queue<int> & percent_complete,
                          std::atomic_bool & fully_complete);

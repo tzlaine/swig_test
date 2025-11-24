@@ -3,6 +3,7 @@
 #include "logging.hpp"
 #include "memmap.hpp"
 #include "sparse_vector.hpp"
+#include "model_visibility.hpp"
 
 #include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
@@ -535,6 +536,56 @@ namespace detail {
         }
 
         return src;
+    }
+
+    template<typename T>
+    std::ptrdiff_t serialize_sparse(
+        int nation_id,
+        std::vector<T> const & x,
+        int field_number,
+        std::ostream * os)
+    {
+        std::ptrdiff_t retval = 0;
+
+        uint8_t buf[64];
+        uint8_t * out = buf;
+
+        out = os::WriteVarint32ToArray(field_number, out);
+        int const size = std::ranges::count_if(x, [nation_id](auto const & e) {
+            return visible_to(nation_id, e);
+        });
+        out = os::WriteVarint32ToArray(size, out);
+        detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
+        int i = 0;
+        for (auto const & e : x) {
+            out = os::WriteVarint32ToArray(i++, out);
+            detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
+            auto element = view_of(nation_id, e);
+            retval +=
+                detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
+                    element, 0, os);
+        }
+
+        return retval;
+    }
+
+    inline std::ptrdiff_t serialize_for_client(
+        int nation_id, game_state_t const & x, std::ostream * os)
+    {
+        std::ptrdiff_t retval = 0;
+
+        retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
+            x.map_width, 1, os);
+        retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
+            x.map_height, 2, os);
+        retval += detail::serialize_sparse(nation_id, x.hexes, 3, os);
+        retval += detail::serialize_sparse(nation_id, x.systems, 4, os);
+        retval += detail::serialize_sparse(nation_id, x.planets, 5, os);
+        retval += detail::serialize_sparse(nation_id, x.nations, 6, os);
+
+        retval += detail::serialize_message_end<ser_op::write>(os);
+
+        return retval;
     }
 }
 
