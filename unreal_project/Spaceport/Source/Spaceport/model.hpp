@@ -290,14 +290,6 @@ private:
         ~reset_saving()  { *saving_ = 0; }
         std::atomic_int * saving_ = nullptr;
     };
-    struct reset_save_state
-    {
-        reset_save_state(boost::shared_ptr<game_state_t const> & save_state) :
-            save_state_(&save_state)
-        {}
-        ~reset_save_state()  { save_state_->reset(); }
-        boost::shared_ptr<game_state_t const> * save_state_ = nullptr;
-    };
 
     concurrent_queue<
         std::pair<boost::shared_ptr<game_state_t const>,
