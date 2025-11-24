@@ -555,7 +555,7 @@ namespace detail {
     }
 
     template<typename T, typename OStream>
-    std::ptrdiff_t serialize_sparse(
+    std::ptrdiff_t serialize_for_client(
         int nation_id, std::vector<T> const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
@@ -592,10 +592,10 @@ namespace detail {
             x.map_width, 1, os);
         retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
             x.map_height, 2, os);
-        retval += detail::serialize_sparse(nation_id, x.hexes, 3, os);
-        retval += detail::serialize_sparse(nation_id, x.systems, 4, os);
-        retval += detail::serialize_sparse(nation_id, x.planets, 5, os);
-        retval += detail::serialize_sparse(nation_id, x.nations, 6, os);
+        retval += detail::serialize_for_client(nation_id, x.hexes, 3, os);
+        retval += detail::serialize_for_client(nation_id, x.systems, 4, os);
+        retval += detail::serialize_for_client(nation_id, x.planets, 5, os);
+        retval += detail::serialize_for_client(nation_id, x.nations, 6, os);
 
         retval += detail::serialize_message_end<ser_op::write>(os);
 
