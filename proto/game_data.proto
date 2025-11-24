@@ -247,4 +247,5 @@ message game_state_t
     repeated system_t systems = 4;
     repeated planet_t planets = 5;
     repeated nation_t nations = 6;
+    repeated uint32 alliances = 7; // packed bitfield
 }

@@ -266,6 +266,7 @@ struct game_state_t
     std::vector<system_t> systems;
     std::vector<planet_t> planets;
     std::vector<nation_t> nations;
+    std::vector<unsigned int> alliances;
     bool operator==(game_state_t const &) const = default;
 };
 

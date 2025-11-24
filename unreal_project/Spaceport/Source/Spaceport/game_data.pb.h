@@ -3712,6 +3712,7 @@ class game_state_t PROTOBUF_FINAL :
     kSystemsFieldNumber = 4,
     kPlanetsFieldNumber = 5,
     kNationsFieldNumber = 6,
+    kAlliancesFieldNumber = 7,
     kMapWidthFieldNumber = 1,
     kMapHeightFieldNumber = 2,
   };
@@ -3787,6 +3788,28 @@ class game_state_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_t >&
       nations() const;
 
+  // repeated uint32 alliances = 7;
+  int alliances_size() const;
+  private:
+  int _internal_alliances_size() const;
+  public:
+  void clear_alliances();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_alliances(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+      _internal_alliances() const;
+  void _internal_add_alliances(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+      _internal_mutable_alliances();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::uint32 alliances(int index) const;
+  void set_alliances(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value);
+  void add_alliances(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+      alliances() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+      mutable_alliances();
+
   // int32 map_width = 1;
   void clear_map_width();
   ::PROTOBUF_NAMESPACE_ID::int32 map_width() const;
@@ -3816,6 +3839,8 @@ class game_state_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_t > systems_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::planet_t > planets_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_t > nations_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 > alliances_;
+  mutable std::atomic<int> _alliances_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_width_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_height_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -7109,6 +7134,53 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data:
 game_state_t::nations() const {
   // @@protoc_insertion_point(field_list:pb_message.game_data.game_state_t.nations)
   return nations_;
+}
+
+// repeated uint32 alliances = 7;
+inline int game_state_t::_internal_alliances_size() const {
+  return alliances_.size();
+}
+inline int game_state_t::alliances_size() const {
+  return _internal_alliances_size();
+}
+inline void game_state_t::clear_alliances() {
+  alliances_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 game_state_t::_internal_alliances(int index) const {
+  return alliances_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 game_state_t::alliances(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_state_t.alliances)
+  return _internal_alliances(index);
+}
+inline void game_state_t::set_alliances(int index, ::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  alliances_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_state_t.alliances)
+}
+inline void game_state_t::_internal_add_alliances(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  alliances_.Add(value);
+}
+inline void game_state_t::add_alliances(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_add_alliances(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.game_state_t.alliances)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+game_state_t::_internal_alliances() const {
+  return alliances_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >&
+game_state_t::alliances() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.game_state_t.alliances)
+  return _internal_alliances();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+game_state_t::_internal_mutable_alliances() {
+  return &alliances_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
+game_state_t::mutable_alliances() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.game_state_t.alliances)
+  return _internal_mutable_alliances();
 }
 
 #ifdef __GNUC__

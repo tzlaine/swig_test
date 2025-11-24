@@ -617,6 +617,11 @@ struct std::formatter<game_state_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " alliances=[");
+        for (auto && e : x.alliances) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
 
         return std::format_to(out, " )");
     }

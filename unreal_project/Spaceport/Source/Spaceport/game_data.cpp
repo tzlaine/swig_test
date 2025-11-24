@@ -520,6 +520,9 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
     for (const auto& x : value.nations) {
         retval.add_nations()->CopyFrom(to_protobuf(x));
     }
+    for (const auto& x : value.alliances) {
+        retval.add_alliances(x);
+    }
     return retval;
 }
 
@@ -554,6 +557,13 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
         auto it = retval.nations.begin();
         for (const auto& x : msg.nations()) {
             *it++ = from_protobuf(x);
+        }
+    }
+    {
+        retval.alliances.resize(msg.alliances_size());
+        auto it = retval.alliances.begin();
+        for (const auto& x : msg.alliances()) {
+            *it++ = x;
         }
     }
     return retval;
