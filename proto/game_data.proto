@@ -234,9 +234,10 @@ message nation_t
     repeated fleet_t map_fleets = 4;
     repeated int32 planets = 5;
     repeated nation_and_object_id_t foreign_designs_seen = 6;
-    repeated int32 hexes_seen = 7;
-    repeated int32 systems_seen = 8;
-    bool defeated = 9;
+    repeated nation_and_object_id_t foreign_designs_glimpsed = 7;
+    repeated int32 hexes_seen = 8;
+    repeated int32 systems_seen = 9;
+    bool defeated = 10;
 }
 
 message game_state_t

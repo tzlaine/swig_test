@@ -565,6 +565,11 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " foreign_designs_glimpsed=[");
+        for (auto && e : x.foreign_designs_glimpsed) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
         out = std::format_to(out, " hexes_seen=[");
         for (auto && e : x.hexes_seen) {
             out = std::format_to(out, " {}", e);

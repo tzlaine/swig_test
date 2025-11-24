@@ -228,10 +228,10 @@ Visibility of Other Nations' Data
 =================================
 
 Visibility levels:
-owner - can see everything
-allied - can see most/all properties
-known - can see some properties
-unknown - doesn't even know the thing exists
+owner - I own this thing; I can see everything
+allied - I'm allied to the owner of this thing; I can see most/all properties
+known (enemy or neutral) - I have no relationship with the owner of this thing; I can see some properties
+unseen - I don't even know this thing exists
 
 All visibility levels besides unknown can see IDs; we won't keep repeating
 those below.
@@ -253,7 +253,8 @@ planet_effect: allied sees all; known sees only the permanent effects
 planet: allied sees all; known sees only permanent things like planet_type
 through ocean_coverage, the permanent effects part of growth_factor and
 max_population, and a range of values for pop and infra (curr. owner too,
-obvs.) intel is required to see about resources
+obvs.) intel is required to see about resources (this implies that planets
+need to be sruveyed before you know what the resource availability is)
 
 location_object: TODO
 
@@ -265,12 +266,13 @@ star: everyone can see everything, once they've found the system it's in
 system: allied sees all; known sees only name, coord, star,
 permanent_locations, world_pos_*, *_planet
 
-hex: everyone sees everything (within the limitations above)
+hex: everyone sees everything, once they have scouted the hex with an owned
+ship (within the limitations above)
 
 province: TODO
 
 nation: allied see all; known cannot see unit designs it has not seen before,
-except via intel(?), and cannotsee anything else (except "defeated") unless
+except via intel(?), and canno tsee anything else (except "defeated") unless
 they can scout it individually on the map, as described above.
 
 

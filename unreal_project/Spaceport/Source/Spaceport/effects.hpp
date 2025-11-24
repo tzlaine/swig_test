@@ -43,3 +43,8 @@ inline planet_effect_t onetime_max_population_effect(
 
     return retval;
 }
+
+inline bool transitory(planet_effect_t const & effect)
+{
+    return effect.months_of_effect != 0;
+}

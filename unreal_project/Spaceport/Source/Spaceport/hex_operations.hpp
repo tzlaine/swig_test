@@ -45,6 +45,17 @@ inline hex_direction_t & operator-- (hex_direction_t & d)
 extern const hex_coord_t invalid_hex_coord;
 extern const hex_direction_t all_hex_directions[6];
 
+constexpr int to_index(hex_coord_t hc, int map_width)
+{
+    return hc.x + hc.y * map_width;
+}
+
+constexpr hex_coord_t from_index(int i, int map_width)
+{
+    return hex_coord_t{i % map_width, i / map_width};
+}
+
+static_assert(to_index(from_index(64, 31), 31) == 64);
 
 inline bool operator< (hex_coord_t lhs, hex_coord_t rhs)
 { return lhs.x < rhs.x || lhs.x == rhs.x && lhs.y < rhs.y; }

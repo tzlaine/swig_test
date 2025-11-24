@@ -758,9 +758,10 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_fleets, 4, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets, 5, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 6, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 7, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_seen, 8, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 9, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 7, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 8, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_seen, 9, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 10, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -770,13 +771,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "nation_t"sv;
-        constexpr std::array<std::string_view, 10> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "unit_designs"sv, "provinces"sv, "map_fleets"sv, "planets"sv, "foreign_designs_seen"sv, "hexes_seen"sv, "systems_seen"sv, "defeated"sv}};
-        std::array<int, 9> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9}};
+        constexpr std::array<std::string_view, 11> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "unit_designs"sv, "provinces"sv, "map_fleets"sv, "planets"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "hexes_seen"sv, "systems_seen"sv, "defeated"sv}};
+        std::array<int, 10> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 9;
+        constexpr int hi_field_number = 10;
     
         auto read_field = [] (nation_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -786,9 +787,10 @@ namespace detail {
             case 4: return detail::deserialize_impl(x.map_fleets, src);
             case 5: return detail::deserialize_impl(x.planets, src);
             case 6: return detail::deserialize_impl(x.foreign_designs_seen, src);
-            case 7: return detail::deserialize_impl(x.hexes_seen, src);
-            case 8: return detail::deserialize_impl(x.systems_seen, src);
-            case 9: return detail::deserialize_impl(x.defeated, src);
+            case 7: return detail::deserialize_impl(x.foreign_designs_glimpsed, src);
+            case 8: return detail::deserialize_impl(x.hexes_seen, src);
+            case 9: return detail::deserialize_impl(x.systems_seen, src);
+            case 10: return detail::deserialize_impl(x.defeated, src);
             default: return src; // unreachable
             }
         };

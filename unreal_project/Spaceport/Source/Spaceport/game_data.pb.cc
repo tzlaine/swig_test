@@ -550,6 +550,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, map_fleets_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, planets_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, foreign_designs_seen_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, foreign_designs_glimpsed_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, hexes_seen_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, systems_seen_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, defeated_),
@@ -583,7 +584,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 154, -1, sizeof(::pb_message::game_data::hex_t)},
   { 163, -1, sizeof(::pb_message::game_data::province_t)},
   { 170, -1, sizeof(::pb_message::game_data::nation_t)},
-  { 184, -1, sizeof(::pb_message::game_data::game_state_t)},
+  { 185, -1, sizeof(::pb_message::game_data::game_state_t)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -682,15 +683,17 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "\022\023\n\013last_system\030\004 \001(\004\"s\n\nprovince_t\0228\n\002i"
   "d\030\001 \001(\0132,.pb_message.game_data.nation_an"
   "d_object_id_t\022+\n\nhex_coords\030\002 \003(\0132\027.pb_m"
-  "essage.hex_coord_t\"\322\002\n\010nation_t\022\n\n\002id\030\001 "
+  "essage.hex_coord_t\"\242\003\n\010nation_t\022\n\n\002id\030\001 "
   "\001(\005\0229\n\014unit_designs\030\002 \003(\0132#.pb_message.g"
   "ame_data.unit_design_t\0223\n\tprovinces\030\003 \003("
   "\0132 .pb_message.game_data.province_t\0221\n\nm"
   "ap_fleets\030\004 \003(\0132\035.pb_message.game_data.f"
   "leet_t\022\017\n\007planets\030\005 \003(\005\022J\n\024foreign_desig"
   "ns_seen\030\006 \003(\0132,.pb_message.game_data.nat"
-  "ion_and_object_id_t\022\022\n\nhexes_seen\030\007 \003(\005\022"
-  "\024\n\014systems_seen\030\010 \003(\005\022\020\n\010defeated\030\t \001(\010\""
+  "ion_and_object_id_t\022N\n\030foreign_designs_g"
+  "limpsed\030\007 \003(\0132,.pb_message.game_data.nat"
+  "ion_and_object_id_t\022\022\n\nhexes_seen\030\010 \003(\005\022"
+  "\024\n\014systems_seen\030\t \003(\005\022\020\n\010defeated\030\n \001(\010\""
   "\207\002\n\014game_state_t\022\021\n\tmap_width\030\001 \001(\005\022\022\n\nm"
   "ap_height\030\002 \001(\005\022*\n\005hexes\030\003 \003(\0132\033.pb_mess"
   "age.game_data.hex_t\022/\n\007systems\030\004 \003(\0132\036.p"
@@ -744,7 +747,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gam
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fdata_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fdata_2eproto = {
-  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4464,
+  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4544,
   &descriptor_table_game_5fdata_2eproto_once, descriptor_table_game_5fdata_2eproto_sccs, descriptor_table_game_5fdata_2eproto_deps, 17, 1,
   schemas, file_default_instances, TableStruct_game_5fdata_2eproto::offsets,
   file_level_metadata_game_5fdata_2eproto, 17, file_level_enum_descriptors_game_5fdata_2eproto, file_level_service_descriptors_game_5fdata_2eproto,
@@ -5834,6 +5837,7 @@ nation_t::nation_t(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   map_fleets_(arena),
   planets_(arena),
   foreign_designs_seen_(arena),
+  foreign_designs_glimpsed_(arena),
   hexes_seen_(arena),
   systems_seen_(arena) {
   SharedCtor();
@@ -5847,6 +5851,7 @@ nation_t::nation_t(const nation_t& from)
       map_fleets_(from.map_fleets_),
       planets_(from.planets_),
       foreign_designs_seen_(from.foreign_designs_seen_),
+      foreign_designs_glimpsed_(from.foreign_designs_glimpsed_),
       hexes_seen_(from.hexes_seen_),
       systems_seen_(from.systems_seen_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -5899,6 +5904,7 @@ void nation_t::Clear() {
   map_fleets_.Clear();
   planets_.Clear();
   foreign_designs_seen_.Clear();
+  foreign_designs_glimpsed_.Clear();
   hexes_seen_.Clear();
   systems_seen_.Clear();
   ::memset(&id_, 0, static_cast<size_t>(
@@ -5980,29 +5986,41 @@ const char* nation_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated int32 hexes_seen = 7;
+      // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_foreign_designs_glimpsed(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // repeated int32 hexes_seen = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_hexes_seen(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64) {
           _internal_add_hexes_seen(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int32 systems_seen = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+      // repeated int32 systems_seen = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_systems_seen(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72) {
           _internal_add_systems_seen(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // bool defeated = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
+      // bool defeated = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
           defeated_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -6082,28 +6100,36 @@ failure:
       InternalWriteMessage(6, this->_internal_foreign_designs_seen(i), target, stream);
   }
 
-  // repeated int32 hexes_seen = 7;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_foreign_designs_glimpsed_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(7, this->_internal_foreign_designs_glimpsed(i), target, stream);
+  }
+
+  // repeated int32 hexes_seen = 8;
   {
     int byte_size = _hexes_seen_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          7, _internal_hexes_seen(), byte_size, target);
+          8, _internal_hexes_seen(), byte_size, target);
     }
   }
 
-  // repeated int32 systems_seen = 8;
+  // repeated int32 systems_seen = 9;
   {
     int byte_size = _systems_seen_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          8, _internal_systems_seen(), byte_size, target);
+          9, _internal_systems_seen(), byte_size, target);
     }
   }
 
-  // bool defeated = 9;
+  // bool defeated = 10;
   if (this->defeated() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(9, this->_internal_defeated(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(10, this->_internal_defeated(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6165,7 +6191,14 @@ size_t nation_t::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated int32 hexes_seen = 7;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
+  total_size += 1UL * this->_internal_foreign_designs_glimpsed_size();
+  for (const auto& msg : this->foreign_designs_glimpsed_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated int32 hexes_seen = 8;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->hexes_seen_);
@@ -6180,7 +6213,7 @@ size_t nation_t::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int32 systems_seen = 8;
+  // repeated int32 systems_seen = 9;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->systems_seen_);
@@ -6202,7 +6235,7 @@ size_t nation_t::ByteSizeLong() const {
         this->_internal_id());
   }
 
-  // bool defeated = 9;
+  // bool defeated = 10;
   if (this->defeated() != 0) {
     total_size += 1 + 1;
   }
@@ -6243,6 +6276,7 @@ void nation_t::MergeFrom(const nation_t& from) {
   map_fleets_.MergeFrom(from.map_fleets_);
   planets_.MergeFrom(from.planets_);
   foreign_designs_seen_.MergeFrom(from.foreign_designs_seen_);
+  foreign_designs_glimpsed_.MergeFrom(from.foreign_designs_glimpsed_);
   hexes_seen_.MergeFrom(from.hexes_seen_);
   systems_seen_.MergeFrom(from.systems_seen_);
   if (from.id() != 0) {
@@ -6279,6 +6313,7 @@ void nation_t::InternalSwap(nation_t* other) {
   map_fleets_.InternalSwap(&other->map_fleets_);
   planets_.InternalSwap(&other->planets_);
   foreign_designs_seen_.InternalSwap(&other->foreign_designs_seen_);
+  foreign_designs_glimpsed_.InternalSwap(&other->foreign_designs_glimpsed_);
   hexes_seen_.InternalSwap(&other->hexes_seen_);
   systems_seen_.InternalSwap(&other->systems_seen_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<

@@ -436,6 +436,9 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.foreign_designs_seen) {
         retval.add_foreign_designs_seen()->CopyFrom(to_protobuf(x));
     }
+    for (const auto& x : value.foreign_designs_glimpsed) {
+        retval.add_foreign_designs_glimpsed()->CopyFrom(to_protobuf(x));
+    }
     for (const auto& x : value.hexes_seen) {
         retval.add_hexes_seen(x);
     }
@@ -482,6 +485,13 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         retval.foreign_designs_seen.resize(msg.foreign_designs_seen_size());
         auto it = retval.foreign_designs_seen.begin();
         for (const auto& x : msg.foreign_designs_seen()) {
+            *it++ = from_protobuf(x);
+        }
+    }
+    {
+        retval.foreign_designs_glimpsed.resize(msg.foreign_designs_glimpsed_size());
+        auto it = retval.foreign_designs_glimpsed.begin();
+        for (const auto& x : msg.foreign_designs_glimpsed()) {
             *it++ = from_protobuf(x);
         }
     }

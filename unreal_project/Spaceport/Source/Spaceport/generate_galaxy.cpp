@@ -624,8 +624,8 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
 {
     assert(habitable_systems < params.systems_per_hex);
 
-    hex_coord_t const hc{
-        hex_index % game_state.map_width, hex_index / game_state.map_width};
+    hex_coord_t const hc = from_index(hex_index, game_state.map_width);
+
     hex.coord = hc;
 
     hex.first_system = hex_index * params.systems_per_hex;

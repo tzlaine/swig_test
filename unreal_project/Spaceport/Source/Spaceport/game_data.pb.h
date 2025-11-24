@@ -3410,10 +3410,11 @@ class nation_t PROTOBUF_FINAL :
     kMapFleetsFieldNumber = 4,
     kPlanetsFieldNumber = 5,
     kForeignDesignsSeenFieldNumber = 6,
-    kHexesSeenFieldNumber = 7,
-    kSystemsSeenFieldNumber = 8,
+    kForeignDesignsGlimpsedFieldNumber = 7,
+    kHexesSeenFieldNumber = 8,
+    kSystemsSeenFieldNumber = 9,
     kIdFieldNumber = 1,
-    kDefeatedFieldNumber = 9,
+    kDefeatedFieldNumber = 10,
   };
   // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
   int unit_designs_size() const;
@@ -3509,7 +3510,25 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
       foreign_designs_seen() const;
 
-  // repeated int32 hexes_seen = 7;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
+  int foreign_designs_glimpsed_size() const;
+  private:
+  int _internal_foreign_designs_glimpsed_size() const;
+  public:
+  void clear_foreign_designs_glimpsed();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_foreign_designs_glimpsed(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+      mutable_foreign_designs_glimpsed();
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_foreign_designs_glimpsed(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_add_foreign_designs_glimpsed();
+  public:
+  const ::pb_message::game_data::nation_and_object_id_t& foreign_designs_glimpsed(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* add_foreign_designs_glimpsed();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+      foreign_designs_glimpsed() const;
+
+  // repeated int32 hexes_seen = 8;
   int hexes_seen_size() const;
   private:
   int _internal_hexes_seen_size() const;
@@ -3531,7 +3550,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_hexes_seen();
 
-  // repeated int32 systems_seen = 8;
+  // repeated int32 systems_seen = 9;
   int systems_seen_size() const;
   private:
   int _internal_systems_seen_size() const;
@@ -3562,7 +3581,7 @@ class nation_t PROTOBUF_FINAL :
   void _internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // bool defeated = 9;
+  // bool defeated = 10;
   void clear_defeated();
   bool defeated() const;
   void set_defeated(bool value);
@@ -3584,6 +3603,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > planets_;
   mutable std::atomic<int> _planets_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_seen_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_glimpsed_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > hexes_seen_;
   mutable std::atomic<int> _hexes_seen_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > systems_seen_;
@@ -6822,7 +6842,46 @@ nation_t::foreign_designs_seen() const {
   return foreign_designs_seen_;
 }
 
-// repeated int32 hexes_seen = 7;
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
+inline int nation_t::_internal_foreign_designs_glimpsed_size() const {
+  return foreign_designs_glimpsed_.size();
+}
+inline int nation_t::foreign_designs_glimpsed_size() const {
+  return _internal_foreign_designs_glimpsed_size();
+}
+inline void nation_t::clear_foreign_designs_glimpsed() {
+  foreign_designs_glimpsed_.Clear();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_foreign_designs_glimpsed(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return foreign_designs_glimpsed_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+nation_t::mutable_foreign_designs_glimpsed() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return &foreign_designs_glimpsed_;
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_foreign_designs_glimpsed(int index) const {
+  return foreign_designs_glimpsed_.Get(index);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::foreign_designs_glimpsed(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return _internal_foreign_designs_glimpsed(index);
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_add_foreign_designs_glimpsed() {
+  return foreign_designs_glimpsed_.Add();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::add_foreign_designs_glimpsed() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return _internal_add_foreign_designs_glimpsed();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+nation_t::foreign_designs_glimpsed() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return foreign_designs_glimpsed_;
+}
+
+// repeated int32 hexes_seen = 8;
 inline int nation_t::_internal_hexes_seen_size() const {
   return hexes_seen_.size();
 }
@@ -6869,7 +6928,7 @@ nation_t::mutable_hexes_seen() {
   return _internal_mutable_hexes_seen();
 }
 
-// repeated int32 systems_seen = 8;
+// repeated int32 systems_seen = 9;
 inline int nation_t::_internal_systems_seen_size() const {
   return systems_seen_.size();
 }
@@ -6916,7 +6975,7 @@ nation_t::mutable_systems_seen() {
   return _internal_mutable_systems_seen();
 }
 
-// bool defeated = 9;
+// bool defeated = 10;
 inline void nation_t::clear_defeated() {
   defeated_ = false;
 }

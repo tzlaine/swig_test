@@ -252,6 +252,7 @@ struct nation_t
     std::vector<fleet_t> map_fleets;
     std::vector<int> planets;
     std::vector<nation_and_object_id_t> foreign_designs_seen;
+    std::vector<nation_and_object_id_t> foreign_designs_glimpsed;
     std::vector<int> hexes_seen;
     std::vector<int> systems_seen;
     bool defeated;

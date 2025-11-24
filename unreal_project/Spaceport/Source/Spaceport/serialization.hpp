@@ -556,24 +556,42 @@ namespace detail {
 
     template<typename T, typename OStream>
     std::ptrdiff_t serialize_for_client(
-        int nation_id, std::vector<T> const & x, int field_number, OStream * os)
+        game_state_t const & gs,
+        int nation_id,
+        std::vector<T> const & x,
+        int field_number,
+        OStream * os)
     {
         std::ptrdiff_t retval = 0;
 
         uint8_t buf[64];
         uint8_t * out = buf;
 
+        auto const vis = [](auto & gs, int nation_id, T const & e, int i) {
+            if constexpr (requires { visibility_of(gs, nation_id, e, i); })
+                return visibility_of(gs, nation_id, e, i);
+            else
+                return visibility_of(gs, nation_id, e);
+        };
+
         out = os::WriteVarint32ToArray(field_number, out);
-        int const size = std::ranges::count_if(x, [nation_id](auto const & e) {
-            return visible_to(nation_id, e);
-        });
-        out = os::WriteVarint32ToArray(size, out);
-        detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
+        {
+            int i = 0;
+            int const size = std::ranges::count_if(x, [&](auto const & e) {
+                return vis(gs, nation_id, e, i++) != visibility_kind::unseen;
+            });
+            out = os::WriteVarint32ToArray(size, out);
+            detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
+        }
         int i = 0;
         for (auto const & e : x) {
+            if (vis(gs, nation_id, e, i) == visibility_kind::unseen) {
+                ++i;
+                continue;
+            }
             out = os::WriteVarint32ToArray(i++, out);
             detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
-            auto element = view_of(nation_id, e);
+            auto element = view_of(gs, nation_id, e);
             retval +=
                 detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
                     element, 0, os);
@@ -584,18 +602,21 @@ namespace detail {
 
     template<typename OStream>
     std::ptrdiff_t
-    serialize_for_client(int nation_id, game_state_t const & x, OStream * os)
+    serialize_for_client(int nation_id, game_state_t const & gs, OStream * os)
     {
         std::ptrdiff_t retval = 0;
 
         retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
-            x.map_width, 1, os);
+            gs.map_width, 1, os);
         retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
-            x.map_height, 2, os);
-        retval += detail::serialize_for_client(nation_id, x.hexes, 3, os);
-        retval += detail::serialize_for_client(nation_id, x.systems, 4, os);
-        retval += detail::serialize_for_client(nation_id, x.planets, 5, os);
-        retval += detail::serialize_for_client(nation_id, x.nations, 6, os);
+            gs.map_height, 2, os);
+        retval += detail::serialize_for_client(gs, nation_id, gs.hexes, 3, os);
+        retval +=
+            detail::serialize_for_client(gs, nation_id, gs.systems, 4, os);
+        retval +=
+            detail::serialize_for_client(gs, nation_id, gs.planets, 5, os);
+        retval +=
+            detail::serialize_for_client(gs, nation_id, gs.nations, 6, os);
 
         retval += detail::serialize_message_end<ser_op::write>(os);
 
