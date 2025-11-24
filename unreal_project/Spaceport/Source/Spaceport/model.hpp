@@ -193,6 +193,19 @@ inline void break_alliance(game_state_t & gs, int nation_id_1, int nation_id_2)
         nation_id_1, nation_id_2);
 }
 
+inline void
+allies_of(std::vector<int> & retval, game_state_t const & gs, int nation_id)
+{
+    retval.clear();
+    auto const detail::alliances alliances(gs.alliances);
+    for (int i = 0, last = (int)gs.nations.size(); i != last; ++i) {
+        if (i == nation_id)
+            continue;
+        if (alliances.allied(i, nation_id))
+            retval.push_back(i);
+    }
+}
+
 
 struct model
 {
