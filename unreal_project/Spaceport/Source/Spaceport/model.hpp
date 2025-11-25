@@ -7,6 +7,7 @@
 #include "logging.hpp"
 #include "map_util.hpp"
 #include "game_data_serialization.hpp"
+#include "proximity_grid.hpp"
 
 
 #include <boost/shared_ptr.hpp>
@@ -197,13 +198,84 @@ inline void
 allies_of(std::vector<int> & retval, game_state_t const & gs, int nation_id)
 {
     retval.clear();
-    auto const detail::alliances alliances(gs.alliances);
+    auto const alliances_ = detail::alliances(gs.alliances);
     for (int i = 0, last = (int)gs.nations.size(); i != last; ++i) {
         if (i == nation_id)
             continue;
-        if (alliances.allied(i, nation_id))
+        if (alliances_.allied(i, nation_id))
             retval.push_back(i);
     }
+}
+
+enum struct fleet_visitation { garrisons, no_garrisons };
+
+template<typename GameState, typename F>
+void visit_fleets(
+    GameState & gs,
+    F && f,
+    int nation_id = nation_none,
+    fleet_visitation garrisons = fleet_visitation::no_garrisons)
+{
+    if (garrisons == fleet_visitation::garrisons) {
+        for (auto & planet : gs.planets) {
+            if (nation_id == nation_none || planet.owner == nation_id)
+                f(planet.garrison);
+        }
+    }
+
+    auto const process_system_location = [&](auto & sys_loc) {
+        for (auto & object : sys_loc.objects) {
+            if (!object.bases.units.empty() && nation_id == nation_none ||
+                object.bases.id.nation_id == nation_id) {
+                f(object.bases);
+            }
+        }
+        if (nation_id == nation_none) {
+            for (auto & [nation, fleet] : sys_loc.units.fleets) {
+                f(fleet);
+            }
+        } else {
+            auto it = sys_loc.units.fleets.find(nation_id);
+            if (it != sys_loc.units.fleets.end())
+                f(it->second);
+        }
+    };
+    for (auto & system : gs.systems) {
+        for (auto & sys_loc : system.permanent_locations) {
+            process_system_location(sys_loc);
+        }
+        for (auto & sys_loc : system.temporary_locations) {
+            process_system_location(sys_loc);
+        }
+    }
+
+    auto const process_map_fleets = [&](auto & map_fleets) {
+        for (auto & fleet : map_fleets) {
+            f(fleet);
+        }
+    };
+    if (nation_id == nation_none) {
+        for (auto & nation : gs.nations) {
+            process_map_fleets(nation.map_fleets);
+        }
+    } else {
+        process_map_fleets(gs.nations[nation_id].map_fleets);
+    }
+}
+
+// obligations of proximity_grid
+inline int owner(fleet_t const * f) { return f->owner; }
+inline point_2d position(fleet_t const * f)
+{
+    return {f->world_pos_x, f->world_pos_y};
+}
+inline double detection_dist_sq(
+    game_state_t const & gs,
+    fleet_t const * detector,
+    fleet_t const * other_fleet)
+{
+    double dist = 1.0; // TODO: Detection logic goes here.
+    return dist * dist;
 }
 
 
@@ -267,6 +339,10 @@ struct model
     {
         game_state_ = boost::shared_ptr<game_state_t>(new game_state_t);
         deserialize_message(*game_state_, path);
+        proximity_grid_ = proximity_grid<fleet_t const>(
+            world_map_extent(*game_state_),
+            max_detection_radius_before_stealth(*game_state_));
+        repopulate_grid();
     }
 
 private:
@@ -277,9 +353,18 @@ private:
             return;
         game_state_ =
             boost::shared_ptr<game_state_t>(new game_state_t (*game_state_));
+        repopulate_grid();
     }
 
     boost::shared_ptr<game_state_t> game_state_;
+
+    proximity_grid<fleet_t const> proximity_grid_;
+    void repopulate_grid()
+    {
+        proximity_grid_.clear_pointers();
+        auto f = [this](auto & fleet) { proximity_grid_.insert(fleet); };
+        visit_fleets(*game_state_, f);
+    }
 
     std::atomic_int saving_{0};
     std::string serialized_bytes_; // to be used in the save thread *only*

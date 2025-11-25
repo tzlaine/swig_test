@@ -261,6 +261,7 @@ struct std::formatter<fleet_t> {
         out = std::format_to(out, " rounds={}", x.rounds);
         out = std::format_to(out, " missiles={}", x.missiles);
         out = std::format_to(out, " fighters={}", x.fighters);
+        out = std::format_to(out, " owner={}", x.owner);
         out = std::format_to(out, " world_pos_x={}", x.world_pos_x);
         out = std::format_to(out, " world_pos_y={}", x.world_pos_y);
 

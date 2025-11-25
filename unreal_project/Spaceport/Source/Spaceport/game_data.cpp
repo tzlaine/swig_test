@@ -113,6 +113,7 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
     retval.set_rounds(value.rounds);
     retval.set_missiles(value.missiles);
     retval.set_fighters(value.fighters);
+    retval.set_owner(value.owner);
     retval.set_world_pos_x(value.world_pos_x);
     retval.set_world_pos_y(value.world_pos_y);
     return retval;
@@ -134,6 +135,7 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
     retval.rounds = msg.rounds();
     retval.missiles = msg.missiles();
     retval.fighters = msg.fighters();
+    retval.owner = msg.owner();
     retval.world_pos_x = msg.world_pos_x();
     retval.world_pos_y = msg.world_pos_y();
     return retval;

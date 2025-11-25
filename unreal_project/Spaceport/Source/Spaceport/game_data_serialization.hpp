@@ -227,8 +227,9 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 5, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 6, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 7, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_x, 8, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_y, 9, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.owner, 8, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_x, 9, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_y, 10, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -238,13 +239,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "fleet_t"sv;
-        constexpr std::array<std::string_view, 10> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "mission"sv, "units"sv, "fuel"sv, "rounds"sv, "missiles"sv, "fighters"sv, "world_pos_x"sv, "world_pos_y"sv}};
-        std::array<int, 9> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9}};
+        constexpr std::array<std::string_view, 11> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "mission"sv, "units"sv, "fuel"sv, "rounds"sv, "missiles"sv, "fighters"sv, "owner"sv, "world_pos_x"sv, "world_pos_y"sv}};
+        std::array<int, 10> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 9;
+        constexpr int hi_field_number = 10;
     
         auto read_field = [] (fleet_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -255,8 +256,9 @@ namespace detail {
             case 5: return detail::deserialize_impl(x.rounds, src);
             case 6: return detail::deserialize_impl(x.missiles, src);
             case 7: return detail::deserialize_impl(x.fighters, src);
-            case 8: return detail::deserialize_impl(x.world_pos_x, src);
-            case 9: return detail::deserialize_impl(x.world_pos_y, src);
+            case 8: return detail::deserialize_impl(x.owner, src);
+            case 9: return detail::deserialize_impl(x.world_pos_x, src);
+            case 10: return detail::deserialize_impl(x.world_pos_y, src);
             default: return src; // unreachable
             }
         };
