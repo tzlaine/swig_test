@@ -11,7 +11,7 @@
 
 
 class Aplayer_controller;
-class Agame_actor;
+class Amap_actor_base;
 struct game_state_t;
 
 UCLASS()
@@ -58,7 +58,7 @@ private:
         return std::ranges::find(players_, pc) - players_.begin();
     }
 
-    void add_to_cells(Agame_actor * a, Aplayer_controller const * owner);
+    void add_to_cells(Amap_actor_base * a, Aplayer_controller const * owner);
 
     void set_allied(int nation_id_1, int nation_id_2, bool value);
 
@@ -82,8 +82,8 @@ private:
 
     struct actors
     {
-        std::vector<Agame_actor *> actors_;
-        std::vector<Agame_actor *> removed_actors_;
+        std::vector<Amap_actor_base *> actors_;
+        std::vector<Amap_actor_base *> removed_actors_;
     };
 
     // last element's .actors_ sorted by nation owner ID
@@ -96,7 +96,7 @@ private:
         // TODO: Fleet actors specifically?  Maybe one vec of fleets, and
         // another of systems?  Systems can spot fleets, but not vice
         // versa....
-        std::vector<Agame_actor *> actors_;
+        std::vector<Amap_actor_base *> actors_;
     };
 
     cell const & cell_for(FIntPoint pos, int player_index) const

@@ -4,16 +4,16 @@
 
 #include <CoreMinimal.h>
 #include <GameFramework/GameStateBase.h>
-#include "Agame_actor.generated.h"
+#include "Amap_actor_base.generated.h"
 
 
 UCLASS()
-class Agame_actor : public AActor
+class Amap_actor_base : public AActor
 {
     GENERATED_BODY()
 
 public:
-    Agame_actor();
+    Amap_actor_base();
 
     int nation_id() const { return nation_id_; }
 

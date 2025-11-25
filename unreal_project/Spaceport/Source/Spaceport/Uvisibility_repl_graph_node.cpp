@@ -1,6 +1,6 @@
 #include "Uvisibility_repl_graph_node.h"
 
-#include "Agame_actor.h"
+#include "Amap_actor_base.h"
 #include "Aplayer_controller.h"
 #include "model.hpp"
 
@@ -11,10 +11,13 @@ namespace {
         return Cast<Aplayer_controller>(a);
     }
 
-    Agame_actor * actor_cast(AActor * a) { return Cast<Agame_actor>(a); }
-    Agame_actor const * actor_cast(AActor const * a)
+    Amap_actor_base * actor_cast(AActor * a)
     {
-        return Cast<Agame_actor>(a);
+        return Cast<Amap_actor_base>(a);
+    }
+    Amap_actor_base const * actor_cast(AActor const * a)
+    {
+        return Cast<Amap_actor_base>(a);
     }
 
     double const temp_detection_radius_TODO = 2.0;
@@ -216,7 +219,7 @@ void Uvisibility_repl_graph_node::PrepareForReplication()
 }
 
 void Uvisibility_repl_graph_node::add_to_cells(
-    Agame_actor * a, Aplayer_controller const * owner)
+    Amap_actor_base * a, Aplayer_controller const * owner)
 {
     auto const actor_pos = cell_pos(a);
     int const owner_index = pc_to_index(owner);
