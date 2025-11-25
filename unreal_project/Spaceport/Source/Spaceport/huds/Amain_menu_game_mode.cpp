@@ -59,7 +59,7 @@ void Amain_menu_game_mode::load_and_start_newest_game_Implementation()
         for (auto const & save : saves) {
             std::filesystem::path p = dir / to_path(save);
             auto const t = last_write_time(p);
-            if (t < newest_t) {
+            if (newest_t < t) {
                 newest = std::move(p);
                 newest_t = t;
             }
