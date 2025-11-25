@@ -98,7 +98,9 @@ inline double detection_dist_sq(
 #if defined(BUILD_FOR_TEST)
     return detail::g_testing_detection_dist * detail::g_testing_detection_dist;
 #endif
-    double dist = 1.0; // TODO: Detection logic goes here.
+    // TODO: Detection logic goes here.  NOTE: Must match logic in
+    // Amap_actor_base.cpp!
+    double dist = 1.0;
     return dist * dist;
 }
 
@@ -144,6 +146,7 @@ struct model
     TArray<uint8> serialize_for_client(int nation_id) const;
 #endif
 
+    // TODO: Need to generate nations, resize .alliances, etc.
     void generate_galaxy(game_start_params_t const & params,
                          concurrent_queue<int> & percent_complete,
                          std::atomic_bool & fully_complete);

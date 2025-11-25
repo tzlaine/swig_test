@@ -25,6 +25,11 @@ public:
 
     void publish_save_files();
 
+    boost::shared_ptr<game_state_t const> game_state() const
+    {
+        return model_.game_state();
+    }
+
 protected:
     model model_;
 };

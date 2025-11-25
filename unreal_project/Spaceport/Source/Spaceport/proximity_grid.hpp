@@ -144,6 +144,8 @@ struct proximity_grid
         }
     }
 
+    void prepare_to_gather_objects() { reconcile(); }
+
     double max_detection_radius() const { return max_detection_radius_; }
     void max_detection_radius(double r)
     {
