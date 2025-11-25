@@ -34,6 +34,7 @@ add_executable_and_test(flags_tests)
 add_executable_and_test(formatter_tests)
 add_executable_and_test(generation_tests)
 add_executable_and_test(model_tests)
+add_executable_and_test(proximity_grid_tests)
 add_executable_and_test(serialize_impl_count_tests)
 add_executable_and_test(serialize_impl_round_trip_tests)
 add_executable_and_test(

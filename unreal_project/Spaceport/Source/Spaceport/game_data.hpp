@@ -132,7 +132,6 @@ struct fleet_t
     int rounds;
     int missiles;
     int fighters;
-    int owner;
     double world_pos_x;
     double world_pos_y;
     bool operator==(fleet_t const &) const = default;

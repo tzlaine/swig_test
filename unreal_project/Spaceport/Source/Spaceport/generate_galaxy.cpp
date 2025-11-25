@@ -692,7 +692,8 @@ void generation::generate_galaxy(game_start_params_t const & params,
 
    std::normal_distribution<double> habitable_systems_dist(
        params.habitable_systems_per_hex_mean,
-       plus_minus_to_sigma(params.habitable_systems_per_hex_plus_minus));
+        ::detail::plus_minus_to_sigma(
+            params.habitable_systems_per_hex_plus_minus));
 
    detail::scratch_space scratch(game_state.hexes.size());
    game_state.systems.resize(game_state.hexes.size() * params.systems_per_hex);

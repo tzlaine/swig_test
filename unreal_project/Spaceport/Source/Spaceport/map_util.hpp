@@ -13,6 +13,8 @@ struct point_2d
     {
         return {pt1.x - pt2.x, pt1.y - pt2.y};
     }
+
+    bool operator==(point_2d const &) const = default;
 };
 
 inline double dist_sq(point_2d pt1, point_2d pt2)
@@ -30,6 +32,8 @@ struct box_2d
 {
     point_2d min_;
     point_2d max_;
+
+    bool operator==(box_2d const &) const = default;
 };
 
 inline point_2d extent(box_2d box) { return box.max_ - box.min_; }
@@ -63,6 +67,8 @@ struct int_point
     {
         return {lhs.x + rhs.x, lhs.y + rhs.y};
     }
+
+    bool operator==(int_point const &) const = default;
 };
 
 inline point_2d hex_position(hex_coord_t hc, int map_height)

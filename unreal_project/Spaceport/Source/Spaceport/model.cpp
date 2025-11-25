@@ -41,9 +41,7 @@ void model::generate_galaxy(
     game_state_.reset(new game_state_t);
     generation::generate_galaxy(
         params, *game_state_, nullptr, &percent_complete, &fully_complete);
-    proximity_grid_ = proximity_grid<fleet_t const >(
-        world_map_extent(*game_state_),
-        max_detection_radius_before_stealth(*game_state_));
+    proximity_grid_ = proximity_grid<fleet_t const >(*game_state_);
     repopulate_grid();
 #if INSTRUMENT_MODEL_GALAXY_GENERATION
     std::cout << std::format(

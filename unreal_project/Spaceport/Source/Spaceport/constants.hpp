@@ -65,6 +65,9 @@ inline constexpr int default_systems_per_hex = 50;
 inline constexpr int max_infrastructure = 100;
 inline constexpr double min_habitable_nonsuit_temp_k = earth_temperature_k - 44;
 inline constexpr double max_habitable_temp_k = earth_temperature_k + 55;
+constexpr static int small_map_height = 11;
+constexpr static int medium_map_height = 21;
+constexpr static int large_map_height = 41;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);

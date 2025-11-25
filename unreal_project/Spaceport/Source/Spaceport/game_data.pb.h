@@ -1179,10 +1179,9 @@ class fleet_t PROTOBUF_FINAL :
     kFuelFieldNumber = 4,
     kRoundsFieldNumber = 5,
     kMissilesFieldNumber = 6,
+    kWorldPosXFieldNumber = 8,
+    kWorldPosYFieldNumber = 9,
     kFightersFieldNumber = 7,
-    kOwnerFieldNumber = 8,
-    kWorldPosXFieldNumber = 9,
-    kWorldPosYFieldNumber = 10,
   };
   // repeated .pb_message.game_data.unit_t units = 3;
   int units_size() const;
@@ -1256,25 +1255,7 @@ class fleet_t PROTOBUF_FINAL :
   void _internal_set_missiles(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 fighters = 7;
-  void clear_fighters();
-  ::PROTOBUF_NAMESPACE_ID::int32 fighters() const;
-  void set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fighters() const;
-  void _internal_set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // int32 owner = 8;
-  void clear_owner();
-  ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
-  void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_owner() const;
-  void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // double world_pos_x = 9;
+  // double world_pos_x = 8;
   void clear_world_pos_x();
   double world_pos_x() const;
   void set_world_pos_x(double value);
@@ -1283,13 +1264,22 @@ class fleet_t PROTOBUF_FINAL :
   void _internal_set_world_pos_x(double value);
   public:
 
-  // double world_pos_y = 10;
+  // double world_pos_y = 9;
   void clear_world_pos_y();
   double world_pos_y() const;
   void set_world_pos_y(double value);
   private:
   double _internal_world_pos_y() const;
   void _internal_set_world_pos_y(double value);
+  public:
+
+  // int32 fighters = 7;
+  void clear_fighters();
+  ::PROTOBUF_NAMESPACE_ID::int32 fighters() const;
+  void set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fighters() const;
+  void _internal_set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.fleet_t)
@@ -1305,10 +1295,9 @@ class fleet_t PROTOBUF_FINAL :
   float fuel_;
   ::PROTOBUF_NAMESPACE_ID::int32 rounds_;
   ::PROTOBUF_NAMESPACE_ID::int32 missiles_;
-  ::PROTOBUF_NAMESPACE_ID::int32 fighters_;
-  ::PROTOBUF_NAMESPACE_ID::int32 owner_;
   double world_pos_x_;
   double world_pos_y_;
+  ::PROTOBUF_NAMESPACE_ID::int32 fighters_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -4652,27 +4641,7 @@ inline void fleet_t::set_fighters(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.fighters)
 }
 
-// int32 owner = 8;
-inline void fleet_t::clear_owner() {
-  owner_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 fleet_t::_internal_owner() const {
-  return owner_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 fleet_t::owner() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.fleet_t.owner)
-  return _internal_owner();
-}
-inline void fleet_t::_internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  owner_ = value;
-}
-inline void fleet_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_owner(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.owner)
-}
-
-// double world_pos_x = 9;
+// double world_pos_x = 8;
 inline void fleet_t::clear_world_pos_x() {
   world_pos_x_ = 0;
 }
@@ -4692,7 +4661,7 @@ inline void fleet_t::set_world_pos_x(double value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.fleet_t.world_pos_x)
 }
 
-// double world_pos_y = 10;
+// double world_pos_y = 9;
 inline void fleet_t::clear_world_pos_y() {
   world_pos_y_ = 0;
 }
