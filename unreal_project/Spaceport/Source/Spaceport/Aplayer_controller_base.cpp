@@ -3,6 +3,8 @@
 #include "Agame_mode_base.h"
 #include "utility.hpp"
 
+#include <UserSettings/EnhancedInputUserSettings.h> // TODO
+
 #include <EnhancedInputComponent.h>
 #include <EnhancedInputSubsystems.h>
 #include <InputAction.h>
@@ -35,10 +37,49 @@ void Aplayer_controller_base::BeginPlay()
     if (ULocalPlayer * local_player = GetLocalPlayer()) {
         if (auto * input_sys =
             local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
-            if (imc)
-                input_sys->AddMappingContext(imc, 0);
+            if (imc) {
+                if (UEnhancedInputUserSettings * user_settings =
+                        input_sys->GetUserSettings()) {
+                    user_settings->RegisterInputMappingContext(imc);
+#if 0 // TODO: Do this when the user clicks "Apply" in the applicable settings panel.
+                    user_settings->SaveSettings();
+#endif
+                }
+                FModifyContextOptions options = {};
+                options.bNotifyUserSettings = true;
+                input_sys->AddMappingContext(imc, 0, options);
+            }
         }
     }
+
+#if 0 // TODO: Use this to populate the applicable settings panel.  Use the code here: https://dev.epicgames.com/community/learning/tutorials/Vp69/unreal-engine-player-mappable-keys-using-enhanced-input to actually do the mapping.
+    if (auto * local_player = GetLocalPlayer()) {
+        if (auto * subsystem =
+                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+                    local_player)) {
+
+            // print out mappings
+            if (UEnhancedInputUserSettings * user_settings =
+                    subsystem->GetUserSettings()) {
+                if (auto * profile = user_settings->GetActiveKeyProfile()) {
+                    auto const & rows = profile->GetPlayerMappingRows();
+                    for (auto && [name, row] : rows) {
+                        UE_LOG(LogTemp, Warning, TEXT("Active: %s"), *name.ToString());
+                        for (auto && mapping : row.Mappings) {
+                            UE_LOG(
+                                LogTemp,
+                                Log,
+                                TEXT("%s"),
+                                *mapping.GetCurrentKey()
+                                     .GetDisplayName()
+                                     .ToString());
+                        }
+                    }
+                }
+            }
+        }
+    }
+#endif
 }
 
 void Aplayer_controller_base::SetupInputComponent()
