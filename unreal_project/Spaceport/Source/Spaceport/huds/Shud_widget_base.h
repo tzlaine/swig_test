@@ -16,6 +16,4 @@ public:
 
     virtual bool cancelable();
     virtual void cancel();
-    virtual void show();
-    virtual void hide();
 };

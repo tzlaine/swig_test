@@ -54,7 +54,7 @@ void Agame_mode::Tick(float secs)
         if (generation_complete_) {
             start_play();
             if (auto * hud_ptr = playing_hud())
-                hud_ptr->hide_generating_galaxy();
+                hud_ptr->remove_generating_widget();
         }
     }
 }

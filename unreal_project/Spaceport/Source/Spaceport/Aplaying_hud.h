@@ -24,11 +24,11 @@ public:
     void saves_changed(TArray<Ffile_change> const & changes) override;
 
     void show_game_setup();
-    void hide_game_setup();
+    void remove_game_setup_widget();
 
     void show_generating_galaxy();
-    void hide_generating_galaxy();
     void generating_percent_update(int p);
+    void remove_generating_widget();
 
 protected:
     void BeginPlay() override;

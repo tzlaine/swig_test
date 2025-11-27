@@ -53,7 +53,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     [this] {
                         if (auto * pc = player_controller())
                             pc->server_save_game(filename_);
-                        hide();
+                        if (auto * hud = playing_hud())
+                            hud->remove_widget(*this);
                     },
                     TEXT("confirm_save_over"),
                     TEXT("previous_save_will_be_lost"),
@@ -61,7 +62,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
             } else {
                 if (auto * pc = player_controller())
                     pc->server_save_game(filename_);
-                hide();
+                if (auto * hud = playing_hud())
+                    hud->remove_widget(*this);
             }
         } else if (in_game_) {
             playing_hud()->do_after_confirming(
@@ -157,7 +159,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     +SHorizontalBox::Slot().AutoWidth()[
                         SNew(Sstyled_button).Text(loc_text(TEXT("cancel")))
                         .OnClicked_Lambda([this] {
-                            hide();
+                            if (auto * hud = hud_base())
+                                hud->remove_widget(*this);
                             return FReply::Handled();
                         })]
 

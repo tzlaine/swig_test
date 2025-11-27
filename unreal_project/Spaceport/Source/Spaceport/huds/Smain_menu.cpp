@@ -19,19 +19,13 @@
 #include <Widgets/Text/STextBlock.h>
 
 
+// TODO: Use this to switch between the main menu proper and the various
+// options/confim/save+load UIs.
+#include <Slate/SCommonAnimatedSwitcher.h>
+
 using namespace adobe::literals;
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
-
-Smain_menu::Smain_menu()
-{
-    anims_.insert(
-        "fadein"_name,
-        animation(
-            FString(TEXT("/Game/sigmoid_curve.sigmoid_curve")),
-            0.1,
-            [this](float value) { SetRenderOpacity(value); }));
-}
 
 void Smain_menu::Construct(FArguments const & args)
 {
@@ -98,8 +92,6 @@ void Smain_menu::Construct(FArguments const & args)
         if (cp_first != cp_last)
             title_hbox->AddSlot().FillWidth(1);
     }
-
-    SetRenderOpacity(in_game_ ? 0 : 1);
 }
 
 // TODO: Stop the arrow navigation from leaving the current dialog.
@@ -116,7 +108,8 @@ void Smain_menu::rebuild()
         .Text(loc_text(TEXT("continue_game")))
         .OnClicked_Lambda([in_game = in_game_, this] {
             if (in_game) {
-                hide();
+                if (auto * hud = playing_hud())
+                    hud->remove_widget(*this);
             } else {
                 if (auto * pc = main_menu_controller())
                     pc->server_load_newest_game();
@@ -222,21 +215,6 @@ void Smain_menu::have_saves(bool b)
 bool Smain_menu::cancelable()
 {
     return in_game_;
-}
-
-void Smain_menu::show()
-{
-    Shud_widget_base::show();
-    anims_.start("fadein"_name);
-}
-
-void Smain_menu::Tick(FGeometry const & g, double t, float dt)
-{
-    Shud_widget_base::Tick(g, t, dt);
-    if (!anims_.need_update())
-        return;
-
-    anims_.update(dt);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

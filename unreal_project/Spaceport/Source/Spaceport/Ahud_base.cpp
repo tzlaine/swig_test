@@ -4,6 +4,7 @@
 #include "utility.hpp"
 #include "huds/Smain_menu.h"
 #include "huds/Ssave_load_dlg.h"
+#include "huds/Uactivatable_widget.h"
 
 
 Ahud_base::Ahud_base(FObjectInitializer const & init) : AHUD(init) {}
@@ -17,7 +18,7 @@ void Ahud_base::Tick(float dt)
             return false;
         if (info.result_ == Sconfirm_dlg::result::yes)
             info.action_();
-        hide_modal(info.dlg_);
+        remove_widget(*info.dlg_);
         return true;
     });
 }
@@ -26,11 +27,6 @@ void Ahud_base::EndPlay(EEndPlayReason::Type reason)
 {
     Super::EndPlay(reason);
     UE_LOG(LogTemp, Log, TEXT("ENTER Ahud_base::EndPlay()"));
-    for (auto & widget : modal_stack_) {
-        if (auto w = widget.Pin())
-            w->hide();
-    }
-    modal_stack_.clear();
     UE_LOG(LogTemp, Log, TEXT("EXIT Ahud_base::EndPlay()"));
 }
 
@@ -41,9 +37,8 @@ void Ahud_base::saves_list(TArray<FString> const & saves)
         Log,
         TEXT("Ahud_base::saves_list(): new files: %s"),
         *FString::Join(saves, TEXT(", ")));
-    if (!save_load_dlg_)
-        return;
-    save_load_dlg_->saves_changed(saves);
+    if (save_load_dlg_)
+        save_load_dlg_->saves_changed(saves);
 }
 
 void Ahud_base::saves_changed(TArray<Ffile_change> const & changes) {}
@@ -56,8 +51,7 @@ void Ahud_base::in_game(bool b)
 void Ahud_base::show_main_menu()
 {
     allocate_widgets();
-    show_modal(main_menu_);
-
+    push_modal(main_menu_);
     bool saves = false;
     if (auto * gs = Cast<Agame_state_base>(
             UGameplayStatics::GetGameState(GetWorld()))) {
@@ -65,35 +59,30 @@ void Ahud_base::show_main_menu()
     }
     main_menu_->have_saves(saves);
 }
-void Ahud_base::hide_main_menu()
-{
-    allocate_widgets();
-    hide_modal(main_menu_);
-}
 
 void Ahud_base::show_save_load_dlg(bool saving)
 {
     save_load_dlg_ = SNew(Ssave_load_dlg).in_game(in_game_).saving(saving);
-    show_modal(save_load_dlg_);
+    push_modal(save_load_dlg_);
     if (auto * pc = player_controller_base())
         pc->server_req_save_files();
     // TODO: Sign up for dir watching while the main menu is up (in_game_ ==
     // true only); cancel it afterward.
 }
-void Ahud_base::hide_save_load_dlg()
-{
-    allocate_widgets();
-    hide_modal(save_load_dlg_);
-}
 
 void Ahud_base::escape_pressed()
 {
-    if (!modal_stack_.empty()) {
-        if (auto back = modal_stack_.back().Pin(); back->cancelable()) {
-            back->cancel();
-            hide_modal(back);
+    UE_LOG(LogTemp, Warning, TEXT("ESCAPE!"));
+
+    if (auto activatable = modal_stack()->GetActiveWidget()) {
+        check(Cast<Uactivatable_widget>(activatable));
+        if (Uactivatable_widget * w = Cast<Uactivatable_widget>(activatable)) {
+            if (w->cancelable()) {
+                w->cancel();
+                modal_stack()->RemoveWidget(*activatable);
+            }
+            return;
         }
-        return;
     }
 
 #if 0 // TODO
@@ -129,7 +118,7 @@ void Ahud_base::do_after_confirming(std::function<void()> action,
             .no_button(std::move(no_button))
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
-    show_modal(confirm_dlg);
+    push_modal(confirm_dlg);
 }
 
 void Ahud_base::notify_user(FString title, FString message, FString button)
@@ -144,7 +133,7 @@ void Ahud_base::notify_user(FString title, FString message, FString button)
             .no_button(button)
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
-    show_modal(confirm_dlg);
+    push_modal(confirm_dlg);
 }
 
 void Ahud_base::notify_user(FString title, FText message, FString button)
@@ -159,33 +148,42 @@ void Ahud_base::notify_user(FString title, FText message, FString button)
             .no_button(button)
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
-    show_modal(confirm_dlg);
+    push_modal(confirm_dlg);
 }
 
-Smain_menu * Ahud_base::main_menu() const
-{
-    if (main_menu_)
-        return main_menu_.Get();
-    return nullptr;
+namespace {
+    // Required by the inconvenient AddWidget API below.
+    TSharedPtr<Shud_widget_base> g_content_shared_ptr;
 }
 
-void Ahud_base::show_modal(TSharedPtr<Shud_widget_base> widget)
+void Ahud_base::push_modal(TSharedPtr<Shud_widget_base> widget)
 {
-    widget->show();
-    modal_stack_.push_back(widget);
+    g_content_shared_ptr = widget;
+    modal_stack()->AddWidget<Uactivatable_widget>(
+        Uactivatable_widget::StaticClass(), [](Uactivatable_widget & w) {
+            w.content([] {
+                check(g_content_shared_ptr);
+                return g_content_shared_ptr.ToSharedRef();
+            });
+        });
 }
 
-void Ahud_base::hide_modal(TSharedPtr<Shud_widget_base> widget)
+void Ahud_base::remove_widget(Shud_widget_base & hud_widget)
 {
-    widget->hide();
-    std::erase(modal_stack_, widget);
+    for (auto * activatable : modal_stack()->GetWidgetList()) {
+        check(Cast<Uactivatable_widget>(activatable));
+        if (Cast<Uactivatable_widget>(activatable)->wraps(hud_widget)) {
+            modal_stack()->RemoveWidget(*activatable);
+            return;
+        }
+    }
 }
 
 void Ahud_base::show_deferred_notifications(level l)
 {
     auto notifications = Ugame_instance::get()->deferred_notifications(l);
     for (auto & n : notifications) {
-        hud_base()->notify_user(std::move(n.title_), std::move(n.msg_));
+        notify_user(std::move(n.title_), std::move(n.msg_));
     }
 }
 

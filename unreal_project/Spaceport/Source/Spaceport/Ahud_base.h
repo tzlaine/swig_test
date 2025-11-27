@@ -34,10 +34,7 @@ public:
     void in_game(bool b);
 
     void show_main_menu();
-    void hide_main_menu();
-
     void show_save_load_dlg(bool saving);
-    void hide_save_load_dlg();
 
     void escape_pressed();
 
@@ -54,19 +51,19 @@ public:
     UPROPERTY(EditAnywhere, Category="ui")
     TObjectPtr<Ucommonui_stack_wrapper> stack_wrapper_;
 
-protected:
-    Smain_menu * main_menu() const;
-    void show_modal(TSharedPtr<Shud_widget_base> widget);
-    void hide_modal(TSharedPtr<Shud_widget_base> widget);
-    void show_deferred_notifications(level l);
+    void push_modal(TSharedPtr<Shud_widget_base> widget);
+    void remove_widget(Shud_widget_base & w);
+    // TODO: Need to handle the modeless case.
 
-private:
+protected:
+    void show_deferred_notifications(level l);
     void allocate_widgets();
     UCommonActivatableWidgetStack * modal_stack();
 
     TSharedPtr<Smain_menu> main_menu_;
     TSharedPtr<Ssave_load_dlg> save_load_dlg_;
 
+private:
     struct confirm_dlg_info
     {
         TSharedPtr<Sconfirm_dlg> dlg_;
@@ -75,8 +72,6 @@ private:
             Sconfirm_dlg::result::waiting_for_user;
     };
     std::list<confirm_dlg_info> confirm_dlg_infos_;
-
-    std::vector<TWeakPtr<Shud_widget_base>> modal_stack_;
 
     bool in_game_ = false;
 };

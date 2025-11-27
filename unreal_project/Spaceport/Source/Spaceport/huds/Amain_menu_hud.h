@@ -23,9 +23,6 @@ public:
 
 protected:
     void BeginPlay() override;
-    void EndPlay(EEndPlayReason::Type reason) override;
 
     void have_saves(bool b);
-
-    TSharedPtr<Smain_menu> widget_;
 };

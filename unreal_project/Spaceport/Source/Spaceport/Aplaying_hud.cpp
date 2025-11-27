@@ -17,8 +17,8 @@ Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_base(init)
 void Aplaying_hud::saves_list(TArray<FString> const & saves)
 {
     Ahud_base::saves_list(saves);
-    if (main_menu())
-        main_menu()->have_saves(!saves.IsEmpty());
+    if (main_menu_)
+        main_menu_->have_saves(!saves.IsEmpty());
 }
 
 void Aplaying_hud::saves_changed(TArray<Ffile_change> const & changes)
@@ -29,24 +29,19 @@ void Aplaying_hud::saves_changed(TArray<Ffile_change> const & changes)
 void Aplaying_hud::show_game_setup()
 {
     allocate_widgets();
-    show_modal(game_setup_);
+    push_modal(game_setup_);
 }
-void Aplaying_hud::hide_game_setup()
+void Aplaying_hud::remove_game_setup_widget()
 {
-    allocate_widgets();
-    hide_modal(game_setup_);
+    check(game_setup_);
+    remove_widget(*game_setup_);
 }
 
 void Aplaying_hud::show_generating_galaxy()
 {
     allocate_widgets();
-    show_modal(generating_galaxy_);
+    push_modal(generating_galaxy_);
     generating_progress_ = 0;
-}
-void Aplaying_hud::hide_generating_galaxy()
-{
-    allocate_widgets();
-    hide_modal(generating_galaxy_);
 }
 void Aplaying_hud::generating_percent_update(int u)
 {
@@ -54,6 +49,11 @@ void Aplaying_hud::generating_percent_update(int u)
         return;
     generating_progress_ += u;
     generating_galaxy_->percent_complete(generating_progress_);
+}
+void Aplaying_hud::remove_generating_widget()
+{
+    check(generating_galaxy_);
+    remove_widget(*generating_galaxy_);
 }
 
 void Aplaying_hud::BeginPlay()

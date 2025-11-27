@@ -39,7 +39,7 @@ void Aplayer_controller::server_start_game_Implementation(
     TArray<uint8> const & params)
 {
     if (auto * hud = cast(GetHUD()))
-        hud->hide_game_setup();
+        hud->remove_game_setup_widget();
 
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
