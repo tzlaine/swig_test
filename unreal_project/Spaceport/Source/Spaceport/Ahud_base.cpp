@@ -195,3 +195,12 @@ void Ahud_base::allocate_widgets()
         return;
     main_menu_ = SNew(Smain_menu).in_game(in_game_);
 }
+
+UCommonActivatableWidgetStack * Ahud_base::modal_stack()
+{
+    check(stack_wrapper_);
+    if (!stack_wrapper_->IsInViewport())
+        stack_wrapper_->AddToViewport();
+    check(stack_wrapper_->stack_);
+    return stack_wrapper_->stack_;
+}

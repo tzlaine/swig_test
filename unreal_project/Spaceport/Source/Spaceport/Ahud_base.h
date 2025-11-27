@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_instance.h"
+#include "Ucommonui_stack_wrapper.h"
 #include "huds/Sconfirm_dlg.h"
 
 #include <functional>
@@ -50,6 +51,9 @@ public:
     void notify_user(
         FString title, FText message, FString button = TEXT("ok"));
 
+    UPROPERTY(EditAnywhere, Category="ui")
+    TObjectPtr<Ucommonui_stack_wrapper> stack_wrapper_;
+
 protected:
     Smain_menu * main_menu() const;
     void show_modal(TSharedPtr<Shud_widget_base> widget);
@@ -58,6 +62,7 @@ protected:
 
 private:
     void allocate_widgets();
+    UCommonActivatableWidgetStack * modal_stack();
 
     TSharedPtr<Smain_menu> main_menu_;
     TSharedPtr<Ssave_load_dlg> save_load_dlg_;
