@@ -51,14 +51,12 @@ private:                                                                \
 
 namespace detail {
 
-    inline UFont * stream_default_font()
+    inline UFont * stream_font(FString const & f)
     {
         FStreamableManager & streamable_mgr =
             UAssetManager::GetStreamableManager();
         TSoftObjectPtr<UFont> font_ptr =
-            streamable_mgr.LoadSynchronous<UFont>(
-                FSoftObjectPath(
-                    TEXT("/Game/ui/fonts/futura_light_bt_Font.futura_light_bt_Font")));
+            streamable_mgr.LoadSynchronous<UFont>(f);
         if (font_ptr.IsValid())
             return font_ptr.Get();
         return nullptr;

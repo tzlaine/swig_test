@@ -21,8 +21,8 @@ public:
             *defaults.USpinBox_style_path_);
         auto args(args_);
         args.Style(style.Object);
-        args.Font(
-            FSlateFontInfo(detail::stream_default_font(), defaults.font_size_));
+        args.Font(FSlateFontInfo(
+            detail::stream_font(defaults.font_path_), defaults.font_size_));
         SSpinBox<T>::Construct(args);
     }
 };

@@ -17,7 +17,7 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void Sconfirm_dlg::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_default_font();
+    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
 
     result_ptr_ = args._result_ptr;
     check(result_ptr_);

@@ -9,8 +9,8 @@ void Sstyled_editable_text_box::Construct(FArguments const & args_)
     SEditableTextBox::FArguments args(args_);
     args.Style(style.Object);
     if (!args._Font.IsSet()) {
-        args.Font(
-            FSlateFontInfo(detail::stream_default_font(), defaults.font_size_));
+        args.Font(FSlateFontInfo(
+            detail::stream_font(defaults.font_path_), defaults.font_size_));
     }
     SEditableTextBox::Construct(args);
 }

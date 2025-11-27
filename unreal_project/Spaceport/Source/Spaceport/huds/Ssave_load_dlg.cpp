@@ -38,7 +38,7 @@ namespace {
 
 void Ssave_load_dlg::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_default_font();
+    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
 
     saving_ = args._saving;
     in_game_ = args._in_game;
