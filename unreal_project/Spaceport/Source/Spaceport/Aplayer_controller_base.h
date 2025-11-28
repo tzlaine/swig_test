@@ -29,6 +29,8 @@ public:
     void server_load_game(FString const & filename);
     void server_load_game_Implementation(FString const & filename);
 
+    void remap_key(FName name, FKey key);
+
 private:
     TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
     TSoftObjectPtr<UInputAction> menu_toggle_action_;

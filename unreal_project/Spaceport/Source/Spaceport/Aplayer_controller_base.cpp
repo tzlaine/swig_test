@@ -118,3 +118,24 @@ void Aplayer_controller_base::server_load_game_Implementation(
 
     gm->load_and_start_game(filename);
 }
+
+void Aplayer_controller_base::remap_key(FName name, FKey key)
+{
+    if (auto * local_player = GetLocalPlayer()) {
+        if (auto * subsystem =
+                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+                    local_player)) {
+
+            // print out mappings
+            if (UEnhancedInputUserSettings * user_settings =
+                    subsystem->GetUserSettings()) {
+                FMapPlayerKeyArgs args = {};
+                args.MappingName = name;
+                args.Slot = EPlayerMappableKeySlot::First;
+                args.NewKey = key;
+                FGameplayTagContainer failure;
+                user_settings->MapPlayerKey(args, failure);
+            }
+        }
+    }
+}
