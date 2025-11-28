@@ -4,6 +4,7 @@
 #include "utility.hpp"
 #include "huds/Smain_menu.h"
 #include "huds/Ssave_load_dlg.h"
+#include "huds/Soptions.h"
 #include "huds/Uactivatable_widget.h"
 
 
@@ -68,6 +69,12 @@ void Ahud_base::show_save_load_dlg(bool saving)
         pc->server_req_save_files();
     // TODO: Sign up for dir watching while the main menu is up (in_game_ ==
     // true only); cancel it afterward.
+}
+
+void Ahud_base::show_options()
+{
+    options_ = SNew(Soptions);
+    push_modal(options_);
 }
 
 void Ahud_base::escape_pressed()

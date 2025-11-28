@@ -176,7 +176,8 @@ void Smain_menu::rebuild()
         SNew(Sstyled_button)
         .Text(loc_text(TEXT("options")))
         .OnClicked_Lambda([] {
-            // TODO
+            if (auto * hud = hud_base())
+                hud->show_options();
             return FReply::Handled();
         })];
 

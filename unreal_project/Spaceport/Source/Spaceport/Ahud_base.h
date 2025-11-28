@@ -16,6 +16,7 @@
 struct Ffile_change;
 class Smain_menu;
 class Ssave_load_dlg;
+class Soptions;
 
 UCLASS()
 class Ahud_base : public AHUD
@@ -35,6 +36,7 @@ public:
 
     void show_main_menu();
     void show_save_load_dlg(bool saving);
+    void show_options();
 
     void escape_pressed();
 
@@ -61,6 +63,7 @@ protected:
     UCommonActivatableWidgetStack * modal_stack();
 
     TSharedPtr<Smain_menu> main_menu_;
+    TSharedPtr<Soptions> options_;
     TSharedPtr<Ssave_load_dlg> save_load_dlg_;
 
 private:

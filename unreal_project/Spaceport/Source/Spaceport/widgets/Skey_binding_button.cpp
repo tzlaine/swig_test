@@ -17,25 +17,47 @@ public:
     void listen(
         FName name,
         TSharedPtr<Sstyled_button> button,
-        TSharedPtr<SWidget> prev_focus)
+        TSharedPtr<SWidget> prev_focus,
+        FText const & prev_text)
     {
         check(button);
         name_ = name;
         listening_for_ = button;
         prev_focus_ = prev_focus;
+        prev_text_ = prev_text;
+    }
+
+    void rebind_action_target(std::vector<std::function<void()>> * target)
+    {
+        rebind_action_target_ = target;
     }
 
     bool SupportsKeyboardFocus() const override { return true; }
+    void OnFocusLost(FFocusEvent const &)
+    {
+        if (listening_for_) {
+            listening_for_->set_text(prev_text_);
+            listening_for_.Reset();
+            prev_focus_.Reset();
+        }
+    }
     FReply OnKeyDown(FGeometry const & g, FKeyEvent const & e) override
     {
         if (listening_for_) {
-            auto * pc = player_controller_base();
-            check(pc);
-            pc->remap_key(name_, e.GetKey());
-            listening_for_->set_text(e.ToText());
-            listening_for_.Reset();
-            FSlateApplication::Get().SetKeyboardFocus(prev_focus_);
-            prev_focus_.Reset();
+            auto const do_rebind = [&] {
+                auto * pc = player_controller_base();
+                check(pc);
+                pc->remap_key(name_, e.GetKey());
+                listening_for_->set_text(
+                    FText::FromString(e.GetKey().ToString()));
+                listening_for_.Reset();
+                FSlateApplication::Get().SetKeyboardFocus(prev_focus_);
+                prev_focus_.Reset();
+            };
+            if (rebind_action_target_)
+                rebind_action_target_->emplace_back(do_rebind);
+            else
+                do_rebind();
             return FReply::Handled();
         } else {
             return SUserWidget::OnKeyDown(g, e);
@@ -51,6 +73,8 @@ private:
     FName name_;
     TSharedPtr<Sstyled_button> listening_for_;
     TSharedPtr<SWidget> prev_focus_;
+    FText prev_text_;
+    std::vector<std::function<void()>> * rebind_action_target_ = nullptr;
 };
 
 void Skey_binding_button::Construct(FArguments const & args)
@@ -65,17 +89,24 @@ void Skey_binding_button::Construct(FArguments const & args)
 
         +SOverlay::Slot()[
             SAssignNew(button_, Sstyled_button)
-            .Text(args._key)
+            .Text(FText::FromString(args._key))
             .OnClicked_Lambda([this] {
                 TSharedPtr<SWidget> prev_focus =
                     FSlateApplication::Get().GetUserFocusedWidget(0);
-                key_listener_->listen(name_, button_, prev_focus);
+                key_listener_->listen(name_, button_, prev_focus, button_->get_text());
                 FSlateApplication::Get().SetKeyboardFocus(key_listener_);
                 button_->set_text(loc_text(TEXT("press_any_key")));
-                UE_LOG(LogTemp, Log, TEXT("CLICKED!"));
                 return FReply::Handled();
             })
         ]
     ];
     // clang-format on
+
+    key_listener_->rebind_action_target(rebind_action_target_);
+}
+
+void Skey_binding_button::rebind_action_target(
+    std::vector<std::function<void()>> & target)
+{
+    rebind_action_target_ = &target;
 }

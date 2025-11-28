@@ -3,8 +3,6 @@
 #include "Agame_mode_base.h"
 #include "utility.hpp"
 
-#include <UserSettings/EnhancedInputUserSettings.h> // TODO
-
 #include <EnhancedInputComponent.h>
 #include <EnhancedInputSubsystems.h>
 #include <InputAction.h>
@@ -40,46 +38,17 @@ void Aplayer_controller_base::BeginPlay()
             if (imc) {
                 if (UEnhancedInputUserSettings * user_settings =
                         input_sys->GetUserSettings()) {
-                    user_settings->RegisterInputMappingContext(imc);
-#if 0 // TODO: Do this when the user clicks "Apply" in the applicable settings panel.
-                    user_settings->SaveSettings();
-#endif
+                    if (!user_settings->IsMappingContextRegistered(imc))
+                        user_settings->RegisterInputMappingContext(imc);
                 }
-                FModifyContextOptions options = {};
-                options.bNotifyUserSettings = true;
-                input_sys->AddMappingContext(imc, 0, options);
-            }
-        }
-    }
-
-#if 0 // TODO: Use this to populate the applicable settings panel.  Use the code here: https://dev.epicgames.com/community/learning/tutorials/Vp69/unreal-engine-player-mappable-keys-using-enhanced-input to actually do the mapping.
-    if (auto * local_player = GetLocalPlayer()) {
-        if (auto * subsystem =
-                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
-                    local_player)) {
-
-            // print out mappings
-            if (UEnhancedInputUserSettings * user_settings =
-                    subsystem->GetUserSettings()) {
-                if (auto * profile = user_settings->GetActiveKeyProfile()) {
-                    auto const & rows = profile->GetPlayerMappingRows();
-                    for (auto && [name, row] : rows) {
-                        UE_LOG(LogTemp, Warning, TEXT("Active: %s"), *name.ToString());
-                        for (auto && mapping : row.Mappings) {
-                            UE_LOG(
-                                LogTemp,
-                                Log,
-                                TEXT("%s"),
-                                *mapping.GetCurrentKey()
-                                     .GetDisplayName()
-                                     .ToString());
-                        }
-                    }
+                if (!input_sys->HasMappingContext(imc)) {
+                    FModifyContextOptions options = {};
+                    options.bNotifyUserSettings = true;
+                    input_sys->AddMappingContext(imc, 0, options);
                 }
             }
         }
     }
-#endif
 }
 
 void Aplayer_controller_base::SetupInputComponent()
@@ -122,20 +91,52 @@ void Aplayer_controller_base::server_load_game_Implementation(
 void Aplayer_controller_base::remap_key(FName name, FKey key)
 {
     if (auto * local_player = GetLocalPlayer()) {
-        if (auto * subsystem =
+        if (auto * input_sys =
                 ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
                     local_player)) {
-
-            // print out mappings
             if (UEnhancedInputUserSettings * user_settings =
-                    subsystem->GetUserSettings()) {
+                    input_sys->GetUserSettings()) {
                 FMapPlayerKeyArgs args = {};
                 args.MappingName = name;
                 args.Slot = EPlayerMappableKeySlot::First;
                 args.NewKey = key;
                 FGameplayTagContainer failure;
                 user_settings->MapPlayerKey(args, failure);
+                check(failure.IsEmpty());
             }
         }
     }
+}
+
+void Aplayer_controller_base::save_user_input_mappings()
+{
+    if (auto * local_player = GetLocalPlayer()) {
+        if (auto * input_sys =
+                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+                    local_player)) {
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                user_settings->SaveSettings();
+            }
+        }
+    }
+}
+
+UInputMappingContext const &
+Aplayer_controller_base::input_mapping_context() const
+{
+    UInputMappingContext * imc = input_mapping_ctx_.Get();
+    check(imc);
+    return *imc;
+}
+
+TArray<FEnhancedActionKeyMapping>
+Aplayer_controller_base::player_mappable_action_key_mappings() const
+{
+    ULocalPlayer * local_player = GetLocalPlayer();
+    check(local_player);
+     auto * input_sys =
+         local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+     check(input_sys);
+     return input_sys->GetAllPlayerMappableActionKeyMappings();
 }

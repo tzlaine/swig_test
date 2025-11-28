@@ -2,7 +2,10 @@
 
 #include "constants.hpp"
 
+#include <functional>
+
 #include <CoreMinimal.h>
+#include <UserSettings/EnhancedInputUserSettings.h>
 #include <GameFramework/PlayerController.h>
 #include "Aplayer_controller_base.generated.h"
 
@@ -29,7 +32,12 @@ public:
     void server_load_game(FString const & filename);
     void server_load_game_Implementation(FString const & filename);
 
+    UInputMappingContext const & input_mapping_context() const;
+    TArray<FEnhancedActionKeyMapping>
+    player_mappable_action_key_mappings() const;
+
     void remap_key(FName name, FKey key);
+    void save_user_input_mappings();
 
 private:
     TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;

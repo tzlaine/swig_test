@@ -2,6 +2,8 @@
 
 #include "widgets/Sstyled_button.h"
 
+#include <functional>
+
 #include <CoreMinimal.h>
 #include <Slate/SCommonAnimatedSwitcher.h>
 #include <Widgets/SCompoundWidget.h>
@@ -15,23 +17,30 @@ public:
 
     void Construct(FArguments const & args);
 
+    int index() const;
+
     template<typename I, typename S>
-    void insert(I first, S last)
+    void panels(I first, S last)
     {
         int i = 0;
         for (; first != last; ++first, ++i) {
             auto && [button_text, widget] = *first;
-            buttons_->AddSlot()[SNew(Sstyled_button)
-                                    .Text(loc_text(button_text))
-                                    .OnClicked_Lambda([this, i] {
-                                        switcher_->TransitionToIndex(i);
-                                        return FReply::Handled();
-                                    })];
+            buttons_->AddSlot().AutoWidth()[SNew(Sstyled_button)
+                                                .Text(loc_text(button_text))
+                                                .OnClicked_Lambda([this, i] {
+                                                    switcher_
+                                                        ->TransitionToIndex(i);
+                                                    return FReply::Handled();
+                                                })];
             switcher_->AddSlot()[widget.ToSharedRef()];
         }
+        buttons_->AddSlot().FillWidth(1);
     }
+
+    void panel_change_callback(std::function<void(int)> cb);
 
 private:
     TSharedPtr<SHorizontalBox> buttons_;
     TSharedPtr<SCommonAnimatedSwitcher> switcher_;
+    std::function<void(int)> panel_change_cb_;
 };

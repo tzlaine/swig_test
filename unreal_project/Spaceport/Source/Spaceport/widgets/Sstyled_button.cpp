@@ -32,3 +32,9 @@ void Sstyled_button::set_text(FText const & text)
     check(text_);
     text_->SetText(text);
 }
+
+FText const & Sstyled_button::get_text() const
+{
+    check(text_);
+    return text_->GetText();
+}

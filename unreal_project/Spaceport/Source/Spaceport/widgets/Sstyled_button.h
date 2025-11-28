@@ -15,6 +15,7 @@ public:
 
     void Construct(FArguments const & args);
 
+    FText const & get_text() const;
     void set_text(FText const & text);
 
 private:
