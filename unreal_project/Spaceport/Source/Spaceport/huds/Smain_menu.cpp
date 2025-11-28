@@ -15,6 +15,7 @@
 #include <Widgets/SUserWidget.h>
 #include <Widgets/Images/SImage.h>
 #include <Widgets/Input/SButton.h>
+#include <Widgets/Layout/SBackgroundBlur.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 #include <Widgets/Text/STextBlock.h>
 
@@ -35,14 +36,10 @@ void Smain_menu::Construct(FArguments const & args)
 
     TSharedPtr<SHorizontalBox> title_hbox;
 
-    uint8 const bg_opacity = in_game_ ? 127u : 0u;
+    float const blur_strength = in_game_ ? 5.0f : 0.0f;
 
-    ChildSlot[
+    ChildSlot[SNew(SBackgroundBlur).BlurStrength(blur_strength)[
         SNew(SConstraintCanvas)
-
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0, 0, 1, 1))[
-            SNew(SImage)
-            .ColorAndOpacity(FSlateColor(FColor(0, 0, 0, bg_opacity)))]
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.2, 0.2, 0.8, 0.2))
@@ -66,7 +63,7 @@ void Smain_menu::Construct(FArguments const & args)
                    +SVerticalBox::Slot().FillHeight(1)
                    ]
                 ]
-    ];
+    ]];
 
     rebuild();
 

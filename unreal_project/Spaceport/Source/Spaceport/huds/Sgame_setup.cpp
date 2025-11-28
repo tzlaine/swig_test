@@ -16,6 +16,7 @@
 #include <Widgets/Images/SImage.h>
 #include <Widgets/Input/SButton.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
+#include <Widgets/Layout/SBackgroundBlur.h>
 #include <Widgets/Text/STextBlock.h>
 
 
@@ -27,11 +28,8 @@ void Sgame_setup::Construct(FArguments const & args)
 
     TSharedPtr<SVerticalBox> vbox;
 
-    ChildSlot[
+    ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
-
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0, 0, 1, 1))[
-            SNew(SImage).ColorAndOpacity(FSlateColor(FColor(0, 0, 0, 127)))]
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.05, 0, 0.95, 0.125))[
@@ -86,7 +84,7 @@ void Sgame_setup::Construct(FArguments const & args)
 
             +SVerticalBox::Slot().FillHeight(1)
         ]
-    ];
+    ]];
 
     auto const adjust_total_for_inhab = [this] {
         int const curr_min_value = (int)std::ceil(

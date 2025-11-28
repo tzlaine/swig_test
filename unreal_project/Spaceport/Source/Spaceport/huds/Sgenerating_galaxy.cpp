@@ -10,6 +10,7 @@
 #include <Widgets/Layout/SScaleBox.h>
 #include <Widgets/SUserWidget.h>
 #include <Widgets/Images/SImage.h>
+#include <Widgets/Layout/SBackgroundBlur.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 
 
@@ -21,11 +22,8 @@ void Sgenerating_galaxy::Construct(FArguments const & args)
 
     TSharedPtr<SVerticalBox> vbox;
 
-    ChildSlot[
+    ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
-
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0, 0, 1, 1))[
-            SNew(SImage).ColorAndOpacity(FSlateColor(FColor(0, 0, 0, 127)))]
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.3, 0.3, 0.7, 0.7))[
@@ -43,7 +41,7 @@ void Sgenerating_galaxy::Construct(FArguments const & args)
             ]
             +SVerticalBox::Slot().FillHeight(2)
         ]
-    ];
+    ]];
 }
 
 void Sgenerating_galaxy::percent_complete(int p)

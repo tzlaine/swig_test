@@ -10,6 +10,7 @@
 #include <Widgets/Layout/SScaleBox.h>
 #include <Widgets/SUserWidget.h>
 #include <Widgets/Images/SImage.h>
+#include <Widgets/Layout/SBackgroundBlur.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 
 
@@ -28,11 +29,8 @@ void Sconfirm_dlg::Construct(FArguments const & args)
     if (message_as_text.IsEmpty())
         message_as_text = loc_text(args._message);
 
-    ChildSlot[
+    ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
-
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0, 0, 1, 1))[
-            SNew(SImage).ColorAndOpacity(FSlateColor(FColor(0, 0, 0, 200)))]
 
         +SConstraintCanvas::Slot().Anchors(FAnchors(0.3, 0.3, 0.7, 0.7))[
             SNew(SBorder).Padding(50.0f)[ // TODO: Use a styled one.
@@ -56,7 +54,7 @@ void Sconfirm_dlg::Construct(FArguments const & args)
                 +SVerticalBox::Slot().AutoHeight()[
                     SAssignNew(buttons_hbox, SHorizontalBox)]
 
-                +SVerticalBox::Slot().FillHeight(2)]]];
+                +SVerticalBox::Slot().FillHeight(2)]]]];
 
     buttons_hbox->AddSlot().FillWidth(10);
 

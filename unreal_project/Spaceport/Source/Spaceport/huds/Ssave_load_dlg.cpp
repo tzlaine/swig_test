@@ -14,6 +14,7 @@
 #include <Widgets/Layout/SScaleBox.h>
 #include <Widgets/SUserWidget.h>
 #include <Widgets/Images/SImage.h>
+#include <Widgets/Layout/SBackgroundBlur.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 
 
@@ -84,11 +85,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
     // TODO: Allow selecting one or more saves, and deleting them.
 
     // clang-format off
-    ChildSlot[
+    ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
-
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0, 0, 1, 1))[
-            SNew(SImage).ColorAndOpacity(FSlateColor(FColor(0, 0, 0, 200)))]
 
         +SConstraintCanvas::Slot().Anchors(FAnchors(0.4, 0.2, 0.6, 0.8))[
             SNew(SBorder).Padding(50.0f)[ // TODO: Use a styled one.
@@ -166,7 +164,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
 
                     +SHorizontalBox::Slot().FillWidth(1)]
 
-                +SVerticalBox::Slot().FillHeight(2)]]];
+                +SVerticalBox::Slot().FillHeight(2)]]]];
     // clang-format on
 
     if (saving_) {
