@@ -11,13 +11,20 @@ class Sstyled_text_block;
 class Sstyled_button : public SButton
 {
 public:
+    enum struct style_kind { typical, tab };
+
     using FArguments = SButton::FArguments;
 
     void Construct(FArguments const & args);
 
     FText const & get_text() const;
+
     void set_text(FText const & text);
+    void set_style_kind(style_kind kind);
 
 private:
+    void rebuild_text(FText const & text);
+
     TSharedPtr<Sstyled_text_block> text_;
+    style_kind style_kind_ = style_kind::typical;
 };

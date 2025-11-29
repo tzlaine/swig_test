@@ -25,13 +25,15 @@ public:
         int i = 0;
         for (; first != last; ++first, ++i) {
             auto && [button_text, widget] = *first;
-            buttons_->AddSlot().AutoWidth()[SNew(Sstyled_button)
-                                                .Text(loc_text(button_text))
-                                                .OnClicked_Lambda([this, i] {
-                                                    switcher_
-                                                        ->TransitionToIndex(i);
-                                                    return FReply::Handled();
-                                                })];
+            TSharedPtr<Sstyled_button> button;
+            buttons_->AddSlot().AutoWidth().Padding(
+                0, 0, 20, 0)[SAssignNew(button, Sstyled_button)
+                                 .Text(loc_text(button_text))
+                                 .OnClicked_Lambda([this, i] {
+                                     switcher_->TransitionToIndex(i);
+                                     return FReply::Handled();
+                                 })];
+            button->set_style_kind(Sstyled_button::style_kind::tab);
             switcher_->AddSlot()[widget.ToSharedRef()];
         }
         buttons_->AddSlot().FillWidth(1);
