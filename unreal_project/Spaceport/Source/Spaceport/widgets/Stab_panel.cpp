@@ -15,7 +15,7 @@ void Stab_panel::Construct(FArguments const &)
             SAssignNew(buttons_, SHorizontalBox)
         ]
 
-        +SVerticalBox::Slot().FillHeight(1)[
+        +SVerticalBox::Slot().FillHeight(1).Padding(0, 25, 0, 0)[
             SAssignNew(switcher_, SCommonAnimatedSwitcher)
             .TransitionType(ECommonSwitcherTransition::Horizontal)
             .OnActiveIndexChanged_Lambda([this](int i) {
