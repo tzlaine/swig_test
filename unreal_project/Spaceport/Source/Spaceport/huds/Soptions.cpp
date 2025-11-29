@@ -170,7 +170,7 @@ namespace {
                     FTextFormat(FText::FromString(TEXT("      {0}"))),
                     loc_text(axis_names[(int)negative * 2 + (int)y_axis]));
             } else {
-                button_text = FText::FromString(name.ToString());
+                button_text = loc_text(name.ToString());
             }
             hbox->AddSlot()[SNew(Sstyled_text_block)
                                 .Text(button_text)];
