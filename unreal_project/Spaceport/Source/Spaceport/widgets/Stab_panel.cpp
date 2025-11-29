@@ -5,14 +5,16 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
-void Stab_panel::Construct(FArguments const &)
+void Stab_panel::Construct(FArguments const & args)
 {
+    selected_tab_color_ = args._selected_tab_color;
+
     // clang-format off
     ChildSlot[
         SNew(SVerticalBox)
 
         +SVerticalBox::Slot().AutoHeight()[
-            SAssignNew(buttons_, SHorizontalBox)
+            SAssignNew(buttons_hbox_, SHorizontalBox)
         ]
 
         +SVerticalBox::Slot().FillHeight(1).Padding(0, 25, 0, 0)[

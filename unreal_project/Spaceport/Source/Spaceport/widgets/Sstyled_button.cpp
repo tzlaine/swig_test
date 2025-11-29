@@ -42,6 +42,25 @@ void Sstyled_button::set_style_kind(style_kind kind)
     rebuild_text(text_->GetText());
 }
 
+void Sstyled_button::selected_tab(bool selected)
+{
+    check(style_kind_ == style_kind::tab);
+    auto const & defaults = ui_defaults();
+    detail::FObjectFinder<USlateWidgetStyleAsset> style(
+        *defaults.UButton_style_path_);
+    SButton::FArguments args;
+    args.ButtonStyle(style.Object);
+    if (selected)
+        SetColorAndOpacity(selected_color_);
+    else
+        SetColorAndOpacity(FLinearColor(1, 1, 1));
+}
+
+void Sstyled_button::set_selected_color(FColor selected_color)
+{
+    selected_color_ = selected_color;
+}
+
 void Sstyled_button::rebuild_text(FText const & text)
 {
     auto text_widget = SAssignNew(text_, Sstyled_text_block).Text(text);

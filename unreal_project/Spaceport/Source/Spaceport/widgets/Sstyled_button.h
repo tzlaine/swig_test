@@ -21,10 +21,13 @@ public:
 
     void set_text(FText const & text);
     void set_style_kind(style_kind kind);
+    void selected_tab(bool selected);
+    void set_selected_color(FColor selected_color);
 
 private:
     void rebuild_text(FText const & text);
 
     TSharedPtr<Sstyled_text_block> text_;
     style_kind style_kind_ = style_kind::typical;
+    FColor selected_color_;
 };

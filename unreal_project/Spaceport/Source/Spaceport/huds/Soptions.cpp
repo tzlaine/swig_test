@@ -216,6 +216,7 @@ void Soptions::Construct(FArguments const & args)
         .Anchors(FAnchors(0, 0.1, 1, 0.9))
         .Offset(FMargin(25, 10, 25, 0))[
             SAssignNew(tab_panel_, Stab_panel)
+            .selected_tab_color(FColor(218, 165, 32))
         ]
 
         +SConstraintCanvas::Slot()
