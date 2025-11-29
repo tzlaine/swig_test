@@ -41,6 +41,10 @@ public:
     {
         rebind_action_target_ = target;
     }
+    void notifier(std::function<void(FKey const &)> notifier)
+    {
+        notifier_ = std::move(notifier);
+    }
 
     bool SupportsKeyboardFocus() const override { return true; }
     void OnFocusLost(FFocusEvent const &) { cancel_listen(); }
@@ -61,6 +65,8 @@ public:
                 rebind_action_target_->emplace_back(do_rebind);
             else
                 do_rebind();
+            if (notifier_)
+                notifier_(e.GetKey());
             return FReply::Handled();
         } else {
             return SUserWidget::OnKeyDown(g, e);
@@ -78,11 +84,13 @@ private:
     TSharedPtr<SWidget> prev_focus_;
     FText prev_text_;
     std::shared_ptr<std::vector<std::function<void()>>> rebind_action_target_;
+    std::function<void(FKey const &)> notifier_;
 };
 
 void Skey_binding_button::Construct(FArguments const & args)
 {
     name_ = args._name;
+    curr_key_ = args._key;
 
     // clang-format off
     ChildSlot.VAlign(VAlign_Fill).HAlign(HAlign_Fill)[
@@ -92,7 +100,7 @@ void Skey_binding_button::Construct(FArguments const & args)
 
         +SOverlay::Slot()[
             SAssignNew(button_, Sstyled_button)
-            .Text(FText::FromString(args._key))
+            .Text(FText::FromString(args._key.ToString()))
             .OnClicked_Lambda([this] {
                 TSharedPtr<SWidget> prev_focus =
                     FSlateApplication::Get().GetUserFocusedWidget(0);
@@ -106,6 +114,10 @@ void Skey_binding_button::Construct(FArguments const & args)
     // clang-format on
 
     key_listener_->rebind_action_target(rebind_action_target_);
+    key_listener_->notifier([this](FKey const & key) {
+        curr_key_ = key;
+        notifier_();
+    });
 }
 
 void Skey_binding_button::rebind_action_target(
@@ -118,4 +130,15 @@ void Skey_binding_button::set_text(FText const & text)
 {
     button_->set_text(text);
     key_listener_->cancel_listen();
+}
+
+void Skey_binding_button::notifier(std::function<void()> notifier)
+{
+    notifier_ = std::move(notifier);
+}
+
+void Skey_binding_button::indicate_conflict(bool conflicts)
+{
+    button_->SetColorAndOpacity(
+        conflicts ? FColor(255, 0, 0) : FColor(255, 255, 255));
 }

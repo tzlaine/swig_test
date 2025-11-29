@@ -13,10 +13,9 @@ class key_listener;
 class Skey_binding_button : public SCompoundWidget
 {
 public:
-    SLATE_BEGIN_ARGS(Skey_binding_button)
-        {}
+    SLATE_BEGIN_ARGS(Skey_binding_button) {}
     SLATE_ARGUMENT(FName, name)
-    SLATE_ARGUMENT(FString, key)
+    SLATE_ARGUMENT(FKey, key)
     SLATE_END_ARGS()
 
     void Construct(FArguments const & args);
@@ -27,12 +26,18 @@ public:
     void rebind_action_target(
         std::shared_ptr<std::vector<std::function<void()>>> target);
     void set_text(FText const & text);
+    void notifier(std::function<void()> notifier);
+    void indicate_conflict(bool conflicts);
+
+    FKey curr_key() const { return curr_key_; }
 
     bool SupportsKeyboardFocus() const override { return true; }
 
 private:
     FName name_;
+    FKey curr_key_;
     TSharedPtr<Sstyled_button> button_;
     TSharedPtr<key_listener> key_listener_;
     std::shared_ptr<std::vector<std::function<void()>>> rebind_action_target_;
+    std::function<void()> notifier_;
 };

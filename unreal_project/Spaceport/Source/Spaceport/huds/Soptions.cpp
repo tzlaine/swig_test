@@ -11,9 +11,6 @@
 #include <InputMappingContext.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SOverlay.h>
-#include <Widgets/Layout/SScaleBox.h>
-#include <Widgets/SUserWidget.h>
-#include <Widgets/Images/SImage.h>
 #include <Widgets/Layout/SBackgroundBlur.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 
@@ -23,7 +20,9 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 namespace {
     std::pair<FString, TSharedPtr<SWidget>> gameplay_panel(
         std::function<void()> & apply_changes,
-        std::function<void()> & restore_defaults)
+        std::function<void()> & restore_defaults,
+        bool & can_apply,
+        TSharedPtr<Sstyled_button> apply_button)
     {
         auto panel = SNew(SOverlay); // TODO
 
@@ -42,7 +41,9 @@ namespace {
 
     std::pair<FString, TSharedPtr<SWidget>> video_panel(
         std::function<void()> & apply_changes,
-        std::function<void()> & restore_defaults)
+        std::function<void()> & restore_defaults,
+        bool & can_apply,
+        TSharedPtr<Sstyled_button> apply_button)
     {
         auto panel = SNew(SOverlay); // TODO
 
@@ -61,7 +62,9 @@ namespace {
 
     std::pair<FString, TSharedPtr<SWidget>> audio_panel(
         std::function<void()> & apply_changes,
-        std::function<void()> & restore_defaults)
+        std::function<void()> & restore_defaults,
+        bool & can_apply,
+        TSharedPtr<Sstyled_button> apply_button)
     {
         auto panel = SNew(SOverlay); // TODO
 
@@ -87,7 +90,9 @@ namespace {
 
     std::pair<FString, TSharedPtr<SWidget>> controls_panel(
         std::function<void()> & apply_changes,
-        std::function<void()> & restore_defaults)
+        std::function<void()> & restore_defaults,
+        bool & can_apply,
+        TSharedPtr<Sstyled_button> apply_button)
     {
         std::shared_ptr remappings =
             std::make_shared<std::vector<std::function<void()>>>();
@@ -108,13 +113,48 @@ namespace {
 
         std::shared_ptr defaults_vec =
             std::make_shared<std::vector<controls_to_default_info>>();
-        auto const restore = [defaults_vec, pc] {
+        auto const restore = [defaults_vec, pc, &can_apply, apply_button] {
             for (auto & info : *defaults_vec) {
                 pc->remap_key(info.name_, info.default_key_);
                 info.button_->set_text(
                     FText::FromString(info.default_key_.ToString()));
+                info.button_->indicate_conflict(false);
             }
+            can_apply = true;
+            apply_button->SetEnabled(can_apply);
         };
+
+        std::shared_ptr buttons =
+            std::make_shared<std::vector<TSharedPtr<Skey_binding_button>>>();
+        auto const key_rebound =
+            [buttons, &can_apply, apply_button]() {
+                std::vector<FString> all_keys(buttons->size());
+                std::ranges::transform(
+                    *buttons, all_keys.begin(), [](auto const & e) {
+                        return e->curr_key().ToString();
+                    });
+                std::ranges::sort(all_keys);
+                std::vector<FString> dupes;
+                auto first = all_keys.begin();
+                auto const last = all_keys.end() - 1;
+                for (; first != last; ++first) {
+                    auto next = std::next(first);
+                    if (*first == *next)
+                        dupes.push_back(std::move(*next));
+                }
+
+                can_apply = true;
+                for (auto const & button : *buttons) {
+                    bool const dupe =
+                        std::ranges::find(
+                            dupes, button->curr_key().ToString()) !=
+                        dupes.end();
+                    if (dupe)
+                        can_apply = false;
+                    button->indicate_conflict(dupe);
+                }
+                apply_button->SetEnabled(can_apply);
+            };
 
         TSharedPtr<SVerticalBox> vbox;
         auto retval =
@@ -176,11 +216,11 @@ namespace {
                                 .Text(button_text)];
             hbox->AddSlot().FillWidth(1);
             TSharedPtr<Skey_binding_button> button;
-            hbox->AddSlot().MinWidth(
-                200)[SAssignNew(button, Skey_binding_button)
-                         .name(name)
-                         .key(key.ToString())];
+            hbox->AddSlot().MinWidth(200)
+                [SAssignNew(button, Skey_binding_button).name(name).key(key)];
             button->rebind_action_target(remappings);
+            button->notifier(key_rebound);
+            buttons->push_back(button);
 
             check(current_to_default_keys.Contains(key));
             defaults_vec->push_back(
@@ -199,8 +239,6 @@ namespace {
 void Soptions::Construct(FArguments const & args)
 {
     UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
-
-    TSharedPtr<Sstyled_button> apply_button;
 
     // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
@@ -229,7 +267,7 @@ void Soptions::Construct(FArguments const & args)
             SNew(SHorizontalBox)
 
             +SHorizontalBox::Slot().AutoWidth()[
-                SAssignNew(apply_button, Sstyled_button)
+                SAssignNew(apply_button_, Sstyled_button)
                 .Text(loc_text(TEXT("apply")))
                 .OnClicked_Lambda([this] {
                     curr_panel_info().apply_changes_();
@@ -266,33 +304,49 @@ void Soptions::Construct(FArguments const & args)
     panel_infos_.push_back({});
     options_panels.push_back(gameplay_panel(
         panel_infos_.back().apply_changes_,
-        panel_infos_.back().restore_defaults_));
+        panel_infos_.back().restore_defaults_,
+        panel_infos_.back().can_apply_,
+        apply_button_));
 
     panel_infos_.push_back({});
     options_panels.push_back(video_panel(
         panel_infos_.back().apply_changes_,
-        panel_infos_.back().restore_defaults_));
+        panel_infos_.back().restore_defaults_,
+        panel_infos_.back().can_apply_,
+        apply_button_));
 
     panel_infos_.push_back({});
     options_panels.push_back(audio_panel(
         panel_infos_.back().apply_changes_,
-        panel_infos_.back().restore_defaults_));
+        panel_infos_.back().restore_defaults_,
+        panel_infos_.back().can_apply_,
+        apply_button_));
 
     panel_infos_.push_back({});
     options_panels.push_back(controls_panel(
         panel_infos_.back().apply_changes_,
-        panel_infos_.back().restore_defaults_));
+        panel_infos_.back().restore_defaults_,
+        panel_infos_.back().can_apply_,
+        apply_button_));
 
     tab_panel_->panels(options_panels.begin(), options_panels.end());
+    tab_panel_->panel_change_callback([this](int i) {
+        apply_button_->SetEnabled(get_panel_info(i).can_apply_);
+    });
 }
 
 bool Soptions::cancelable() { return true; }
 
-Soptions::panel_info const & Soptions::curr_panel_info() const
+Soptions::panel_info const & Soptions::get_panel_info(int i) const
 {
     auto it = panel_infos_.begin();
-    std::advance(it, tab_panel_->index());
+    std::advance(it, i);
     return *it;
+}
+
+Soptions::panel_info const & Soptions::curr_panel_info() const
+{
+    return get_panel_info(tab_panel_->index());
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
