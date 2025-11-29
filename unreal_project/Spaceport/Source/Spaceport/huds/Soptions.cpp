@@ -78,6 +78,13 @@ namespace {
         return {TEXT("audio"), panel};
     }
 
+    struct controls_to_default_info
+    {
+        FName name_;
+        FKey default_key_;
+        TSharedPtr<Skey_binding_button> button_;
+    };
+
     std::pair<FString, TSharedPtr<SWidget>> controls_panel(
         std::function<void()> & apply_changes,
         std::function<void()> & restore_defaults)
@@ -93,8 +100,20 @@ namespace {
             if (auto * pc = player_controller_base())
                 pc->save_user_input_mappings();
         };
-        auto const restore = [=] {
-            // TODO
+
+        auto * pc = player_controller_base();
+        check(pc);
+        TMap<FKey, FKey> current_to_default_keys =
+            pc->current_to_default_keys();
+
+        std::shared_ptr defaults_vec =
+            std::make_shared<std::vector<controls_to_default_info>>();
+        auto const restore = [defaults_vec, pc] {
+            for (auto & info : *defaults_vec) {
+                pc->remap_key(info.name_, info.default_key_);
+                info.button_->set_text(
+                    FText::FromString(info.default_key_.ToString()));
+            }
         };
 
         TSharedPtr<SVerticalBox> vbox;
@@ -105,33 +124,16 @@ namespace {
                     [SNew(SScrollBox) +
                      SScrollBox::Slot()[SAssignNew(vbox, SVerticalBox)]];
 
-        auto * pc = player_controller_base();
-        check(pc);
         TArray<FEnhancedActionKeyMapping> curr_mappings =
             pc->player_mappable_action_key_mappings();
 
-        // This extremely odd skipping code below is here to deal with this:
-        // when I iterate without skipping, there is a mapping for each key,
-        // along with all permutations of modifiers.  Since a 2d axis has four
-        // buttons, and each one has a unique set of modifers to distinguish
-        // the meaning of each of the four buttons in the axis, you get 16
-        // mappings instead of four.  Sigh.
-
-        // NB: console command for showing all key mappings:
+        // NB: console command for visualizing when the key mappings are used:
         // `ShowDebug EnhancedInput`
 
         UInputAction const * prev_input_action = nullptr;
-        int iterations_to_skip = 0;
         for (auto const & mapping : curr_mappings) {
             UInputAction const * input_action = mapping.Action;
-            bool first = input_action != prev_input_action;
-            if (first)
-                iterations_to_skip = 0;
-
-            if (iterations_to_skip) {
-                --iterations_to_skip;
-                continue;
-            }
+            bool const first = input_action != prev_input_action;
 
             bool y_axis = false;
             bool negative = false;
@@ -143,8 +145,6 @@ namespace {
             }
             bool const axis_2d =
                 input_action->ValueType == EInputActionValueType::Axis2D;
-            if (axis_2d && iterations_to_skip == 0)
-                iterations_to_skip = 4;
 
             FName const name = mapping.GetMappingName();
             if (axis_2d && first) {
@@ -154,7 +154,7 @@ namespace {
                     [SNew(SHorizontalBox) +
                      SHorizontalBox::Slot()[SNew(Sstyled_text_block)
                                                 .Text(loc_text(
-                                                    name.ToString()))] +
+                                                    input_action->GetName()))] +
                      SHorizontalBox::Slot().FillWidth(1) +
                      SHorizontalBox::Slot().MinWidth(200)];
             }
@@ -180,7 +180,11 @@ namespace {
                 200)[SAssignNew(button, Skey_binding_button)
                          .name(name)
                          .key(key.ToString())];
-            button->rebind_action_target(*remappings);
+            button->rebind_action_target(remappings);
+
+            check(current_to_default_keys.Contains(key));
+            defaults_vec->push_back(
+                {name, current_to_default_keys[key], button});
 
             prev_input_action = input_action;
         }

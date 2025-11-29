@@ -27,20 +27,23 @@ public:
         prev_text_ = prev_text;
     }
 
-    void rebind_action_target(std::vector<std::function<void()>> * target)
+    void cancel_listen()
+    {
+        if (!listening_for_)
+            return;
+        listening_for_->set_text(prev_text_);
+        listening_for_.Reset();
+        prev_focus_.Reset();
+    }
+
+    void rebind_action_target(
+        std::shared_ptr<std::vector<std::function<void()>>> target)
     {
         rebind_action_target_ = target;
     }
 
     bool SupportsKeyboardFocus() const override { return true; }
-    void OnFocusLost(FFocusEvent const &)
-    {
-        if (listening_for_) {
-            listening_for_->set_text(prev_text_);
-            listening_for_.Reset();
-            prev_focus_.Reset();
-        }
-    }
+    void OnFocusLost(FFocusEvent const &) { cancel_listen(); }
     FReply OnKeyDown(FGeometry const & g, FKeyEvent const & e) override
     {
         if (listening_for_) {
@@ -74,7 +77,7 @@ private:
     TSharedPtr<Sstyled_button> listening_for_;
     TSharedPtr<SWidget> prev_focus_;
     FText prev_text_;
-    std::vector<std::function<void()>> * rebind_action_target_ = nullptr;
+    std::shared_ptr<std::vector<std::function<void()>>> rebind_action_target_;
 };
 
 void Skey_binding_button::Construct(FArguments const & args)
@@ -106,7 +109,13 @@ void Skey_binding_button::Construct(FArguments const & args)
 }
 
 void Skey_binding_button::rebind_action_target(
-    std::vector<std::function<void()>> & target)
+    std::shared_ptr<std::vector<std::function<void()>>> target)
 {
-    rebind_action_target_ = &target;
+    rebind_action_target_ = target;
+}
+
+void Skey_binding_button::set_text(FText const & text)
+{
+    button_->set_text(text);
+    key_listener_->cancel_listen();
 }

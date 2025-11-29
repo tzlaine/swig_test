@@ -88,6 +88,32 @@ void Aplayer_controller_base::server_load_game_Implementation(
     gm->load_and_start_game(filename);
 }
 
+TMap<FKey, FKey> Aplayer_controller_base::current_to_default_keys() const
+{
+    TMap<FKey, FKey> retval;
+
+    if (ULocalPlayer * local_player = GetLocalPlayer()) {
+        if (auto * input_sys =
+            local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                if (auto * profile = user_settings->GetActiveKeyProfile()) {
+                    auto const & rows = profile->GetPlayerMappingRows();
+                    for (auto && [_, row] : rows) {
+                        for (auto && mapping : row.Mappings) {
+                            retval.Add(
+                                mapping.GetCurrentKey(),
+                                mapping.GetDefaultKey());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return retval;
+}
+
 void Aplayer_controller_base::remap_key(FName name, FKey key)
 {
     if (auto * local_player = GetLocalPlayer()) {

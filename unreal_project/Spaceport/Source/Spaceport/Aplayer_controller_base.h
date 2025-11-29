@@ -35,6 +35,7 @@ public:
     UInputMappingContext const & input_mapping_context() const;
     TArray<FEnhancedActionKeyMapping>
     player_mappable_action_key_mappings() const;
+    TMap<FKey, FKey> current_to_default_keys() const;
 
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
