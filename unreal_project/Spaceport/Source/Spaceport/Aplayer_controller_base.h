@@ -3,12 +3,23 @@
 #include "constants.hpp"
 
 #include <functional>
+#include <map>
 
 #include <CoreMinimal.h>
 #include <UserSettings/EnhancedInputUserSettings.h>
 #include <GameFramework/PlayerController.h>
 #include "Aplayer_controller_base.generated.h"
 
+
+class UMaterialInterface;
+
+struct loaded_material_interfaces
+{
+    UMaterialInterface * get(FString const & obj_path);
+
+private:
+    TMap<FString, TStrongObjectPtr<UMaterialInterface>> materials_;
+};
 
 class UInputMappingContext;
 class UInputAction;
@@ -39,8 +50,10 @@ public:
 
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
+    loaded_material_interfaces & materials() { return materials_; }
 
 private:
     TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
     TSoftObjectPtr<UInputAction> menu_toggle_action_;
+    loaded_material_interfaces materials_;
 };

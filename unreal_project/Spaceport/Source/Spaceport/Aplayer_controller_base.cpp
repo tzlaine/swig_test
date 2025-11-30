@@ -7,9 +7,33 @@
 #include <EnhancedInputSubsystems.h>
 #include <InputAction.h>
 #include <InputMappingContext.h>
+#include <Materials/MaterialInterface.h>
 #include <Engine/LocalPlayer.h>
 #include <Engine/World.h>
+#include <UObject/ConstructorHelpers.h>
 
+template<typename T>
+T * load_object(FString const & path)
+{
+    if (path.IsEmpty())
+        return nullptr;
+    return Cast<T>(StaticLoadObject(T::StaticClass(), nullptr, *path));
+}
+
+UMaterialInterface * loaded_material_interfaces::get(FString const & obj_path)
+{
+    if (TStrongObjectPtr<UMaterialInterface> * found =
+            materials_.Find(obj_path)) {
+        return found->Get();
+    }
+    if (auto * ptr = load_object<UMaterialInterface>(obj_path)) {
+        materials_.Add(obj_path, TStrongObjectPtr<UMaterialInterface>(ptr));
+        return ptr;
+    }
+    throw std::runtime_error(
+        std::format("Could not load base material {}", obj_path));
+    return nullptr;
+}
 
 Aplayer_controller_base::Aplayer_controller_base() :
     input_mapping_ctx_(FString(TEXT("/Game/ui/input/input_mapping_context.input_mapping_context"))),

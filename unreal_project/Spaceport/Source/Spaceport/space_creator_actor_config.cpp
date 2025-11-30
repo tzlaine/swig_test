@@ -222,26 +222,6 @@ private:
     TMap<FString, UTexture *> textures_;
 };
 
-struct loaded_material_interfaces
-{
-    UMaterialInterface * get(FName name)
-    {
-        if (textures_.Contains(name))
-            return textures_[name];
-        FString material_path = FString::Printf(TEXT("Material'{}'"), name);
-        ConstructorHelpers::FObjectFinder<UMaterialInterface> finder(
-            *material_path);
-        if (!finder.Succeeded()) {
-            throw std::runtime_error(
-                std::format("Could not load base material {}", material_path));
-        }
-        return textures_[name] = finder.Object;
-    }
-
-private:
-    TMap<FName, TObjectPtr<UMaterialInterface>> textures_;
-};
-
 template<typename T>
 void set_property(AActor * a, FName name, T value)
 {
@@ -295,32 +275,32 @@ void configure_map_star(
 
     star_actor->SetActorLocation(FVector(system.world_pos_x, system.world_pos_y, 0));
 
-    FName texture_name;
+    FString material_name;
     switch (star.star_class) {
     case star_class_t::o:
-        texture_name =
+        material_name =
             TEXT("/Game/levels/star_materials/blue_map_star.blue_map_star");
         break;
     case star_class_t::b:
     case star_class_t::a:
-        texture_name = TEXT(
+        material_name = TEXT(
             "/Game/levels/star_materials/"
             "blue_white_map_star.blue_white_map_star");
         break;
     case star_class_t::f:
-        texture_name =
+        material_name =
             TEXT("/Game/levels/star_materials/white_map_star.white_map_star");
         break;
     case star_class_t::g:
     case star_class_t::k: {
-        texture_name = *FString::Printf(
+        material_name = *FString::Printf(
             TEXT("/Game/levels/star_materials/"
                  "yellow_map_star_{}.yellow_map_star_{}"),
             random_int(0, 1));
         break;
     }
     case star_class_t::m: {
-        texture_name = *FString::Printf(
+        material_name = *FString::Printf(
             TEXT("/Game/levels/star_materials/red_map_star_{}.red_map_star_{}"),
             random_int(0, 2));
         break;
@@ -328,7 +308,7 @@ void configure_map_star(
     default: break;
     }
 
-    UMaterialInterface * base_material = material_interfaces.get(texture_name);
+    UMaterialInterface * base_material = material_interfaces.get(material_name);
     UMaterialInstanceDynamic * instance =
         UMaterialInstanceDynamic::Create(base_material, star_actor);
 
