@@ -39,6 +39,8 @@ public class Spaceport : ModuleRules
 
         LoadProtobuf(Target);
         LoadJansson(Target);
+
+        bEnableExceptions = true;
     }
 
     public bool LoadProtobuf(ReadOnlyTargetRules Target)

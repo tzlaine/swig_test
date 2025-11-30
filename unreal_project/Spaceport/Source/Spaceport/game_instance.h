@@ -15,6 +15,7 @@
 #include <Internationalization/StringTable.h>
 #include <Kismet/GameplayStatics.h>
 #include <Kismet/KismetSystemLibrary.h>
+#include <Misc/Paths.h>
 #include "game_instance.generated.h"
 
 
