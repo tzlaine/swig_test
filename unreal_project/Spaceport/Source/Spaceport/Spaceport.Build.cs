@@ -20,7 +20,7 @@ public class Spaceport : ModuleRules
         PCHUsage = PCHUsageMode.NoPCHs;
 
         PublicDependencyModuleNames.AddRange(new string[] {
-                "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "CommonUI"
+                "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "CommonUI", "RHI"
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] {

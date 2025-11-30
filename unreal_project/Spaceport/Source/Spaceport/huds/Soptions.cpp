@@ -2,13 +2,18 @@
 #include "game_instance.h"
 #include "utility.hpp"
 #include "Widgets/Skey_binding_button.h"
+#include "Widgets/Spip_rotator_button.h"
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Stab_panel.h"
 
+#include <utility>
+
+#include <RHI.h>
 #include <SlateOptMacros.h>
 #include <InputAction.h>
 #include <InputMappingContext.h>
+#include <GameFramework/GameUserSettings.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SOverlay.h>
 #include <Widgets/Layout/SBackgroundBlur.h>
@@ -16,6 +21,19 @@
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
+
+bool operator==(FScreenResolutionRHI const & l, FScreenResolutionRHI const & r)
+{
+    return l.Width == r.Width && l.Height == r.Height;
+}
+bool operator<(FScreenResolutionRHI const & l, FScreenResolutionRHI const & r)
+{
+        if (l.Width < r.Width)
+            return true;
+        if (r.Width < l.Width)
+            return false;
+        return l.Height < r.Height;
+}
 
 namespace {
     std::pair<FString, TSharedPtr<SWidget>> gameplay_panel(
@@ -39,13 +57,51 @@ namespace {
         return {TEXT("gameplay"), panel};
     }
 
+    std::pair<FScreenResolutionArray, int>
+    supported_screen_resolutions(FScreenResolutionRHI curr_resolution)
+    {
+        FScreenResolutionArray retval;
+        RHIGetAvailableResolutions(retval, true);
+        std::sort(begin(retval), end(retval));
+        int const new_size =
+             std::unique(begin(retval), end(retval)) - begin(retval);
+        retval.SetNum(new_size);
+
+        // Ensure that the current resolution is actually in the list.
+        auto curr_resolution_it =
+            std::lower_bound(begin(retval), end(retval), curr_resolution);
+        int const pos = curr_resolution_it - begin(retval);
+        if (curr_resolution_it == end(retval)) {
+            retval.Add(curr_resolution);
+        } else if (*curr_resolution_it != curr_resolution) {
+            retval.SetNum(retval.Num() + 1);
+            curr_resolution_it = begin(retval) + pos;
+            std::copy_backward(
+                curr_resolution_it, end(retval) - 1, end(retval));
+            *curr_resolution_it = curr_resolution;
+        }
+
+        return {std::move(retval), pos};
+    }
+
     std::pair<FString, TSharedPtr<SWidget>> video_panel(
         std::function<void()> & apply_changes,
         std::function<void()> & restore_defaults,
         bool & can_apply,
         TSharedPtr<Sstyled_button> apply_button)
     {
-        auto panel = SNew(SOverlay); // TODO
+        UGameUserSettings * game_user_settings =
+            UGameUserSettings::GetGameUserSettings();
+        FScreenResolutionRHI curr_resolution = {0};
+        {
+            FIntPoint const res = game_user_settings->GetScreenResolution();
+            curr_resolution.Width = res.X;
+            curr_resolution.Height = res.Y;
+        }
+        auto [all_resolutions, curr_resolution_pos] =
+            supported_screen_resolutions(curr_resolution);
+
+        auto const default_resolution = game_user_settings->GetDefaultResolution();
 
         auto const apply = [=] {
             // TODO
@@ -54,10 +110,37 @@ namespace {
             // TODO
         };
 
+        TSharedPtr<SVerticalBox> vbox;
+        auto retval =
+            SNew(SBox)
+                .HAlign(HAlign_Fill)
+                .VAlign(VAlign_Fill)
+                    [SNew(SScrollBox) +
+                     SScrollBox::Slot()[SAssignNew(vbox, SVerticalBox)]];
+
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight()[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot()[SNew(Sstyled_text_block)
+                                .Text(loc_text(TEXT("screen_resolution")))];
+            hbox->AddSlot().FillWidth(1);
+            TArray<FText> settings;
+            for (auto const & res : all_resolutions) {
+                settings.Add(FText::Format(
+                    FText::FromString("{0} x {1}"), res.Width, res.Height));
+            }
+            TSharedPtr<Spip_rotator_button> button;
+            hbox->AddSlot().MinWidth(
+                200)[SAssignNew(button, Spip_rotator_button)
+                         .settings(settings)];
+            button->select(curr_resolution_pos);
+        }
+
         apply_changes = apply;
         restore_defaults = restore;
 
-        return {TEXT("video"), panel};
+        return {TEXT("video"), retval};
     }
 
     std::pair<FString, TSharedPtr<SWidget>> audio_panel(

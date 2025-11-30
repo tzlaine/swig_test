@@ -25,6 +25,7 @@ public:
     // later (such as when the user hits the "Apply" button.
     void rebind_action_target(
         std::shared_ptr<std::vector<std::function<void()>>> target);
+    void select(int i);
 
 private:
     TSharedPtr<Stext_rotator> text_;

@@ -132,3 +132,11 @@ void Spip_rotator_button::rebind_action_target(
 {
     rebind_action_target_ = target;
 }
+
+void Spip_rotator_button::select(int i)
+{
+    if (!text_)
+        return;
+    text_->select(i);
+    pip_material_->SetScalarParameterValue(TEXT("curr_pip"), i);
+}
