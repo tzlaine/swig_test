@@ -28,11 +28,11 @@ bool operator==(FScreenResolutionRHI const & l, FScreenResolutionRHI const & r)
 }
 bool operator<(FScreenResolutionRHI const & l, FScreenResolutionRHI const & r)
 {
-        if (l.Width < r.Width)
-            return true;
-        if (r.Width < l.Width)
-            return false;
-        return l.Height < r.Height;
+    if (l.Width < r.Width)
+        return true;
+    if (r.Width < l.Width)
+        return false;
+    return l.Height < r.Height;
 }
 
 namespace {
@@ -84,6 +84,45 @@ namespace {
         return {std::move(retval), pos};
     }
 
+    FScreenResolutionRHI default_resolution(
+        UGameUserSettings & game_user_settings,
+        FScreenResolutionArray const & all_resolutions)
+    {
+        game_user_settings.LoadSettings();
+        game_user_settings.ValidateSettings();
+
+        FIntPoint const settings_default =
+            game_user_settings.GetDefaultResolution();
+        if (settings_default.X && settings_default.Y) {
+            return FScreenResolutionRHI{
+                (uint32_t)settings_default.X, (uint32_t)settings_default.Y};
+        }
+
+        FIntPoint const desktop_resolution =
+            game_user_settings.GetDesktopResolution();
+        if (desktop_resolution.X && desktop_resolution.Y) {
+            return FScreenResolutionRHI{
+                (uint32_t)desktop_resolution.X, (uint32_t)desktop_resolution.Y};
+        }
+
+        if (!all_resolutions.IsEmpty())
+            return all_resolutions.Last();
+
+        return FScreenResolutionRHI{1280u, 720u};
+    }
+
+    struct video_defaults_and_buttons
+    {
+        TSharedPtr<Spip_rotator_button> resolution_button_;
+        FScreenResolutionRHI resolution_;
+        int resolution_index_;
+        TSharedPtr<Spip_rotator_button> window_mode_button_;
+        EWindowMode::Type window_mode_;
+        int window_mode_index_;
+
+        // TODO
+    };
+
     std::pair<FString, TSharedPtr<SWidget>> video_panel(
         std::function<void()> & apply_changes,
         std::function<void()> & restore_defaults,
@@ -92,21 +131,26 @@ namespace {
     {
         UGameUserSettings * game_user_settings =
             UGameUserSettings::GetGameUserSettings();
-        FScreenResolutionRHI curr_resolution = {0};
-        {
-            FIntPoint const res = game_user_settings->GetScreenResolution();
-            curr_resolution.Width = res.X;
-            curr_resolution.Height = res.Y;
-        }
-        auto [all_resolutions, curr_resolution_pos] =
-            supported_screen_resolutions(curr_resolution);
 
-        auto const default_resolution = game_user_settings->GetDefaultResolution();
-
-        auto const apply = [=] {
-            // TODO
+        std::shared_ptr apply_ops =
+            std::make_shared<std::vector<std::function<void()>>>();
+        auto const apply = [apply_ops, game_user_settings] {
+            for (auto const & op : *apply_ops) {
+                op();
+            }
+            game_user_settings->ApplySettings(false);
+            game_user_settings->SaveSettings();
         };
-        auto const restore = [=] {
+
+        std::shared_ptr defaults =
+            std::make_shared<video_defaults_and_buttons>();
+        auto const restore = [defaults, apply_ops] {
+            apply_ops->clear();
+
+            UGameUserSettings * game_user_settings =
+                UGameUserSettings::GetGameUserSettings();
+            defaults->resolution_button_->select(defaults->resolution_index_);
+            defaults->window_mode_button_->select(defaults->window_mode_index_);
             // TODO
         };
 
@@ -118,6 +162,38 @@ namespace {
                     [SNew(SScrollBox) +
                      SScrollBox::Slot()[SAssignNew(vbox, SVerticalBox)]];
 
+        UFont * title_font =
+            detail::stream_font(ui_defaults().title_font_path_);
+        vbox->AddSlot()
+            .MinHeight(50)
+            .VAlign(VAlign_Center)
+            .Padding(
+                0,
+                20,
+                0,
+                20)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("display_settings")))
+                        .Font(FSlateFontInfo(
+                            title_font, ui_defaults().font_size_ * 4 / 3))];
+
+        FScreenResolutionRHI curr_resolution = {0};
+        {
+            FIntPoint const res = game_user_settings->GetScreenResolution();
+            curr_resolution.Width = res.X;
+            curr_resolution.Height = res.Y;
+        }
+        auto [all_resolutions, curr_resolution_pos] =
+            supported_screen_resolutions(curr_resolution);
+        defaults->resolution_ =
+            default_resolution(*game_user_settings, all_resolutions);
+        {
+            auto curr_resolution_it = std::lower_bound(
+                begin(all_resolutions),
+                end(all_resolutions),
+                defaults->resolution_);
+            defaults->resolution_index_ =
+                curr_resolution_it - begin(all_resolutions);
+        }
         {
             TSharedPtr<SHorizontalBox> hbox;
             vbox->AddSlot().AutoHeight()[SAssignNew(hbox, SHorizontalBox)];
@@ -135,7 +211,64 @@ namespace {
                 200)[SAssignNew(button, Spip_rotator_button)
                          .settings(settings)];
             button->select(curr_resolution_pos);
+            button->notifier([resolutions = std::move(all_resolutions),
+                              apply_ops](int i) {
+                auto const resolution = resolutions[i];
+                apply_ops->push_back([resolution] {
+                    UGameUserSettings * game_user_settings =
+                        UGameUserSettings::GetGameUserSettings();
+                    game_user_settings->SetScreenResolution(
+                        FIntPoint(resolution.Width, resolution.Height));
+                });
+            });
+            defaults->resolution_button_ = button;
         }
+
+        EWindowMode::Type const window_mode =
+            game_user_settings->GetFullscreenMode();
+        EWindowMode::Type const default_window_mode =
+            game_user_settings->GetDefaultWindowMode();
+        defaults->window_mode_ = default_window_mode;
+        defaults->window_mode_index_ = (int)default_window_mode;
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight()[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot()[SNew(Sstyled_text_block)
+                                .Text(loc_text(TEXT("window_mode")))];
+            hbox->AddSlot().FillWidth(1);
+            TArray<FText> settings;
+            settings.Add(loc_text(TEXT("fullscreen")));
+            settings.Add(loc_text(TEXT("windowed_fullscreen")));
+            settings.Add(loc_text(TEXT("windowed")));
+            TSharedPtr<Spip_rotator_button> button;
+            hbox->AddSlot().MinWidth(
+                200)[SAssignNew(button, Spip_rotator_button)
+                         .settings(settings)];
+            button->select((int)window_mode);
+            button->notifier([apply_ops](int i) {
+                apply_ops->push_back([window_mode = (EWindowMode::Type)i] {
+                    UGameUserSettings * game_user_settings =
+                        UGameUserSettings::GetGameUserSettings();
+                    game_user_settings->SetFullscreenMode(window_mode);
+                });
+            });
+            defaults->window_mode_button_ = button;
+        }
+
+        vbox->AddSlot()
+            .MinHeight(50)
+            .VAlign(VAlign_Center)
+            .Padding(
+                0,
+                20,
+                0,
+                20)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("graphics_settings")))
+                        .Font(FSlateFontInfo(
+                            title_font, ui_defaults().font_size_ * 4 / 3))];
+
+        // TODO: antialiasing, texture quality, planet detail, star detail
 
         apply_changes = apply;
         restore_defaults = restore;
@@ -196,16 +329,18 @@ namespace {
 
         std::shared_ptr defaults_vec =
             std::make_shared<std::vector<controls_to_default_info>>();
-        auto const restore = [defaults_vec, pc, &can_apply, apply_button] {
-            for (auto & info : *defaults_vec) {
-                pc->remap_key(info.name_, info.default_key_);
-                info.button_->set_text(
-                    FText::FromString(info.default_key_.ToString()));
-                info.button_->indicate_conflict(false);
-            }
-            can_apply = true;
-            apply_button->SetEnabled(can_apply);
-        };
+        auto const restore =
+            [defaults_vec, pc, &can_apply, apply_button, remappings] {
+                for (auto & info : *defaults_vec) {
+                    pc->remap_key(info.name_, info.default_key_);
+                    info.button_->set_text(
+                        FText::FromString(info.default_key_.ToString()));
+                    info.button_->indicate_conflict(false);
+                }
+                can_apply = true;
+                apply_button->SetEnabled(can_apply);
+                remappings->clear();
+            };
 
         std::shared_ptr buttons =
             std::make_shared<std::vector<TSharedPtr<Skey_binding_button>>>();

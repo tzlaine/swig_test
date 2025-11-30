@@ -24,7 +24,6 @@ public:
     {
         all_texts_ = args._texts;
         check(0 < all_texts_.Num());
-        selected_ = 0;
         ChildSlot.VAlign(VAlign_Fill)
             .HAlign(HAlign_Fill)[SAssignNew(curr_text_, Sstyled_text_block)
                                      .Text(all_texts_[selected_])];
@@ -41,15 +40,11 @@ public:
 
     void select(int i)
     {
-        check(!all_texts_.IsEmpty());
-        check(0 <= i);
-        check(i < all_texts_.Num());
-        check(curr_text_);
-        if (all_texts_.IsEmpty())
-            return;
+        selected_ = i;
         if (!curr_text_)
             return;
-        selected_ = i;
+        if (i < 0 || all_texts_.Num() <= i)
+            return;
         curr_text_->SetText(all_texts_[selected_]);
     }
     void shift_left()
@@ -70,7 +65,7 @@ public:
 private:
     TSharedPtr<Sstyled_text_block> curr_text_;
     TArray<FText> all_texts_;
-    int selected_ = -1;
+    int selected_ = 0;
 };
 
 void Spip_rotator_button::Construct(FArguments const & args)
@@ -97,6 +92,8 @@ void Spip_rotator_button::Construct(FArguments const & args)
                 text_->shift_left();
                 pip_material_->SetScalarParameterValue(
                     TEXT("curr_pip"), text_->index());
+                if (notifier_)
+                    notifier_(text_->index());
                 return FReply::Handled();
             })
         ]
@@ -121,6 +118,8 @@ void Spip_rotator_button::Construct(FArguments const & args)
                 text_->shift_right();
                 pip_material_->SetScalarParameterValue(
                     TEXT("curr_pip"), text_->index());
+                if (notifier_)
+                    notifier_(text_->index());
                 return FReply::Handled();
             })
         ]
@@ -128,16 +127,29 @@ void Spip_rotator_button::Construct(FArguments const & args)
     // clang-format on
 }
 
-void Spip_rotator_button::rebind_action_target(
-    std::shared_ptr<std::vector<std::function<void()>>> target)
+FText Spip_rotator_button::curr_text() const
 {
-    rebind_action_target_ = target;
+    check(text_);
+    return text_->curr_text();
 }
 
-void Spip_rotator_button::select(int i)
+int Spip_rotator_button::index() const
+{
+    check(text_);
+    return text_->index();
+}
+
+void Spip_rotator_button::select(int i, bool notify)
 {
     if (!text_)
         return;
     text_->select(i);
     pip_material_->SetScalarParameterValue(TEXT("curr_pip"), i);
+    if (notifier_ && notify)
+        notifier_(i);
+}
+
+void Spip_rotator_button::notifier(std::function<void(int)> notifier)
+{
+    notifier_ = std::move(notifier);
 }

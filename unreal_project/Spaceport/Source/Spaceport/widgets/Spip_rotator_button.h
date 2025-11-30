@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-#include <memory>
 #include <vector>
 
 #include <Widgets/SCompoundWidget.h>
@@ -20,17 +19,16 @@ public:
 
     void Construct(FArguments const & args);
 
-    // Set this when you don't want to do the rebind immediately, but instead
-    // want to add the act of rebinding to a list of callbables, to be called
-    // later (such as when the user hits the "Apply" button.
-    void rebind_action_target(
-        std::shared_ptr<std::vector<std::function<void()>>> target);
-    void select(int i);
+    FText curr_text() const;
+    int index() const;
+
+    void select(int i, bool notify = true);
+    void notifier(std::function<void(int)> notifier);
 
 private:
     TSharedPtr<Stext_rotator> text_;
     TSharedPtr<SImage> pips_;
-    std::shared_ptr<std::vector<std::function<void()>>> rebind_action_target_;
     FSlateBrush pip_brush_;
     TStrongObjectPtr<UMaterialInstanceDynamic> pip_material_;
+    std::function<void(int)> notifier_;
 };
