@@ -32,5 +32,5 @@ private:
     TSharedPtr<SImage> pips_;
     std::shared_ptr<std::vector<std::function<void()>>> rebind_action_target_;
     FSlateBrush pip_brush_;
-    UMaterialInstanceDynamic * pip_material_;
+    TStrongObjectPtr<UMaterialInstanceDynamic> pip_material_;
 };

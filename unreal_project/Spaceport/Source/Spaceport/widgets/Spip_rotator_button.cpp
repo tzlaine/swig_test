@@ -80,10 +80,11 @@ void Spip_rotator_button::Construct(FArguments const & args)
     auto * pc = player_controller_base();
     UMaterialInterface * base_material = pc->materials().get(
         TEXT("/Game/ui/settings/rotator_pip_material.rotator_pip_material"));
-    pip_material_ = UMaterialInstanceDynamic::Create(base_material, pc);
+    pip_material_.Reset(
+        UMaterialInstanceDynamic::Create(base_material, nullptr));
     pip_material_->SetScalarParameterValue(TEXT("num_pips"), size);
     pip_material_->SetScalarParameterValue(TEXT("curr_pip"), 0);
-    pip_brush_.SetResourceObject(pip_material_);
+    pip_brush_.SetResourceObject(pip_material_.Get());
 
     // clang-format off
     ChildSlot.VAlign(VAlign_Fill).HAlign(HAlign_Fill)[
