@@ -4,6 +4,7 @@
 #include "Widgets/Skey_binding_button.h"
 #include "Widgets/Spip_rotator_button.h"
 #include "widgets/Sstyled_button.h"
+#include "widgets/Sstyled_check_box.h"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Stab_panel.h"
 
@@ -119,6 +120,8 @@ namespace {
         TSharedPtr<Spip_rotator_button> window_mode_button_;
         EWindowMode::Type window_mode_;
         int window_mode_index_;
+        TSharedPtr<Sstyled_check_box> vsync_button_;
+        bool vsync_;
 
         // TODO
     };
@@ -151,6 +154,14 @@ namespace {
                 UGameUserSettings::GetGameUserSettings();
             defaults->resolution_button_->select(defaults->resolution_index_);
             defaults->window_mode_button_->select(defaults->window_mode_index_);
+            defaults->vsync_button_->SetIsChecked(
+                defaults->vsync_ ? ECheckBoxState::Checked
+                                 : ECheckBoxState::Unchecked);
+            apply_ops->push_back([enable = defaults->vsync_] {
+                UGameUserSettings * game_user_settings =
+                    UGameUserSettings::GetGameUserSettings();
+                game_user_settings->SetVSyncEnabled(enable);
+            });
             // TODO
         };
 
@@ -196,7 +207,8 @@ namespace {
         }
         {
             TSharedPtr<SHorizontalBox> hbox;
-            vbox->AddSlot().AutoHeight()[SAssignNew(hbox, SHorizontalBox)];
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
 
             hbox->AddSlot()[SNew(Sstyled_text_block)
                                 .Text(loc_text(TEXT("screen_resolution")))];
@@ -232,7 +244,8 @@ namespace {
         defaults->window_mode_index_ = (int)default_window_mode;
         {
             TSharedPtr<SHorizontalBox> hbox;
-            vbox->AddSlot().AutoHeight()[SAssignNew(hbox, SHorizontalBox)];
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
 
             hbox->AddSlot()[SNew(Sstyled_text_block)
                                 .Text(loc_text(TEXT("window_mode")))];
@@ -254,6 +267,34 @@ namespace {
                 });
             });
             defaults->window_mode_button_ = button;
+        }
+
+        bool const vsync = game_user_settings->IsVSyncEnabled();
+        defaults->vsync_ = false;
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot()[SNew(Sstyled_text_block)
+                                .Text(loc_text(TEXT("enable_vsync")))];
+            hbox->AddSlot().FillWidth(1);
+            TSharedPtr<Sstyled_check_box> button;
+            hbox->AddSlot().MinWidth(200).HAlign(HAlign_Center)
+                [SAssignNew(button, Sstyled_check_box)
+                     .IsChecked(
+                         vsync ? ECheckBoxState::Checked
+                               : ECheckBoxState::Unchecked)
+                     .OnCheckStateChanged_Lambda([apply_ops](
+                                                     ECheckBoxState state) {
+                         apply_ops->push_back(
+                             [enable = state == ECheckBoxState::Checked] {
+                                 UGameUserSettings * game_user_settings =
+                                     UGameUserSettings::GetGameUserSettings();
+                                 game_user_settings->SetVSyncEnabled(enable);
+                             });
+                     })];
+            defaults->vsync_button_ = button;
         }
 
         vbox->AddSlot()
