@@ -19,7 +19,7 @@ void Sstyled_button::Construct(FArguments const & args_)
     SButton::Construct(args);
 
     if (has_text)
-        rebuild_text(args._Text.Get());
+        rebuild_text(args._Text.Get(), nullptr);
 }
 
 FText const & Sstyled_button::get_text() const
@@ -28,10 +28,14 @@ FText const & Sstyled_button::get_text() const
     return text_->GetText();
 }
 
-void Sstyled_button::set_text(FText const & text)
+void Sstyled_button::set_text(FText const & text, FSlateFontInfo * font_info)
 {
-    check(text_);
-    text_->SetText(text);
+    if (font_info) {
+        rebuild_text(text, font_info);
+    } else {
+        check(text_);
+        text_->SetText(text);
+    }
 }
 
 void Sstyled_button::set_style_kind(style_kind kind)
@@ -39,7 +43,7 @@ void Sstyled_button::set_style_kind(style_kind kind)
     if (kind == style_kind_)
         return;
     style_kind_ = kind;
-    rebuild_text(text_->GetText());
+    rebuild_text(text_->GetText(), nullptr);
 }
 
 void Sstyled_button::selected_tab(bool selected)
@@ -61,9 +65,12 @@ void Sstyled_button::set_selected_color(FColor selected_color)
     selected_color_ = selected_color;
 }
 
-void Sstyled_button::rebuild_text(FText const & text)
+void Sstyled_button::rebuild_text(
+    FText const & text, FSlateFontInfo * font_info)
 {
     auto text_widget = SAssignNew(text_, Sstyled_text_block).Text(text);
+    if (font_info)
+        text_widget->SetFont(*font_info);
     if (style_kind_ == style_kind::tab) {
         text_->SetJustification(ETextJustify::Left);
         auto with_padding = SNew(SBox).HAlign(HAlign_Left)[text_widget];

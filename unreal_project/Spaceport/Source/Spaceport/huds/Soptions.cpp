@@ -65,7 +65,7 @@ namespace {
         RHIGetAvailableResolutions(retval, true);
         std::sort(begin(retval), end(retval));
         int const new_size =
-             std::unique(begin(retval), end(retval)) - begin(retval);
+            std::unique(begin(retval), end(retval)) - begin(retval);
         retval.SetNum(new_size);
 
         // Ensure that the current resolution is actually in the list.
@@ -112,6 +112,17 @@ namespace {
         return FScreenResolutionRHI{1280u, 720u};
     }
 
+    int const default_aa_technique = AAM_TSR;
+
+    int current_aa_technique()
+    {
+        IConsoleVariable * var = IConsoleManager::Get().FindConsoleVariable(
+            TEXT("r.AntiAliasingMethod"));
+        if (var)
+            return var->GetInt();
+        return default_aa_technique;
+    }
+
     struct video_defaults_and_buttons
     {
         TSharedPtr<Spip_rotator_button> resolution_button_;
@@ -122,6 +133,12 @@ namespace {
         int window_mode_index_;
         TSharedPtr<Sstyled_check_box> vsync_button_;
         bool vsync_;
+        TSharedPtr<Spip_rotator_button> texture_quality_button_;
+        int texture_quality_;
+        TSharedPtr<Spip_rotator_button> aa_technique_button_;
+        int aa_technique_;
+        TSharedPtr<Spip_rotator_button> aa_quality_button_;
+        int aa_quality_;
 
         // TODO
     };
@@ -157,11 +174,15 @@ namespace {
             defaults->vsync_button_->SetIsChecked(
                 defaults->vsync_ ? ECheckBoxState::Checked
                                  : ECheckBoxState::Unchecked);
-            apply_ops->push_back([enable = defaults->vsync_] {
+            apply_ops->push_back([enable = defaults->vsync_, defaults] {
                 UGameUserSettings * game_user_settings =
                     UGameUserSettings::GetGameUserSettings();
                 game_user_settings->SetVSyncEnabled(enable);
+                defaults->window_mode_button_->select(
+                    defaults->window_mode_index_);
             });
+            defaults->texture_quality_button_->select(
+                defaults->texture_quality_);
             // TODO
         };
 
@@ -180,9 +201,9 @@ namespace {
             .VAlign(VAlign_Center)
             .Padding(
                 0,
-                20,
+                40,
                 0,
-                20)[SNew(Sstyled_text_block)
+                40)[SNew(Sstyled_text_block)
                         .Text(loc_text(TEXT("display_settings")))
                         .Font(FSlateFontInfo(
                             title_font, ui_defaults().font_size_ * 4 / 3))];
@@ -210,29 +231,29 @@ namespace {
             vbox->AddSlot().AutoHeight().Padding(
                 0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
 
-            hbox->AddSlot()[SNew(Sstyled_text_block)
-                                .Text(loc_text(TEXT("screen_resolution")))];
-            hbox->AddSlot().FillWidth(1);
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("screen_resolution")))];
             TArray<FText> settings;
             for (auto const & res : all_resolutions) {
                 settings.Add(FText::Format(
                     FText::FromString("{0} x {1}"), res.Width, res.Height));
             }
+            hbox->AddSlot().FillWidth(20);
             TSharedPtr<Spip_rotator_button> button;
-            hbox->AddSlot().MinWidth(
-                200)[SAssignNew(button, Spip_rotator_button)
-                         .settings(settings)];
+            hbox->AddSlot().FillWidth(
+                40)[SAssignNew(button, Spip_rotator_button).settings(settings)];
             button->select(curr_resolution_pos);
-            button->notifier([resolutions = std::move(all_resolutions),
-                              apply_ops](int i) {
-                auto const resolution = resolutions[i];
-                apply_ops->push_back([resolution] {
-                    UGameUserSettings * game_user_settings =
-                        UGameUserSettings::GetGameUserSettings();
-                    game_user_settings->SetScreenResolution(
-                        FIntPoint(resolution.Width, resolution.Height));
+            button->notifier(
+                [resolutions = std::move(all_resolutions), apply_ops](int i) {
+                    auto const resolution = resolutions[i];
+                    apply_ops->push_back([resolution] {
+                        UGameUserSettings * game_user_settings =
+                            UGameUserSettings::GetGameUserSettings();
+                        game_user_settings->SetScreenResolution(
+                            FIntPoint(resolution.Width, resolution.Height));
+                    });
                 });
-            });
             defaults->resolution_button_ = button;
         }
 
@@ -247,17 +268,17 @@ namespace {
             vbox->AddSlot().AutoHeight().Padding(
                 0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
 
-            hbox->AddSlot()[SNew(Sstyled_text_block)
-                                .Text(loc_text(TEXT("window_mode")))];
-            hbox->AddSlot().FillWidth(1);
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("window_mode")))];
+            hbox->AddSlot().FillWidth(20);
             TArray<FText> settings;
             settings.Add(loc_text(TEXT("fullscreen")));
             settings.Add(loc_text(TEXT("windowed_fullscreen")));
             settings.Add(loc_text(TEXT("windowed")));
             TSharedPtr<Spip_rotator_button> button;
-            hbox->AddSlot().MinWidth(
-                200)[SAssignNew(button, Spip_rotator_button)
-                         .settings(settings)];
+            hbox->AddSlot().FillWidth(
+                40)[SAssignNew(button, Spip_rotator_button).settings(settings)];
             button->select((int)window_mode);
             button->notifier([apply_ops](int i) {
                 apply_ops->push_back([window_mode = (EWindowMode::Type)i] {
@@ -276,11 +297,12 @@ namespace {
             vbox->AddSlot().AutoHeight().Padding(
                 0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
 
-            hbox->AddSlot()[SNew(Sstyled_text_block)
-                                .Text(loc_text(TEXT("enable_vsync")))];
-            hbox->AddSlot().FillWidth(1);
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("enable_vsync")))];
+            hbox->AddSlot().FillWidth(20);
             TSharedPtr<Sstyled_check_box> button;
-            hbox->AddSlot().MinWidth(200).HAlign(HAlign_Center)
+            hbox->AddSlot().FillWidth(40).HAlign(HAlign_Center)
                 [SAssignNew(button, Sstyled_check_box)
                      .IsChecked(
                          vsync ? ECheckBoxState::Checked
@@ -302,14 +324,100 @@ namespace {
             .VAlign(VAlign_Center)
             .Padding(
                 0,
-                20,
+                40,
                 0,
-                20)[SNew(Sstyled_text_block)
+                40)[SNew(Sstyled_text_block)
                         .Text(loc_text(TEXT("graphics_settings")))
                         .Font(FSlateFontInfo(
                             title_font, ui_defaults().font_size_ * 4 / 3))];
 
-        // TODO: antialiasing, texture quality, planet detail, star detail
+        TArray<FText> graphics_settings_0_4;
+        graphics_settings_0_4.Add(loc_text(TEXT("graphics_low")));
+        graphics_settings_0_4.Add(loc_text(TEXT("graphics_medium")));
+        graphics_settings_0_4.Add(loc_text(TEXT("graphics_high")));
+        graphics_settings_0_4.Add(loc_text(TEXT("graphics_epic")));
+        graphics_settings_0_4.Add(loc_text(TEXT("graphics_cinematic")));
+
+        int const texture_quality = game_user_settings->GetTextureQuality();
+        defaults->texture_quality_ = 4;
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("texture_quality")))];
+            hbox->AddSlot().FillWidth(20);
+            TSharedPtr<Spip_rotator_button> button;
+            hbox->AddSlot().FillWidth(
+                40)[SAssignNew(button, Spip_rotator_button)
+                        .settings(graphics_settings_0_4)];
+            button->select((int)window_mode);
+            button->notifier([apply_ops](int i) {
+                apply_ops->push_back([i] {
+                    UGameUserSettings * game_user_settings =
+                        UGameUserSettings::GetGameUserSettings();
+                    game_user_settings->SetTextureQuality(i);
+                });
+            });
+            defaults->texture_quality_button_ = button;
+        }
+
+        int const aa_technique = current_aa_technique();
+        defaults->aa_technique_ = default_aa_technique;
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("aa_technique")))];
+            hbox->AddSlot().FillWidth(20);
+            TArray<FText> settings;
+            settings.Add(loc_text(TEXT("aa_off")));
+            settings.Add(loc_text(TEXT("aa_fxaa")));
+            settings.Add(loc_text(TEXT("aa_taa")));
+            settings.Add(loc_text(TEXT("aa_msaa")));
+            settings.Add(loc_text(TEXT("aa_tsr")));
+            TSharedPtr<Spip_rotator_button> button;
+            hbox->AddSlot().FillWidth(
+                40)[SAssignNew(button, Spip_rotator_button).settings(settings)];
+            button->select((int)window_mode);
+            button->notifier([apply_ops](int i) {
+                apply_ops->push_back([i] {
+                    // TODO
+                });
+            });
+            defaults->aa_technique_button_ = button;
+        }
+
+        int const aa_quality = game_user_settings->GetAntiAliasingQuality();
+        defaults->aa_quality_ = 4;
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("aa_quality")))];
+            hbox->AddSlot().FillWidth(20);
+            TSharedPtr<Spip_rotator_button> button;
+            hbox->AddSlot().FillWidth(
+                40)[SAssignNew(button, Spip_rotator_button)
+                        .settings(graphics_settings_0_4)];
+            button->select((int)window_mode);
+            button->notifier([apply_ops](int i) {
+                apply_ops->push_back([i] {
+                    // TODO
+                });
+            });
+            defaults->aa_quality_button_ = button;
+        }
+
+        // TODO: planet detail, star detail
 
         apply_changes = apply;
         restore_defaults = restore;
@@ -385,35 +493,33 @@ namespace {
 
         std::shared_ptr buttons =
             std::make_shared<std::vector<TSharedPtr<Skey_binding_button>>>();
-        auto const key_rebound =
-            [buttons, &can_apply, apply_button]() {
-                std::vector<FString> all_keys(buttons->size());
-                std::ranges::transform(
-                    *buttons, all_keys.begin(), [](auto const & e) {
-                        return e->curr_key().ToString();
-                    });
-                std::ranges::sort(all_keys);
-                std::vector<FString> dupes;
-                auto first = all_keys.begin();
-                auto const last = all_keys.end() - 1;
-                for (; first != last; ++first) {
-                    auto next = std::next(first);
-                    if (*first == *next)
-                        dupes.push_back(std::move(*next));
-                }
+        auto const key_rebound = [buttons, &can_apply, apply_button]() {
+            std::vector<FString> all_keys(buttons->size());
+            std::ranges::transform(
+                *buttons, all_keys.begin(), [](auto const & e) {
+                    return e->curr_key().ToString();
+                });
+            std::ranges::sort(all_keys);
+            std::vector<FString> dupes;
+            auto first = all_keys.begin();
+            auto const last = all_keys.end() - 1;
+            for (; first != last; ++first) {
+                auto next = std::next(first);
+                if (*first == *next)
+                    dupes.push_back(std::move(*next));
+            }
 
-                can_apply = true;
-                for (auto const & button : *buttons) {
-                    bool const dupe =
-                        std::ranges::find(
-                            dupes, button->curr_key().ToString()) !=
-                        dupes.end();
-                    if (dupe)
-                        can_apply = false;
-                    button->indicate_conflict(dupe);
-                }
-                apply_button->SetEnabled(can_apply);
-            };
+            can_apply = true;
+            for (auto const & button : *buttons) {
+                bool const dupe =
+                    std::ranges::find(dupes, button->curr_key().ToString()) !=
+                    dupes.end();
+                if (dupe)
+                    can_apply = false;
+                button->indicate_conflict(dupe);
+            }
+            apply_button->SetEnabled(can_apply);
+        };
 
         TSharedPtr<SVerticalBox> vbox;
         auto retval =
@@ -451,11 +557,11 @@ namespace {
                 // called, together as an axis.
                 vbox->AddSlot().AutoHeight()
                     [SNew(SHorizontalBox) +
-                     SHorizontalBox::Slot()[SNew(Sstyled_text_block)
-                                                .Text(loc_text(
-                                                    input_action->GetName()))] +
-                     SHorizontalBox::Slot().FillWidth(1) +
-                     SHorizontalBox::Slot().MinWidth(200)];
+                     SHorizontalBox::Slot().FillWidth(
+                         40)[SNew(Sstyled_text_block)
+                                 .Text(loc_text(input_action->GetName()))] +
+                     SHorizontalBox::Slot().FillWidth(40) +
+                     SHorizontalBox::Slot().FillWidth(20)];
             }
 
             FString::ElementType const * axis_names[4] = {
@@ -471,11 +577,11 @@ namespace {
             } else {
                 button_text = loc_text(name.ToString());
             }
-            hbox->AddSlot()[SNew(Sstyled_text_block)
-                                .Text(button_text)];
-            hbox->AddSlot().FillWidth(1);
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block).Text(button_text)];
+            hbox->AddSlot().FillWidth(40);
             TSharedPtr<Skey_binding_button> button;
-            hbox->AddSlot().MinWidth(200)
+            hbox->AddSlot().FillWidth(20)
                 [SAssignNew(button, Skey_binding_button).name(name).key(key)];
             button->rebind_action_target(remappings);
             button->notifier(key_rebound);

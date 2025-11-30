@@ -81,13 +81,16 @@ void Spip_rotator_button::Construct(FArguments const & args)
     pip_material_->SetScalarParameterValue(TEXT("curr_pip"), 0);
     pip_brush_.SetResourceObject(pip_material_.Get());
 
+    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+
+    TSharedPtr<Sstyled_button> lbutton, rbutton;
+
     // clang-format off
     ChildSlot.VAlign(VAlign_Fill).HAlign(HAlign_Fill)[
         SNew(SHorizontalBox)
 
-        +SHorizontalBox::Slot().FillWidth(20).MinWidth(50).HAlign(HAlign_Center)[
-            SNew(Sstyled_button)
-            .Text(FText::FromString(TEXT("<")))
+        +SHorizontalBox::Slot().AutoWidth().HAlign(HAlign_Center)[
+            SAssignNew(lbutton, Sstyled_button)
             .OnClicked_Lambda([this] {
                 text_->shift_left();
                 pip_material_->SetScalarParameterValue(
@@ -98,7 +101,7 @@ void Spip_rotator_button::Construct(FArguments const & args)
             })
         ]
 
-        +SHorizontalBox::Slot().FillWidth(60).HAlign(HAlign_Fill)[
+        +SHorizontalBox::Slot().FillWidth(1).HAlign(HAlign_Fill)[
             SNew(SVerticalBox)
 
             +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
@@ -106,14 +109,14 @@ void Spip_rotator_button::Construct(FArguments const & args)
                 .texts(args._settings)
             ]
 
-            +SVerticalBox::Slot().MinHeight(20).HAlign(HAlign_Fill)[
+            +SVerticalBox::Slot()
+            .MinHeight(40).MaxHeight(40).HAlign(HAlign_Fill)[
                 SAssignNew(pips_, SImage).Image(&pip_brush_)
             ]
         ]
 
-        +SHorizontalBox::Slot().FillWidth(20).MinWidth(50).HAlign(HAlign_Center)[
-            SNew(Sstyled_button)
-            .Text(FText::FromString(TEXT(">")))
+        +SHorizontalBox::Slot().AutoWidth().HAlign(HAlign_Center)[
+            SAssignNew(rbutton, Sstyled_button)
             .OnClicked_Lambda([this] {
                 text_->shift_right();
                 pip_material_->SetScalarParameterValue(
@@ -125,6 +128,10 @@ void Spip_rotator_button::Construct(FArguments const & args)
         ]
     ];
     // clang-format on
+
+    FSlateFontInfo big_font(title_font, ui_defaults().title_font_size_);
+    lbutton->set_text(FText::FromString(TEXT("<")), &big_font);
+    rbutton->set_text(FText::FromString(TEXT(">")), &big_font);
 }
 
 FText Spip_rotator_button::curr_text() const
