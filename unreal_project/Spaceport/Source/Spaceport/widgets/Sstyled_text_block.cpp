@@ -1,5 +1,8 @@
 #include "Sstyled_text_block.h"
 
+#include <ui_defaults.h>
+#include <ui_util.h>
+
 
 void Sstyled_text_block::Construct(FArguments const & args_)
 {
