@@ -1,5 +1,6 @@
 #include "Soptions.h"
 #include "game_instance.h"
+#include "game_user_settings.h"
 #include "utility.hpp"
 #include "Widgets/Skey_binding_button.h"
 #include "Widgets/Spip_rotator_button.h"
@@ -86,7 +87,7 @@ namespace {
     }
 
     FScreenResolutionRHI default_resolution(
-        UGameUserSettings & game_user_settings,
+        Ugame_user_settings & game_user_settings,
         FScreenResolutionArray const & all_resolutions)
     {
         game_user_settings.LoadSettings();
@@ -112,17 +113,6 @@ namespace {
         return FScreenResolutionRHI{1280u, 720u};
     }
 
-    int const default_aa_technique = AAM_TSR;
-
-    int current_aa_technique()
-    {
-        IConsoleVariable * var = IConsoleManager::Get().FindConsoleVariable(
-            TEXT("r.AntiAliasingMethod"));
-        if (var)
-            return var->GetInt();
-        return default_aa_technique;
-    }
-
     struct video_defaults_and_buttons
     {
         TSharedPtr<Spip_rotator_button> resolution_button_;
@@ -135,12 +125,12 @@ namespace {
         bool vsync_;
         TSharedPtr<Spip_rotator_button> texture_quality_button_;
         int texture_quality_;
-        TSharedPtr<Spip_rotator_button> aa_technique_button_;
-        int aa_technique_;
+        TSharedPtr<Spip_rotator_button> aa_method_button_;
+        int aa_method_;
         TSharedPtr<Spip_rotator_button> aa_quality_button_;
         int aa_quality_;
-
-        // TODO
+        TSharedPtr<Spip_rotator_button> planet_detail_button_;
+        int planet_detail_;
     };
 
     std::pair<FString, TSharedPtr<SWidget>> video_panel(
@@ -149,8 +139,8 @@ namespace {
         bool & can_apply,
         TSharedPtr<Sstyled_button> apply_button)
     {
-        UGameUserSettings * game_user_settings =
-            UGameUserSettings::GetGameUserSettings();
+        Ugame_user_settings * game_user_settings =
+            Ugame_user_settings::get();
 
         std::shared_ptr apply_ops =
             std::make_shared<std::vector<std::function<void()>>>();
@@ -167,23 +157,25 @@ namespace {
         auto const restore = [defaults, apply_ops] {
             apply_ops->clear();
 
-            UGameUserSettings * game_user_settings =
-                UGameUserSettings::GetGameUserSettings();
+            Ugame_user_settings * game_user_settings =
+                Ugame_user_settings::get();
             defaults->resolution_button_->select(defaults->resolution_index_);
             defaults->window_mode_button_->select(defaults->window_mode_index_);
             defaults->vsync_button_->SetIsChecked(
                 defaults->vsync_ ? ECheckBoxState::Checked
                                  : ECheckBoxState::Unchecked);
             apply_ops->push_back([enable = defaults->vsync_, defaults] {
-                UGameUserSettings * game_user_settings =
-                    UGameUserSettings::GetGameUserSettings();
+                Ugame_user_settings * game_user_settings =
+                    Ugame_user_settings::get();
                 game_user_settings->SetVSyncEnabled(enable);
                 defaults->window_mode_button_->select(
                     defaults->window_mode_index_);
             });
             defaults->texture_quality_button_->select(
                 defaults->texture_quality_);
-            // TODO
+            defaults->aa_method_button_->select(defaults->aa_method_);
+            defaults->aa_quality_button_->select(defaults->aa_quality_);
+            defaults->planet_detail_button_->select(defaults->planet_detail_);
         };
 
         TSharedPtr<SVerticalBox> vbox;
@@ -248,8 +240,8 @@ namespace {
                 [resolutions = std::move(all_resolutions), apply_ops](int i) {
                     auto const resolution = resolutions[i];
                     apply_ops->push_back([resolution] {
-                        UGameUserSettings * game_user_settings =
-                            UGameUserSettings::GetGameUserSettings();
+                        Ugame_user_settings * game_user_settings =
+                            Ugame_user_settings::get();
                         game_user_settings->SetScreenResolution(
                             FIntPoint(resolution.Width, resolution.Height));
                     });
@@ -282,8 +274,8 @@ namespace {
             button->select((int)window_mode);
             button->notifier([apply_ops](int i) {
                 apply_ops->push_back([window_mode = (EWindowMode::Type)i] {
-                    UGameUserSettings * game_user_settings =
-                        UGameUserSettings::GetGameUserSettings();
+                    Ugame_user_settings * game_user_settings =
+                        Ugame_user_settings::get();
                     game_user_settings->SetFullscreenMode(window_mode);
                 });
             });
@@ -311,8 +303,8 @@ namespace {
                                                      ECheckBoxState state) {
                          apply_ops->push_back(
                              [enable = state == ECheckBoxState::Checked] {
-                                 UGameUserSettings * game_user_settings =
-                                     UGameUserSettings::GetGameUserSettings();
+                                 Ugame_user_settings * game_user_settings =
+                                     Ugame_user_settings::get();
                                  game_user_settings->SetVSyncEnabled(enable);
                              });
                      })];
@@ -338,8 +330,8 @@ namespace {
         graphics_settings_0_4.Add(loc_text(TEXT("graphics_epic")));
         graphics_settings_0_4.Add(loc_text(TEXT("graphics_cinematic")));
 
-        int const texture_quality = game_user_settings->GetTextureQuality();
-        defaults->texture_quality_ = 4;
+        int const texture_quality = game_user_settings->texture_quality;
+        defaults->texture_quality_ = 3;
         {
             TSharedPtr<SHorizontalBox> hbox;
             vbox->AddSlot().AutoHeight().Padding(
@@ -353,19 +345,20 @@ namespace {
             hbox->AddSlot().FillWidth(
                 40)[SAssignNew(button, Spip_rotator_button)
                         .settings(graphics_settings_0_4)];
-            button->select((int)window_mode);
+            button->select(texture_quality);
             button->notifier([apply_ops](int i) {
                 apply_ops->push_back([i] {
-                    UGameUserSettings * game_user_settings =
-                        UGameUserSettings::GetGameUserSettings();
-                    game_user_settings->SetTextureQuality(i);
+                    Ugame_user_settings * game_user_settings =
+                        Ugame_user_settings::get();
+                    game_user_settings->texture_quality = i;
                 });
             });
             defaults->texture_quality_button_ = button;
         }
 
-        int const aa_technique = current_aa_technique();
-        defaults->aa_technique_ = default_aa_technique;
+        int const default_aa_method = AAM_TSR;
+        int const aa_method = game_user_settings->aa_method;
+        defaults->aa_method_ = default_aa_method;
         {
             TSharedPtr<SHorizontalBox> hbox;
             vbox->AddSlot().AutoHeight().Padding(
@@ -373,7 +366,7 @@ namespace {
 
             hbox->AddSlot().FillWidth(
                 40)[SNew(Sstyled_text_block)
-                        .Text(loc_text(TEXT("aa_technique")))];
+                        .Text(loc_text(TEXT("aa_method")))];
             hbox->AddSlot().FillWidth(20);
             TArray<FText> settings;
             settings.Add(loc_text(TEXT("aa_off")));
@@ -384,17 +377,19 @@ namespace {
             TSharedPtr<Spip_rotator_button> button;
             hbox->AddSlot().FillWidth(
                 40)[SAssignNew(button, Spip_rotator_button).settings(settings)];
-            button->select((int)window_mode);
+            button->select(aa_method);
             button->notifier([apply_ops](int i) {
                 apply_ops->push_back([i] {
-                    // TODO
+                    Ugame_user_settings * game_user_settings =
+                        Ugame_user_settings::get();
+                    game_user_settings->aa_method = i;
                 });
             });
-            defaults->aa_technique_button_ = button;
+            defaults->aa_method_button_ = button;
         }
 
-        int const aa_quality = game_user_settings->GetAntiAliasingQuality();
-        defaults->aa_quality_ = 4;
+        int const aa_quality = game_user_settings->aa_quality;
+        defaults->aa_quality_ = 3;
         {
             TSharedPtr<SHorizontalBox> hbox;
             vbox->AddSlot().AutoHeight().Padding(
@@ -408,16 +403,44 @@ namespace {
             hbox->AddSlot().FillWidth(
                 40)[SAssignNew(button, Spip_rotator_button)
                         .settings(graphics_settings_0_4)];
-            button->select((int)window_mode);
+            button->select(aa_quality);
             button->notifier([apply_ops](int i) {
                 apply_ops->push_back([i] {
-                    // TODO
+                    Ugame_user_settings * game_user_settings =
+                        Ugame_user_settings::get();
+                    game_user_settings->aa_quality = i;
                 });
             });
             defaults->aa_quality_button_ = button;
         }
 
-        // TODO: planet detail, star detail
+        int const planet_detail = game_user_settings->planet_detail;
+        defaults->planet_detail_ = 3;
+        {
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block)
+                        .Text(loc_text(TEXT("planet_detail")))];
+            hbox->AddSlot().FillWidth(20);
+            TSharedPtr<Spip_rotator_button> button;
+            hbox->AddSlot().FillWidth(
+                40)[SAssignNew(button, Spip_rotator_button)
+                        .settings(graphics_settings_0_4)];
+            button->select(planet_detail);
+            button->notifier([apply_ops](int i) {
+                apply_ops->push_back([i] {
+                    Ugame_user_settings * game_user_settings =
+                        Ugame_user_settings::get();
+                    game_user_settings->planet_detail = i;
+                });
+            });
+            defaults->planet_detail_button_ = button;
+        }
+
+        // TODO: star detail?
 
         apply_changes = apply;
         restore_defaults = restore;
