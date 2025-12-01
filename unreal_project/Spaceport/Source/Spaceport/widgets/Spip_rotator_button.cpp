@@ -73,9 +73,8 @@ void Spip_rotator_button::Construct(FArguments const & args)
 {
     int const size = args._settings.Num();
 
-    using namespace adobe::literals;
     auto * pc = player_controller_base();
-    UMaterialInterface * base_material = pc->material("rotator_pip"_name);
+    UMaterialInterface * base_material = pc->materials().rotator_pip_;
     pip_material_.Reset(
         UMaterialInstanceDynamic::Create(base_material, nullptr));
     pip_material_->SetScalarParameterValue(TEXT("num_pips"), size);

@@ -276,35 +276,34 @@ void configure_map_star(
     star_actor->SetActorLocation(
         FVector(system.world_pos_x, system.world_pos_y, 0));
 
-    using namespace adobe::literals;
-    adobe::name_t material_name;
+    auto const & materials = ::materials();
+    UMaterialInterface * material = nullptr;
     switch (star.star_class) {
-    case star_class_t::o: material_name = "blue_map_star"_name; break;
+    case star_class_t::o: material = materials.blue_map_star_; break;
     case star_class_t::b:
-    case star_class_t::a: material_name = "blue_white_map_star"_name; break;
-    case star_class_t::f: material_name = "white_map_star"_name; break;
+    case star_class_t::a: material = materials.blue_white_map_star_; break;
+    case star_class_t::f: material = materials.white_map_star_; break;
     case star_class_t::g:
     case star_class_t::k:
-        material_name = random_int(0, 1) ? "yellow_map_star_0"_name
-                                         : "yellow_map_star_1"_name;
+        material = random_int(0, 1) ? materials.yellow_map_star_0_
+                                    : materials.yellow_map_star_1_;
         break;
     case star_class_t::m: {
         int const choice = random_int(0, 2);
         if (choice == 0)
-            material_name = "red_map_star_0"_name;
+            material = materials.red_map_star_0_;
         else if (choice == 1)
-            material_name = "red_map_star_1"_name;
+            material = materials.red_map_star_1_;
         else
-            material_name = "red_map_star_2 "_name;
+            material = materials.red_map_star_2_;
         break;
     }
     default: break;
     }
 
     auto * pc = player_controller_base();
-    UMaterialInterface * base_material = pc->material(material_name);
     UMaterialInstanceDynamic * instance =
-        UMaterialInstanceDynamic::Create(base_material, star_actor);
+        UMaterialInstanceDynamic::Create(material, star_actor);
 
     // https://en.wikipedia.org/wiki/Stellar_classification
 

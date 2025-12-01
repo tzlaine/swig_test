@@ -49,23 +49,6 @@ void Aplayer_controller_base::BeginPlay()
             }
         }
     }
-
-    if (auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>())
-        return;
-    using namespace adobe::literals;
-    materials_["rotator_pip"_name] = rotator_pip_material_.LoadSynchronous();
-#define MATERIAL(mat)                                                          \
-    materials_[#mat ## _name] = mat ## _material_.LoadSynchronous()
-    MATERIAL(rotator_pip);
-    MATERIAL(blue_map_star);
-    MATERIAL(blue_white_map_star);
-    MATERIAL(white_map_star);
-    MATERIAL(yellow_map_star_0);
-    MATERIAL(yellow_map_star_1);
-    MATERIAL(red_map_star_0);
-    MATERIAL(red_map_star_1);
-    MATERIAL(red_map_star_2);
-#undef MATERIAL
 }
 
 void Aplayer_controller_base::SetupInputComponent()
@@ -132,19 +115,18 @@ TMap<FKey, FKey> Aplayer_controller_base::current_to_default_keys() const
     return retval;
 }
 
-UMaterialInterface * Aplayer_controller_base::material(adobe::name_t name) const
-{
-    auto it = materials_.find(name);
-    if (it == materials_.end())
-        return nullptr;
-    return it->second;
-}
-
 Uui_defaults_t const & Aplayer_controller_base::ui_defaults()
 {
     if (!ui_defaults_)
         ui_defaults_ = NewObject<Uui_defaults_t>(this, ui_defaults_class_);
     return *ui_defaults_;
+}
+
+Umaterials_t const & Aplayer_controller_base::materials()
+{
+    if (!materials_)
+        materials_ = NewObject<Umaterials_t>(this, materials_class_);
+    return *materials_;
 }
 
 void Aplayer_controller_base::remap_key(FName name, FKey key)

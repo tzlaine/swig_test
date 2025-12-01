@@ -2,6 +2,7 @@
 
 #include "constants.hpp"
 #include "ui_defaults.h"
+#include "materials.h"
 
 #include <adobe/name.hpp>
 
@@ -41,17 +42,20 @@ public:
     TArray<FEnhancedActionKeyMapping>
     player_mappable_action_key_mappings() const;
     TMap<FKey, FKey> current_to_default_keys() const;
-    UMaterialInterface * material(adobe::name_t name) const;
 
     Uui_defaults_t const & ui_defaults();
+    Umaterials_t const & materials();
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
 
     UPROPERTY(EditAnywhere, Category = "UI")
     TSubclassOf<Uui_defaults_t> ui_defaults_class_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TSubclassOf<Umaterials_t> materials_class_;
 
 private:
     Uui_defaults_t * ui_defaults_ = nullptr;
+    Umaterials_t * materials_ = nullptr;
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
@@ -59,53 +63,4 @@ private:
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TSoftObjectPtr<UInputAction> menu_toggle_action_;
-
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> rotator_pip_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> blue_map_star_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> blue_white_map_star_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> white_map_star_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> yellow_map_star_0_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> yellow_map_star_1_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> red_map_star_0_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> red_map_star_1_material_;
-    UPROPERTY(
-        EditAnywhere,
-        Category = "Materials",
-        meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UMaterialInterface> red_map_star_2_material_;
-
-    std::map<adobe::name_t, UMaterialInterface *> materials_;
-    // TODO: Same for textures.
 };
