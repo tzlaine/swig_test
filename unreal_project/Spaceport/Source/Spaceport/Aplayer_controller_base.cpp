@@ -35,9 +35,7 @@ UMaterialInterface * loaded_material_interfaces::get(FString const & obj_path)
     return nullptr;
 }
 
-Aplayer_controller_base::Aplayer_controller_base() :
-    input_mapping_ctx_(FString(TEXT("/Game/ui/input/input_mapping_context.input_mapping_context"))),
-    menu_toggle_action_(FString(TEXT("/Game/ui/input/menu_toggle.menu_toggle")))
+Aplayer_controller_base::Aplayer_controller_base()
 {
     bReplicates = true;
     bAlwaysRelevant = true;

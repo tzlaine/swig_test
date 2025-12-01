@@ -36,12 +36,7 @@ class SPACEPORT_API Ugame_instance : public UGameInstance
     GENERATED_BODY()
 
 public:
-    Ugame_instance() :
-        start_level_(FString(TEXT("/Game/levels/start/start_screen.start_screen"))),
-        playing_level_(FString(TEXT("/Game/levels/playing.playing")))
-    {
-        self_ptr_ = this;
-    }
+    Ugame_instance() { self_ptr_ = this; }
 
     void
     watch_save_game_dir(std::function<void(std::vector<Ffile_change>)> callback)
@@ -116,16 +111,9 @@ public:
             std::move(title), std::move(msg));
     }
 
-    UPROPERTY(EditAnywhere, Category = "Localization")
-    TSoftObjectPtr<UStringTable> string_table_;
-
     FText loc_text(FTextKey const & key)
     {
         if (string_table_id_.IsNone()) {
-            if (!string_table_.IsValid()) {
-                string_table_ = TSoftObjectPtr<UStringTable>(
-                    FString(TEXT("/Game/strings.strings")));
-            }
             string_table_id_ =
                 string_table_.LoadSynchronous()->GetStringTableId();
         }
@@ -138,11 +126,16 @@ public:
     }
 
 private:
+    UPROPERTY(EditAnywhere, Category = "Localization", meta = (AllowPrivateAccess = "true"))
+    TSoftObjectPtr<UStringTable> string_table_;
+
     FName string_table_id_;
     ::game_kind game_kind_;
     std::filesystem::path game_to_load_;
 
+    UPROPERTY(EditAnywhere, Category = "Levels", meta = (AllowPrivateAccess = "true"))
     TSoftObjectPtr<UWorld> start_level_;
+    UPROPERTY(EditAnywhere, Category = "Levels", meta = (AllowPrivateAccess = "true"))
     TSoftObjectPtr<UWorld> playing_level_;
 
     void dir_watch_update()

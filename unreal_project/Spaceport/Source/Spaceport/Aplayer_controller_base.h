@@ -52,8 +52,12 @@ public:
     void save_user_input_mappings();
     loaded_material_interfaces & materials() { return materials_; }
 
-private:
+protected:
+    UPROPERTY(EditAnywhere, Category = "Input")
     TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
+    UPROPERTY(EditAnywhere, Category = "Input")
     TSoftObjectPtr<UInputAction> menu_toggle_action_;
+
+private:
     loaded_material_interfaces materials_;
 };
