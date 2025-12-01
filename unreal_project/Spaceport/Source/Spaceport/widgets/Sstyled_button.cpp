@@ -1,16 +1,16 @@
 #include "Sstyled_button.h"
 #include "Sstyled_text_block.h"
+#include <ui_defaults.h>
+
+#include <Widgets/Layout/SBox.h>
 
 
 void Sstyled_button::Construct(FArguments const & args_)
 {
     bool const has_text = args_._Text.IsSet();
 
-    auto const & defaults = ui_defaults();
-    detail::FObjectFinder<USlateWidgetStyleAsset> style(
-        *defaults.UButton_style_path_);
     SButton::FArguments args(args_);
-    args.ButtonStyle(style.Object);
+    args.ButtonStyle(ui_defaults().Button_style_.Get());
     if (has_text) {
         args.ContentPadding(FMargin(4, 2));
         args.HAlign(HAlign_Center);
@@ -49,11 +49,8 @@ void Sstyled_button::set_style_kind(style_kind kind)
 void Sstyled_button::selected_tab(bool selected)
 {
     check(style_kind_ == style_kind::tab);
-    auto const & defaults = ui_defaults();
-    detail::FObjectFinder<USlateWidgetStyleAsset> style(
-        *defaults.UButton_style_path_);
     SButton::FArguments args;
-    args.ButtonStyle(style.Object);
+    args.ButtonStyle(ui_defaults().Button_style_.Get());
     if (selected)
         SetColorAndOpacity(selected_color_);
     else

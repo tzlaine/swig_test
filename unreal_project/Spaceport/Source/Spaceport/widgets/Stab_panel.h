@@ -6,6 +6,7 @@
 
 #include <CoreMinimal.h>
 #include <Slate/SCommonAnimatedSwitcher.h>
+#include <Widgets/SBoxPanel.h>
 #include <Widgets/SCompoundWidget.h>
 
 

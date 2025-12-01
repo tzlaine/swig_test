@@ -6,6 +6,7 @@
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_spin_box.h"
 #include "widgets/Sstyled_text_block.h"
+#include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
@@ -24,7 +25,7 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void Sgame_setup::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+    UFont * title_font = ui_defaults().title_font_.Get();
 
     TSharedPtr<SVerticalBox> vbox;
 

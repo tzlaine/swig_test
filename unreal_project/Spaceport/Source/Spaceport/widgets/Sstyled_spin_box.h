@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ui_defaults.h>
-#include <ui_util.h>
 
 #include <Widgets/Input/SSpinBox.h>
 
@@ -17,12 +16,9 @@ public:
     void Construct(FArguments const & args_)
     {
         auto const & defaults = ui_defaults();
-        detail::FObjectFinder<USlateWidgetStyleAsset> style(
-            *defaults.USpinBox_style_path_);
         auto args(args_);
-        args.Style(style.Object);
-        args.Font(FSlateFontInfo(
-            detail::stream_font(defaults.font_path_), defaults.font_size_));
+        args.Style(defaults.SpinBox_style_.Get());
+        args.Font(FSlateFontInfo(defaults.font_.Get(), defaults.font_size_));
         SSpinBox<T>::Construct(args);
     }
 };

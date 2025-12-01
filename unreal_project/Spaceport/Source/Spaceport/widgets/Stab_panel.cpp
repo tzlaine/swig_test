@@ -1,6 +1,7 @@
 #include "Stab_panel.h"
 
 #include <SlateOptMacros.h>
+#include <Widgets/SBoxPanel.h>
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION

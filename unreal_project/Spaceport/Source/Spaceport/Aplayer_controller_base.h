@@ -1,6 +1,7 @@
 #pragma once
 
 #include "constants.hpp"
+#include "ui_defaults.h"
 
 #include <adobe/name.hpp>
 
@@ -42,10 +43,16 @@ public:
     TMap<FKey, FKey> current_to_default_keys() const;
     UMaterialInterface * material(adobe::name_t name) const;
 
+    Uui_defaults_t const & ui_defaults();
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
 
+    UPROPERTY(EditAnywhere, Category = "UI")
+    TSubclassOf<Uui_defaults_t> ui_defaults_class_;
+
 private:
+    Uui_defaults_t * ui_defaults_ = nullptr;
+
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
     TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;

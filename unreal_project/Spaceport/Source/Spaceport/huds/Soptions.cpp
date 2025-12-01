@@ -8,6 +8,7 @@
 #include "widgets/Sstyled_check_box.h"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Stab_panel.h"
+#include <ui_defaults.h>
 
 #include <utility>
 
@@ -17,9 +18,12 @@
 #include <InputMappingContext.h>
 #include <GameFramework/GameUserSettings.h>
 #include <Internationalization/Internationalization.h>
+#include <Materials/MaterialInstanceDynamic.h>
 #include <Widgets/SOverlay.h>
 #include <Widgets/Layout/SBackgroundBlur.h>
+#include <Widgets/Layout/SBox.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
+#include <Widgets/Layout/SScrollBox.h>
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -186,8 +190,7 @@ namespace {
                     [SNew(SScrollBox) +
                      SScrollBox::Slot()[SAssignNew(vbox, SVerticalBox)]];
 
-        UFont * title_font =
-            detail::stream_font(ui_defaults().title_font_path_);
+        UFont * title_font = ui_defaults().title_font_.Get();
         vbox->AddSlot()
             .MinHeight(50)
             .VAlign(VAlign_Center)
@@ -626,7 +629,7 @@ namespace {
 
 void Soptions::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+    UFont * title_font = ui_defaults().title_font_.Get();
 
     // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[

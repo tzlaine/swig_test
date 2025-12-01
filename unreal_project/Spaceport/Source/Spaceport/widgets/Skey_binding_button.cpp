@@ -4,8 +4,8 @@
 #include "utility.hpp"
 
 #include <ui_defaults.h>
-#include <ui_util.h>
 
+#include <Framework/Application/SlateApplication.h>
 #include <Widgets/SOverlay.h>
 
 

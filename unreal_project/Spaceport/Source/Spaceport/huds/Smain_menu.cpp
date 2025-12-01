@@ -6,6 +6,7 @@
 #include "widgets/Sstyled_text_block.h"
 #include "text/grapheme_break.hpp"
 #include "text/beman_utf_view/utf_view.hpp"
+#include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
@@ -30,7 +31,7 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void Smain_menu::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+    UFont * title_font = ui_defaults().title_font_.Get();
 
     in_game_ = args._in_game;
 

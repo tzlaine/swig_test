@@ -4,6 +4,7 @@
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_editable_text_box.h"
+#include <ui_defaults.h>
 
 #include <format>
 
@@ -39,7 +40,7 @@ namespace {
 
 void Ssave_load_dlg::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+    UFont * title_font = ui_defaults().title_font_.Get();
 
     saving_ = args._saving;
     in_game_ = args._in_game;

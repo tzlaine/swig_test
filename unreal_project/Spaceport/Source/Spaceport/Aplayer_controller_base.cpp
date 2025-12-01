@@ -140,6 +140,13 @@ UMaterialInterface * Aplayer_controller_base::material(adobe::name_t name) const
     return it->second;
 }
 
+Uui_defaults_t const & Aplayer_controller_base::ui_defaults()
+{
+    if (!ui_defaults_)
+        ui_defaults_ = NewObject<Uui_defaults_t>(this, ui_defaults_class_);
+    return *ui_defaults_;
+}
+
 void Aplayer_controller_base::remap_key(FName name, FKey key)
 {
     if (auto * local_player = GetLocalPlayer()) {

@@ -5,7 +5,6 @@
 #include "utility.hpp"
 
 #include <ui_defaults.h>
-#include <ui_util.h>
 
 #include <adobe/name.hpp>
 
@@ -83,7 +82,7 @@ void Spip_rotator_button::Construct(FArguments const & args)
     pip_material_->SetScalarParameterValue(TEXT("curr_pip"), 0);
     pip_brush_.SetResourceObject(pip_material_.Get());
 
-    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+    UFont * title_font = ui_defaults().title_font_.Get();
 
     TSharedPtr<Sstyled_button> lbutton, rbutton;
 

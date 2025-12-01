@@ -2,6 +2,7 @@
 #include "game_instance.h"
 #include "widgets/Sstyled_progress_bar.h"
 #include "widgets/Sstyled_text_block.h"
+#include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
@@ -18,7 +19,7 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void Sgenerating_galaxy::Construct(FArguments const & args)
 {
-    UFont * title_font = detail::stream_font(ui_defaults().title_font_path_);
+    UFont * title_font = ui_defaults().title_font_.Get();
 
     TSharedPtr<SVerticalBox> vbox;
 
