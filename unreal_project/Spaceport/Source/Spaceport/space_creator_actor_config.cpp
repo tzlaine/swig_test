@@ -1,5 +1,6 @@
 #include "space_creator_actor_config.hpp"
 
+#include "Aplayer_controller_base.h"
 #include "constants.hpp"
 #include "game_data.hpp"
 #include "rng.hpp"
@@ -266,8 +267,7 @@ void configure_map_star(
     AStaticMeshActor * star_actor,
     system_t const & system,
     star_t const & star,
-    loaded_textures & textures,
-    loaded_material_interfaces & material_interfaces)
+    loaded_textures & textures)
 {
     check(star_actor);
     check(star_class_t::invalid_star_class < star.star_class);
@@ -275,40 +275,40 @@ void configure_map_star(
 
     star_actor->SetActorLocation(FVector(system.world_pos_x, system.world_pos_y, 0));
 
-    FString material_name;
+    using namespace adobe::literals;
+    adobe::name_t material_name;
     switch (star.star_class) {
     case star_class_t::o:
         material_name =
-            TEXT("/Game/levels/star_materials/blue_map_star.blue_map_star");
+            "/Game/levels/star_materials/blue_map_star.blue_map_star"_name; // TODO
         break;
     case star_class_t::b:
     case star_class_t::a:
-        material_name = TEXT(
-            "/Game/levels/star_materials/"
-            "blue_white_map_star.blue_white_map_star");
+        material_name =
+            "/Game/levels/star_materials/blue_white_map_star.blue_white_map_star"_name;
         break;
     case star_class_t::f:
         material_name =
-            TEXT("/Game/levels/star_materials/white_map_star.white_map_star");
+            "/Game/levels/star_materials/white_map_star.white_map_star"_name;
         break;
     case star_class_t::g:
     case star_class_t::k: {
-        material_name = *FString::Printf(
-            TEXT("/Game/levels/star_materials/"
-                 "yellow_map_star_{}.yellow_map_star_{}"),
-            random_int(0, 1));
+        material_name =
+            "/Game/levels/star_materials/yellow_map_star_{}.yellow_map_star_{}"_name,
+        random_int(0, 1); // TODO
         break;
     }
     case star_class_t::m: {
-        material_name = *FString::Printf(
-            TEXT("/Game/levels/star_materials/red_map_star_{}.red_map_star_{}"),
-            random_int(0, 2));
+        material_name =
+            "/Game/levels/star_materials/red_map_star_{}.red_map_star_{}"_name,
+        random_int(0, 2); // TODO
         break;
     }
     default: break;
     }
 
-    UMaterialInterface * base_material = material_interfaces.get(material_name);
+    auto * pc = player_controller_base();
+    UMaterialInterface * base_material = pc->material(material_name);
     UMaterialInstanceDynamic * instance =
         UMaterialInstanceDynamic::Create(base_material, star_actor);
 

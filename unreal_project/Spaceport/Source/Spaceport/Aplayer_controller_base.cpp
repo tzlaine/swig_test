@@ -12,28 +12,6 @@
 #include <Engine/World.h>
 #include <UObject/ConstructorHelpers.h>
 
-template<typename T>
-T * load_object(FString const & path)
-{
-    if (path.IsEmpty())
-        return nullptr;
-    return Cast<T>(StaticLoadObject(T::StaticClass(), nullptr, *path));
-}
-
-UMaterialInterface * loaded_material_interfaces::get(FString const & obj_path)
-{
-    if (TStrongObjectPtr<UMaterialInterface> * found =
-            materials_.Find(obj_path)) {
-        return found->Get();
-    }
-    if (auto * ptr = load_object<UMaterialInterface>(obj_path)) {
-        materials_.Add(obj_path, TStrongObjectPtr<UMaterialInterface>(ptr));
-        return ptr;
-    }
-    throw std::runtime_error(
-        std::format("Could not load base material {}", obj_path));
-    return nullptr;
-}
 
 Aplayer_controller_base::Aplayer_controller_base()
 {
@@ -47,8 +25,7 @@ void Aplayer_controller_base::BeginPlay()
     Super::BeginPlay();
 
     FInputModeGameAndUI input_mode;
-    input_mode.SetLockMouseToViewportBehavior(
-        EMouseLockMode::DoNotLock);
+    input_mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
     SetInputMode(input_mode);
     SetShowMouseCursor(true);
 
@@ -56,7 +33,8 @@ void Aplayer_controller_base::BeginPlay()
 
     if (ULocalPlayer * local_player = GetLocalPlayer()) {
         if (auto * input_sys =
-            local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
+                local_player
+                    ->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
             if (imc) {
                 if (UEnhancedInputUserSettings * user_settings =
                         input_sys->GetUserSettings()) {
@@ -71,6 +49,12 @@ void Aplayer_controller_base::BeginPlay()
             }
         }
     }
+
+    if (auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>())
+        return;
+    using namespace adobe::literals;
+    materials_["rotator_pip"_name] = rotator_pip_material_.LoadSynchronous();
+    // TODO: Etc...
 }
 
 void Aplayer_controller_base::SetupInputComponent()
@@ -116,7 +100,8 @@ TMap<FKey, FKey> Aplayer_controller_base::current_to_default_keys() const
 
     if (ULocalPlayer * local_player = GetLocalPlayer()) {
         if (auto * input_sys =
-            local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
+                local_player
+                    ->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
             if (UEnhancedInputUserSettings * user_settings =
                     input_sys->GetUserSettings()) {
                 if (auto * profile = user_settings->GetActiveKeyProfile()) {
@@ -134,6 +119,14 @@ TMap<FKey, FKey> Aplayer_controller_base::current_to_default_keys() const
     }
 
     return retval;
+}
+
+UMaterialInterface * Aplayer_controller_base::material(adobe::name_t name) const
+{
+    auto it = materials_.find(name);
+    if (it == materials_.end())
+        return nullptr;
+    return it->second;
 }
 
 void Aplayer_controller_base::remap_key(FName name, FKey key)
@@ -183,8 +176,8 @@ Aplayer_controller_base::player_mappable_action_key_mappings() const
 {
     ULocalPlayer * local_player = GetLocalPlayer();
     check(local_player);
-     auto * input_sys =
-         local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
-     check(input_sys);
-     return input_sys->GetAllPlayerMappableActionKeyMappings();
+    auto * input_sys =
+        local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+    check(input_sys);
+    return input_sys->GetAllPlayerMappableActionKeyMappings();
 }

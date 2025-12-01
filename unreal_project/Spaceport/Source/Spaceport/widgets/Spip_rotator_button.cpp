@@ -7,6 +7,8 @@
 #include <ui_defaults.h>
 #include <ui_util.h>
 
+#include <adobe/name.hpp>
+
 #include <SlateMaterialBrush.h>
 #include <Materials/MaterialInstanceDynamic.h>
 #include <Materials/MaterialInterface.h>
@@ -72,9 +74,9 @@ void Spip_rotator_button::Construct(FArguments const & args)
 {
     int const size = args._settings.Num();
 
+    using namespace adobe::literals;
     auto * pc = player_controller_base();
-    UMaterialInterface * base_material = pc->materials().get(
-        TEXT("/Game/ui/settings/rotator_pip_material.rotator_pip_material"));
+    UMaterialInterface * base_material = pc->material("rotator_pip"_name);
     pip_material_.Reset(
         UMaterialInstanceDynamic::Create(base_material, nullptr));
     pip_material_->SetScalarParameterValue(TEXT("num_pips"), size);

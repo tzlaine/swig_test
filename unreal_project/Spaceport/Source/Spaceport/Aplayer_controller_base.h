@@ -2,6 +2,8 @@
 
 #include "constants.hpp"
 
+#include <adobe/name.hpp>
+
 #include <functional>
 #include <map>
 
@@ -12,15 +14,6 @@
 
 
 class UMaterialInterface;
-
-struct loaded_material_interfaces
-{
-    UMaterialInterface * get(FString const & obj_path);
-
-private:
-    TMap<FString, TStrongObjectPtr<UMaterialInterface>> materials_;
-};
-
 class UInputMappingContext;
 class UInputAction;
 
@@ -47,17 +40,25 @@ public:
     TArray<FEnhancedActionKeyMapping>
     player_mappable_action_key_mappings() const;
     TMap<FKey, FKey> current_to_default_keys() const;
+    UMaterialInterface * material(adobe::name_t name) const;
 
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
-    loaded_material_interfaces & materials() { return materials_; }
-
-protected:
-    UPROPERTY(EditAnywhere, Category = "Input")
-    TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
-    UPROPERTY(EditAnywhere, Category = "Input")
-    TSoftObjectPtr<UInputAction> menu_toggle_action_;
 
 private:
-    loaded_material_interfaces materials_;
+    UPROPERTY(
+        EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
+    UPROPERTY(
+        EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TSoftObjectPtr<UInputAction> menu_toggle_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        Category = "InputMaterials",
+        meta = (AllowPrivateAccess = "true"))
+    TSoftObjectPtr<UMaterialInterface> rotator_pip_material_;
+
+    std::map<adobe::name_t, UMaterialInterface *> materials_;
+    // TODO: Same for textures.
 };
