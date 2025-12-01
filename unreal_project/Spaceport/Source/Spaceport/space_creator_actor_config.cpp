@@ -273,35 +273,29 @@ void configure_map_star(
     check(star_class_t::invalid_star_class < star.star_class);
     check(star.star_class <= star_class_t::m);
 
-    star_actor->SetActorLocation(FVector(system.world_pos_x, system.world_pos_y, 0));
+    star_actor->SetActorLocation(
+        FVector(system.world_pos_x, system.world_pos_y, 0));
 
     using namespace adobe::literals;
     adobe::name_t material_name;
     switch (star.star_class) {
-    case star_class_t::o:
-        material_name =
-            "/Game/levels/star_materials/blue_map_star.blue_map_star"_name; // TODO
-        break;
+    case star_class_t::o: material_name = "blue_map_star"_name; break;
     case star_class_t::b:
-    case star_class_t::a:
-        material_name =
-            "/Game/levels/star_materials/blue_white_map_star.blue_white_map_star"_name;
-        break;
-    case star_class_t::f:
-        material_name =
-            "/Game/levels/star_materials/white_map_star.white_map_star"_name;
-        break;
+    case star_class_t::a: material_name = "blue_white_map_star"_name; break;
+    case star_class_t::f: material_name = "white_map_star"_name; break;
     case star_class_t::g:
-    case star_class_t::k: {
-        material_name =
-            "/Game/levels/star_materials/yellow_map_star_{}.yellow_map_star_{}"_name,
-        random_int(0, 1); // TODO
+    case star_class_t::k:
+        material_name = random_int(0, 1) ? "yellow_map_star_0"_name
+                                         : "yellow_map_star_1"_name;
         break;
-    }
     case star_class_t::m: {
-        material_name =
-            "/Game/levels/star_materials/red_map_star_{}.red_map_star_{}"_name,
-        random_int(0, 2); // TODO
+        int const choice = random_int(0, 2);
+        if (choice == 0)
+            material_name = "red_map_star_0"_name;
+        else if (choice == 1)
+            material_name = "red_map_star_1"_name;
+        else
+            material_name = "red_map_star_2 "_name;
         break;
     }
     default: break;
@@ -315,8 +309,9 @@ void configure_map_star(
     // https://en.wikipedia.org/wiki/Stellar_classification
 
     {
-        // Map this star's luminosity relative to other main sequece stars (in
-        // log space) into the (linear) range of visual intensity values.
+        // Map this star's luminosity relative to other main sequece stars
+        // (in log space) into the (linear) range of visual intensity
+        // values.
         double const log_min_lum = std::log10(0.08);
         double const log_max_lum = std::log10(30000.0);
         double const log_lum = std::log10(star.solar_luminosities);
@@ -324,31 +319,31 @@ void configure_map_star(
             (log_lum - log_min_lum) / (log_max_lum - log_min_lum);
         instance->SetScalarParameterValue(
             TEXT("Burst_Intensity"), std::lerp(0.5, 40.0, alpha));
-    }
+        }
 
-    // Class A and brighter are >= 5x the sun.
-    bool const use_wide_lense_flare = 5.0 < star.solar_luminosities;
+        // Class A and brighter are >= 5x the sun.
+        bool const use_wide_lense_flare = 5.0 < star.solar_luminosities;
 
-    UTexture * texture = nullptr;
-    if (use_wide_lense_flare) {
-        int i = random_int(0, 4);
-        if (i ==0)
-            i = 7;
-        FString path = FString::Printf(TEXT("T_LensFlare_{}"), i);
-        texture = textures.get(path);
-    } else {
-        FString path =
-            FString::Printf(TEXT("T_LensFlare_{}"), random_int(5, 6));
-        texture = textures.get(path);
-    }
+        UTexture * texture = nullptr;
+        if (use_wide_lense_flare) {
+            int i = random_int(0, 4);
+            if (i == 0)
+                i = 7;
+            FString path = FString::Printf(TEXT("T_LensFlare_{}"), i);
+            texture = textures.get(path);
+        } else {
+            FString path =
+                FString::Printf(TEXT("T_LensFlare_{}"), random_int(5, 6));
+            texture = textures.get(path);
+        }
 
-    instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
-    instance->SetScalarParameterValue(
-        TEXT("Halo_Size"),
-        use_wide_lense_flare ? random_double(0.1, 0.4)
-                             : random_double(0.1, 0.25));
+        instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
+        instance->SetScalarParameterValue(
+            TEXT("Halo_Size"),
+            use_wide_lense_flare ? random_double(0.1, 0.4)
+                                 : random_double(0.1, 0.25));
 
-    star_actor->GetStaticMeshComponent()->SetMaterial(0, instance);
+        star_actor->GetStaticMeshComponent()->SetMaterial(0, instance);
 }
 
 void configure_system_star(AActor * star_actor, star_t const & star)
