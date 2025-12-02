@@ -29,49 +29,40 @@ void Sgame_setup::Construct(FArguments const & args)
 
     TSharedPtr<SVerticalBox> vbox;
 
+    int vertical_spacing = 15;
+    // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.05, 0, 0.95, 0.125))[
+        .Anchors(FAnchors(0, 0, 1, 0.1))
+        .Offset(FMargin(20, 20, 20, 0))[
             SNew(SVerticalBox)
-            +SVerticalBox::Slot().FillHeight(1)
             +SVerticalBox::Slot().AutoHeight()[
                 SNew(Sstyled_text_block)
                 .Text(loc_text(TEXT("game_setup_title")))
                 .Font(FSlateFontInfo(title_font,
                                      ui_defaults().title_font_size_))
             ]
-            +SVerticalBox::Slot().FillHeight(1)
         ]
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.05, 0.125, 0.95, 0.875))[
+        .Anchors(FAnchors(0, 0.1, 1, 0.9))
+        .Offset(FMargin(20, 10, 20, 0))[
             SAssignNew(vbox, SVerticalBox)
         ]
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.05, 0.875, 0.95, 1))[
+        .Anchors(FAnchors(0, 0.9, 1, 1))
+        .Offset(FMargin(20, 0, 20, 20))[
             SNew(SVerticalBox)
 
-            +SVerticalBox::Slot().FillHeight(1)
-
-            +SVerticalBox::Slot().AutoHeight()[
+            +SVerticalBox::Slot().Padding(0, 10)[
                 SNew(SHorizontalBox)
 
-                +SHorizontalBox::Slot().FillWidth(10)
+                +SHorizontalBox::Slot().FillWidth(50)
 
-                +SHorizontalBox::Slot().FillWidth(2)[
-                    SNew(Sstyled_button).Text(loc_text(TEXT("back")))
-                    .OnClicked_Lambda([this] {
-                        back();
-                        return FReply::Handled();
-                    })
-                ]
-
-                +SHorizontalBox::Slot().FillWidth(0.5)
-
-                +SHorizontalBox::Slot().FillWidth(2)[
+                +SHorizontalBox::Slot().FillWidth(25)[
                     SNew(Sstyled_button).Text(loc_text(TEXT("play")))
                     .OnClicked_Lambda([this] {
                         TArray<uint8> params = to_tarray(params_);
@@ -81,11 +72,18 @@ void Sgame_setup::Construct(FArguments const & args)
                         return FReply::Handled();
                     })
                 ]
-            ]
 
-            +SVerticalBox::Slot().FillHeight(1)
+                +SHorizontalBox::Slot().FillWidth(25).Padding(10, 0)[
+                    SNew(Sstyled_button).Text(loc_text(TEXT("back")))
+                    .OnClicked_Lambda([this] {
+                        back();
+                        return FReply::Handled();
+                    })
+                ]
+            ]
         ]
     ]];
+    // clang-format on
 
     auto const adjust_total_for_inhab = [this] {
         int const curr_min_value = (int)std::ceil(
