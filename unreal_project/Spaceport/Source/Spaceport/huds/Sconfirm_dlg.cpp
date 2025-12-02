@@ -2,13 +2,15 @@
 #include "game_instance.h"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Sstyled_button.h"
+#include "widgets/Sstyled_border.h"
+#include "widgets/Sstyled_scroll_box.h"
 #include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SCanvas.h>
 #include <Widgets/SOverlay.h>
-#include <Widgets/Layout/SScaleBox.h>
+#include <Widgets/Layout/SBox.h>
 #include <Widgets/SUserWidget.h>
 #include <Widgets/Images/SImage.h>
 #include <Widgets/Layout/SBackgroundBlur.h>
@@ -30,34 +32,45 @@ void Sconfirm_dlg::Construct(FArguments const & args)
     if (message_as_text.IsEmpty())
         message_as_text = loc_text(args._message);
 
+    FAnchors const anchors(0.25, 0.3, 0.75, 0.7);
+    int vertical_spacing = 10;
+    // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
 
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0.3, 0.3, 0.7, 0.7))[
-            SNew(SBorder).Padding(50.0f)[ // TODO: Use a styled one.
+        +SConstraintCanvas::Slot().Anchors(anchors)[
+            SNew(Sstyled_border)
+        ]
 
-                SNew(SVerticalBox)
-                +SVerticalBox::Slot().FillHeight(2)
+        +SConstraintCanvas::Slot().Anchors(anchors).Offset(20)[
+            SNew(SVerticalBox)
 
-                +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
+            +SVerticalBox::Slot()
+            .AutoHeight().HAlign(HAlign_Center)
+            .Padding(0, 0, 0, vertical_spacing)[
+                SNew(Sstyled_text_block)
+                .Text(loc_text(args._title))
+                .Font(FSlateFontInfo(title_font,
+                                     ui_defaults().title_font_size_))]
+
+            +SVerticalBox::Slot()
+            .HAlign(HAlign_Fill)
+            .Padding(0, 0, 0, vertical_spacing)[
+                STYLED_SCROLL_BOX()
+
+                +SScrollBox::Slot()[
                     SNew(Sstyled_text_block)
-                    .Text(loc_text(args._title))
-                    .Font(FSlateFontInfo(title_font,
-                                         ui_defaults().title_font_size_))]
+                    .Justification(ETextJustify::Left)
+                    .AutoWrapText(true)
+                    .Text(message_as_text)
+                ]
+            ]
 
-                +SVerticalBox::Slot().FillHeight(1)
-
-                +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
-                    SNew(Sstyled_text_block).AutoWrapText(true).Text(message_as_text)]
-
-                +SVerticalBox::Slot().FillHeight(2)
-
-                +SVerticalBox::Slot().AutoHeight()[
-                    SAssignNew(buttons_hbox, SHorizontalBox)]
-
-                +SVerticalBox::Slot().FillHeight(2)]]]];
-
-    buttons_hbox->AddSlot().FillWidth(10);
+            +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
+                SAssignNew(buttons_hbox, SHorizontalBox)]
+        ]
+    ]];
+    // clang-format on
 
     if (args._yes_button == args._no_button) {
         buttons_hbox->AddSlot().AutoWidth()[
@@ -69,14 +82,13 @@ void Sconfirm_dlg::Construct(FArguments const & args)
 
         cancelable_ = true;
     } else {
-        buttons_hbox->AddSlot().AutoWidth()[
-            SNew(Sstyled_button).Text(loc_text(args._yes_button))
-            .OnClicked_Lambda([this] {
-                *result_ptr_ = result::yes;
-                return FReply::Handled();
-            })];
-
-        buttons_hbox->AddSlot().FillWidth(0.5);
+        buttons_hbox->AddSlot().AutoWidth().Padding(
+            0, 0, 20, 0)[SNew(Sstyled_button)
+                             .Text(loc_text(args._yes_button))
+                             .OnClicked_Lambda([this] {
+                                 *result_ptr_ = result::yes;
+                                 return FReply::Handled();
+                             })];
 
         buttons_hbox->AddSlot().AutoWidth()[
             SNew(Sstyled_button).Text(loc_text(args._no_button))
@@ -85,8 +97,6 @@ void Sconfirm_dlg::Construct(FArguments const & args)
                 return FReply::Handled();
             })];
     }
-
-    buttons_hbox->AddSlot().FillWidth(10);
 }
 
 bool Sconfirm_dlg::cancelable()

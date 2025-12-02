@@ -3,6 +3,8 @@
 #include <CoreMinimal.h>
 #include <SlateCore.h>
 #include <Engine/Font.h>
+#include <Styling/SlateBrush.h>
+#include <Widgets/Views/SListView.h>
 #include "ui_defaults.generated.h"
 
 
@@ -12,6 +14,9 @@ class Uui_defaults_t : public UObject
     GENERATED_BODY()
 
 public:
+    Uui_defaults_t();
+
+    // Fonts
     UPROPERTY(EditAnywhere, Category = "UI")
     TObjectPtr<UFont> title_font_;
     UPROPERTY(EditAnywhere, Category = "UI")
@@ -21,6 +26,7 @@ public:
     UPROPERTY(EditAnywhere, Category = "UI")
     int32 font_size_;
 
+    // Slate styles
     UPROPERTY(EditAnywhere, Category = "UI")
     TObjectPtr<USlateWidgetStyleAsset> Button_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
@@ -41,6 +47,16 @@ public:
     TObjectPtr<USlateWidgetStyleAsset> ScrollBox_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     TObjectPtr<USlateWidgetStyleAsset> TextBlock_style_;
+
+    // Brushes
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FSlateBrush border_background_;
+
+    // SListView rows
+    FTableRowStyle table_row_style_;
+    TSharedRef<ITableRow> make_row(
+        TSharedPtr<FString> text,
+        TSharedRef<STableViewBase> const & table) const;
 };
 
 Uui_defaults_t const & ui_defaults();

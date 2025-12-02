@@ -2,6 +2,7 @@
 #include "game_instance.h"
 #include "utility.hpp"
 #include "widgets/Sstyled_text_block.h"
+#include "widgets/Sstyled_border.h"
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_editable_text_box.h"
 #include <ui_defaults.h>
@@ -22,15 +23,6 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 namespace {
-    TSharedRef<ITableRow> make_row(
-        Ssave_load_dlg::item_data data,
-        TSharedRef<STableViewBase> const & table)
-    {
-        return SNew(STableRow<TSharedPtr<FString>>, table)
-            .Padding(2.0f)[SNew(Sstyled_text_block)
-                           .Text(FText::FromString(*data))];
-    }
-
     std::filesystem::path
     default_filename(std::string nation, std::chrono::utc_clock::time_point t)
     {
@@ -85,87 +77,88 @@ void Ssave_load_dlg::Construct(FArguments const & args)
 
     // TODO: Allow selecting one or more saves, and deleting them.
 
+    FAnchors const anchors(0.35, 0.15, 0.65, 0.85);
+    int vertical_spacing = 15;
     // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
 
-        +SConstraintCanvas::Slot().Anchors(FAnchors(0.4, 0.2, 0.6, 0.8))[
-            SNew(SBorder).Padding(50.0f)[ // TODO: Use a styled one.
+        +SConstraintCanvas::Slot().Anchors(anchors)[
+            SNew(Sstyled_border)
+        ]
 
-                SNew(SVerticalBox)
-                +SVerticalBox::Slot().FillHeight(5)
+        +SConstraintCanvas::Slot().Anchors(anchors).Offset(20)[
+            SNew(SVerticalBox)
+            +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
+                SNew(Sstyled_text_block)
+                .Text(action_text)
+                .Font(FSlateFontInfo(title_font,
+                                     ui_defaults().title_font_size_))]
 
-                +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
-                    SNew(Sstyled_text_block)
-                    .Text(action_text)
-                    .Font(FSlateFontInfo(title_font,
-                                         ui_defaults().title_font_size_))]
-
-                +SVerticalBox::Slot().FillHeight(5)
-
-                +SVerticalBox::Slot().FillHeight(15).HAlign(HAlign_Fill)[
-                    SAssignNew(edit_, Sstyled_editable_text_box)
-                    .OnTextCommitted_Lambda(
-                        [do_action, this](FText const & text, ETextCommit::Type type) {
-                            if (type != ETextCommit::OnEnter)
-                                return;
-                            filename_ = text.ToString();
-                            do_action();
-                        })
-                    .OnTextChanged_Lambda([this](FText const & text) {
+            +SVerticalBox::Slot()
+            .AutoHeight().HAlign(HAlign_Fill)
+            .Padding(0, vertical_spacing, 0, vertical_spacing)[
+                SAssignNew(edit_, Sstyled_editable_text_box)
+                .OnTextCommitted_Lambda([do_action, this](
+                    FText const & text, ETextCommit::Type type) {
+                        if (type != ETextCommit::OnEnter)
+                            return;
                         filename_ = text.ToString();
-                        action_button_->SetEnabled(filename_is_well_formed());
+                        do_action();
                     })
-                ]
+                .OnTextChanged_Lambda([this](FText const & text) {
+                    filename_ = text.ToString();
+                    action_button_->SetEnabled(filename_is_well_formed());
+                })
+            ]
 
-                +SVerticalBox::Slot().FillHeight(70).HAlign(HAlign_Fill)[
-                    SAssignNew(list_box_, Sstyled_list_view<item_data>)
-                    .ItemHeight(ui_defaults().font_size_)
-                    .ListItemsSource(&items_)
-                    .OnGenerateRow_Lambda(&make_row)
-                    .SelectionMode(ESelectionMode::Single)
-                    .OnMouseButtonDoubleClick_Lambda(
-                        [do_action, this](Ssave_load_dlg::item_data data) {
-                            if (!data)
-                                return;
+            +SVerticalBox::Slot().FillHeight(100).HAlign(HAlign_Fill)[
+                SAssignNew(list_box_, Sstyled_list_view<item_data>)
+                .ItemHeight(ui_defaults().font_size_)
+                .ListItemsSource(&items_)
+                .OnGenerateRow_Lambda(
+                    [](TSharedPtr<FString> text,
+                       TSharedRef<STableViewBase> const & table) {
+                        return ui_defaults().make_row(text, table);
+                    })
+                .SelectionMode(ESelectionMode::Single)
+                .OnMouseButtonDoubleClick_Lambda(
+                    [do_action, this](Ssave_load_dlg::item_data data) {
+                        if (!data)
+                            return;
+                        filename_ = *data;
+                        do_action();
+                    })
+                .OnSelectionChanged_Lambda(
+                    [this](Ssave_load_dlg::item_data data,
+                           ESelectInfo::Type) {
+                        if (data)
                             filename_ = *data;
-                            do_action();
-                        })
-                    .OnSelectionChanged_Lambda(
-                        [this](Ssave_load_dlg::item_data data,
-                               ESelectInfo::Type) {
-                            if (data)
-                                filename_ = *data;
-                            else
-                                filename_.Reset();
-                            edit_->SetText(FText::FromString(filename_));
-                            action_button_->SetEnabled(filename_is_well_formed());
-                        })]
+                        else
+                            filename_.Reset();
+                        edit_->SetText(FText::FromString(filename_));
+                        action_button_->SetEnabled(filename_is_well_formed());
+                    })]
 
-                +SVerticalBox::Slot().FillHeight(5)
+            +SVerticalBox::Slot()
+            .AutoHeight().HAlign(HAlign_Center)
+            .Padding(0, vertical_spacing, 0, 0)[
+                SNew(SHorizontalBox)
 
-                +SVerticalBox::Slot().AutoHeight()[
-                    SNew(SHorizontalBox)
+                +SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 20, 0)[
+                    SAssignNew(action_button_, Sstyled_button).Text(action_text)
+                    .OnClicked_Lambda(do_action)]
 
-                    +SHorizontalBox::Slot().FillWidth(1)
-
-                    +SHorizontalBox::Slot().AutoWidth()[
-                        SAssignNew(action_button_, Sstyled_button).Text(action_text)
-                        .OnClicked_Lambda(do_action)]
-
-                    +SHorizontalBox::Slot().FillWidth(0.5)
-
-                    +SHorizontalBox::Slot().AutoWidth()[
-                        SNew(Sstyled_button).Text(loc_text(TEXT("cancel")))
-                        .OnClicked_Lambda([this] {
-                            if (auto * hud = hud_base())
-                                hud->remove_widget(*this);
-                            return FReply::Handled();
-                        })]
-
-                    +SHorizontalBox::Slot().FillWidth(1)]
-
-                +SVerticalBox::Slot().FillHeight(2)]]]];
+                +SHorizontalBox::Slot().AutoWidth()[
+                    SNew(Sstyled_button).Text(loc_text(TEXT("cancel")))
+                    .OnClicked_Lambda([this] {
+                        if (auto * hud = hud_base())
+                            hud->remove_widget(*this);
+                        return FReply::Handled();
+                    })]
+            ]
+        ]
+    ]];
     // clang-format on
 
     if (saving_) {

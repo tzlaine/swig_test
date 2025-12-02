@@ -1,7 +1,6 @@
 #pragma once
 
 #include "constants.hpp"
-#include "ui_defaults.h"
 #include "materials.h"
 
 #include <adobe/name.hpp>
@@ -18,6 +17,7 @@
 class UMaterialInterface;
 class UInputMappingContext;
 class UInputAction;
+class Uui_defaults_t;
 
 UCLASS()
 class Aplayer_controller_base : public APlayerController

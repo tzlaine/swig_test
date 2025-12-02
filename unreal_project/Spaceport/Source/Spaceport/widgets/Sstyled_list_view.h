@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ui_defaults.h>
+
 #include <memory>
 
 #include <Widgets/Views/SListView.h>
@@ -14,10 +16,9 @@ public:
     void Construct(FArguments const & args_)
     {
         style_ = std::make_unique<FTableViewStyle>(FTableViewStyle::GetDefault());
-        // style_->BackgroundBrush = TODO;
-        FSlateWidgetStyle s;
         typename SListView<ItemData>::FArguments args(args_);
         args.ListViewStyle(style_.get());
+        args.ScrollBarStyle(ui_defaults().ScrollBar_style_.Get());
         SListView<ItemData>::Construct(args);
     }
 

@@ -39,6 +39,7 @@ void Smain_menu::Construct(FArguments const & args)
 
     float const blur_strength = in_game_ ? 5.0f : 0.0f;
 
+    // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(blur_strength)[
         SNew(SConstraintCanvas)
 
@@ -55,16 +56,15 @@ void Smain_menu::Construct(FArguments const & args)
         ]
 
         +SConstraintCanvas::Slot()
-            .Anchors(FAnchors(0.4, 0.35, 0.6, 0.85))[
-               SNew(SBorder).Padding(50.0f)[ // TODO: Use a styled one.
-                   SNew(SVerticalBox)
-                   +SVerticalBox::Slot().FillHeight(1)
-                   +SVerticalBox::Slot().AutoHeight()[
-                       SAssignNew(vbox_, SVerticalBox)]
-                   +SVerticalBox::Slot().FillHeight(1)
-                   ]
-                ]
+            .Anchors(FAnchors(0.35, 0.35, 0.65, 0.85))[
+               SNew(SVerticalBox)
+               +SVerticalBox::Slot().FillHeight(1)
+               +SVerticalBox::Slot().AutoHeight()[
+                   SAssignNew(vbox_, SVerticalBox)]
+               +SVerticalBox::Slot().FillHeight(1)
+           ]
     ]];
+    // clang-format on
 
     rebuild();
 

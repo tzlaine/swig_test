@@ -29,18 +29,17 @@ void Sgenerating_galaxy::Construct(FArguments const & args)
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0.3, 0.3, 0.7, 0.7))[
             SNew(SVerticalBox)
-            +SVerticalBox::Slot().FillHeight(2)
+            +SVerticalBox::Slot().FillHeight(50)
             +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
                 SNew(Sstyled_text_block)
                 .Text(loc_text(TEXT("generating_galaxy")))
                 .Font(FSlateFontInfo(title_font,
                                      ui_defaults().title_font_size_))
             ]
-            +SVerticalBox::Slot().FillHeight(1)
-            +SVerticalBox::Slot().MinHeight(80).VAlign(VAlign_Fill)[
+            +SVerticalBox::Slot().MinHeight(20).Padding(0, 40)[
                 SAssignNew(bar_, Sstyled_progress_bar).Percent(0.0f)
             ]
-            +SVerticalBox::Slot().FillHeight(2)
+            +SVerticalBox::Slot().FillHeight(50)
         ]
     ]];
 }
