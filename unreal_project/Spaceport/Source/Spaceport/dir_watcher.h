@@ -43,7 +43,7 @@ struct Ffile_change
     FString file;
 
     UPROPERTY(BlueprintReadOnly)
-    Efile_change_kind kind;
+    Efile_change_kind kind = Efile_change_kind::unknown;
 
     bool operator==(Ffile_change const &) const = default;
 };
