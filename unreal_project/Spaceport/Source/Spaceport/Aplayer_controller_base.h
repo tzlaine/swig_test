@@ -48,14 +48,20 @@ public:
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
 
-    UPROPERTY(EditAnywhere, Category = "UI")
+private:
+    UPROPERTY(
+        EditAnywhere, Category = "UI", meta = (AllowPrivateAccess = "true"))
     TSubclassOf<Uui_defaults_t> ui_defaults_class_;
-    UPROPERTY(EditAnywhere, Category = "Materials")
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Materials",
+        meta = (AllowPrivateAccess = "true"))
     TSubclassOf<Umaterials_t> materials_class_;
 
-private:
-    Uui_defaults_t * ui_defaults_ = nullptr;
-    Umaterials_t * materials_ = nullptr;
+    UPROPERTY()
+    TObjectPtr<Uui_defaults_t> ui_defaults_;
+    UPROPERTY()
+    TObjectPtr<Umaterials_t> materials_;
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
