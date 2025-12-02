@@ -5,6 +5,7 @@
 #include "materials.h"
 #include "game_data.hpp"
 #include "rng.hpp"
+#include "textures.h"
 #include "utility.hpp"
 #include "text/beman_utf_view/utf_view.hpp"
 
@@ -205,25 +206,6 @@ inline ADirectionalLight * directional_light(UWorld * w)
     return nullptr; // unreachable
 }
 
-struct loaded_textures
-{
-    UTexture * get(FString name)
-    {
-        if (textures_.Contains(name))
-            return textures_[name];
-        TSoftObjectPtr<UTexture> loader(name);
-        UTexture * retval = loader.LoadSynchronous();
-        if (!retval) {
-            throw std::runtime_error(
-                std::format("Could not get a pointer to texture {}", name));
-        }
-        return textures_[name] = retval;
-    }
-
-private:
-    TMap<FString, UTexture *> textures_;
-};
-
 template<typename T>
 void set_property(AActor * a, FName name, T value)
 {
@@ -265,10 +247,7 @@ double seasons_intensity_factor(planet_t const & planet)
 
 // TODO: Aplanet_actor?
 void configure_map_star(
-    AStaticMeshActor * star_actor,
-    system_t const & system,
-    star_t const & star,
-    loaded_textures & textures)
+    AStaticMeshActor * star_actor, system_t const & system, star_t const & star)
 {
     check(star_actor);
     check(star_class_t::invalid_star_class < star.star_class);
@@ -324,18 +303,9 @@ void configure_map_star(
         // Class A and brighter are >= 5x the sun.
         bool const use_wide_lense_flare = 5.0 < star.solar_luminosities;
 
-        UTexture * texture = nullptr;
-        if (use_wide_lense_flare) {
-            int i = random_int(0, 4);
-            if (i == 0)
-                i = 7;
-            FString path = FString::Printf(TEXT("T_LensFlare_{}"), i);
-            texture = textures.get(path);
-        } else {
-            FString path =
-                FString::Printf(TEXT("T_LensFlare_{}"), random_int(5, 6));
-            texture = textures.get(path);
-        }
+        UTexture * texture = use_wide_lense_flare
+                                 ? textures().random_wide_lens_flare()
+                                 : textures().random_small_lens_flare();
 
         instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
         instance->SetScalarParameterValue(
@@ -471,7 +441,7 @@ void configure_system_star(AActor * star_actor, star_t const & star)
 // Earthlike conditions common, change it to use the BP_Planet_Terran
 // blueprint, keeping the properties that they have in common.
 void configure_rocky_oxidized_planet(
-    AActor * planet_actor, planet_t const & planet, loaded_textures & textures)
+    AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 
@@ -561,19 +531,10 @@ void configure_rocky_oxidized_planet(
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
 
-    FString mountains_tex_name = FString::Printf(
-        TEXT("/Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/"
-             "T_PlanetTexture_Color_{}.T_PlanetTexture_Color_{}"),
-        1);
-    UTexture * mountains_tex = textures.get(mountains_tex_name);
-    set_property(planet_actor, TEXT("T_Mountains"), mountains_tex);
-
-    FString plains_tex_name = FString::Printf(
-        TEXT("/Game/Space_Creator/PlanetCreator_1_V2/Textures/Color_Textures/"
-             "T_PlanetTexture_Color_{}.T_PlanetTexture_Color_{}"),
-        2);
-    UTexture * plains_tex = textures.get(plains_tex_name);
-    set_property(planet_actor, TEXT("T_Plains"), plains_tex);
+    set_property(
+        planet_actor, TEXT("T_Mountains"), textures().random_planet_texture());
+    set_property(
+        planet_actor, TEXT("T_Plains"), textures().random_planet_texture());
 
     // oceans
     set_property(planet_actor, TEXT("Sea_Level"), planet.ocean_coverage);
@@ -699,7 +660,7 @@ void configure_rocky_oxidized_planet(
 }
 
 void configure_rocky_reduced_or_carbon_rich_planet(
-    AActor * planet_actor, planet_t const & planet, loaded_textures & textures)
+    AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 
@@ -707,23 +668,21 @@ void configure_rocky_reduced_or_carbon_rich_planet(
 }
 
 void configure_high_temperature_planet(
-    AActor * planet_actor, planet_t const & planet, loaded_textures & textures)
+    AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 
     // TODO
 }
 
-void configure_gas_giant_planet(
-    AActor * planet_actor, planet_t const & planet, loaded_textures & textures)
+void configure_gas_giant_planet(AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 
     // TODO
 }
 
-void configure_ice_giant_planet(
-    AActor * planet_actor, planet_t const & planet, loaded_textures & textures)
+void configure_ice_giant_planet(AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 

@@ -3,6 +3,7 @@
 #include "Agame_mode_base.h"
 #include "audio_cues.h"
 #include "materials.h"
+#include "textures.h"
 #include "ui_defaults.h"
 #include "utility.hpp"
 
@@ -130,6 +131,13 @@ Umaterials_t const & Aplayer_controller_base::materials()
     if (!materials_)
         materials_ = NewObject<Umaterials_t>(this, materials_class_);
     return *materials_;
+}
+
+Utextures_t const & Aplayer_controller_base::textures()
+{
+    if (!textures_)
+        textures_ = NewObject<Utextures_t>(this, textures_class_);
+    return *textures_;
 }
 
 Uaudio_cues_t const & Aplayer_controller_base::audio_cues()
