@@ -28,9 +28,19 @@ void Sconfirm_dlg::Construct(FArguments const & args)
 
     TSharedPtr<SHorizontalBox> buttons_hbox;
 
+    // TODO: Also check if the message would wrap.... That probably requires
+    // adding logic in Tick().
+    bool message_contains_newlines = false;
     FText message_as_text = args._message_as_text;
-    if (message_as_text.IsEmpty())
+    if (message_as_text.IsEmpty()) {
         message_as_text = loc_text(args._message);
+        message_contains_newlines = args._message.Contains(TEXT("\n"));
+    } else {
+        message_contains_newlines =
+            message_as_text.ToString().Contains(TEXT("\n"));
+    }
+
+    TSharedPtr<SOverlay> message_overlay;
 
     FAnchors const anchors(0.25, 0.3, 0.75, 0.7);
     int vertical_spacing = 10;
@@ -56,14 +66,7 @@ void Sconfirm_dlg::Construct(FArguments const & args)
             +SVerticalBox::Slot()
             .HAlign(HAlign_Fill)
             .Padding(0, 0, 0, vertical_spacing)[
-                STYLED_SCROLL_BOX()
-
-                +SScrollBox::Slot()[
-                    SNew(Sstyled_text_block)
-                    .Justification(ETextJustify::Left)
-                    .AutoWrapText(true)
-                    .Text(message_as_text)
-                ]
+                SAssignNew(message_overlay, SOverlay)
             ]
 
             +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Fill)[
@@ -71,6 +74,29 @@ void Sconfirm_dlg::Construct(FArguments const & args)
         ]
     ]];
     // clang-format on
+
+    if (message_contains_newlines) {
+        message_overlay->AddSlot()
+            .HAlign(HAlign_Fill)
+            .VAlign(VAlign_Fill)
+                [STYLED_SCROLL_BOX()
+
+                 + SScrollBox::Slot()[SNew(Sstyled_text_block)
+                                          .Justification(ETextJustify::Left)
+                                          .AutoWrapText(true)
+                                          .Text(message_as_text)]];
+    } else {
+        message_overlay->AddSlot()
+            .HAlign(HAlign_Fill)
+            .VAlign(
+                VAlign_Fill)[SNew(SBox)
+                                 .HAlign(HAlign_Center)
+                                 .VAlign(VAlign_Center)
+                                     [SNew(Sstyled_text_block)
+                                          .Justification(ETextJustify::Center)
+                                          .AutoWrapText(true)
+                                          .Text(message_as_text)]];
+    }
 
     if (args._yes_button == args._no_button) {
         buttons_hbox->AddSlot()
