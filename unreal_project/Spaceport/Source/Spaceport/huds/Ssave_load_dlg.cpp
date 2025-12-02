@@ -141,15 +141,15 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     })]
 
             +SVerticalBox::Slot()
-            .AutoHeight().HAlign(HAlign_Center)
+            .AutoHeight().HAlign(HAlign_Fill)
             .Padding(0, vertical_spacing, 0, 0)[
                 SNew(SHorizontalBox)
 
-                +SHorizontalBox::Slot().AutoWidth().Padding(0, 0, 20, 0)[
+                +SHorizontalBox::Slot().FillWidth(50).Padding(10, 0, 10, 0)[
                     SAssignNew(action_button_, Sstyled_button).Text(action_text)
                     .OnClicked_Lambda(do_action)]
 
-                +SHorizontalBox::Slot().AutoWidth()[
+                +SHorizontalBox::Slot().FillWidth(50).Padding(10, 0, 10, 0)[
                     SNew(Sstyled_button).Text(loc_text(TEXT("cancel")))
                     .OnClicked_Lambda([this] {
                         if (auto * hud = hud_base())

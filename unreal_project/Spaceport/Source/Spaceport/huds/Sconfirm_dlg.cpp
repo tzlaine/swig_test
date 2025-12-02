@@ -66,36 +66,39 @@ void Sconfirm_dlg::Construct(FArguments const & args)
                 ]
             ]
 
-            +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Center)[
+            +SVerticalBox::Slot().AutoHeight().HAlign(HAlign_Fill)[
                 SAssignNew(buttons_hbox, SHorizontalBox)]
         ]
     ]];
     // clang-format on
 
     if (args._yes_button == args._no_button) {
-        buttons_hbox->AddSlot().AutoWidth()[
-            SNew(Sstyled_button).Text(loc_text(args._yes_button))
-            .OnClicked_Lambda([this] {
-                *result_ptr_ = result::no;
-                return FReply::Handled();
-            })];
+        buttons_hbox->AddSlot()
+            .HAlign(HAlign_Fill)
+            .Padding(10, 0, 10, 0)[SNew(Sstyled_button)
+                                       .Text(loc_text(args._yes_button))
+                                       .OnClicked_Lambda([this] {
+                                           *result_ptr_ = result::no;
+                                           return FReply::Handled();
+                                       })];
 
         cancelable_ = true;
     } else {
-        buttons_hbox->AddSlot().AutoWidth().Padding(
-            0, 0, 20, 0)[SNew(Sstyled_button)
-                             .Text(loc_text(args._yes_button))
-                             .OnClicked_Lambda([this] {
-                                 *result_ptr_ = result::yes;
-                                 return FReply::Handled();
-                             })];
+        buttons_hbox->AddSlot().FillWidth(50).Padding(
+            10, 0, 10, 0)[SNew(Sstyled_button)
+                              .Text(loc_text(args._yes_button))
+                              .OnClicked_Lambda([this] {
+                                  *result_ptr_ = result::yes;
+                                  return FReply::Handled();
+                              })];
 
-        buttons_hbox->AddSlot().AutoWidth()[
-            SNew(Sstyled_button).Text(loc_text(args._no_button))
-            .OnClicked_Lambda([this] {
-                *result_ptr_ = result::no;
-                return FReply::Handled();
-            })];
+        buttons_hbox->AddSlot().FillWidth(50).Padding(
+            10, 0, 10, 0)[SNew(Sstyled_button)
+                              .Text(loc_text(args._no_button))
+                              .OnClicked_Lambda([this] {
+                                  *result_ptr_ = result::no;
+                                  return FReply::Handled();
+                              })];
     }
 }
 
