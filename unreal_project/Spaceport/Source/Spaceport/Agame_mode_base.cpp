@@ -17,7 +17,7 @@ Agame_mode_base::Agame_mode_base(FObjectInitializer const & init) :
 
 void Agame_mode_base::multicast_load_playing_Implementation()
 {
-    Ugame_instance::get()->load_playing_level();
+    Ugame_instance::get()->load(level::playing);
 }
 
 void Agame_mode_base::load_and_start_game_Implementation(

@@ -69,14 +69,7 @@ public:
         UE_LOG(LogTemp, Log, TEXT("No longer watching save dir for changes"));
     }
 
-    void load_start_level()
-    {
-        UGameplayStatics::OpenLevelBySoftObjectPtr(GetWorld(), start_level_);
-    }
-    void load_playing_level()
-    {
-        UGameplayStatics::OpenLevelBySoftObjectPtr(GetWorld(), playing_level_);
-    }
+    void load(level l);
 
     ::game_kind game_kind() const
     {
@@ -120,6 +113,8 @@ public:
         return FText::FromStringTable(string_table_id_, key);
     }
 
+    void play_sound_across_level_loads(USoundBase * sound);
+
     static Ugame_instance * get()
     {
         return self_ptr_;
@@ -149,6 +144,8 @@ private:
     std::function<void(std::vector<Ffile_change>)> dir_watcher_cb_;
 
     std::array<std::vector<deferred_notification>, 2> deferred_notifications_;
+
+    TObjectPtr<UAudioComponent> audio_component_;
 
     inline static Ugame_instance * self_ptr_ = nullptr;
 };

@@ -61,7 +61,7 @@ void Agame_mode::Tick(float secs)
 
 void Agame_mode::multicast_quit_to_menu_Implementation()
 {
-    Ugame_instance::get()->load_start_level();
+    Ugame_instance::get()->load(level::start);
 }
 
 void Agame_mode::distribute_initial_game_state_Implementation(
