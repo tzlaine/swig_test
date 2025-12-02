@@ -1,6 +1,8 @@
 #include "Aplayer_controller_base.h"
 #include "Ahud_base.h"
 #include "Agame_mode_base.h"
+#include "audio_cues.h"
+#include "materials.h"
 #include "ui_defaults.h"
 #include "utility.hpp"
 
@@ -128,6 +130,13 @@ Umaterials_t const & Aplayer_controller_base::materials()
     if (!materials_)
         materials_ = NewObject<Umaterials_t>(this, materials_class_);
     return *materials_;
+}
+
+Uaudio_cues_t const & Aplayer_controller_base::audio_cues()
+{
+    if (!audio_cues_)
+        audio_cues_ = NewObject<Uaudio_cues_t>(this, audio_cues_class_);
+    return *audio_cues_;
 }
 
 void Aplayer_controller_base::remap_key(FName name, FKey key)

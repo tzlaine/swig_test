@@ -2,6 +2,7 @@
 #include "Sstyled_button.h"
 #include "Sstyled_text_block.h"
 #include "game_instance.h"
+#include "materials.h"
 #include "utility.hpp"
 
 #include <ui_defaults.h>

@@ -2,6 +2,7 @@
 
 #include "Aplayer_controller_base.h"
 #include "constants.hpp"
+#include "materials.h"
 #include "game_data.hpp"
 #include "rng.hpp"
 #include "utility.hpp"

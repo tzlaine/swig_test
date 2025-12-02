@@ -1,7 +1,6 @@
 #pragma once
 
 #include "constants.hpp"
-#include "materials.h"
 
 #include <adobe/name.hpp>
 
@@ -18,6 +17,8 @@ class UMaterialInterface;
 class UInputMappingContext;
 class UInputAction;
 class Uui_defaults_t;
+class Umaterials_t;
+class Uaudio_cues_t;
 
 UCLASS()
 class Aplayer_controller_base : public APlayerController
@@ -45,6 +46,7 @@ public:
 
     Uui_defaults_t const & ui_defaults();
     Umaterials_t const & materials();
+    Uaudio_cues_t const & audio_cues();
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
 
@@ -57,11 +59,18 @@ private:
         Category = "Materials",
         meta = (AllowPrivateAccess = "true"))
     TSubclassOf<Umaterials_t> materials_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Audio cues",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Uaudio_cues_t> audio_cues_class_;
 
     UPROPERTY()
     TObjectPtr<Uui_defaults_t> ui_defaults_;
     UPROPERTY()
     TObjectPtr<Umaterials_t> materials_;
+    UPROPERTY()
+    TObjectPtr<Uaudio_cues_t> audio_cues_;
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
