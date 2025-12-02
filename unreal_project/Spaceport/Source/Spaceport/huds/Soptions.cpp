@@ -637,7 +637,7 @@ void Soptions::Construct(FArguments const & args)
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0, 0, 1, 0.1))
-        .Offset(FMargin(25, 25, 25, 0))[
+        .Offset(FMargin(20, 20, 20, 0))[
             SNew(SBox).HAlign(HAlign_Left).VAlign(VAlign_Top)[
                 SNew(Sstyled_text_block)
                 .Text(loc_text(TEXT("options")))
@@ -647,14 +647,14 @@ void Soptions::Construct(FArguments const & args)
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0, 0.1, 1, 0.9))
-        .Offset(FMargin(25, 10, 25, 0))[
+        .Offset(FMargin(20, 10, 20, 0))[
             SAssignNew(tab_panel_, Stab_panel)
             .selected_tab_color(FColor(218, 165, 32))
         ]
 
         +SConstraintCanvas::Slot()
         .Anchors(FAnchors(0, 0.9, 1, 1))
-        .Offset(FMargin(25, 0, 25, 25))[
+        .Offset(FMargin(20, 0, 20, 20))[
             SNew(SHorizontalBox)
 
             +SHorizontalBox::Slot().AutoWidth()[
