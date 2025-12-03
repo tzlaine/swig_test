@@ -17,6 +17,8 @@ public:
     // UI
     UPROPERTY(EditAnywhere, Category = "Materials")
     TObjectPtr<UMaterialInterface> rotator_pip_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TObjectPtr<UMaterialInterface> slider_fill_;
 
     // Map stars
     UPROPERTY(EditAnywhere, Category = "Materials")

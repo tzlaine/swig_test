@@ -47,6 +47,8 @@ public:
     TObjectPtr<USlateWidgetStyleAsset> ScrollBox_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     TObjectPtr<USlateWidgetStyleAsset> TextBlock_style_;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FSliderStyle Slider_style_;
 
     // Brushes
     UPROPERTY(EditAnywhere, Category = "UI")
