@@ -26,9 +26,13 @@ void Sstyled_slider::Construct(FArguments const & args_)
     SSlider::FArguments args(args_);
     args.Style(&style_);
     moved_delegate_ = std::move(args._OnValueChanged);
-    args._OnValueChanged.BindLambda([this](float value) {
-        fill_material_->SetScalarParameterValue(TEXT("value"), value);
-        moved_delegate_.Execute(value);
-    });
+    args._OnValueChanged.BindLambda(
+        [this](float value) { value_changed(value); });
     SSlider::Construct(args);
+}
+
+void Sstyled_slider::value_changed(float value)
+{
+    fill_material_->SetScalarParameterValue(TEXT("value"), value);
+    moved_delegate_.Execute(value);
 }

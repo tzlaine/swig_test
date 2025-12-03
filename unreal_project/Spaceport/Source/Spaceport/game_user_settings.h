@@ -16,6 +16,7 @@ public:
     Ugame_user_settings(FObjectInitializer const & init);
 
     void apply_console_settings(Aplayer_controller_base & pc);
+    void apply_volume_settings();
 
     void LoadSettings(bool b = false) override;
     void ApplySettings(bool b) override;
@@ -32,8 +33,14 @@ public:
     UPROPERTY(config, BlueprintReadWrite, Category = "Video")
     int planet_detail;
 
+    UPROPERTY(config, BlueprintReadWrite, Category = "Audio")
+    TMap<FString, float> volume_levels;
+
     static Ugame_user_settings * get();
 
 private:
     void apply_impl();
+    void apply_volume_settings_impl();
+
+    bool unapplied_volume_settings_ = false;
 };

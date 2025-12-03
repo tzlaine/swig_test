@@ -11,6 +11,7 @@
 #include <string>
 
 #include <HAL/FileManager.h>
+#include <Sound/SoundMix.h>
 
 
 inline constexpr float meters = 100.0f;
@@ -192,4 +193,15 @@ inline Ahud_base * hud_base(AHUD * hud)
     if (!hud)
         return nullptr;
     return Cast<Ahud_base>(hud);
+}
+
+inline USoundClass * sound_class_of(USoundMix const * mix)
+{
+    if (!mix)
+        return nullptr;
+    for (FSoundClassAdjuster const & o : mix->SoundClassEffects) {
+        if (o.SoundClassObject)
+            return o.SoundClassObject;
+    }
+    return nullptr;
 }

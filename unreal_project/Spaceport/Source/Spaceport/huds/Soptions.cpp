@@ -1,4 +1,5 @@
 #include "Soptions.h"
+#include "audio_cues.h"
 #include "game_instance.h"
 #include "game_user_settings.h"
 #include "utility.hpp"
@@ -6,6 +7,7 @@
 #include "Widgets/Spip_rotator_button.h"
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_check_box.h"
+#include "widgets/Sstyled_slider.h"
 #include "widgets/Sstyled_text_block.h"
 #include "widgets/Stab_panel.h"
 #include <ui_defaults.h>
@@ -154,6 +156,7 @@ namespace {
             }
             game_user_settings->ApplySettings(false);
             game_user_settings->SaveSettings();
+            apply_ops->clear();
         };
 
         std::shared_ptr defaults =
@@ -451,25 +454,127 @@ namespace {
         return {TEXT("video"), retval};
     }
 
+    const float default_volume = 1.0f;
+
+    float volume_of(FString const & mix, FString const & reference_mix)
+    {
+        if (mix == reference_mix)
+            return Ugame_user_settings::get()->volume_levels[mix];
+        return Ugame_user_settings::get()->volume_levels[mix] /
+               Ugame_user_settings::get()->volume_levels[reference_mix];
+    }
+
     std::pair<FString, TSharedPtr<SWidget>> audio_panel(
         std::function<void()> & apply_changes,
         std::function<void()> & restore_defaults,
         bool & can_apply,
         TSharedPtr<Sstyled_button> apply_button)
     {
-        auto panel = SNew(SOverlay); // TODO
+        Ugame_user_settings * game_user_settings =
+            Ugame_user_settings::get();
 
-        auto const apply = [=] {
-            // TODO
+        // TODO: Audio is a little different.  Instead of entirely deferring
+        // the changes until the user hits Apply, we should probably apply
+        // them immediately, and then roll them back when hiding the options
+        // screen.
+
+        std::shared_ptr apply_ops =
+            std::make_shared<std::vector<std::function<void()>>>();
+        auto const apply = [apply_ops, game_user_settings] {
+            for (auto const & op : *apply_ops) {
+                op();
+            }
+            apply_ops->clear();
+            game_user_settings->ApplySettings(false);
+            game_user_settings->SaveSettings();
         };
-        auto const restore = [=] {
-            // TODO
+
+        std::shared_ptr sliders_vec =
+            std::make_shared<std::vector<TSharedPtr<Sstyled_slider>>>();
+        auto const restore = [sliders_vec, apply_ops] {
+            apply_ops->clear();
+            for (auto const & slider : *sliders_vec) {
+                slider->SetValue(default_volume);
+                slider->value_changed(default_volume);
+            }
         };
+
+        TSharedPtr<SVerticalBox> vbox;
+        auto retval =
+            SNew(SBox)
+                .HAlign(HAlign_Fill)
+                .VAlign(VAlign_Fill)
+                    [SNew(SScrollBox) +
+                     SScrollBox::Slot()[SAssignNew(vbox, SVerticalBox)]];
+
+        auto const make_number_text = [](auto value) {
+            FNumberFormattingOptions number_text_options;
+            number_text_options.MaximumFractionalDigits = 0;
+            return FText::AsNumber(value * 100, &number_text_options);
+        };
+
+        FString const master_name = TEXT("master_sound");
+
+        for (auto const & [name, mix] : audio_cues().sound_mixes_) {
+            FString const category_label = name + TEXT("_volume");
+
+            bool const master = category_label.Contains(TEXT("master"));
+            double const curr_value = volume_of(name, master_name);
+
+            TSharedPtr<SHorizontalBox> hbox;
+            vbox->AddSlot().AutoHeight().Padding(
+                0, 0, 0, 10)[SAssignNew(hbox, SHorizontalBox)];
+
+            hbox->AddSlot().FillWidth(
+                40)[SNew(Sstyled_text_block).Text(loc_text(category_label))];
+            hbox->AddSlot().FillWidth(20);
+            TSharedPtr<Sstyled_slider> slider;
+            TSharedPtr<Sstyled_text_block> text;
+            hbox->AddSlot().FillWidth(40).VAlign(VAlign_Fill)
+                [SNew(SOverlay) +
+                 SOverlay::Slot()
+                     .HAlign(HAlign_Center)
+                     .ZOrder(1)[SAssignNew(text, Sstyled_text_block)
+                                    .Text(make_number_text(curr_value))] +
+                 SOverlay::Slot().ZOrder(0).VAlign(VAlign_Center)
+                     [SAssignNew(slider, Sstyled_slider)
+                          .OnValueChanged_Lambda([=](auto value) {
+                              text->SetText(make_number_text(value));
+                              if (master) {
+                                  apply_ops->push_back([=] {
+                                      float const prev_value =
+                                          volume_of(master_name, master_name);
+                                      for (auto const & [name, mix] :
+                                           audio_cues().sound_mixes_) {
+                                          float this_value = value;
+                                          if (name != master_name) {
+                                              this_value =
+                                                  volume_of(name, name) /
+                                                  prev_value * value;
+                                          }
+                                          Ugame_user_settings::get()
+                                              ->volume_levels[name] =
+                                              this_value;
+                                      }
+                                  });
+                              } else {
+                                  apply_ops->push_back([=] {
+                                      float const master_volume =
+                                          volume_of(master_name, master_name);
+                                      Ugame_user_settings::get()
+                                          ->volume_levels[name] =
+                                          value * master_volume;
+                                  });
+                              }
+                          })
+                          .Value(curr_value)]];
+            sliders_vec->push_back(slider);
+        }
 
         apply_changes = apply;
         restore_defaults = restore;
 
-        return {TEXT("audio"), panel};
+        return {TEXT("audio"), retval};
     }
 
     struct controls_to_default_info

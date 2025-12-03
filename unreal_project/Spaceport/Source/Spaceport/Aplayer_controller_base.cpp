@@ -2,6 +2,7 @@
 #include "Ahud_base.h"
 #include "Agame_mode_base.h"
 #include "audio_cues.h"
+#include "game_user_settings.h"
 #include "materials.h"
 #include "textures.h"
 #include "ui_defaults.h"
@@ -53,6 +54,13 @@ void Aplayer_controller_base::BeginPlay()
             }
         }
     }
+
+    // KLUDGE: Since this player controller is unavailable at the time
+    // Ugame_user_settings::LoadSettings() gets called, it cannot apply the
+    // audio settings yet.  Now that this player controller is within its
+    // lifetime, let's give the Ugame_user_settings a chance to apply any
+    // deferred audio settings.
+    Ugame_user_settings::get()->apply_volume_settings();
 }
 
 void Aplayer_controller_base::SetupInputComponent()

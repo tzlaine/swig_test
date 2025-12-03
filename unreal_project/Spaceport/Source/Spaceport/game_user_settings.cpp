@@ -1,7 +1,10 @@
 #include "Aplayer_controller_base.h"
+#include "audio_cues.h"
 #include "game_user_settings.h"
 #include "utility.hpp"
 
+#include <AudioDevice.h>
+#include <Engine/Engine.h>
 #include <HAL/IConsoleManager.h>
 
 
@@ -97,6 +100,12 @@ void Ugame_user_settings::apply_console_settings(Aplayer_controller_base & pc)
     }
 }
 
+void Ugame_user_settings::apply_volume_settings()
+{
+    if (unapplied_volume_settings_)
+        apply_volume_settings_impl();
+}
+
 void Ugame_user_settings::LoadSettings(bool b)
 {
     Super::LoadSettings(b);
@@ -122,4 +131,25 @@ void Ugame_user_settings::apply_impl()
             apply_console_settings(*pc);
         }
     }
+    apply_volume_settings_impl();
+}
+
+void Ugame_user_settings::apply_volume_settings_impl()
+{
+    FAudioDeviceHandle device = GEngine->GetActiveAudioDevice();
+    if (!device || !have_audio_cues()) {
+        // At LoadSettings time, there is no world, nor a player controller;
+        // apply these later.
+        unapplied_volume_settings_ = true;
+        return;
+    }
+
+    for (auto const & [name, mix] : audio_cues().sound_mixes_) {
+        if (!volume_levels.Contains(name))
+            volume_levels.Add(name, 1.0f);
+        device->SetSoundMixClassOverride(
+            mix, sound_class_of(mix), volume_levels[name], 1.0f, 0.0f, true);
+    }
+
+    unapplied_volume_settings_ = false;
 }

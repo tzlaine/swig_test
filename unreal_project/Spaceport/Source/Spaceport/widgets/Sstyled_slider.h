@@ -12,6 +12,8 @@ public:
 
     void Construct(FArguments const & args);
 
+    void value_changed(float value);
+
 private:
     FSliderStyle style_;
     TStrongObjectPtr<UMaterialInstanceDynamic> fill_material_;
