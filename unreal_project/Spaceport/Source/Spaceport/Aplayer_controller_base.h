@@ -16,7 +16,7 @@
 class UMaterialInterface;
 class UInputMappingContext;
 class UInputAction;
-class Uaudio_cues_t;
+class Uaudio_assets_t;
 class Umaterials_t;
 class Utextures_t;
 class Uui_defaults_t;
@@ -48,7 +48,7 @@ public:
     Uui_defaults_t const & ui_defaults();
     Umaterials_t const & materials();
     Utextures_t const & textures();
-    Uaudio_cues_t const & audio_cues();
+    Uaudio_assets_t const & audio_assets();
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
 
@@ -72,7 +72,7 @@ private:
         EditAnywhere,
         Category = "Asset classes",
         meta = (AllowPrivateAccess = "true"))
-    TSubclassOf<Uaudio_cues_t> audio_cues_class_;
+    TSubclassOf<Uaudio_assets_t> audio_assets_class_;
 
     UPROPERTY()
     TObjectPtr<Uui_defaults_t> ui_defaults_;
@@ -81,7 +81,7 @@ private:
     UPROPERTY()
     TObjectPtr<Utextures_t> textures_;
     UPROPERTY()
-    TObjectPtr<Uaudio_cues_t> audio_cues_;
+    TObjectPtr<Uaudio_assets_t> audio_assets_;
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))

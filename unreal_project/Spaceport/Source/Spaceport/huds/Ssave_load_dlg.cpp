@@ -5,7 +5,7 @@
 #include "widgets/Sstyled_border.h"
 #include "widgets/Sstyled_button.h"
 #include "widgets/Sstyled_editable_text_box.h"
-#include "audio_cues.h"
+#include "audio_assets.h"
 #include <ui_defaults.h>
 
 #include <format>
@@ -67,7 +67,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     // cut off by the level load.  We have to explicitly play it
                     // here.
                     Ugame_instance::get()->play_sound_across_level_loads(
-                        audio_cues().click_cue_);
+                        audio_assets().click_cue_);
                     if (auto * pc = player_controller_base())
                         pc->server_load_game(filename_);
                 },
@@ -78,7 +78,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
             // The button click sounds that should paly normally gets cut
             // off by the level load.  We have to explicitly play it here.
             Ugame_instance::get()->play_sound_across_level_loads(
-                audio_cues().click_cue_);
+                audio_assets().click_cue_);
             if (auto * pc = player_controller_base())
                 pc->server_load_game(filename_);
         }

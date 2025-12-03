@@ -1,5 +1,5 @@
 #include "Soptions.h"
-#include "audio_cues.h"
+#include "audio_assets.h"
 #include "game_instance.h"
 #include "game_user_settings.h"
 #include "utility.hpp"
@@ -515,7 +515,7 @@ namespace {
 
         FString const master_name = TEXT("master_sound");
 
-        for (auto const & [name, mix] : audio_cues().sound_mixes_) {
+        for (auto const & [name, mix] : audio_assets().sound_mixes_) {
             FString const category_label = name + TEXT("_volume");
 
             bool const master = category_label.Contains(TEXT("master"));
@@ -545,7 +545,7 @@ namespace {
                                       float const prev_value =
                                           volume_of(master_name, master_name);
                                       for (auto const & [name, mix] :
-                                           audio_cues().sound_mixes_) {
+                                           audio_assets().sound_mixes_) {
                                           float this_value = value;
                                           if (name != master_name) {
                                               this_value =

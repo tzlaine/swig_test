@@ -6,7 +6,7 @@
 #include "widgets/Sstyled_text_block.h"
 #include "text/grapheme_break.hpp"
 #include "text/beman_utf_view/utf_view.hpp"
-#include "audio_cues.h"
+#include "audio_assets.h"
 #include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
@@ -113,7 +113,7 @@ void Smain_menu::rebuild()
                 // The button click sounds that should paly normally gets cut
                 // off by the level load.  We have to explicitly play it here.
                 Ugame_instance::get()->play_sound_across_level_loads(
-                    audio_cues().click_cue_);
+                    audio_assets().click_cue_);
                 if (auto * pc = main_menu_controller())
                     pc->server_load_newest_game();
             }
@@ -139,7 +139,7 @@ void Smain_menu::rebuild()
                 // The button click sounds that should paly normally gets cut
                 // off by the level load.  We have to explicitly play it here.
                 Ugame_instance::get()->play_sound_across_level_loads(
-                    audio_cues().click_cue_);
+                    audio_assets().click_cue_);
                 if (auto * pc = main_menu_controller())
                     pc->server_new_game(game_kind::sp, FFilePath());
                 return FReply::Handled();
@@ -169,7 +169,7 @@ void Smain_menu::rebuild()
                     // cut off by the level load.  We have to explicitly play
                     // it here.
                     Ugame_instance::get()->play_sound_across_level_loads(
-                        audio_cues().click_cue_);
+                        audio_assets().click_cue_);
                     if (auto * pc = player_controller())
                         pc->server_quit_to_menu();
                 });

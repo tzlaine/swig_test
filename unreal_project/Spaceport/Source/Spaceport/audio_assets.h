@@ -4,11 +4,11 @@
 #include <Sound/SoundBase.h>
 #include <Sound/SoundClass.h>
 #include <Sound/SoundMix.h>
-#include "audio_cues.generated.h"
+#include "audio_assets.generated.h"
 
 
 UCLASS(BlueprintType, Blueprintable)
-class Uaudio_cues_t : public UObject
+class Uaudio_assets_t : public UObject
 {
     GENERATED_BODY()
 
@@ -26,6 +26,6 @@ public:
     TMap<FString, TObjectPtr<USoundMix>> sound_mixes_;
 };
 
-bool have_audio_cues();
+bool have_audio_assets();
 
-Uaudio_cues_t const & audio_cues();
+Uaudio_assets_t const & audio_assets();

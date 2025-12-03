@@ -1,7 +1,7 @@
 #include "Aplayer_controller_base.h"
 #include "Ahud_base.h"
 #include "Agame_mode_base.h"
-#include "audio_cues.h"
+#include "audio_assets.h"
 #include "game_user_settings.h"
 #include "materials.h"
 #include "textures.h"
@@ -148,11 +148,11 @@ Utextures_t const & Aplayer_controller_base::textures()
     return *textures_;
 }
 
-Uaudio_cues_t const & Aplayer_controller_base::audio_cues()
+Uaudio_assets_t const & Aplayer_controller_base::audio_assets()
 {
-    if (!audio_cues_)
-        audio_cues_ = NewObject<Uaudio_cues_t>(this, audio_cues_class_);
-    return *audio_cues_;
+    if (!audio_assets_)
+        audio_assets_ = NewObject<Uaudio_assets_t>(this, audio_assets_class_);
+    return *audio_assets_;
 }
 
 void Aplayer_controller_base::remap_key(FName name, FKey key)
