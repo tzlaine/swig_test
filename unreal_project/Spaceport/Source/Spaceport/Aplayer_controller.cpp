@@ -53,6 +53,79 @@ void Aplayer_controller::server_save_game_Implementation(
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
-
     gm->save_game(filename);
+}
+
+void Aplayer_controller::send_initial_game_state_to_client(
+    TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        client_recv_initial_game_state(state);
+}
+
+void Aplayer_controller::client_recv_initial_game_state_Implementation(
+    TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        return;
+    // TODO
+}
+
+void Aplayer_controller::send_day_updates_to_client(TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        client_recv_day_updates(state);
+}
+
+void Aplayer_controller::client_recv_day_updates_Implementation(
+    TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        return;
+    // TODO
+}
+
+void Aplayer_controller::send_month_updates_to_client(
+    TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        client_recv_month_updates(state);
+}
+
+void Aplayer_controller::client_recv_month_updates_Implementation(
+    TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        return;
+    // TODO
+}
+
+void Aplayer_controller::send_year_updates_to_client(TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        client_recv_year_updates(state);
+}
+
+void Aplayer_controller::client_recv_year_updates_Implementation(
+    TArray<uint8> const & state)
+{
+    if (HasAuthority())
+        return;
+    // TODO
+}
+
+void Aplayer_controller::server_toggle_pause_Implementation()
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
+    if (!gm)
+        return;
+    gm->toggle_pause();
+}
+
+void Aplayer_controller::server_change_play_speed_Implementation(int speed)
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
+    if (!gm)
+        return;
+    gm->play_speed(speed);
 }

@@ -42,11 +42,15 @@ public:
     void setup_for_game_start_Implementation(TArray<uint8> const & params);
 
     void save_game(FString const & filename);
+    void toggle_pause();
+    void play_speed(int speed);
 
 private:
     void ready_for_sp_game();
     void ready_for_mp_game();
     void signal_start_of_play();
+
+    float seconds_since_last_day_tick_ = 0.0;
 
     // generating the galaxy
     std::jthread generation_thread_;

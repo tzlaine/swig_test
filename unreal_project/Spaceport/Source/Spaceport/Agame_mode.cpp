@@ -13,6 +13,14 @@ namespace {
     {
         return Cast<Agame_state>(base);
     }
+
+    float seconds_between_day_ticks(int speed)
+    {
+        check(1 <= speed && speed <= 5);
+        if (speed == 5)
+            return 0.0f;
+        return 1.0f / speed;
+    }
 }
 
 Agame_mode::Agame_mode(FObjectInitializer const & init) : Agame_mode_base(init)
@@ -57,6 +65,12 @@ void Agame_mode::Tick(float secs)
                 hud_ptr->remove_generating_widget();
         }
     }
+
+    if (cast(GameState)->play_state_ == play_state::paused)
+        return;
+
+    // TODO: Update moving actors on the map; do the next day/month/year tick(s)
+    // if necessary; send out model updates to clients.
 }
 
 void Agame_mode::multicast_quit_to_menu_Implementation()
@@ -92,6 +106,33 @@ void Agame_mode::save_game(FString const & filename)
     auto f = to_path(filename);
     f += TEXT(".sav");
     model_.save(save_dir_path() / f);
+}
+
+void Agame_mode::toggle_pause()
+{
+    if (cast(GameState)->play_state_ != play_state::playing &&
+        cast(GameState)->play_state_ != play_state::paused) {
+        return;
+    }
+    if (cast(GameState)->play_state_ == play_state::playing) {
+        // TODO: Give a notification of duration of pause in MP.
+        cast(GameState)->play_state_ = play_state::paused;
+    } else {
+        cast(GameState)->play_state_ = play_state::playing;
+    }
+    cast(GameState)->play_state_changed();
+}
+
+void Agame_mode::play_speed(int speed)
+{
+    if (cast(GameState)->play_state_ != play_state::playing)
+        return;
+    // TODO: Give a notification of speed change a bit before changing it in
+    // MP.
+    speed = std::clamp(1, 5, speed);
+    model_.set_speed(speed);
+    cast(GameState)->play_speed_ = speed;
+    cast(GameState)->play_speed_changed();
 }
 
 void Agame_mode::ready_for_sp_game()

@@ -33,6 +33,35 @@ public:
     void server_save_game(FString const & filename);
     void server_save_game_Implementation(FString const & filename);
 
+    void send_initial_game_state_to_client(TArray<uint8> const & state);
+    UFUNCTION(Client, Reliable)
+    void client_recv_initial_game_state(TArray<uint8> const & state);
+    void
+    client_recv_initial_game_state_Implementation(TArray<uint8> const & state);
+
+    void send_day_updates_to_client(TArray<uint8> const & state);
+    UFUNCTION(Client, Reliable)
+    void client_recv_day_updates(TArray<uint8> const & state);
+    void client_recv_day_updates_Implementation(TArray<uint8> const & state);
+
+    void send_month_updates_to_client(TArray<uint8> const & state);
+    UFUNCTION(Client, Reliable)
+    void client_recv_month_updates(TArray<uint8> const & state);
+    void client_recv_month_updates_Implementation(TArray<uint8> const & state);
+
+    void send_year_updates_to_client(TArray<uint8> const & state);
+    UFUNCTION(Client, Reliable)
+    void client_recv_year_updates(TArray<uint8> const & state);
+    void client_recv_year_updates_Implementation(TArray<uint8> const & state);
+
+    UFUNCTION(Server, Reliable)
+    void server_toggle_pause();
+    void server_toggle_pause_Implementation();
+
+    UFUNCTION(Server, Reliable)
+    void server_change_play_speed(int speed);
+    void server_change_play_speed_Implementation(int speed);
+
     int nation_id() const { return nation_id_; }
 
 private:

@@ -31,5 +31,5 @@ public:
     }
 
 protected:
-    model model_;
+    model model_; // TODO: Move to Agame_mode?
 };

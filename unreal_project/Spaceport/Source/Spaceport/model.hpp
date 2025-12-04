@@ -161,6 +161,8 @@ struct model
     void month_tick();
     void year_tick();
 
+    void set_speed(int speed) { mutable_state().play_speed = speed; }
+
     void save(std::filesystem::path path)
     {
         // Ignore save requests that overlap with the current save.
@@ -185,6 +187,12 @@ private:
         game_state_ =
             boost::shared_ptr<game_state_t>(new game_state_t (*game_state_));
         repopulate_grid();
+    }
+
+    game_state_t & mutable_state()
+    {
+        copy_before_write();
+        return *game_state_;
     }
 
     boost::shared_ptr<game_state_t> game_state_;

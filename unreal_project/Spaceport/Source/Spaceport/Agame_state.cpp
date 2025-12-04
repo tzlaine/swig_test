@@ -12,9 +12,15 @@ void Agame_state::play_state_changed()
            *UEnum::GetValueAsString(play_state_));
 }
 
+void Agame_state::play_speed_changed()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Client: play speed=%d"), (int)play_speed_);
+}
+
 void Agame_state::GetLifetimeReplicatedProps(
     TArray<FLifetimeProperty> & OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     DOREPLIFETIME(Agame_state, play_state_);
+    DOREPLIFETIME(Agame_state, play_speed_);
 }
