@@ -10,6 +10,7 @@ class UCameraComponent;
 class UCapsuleComponent;
 class UFloatingPawnMovement;
 class UInputAction;
+class UInputComponent;
 class USpringArmComponent;
 
 UCLASS()
@@ -20,15 +21,9 @@ class Acontroller_pawn : public APawn
 public:
     Acontroller_pawn();
 
-    void BeginPlay() override;
-    void Tick(float DeltaTime) override;
-    void SetupPlayerInputComponent(
-        class UInputComponent * PlayerInputComponent) override;
+    void SetupPlayerInputComponent(UInputComponent * input) override;
 
 private:
-    void move(FInputActionValue const & value);
-    void zoom(FInputActionValue const & value);
-
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,

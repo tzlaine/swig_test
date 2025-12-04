@@ -17,14 +17,42 @@ namespace {
     }
 }
 
-Aplayer_controller::Aplayer_controller()
-{}
+Aplayer_controller::Aplayer_controller() {}
 
 void Aplayer_controller::BeginPlay()
 {
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Aplayer_controller::BeginPlay()"));
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplayer_controller::BeginPlay()"));
+}
+
+void Aplayer_controller::SetupInputComponent()
+{
+    Super::SetupInputComponent();
+
+    UEnhancedInputComponent * eic =
+        Cast<UEnhancedInputComponent>(InputComponent);
+    check(eic);
+
+    eic->BindActionValueLambda(
+        select_object_action_, ETriggerEvent::Completed, [this](auto const &) {
+            FHitResult hit_result;
+            if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
+                // TODO AActor* HitActor = Cast<Afleet_actor>(hit_result.GetActor());
+            } else if (GetHitResultUnderCursor(star_channel, false, hit_result)) {
+                // TODO AActor* HitActor = Cast<Astar_actor>(hit_result.GetActor());
+            } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
+                // TODO AActor* HitActor = Cast<Ahex_actor>(hit_result.GetActor());
+            }
+        });
+    eic->BindActionValueLambda(
+        order_selected_action_, ETriggerEvent::Completed, [this](auto const &) {
+            // TODO
+        });
+    eic->BindActionValueLambda(
+        pause_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
+            // TODO
+        });
 }
 
 void Aplayer_controller::server_quit_to_menu_Implementation()

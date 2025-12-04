@@ -7,9 +7,10 @@
 #include "Aplayer_controller.generated.h"
 
 
-class UInputMappingContext;
 class UInputAction;
 class Agame_mode;
+struct FInputActionValue;
+class UInputAction;
 
 UCLASS()
 class Aplayer_controller : public Aplayer_controller_base
@@ -20,6 +21,7 @@ public:
     Aplayer_controller();
 
     void BeginPlay() override;
+    void SetupInputComponent() override;
 
     UFUNCTION(Server, Reliable)
     void server_quit_to_menu();
@@ -66,6 +68,34 @@ public:
 
 private:
     int nation_id_ = nation_none;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> select_object_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> order_selected_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> pause_toggle_action_;
+
+    static constexpr auto fleet_channel =
+        ECollisionChannel::ECC_GameTraceChannel1;
+    static constexpr auto star_channel =
+        ECollisionChannel::ECC_GameTraceChannel1;
+    static constexpr auto hex_channel =
+        ECollisionChannel::ECC_GameTraceChannel1;
 
     friend Agame_mode;
 };

@@ -34,23 +34,23 @@ void Aplayer_controller_base::BeginPlay()
     SetInputMode(input_mode);
     SetShowMouseCursor(true);
 
-    UInputMappingContext * imc = input_mapping_ctx_.LoadSynchronous();
+    check(input_mapping_ctx_);
 
     if (ULocalPlayer * local_player = GetLocalPlayer()) {
         if (auto * input_sys =
                 local_player
                     ->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
-            if (imc) {
-                if (UEnhancedInputUserSettings * user_settings =
-                        input_sys->GetUserSettings()) {
-                    if (!user_settings->IsMappingContextRegistered(imc))
-                        user_settings->RegisterInputMappingContext(imc);
-                }
-                if (!input_sys->HasMappingContext(imc)) {
-                    FModifyContextOptions options = {};
-                    options.bNotifyUserSettings = true;
-                    input_sys->AddMappingContext(imc, 0, options);
-                }
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                if (!user_settings->IsMappingContextRegistered(
+                        input_mapping_ctx_))
+                    user_settings->RegisterInputMappingContext(
+                        input_mapping_ctx_);
+            }
+            if (!input_sys->HasMappingContext(input_mapping_ctx_)) {
+                FModifyContextOptions options = {};
+                options.bNotifyUserSettings = true;
+                input_sys->AddMappingContext(input_mapping_ctx_, 0, options);
             }
         }
     }
@@ -69,16 +69,14 @@ void Aplayer_controller_base::SetupInputComponent()
 
     EnableInput(this);
 
-    if (auto * eic = Cast<UEnhancedInputComponent>(InputComponent)) {
-        UInputAction * menu_toggle = menu_toggle_action_.LoadSynchronous();
-        if (menu_toggle) {
-            eic->BindActionInstanceLambda(
-                menu_toggle, ETriggerEvent::Started, [this](auto const &) {
-                    if (auto * hud = hud_base(GetHUD()))
-                        hud->escape_pressed();
-                });
-        }
-    }
+    auto * eic = Cast<UEnhancedInputComponent>(InputComponent);
+    check(eic);
+    check(menu_toggle_action_);
+    eic->BindActionValueLambda(
+        menu_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
+            if (auto * hud = hud_base(GetHUD()))
+                hud->escape_pressed();
+        });
 }
 
 void Aplayer_controller_base::server_req_save_files_Implementation()
