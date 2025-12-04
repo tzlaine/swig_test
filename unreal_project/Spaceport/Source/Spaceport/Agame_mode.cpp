@@ -52,7 +52,7 @@ void Agame_mode::Tick(float secs)
         }
 
         if (generation_complete_) {
-            start_play();
+            signal_start_of_play();
             if (auto * hud_ptr = playing_hud())
                 hud_ptr->remove_generating_widget();
         }
@@ -64,11 +64,11 @@ void Agame_mode::multicast_quit_to_menu_Implementation()
     Ugame_instance::get()->load(level::start);
 }
 
-void Agame_mode::distribute_initial_game_state_Implementation(
+void Agame_mode::setup_for_game_start_Implementation(
     TArray<uint8> const & params_)
 {
     if (params_.IsEmpty()) {
-        start_play();
+        signal_start_of_play();
         return;
     }
 
@@ -105,7 +105,7 @@ void Agame_mode::ready_for_sp_game()
     } else {
         try {
             model_.load(load_path);
-            distribute_initial_game_state(TArray<uint8>{});
+            setup_for_game_start(TArray<uint8>{});
         } catch (failed_deserialization const & e) {
             FText message = FText::Format(
                 loc_text(TEXT("load_game_failed_message")),
@@ -122,10 +122,8 @@ void Agame_mode::ready_for_mp_game()
     // TODO
 }
 
-void Agame_mode::start_play()
+void Agame_mode::signal_start_of_play()
 {
     cast(GameState)->play_state_ = play_state::playing;
     cast(GameState)->play_state_changed();
-
-    // TODO: Spawn actors; show map UI (side panel, etc.).
 }

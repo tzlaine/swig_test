@@ -38,15 +38,15 @@ public:
     // Sent loaded save game data iff params.IsEmpty(); generate a new galaxy
     // otherwise.
     UFUNCTION(NetMulticast, Reliable)
-    void distribute_initial_game_state(TArray<uint8> const & params);
-    void distribute_initial_game_state_Implementation(TArray<uint8> const & params);
+    void setup_for_game_start(TArray<uint8> const & params);
+    void setup_for_game_start_Implementation(TArray<uint8> const & params);
 
     void save_game(FString const & filename);
 
 private:
     void ready_for_sp_game();
     void ready_for_mp_game();
-    void start_play();
+    void signal_start_of_play();
 
     // generating the galaxy
     std::jthread generation_thread_;

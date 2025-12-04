@@ -44,8 +44,7 @@ void Aplayer_controller::server_start_game_Implementation(
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
-
-    gm->distribute_initial_game_state(params);
+    gm->setup_for_game_start(params);
 }
 
 void Aplayer_controller::server_save_game_Implementation(
