@@ -151,6 +151,12 @@ struct model
                          concurrent_queue<int> & percent_complete,
                          std::atomic_bool & fully_complete);
 
+    // TODO: These should take a by-ref param that has a map of nation-ID ->
+    // updates.  As each mutation to the game_state_t is done, it should be
+    // added to the list for whichever nation(s) can see that mutation.  The
+    // calling Agame_state should provide the map with only the nation-IDs of
+    // the active human players.  It can then send the updates to the
+    // associated player(s).
     void day_tick();
     void month_tick();
     void year_tick();
