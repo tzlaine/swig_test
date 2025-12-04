@@ -85,8 +85,8 @@ private:
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UInputMappingContext> input_mapping_ctx_;
+    TObjectPtr<UInputMappingContext> input_mapping_ctx_;
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UInputAction> menu_toggle_action_;
+    TObjectPtr<UInputAction> menu_toggle_action_;
 };
