@@ -5,7 +5,6 @@
 #include "Acontroller_pawn.generated.h"
 
 
-struct FInputActionValue;
 class UCameraComponent;
 class UCapsuleComponent;
 class UFloatingPawnMovement;

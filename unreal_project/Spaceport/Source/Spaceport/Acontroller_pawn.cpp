@@ -22,6 +22,7 @@ Acontroller_pawn::Acontroller_pawn()
     movement_ = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("movement"));
 
     RootComponent = capsule_;
+
     spring_arm_->SetupAttachment(RootComponent);
     camera_->SetupAttachment(spring_arm_, USpringArmComponent::SocketName);
 }
