@@ -566,6 +566,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, planets_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, nations_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, alliances_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, play_speed_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::pb_message::game_data::nation_and_object_id_t)},
@@ -694,34 +695,35 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "limpsed\030\007 \003(\0132,.pb_message.game_data.nat"
   "ion_and_object_id_t\022\022\n\nhexes_seen\030\010 \003(\005\022"
   "\024\n\014systems_seen\030\t \003(\005\022\020\n\010defeated\030\n \001(\010\""
-  "\207\002\n\014game_state_t\022\021\n\tmap_width\030\001 \001(\005\022\022\n\nm"
+  "\233\002\n\014game_state_t\022\021\n\tmap_width\030\001 \001(\005\022\022\n\nm"
   "ap_height\030\002 \001(\005\022*\n\005hexes\030\003 \003(\0132\033.pb_mess"
   "age.game_data.hex_t\022/\n\007systems\030\004 \003(\0132\036.p"
   "b_message.game_data.system_t\022/\n\007planets\030"
   "\005 \003(\0132\036.pb_message.game_data.planet_t\022/\n"
   "\007nations\030\006 \003(\0132\036.pb_message.game_data.na"
-  "tion_t\022\021\n\talliances\030\007 \003(\r*Q\n\rplanet_type"
-  "_t\022\027\n\023invalid_planet_type\020\000\022\t\n\005rocky\020\001\022\r"
-  "\n\tgas_giant\020\002\022\r\n\tice_giant\020\003*\273\001\n\021atmosph"
-  "ere_type_t\022\033\n\027invalid_atmosphere_type\020\000\022"
-  "\022\n\016reduced_type_a\020\001\022\023\n\017oxidized_type_b\020\002"
-  "\022\026\n\022carbon_rich_type_c\020\003\022\024\n\020high_tempera"
-  "ture\020\004\022\030\n\024gas_giant_atmosphere\020\005\022\030\n\024ice_"
-  "giant_atmosphere\020\006*\310\002\n\026planet_effect_tar"
-  "get_t\022 \n\034invalid_planet_effect_target\020\000\022"
-  "\013\n\007gravity\020\001\022\016\n\naxial_tilt\020\002\022\007\n\003day\020\003\022\027\n"
-  "\023surface_temperature\020\004\022\032\n\026magnetosphere_"
-  "strength\020\005\022\030\n\024atmopsheric_pressure\020\006\022\026\n\022"
-  "o2_co2_suitability\020\007\022\021\n\rgrowth_factor\020\010\022"
-  "\t\n\005water\020\t\022\010\n\004food\020\n\022\n\n\006energy\020\013\022\t\n\005meta"
-  "l\020\014\022\010\n\004fuel\020\r\022\016\n\npopulation\020\016\022\022\n\016infrast"
-  "ructure\020\017\022\022\n\016max_population\020\020*K\n\023planet_"
-  "effect_mod_t\022\035\n\031invalid_planet_effect_mo"
-  "d\020\000\022\013\n\007monthly\020\001\022\010\n\004cost\020\002*;\n\013effect_op_"
-  "t\022\025\n\021invalid_effect_op\020\000\022\007\n\003add\020\001\022\014\n\010mul"
-  "tiply\020\002*W\n\014star_class_t\022\026\n\022invalid_star_"
-  "class\020\000\022\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n\001a\020\003\022\005\n\001f\020\004\022\005\n\001g"
-  "\020\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006proto3"
+  "tion_t\022\021\n\talliances\030\007 \003(\r\022\022\n\nplay_speed\030"
+  "\010 \001(\005*Q\n\rplanet_type_t\022\027\n\023invalid_planet"
+  "_type\020\000\022\t\n\005rocky\020\001\022\r\n\tgas_giant\020\002\022\r\n\tice"
+  "_giant\020\003*\273\001\n\021atmosphere_type_t\022\033\n\027invali"
+  "d_atmosphere_type\020\000\022\022\n\016reduced_type_a\020\001\022"
+  "\023\n\017oxidized_type_b\020\002\022\026\n\022carbon_rich_type"
+  "_c\020\003\022\024\n\020high_temperature\020\004\022\030\n\024gas_giant_"
+  "atmosphere\020\005\022\030\n\024ice_giant_atmosphere\020\006*\310"
+  "\002\n\026planet_effect_target_t\022 \n\034invalid_pla"
+  "net_effect_target\020\000\022\013\n\007gravity\020\001\022\016\n\naxia"
+  "l_tilt\020\002\022\007\n\003day\020\003\022\027\n\023surface_temperature"
+  "\020\004\022\032\n\026magnetosphere_strength\020\005\022\030\n\024atmops"
+  "heric_pressure\020\006\022\026\n\022o2_co2_suitability\020\007"
+  "\022\021\n\rgrowth_factor\020\010\022\t\n\005water\020\t\022\010\n\004food\020\n"
+  "\022\n\n\006energy\020\013\022\t\n\005metal\020\014\022\010\n\004fuel\020\r\022\016\n\npop"
+  "ulation\020\016\022\022\n\016infrastructure\020\017\022\022\n\016max_pop"
+  "ulation\020\020*K\n\023planet_effect_mod_t\022\035\n\031inva"
+  "lid_planet_effect_mod\020\000\022\013\n\007monthly\020\001\022\010\n\004"
+  "cost\020\002*;\n\013effect_op_t\022\025\n\021invalid_effect_"
+  "op\020\000\022\007\n\003add\020\001\022\014\n\010multiply\020\002*W\n\014star_clas"
+  "s_t\022\026\n\022invalid_star_class\020\000\022\005\n\001o\020\001\022\005\n\001b\020"
+  "\002\022\005\n\001a\020\003\022\005\n\001f\020\004\022\005\n\001g\020\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006pr"
+  "oto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fdata_2eproto_deps[1] = {
   &::descriptor_table_base_5ftypes_2eproto,
@@ -747,7 +749,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gam
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fdata_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fdata_2eproto = {
-  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4544,
+  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4564,
   &descriptor_table_game_5fdata_2eproto_once, descriptor_table_game_5fdata_2eproto_sccs, descriptor_table_game_5fdata_2eproto_deps, 17, 1,
   schemas, file_default_instances, TableStruct_game_5fdata_2eproto::offsets,
   file_level_metadata_game_5fdata_2eproto, 17, file_level_enum_descriptors_game_5fdata_2eproto, file_level_service_descriptors_game_5fdata_2eproto,
@@ -6357,16 +6359,16 @@ game_state_t::game_state_t(const game_state_t& from)
       alliances_(from.alliances_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&map_width_, &from.map_width_,
-    static_cast<size_t>(reinterpret_cast<char*>(&map_height_) -
-    reinterpret_cast<char*>(&map_width_)) + sizeof(map_height_));
+    static_cast<size_t>(reinterpret_cast<char*>(&play_speed_) -
+    reinterpret_cast<char*>(&map_width_)) + sizeof(play_speed_));
   // @@protoc_insertion_point(copy_constructor:pb_message.game_data.game_state_t)
 }
 
 void game_state_t::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_game_state_t_game_5fdata_2eproto.base);
   ::memset(&map_width_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&map_height_) -
-      reinterpret_cast<char*>(&map_width_)) + sizeof(map_height_));
+      reinterpret_cast<char*>(&play_speed_) -
+      reinterpret_cast<char*>(&map_width_)) + sizeof(play_speed_));
 }
 
 game_state_t::~game_state_t() {
@@ -6406,8 +6408,8 @@ void game_state_t::Clear() {
   nations_.Clear();
   alliances_.Clear();
   ::memset(&map_width_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&map_height_) -
-      reinterpret_cast<char*>(&map_width_)) + sizeof(map_height_));
+      reinterpret_cast<char*>(&play_speed_) -
+      reinterpret_cast<char*>(&map_width_)) + sizeof(play_speed_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -6488,6 +6490,13 @@ const char* game_state_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56) {
           _internal_add_alliances(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 play_speed = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
+          play_speed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -6572,6 +6581,12 @@ failure:
     }
   }
 
+  // int32 play_speed = 8;
+  if (this->play_speed() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_play_speed(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -6645,6 +6660,13 @@ size_t game_state_t::ByteSizeLong() const {
         this->_internal_map_height());
   }
 
+  // int32 play_speed = 8;
+  if (this->play_speed() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_play_speed());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -6687,6 +6709,9 @@ void game_state_t::MergeFrom(const game_state_t& from) {
   if (from.map_height() != 0) {
     _internal_set_map_height(from._internal_map_height());
   }
+  if (from.play_speed() != 0) {
+    _internal_set_play_speed(from._internal_play_speed());
+  }
 }
 
 void game_state_t::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -6716,8 +6741,8 @@ void game_state_t::InternalSwap(game_state_t* other) {
   nations_.InternalSwap(&other->nations_);
   alliances_.InternalSwap(&other->alliances_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(game_state_t, map_height_)
-      + sizeof(game_state_t::map_height_)
+      PROTOBUF_FIELD_OFFSET(game_state_t, play_speed_)
+      + sizeof(game_state_t::play_speed_)
       - PROTOBUF_FIELD_OFFSET(game_state_t, map_width_)>(
           reinterpret_cast<char*>(&map_width_),
           reinterpret_cast<char*>(&other->map_width_));

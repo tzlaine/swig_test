@@ -3735,6 +3735,7 @@ class game_state_t PROTOBUF_FINAL :
     kAlliancesFieldNumber = 7,
     kMapWidthFieldNumber = 1,
     kMapHeightFieldNumber = 2,
+    kPlaySpeedFieldNumber = 8,
   };
   // repeated .pb_message.game_data.hex_t hexes = 3;
   int hexes_size() const;
@@ -3848,6 +3849,15 @@ class game_state_t PROTOBUF_FINAL :
   void _internal_set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // int32 play_speed = 8;
+  void clear_play_speed();
+  ::PROTOBUF_NAMESPACE_ID::int32 play_speed() const;
+  void set_play_speed(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_play_speed() const;
+  void _internal_set_play_speed(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:pb_message.game_data.game_state_t)
  private:
   class _Internal;
@@ -3863,6 +3873,7 @@ class game_state_t PROTOBUF_FINAL :
   mutable std::atomic<int> _alliances_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_width_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_height_;
+  ::PROTOBUF_NAMESPACE_ID::int32 play_speed_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -7240,6 +7251,26 @@ inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >
 game_state_t::mutable_alliances() {
   // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.game_state_t.alliances)
   return _internal_mutable_alliances();
+}
+
+// int32 play_speed = 8;
+inline void game_state_t::clear_play_speed() {
+  play_speed_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_state_t::_internal_play_speed() const {
+  return play_speed_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_state_t::play_speed() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_state_t.play_speed)
+  return _internal_play_speed();
+}
+inline void game_state_t::_internal_set_play_speed(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  play_speed_ = value;
+}
+inline void game_state_t::set_play_speed(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_play_speed(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_state_t.play_speed)
 }
 
 #ifdef __GNUC__

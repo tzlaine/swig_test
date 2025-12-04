@@ -818,6 +818,7 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets, 5, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.nations, 6, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.alliances, 7, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.play_speed, 8, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -827,13 +828,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "game_state_t"sv;
-        constexpr std::array<std::string_view, 8> field_names = {{"<UNKOWN_FIELD>"sv,
-          "map_width"sv, "map_height"sv, "hexes"sv, "systems"sv, "planets"sv, "nations"sv, "alliances"sv}};
-        std::array<int, 7> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7}};
+        constexpr std::array<std::string_view, 9> field_names = {{"<UNKOWN_FIELD>"sv,
+          "map_width"sv, "map_height"sv, "hexes"sv, "systems"sv, "planets"sv, "nations"sv, "alliances"sv, "play_speed"sv}};
+        std::array<int, 8> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 7;
+        constexpr int hi_field_number = 8;
     
         auto read_field = [] (game_state_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -844,6 +845,7 @@ namespace detail {
             case 5: return detail::deserialize_impl(x.planets, src);
             case 6: return detail::deserialize_impl(x.nations, src);
             case 7: return detail::deserialize_impl(x.alliances, src);
+            case 8: return detail::deserialize_impl(x.play_speed, src);
             default: return src; // unreachable
             }
         };

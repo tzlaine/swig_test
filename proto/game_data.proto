@@ -249,4 +249,5 @@ message game_state_t
     repeated planet_t planets = 5;
     repeated nation_t nations = 6;
     repeated uint32 alliances = 7; // packed bitfield
+    int32 play_speed = 8; // 0=paused; 1-4 have fixed rates; 5 is as fast as it will go
 }

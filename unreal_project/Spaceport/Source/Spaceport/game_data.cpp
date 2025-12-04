@@ -533,6 +533,7 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
     for (const auto& x : value.alliances) {
         retval.add_alliances(x);
     }
+    retval.set_play_speed(value.play_speed);
     return retval;
 }
 
@@ -576,5 +577,6 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
             *it++ = x;
         }
     }
+    retval.play_speed = msg.play_speed();
     return retval;
 }

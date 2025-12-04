@@ -627,6 +627,7 @@ struct std::formatter<game_state_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " play_speed={}", x.play_speed);
 
         return std::format_to(out, " )");
     }
