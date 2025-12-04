@@ -2,6 +2,7 @@
 
 class AActor;
 class AStaticMeshActor;
+class Amap_system;
 struct system_t;
 struct star_t;
 struct planet_t;
@@ -9,7 +10,7 @@ struct loaded_textures;
 struct loaded_material_interfaces;
 
 void configure_map_star(
-    AStaticMeshActor * star_actor,
+    Amap_system * system_actor,
     system_t const & system,
     star_t const & star,
     loaded_textures & textures,

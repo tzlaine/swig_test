@@ -9,6 +9,9 @@
 
 class Agame_state;
 class Aplaying_hud;
+class Amap_fleet;
+class Amap_system;
+class Amap_hex;
 
 UENUM(BlueprintType)
 enum class play_state : uint8 {
@@ -56,4 +59,25 @@ private:
     std::jthread generation_thread_;
     std::unique_ptr<concurrent_queue<int>> percent_complete_;
     std::atomic_bool generation_complete_ = false;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Actor classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Amap_fleet> fleet_pawn_class_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Actor classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Amap_system> system_class_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Actor classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Amap_hex> hex_class_;
 };

@@ -1,13 +1,13 @@
 #include "space_creator_actor_config.hpp"
 
 #include "Aplayer_controller_base.h"
+#include "Amap_system.h"
 #include "constants.hpp"
 #include "materials.h"
 #include "game_data.hpp"
 #include "rng.hpp"
 #include "textures.h"
 #include "utility.hpp"
-#include "text/beman_utf_view/utf_view.hpp"
 
 #include <boost/type_index.hpp>
 
@@ -15,7 +15,6 @@
 #include <EngineUtils.h>
 #include <Components/StaticMeshComponent.h>
 #include <Engine/DirectionalLight.h>
-#include <Engine/StaticMeshActor.h>
 #include <Engine/StaticMesh.h>
 #include <Engine/Texture.h>
 #include <Materials/MaterialInstanceDynamic.h>
@@ -245,9 +244,8 @@ double seasons_intensity_factor(planet_t const & planet)
 
 // TODO: Move all the utilities above here somewhere else.
 
-// TODO: Aplanet_actor?
 void configure_map_star(
-    AStaticMeshActor * star_actor, system_t const & system, star_t const & star)
+    Amap_system * star_actor, system_t const & system, star_t const & star)
 {
     check(star_actor);
     check(star_class_t::invalid_star_class < star.star_class);
@@ -313,7 +311,7 @@ void configure_map_star(
             use_wide_lense_flare ? random_double(0.1, 0.4)
                                  : random_double(0.1, 0.25));
 
-        star_actor->GetStaticMeshComponent()->SetMaterial(0, instance);
+        star_actor->static_mesh()->SetMaterial(0, instance);
 }
 
 void configure_system_star(AActor * star_actor, star_t const & star)

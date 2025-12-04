@@ -1,5 +1,8 @@
 #include "Aplayer_controller.h"
 #include "Agame_mode.h"
+#include "Amap_fleet.h"
+#include "Amap_system.h"
+#include "Amap_hex.h"
 #include "Aplaying_hud.h"
 
 #include <EnhancedInputComponent.h>
@@ -26,6 +29,28 @@ void Aplayer_controller::BeginPlay()
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplayer_controller::BeginPlay()"));
 }
 
+void Aplayer_controller::Tick(float delta)
+{
+    Super::Tick(delta);
+
+    FHitResult hit_result;
+    if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
+        Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
+        if (fleet)
+            fleet->hover(true);
+    } else if (GetHitResultUnderCursor(star_channel, false, hit_result)) {
+        Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
+        if (system)
+            system->hover(true);
+    } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
+        Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
+        if (hex)
+            hex->hover(true);
+    } else {
+        Amap_pawn_base::dehover_current();
+    }
+}
+
 void Aplayer_controller::SetupInputComponent()
 {
     Super::SetupInputComponent();
@@ -38,11 +63,20 @@ void Aplayer_controller::SetupInputComponent()
         select_object_action_, ETriggerEvent::Completed, [this](auto const &) {
             FHitResult hit_result;
             if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
-                // TODO AActor* HitActor = Cast<Afleet_actor>(hit_result.GetActor());
-            } else if (GetHitResultUnderCursor(star_channel, false, hit_result)) {
-                // TODO AActor* HitActor = Cast<Astar_actor>(hit_result.GetActor());
+                Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
+                if (fleet)
+                    fleet->select(true);
+            } else if (GetHitResultUnderCursor(
+                           star_channel, false, hit_result)) {
+                Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
+                if (system)
+                    system->select(true);
             } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
-                // TODO AActor* HitActor = Cast<Ahex_actor>(hit_result.GetActor());
+                Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
+                if (hex)
+                    hex->select(true);
+            } else {
+                Amap_pawn_base::deselect_current();
             }
         });
     eic->BindActionValueLambda(

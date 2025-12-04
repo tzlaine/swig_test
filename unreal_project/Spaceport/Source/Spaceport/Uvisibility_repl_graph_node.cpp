@@ -1,7 +1,6 @@
 #include "Uvisibility_repl_graph_node.h"
 
 #include "Agame_mode.h"
-#include "Amap_actor_base.h"
 #include "Aplayer_controller.h"
 #include "model.hpp"
 
@@ -14,13 +13,13 @@ namespace {
         return Cast<Aplayer_controller>(a);
     }
 
-    Amap_actor_base * actor_cast(AActor * a)
+    Amap_pawn_base * actor_cast(AActor * a)
     {
-        return Cast<Amap_actor_base>(a);
+        return Cast<Amap_pawn_base>(a);
     }
-    Amap_actor_base const * actor_cast(AActor const * a)
+    Amap_pawn_base const * actor_cast(AActor const * a)
     {
-        return Cast<Amap_actor_base>(a);
+        return Cast<Amap_pawn_base>(a);
     }
 }
 
@@ -28,7 +27,7 @@ Uvisibility_repl_graph_node::Uvisibility_repl_graph_node() {}
 
 void Uvisibility_repl_graph_node::new_game(game_state_t const & gs)
 {
-    proximity_grid_ = proximity_grid<Amap_actor_base>(gs);
+    proximity_grid_ = proximity_grid<Amap_pawn_base>(gs);
     all_nations_actors_.resize(gs.nations.size());
 }
 
@@ -66,7 +65,7 @@ bool Uvisibility_repl_graph_node::NotifyActorRenamed(
     return true;
 }
 
-void push_back(FActorRepListRefView & actors, Amap_actor_base * a)
+void push_back(FActorRepListRefView & actors, Amap_pawn_base * a)
 {
     actors.Add(a);
 }
@@ -75,7 +74,7 @@ void Uvisibility_repl_graph_node::GatherActorListsForConnection(
     FConnectionGatherActorListParameters const & params)
 {
     FActorRepListRefView gathered_actors;
-    push_back(gathered_actors, (Amap_actor_base *)nullptr);
+    push_back(gathered_actors, (Amap_pawn_base *)nullptr);
 
     auto * gm = Cast<Agame_mode>(UGameplayStatics::GetGameMode(GetWorld()));
     if (!gm) {

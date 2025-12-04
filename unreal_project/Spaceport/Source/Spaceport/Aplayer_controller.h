@@ -21,6 +21,7 @@ public:
     Aplayer_controller();
 
     void BeginPlay() override;
+    void Tick(float delta) override;
     void SetupInputComponent() override;
 
     UFUNCTION(Server, Reliable)
@@ -89,13 +90,6 @@ private:
         Category = "Input",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UInputAction> pause_toggle_action_;
-
-    static constexpr auto fleet_channel =
-        ECollisionChannel::ECC_GameTraceChannel1;
-    static constexpr auto star_channel =
-        ECollisionChannel::ECC_GameTraceChannel1;
-    static constexpr auto hex_channel =
-        ECollisionChannel::ECC_GameTraceChannel1;
 
     friend Agame_mode;
 };

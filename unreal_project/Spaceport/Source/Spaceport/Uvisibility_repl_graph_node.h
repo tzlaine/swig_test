@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Amap_actor_base.h"
+#include "Amap_pawn_base.h"
 #include "map_util.hpp"
 #include "proximity_grid.hpp"
 
@@ -43,6 +43,6 @@ public:
     void PrepareForReplication() override;
 
 private:
-    std::vector<std::vector<Amap_actor_base *>> all_nations_actors_;
-    proximity_grid<Amap_actor_base> proximity_grid_;
+    std::vector<std::vector<Amap_pawn_base *>> all_nations_actors_;
+    proximity_grid<Amap_pawn_base> proximity_grid_;
 };

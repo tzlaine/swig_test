@@ -1,8 +1,9 @@
 #pragma once
 
+#include <Engine/EngineTypes.h>
+
 #include <cmath>
 #include <numbers>
-
 
 
 // (real-world) physical constants
@@ -41,6 +42,7 @@ inline constexpr double atmos_millions = -2.0;
 inline constexpr double growth_uninhabitable = -1000.0;
 // generic
 inline constexpr int nation_none = -1;
+inline constexpr int system_none = -1;
 inline constexpr double n_a = -3.0; // UI should show "N/A" for this property
 
 // game constants
@@ -65,11 +67,15 @@ inline constexpr int default_systems_per_hex = 50;
 inline constexpr int max_infrastructure = 100;
 inline constexpr double min_habitable_nonsuit_temp_k = earth_temperature_k - 44;
 inline constexpr double max_habitable_temp_k = earth_temperature_k + 55;
-constexpr static int small_map_height = 11;
-constexpr static int medium_map_height = 21;
-constexpr static int large_map_height = 41;
-constexpr static float min_camera_dist = 5.0f;
-constexpr static float max_camera_dist = 1000.0f;
+inline constexpr int small_map_height = 11;
+inline constexpr int medium_map_height = 21;
+inline constexpr int large_map_height = 41;
+inline constexpr float min_camera_dist = 5.0f;
+inline constexpr float max_camera_dist = 1000.0f;
+
+inline constexpr auto fleet_channel = ECollisionChannel::ECC_GameTraceChannel1;
+inline constexpr auto star_channel = ECollisionChannel::ECC_GameTraceChannel2;
+inline constexpr auto hex_channel = ECollisionChannel::ECC_GameTraceChannel3;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);
