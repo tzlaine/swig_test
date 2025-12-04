@@ -68,6 +68,8 @@ inline constexpr double max_habitable_temp_k = earth_temperature_k + 55;
 constexpr static int small_map_height = 11;
 constexpr static int medium_map_height = 21;
 constexpr static int large_map_height = 41;
+constexpr static float min_camera_dist = 5.0f;
+constexpr static float max_camera_dist = 1000.0f;
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);
