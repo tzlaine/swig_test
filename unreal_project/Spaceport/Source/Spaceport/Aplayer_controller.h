@@ -78,15 +78,18 @@ private:
     void hover(Amap_pawn_base * pawn);
     void select(Amap_pawn_base * pawn, deselect deselect_curr);
     void select(
-        std::span<Amap_pawn_base> pawns,
+        std::span<Amap_pawn_base *> pawns,
         deselect deselect_curr,
         map_pawn_kind kind);
+    void select_in_box(map_pawn_kind selecting, deselect deselect_curr);
 
     int nation_id_ = nation_none;
     std::vector<Amap_pawn_base *> curr_hovers_;
     std::vector<Amap_pawn_base *> curr_selections_;
-    bool keep_selected_key_down = false;
-    bool alternate_selection_key_down = false;
+    bool keep_selected_key_down_ = false;
+    bool alternate_selection_key_down_ = false;
+    FVector2D selection_box_first_;
+    FVector2D selection_box_last_;
 
     UPROPERTY(
         EditAnywhere,

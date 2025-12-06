@@ -65,6 +65,8 @@ public:
     float camera_pan_speed_ = 1.0f;
     UPROPERTY(EditAnywhere, Category = "UI")
     float camera_zoom_speed_ = 1.0f;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor drag_selection_box_color_ = FLinearColor(1, 1, 1, 1);
 };
 
 Uui_defaults_t const & ui_defaults();

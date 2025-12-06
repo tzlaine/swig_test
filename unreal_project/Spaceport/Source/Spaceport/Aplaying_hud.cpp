@@ -1,6 +1,8 @@
 #include "Aplaying_hud.h"
+#include "Amap_pawn_base.h"
 #include "Agame_state_base.h"
 #include "game_instance.h"
+#include "ui_defaults.h"
 #include "utility.hpp"
 #include "huds/Sgame_setup.h"
 #include "huds/Sgenerating_galaxy.h"
@@ -56,6 +58,24 @@ void Aplaying_hud::remove_generating_widget()
     remove_widget(*generating_galaxy_);
 }
 
+void Aplaying_hud::set_selection_box_first(FVector2D first)
+{
+    selection_box_first_ = first;
+    UE_LOG(
+        LogTemp, Log, TEXT("selection box starts at %f,%f"), first.X, first.Y);
+}
+
+void Aplaying_hud::set_selection_box_last(FVector2D last)
+{
+    selection_box_last_ = last;
+    UE_LOG(LogTemp, Log, TEXT("selection box stops at %f,%f"), last.X, last.Y);
+}
+
+TArray<Amap_pawn_base *> & Aplaying_hud::selected_in_box()
+{
+    return selected_pawns_;
+}
+
 void Aplaying_hud::BeginPlay()
 {
     Super::BeginPlay();
@@ -70,6 +90,45 @@ void Aplaying_hud::EndPlay(EEndPlayReason::Type reason)
     Super::EndPlay(reason);
     UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::EndPlay()"));
     UE_LOG(LogTemp, Log, TEXT("EXIT Aplaying_hud::EndPlay()"));
+}
+
+void Aplaying_hud::DrawHUD()
+{
+    Super::DrawHUD();
+
+    if (selection_box_first_ == selection_box_last_)
+        return;
+
+    FLinearColor const color = ui_defaults().drag_selection_box_color_;
+
+    DrawLine(
+        selection_box_first_.X,
+        selection_box_first_.Y,
+        selection_box_first_.X,
+        selection_box_last_.Y,
+        color);
+    DrawLine(
+        selection_box_last_.X,
+        selection_box_first_.Y,
+        selection_box_last_.X,
+        selection_box_last_.Y,
+        color);
+    DrawLine(
+        selection_box_first_.X,
+        selection_box_first_.Y,
+        selection_box_last_.X,
+        selection_box_first_.Y,
+        color);
+    DrawLine(
+        selection_box_first_.X,
+        selection_box_last_.Y,
+        selection_box_last_.X,
+        selection_box_last_.Y,
+        color);
+
+    selected_pawns_.Empty();
+    GetActorsInSelectionRectangle<Amap_pawn_base>(
+        selection_box_first_, selection_box_last_, selected_pawns_);
 }
 
 void Aplaying_hud::allocate_widgets()

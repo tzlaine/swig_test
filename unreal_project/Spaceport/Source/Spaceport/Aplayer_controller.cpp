@@ -4,6 +4,7 @@
 #include "Amap_system.h"
 #include "Amap_hex.h"
 #include "Aplaying_hud.h"
+#include "utility.hpp"
 
 #include <EnhancedInputComponent.h>
 #include <EnhancedInputSubsystems.h>
@@ -14,10 +15,7 @@
 
 
 namespace {
-    Aplaying_hud * cast(AHUD * base)
-    {
-        return Cast<Aplaying_hud>(base);
-    }
+    Aplaying_hud * cast(AHUD * base) { return Cast<Aplaying_hud>(base); }
 }
 
 Aplayer_controller::Aplayer_controller() {}
@@ -32,6 +30,9 @@ void Aplayer_controller::BeginPlay()
 void Aplayer_controller::Tick(float delta)
 {
     Super::Tick(delta);
+
+    if (selection_box_first_ != selection_box_last_)
+        return;
 
     FHitResult hit_result;
     if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
@@ -70,14 +71,43 @@ void Aplayer_controller::SetupInputComponent()
     }
 
     eic->BindActionValueLambda(
+        select_object_action_, ETriggerEvent::Started, [this](auto const &) {
+            auto * hud = cast(GetHUD());
+            check(hud);
+            GetMousePosition(selection_box_first_.X, selection_box_first_.Y);
+            hud->set_selection_box_first(selection_box_first_);
+        });
+    eic->BindActionValueLambda(
+        select_object_action_, ETriggerEvent::Triggered, [this](auto const &) {
+            auto * hud = cast(GetHUD());
+            check(hud);
+            GetMousePosition(selection_box_last_.X, selection_box_last_.Y);
+            hud->set_selection_box_last(selection_box_last_);
+            if (selection_box_first_ != selection_box_last_)
+                dehover_all();
+        });
+    eic->BindActionValueLambda(
         select_object_action_, ETriggerEvent::Completed, [this](auto const &) {
+            if (selection_box_first_ != selection_box_last_) {
+                select_in_box(
+                    alternate_selection_key_down_ ? map_pawn_kind::system
+                                                  : map_pawn_kind::fleet,
+                    keep_selected_key_down_ ? deselect::no : deselect::yes);
+                selection_box_first_ = selection_box_last_ = FVector2D();
+                auto * hud = cast(GetHUD());
+                check(hud);
+                hud->set_selection_box_first(FVector2D());
+                hud->set_selection_box_last(FVector2D());
+                return;
+            }
+
             FHitResult hit_result;
             if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
                 Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
                 if (fleet) {
                     select(
                         fleet,
-                        keep_selected_key_down ? deselect::no : deselect::yes);
+                        keep_selected_key_down_ ? deselect::no : deselect::yes);
                 }
             } else if (GetHitResultUnderCursor(
                            star_channel, false, hit_result)) {
@@ -85,7 +115,7 @@ void Aplayer_controller::SetupInputComponent()
                 if (system) {
                     select(
                         system,
-                        keep_selected_key_down ? deselect::no : deselect::yes);
+                        keep_selected_key_down_ ? deselect::no : deselect::yes);
                 }
             } else if (GetHitResultUnderCursor(
                            hex_channel, false, hit_result)) {
@@ -93,7 +123,7 @@ void Aplayer_controller::SetupInputComponent()
                 if (hex) {
                     select(
                         hex,
-                        keep_selected_key_down ? deselect::no : deselect::yes);
+                        keep_selected_key_down_ ? deselect::no : deselect::yes);
                 }
             } else {
                 deselect_all();
@@ -112,21 +142,21 @@ void Aplayer_controller::SetupInputComponent()
 
     eic->BindActionValueLambda(
         keep_selected_action_, ETriggerEvent::Started, [this](auto const &) {
-            keep_selected_key_down = true;
+            keep_selected_key_down_ = true;
         });
     eic->BindActionValueLambda(
         keep_selected_action_, ETriggerEvent::Completed, [this](auto const &) {
-            keep_selected_key_down = false;
+            keep_selected_key_down_ = false;
         });
 
     eic->BindActionValueLambda(
         alternate_selection_action_,
         ETriggerEvent::Started,
-        [this](auto const &) { alternate_selection_key_down = true; });
+        [this](auto const &) { alternate_selection_key_down_ = true; });
     eic->BindActionValueLambda(
         alternate_selection_action_,
         ETriggerEvent::Completed,
-        [this](auto const &) { alternate_selection_key_down = false; });
+        [this](auto const &) { alternate_selection_key_down_ = false; });
 }
 
 void Aplayer_controller::server_quit_to_menu_Implementation()
@@ -273,11 +303,14 @@ void Aplayer_controller::select(Amap_pawn_base * pawn, deselect deselect_curr)
         }
     }
 
-    select(std::span(pawn, pawn + 1), deselect_curr, kind);
+    Amap_pawn_base ** pawn_ptr = &pawn;
+    select(std::span(pawn_ptr, pawn_ptr + 1), deselect_curr, kind);
 }
 
 void Aplayer_controller::select(
-    std::span<Amap_pawn_base> pawns, deselect deselect_curr, map_pawn_kind kind)
+    std::span<Amap_pawn_base *> pawns,
+    deselect deselect_curr,
+    map_pawn_kind kind)
 {
     // Only allow additional selections of the same kind of thing, but don't
     // allow multiselection of hexes.
@@ -290,13 +323,25 @@ void Aplayer_controller::select(
 
     if (deselect_curr == deselect::yes)
         deselect_all();
-    for (auto & p : pawns) {
-        if (p.kind() != kind)
+    for (auto * p : pawns) {
+        if (p->kind() != kind)
             continue;
-        p.select(true);
-        curr_selections_.push_back(std::addressof(p));
+        p->select(true);
+        curr_selections_.push_back(p);
     }
     std::ranges::sort(curr_selections_, std::ranges::less{});
     curr_selections_.resize(
         curr_selections_.size() - std::ranges::unique(curr_selections_).size());
+}
+
+void Aplayer_controller::select_in_box(
+    map_pawn_kind selecting, deselect deselect_curr)
+{
+    auto * hud = cast(GetHUD());
+    check(hud);
+    TArray<Amap_pawn_base *> & pawns = hud->selected_in_box();
+    select(
+        std::span<Amap_pawn_base *>(begin(pawns), end(pawns)),
+        deselect_curr,
+        selecting);
 }

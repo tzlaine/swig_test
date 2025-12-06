@@ -7,6 +7,7 @@
 #include "Aplaying_hud.generated.h"
 
 
+class Amap_pawn_base;
 class Sgame_setup;
 class Sgenerating_galaxy;
 class Smain_menu;
@@ -30,13 +31,22 @@ public:
     void generating_percent_update(int p);
     void remove_generating_widget();
 
-protected:
+    void set_selection_box_first(FVector2D first);
+    void set_selection_box_last(FVector2D last);
+    TArray<Amap_pawn_base *> & selected_in_box();
+
     void BeginPlay() override;
     void EndPlay(EEndPlayReason::Type reason) override;
+    void DrawHUD() override;
 
+private:
     void allocate_widgets();
 
     TSharedPtr<Sgame_setup> game_setup_;
     TSharedPtr<Sgenerating_galaxy> generating_galaxy_;
     int generating_progress_ = 0;
+
+    FVector2D selection_box_first_;
+    FVector2D selection_box_last_;
+    TArray<Amap_pawn_base *> selected_pawns_;
 };
