@@ -6,6 +6,7 @@
 #include "Amap_system.generated.h"
 
 
+class USceneComponent;
 class USphereComponent;
 class UStaticMeshComponent;
 
@@ -27,6 +28,13 @@ public:
     UStaticMeshComponent * static_mesh() { return mesh_; }
 
 private:
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category = "Components",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<USceneComponent> root_;
+
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,

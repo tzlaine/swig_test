@@ -10,16 +10,18 @@ Amap_system::Amap_system()
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     sphere_ = CreateDefaultSubobject<USphereComponent>(TEXT("sphere"));
     mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
     selection_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>(
         TEXT("selection_indicator"));
 
-    RootComponent = sphere_;
+    RootComponent = root_;
 
+    sphere_->SetupAttachment(root_);
     sphere_->SetSphereRadius(1.0f);
-    mesh_->SetupAttachment(RootComponent);
-    selection_indicator_->SetupAttachment(RootComponent);
+    mesh_->SetupAttachment(root_);
+    selection_indicator_->SetupAttachment(root_);
     selection_indicator_->SetHiddenInGame(true);
 
     // collisions
