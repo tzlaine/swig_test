@@ -31,8 +31,10 @@ void Aplayer_controller_base::BeginPlay()
 
     FInputModeGameAndUI input_mode;
     input_mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    input_mode.SetHideCursorDuringCapture(false);
     SetInputMode(input_mode);
     SetShowMouseCursor(true);
+    SetIgnoreLookInput(true);
 
     check(input_mapping_ctx_);
 
