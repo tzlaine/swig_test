@@ -7,7 +7,7 @@
 #include "Aplayer_controller.generated.h"
 
 
-class UInputAction;
+class Amap_pawn_base;
 class Agame_mode;
 struct FInputActionValue;
 class UInputAction;
@@ -68,7 +68,15 @@ public:
     int nation_id() const { return nation_id_; }
 
 private:
+    void dehover_curr();
+    void deselect_curr();
+    void hover_one(Amap_pawn_base * pawn);
+    void select_one(Amap_pawn_base * pawn);
+    // TODO: {hover,select}() taking multiple pawns.
+
     int nation_id_ = nation_none;
+    std::vector<Amap_pawn_base *> curr_hovers_;
+    std::vector<Amap_pawn_base *> curr_selections_;
 
     UPROPERTY(
         EditAnywhere,

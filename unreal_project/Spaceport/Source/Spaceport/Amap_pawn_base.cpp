@@ -65,21 +65,9 @@ namespace {
 
 Amap_pawn_base::Amap_pawn_base() {}
 
-void Amap_pawn_base::select(bool b) { curr_pawn_impl(b, curr_selected_, this); }
+void Amap_pawn_base::select(bool b) {}
 
-void Amap_pawn_base::hover(bool b) { curr_pawn_impl(b, curr_hovered_, this); }
-
-void Amap_pawn_base::deselect_current()
-{
-    if (curr_selected_)
-        curr_selected_->select(false);
-}
-
-void Amap_pawn_base::dehover_current()
-{
-    if (curr_hovered_)
-        curr_hovered_->hover(false);
-}
+void Amap_pawn_base::hover(bool b) {}
 
 double detection_dist_sq(
     game_state_t const & gs,

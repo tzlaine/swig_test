@@ -28,18 +28,9 @@ public:
     virtual void hover(bool b);
     virtual map_pawn_kind kind() const { return map_pawn_kind::unknown; }
 
-    static void deselect_current();
-    static void dehover_current();
-
 private:
     int nation_id_ = nation_none;
-
-    static Amap_pawn_base * curr_selected_;
-    static Amap_pawn_base * curr_hovered_;
 };
-
-inline Amap_pawn_base * Amap_pawn_base::curr_selected_ = nullptr;
-inline Amap_pawn_base * Amap_pawn_base::curr_hovered_ = nullptr;
 
 inline int owner(Amap_pawn_base const * p) { return p->nation_id(); }
 inline point_2d position(Amap_pawn_base const * p)

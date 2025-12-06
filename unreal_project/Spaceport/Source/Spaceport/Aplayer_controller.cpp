@@ -37,17 +37,17 @@ void Aplayer_controller::Tick(float delta)
     if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
         Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
         if (fleet)
-            fleet->hover(true);
+            hover_one(fleet);
     } else if (GetHitResultUnderCursor(star_channel, false, hit_result)) {
         Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
         if (system)
-            system->hover(true);
+            hover_one(system);
     } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
         Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
         if (hex)
-            hex->hover(true);
+            hover_one(hex);
     } else {
-        Amap_pawn_base::dehover_current();
+        dehover_curr();
     }
 }
 
@@ -65,18 +65,19 @@ void Aplayer_controller::SetupInputComponent()
             if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
                 Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
                 if (fleet)
-                    fleet->select(true);
+                    select_one(fleet);
             } else if (GetHitResultUnderCursor(
                            star_channel, false, hit_result)) {
                 Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
                 if (system)
-                    system->select(true);
-            } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
+                    select_one(system);
+            } else if (GetHitResultUnderCursor(
+                           hex_channel, false, hit_result)) {
                 Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
                 if (hex)
-                    hex->select(true);
+                    select_one(hex);
             } else {
-                Amap_pawn_base::deselect_current();
+                deselect_curr();
             }
         });
     eic->BindActionValueLambda(
@@ -190,4 +191,38 @@ void Aplayer_controller::server_change_play_speed_Implementation(int speed)
     if (!gm)
         return;
     gm->play_speed(speed);
+}
+
+void Aplayer_controller::dehover_curr()
+{
+    for (auto * p : curr_hovers_) {
+        p->hover(false);
+    }
+    curr_hovers_.clear();
+}
+
+void Aplayer_controller::deselect_curr()
+{
+    for (auto * p : curr_selections_) {
+        p->select(false);
+    }
+    curr_selections_.clear();
+}
+
+void Aplayer_controller::hover_one(Amap_pawn_base * pawn)
+{
+    dehover_curr();
+    if (std::ranges::any_of(
+            curr_selections_, [pawn](auto * e) { return e == pawn; })) {
+        return;
+    }
+    pawn->hover(true);
+    curr_hovers_.push_back(pawn);
+}
+
+void Aplayer_controller::select_one(Amap_pawn_base * pawn)
+{
+    deselect_curr();
+    pawn->select(true);
+    curr_selections_.push_back(pawn);
 }
