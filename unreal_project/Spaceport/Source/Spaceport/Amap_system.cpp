@@ -18,7 +18,7 @@ Amap_system::Amap_system()
 
     RootComponent = root_;
 
-    sphere_->SetupAttachment(root_);
+    sphere_->SetupAttachment(RootComponent);
     sphere_->SetSphereRadius(1.0f);
     mesh_->SetupAttachment(root_);
     selection_indicator_->SetupAttachment(root_);
@@ -37,6 +37,7 @@ Amap_system::Amap_system()
         UCollisionProfile::NoCollision_ProfileName);
 
     // mobility
+    root_->SetMobility(EComponentMobility::Static);
     sphere_->SetMobility(EComponentMobility::Static);
     mesh_->SetMobility(EComponentMobility::Static);
     selection_indicator_->SetMobility(EComponentMobility::Static);
