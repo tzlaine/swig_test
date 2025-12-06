@@ -148,12 +148,13 @@ TEST(proximity_grid_tests, detect_proximity)
     generate_hexes_and_nations(gs, nations, alliance);
 
     std::vector<fleet_t> own_fleets(
-        {{.id = {own_id, 0}, .world_pos_x = 0.0, .world_pos_y = 0.0}});
+        {{.id = {own_id, 0},
+          .position{.world_pos_x = 0.0, .world_pos_y = 0.0}}});
     std::vector<fleet_t> foreign_fleets(
-        {{.id = {0, 0}, .world_pos_x = 0.0, .world_pos_y = 1.0},
-         {.id = {1, 0}, .world_pos_x = 0.0, .world_pos_y = 2.0},
-         {.id = {3, 0}, .world_pos_x = 0.0, .world_pos_y = 3.0},
-         {.id = {3, 0}, .world_pos_x = 0.0, .world_pos_y = 4.0}});
+        {{.id = {0, 0}, .position{.world_pos_x = 0.0, .world_pos_y = 1.0}},
+         {.id = {1, 0}, .position{.world_pos_x = 0.0, .world_pos_y = 2.0}},
+         {.id = {3, 0}, .position{.world_pos_x = 0.0, .world_pos_y = 3.0}},
+         {.id = {3, 0}, .position{.world_pos_x = 0.0, .world_pos_y = 4.0}}});
 
     {
         proximity_grid<fleet_t const, 2> grid(gs);

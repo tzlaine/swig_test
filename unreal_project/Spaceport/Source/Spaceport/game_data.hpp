@@ -123,6 +123,18 @@ struct unit_t
     bool operator==(unit_t const &) const = default;
 };
 
+struct fleet_position_t
+{
+    double world_pos_x;
+    double world_pos_y;
+    int system_id;
+    bool at_permanent_location;
+    int location_index;
+    int object_index;
+    bool is_garrison;
+    bool operator==(fleet_position_t const &) const = default;
+};
+
 struct fleet_t
 {
     nation_and_object_id_t id;
@@ -132,14 +144,13 @@ struct fleet_t
     int rounds;
     int missiles;
     int fighters;
-    double world_pos_x;
-    double world_pos_y;
+    fleet_position_t position;
     bool operator==(fleet_t const &) const = default;
 };
 
 struct fleets_t
 {
-    boost::container::flat_map<int, fleet_t> fleets;
+    boost::container::flat_map<int, int> fleet_ids;
     bool operator==(fleets_t const &) const = default;
 };
 
@@ -185,14 +196,14 @@ struct planet_t
     int max_population;
     int owner;
     int original_owner;
-    fleet_t garrison;
+    nation_and_object_id_t garrison;
     std::vector<planet_effect_t> effects;
     bool operator==(planet_t const &) const = default;
 };
 
 struct location_object_t
 {
-    fleet_t bases;
+    nation_and_object_id_t bases;
     std::size_t planet_id;
     bool operator==(location_object_t const &) const = default;
 };
@@ -249,7 +260,7 @@ struct nation_t
     int id;
     std::vector<unit_design_t> unit_designs;
     std::vector<province_t> provinces;
-    std::vector<fleet_t> map_fleets;
+    std::vector<fleet_t> fleets;
     std::vector<int> planets;
     std::vector<nation_and_object_id_t> foreign_designs_seen;
     std::vector<nation_and_object_id_t> foreign_designs_glimpsed;
@@ -285,6 +296,9 @@ pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value);
 
 pb_message::game_data::unit_t to_protobuf (const ::unit_t& value);
 ::unit_t from_protobuf (const pb_message::game_data::unit_t& msg);
+
+pb_message::game_data::fleet_position_t to_protobuf (const ::fleet_position_t& value);
+::fleet_position_t from_protobuf (const pb_message::game_data::fleet_position_t& msg);
 
 pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
 ::fleet_t from_protobuf (const pb_message::game_data::fleet_t& msg);

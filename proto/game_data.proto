@@ -45,22 +45,35 @@ message unit_t
     int32 health = 2; // <= design.defense
 }
 
+message fleet_position_t
+{
+    // always used
+    double world_pos_x = 1;
+    double world_pos_y = 2;
+
+    // unused (system_id is a negative value) when between systems
+    int32 system_id = 3;
+    bool at_permanent_location = 4;
+    int32 location_index = 5;
+    int32 object_index = 6; // -1 if this fleet is not at a particular object
+    bool is_garrison = 7; // only meaningful if object_index != -1, and the associated .planet_id != -1 too
+};
+
 message fleet_t
 {
-    nation_and_object_id_t id = 1;
+    nation_and_object_id_t id = 1; // -1 for both of these indicates this fleet is invalid
     pb_message.mission_t mission = 2;
     repeated unit_t units = 3;
     float fuel = 4;
     int32 rounds = 5;
     int32 missiles = 6;
     int32 fighters = 7;
-    double world_pos_x = 8; // unused when in a system
-    double world_pos_y = 9;
+    fleet_position_t position = 8;
 }
 
 message fleets_t
 {
-    map<int32, fleet_t> fleets = 1;
+    map<int32, int32> fleet_ids = 1;
 }
 
 enum planet_type_t {
@@ -125,6 +138,8 @@ message planet_effect_t
     effect_op_t operation = 8;
 }
 
+// TODO: We should add a notion of a settlement, so that there can be more
+// than one on a planet (one each from each neation present)
 message planet_t
 {
     int32 system_id = 1;
@@ -160,16 +175,16 @@ message planet_t
     int32 original_owner = 27;
     // TODO: language, culture, religion
     // TODO: visual properties (incl. rings)
-    fleet_t garrison = 28;
+    nation_and_object_id_t garrison = 28;
     // TODO: ground-to-space defenses
     repeated planet_effect_t effects = 29;
 }
 
 message location_object_t
 {
-    fleet_t bases = 1;
+    nation_and_object_id_t bases = 1;
     uint64 planet_id = 2; // no planet if < 0
-    // TODO: orbital position, if planet is nonempty
+    // TODO: orbital position, if planet is nonzero
     // TODO: other kinds of things as well?
 }
 
@@ -231,7 +246,7 @@ message nation_t
     int32 id = 1;
     repeated unit_design_t unit_designs = 2;
     repeated province_t provinces = 3;
-    repeated fleet_t map_fleets = 4;
+    repeated fleet_t fleets = 4; // may contain gaps, in the form of invalid fleets
     repeated int32 planets = 5;
     repeated nation_and_object_id_t foreign_designs_seen = 6;
     repeated nation_and_object_id_t foreign_designs_glimpsed = 7;
@@ -251,3 +266,20 @@ message game_state_t
     repeated uint32 alliances = 7; // packed bitfield
     int32 play_speed = 8; // 0=paused; 1-4 have fixed rates; 5 is as fast as it will go
 }
+
+// TODO: Need some kind of system for effects, and another one for
+// predicates/triggers.  These should probably be in their own files.
+// TODO message create_fleet
+// TODO {
+// TODO };
+// TODO 
+// TODO message merge_fleets
+// TODO {
+// TODO     int32 fleet_1 = 1;
+// TODO     int32 fleet_2 = 2;
+// TODO };
+// TODO 
+// TODO message disband_fleet
+// TODO {
+// TODO     int32 fleet = 1;
+// TODO };

@@ -209,6 +209,59 @@ namespace detail {
     }
 
     template<ser_op Op, ser_field_op FieldOp, typename OStream>
+    std::ptrdiff_t serialize_message_impl(fleet_position_t const & x, int field_number, OStream * os)
+    {
+        std::ptrdiff_t retval = 0;
+    
+        if constexpr (FieldOp == ser_field_op::write) {
+            uint8_t buf[16];
+            uint8_t * out = buf;
+            out = os::WriteVarint32ToArray(field_number, out);
+            detail::count_or_write<Op>(retval, buf, out - buf, os);
+        }
+    
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_x, 1, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_y, 2, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.system_id, 3, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.at_permanent_location, 4, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.location_index, 5, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.object_index, 6, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.is_garrison, 7, os);
+    
+        retval += detail::serialize_message_end<Op>(os);
+    
+        return retval;
+    }
+    template<> inline std::span<std::byte const> deserialize_message_impl<fleet_position_t>(fleet_position_t & x, std::span<std::byte const> src)
+    {
+        using namespace std::literals;
+        constexpr auto this_message_name = "fleet_position_t"sv;
+        constexpr std::array<std::string_view, 8> field_names = {{"<UNKOWN_FIELD>"sv,
+          "world_pos_x"sv, "world_pos_y"sv, "system_id"sv, "at_permanent_location"sv, "location_index"sv, "object_index"sv, "is_garrison"sv}};
+        std::array<int, 7> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7}};
+    
+        constexpr int lo_field_number = 1;
+        constexpr int hi_field_number = 7;
+    
+        auto read_field = [] (fleet_position_t & x, int i, std::span<std::byte const> src) {
+            switch (i) {
+            case 1: return detail::deserialize_impl(x.world_pos_x, src);
+            case 2: return detail::deserialize_impl(x.world_pos_y, src);
+            case 3: return detail::deserialize_impl(x.system_id, src);
+            case 4: return detail::deserialize_impl(x.at_permanent_location, src);
+            case 5: return detail::deserialize_impl(x.location_index, src);
+            case 6: return detail::deserialize_impl(x.object_index, src);
+            case 7: return detail::deserialize_impl(x.is_garrison, src);
+            default: return src; // unreachable
+            }
+        };
+    
+        return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+            x, src, this_message_name, field_names, expected_field_numbers, read_field);
+    }
+
+    template<ser_op Op, ser_field_op FieldOp, typename OStream>
     std::ptrdiff_t serialize_message_impl(fleet_t const & x, int field_number, OStream * os)
     {
         std::ptrdiff_t retval = 0;
@@ -227,8 +280,7 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 5, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 6, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 7, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_x, 8, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_y, 9, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.position, 8, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -238,13 +290,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "fleet_t"sv;
-        constexpr std::array<std::string_view, 10> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "mission"sv, "units"sv, "fuel"sv, "rounds"sv, "missiles"sv, "fighters"sv, "world_pos_x"sv, "world_pos_y"sv}};
-        std::array<int, 9> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9}};
+        constexpr std::array<std::string_view, 9> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "mission"sv, "units"sv, "fuel"sv, "rounds"sv, "missiles"sv, "fighters"sv, "position"sv}};
+        std::array<int, 8> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 9;
+        constexpr int hi_field_number = 8;
     
         auto read_field = [] (fleet_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -255,8 +307,7 @@ namespace detail {
             case 5: return detail::deserialize_impl(x.rounds, src);
             case 6: return detail::deserialize_impl(x.missiles, src);
             case 7: return detail::deserialize_impl(x.fighters, src);
-            case 8: return detail::deserialize_impl(x.world_pos_x, src);
-            case 9: return detail::deserialize_impl(x.world_pos_y, src);
+            case 8: return detail::deserialize_impl(x.position, src);
             default: return src; // unreachable
             }
         };
@@ -277,7 +328,7 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 1, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleet_ids, 1, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -288,7 +339,7 @@ namespace detail {
         using namespace std::literals;
         constexpr auto this_message_name = "fleets_t"sv;
         constexpr std::array<std::string_view, 2> field_names = {{"<UNKOWN_FIELD>"sv,
-          "fleets"sv}};
+          "fleet_ids"sv}};
         std::array<int, 1> expected_field_numbers = {{
           1}};
     
@@ -297,7 +348,7 @@ namespace detail {
     
         auto read_field = [] (fleets_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
-            case 1: return detail::deserialize_impl(x.fleets, src);
+            case 1: return detail::deserialize_impl(x.fleet_ids, src);
             default: return src; // unreachable
             }
         };
@@ -755,7 +806,7 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.unit_designs, 2, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.provinces, 3, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_fleets, 4, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 4, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets, 5, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 6, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 7, os);
@@ -772,7 +823,7 @@ namespace detail {
         using namespace std::literals;
         constexpr auto this_message_name = "nation_t"sv;
         constexpr std::array<std::string_view, 11> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "unit_designs"sv, "provinces"sv, "map_fleets"sv, "planets"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "hexes_seen"sv, "systems_seen"sv, "defeated"sv}};
+          "id"sv, "unit_designs"sv, "provinces"sv, "fleets"sv, "planets"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "hexes_seen"sv, "systems_seen"sv, "defeated"sv}};
         std::array<int, 10> expected_field_numbers = {{
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10}};
     
@@ -784,7 +835,7 @@ namespace detail {
             case 1: return detail::deserialize_impl(x.id, src);
             case 2: return detail::deserialize_impl(x.unit_designs, src);
             case 3: return detail::deserialize_impl(x.provinces, src);
-            case 4: return detail::deserialize_impl(x.map_fleets, src);
+            case 4: return detail::deserialize_impl(x.fleets, src);
             case 5: return detail::deserialize_impl(x.planets, src);
             case 6: return detail::deserialize_impl(x.foreign_designs_seen, src);
             case 7: return detail::deserialize_impl(x.foreign_designs_glimpsed, src);

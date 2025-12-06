@@ -1,6 +1,8 @@
 #pragma once
 
+#if !defined(BUILD_FOR_TEST)
 #include <Engine/EngineTypes.h>
+#endif
 
 #include <cmath>
 #include <numbers>
@@ -73,9 +75,11 @@ inline constexpr int large_map_height = 41;
 inline constexpr float min_camera_dist = 5.0f;
 inline constexpr float max_camera_dist = 1000.0f;
 
+#if !defined(BUILD_FOR_TEST)
 inline constexpr auto fleet_channel = ECollisionChannel::ECC_GameTraceChannel1;
 inline constexpr auto star_channel = ECollisionChannel::ECC_GameTraceChannel2;
 inline constexpr auto hex_channel = ECollisionChannel::ECC_GameTraceChannel3;
+#endif
 
 // math constants
 inline const double sin_60 = std::sin(std::numbers::pi / 3.0);

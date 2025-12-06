@@ -101,6 +101,32 @@ pb_message::game_data::unit_t to_protobuf (const ::unit_t& value)
     return retval;
 }
 
+pb_message::game_data::fleet_position_t to_protobuf (const ::fleet_position_t& value)
+{
+    pb_message::game_data::fleet_position_t retval;
+    retval.set_world_pos_x(value.world_pos_x);
+    retval.set_world_pos_y(value.world_pos_y);
+    retval.set_system_id(value.system_id);
+    retval.set_at_permanent_location(value.at_permanent_location);
+    retval.set_location_index(value.location_index);
+    retval.set_object_index(value.object_index);
+    retval.set_is_garrison(value.is_garrison);
+    return retval;
+}
+
+::fleet_position_t from_protobuf (const pb_message::game_data::fleet_position_t& msg)
+{
+    ::fleet_position_t retval;
+    retval.world_pos_x = msg.world_pos_x();
+    retval.world_pos_y = msg.world_pos_y();
+    retval.system_id = msg.system_id();
+    retval.at_permanent_location = msg.at_permanent_location();
+    retval.location_index = msg.location_index();
+    retval.object_index = msg.object_index();
+    retval.is_garrison = msg.is_garrison();
+    return retval;
+}
+
 pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
 {
     pb_message::game_data::fleet_t retval;
@@ -113,8 +139,7 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
     retval.set_rounds(value.rounds);
     retval.set_missiles(value.missiles);
     retval.set_fighters(value.fighters);
-    retval.set_world_pos_x(value.world_pos_x);
-    retval.set_world_pos_y(value.world_pos_y);
+    retval.mutable_position()->CopyFrom(to_protobuf(value.position));
     return retval;
 }
 
@@ -134,16 +159,15 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value)
     retval.rounds = msg.rounds();
     retval.missiles = msg.missiles();
     retval.fighters = msg.fighters();
-    retval.world_pos_x = msg.world_pos_x();
-    retval.world_pos_y = msg.world_pos_y();
+    retval.position = from_protobuf(msg.position());
     return retval;
 }
 
 pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value)
 {
     pb_message::game_data::fleets_t retval;
-    for (const auto& x : value.fleets) {
-        (*retval.mutable_fleets())[x.first] = to_protobuf(x.second);
+    for (const auto& x : value.fleet_ids) {
+        (*retval.mutable_fleet_ids())[x.first] = x.second;
     }
     return retval;
 }
@@ -152,8 +176,8 @@ pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value)
 {
     ::fleets_t retval;
     {
-        for (const auto& x : msg.fleets()) {
-            retval.fleets[x.first] = from_protobuf(x.second);
+        for (const auto& x : msg.fleet_ids()) {
+            retval.fleet_ids[x.first] = x.second;
         }
     }
     return retval;
@@ -427,8 +451,8 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.provinces) {
         retval.add_provinces()->CopyFrom(to_protobuf(x));
     }
-    for (const auto& x : value.map_fleets) {
-        retval.add_map_fleets()->CopyFrom(to_protobuf(x));
+    for (const auto& x : value.fleets) {
+        retval.add_fleets()->CopyFrom(to_protobuf(x));
     }
     for (const auto& x : value.planets) {
         retval.add_planets(x);
@@ -468,9 +492,9 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         }
     }
     {
-        retval.map_fleets.resize(msg.map_fleets_size());
-        auto it = retval.map_fleets.begin();
-        for (const auto& x : msg.map_fleets()) {
+        retval.fleets.resize(msg.fleets_size());
+        auto it = retval.fleets.begin();
+        for (const auto& x : msg.fleets()) {
             *it++ = from_protobuf(x);
         }
     }

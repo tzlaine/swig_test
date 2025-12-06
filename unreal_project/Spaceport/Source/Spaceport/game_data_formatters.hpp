@@ -241,6 +241,32 @@ inline std::ostream & operator<<(std::ostream & os, unit_t const & x)
 #endif
 
 template <>
+struct std::formatter<fleet_position_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(fleet_position_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "fleet_position_t(");
+
+        out = std::format_to(out, " world_pos_x={}", x.world_pos_x);
+        out = std::format_to(out, " world_pos_y={}", x.world_pos_y);
+        out = std::format_to(out, " system_id={}", x.system_id);
+        out = std::format_to(out, " at_permanent_location={}", x.at_permanent_location);
+        out = std::format_to(out, " location_index={}", x.location_index);
+        out = std::format_to(out, " object_index={}", x.object_index);
+        out = std::format_to(out, " is_garrison={}", x.is_garrison);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, fleet_position_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<fleet_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }
@@ -261,8 +287,7 @@ struct std::formatter<fleet_t> {
         out = std::format_to(out, " rounds={}", x.rounds);
         out = std::format_to(out, " missiles={}", x.missiles);
         out = std::format_to(out, " fighters={}", x.fighters);
-        out = std::format_to(out, " world_pos_x={}", x.world_pos_x);
-        out = std::format_to(out, " world_pos_y={}", x.world_pos_y);
+        out = std::format_to(out, " position={}", x.position);
 
         return std::format_to(out, " )");
     }
@@ -282,8 +307,8 @@ struct std::formatter<fleets_t> {
         auto out = ctx.out();
         out = std::format_to(out, "fleets_t(");
 
-        out = std::format_to(out, " fleets={{");
-        for (auto && [key, value] : x.fleets) {
+        out = std::format_to(out, " fleet_ids={{");
+        for (auto && [key, value] : x.fleet_ids) {
             out = std::format_to(out, " {}:{}", key, value);
         };
         out = std::format_to(out, " }}");
@@ -550,8 +575,8 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " map_fleets=[");
-        for (auto && e : x.map_fleets) {
+        out = std::format_to(out, " fleets=[");
+        for (auto && e : x.fleets) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");

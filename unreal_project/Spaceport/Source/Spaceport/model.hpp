@@ -18,6 +18,13 @@
 #include <fstream>
 
 
+inline constexpr nation_and_object_id_t invalid_nation_and_object{-1, -1};
+
+inline bool invalid(fleet_t const & f)
+{
+    return f.id == invalid_nation_and_object;
+}
+
 namespace detail {
     inline double plus_minus_to_sigma(double plus_minus)
     {
@@ -33,50 +40,20 @@ namespace detail {
         int nation_id = nation_none,
         fleet_visitation garrisons = fleet_visitation::no_garrisons)
     {
-        if (garrisons == fleet_visitation::garrisons) {
-            for (auto & planet : gs.planets) {
-                if (nation_id == nation_none || planet.owner == nation_id)
-                    f(planet.garrison);
-            }
+        std::span<nation_t> nations;
+        if (nation_id == nation_none) {
+            nations = std::span(gs.nations);
+        } else {
+            auto const first = gs.nations.data() + nation_id;
+            nations = std::span(first, first + 1);
         }
-
-        auto const process_system_location = [&](auto & sys_loc) {
-            for (auto & object : sys_loc.objects) {
-                if (!object.bases.units.empty() && nation_id == nation_none ||
-                    object.bases.id.nation_id == nation_id) {
-                    f(object.bases);
-                }
-            }
-            if (nation_id == nation_none) {
-                for (auto & [nation, fleet] : sys_loc.units.fleets) {
+        for (auto & nation : nations) {
+            for (auto & fleet : nation.fleets) {
+                if (!fleet.position.is_garrison ||
+                    garrisons == fleet_visitation::garrisons) {
                     f(fleet);
                 }
-            } else {
-                auto it = sys_loc.units.fleets.find(nation_id);
-                if (it != sys_loc.units.fleets.end())
-                    f(it->second);
             }
-        };
-        for (auto & system : gs.systems) {
-            for (auto & sys_loc : system.permanent_locations) {
-                process_system_location(sys_loc);
-            }
-            for (auto & sys_loc : system.temporary_locations) {
-                process_system_location(sys_loc);
-            }
-        }
-
-        auto const process_map_fleets = [&](auto & map_fleets) {
-            for (auto & fleet : map_fleets) {
-                f(fleet);
-            }
-        };
-        if (nation_id == nation_none) {
-            for (auto & nation : gs.nations) {
-                process_map_fleets(nation.map_fleets);
-            }
-        } else {
-            process_map_fleets(gs.nations[nation_id].map_fleets);
         }
     }
 #if defined(BUILD_FOR_TEST)
@@ -88,7 +65,7 @@ namespace detail {
 inline int owner(fleet_t const * f) { return f->id.nation_id; }
 inline point_2d position(fleet_t const * f)
 {
-    return {f->world_pos_x, f->world_pos_y};
+    return {f->position.world_pos_x, f->position.world_pos_y};
 }
 inline double detection_dist_sq(
     game_state_t const & gs,
