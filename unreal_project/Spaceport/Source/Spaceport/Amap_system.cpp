@@ -13,6 +13,8 @@ Amap_system::Amap_system()
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     sphere_ = CreateDefaultSubobject<USphereComponent>(TEXT("sphere"));
     mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
+    hover_indicator_ =
+        CreateDefaultSubobject<UStaticMeshComponent>(TEXT("hover_indicator"));
     selection_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>(
         TEXT("selection_indicator"));
 
@@ -21,6 +23,8 @@ Amap_system::Amap_system()
     sphere_->SetupAttachment(RootComponent);
     sphere_->SetSphereRadius(1.0f);
     mesh_->SetupAttachment(root_);
+    hover_indicator_->SetupAttachment(root_);
+    hover_indicator_->SetHiddenInGame(true);
     selection_indicator_->SetupAttachment(root_);
     selection_indicator_->SetHiddenInGame(true);
 
@@ -33,6 +37,8 @@ Amap_system::Amap_system()
     sphere_->SetCollisionResponseToChannel(
         star_channel, ECollisionResponse::ECR_Block);
     mesh_->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+    hover_indicator_->SetCollisionProfileName(
+        UCollisionProfile::NoCollision_ProfileName);
     selection_indicator_->SetCollisionProfileName(
         UCollisionProfile::NoCollision_ProfileName);
 
@@ -40,6 +46,7 @@ Amap_system::Amap_system()
     root_->SetMobility(EComponentMobility::Static);
     sphere_->SetMobility(EComponentMobility::Static);
     mesh_->SetMobility(EComponentMobility::Static);
+    hover_indicator_->SetMobility(EComponentMobility::Static);
     selection_indicator_->SetMobility(EComponentMobility::Static);
 }
 
@@ -56,6 +63,5 @@ void Amap_system::select(bool b)
 void Amap_system::hover(bool b)
 {
     Amap_pawn_base::hover(b);
-    selection_indicator_->SetHiddenInGame(!b);
-    // TODO: separate hover indicator
+    hover_indicator_->SetHiddenInGame(!b);
 }

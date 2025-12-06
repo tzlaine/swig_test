@@ -54,5 +54,12 @@ private:
         BlueprintReadOnly,
         Category = "Components",
         meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UStaticMeshComponent> hover_indicator_;
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category = "Components",
+        meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UStaticMeshComponent> selection_indicator_;
 };

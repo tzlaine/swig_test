@@ -12,6 +12,8 @@ Amap_hex::Amap_hex()
 
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
+    hover_indicator_ =
+        CreateDefaultSubobject<UStaticMeshComponent>(TEXT("hover_indicator"));
     selection_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>(
         TEXT("selection_indicator"));
 
@@ -19,6 +21,8 @@ Amap_hex::Amap_hex()
 
     mesh_->SetupAttachment(root_);
     mesh_->SetVisibility(false);
+    hover_indicator_->SetupAttachment(root_);
+    hover_indicator_->SetHiddenInGame(true);
     selection_indicator_->SetupAttachment(root_);
     selection_indicator_->SetHiddenInGame(true);
 
@@ -30,12 +34,15 @@ Amap_hex::Amap_hex()
         ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Block);
     mesh_->SetCollisionResponseToChannel(
         hex_channel, ECollisionResponse::ECR_Block);
+    hover_indicator_->SetCollisionProfileName(
+        UCollisionProfile::NoCollision_ProfileName);
     selection_indicator_->SetCollisionProfileName(
         UCollisionProfile::NoCollision_ProfileName);
 
     // mobility
     root_->SetMobility(EComponentMobility::Static);
     mesh_->SetMobility(EComponentMobility::Static);
+    hover_indicator_->SetMobility(EComponentMobility::Static);
     selection_indicator_->SetMobility(EComponentMobility::Static);
 }
 
@@ -52,6 +59,5 @@ void Amap_hex::select(bool b)
 void Amap_hex::hover(bool b)
 {
     Amap_pawn_base::hover(b);
-    selection_indicator_->SetHiddenInGame(!b);
-    // TODO: separate hover indicator
+    hover_indicator_->SetHiddenInGame(!b);
 }

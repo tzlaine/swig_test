@@ -14,6 +14,8 @@ Amap_fleet::Amap_fleet()
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     hit_mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("hit_mesh"));
     mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
+    hover_indicator_ =
+        CreateDefaultSubobject<UStaticMeshComponent>(TEXT("hover_indicator"));
     selection_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>(
         TEXT("selection_indicator"));
     movement_ = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("movement"));
@@ -23,6 +25,8 @@ Amap_fleet::Amap_fleet()
     hit_mesh_->SetupAttachment(root_);
     hit_mesh_->SetHiddenInGame(true);
     mesh_->SetupAttachment(root_);
+    hover_indicator_->SetupAttachment(root_);
+    hover_indicator_->SetHiddenInGame(true);
     selection_indicator_->SetupAttachment(root_);
     selection_indicator_->SetHiddenInGame(true);
 
@@ -36,6 +40,8 @@ Amap_fleet::Amap_fleet()
     hit_mesh_->SetCollisionResponseToChannel(
         fleet_channel, ECollisionResponse::ECR_Block);
     mesh_->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
+    hover_indicator_->SetCollisionProfileName(
+        UCollisionProfile::NoCollision_ProfileName);
     selection_indicator_->SetCollisionProfileName(
         UCollisionProfile::NoCollision_ProfileName);
 }
@@ -59,8 +65,7 @@ void Amap_fleet::select(bool b)
 void Amap_fleet::hover(bool b)
 {
     Amap_pawn_base::hover(b);
-    selection_indicator_->SetHiddenInGame(!b);
-    // TODO: separate hover indicator
+    hover_indicator_->SetHiddenInGame(!b);
 }
 
 void Amap_fleet::move_to_system(int system_id, FVector map_location)
