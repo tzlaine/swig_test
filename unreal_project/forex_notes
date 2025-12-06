@@ -82,6 +82,24 @@ Stealth cost
 
 A ship design would consist of picking the level for each item (ship armor 1 vs. ship armor 2, etc.).  The total cost would be in all the resources involved.  Obviously, not all ships need all those elements (stealth, detection, and shields for instance).  Also, the latest available components need not be used.  Older stuff should be cheaper.  Quantity over quality should be a viable strategy at times (or for your whole run).
 
+After a fleet ends its travel, it should have a certain number of days of
+cooldown before it can travel again.  This should change based on tech.
+Consider having interdictor ships that increase this time, saceld by their
+proximity to the affected ships.  Also, a ship should be required to be at the
+edge of a system )far from its star, perhaps based on stellar masses), in the
+direction of the new system it want to go to.  Ships should not be able to
+travel to interstellar space.  The masses of stars interfere with subspace
+drives when they are too close, but are also necessary anchors for subspace
+travel.  A fleet can do an emergency departure (presumably to avoid getting
+destroyed), when they have not reached the end of the cooldaown timer, or are
+too close to the star in their current system.  This randomizes the place they
+end up at the end of their travel.  Friendlies (and enemies) cannot come to
+help or attack them.  If they have fuel and supplies enough, they can do a
+normal travel to a system after the cooldown.  Doing an emergency jump at that
+point should have dire consequences.  If they run out of supplies, they might
+lose crew (and thus operational capabilities).  If they lack fuel, they may
+end up stranded.
+
 
 Other units:
 ============
