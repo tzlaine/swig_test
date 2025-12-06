@@ -1,6 +1,9 @@
 #pragma once
 
+#include "Amap_pawn_base_fwd.hpp"
 #include "constants.hpp"
+
+#include <span>
 
 #include <Aplayer_controller_base.h>
 #include <GameFramework/PlayerController.h>
@@ -68,15 +71,22 @@ public:
     int nation_id() const { return nation_id_; }
 
 private:
-    void dehover_curr();
-    void deselect_curr();
-    void hover_one(Amap_pawn_base * pawn);
-    void select_one(Amap_pawn_base * pawn);
-    // TODO: {hover,select}() taking multiple pawns.
+    enum struct deselect { no, yes };
+
+    void dehover_all();
+    void deselect_all();
+    void hover(Amap_pawn_base * pawn);
+    void select(Amap_pawn_base * pawn, deselect deselect_curr);
+    void select(
+        std::span<Amap_pawn_base> pawns,
+        deselect deselect_curr,
+        map_pawn_kind kind);
 
     int nation_id_ = nation_none;
     std::vector<Amap_pawn_base *> curr_hovers_;
     std::vector<Amap_pawn_base *> curr_selections_;
+    bool keep_selected_key_down = false;
+    bool alternate_selection_key_down = false;
 
     UPROPERTY(
         EditAnywhere,
@@ -98,6 +108,20 @@ private:
         Category = "Input",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UInputAction> pause_toggle_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> keep_selected_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> alternate_selection_action_;
 
     friend Agame_mode;
 };

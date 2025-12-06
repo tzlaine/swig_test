@@ -34,6 +34,15 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
 
     auto * eic = Cast<UEnhancedInputComponent>(input);
     check(eic);
+
+    if (!slide_action_ || !zoom_action_) {
+        UE_LOG(
+            LogTemp,
+            Error,
+            TEXT("The controller pawn does not have all its actions assigned"));
+        return;
+    }
+
     eic->BindActionValueLambda(
         slide_action_, ETriggerEvent::Triggered, [this](auto const & value) {
             FVector2D const delta =
@@ -41,6 +50,7 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
             AddMovementInput(FVector::UnitX(), delta.X);
             AddMovementInput(FVector::UnitY(), delta.Y);
         });
+
     eic->BindActionValueLambda(
         zoom_action_, ETriggerEvent::Triggered, [this](auto const & value) {
             float const delta =

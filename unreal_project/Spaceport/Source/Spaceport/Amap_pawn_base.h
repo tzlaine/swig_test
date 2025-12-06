@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Amap_pawn_base_fwd.hpp"
 #include "constants.hpp"
 #include "map_util.hpp"
 
@@ -10,8 +11,6 @@
 
 struct game_state_t;
 struct point_2d;
-
-enum struct map_pawn_kind { unknown, hex, system, fleet };
 
 UCLASS()
 class Amap_pawn_base : public APawn
