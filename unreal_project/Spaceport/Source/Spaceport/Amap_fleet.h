@@ -7,7 +7,6 @@
 #include "Amap_fleet.generated.h"
 
 
-class UCapsuleComponent;
 class UFloatingPawnMovement;
 class UStaticMeshComponent;
 
@@ -39,7 +38,14 @@ private:
         BlueprintReadOnly,
         Category = "Components",
         meta = (AllowPrivateAccess = "true"))
-    TObjectPtr<UCapsuleComponent> capsule_;
+    TObjectPtr<USceneComponent> root_;
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category = "Components",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UStaticMeshComponent> hit_mesh_;
 
     UPROPERTY(
         VisibleAnywhere,

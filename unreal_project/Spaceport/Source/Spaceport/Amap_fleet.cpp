@@ -1,7 +1,6 @@
 #include "Amap_fleet.h"
 #include "constants.hpp"
 
-#include <Components/CapsuleComponent.h>
 #include <Components/StaticMeshComponent.h>
 #include <GameFramework/FloatingPawnMovement.h>
 #include <Engine/CollisionProfile.h>
@@ -12,25 +11,28 @@ Amap_fleet::Amap_fleet()
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    capsule_ = CreateDefaultSubobject<UCapsuleComponent>(TEXT("capsule"));
+    root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
+    hit_mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("hit_mesh"));
     mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
     selection_indicator_ = CreateDefaultSubobject<UStaticMeshComponent>(
         TEXT("selection_indicator"));
     movement_ = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("movement"));
 
-    RootComponent = capsule_;
+    RootComponent = root_;
 
-    mesh_->SetupAttachment(RootComponent);
+    hit_mesh_->SetupAttachment(root_);
+    hit_mesh_->SetHiddenInGame(true);
+    mesh_->SetupAttachment(root_);
     selection_indicator_->SetupAttachment(RootComponent);
     selection_indicator_->SetHiddenInGame(true);
 
     // collisions
-    capsule_->SetCollisionProfileName(
+    hit_mesh_->SetCollisionProfileName(
         UCollisionProfile::CustomCollisionProfileName);
-    capsule_->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    capsule_->SetCollisionResponseToChannel(
+    hit_mesh_->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+    hit_mesh_->SetCollisionResponseToChannel(
         ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Block);
-    capsule_->SetCollisionResponseToChannel(
+    hit_mesh_->SetCollisionResponseToChannel(
         fleet_channel, ECollisionResponse::ECR_Block);
     mesh_->SetCollisionProfileName(UCollisionProfile::NoCollision_ProfileName);
     selection_indicator_->SetCollisionProfileName(
