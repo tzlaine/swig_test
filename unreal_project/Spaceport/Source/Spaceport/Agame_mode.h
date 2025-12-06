@@ -2,6 +2,8 @@
 
 #include "Agame_mode_base.h"
 
+#include "model.hpp"
+
 #include <CoreMinimal.h>
 #include <GameFramework/GameModeBase.h>
 #include "Agame_mode.generated.h"
@@ -31,6 +33,11 @@ class Agame_mode : public Agame_mode_base
 public:
     Agame_mode(FObjectInitializer const & init);
 
+    boost::shared_ptr<game_state_t const> game_state() const
+    {
+        return model_.game_state();
+    }
+
     void BeginPlay() override;
     void Tick(float secs) override;
 
@@ -54,6 +61,7 @@ private:
     void signal_start_of_play();
 
     float seconds_since_last_day_tick_ = 0.0;
+    model model_;
 
     // generating the galaxy
     std::jthread generation_thread_;

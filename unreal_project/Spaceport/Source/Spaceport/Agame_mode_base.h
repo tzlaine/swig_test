@@ -1,7 +1,5 @@
 #pragma once
 
-#include "model.hpp"
-
 #include <CoreMinimal.h>
 #include <GameFramework/GameModeBase.h>
 #include "Agame_mode_base.generated.h"
@@ -24,12 +22,4 @@ public:
     void load_and_start_game_Implementation(FString const & filename);
 
     void publish_save_files();
-
-    boost::shared_ptr<game_state_t const> game_state() const
-    {
-        return model_.game_state();
-    }
-
-protected:
-    model model_; // TODO: Move to Agame_mode?
 };
