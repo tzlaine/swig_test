@@ -584,8 +584,9 @@ namespace {
         TSharedPtr<Skey_binding_button> button_;
     };
 
-    // TODO: We don't gracefully handle the camera zoom setting here, because
-    // it is an axis, not a key.
+    // TODO: We don't gracefully handle mouse events; we only detect key
+    // presses.  If you change off of the camera zoom settings here, you can't
+    // get them back (because they use the mouse wheel).
     std::pair<FString, TSharedPtr<SWidget>> controls_panel(
         std::function<void()> & apply_changes,
         std::function<void()> & restore_defaults,

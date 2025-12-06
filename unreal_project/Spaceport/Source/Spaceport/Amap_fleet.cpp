@@ -23,13 +23,14 @@ Amap_fleet::Amap_fleet()
     hit_mesh_->SetupAttachment(root_);
     hit_mesh_->SetHiddenInGame(true);
     mesh_->SetupAttachment(root_);
-    selection_indicator_->SetupAttachment(RootComponent);
+    selection_indicator_->SetupAttachment(root_);
     selection_indicator_->SetHiddenInGame(true);
 
     // collisions
     hit_mesh_->SetCollisionProfileName(
         UCollisionProfile::CustomCollisionProfileName);
-    hit_mesh_->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+    hit_mesh_->SetCollisionResponseToAllChannels(
+        ECollisionResponse::ECR_Ignore);
     hit_mesh_->SetCollisionResponseToChannel(
         ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Block);
     hit_mesh_->SetCollisionResponseToChannel(

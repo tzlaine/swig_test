@@ -1,5 +1,6 @@
 #include "Acontroller_pawn.h"
 #include "constants.hpp"
+#include "ui_defaults.h"
 #include "utility.hpp"
 
 #include <algorithm>
@@ -34,14 +35,16 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
     auto * eic = Cast<UEnhancedInputComponent>(input);
     check(eic);
     eic->BindActionValueLambda(
-        slide_action_, ETriggerEvent::Completed, [this](auto const & value) {
-            FVector2D const delta = value.Get<FVector2D>();
+        slide_action_, ETriggerEvent::Triggered, [this](auto const & value) {
+            FVector2D const delta =
+                value.Get<FVector2D>() * ui_defaults().camera_pan_speed_;
             AddMovementInput(FVector::UnitX(), delta.X);
             AddMovementInput(FVector::UnitY(), delta.Y);
         });
     eic->BindActionValueLambda(
-        zoom_action_, ETriggerEvent::Completed, [this](auto const & value) {
-            float const delta = value.Get<float>();
+        zoom_action_, ETriggerEvent::Triggered, [this](auto const & value) {
+            float const delta =
+                value.Get<float>() * ui_defaults().camera_zoom_speed_;
             spring_arm_->TargetArmLength = std::clamp(
                 spring_arm_->TargetArmLength + delta,
                 min_camera_dist,

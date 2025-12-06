@@ -59,6 +59,12 @@ public:
     TSharedRef<ITableRow> make_row(
         TSharedPtr<FString> text,
         TSharedRef<STableViewBase> const & table) const;
+
+    // Miscellaneous
+    UPROPERTY(EditAnywhere, Category = "UI")
+    float camera_pan_speed_ = 1.0f;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    float camera_zoom_speed_ = 1.0f;
 };
 
 Uui_defaults_t const & ui_defaults();
