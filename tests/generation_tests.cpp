@@ -1741,6 +1741,12 @@ TEST(generation_tests, generate_hex)
             hex, i, game_state, params, map_radius, bulge_radius, center_hex,
             center_hex_pos, habitable_systems_per_hex, hex_scratch_);
 
+        for (int j = hex.first_system; j < hex.last_system; ++j) {
+            EXPECT_TRUE(
+                game_state.systems[j].world_pos_x != 0 ||
+                game_state.systems[j].world_pos_y != 0);
+        }
+
         EXPECT_LE((size_t)habitable_systems_per_hex,
                   hex_scratch_.systems_.size());
     }
