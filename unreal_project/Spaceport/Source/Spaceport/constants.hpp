@@ -72,8 +72,8 @@ inline constexpr double max_habitable_temp_k = earth_temperature_k + 55;
 inline constexpr int small_map_height = 11;
 inline constexpr int medium_map_height = 21;
 inline constexpr int large_map_height = 41;
-inline constexpr float min_camera_dist = 5.0f;
-inline constexpr float max_camera_dist = 1000.0f;
+inline constexpr float min_camera_dist = 50.0f;
+inline constexpr float max_camera_dist = 5000.0f;
 
 #if !defined(BUILD_FOR_TEST)
 inline constexpr auto fleet_channel = ECollisionChannel::ECC_GameTraceChannel1;
