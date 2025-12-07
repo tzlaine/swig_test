@@ -7,6 +7,7 @@
 #include "Aplayer_controller.h"
 #include "game_instance.h"
 #include "map_util.hpp"
+#include "rng.hpp"
 #include "space_creator_actor_config.hpp"
 #include "ui_defaults.h"
 #include "utility.hpp"
@@ -203,7 +204,7 @@ void Agame_mode::signal_start_of_play()
             Amap_system * system_pawn = GetWorld()->SpawnActor<Amap_system>(
                 system_class_,
                 system_location,
-                FRotator(),
+                FRotator(0, random_double(0, 360), 0),
                 FActorSpawnParameters());
             configure_map_star(system_pawn, system);
             // TODO: Set the system ID in *system_pawn. (Hex ID too?)

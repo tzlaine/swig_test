@@ -295,8 +295,6 @@ void configure_map_star(Amap_system * star_actor, system_t const & system)
 
     star_actor->use_material(instance);
 
-    // TODO: Rotate mesh, so that all the star textures don't look identical.
-
     // TODO: Need to fogure out how the halo part of the Space Creator
     // material works, at least enough to pull part of it out and use it for
     // these stars.
