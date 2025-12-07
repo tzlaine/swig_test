@@ -195,8 +195,7 @@ void Agame_mode::signal_start_of_play()
             hex_class_, hex_location, FRotator(), FActorSpawnParameters());
         // TODO: Set the hex ID in *hex_pawn.
 
-        int count = 0; // TODO
-        for (int i = hex.first_system, last = hex.last_system; i < last && ++count < 10; ++i) {
+        for (int i = hex.first_system, last = hex.last_system; i < last; ++i) {
             auto const & system = gs.systems[i];
             auto const system_location =
                 FVector(system.world_pos_x, system.world_pos_y, 0) *

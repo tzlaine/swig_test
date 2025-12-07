@@ -162,48 +162,28 @@ namespace generation {
         }
 #endif
 
-#if defined(BUILD_FOR_TEST)
-        inline bool point_in_triangle(
-            point_2d const & pt_,
-            point_2d const & a_,
-            point_2d const & n_,
-            point_2d const & c_)
+        inline bool point_in_upper_right(
+            point_2d pt,
+            point_2d hex_right_corner,
+            point_2d hex_upper_right_corner)
         {
-            return false;
+            double const min_cos_theta =
+                dot(hex_right_corner, hex_upper_right_corner) /
+                norm(hex_right_corner) / norm(hex_upper_right_corner);
+            double const max_cos_theta = 0.0;
+            double const cos_theta =
+                dot(hex_right_corner, pt) / norm(hex_right_corner) / norm(pt);
+            return min_cos_theta <= cos_theta && cos_theta <= 0;
         }
-#else
-        inline bool point_in_triangle(
-            point_2d const & pt_,
-            point_2d const & a_,
-            point_2d const & b_,
-            point_2d const & c_)
+        inline bool point_in_lower_right(
+            point_2d pt,
+            point_2d hex_right_corner,
+            point_2d hex_lower_right_corner)
         {
-            FVector const pt = to_fvector(pt_);
-            FVector const a = to_fvector(a_);
-            FVector const b = to_fvector(b_);
-            FVector const c = to_fvector(c_);
-
-            FVector const ab = b - a;
-            FVector const ac = c - a;
-            FVector const ap = pt - a;
-
-            float const dot_pab = FVector::DotProduct(ap, ab);
-            float const dot_pac = FVector::DotProduct(ap, ac);
-            float const dot_bab = FVector::DotProduct(ab, ab);
-            float const dot_bac = FVector::DotProduct(ab, ac);
-            float const dot_cac = FVector::DotProduct(ac, ac);
-
-            float const divisor = dot_bab * dot_cac - dot_bac * dot_bac;
-
-            if (FMath::Abs(divisor) < KINDA_SMALL_NUMBER)
-                return false;
-
-            float const u = (dot_cac * dot_pab - dot_bac * dot_pac) / divisor;
-            float const v = (dot_bab * dot_pac - dot_bac * dot_pab) / divisor;
-
-            return 0.0f <= u && 0.0f <= v && (u + v) <= 1.0f;
+            // symmetry
+            return point_in_upper_right(
+                pt, hex_right_corner, hex_lower_right_corner);
         }
-#endif
 
         template<typename GenPlanetsFn>
         bool generate_system_impl(
@@ -244,26 +224,16 @@ namespace generation {
                |--------|
             */
 
-            point_2d const upper_right_a{hex_width - 0.5, hex_height};
-            point_2d const upper_right_b{hex_width, hex_height / 2};
-            point_2d const upper_right_c{hex_width, hex_height};
-
-            point_2d const lower_right_a{hex_width - 0.5, 0};
-            point_2d const lower_right_b{hex_width, 0};
-            point_2d const lower_right_c{hex_width, hex_height / 2};
-
-            if (point_in_triangle(
-                    point_2d{x_roll, y_roll},
-                    upper_right_a,
-                    upper_right_b,
-                    upper_right_c)) {
+            if (point_in_upper_right(
+                    {x_roll, y_roll},
+                    {hex_width, hex_height / 2},
+                    {hex_width - 0.5, hex_height})) {
                 y_roll -= hex_height / 2.0;
                 x_roll -= 1.0;
-            } else if (point_in_triangle(
+            } else if (point_in_lower_right(
                            point_2d{x_roll, y_roll},
-                           lower_right_a,
-                           lower_right_b,
-                           lower_right_c)) {
+                           {hex_width, hex_height / 2},
+                           point_2d{hex_width - 0.5, 0})) {
                 y_roll += hex_height / 2.0;
                 x_roll -= 1.0;
             }

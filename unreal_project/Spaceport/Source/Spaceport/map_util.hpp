@@ -37,6 +37,21 @@ inline double dist_sq(point_2d pt1, point_2d pt2)
     return delta.x * delta.x + delta.y * delta.y;
 }
 
+inline double dist(point_2d pt1, point_2d pt2)
+{
+    return std::sqrt(dist_sq(pt1, pt2));
+}
+
+inline double norm(point_2d pt)
+{
+    return std::sqrt(dist_sq(pt, point_2d{0, 0}));
+}
+
+inline double dot(point_2d pt1, point_2d pt2)
+{
+    return pt1.x * pt2.x + pt1.y * pt2.y;
+}
+
 inline bool within(point_2d pt1, point_2d pt2, double dist)
 {
     return dist_sq(pt1, pt2) + 0.001 < dist * dist;
