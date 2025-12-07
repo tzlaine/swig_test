@@ -54,7 +54,8 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
     eic->BindActionValueLambda(
         zoom_action_, ETriggerEvent::Triggered, [this](auto const & value) {
             float const delta =
-                value.Get<float>() * ui_defaults().camera_zoom_speed_;
+                value.Get<float>() * (ui_defaults().camera_zoom_speed_ +
+                                      std::log(spring_arm_->TargetArmLength));
             spring_arm_->TargetArmLength = std::clamp(
                 spring_arm_->TargetArmLength + delta,
                 min_camera_dist,
