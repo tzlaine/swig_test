@@ -162,6 +162,49 @@ namespace generation {
         }
 #endif
 
+#if defined(BUILD_FOR_TEST)
+        inline bool point_in_triangle(
+            point_2d const & pt_,
+            point_2d const & a_,
+            point_2d const & n_,
+            point_2d const & c_)
+        {
+            return false;
+        }
+#else
+        inline bool point_in_triangle(
+            point_2d const & pt_,
+            point_2d const & a_,
+            point_2d const & b_,
+            point_2d const & c_)
+        {
+            FVector const pt = to_fvector(pt_);
+            FVector const a = to_fvector(a_);
+            FVector const b = to_fvector(b_);
+            FVector const c = to_fvector(c_);
+
+            FVector const ab = b - a;
+            FVector const ac = c - a;
+            FVector const ap = pt - a;
+
+            float const dot_pab = FVector::DotProduct(ap, ab);
+            float const dot_pac = FVector::DotProduct(ap, ac);
+            float const dot_bab = FVector::DotProduct(ab, ab);
+            float const dot_bac = FVector::DotProduct(ab, ac);
+            float const dot_cac = FVector::DotProduct(ac, ac);
+
+            float const divisor = dot_bab * dot_cac - dot_bac * dot_bac;
+
+            if (FMath::Abs(divisor) < KINDA_SMALL_NUMBER)
+                return false;
+
+            float const u = (dot_cac * dot_pab - dot_bac * dot_pac) / divisor;
+            float const v = (dot_bab * dot_pac - dot_bac * dot_pab) / divisor;
+
+            return 0.0f <= u && 0.0f <= v && (u + v) <= 1.0f;
+        }
+#endif
+
         template<typename GenPlanetsFn>
         bool generate_system_impl(
             system_t & system, system_scratch & planets,
@@ -184,27 +227,44 @@ namespace generation {
             system.star = generate_star();
 
             // TODO: See if generating 100s or 1000s of rolls at once is faster.
-            double x_roll = random_unit_double();
+            double x_roll = hex_width * random_unit_double();
             double y_roll = hex_height * random_unit_double();
 
-            /* The (x,y) rolled above is mapped onto a rectangle that represents
-               all the locations within the hex.  Since a hex does not exactly
-               cover a rectangle, the left-side corners are snipped off and put on
-               the right to form the rectangle, as shown below.
+            /* The (x,y) rolled above is mapped onto a rectangle that
+               represents all the locations within the hex.  Since a hex does
+               not exactly cover a rectangle, the left-side corners are
+               snipped off and put on the right to form the rectangle, as
+               shown below.
 
-               |-----|
-               |   \ | <- missing lower left segment of hex
-               |    \|
-               |    /|
-               |   / | <- missing upper left segment of hex
-               |-----|
+               |--------|
+               |      \ | <- missing lower left segment of hex
+               |       \|
+               |       /|
+               |      / | <- missing upper left segment of hex
+               |--------|
             */
 
-            if (0.5 < x_roll) {
-                if (hex_height / 2.0 < y_roll)
-                    y_roll -= hex_height / 2.0;
-                else
-                    y_roll += hex_height / 2.0;
+            point_2d const upper_right_a{hex_width - 0.5, hex_height};
+            point_2d const upper_right_b{hex_width, hex_height / 2};
+            point_2d const upper_right_c{hex_width, hex_height};
+
+            point_2d const lower_right_a{hex_width - 0.5, 0};
+            point_2d const lower_right_b{hex_width, 0};
+            point_2d const lower_right_c{hex_width, hex_height / 2};
+
+            if (point_in_triangle(
+                    point_2d{x_roll, y_roll},
+                    upper_right_a,
+                    upper_right_b,
+                    upper_right_c)) {
+                y_roll -= hex_height / 2.0;
+                x_roll -= 1.0;
+            } else if (point_in_triangle(
+                           point_2d{x_roll, y_roll},
+                           lower_right_a,
+                           lower_right_b,
+                           lower_right_c)) {
+                y_roll += hex_height / 2.0;
                 x_roll -= 1.0;
             }
 
@@ -212,9 +272,9 @@ namespace generation {
             // this.
             x_roll += 0.5;
 
-            // Change coord to be relative to hex center. TODO?
-            //x_roll -= hex_width / 2.0;
-            //y_roll -= hex_height / 2.0;
+            // Change coord to be relative to hex center.
+            x_roll -= hex_width / 2.0;
+            y_roll -= hex_height / 2.0;
 
             system.world_pos_x = hex_world_pos.x + x_roll;
             system.world_pos_y = hex_world_pos.y + y_roll;

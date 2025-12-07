@@ -25,6 +25,10 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#include "Amap_fleet.h"
+#include "Amap_hex.h"
+#include "Amap_system.h"
+
 #include <Engine/LevelScriptActor.h>
 #include <GameFramework/Pawn.h>
 #include <GameFramework/PlayerController.h>
@@ -106,24 +110,19 @@ namespace {
 
 Urepl_graph::Urepl_graph()
 {
-    UE_LOG(LogReplicationGraph, Log, TEXT("YAY 1! *************************"));
-
     ReplicationConnectionManagerClass = Urepl_graph_conn::StaticClass();
 
-#if 0 // Seems unnecessary for Spaceport
-    FClassReplGraphInfo repl_info;
-    repl_info.class_ = APawn::StaticClass();
-    repl_info.DistancePriorityScale = 1.f;
-    repl_info.StarvationPriorityScale = 1.f;
-    repl_info.ActorChannelFrameTimeout = 4;
-    // small size of cull distance squard leads inconsistant cull because of
-    // distance between actual character and viewposition; keep it bigger than
-    // distance between actual pawn and viewer
-    repl_info.CullDistanceSquared = 15000.f * 15000.f;
-    explicit_classes_.Add(repl_info);
-#endif
+    // TODO: Should be static_spatial
+    explicit_classes_.emplace_back(
+        Amap_hex::StaticClass(), class_repl_info{}, Erepl_node_kind::always);
 
-    // TODO: Add explicit class settings to explicit_classes_.
+    // TODO: Should be static_spatial
+    explicit_classes_.emplace_back(
+        Amap_system::StaticClass(), class_repl_info{}, Erepl_node_kind::always);
+
+    // TODO: Should be dynamic_spatial
+    explicit_classes_.emplace_back(
+        Amap_fleet::StaticClass(), class_repl_info{}, Erepl_node_kind::always);
 
     check(std::ranges::none_of(
         explicit_classes_, [](auto const & e) { return !e.class_; }));
@@ -131,9 +130,6 @@ Urepl_graph::Urepl_graph()
 
 void Urepl_graph::InitGlobalActorClassSettings()
 {
-    // TODO
-    UE_LOG(LogReplicationGraph, Log, TEXT("YAY 2! *************************"));
-
     Super::InitGlobalActorClassSettings();
 
     auto add_routing = [&](UClass * class_, Erepl_node_kind routing) {

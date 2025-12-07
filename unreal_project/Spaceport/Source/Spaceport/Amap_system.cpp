@@ -4,11 +4,13 @@
 #include <Components/SphereComponent.h>
 #include <Components/StaticMeshComponent.h>
 #include <Engine/CollisionProfile.h>
+#include <Materials/MaterialInstanceDynamic.h>
 
 
 Amap_system::Amap_system()
 {
     PrimaryActorTick.bCanEverTick = true;
+    bReplicates = true;
 
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     sphere_ = CreateDefaultSubobject<USphereComponent>(TEXT("sphere"));
@@ -64,4 +66,10 @@ void Amap_system::hover(bool b)
 {
     Amap_pawn_base::hover(b);
     hover_indicator_->SetHiddenInGame(!b);
+}
+
+void Amap_system::use_material(UMaterialInstanceDynamic * mid)
+{
+    material_instance_ = mid;
+    mesh_->SetMaterial(0, material_instance_);
 }

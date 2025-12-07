@@ -3,6 +3,10 @@
 #include "constants.hpp"
 #include "base_types.hpp"
 
+#if !defined(BUILD_FOR_TEST)
+#include <Math/MathFwd.h>
+#endif
+
 
 struct point_2d
 {
@@ -12,6 +16,16 @@ struct point_2d
     friend point_2d operator-(point_2d pt1, point_2d pt2)
     {
         return {pt1.x - pt2.x, pt1.y - pt2.y};
+    }
+
+    friend point_2d operator*(point_2d pt, double c)
+    {
+        return {pt.x * c, pt.y * c};
+    }
+
+    friend point_2d operator/(point_2d pt, double c)
+    {
+        return {pt.x / c, pt.y / c};
     }
 
     bool operator==(point_2d const &) const = default;
@@ -27,6 +41,11 @@ inline bool within(point_2d pt1, point_2d pt2, double dist)
 {
     return dist_sq(pt1, pt2) + 0.001 < dist * dist;
 }
+
+
+#if !defined(BUILD_FOR_TEST)
+inline FVector to_fvector(point_2d pt) { return FVector(pt.x, pt.y, 0); }
+#endif
 
 struct box_2d
 {

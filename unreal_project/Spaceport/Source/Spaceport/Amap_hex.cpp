@@ -9,6 +9,7 @@
 Amap_hex::Amap_hex()
 {
     PrimaryActorTick.bCanEverTick = true;
+    bReplicates = true;
 
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));

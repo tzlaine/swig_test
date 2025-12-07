@@ -9,12 +9,7 @@ struct planet_t;
 struct loaded_textures;
 struct loaded_material_interfaces;
 
-void configure_map_star(
-    Amap_system * system_actor,
-    system_t const & system,
-    star_t const & star,
-    loaded_textures & textures,
-    loaded_material_interfaces & material_interfaces);
+void configure_map_star(Amap_system * system_actor, system_t const & system);
 
 void configure_system_star(AActor * star_actor, star_t const & star);
 

@@ -6,6 +6,7 @@
 #include "Amap_system.generated.h"
 
 
+class UMaterialInstanceDynamic;
 class USceneComponent;
 class USphereComponent;
 class UStaticMeshComponent;
@@ -25,9 +26,12 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::system; }
 
-    UStaticMeshComponent * static_mesh() { return mesh_; }
+    void use_material(UMaterialInstanceDynamic * mid);
 
 private:
+    UPROPERTY()
+    TObjectPtr<UMaterialInstanceDynamic> material_instance_;
+
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,

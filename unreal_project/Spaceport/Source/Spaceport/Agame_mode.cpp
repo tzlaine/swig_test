@@ -1,8 +1,14 @@
 #include "Agame_mode.h"
 #include "Agame_state.h"
+#include "Amap_fleet.h"
+#include "Amap_hex.h"
+#include "Amap_system.h"
 #include "Aplaying_hud.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
+#include "map_util.hpp"
+#include "space_creator_actor_config.hpp"
+#include "ui_defaults.h"
 #include "utility.hpp"
 
 #include <filesystem>
@@ -165,6 +171,53 @@ void Agame_mode::ready_for_mp_game()
 
 void Agame_mode::signal_start_of_play()
 {
+    check(model_.game_state());
+    auto const & gs = *model_.game_state();
+
+    // TODO: Starting with just one hex; need to do all of them, of course.
+    for (auto const & hex : model_.hexes()) {
+        if (hex.province_id == prov_galactic_center) {
+            // TODO: Populate with LOTS of non-clickable, non-hoverable stars.
+            continue;
+        }
+        if (hex.province_id == prov_galactic_bulge) {
+            // TODO: Populate with non-clickable, non-hoverable stars.
+            continue;
+        }
+        if (hex.province_id == prov_off_map) {
+            // TODO: Populate with non-clickable, non-hoverable stars.
+            continue;
+        }
+
+        auto const hex_xy = hex_position(hex.coord, gs.map_height);
+        auto const hex_location = to_fvector(hex_xy) * ui_defaults().map_scale_;
+        Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
+            hex_class_, hex_location, FRotator(), FActorSpawnParameters());
+        // TODO: Set the hex ID in *hex_pawn.
+
+        int count = 0; // TODO
+        for (int i = hex.first_system, last = hex.last_system; i < last && ++count < 10; ++i) {
+            auto const & system = gs.systems[i];
+            auto const system_location =
+                FVector(system.world_pos_x, system.world_pos_y, 0) *
+                    ui_defaults().map_scale_;
+            Amap_system * system_pawn = GetWorld()->SpawnActor<Amap_system>(
+                system_class_,
+                system_location,
+                FRotator(),
+                FActorSpawnParameters());
+            configure_map_star(system_pawn, system);
+            // TODO: Set the system ID in *system_pawn. (Hex ID too?)
+        }
+    }
+
+    // TODO: Move controller pawn to the middle of the map (or the player's
+    // home hex).
+
+    if (auto * pc = player_controller()) {
+        // TODO? pc->SetSpawnLocation
+    }
+
     cast(GameState)->play_state_ = play_state::playing;
     cast(GameState)->play_state_changed();
 }

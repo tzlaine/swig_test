@@ -10,6 +10,7 @@
 Amap_fleet::Amap_fleet()
 {
     PrimaryActorTick.bCanEverTick = true;
+    bReplicates = true;
 
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     hit_mesh_ = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("hit_mesh"));

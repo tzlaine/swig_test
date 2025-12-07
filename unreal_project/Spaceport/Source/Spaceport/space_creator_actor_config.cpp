@@ -244,15 +244,13 @@ double seasons_intensity_factor(planet_t const & planet)
 
 // TODO: Move all the utilities above here somewhere else.
 
-void configure_map_star(
-    Amap_system * star_actor, system_t const & system, star_t const & star)
+void configure_map_star(Amap_system * star_actor, system_t const & system)
 {
     check(star_actor);
+
+    star_t const & star = system.star;
     check(star_class_t::invalid_star_class < star.star_class);
     check(star.star_class <= star_class_t::m);
-
-    star_actor->SetActorLocation(
-        FVector(system.world_pos_x, system.world_pos_y, 0));
 
     auto const & materials = ::materials();
     UMaterialInterface * material = nullptr;
@@ -279,7 +277,6 @@ void configure_map_star(
     default: break;
     }
 
-    auto * pc = player_controller_base();
     UMaterialInstanceDynamic * instance =
         UMaterialInstanceDynamic::Create(material, star_actor);
 
@@ -295,7 +292,7 @@ void configure_map_star(
         double const alpha =
             (log_lum - log_min_lum) / (log_max_lum - log_min_lum);
         instance->SetScalarParameterValue(
-            TEXT("Burst_Intensity"), std::lerp(0.5, 40.0, alpha));
+            TEXT("Burst_Intensity"), 0);// TODO std::lerp(0.5, 40.0, alpha));
         }
 
         // Class A and brighter are >= 5x the sun.
@@ -307,11 +304,11 @@ void configure_map_star(
 
         instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
         instance->SetScalarParameterValue(
-            TEXT("Halo_Size"),
-            use_wide_lense_flare ? random_double(0.1, 0.4)
-                                 : random_double(0.1, 0.25));
+            TEXT("Halo_Size"), 0);
+            // TODO use_wide_lense_flare ? random_double(0.1, 0.4)
+            // TODO                      : random_double(0.1, 0.25));
 
-        star_actor->static_mesh()->SetMaterial(0, instance);
+        star_actor->use_material(instance);
 }
 
 void configure_system_star(AActor * star_actor, star_t const & star)
