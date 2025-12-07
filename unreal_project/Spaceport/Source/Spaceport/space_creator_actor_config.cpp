@@ -280,35 +280,26 @@ void configure_map_star(Amap_system * star_actor, system_t const & system)
     UMaterialInstanceDynamic * instance =
         UMaterialInstanceDynamic::Create(material, star_actor);
 
-    // https://en.wikipedia.org/wiki/Stellar_classification
-
     {
-        // Map this star's luminosity relative to other main sequece stars
-        // (in log space) into the (linear) range of visual intensity
-        // values.
-        double const log_min_lum = std::log10(0.08);
-        double const log_max_lum = std::log10(30000.0);
-        double const log_lum = std::log10(star.solar_luminosities);
-        double const alpha =
-            (log_lum - log_min_lum) / (log_max_lum - log_min_lum);
-        instance->SetScalarParameterValue(
-            TEXT("Burst_Intensity"), 0);// TODO std::lerp(0.5, 40.0, alpha));
-        }
+        UTexture * texture = textures().random_small_lens_flare();
+        instance->SetTextureParameterValue(TEXT("T_MainFlare"), texture);
 
+#if 0 // TODO
+        // https://en.wikipedia.org/wiki/Stellar_classification
         // Class A and brighter are >= 5x the sun.
-        bool const use_wide_lense_flare = 5.0 < star.solar_luminosities;
+        bool const highly_luminous = 5.0 < star.solar_luminosities;
 
-        UTexture * texture = use_wide_lense_flare
-                                 ? textures().random_wide_lens_flare()
-                                 : textures().random_small_lens_flare();
+        instance->SetScalarParameterValue(TEXT("Burst_Intensity"), 1.0f);
+#endif
+    }
 
-        instance->SetTextureParameterValue(TEXT("Texture_Main_Flare"), texture);
-        instance->SetScalarParameterValue(
-            TEXT("Halo_Size"), 0);
-            // TODO use_wide_lense_flare ? random_double(0.1, 0.4)
-            // TODO                      : random_double(0.1, 0.25));
+    star_actor->use_material(instance);
 
-        star_actor->use_material(instance);
+    // TODO: Rotate mesh, so that all the star textures don't look identical.
+
+    // TODO: Need to fogure out how the halo part of the Space Creator
+    // material works, at least enough to pull part of it out and use it for
+    // these stars.
 }
 
 void configure_system_star(AActor * star_actor, star_t const & star)
