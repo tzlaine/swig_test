@@ -289,7 +289,9 @@ void configure_map_star(Amap_system * star_actor, system_t const & system)
         // Class A and brighter are >= 5x the sun.
         bool const highly_luminous = 5.0 < star.solar_luminosities;
 
-        instance->SetScalarParameterValue(TEXT("Burst_Intensity"), 1.0f);
+        instance->SetScalarParameterValue(TEXT("Burst_Intensity"), TODO);
+        instance->SetScalarParameterValue(TEXT("Halo_Intensity"), TODO);
+        instance->SetScalarParameterValue(TEXT("Halo_SizeIntensity"), TODO);
 #endif
     }
 
