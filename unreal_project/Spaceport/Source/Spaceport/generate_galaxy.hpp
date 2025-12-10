@@ -162,27 +162,44 @@ namespace generation {
         }
 #endif
 
+        inline double scalar_cross_product(point_2d a, point_2d b, point_2d pt)
+        {
+            return (b.x - a.x) * (pt.y - a.y) - (b.y - a.y) * (pt.x - a.x);
+        }
+
+        inline bool
+        point_in_triangle(point_2d a, point_2d b, point_2d c, point_2d pt)
+        {
+            double const cp_1 = scalar_cross_product(a, b, pt);
+            double const cp_2 = scalar_cross_product(b, c, pt);
+            double const cp_3 = scalar_cross_product(c, a, pt);
+            bool const all_nonneg = (0 <= cp_1) && (0 <= cp_2) && (0 <= cp_3);
+            return all_nonneg;
+        }
+
         inline bool point_in_upper_right(
             point_2d pt,
             point_2d hex_right_corner,
-            point_2d hex_upper_right_corner)
+            point_2d hex_upper_right_corner,
+            point_2d box_upper_right_corner)
         {
-            double const min_cos_theta =
-                dot(hex_right_corner, hex_upper_right_corner) /
-                norm(hex_right_corner) / norm(hex_upper_right_corner);
-            double const max_cos_theta = 0.0;
-            double const cos_theta =
-                dot(hex_right_corner, pt) / norm(hex_right_corner) / norm(pt);
-            return min_cos_theta <= cos_theta && cos_theta <= 0;
+            return point_in_triangle(
+                hex_right_corner,
+                box_upper_right_corner,
+                hex_upper_right_corner,
+                pt);
         }
         inline bool point_in_lower_right(
             point_2d pt,
             point_2d hex_right_corner,
-            point_2d hex_lower_right_corner)
+            point_2d hex_lower_right_corner,
+            point_2d box_lower_right_corner)
         {
-            // symmetry
-            return point_in_upper_right(
-                pt, hex_right_corner, hex_lower_right_corner);
+            return point_in_triangle(
+                hex_right_corner,
+                hex_lower_right_corner,
+                box_lower_right_corner,
+                pt);
         }
 
         template<typename GenPlanetsFn>
@@ -206,7 +223,6 @@ namespace generation {
             system.coord = hc;
             system.star = generate_star();
 
-            // TODO: See if generating 100s or 1000s of rolls at once is faster.
             double x_roll = hex_width * random_unit_double();
             double y_roll = hex_height * random_unit_double();
 
@@ -227,23 +243,23 @@ namespace generation {
             if (point_in_upper_right(
                     {x_roll, y_roll},
                     {hex_width, hex_height / 2},
-                    {hex_width - 0.5, hex_height})) {
+                    {hex_width - 0.5, hex_height},
+                    {hex_width, hex_height})) {
                 y_roll -= hex_height / 2.0;
-                x_roll -= 1.0;
+                x_roll -= hex_width;
             } else if (point_in_lower_right(
-                           point_2d{x_roll, y_roll},
+                           {x_roll, y_roll},
                            {hex_width, hex_height / 2},
-                           point_2d{hex_width - 0.5, 0})) {
+                           {hex_width - 0.5, 0},
+                           {hex_width, 0})) {
                 y_roll += hex_height / 2.0;
-                x_roll -= 1.0;
+                x_roll -= hex_width;
             }
 
-            // Now the corners on the left are at x=-0.5 to x=0.0; correct
-            // this.
-            x_roll += 0.5;
-
-            // Change coord to be relative to hex center.
-            x_roll -= hex_width / 2.0;
+            // Now the coords are rleative to the lower left corner of the
+            // bounding box containing the hex.  Change coords to be relative
+            // to hex center.
+            x_roll -= 0.5;
             y_roll -= hex_height / 2.0;
 
             system.world_pos_x = hex_world_pos.x + x_roll;
