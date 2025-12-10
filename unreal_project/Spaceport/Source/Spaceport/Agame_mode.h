@@ -95,4 +95,11 @@ private:
         Category = "Actor classes",
         meta = (AllowPrivateAccess = "true"))
     TSubclassOf<AActor> spiral_galaxy_arms_class_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Actor classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<AActor> galactic_core_glow_class_;
 };

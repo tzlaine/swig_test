@@ -176,29 +176,39 @@ void Agame_mode::signal_start_of_play()
     auto const & gs = *model_.game_state();
 
     for (auto const & hex : model_.hexes()) {
-        if (hex.province_id == prov_off_map)
+        if (hex.province_id == prov_galactic_bulge ||
+            hex.province_id == prov_off_map) {
             continue;
+        }
 
         if (hex.province_id == prov_galactic_center) {
-            // This assumes wr're using the 'plane' mesh that comes with UE,
+            // This assumes we're using the 'plane' mesh that comes with UE,
             // which is 100x100.
             double const plane_width = 100.0;
-            auto * a = GetWorld()->SpawnActor<AActor>(
+
+            auto * arms = GetWorld()->SpawnActor<AActor>(
                 spiral_galaxy_arms_class_,
                 FTransform(
                     FRotator(0, random_double(0, 360), 0),
-                    map_hex_position(hex.coord, gs.map_height),
+                    map_hex_position(hex.coord, gs.map_height) +
+                        FVector(0, 0, 20),
                     FVector(1)),
                 FActorSpawnParameters());
-            a->SetActorScale3D(FVector(
+            arms->SetActorScale3D(FVector(
                 gs.map_height * hex_height / plane_width *
                 ui_defaults().map_scale_));
 
-            // TODO: Populate with LOTS of non-clickable, non-hoverable stars.
-            continue;
-        }
-        if (hex.province_id == prov_galactic_bulge) {
-            // TODO: Populate with non-clickable, non-hoverable stars.
+            auto * glow = GetWorld()->SpawnActor<AActor>(
+                galactic_core_glow_class_,
+                FTransform(
+                    FRotator(),
+                    map_hex_position(hex.coord, gs.map_height) +
+                        FVector(0, 0, 10),
+                    FVector(1)),
+                FActorSpawnParameters());
+            glow->SetActorScale3D(FVector(
+                12 * hex_height / plane_width * ui_defaults().map_scale_));
+
             continue;
         }
 
