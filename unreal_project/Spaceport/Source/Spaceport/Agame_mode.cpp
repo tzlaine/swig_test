@@ -175,8 +175,10 @@ void Agame_mode::signal_start_of_play()
     check(model_.game_state());
     auto const & gs = *model_.game_state();
 
-    // TODO: Starting with just one hex; need to do all of them, of course.
     for (auto const & hex : model_.hexes()) {
+        if (hex.province_id == prov_off_map)
+            continue;
+
         if (hex.province_id == prov_galactic_center) {
             // TODO: Populate with LOTS of non-clickable, non-hoverable stars.
             continue;
@@ -185,13 +187,8 @@ void Agame_mode::signal_start_of_play()
             // TODO: Populate with non-clickable, non-hoverable stars.
             continue;
         }
-        if (hex.province_id == prov_off_map) {
-            // TODO: Populate with non-clickable, non-hoverable stars.
-            continue;
-        }
 
-        auto const hex_xy = hex_position(hex.coord, gs.map_height);
-        auto const hex_location = to_fvector(hex_xy) * ui_defaults().map_scale_;
+        auto const hex_location = map_hex_position(hex.coord, gs.map_height);
         Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
             hex_class_, hex_location, FRotator(), FActorSpawnParameters());
         // TODO: Set the hex ID in *hex_pawn.

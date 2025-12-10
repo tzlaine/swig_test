@@ -4,6 +4,7 @@
 #include "base_types.hpp"
 
 #if !defined(BUILD_FOR_TEST)
+#include "ui_defaults.h"
 #include <Math/MathFwd.h>
 #endif
 
@@ -114,6 +115,14 @@ inline point_2d hex_position(hex_coord_t hc, int map_height)
         retval.y -= sin_60;
     return retval;
 }
+
+#if !defined(BUILD_FOR_TEST)
+inline FVector map_hex_position(hex_coord_t hc, int map_height)
+{
+    point_2d pos = hex_position(hc, map_height);
+    return to_fvector(pos) * ui_defaults().map_scale_;
+}
+#endif
 
 inline double degrees_to_radians(double d)
 {
