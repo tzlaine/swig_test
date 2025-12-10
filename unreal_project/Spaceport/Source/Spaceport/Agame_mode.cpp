@@ -180,6 +180,20 @@ void Agame_mode::signal_start_of_play()
             continue;
 
         if (hex.province_id == prov_galactic_center) {
+            // This assumes wr're using the 'plane' mesh that comes with UE,
+            // which is 100x100.
+            double const plane_width = 100.0;
+            auto * a = GetWorld()->SpawnActor<AActor>(
+                spiral_galaxy_arms_class_,
+                FTransform(
+                    FRotator(0, random_double(0, 360), 0),
+                    map_hex_position(hex.coord, gs.map_height),
+                    FVector(1)),
+                FActorSpawnParameters());
+            a->SetActorScale3D(FVector(
+                gs.map_height * hex_height / plane_width *
+                ui_defaults().map_scale_));
+
             // TODO: Populate with LOTS of non-clickable, non-hoverable stars.
             continue;
         }
