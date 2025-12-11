@@ -8,7 +8,7 @@
 
 Amap_hex::Amap_hex()
 {
-    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bCanEverTick = false;
     bReplicates = true;
 
     root_ = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
@@ -45,6 +45,20 @@ Amap_hex::Amap_hex()
     mesh_->SetMobility(EComponentMobility::Static);
     hover_indicator_->SetMobility(EComponentMobility::Static);
     selection_indicator_->SetMobility(EComponentMobility::Static);
+
+    // shadows
+    mesh_->SetCastShadow(false);
+    mesh_->bReceiveMobileCSMShadows = false;
+    hover_indicator_->SetCastShadow(false);
+    hover_indicator_->bReceiveMobileCSMShadows = false;
+    selection_indicator_->SetCastShadow(false);
+    selection_indicator_->bReceiveMobileCSMShadows = false;
+
+    // ticks
+    root_->SetComponentTickEnabled(false);
+    mesh_->SetComponentTickEnabled(false);
+    hover_indicator_->SetComponentTickEnabled(false);
+    selection_indicator_->SetComponentTickEnabled(false);
 }
 
 void Amap_hex::BeginPlay() { Super::BeginPlay(); }

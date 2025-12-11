@@ -10,6 +10,7 @@ class UMaterialInstanceDynamic;
 class USceneComponent;
 class USphereComponent;
 class UStaticMeshComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class Amap_system : public Amap_pawn_base
@@ -26,11 +27,19 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::system; }
 
-    void use_material(UMaterialInstanceDynamic * mid);
+    void main_material(UMaterialInstanceDynamic * mid);
+
+    void selection_materials(
+        UMaterialInstanceDynamic * selected,
+        UMaterialInstanceDynamic * hovered);
 
 private:
     UPROPERTY()
-    TObjectPtr<UMaterialInstanceDynamic> material_instance_;
+    TObjectPtr<UMaterialInstanceDynamic> main_mid_;
+    UPROPERTY()
+    TObjectPtr<UMaterialInstanceDynamic> selected_mid_;
+    UPROPERTY()
+    TObjectPtr<UMaterialInstanceDynamic> hovered_mid_;
 
     UPROPERTY(
         VisibleAnywhere,
@@ -66,4 +75,11 @@ private:
         Category = "Components",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UStaticMeshComponent> selection_indicator_;
+
+    UPROPERTY(
+        VisibleAnywhere,
+        BlueprintReadOnly,
+        Category = "Components",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UTextRenderComponent> system_name_;
 };

@@ -295,7 +295,7 @@ void configure_map_star(Amap_system * star_actor, system_t const & system)
 #endif
     }
 
-    star_actor->use_material(instance);
+    star_actor->main_material(instance);
 
     // TODO: Need to fogure out how the halo part of the Space Creator
     // material works, at least enough to pull part of it out and use it for

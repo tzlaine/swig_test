@@ -7,12 +7,16 @@
 #include "Aplayer_controller.h"
 #include "game_instance.h"
 #include "map_util.hpp"
+#include "materials.h"
 #include "rng.hpp"
 #include "space_creator_actor_config.hpp"
 #include "ui_defaults.h"
 #include "utility.hpp"
 
 #include <filesystem>
+
+#include <Materials/MaterialInstanceDynamic.h>
+#include <Materials/MaterialInterface.h>
 
 
 namespace {
@@ -228,6 +232,17 @@ void Agame_mode::signal_start_of_play()
                 FRotator(0, random_double(0, 360), 0),
                 FActorSpawnParameters());
             configure_map_star(system_pawn, system);
+            UMaterialInstanceDynamic * selected_mid =
+                UMaterialInstanceDynamic::Create(
+                    materials().system_selected_, system_pawn);
+            selected_mid->SetVectorParameterValue(
+                TEXT("color"), ui_defaults().system_selected_color_);
+            UMaterialInstanceDynamic * hovered_mid =
+                UMaterialInstanceDynamic::Create(
+                    materials().system_selected_, system_pawn);
+            hovered_mid->SetVectorParameterValue(
+                TEXT("color"), ui_defaults().system_hovered_color_);
+            system_pawn->selection_materials(selected_mid, hovered_mid);
             // TODO: Set the system ID in *system_pawn. (Hex ID too?)
         }
     }

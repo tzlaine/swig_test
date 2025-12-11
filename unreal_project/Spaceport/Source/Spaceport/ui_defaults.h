@@ -60,7 +60,7 @@ public:
         TSharedPtr<FString> text,
         TSharedRef<STableViewBase> const & table) const;
 
-    // Miscellaneous
+    // Map
     UPROPERTY(EditAnywhere, Category = "UI")
     float camera_pan_speed_ = 1.0f;
     UPROPERTY(EditAnywhere, Category = "UI")
@@ -69,6 +69,10 @@ public:
     FLinearColor drag_selection_box_color_ = FLinearColor(1, 1, 1, 1);
     UPROPERTY(EditAnywhere, Category = "UI")
     float map_scale_ = 100.0f;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor system_selected_color_ = FLinearColor(1, 1, 1, 1);
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor system_hovered_color_ = FLinearColor(1, 1, 1, 0.5);
 };
 
 Uui_defaults_t const & ui_defaults();

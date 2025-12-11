@@ -45,6 +45,24 @@ Amap_fleet::Amap_fleet()
         UCollisionProfile::NoCollision_ProfileName);
     selection_indicator_->SetCollisionProfileName(
         UCollisionProfile::NoCollision_ProfileName);
+
+    // shadows
+    hit_mesh_->SetCastShadow(false);
+    hit_mesh_->bReceiveMobileCSMShadows = false;
+    mesh_->SetCastShadow(false);
+    mesh_->bReceiveMobileCSMShadows = false;
+    hover_indicator_->SetCastShadow(false);
+    hover_indicator_->bReceiveMobileCSMShadows = false;
+    selection_indicator_->SetCastShadow(false);
+    selection_indicator_->bReceiveMobileCSMShadows = false;
+
+    // ticks
+    root_->SetComponentTickEnabled(false);
+    hit_mesh_->SetComponentTickEnabled(false);
+    mesh_->SetComponentTickEnabled(false);
+    hover_indicator_->SetComponentTickEnabled(false);
+    selection_indicator_->SetComponentTickEnabled(false);
+    movement_->SetComponentTickEnabled(false);
 }
 
 void Amap_fleet::BeginPlay() { Super::BeginPlay(); }
