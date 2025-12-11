@@ -32,6 +32,9 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
 {
     Super::SetupPlayerInputComponent(input);
 
+    // TODO: Put the map size in Agame_state, and use that here to bound how
+    // far we can move in any direction.
+
     auto * eic = Cast<UEnhancedInputComponent>(input);
     check(eic);
 
