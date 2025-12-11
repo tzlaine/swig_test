@@ -14,7 +14,7 @@
 
 Acontroller_pawn::Acontroller_pawn()
 {
-    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bCanEverTick = false;
 
     capsule_ = CreateDefaultSubobject<UCapsuleComponent>(TEXT("capsule"));
     spring_arm_ =
