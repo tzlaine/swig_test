@@ -321,10 +321,20 @@ void Aplayer_controller::select(
             return;
     }
 
+    FBox2D box;
+    {
+        FVector2D const points[2] = {selection_box_first_, selection_box_last_};
+        box = FBox2D(points, 2);
+    }
+
     if (deselect_curr == deselect::yes)
         deselect_all();
     for (auto * p : pawns) {
         if (p->kind() != kind)
+            continue;
+        FVector2D xy;
+        ProjectWorldLocationToScreen(p->GetActorLocation(), xy);
+        if (!box.IsInsideOrOn(xy))
             continue;
         p->select(true);
         curr_selections_.push_back(p);
