@@ -231,7 +231,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 
     // O2 (making simplifying assumption of ignoring the CO2 part of this
     // property)
-    constexpr double harmless_o2_threshold =
+    double const harmless_o2_threshold =
         harmless_low_o2_percentage / earth_o2_percentage;
     double const effective_o2 =
         planet.o2_co2_suitability * planet.atmopsheric_pressure;

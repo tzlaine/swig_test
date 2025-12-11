@@ -3,6 +3,8 @@
 #include "constants.hpp"
 #include "base_types.hpp"
 
+#include <numbers>
+
 #if !defined(BUILD_FOR_TEST)
 #include "ui_defaults.h"
 #include <Math/MathFwd.h>
