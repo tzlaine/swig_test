@@ -321,6 +321,10 @@ void Aplayer_controller::select(
             return;
     }
 
+    // TODO: Consider having this class contain multiple instanced geometry
+    // components, instead of having hover, selection, etc., live in each
+    // actor.
+
     FBox2D box;
     {
         FVector2D const points[2] = {selection_box_first_, selection_box_last_};
