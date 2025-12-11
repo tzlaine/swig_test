@@ -39,7 +39,9 @@ extern const double atmos_millions;
 extern const double growth_uninhabitable;
 // generic
 extern const int nation_none;
+extern const int hex_none;
 extern const int system_none;
+extern const int object_none;
 extern const double n_a; // UI should show "N/A" for this property
 
 // game constants

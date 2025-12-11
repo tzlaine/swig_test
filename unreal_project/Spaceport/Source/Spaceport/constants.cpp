@@ -33,7 +33,9 @@ const double atmos_thousands = -1.0;
 const double atmos_millions = -2.0;
 const double growth_uninhabitable = -1000.0;
 const int nation_none = -1;
+const int hex_none = -1;
 const int system_none = -1;
+const int object_none = -1;
 const double n_a = -3.0;
 
 const float base_pop_growth_factor = 0.25;

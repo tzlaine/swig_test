@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Amap_pawn_base.h"
+#include "Agame_mode.h"
 
 #include <CoreMinimal.h>
 #include "Amap_hex.generated.h"
@@ -24,7 +25,13 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::hex; }
 
+    int hex_id() { return hex_id_; }
+
 private:
+    void hex_id(int id) { hex_id_ = id; }
+
+    int hex_id_ = hex_none;
+
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
@@ -52,4 +59,6 @@ private:
         Category = "Components",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UStaticMeshComponent> selection_indicator_;
+
+    friend Agame_mode;
 };

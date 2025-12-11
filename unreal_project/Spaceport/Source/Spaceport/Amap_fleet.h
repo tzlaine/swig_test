@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Amap_pawn_base.h"
+#include "Agame_mode.h"
 #include "constants.hpp"
 
 #include <CoreMinimal.h>
@@ -25,13 +26,20 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::fleet; }
 
+    nation_and_object_id_t nation_and_object_id() const
+    {
+        return nation_and_object_id_;
+    }
+
     void move_to_system(int system_id, FVector map_location);
 
 private:
     void execute_map_move(float delta);
+    void id(nation_and_object_id_t nao_id) { nation_and_object_id_ = nao_id; }
 
     FVector move_to_map_location_;
     int move_to_system_ = system_none;
+    nation_and_object_id_t nation_and_object_id_{nation_none, object_none};
 
     UPROPERTY(
         VisibleAnywhere,
@@ -95,4 +103,6 @@ private:
         Category = "Map movement",
         meta = (AllowPrivateAccess = "true"))
     float map_rotate_eps_ = 0.01f;
+
+    friend Agame_mode;
 };

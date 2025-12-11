@@ -219,7 +219,7 @@ void Agame_mode::signal_start_of_play()
         auto const hex_location = map_hex_position(hex.coord, gs.map_height);
         Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
             hex_class_, hex_location, FRotator(), FActorSpawnParameters());
-        // TODO: Set the hex ID in *hex_pawn.
+        hex_pawn->hex_id(to_index(hex.coord, gs.map_width));
 
         for (int i = hex.first_system, last = hex.last_system; i < last; ++i) {
             auto const & system = gs.systems[i];
@@ -243,7 +243,7 @@ void Agame_mode::signal_start_of_play()
             hovered_mid->SetVectorParameterValue(
                 TEXT("color"), ui_defaults().system_hovered_color_);
             system_pawn->selection_materials(selected_mid, hovered_mid);
-            // TODO: Set the system ID in *system_pawn. (Hex ID too?)
+            system_pawn->system_id(i);
         }
     }
 

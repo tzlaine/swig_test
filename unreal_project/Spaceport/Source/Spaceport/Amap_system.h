@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Amap_pawn_base.h"
+#include "Agame_mode.h"
+#include "constants.hpp"
 
 #include <CoreMinimal.h>
 #include "Amap_system.generated.h"
@@ -27,6 +29,8 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::system; }
 
+    int system_id() { return system_id_; }
+
     void main_material(UMaterialInstanceDynamic * mid);
 
     void selection_materials(
@@ -34,6 +38,10 @@ public:
         UMaterialInstanceDynamic * hovered);
 
 private:
+    void system_id(int id) { system_id_ = id; }
+
+    int system_id_ = system_none;
+
     UPROPERTY()
     TObjectPtr<UMaterialInstanceDynamic> main_mid_;
     UPROPERTY()
@@ -82,4 +90,6 @@ private:
         Category = "Components",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UTextRenderComponent> system_name_;
+
+    friend Agame_mode;
 };
