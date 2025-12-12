@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Agame_mode_base.h"
+#include "Agame_mode_fwd.h"
 
 #include "model.hpp"
 
@@ -14,16 +15,6 @@ class Aplaying_hud;
 class Amap_fleet;
 class Amap_system;
 class Amap_hex;
-
-UENUM(BlueprintType)
-enum class play_state : uint8 {
-    setup,            // SP, or game host in MP
-    waiting_for_game, // non-hosts in MP
-    generating,
-    playing,
-    paused,
-    ended
-};
 
 UCLASS()
 class Agame_mode : public Agame_mode_base

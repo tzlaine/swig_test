@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Agame_mode.h"
+#include "Agame_mode_fwd.h"
 #include "dir_watcher.h"
 
 #include <CoreMinimal.h>
