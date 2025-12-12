@@ -39,11 +39,11 @@ public:
     void server_save_game(FString const & filename);
     void server_save_game_Implementation(FString const & filename);
 
-    void send_initial_game_state_to_client(TArray<uint8> const & state);
     UFUNCTION(Client, Reliable)
-    void client_recv_initial_game_state(TArray<uint8> const & state);
     void
-    client_recv_initial_game_state_Implementation(TArray<uint8> const & state);
+    client_recv_initial_game_state(int nation_id, TArray<uint8> const & state);
+    void client_recv_initial_game_state_Implementation(
+        int nation_id, TArray<uint8> const & state);
 
     void send_day_updates_to_client(TArray<uint8> const & state);
     UFUNCTION(Client, Reliable)

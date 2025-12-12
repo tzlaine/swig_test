@@ -1,9 +1,12 @@
 #include "Aplayer_controller.h"
+#include "Acontroller_pawn.h"
 #include "Agame_mode.h"
 #include "Amap_fleet.h"
 #include "Amap_system.h"
 #include "Amap_hex.h"
 #include "Aplaying_hud.h"
+#include "hex_operations.hpp"
+#include "map_util.hpp"
 #include "utility.hpp"
 
 #include <EnhancedInputComponent.h>
@@ -188,19 +191,26 @@ void Aplayer_controller::server_save_game_Implementation(
     gm->save_game(filename);
 }
 
-void Aplayer_controller::send_initial_game_state_to_client(
-    TArray<uint8> const & state)
-{
-    if (HasAuthority())
-        client_recv_initial_game_state(state);
-}
-
 void Aplayer_controller::client_recv_initial_game_state_Implementation(
-    TArray<uint8> const & state)
+    int nation_id, TArray<uint8> const & state)
 {
-    if (HasAuthority())
-        return;
-    // TODO
+    UE_LOG(
+        LogTemp,
+        Warning,
+        TEXT("Client: Received message from server (%d bytes)"),
+        state.Num());
+
+    nation_id_ = nation_id;
+
+    auto game_state = from_tarray<game_state_t>(state);
+
+    auto const home_hc = from_index(
+        game_state.nations[nation_id_].hexes_seen.front(),
+        game_state.map_width);
+    auto const location = map_hex_position(home_hc, game_state.map_height);
+    auto * pawn = Cast<Acontroller_pawn>(GetPawn());
+    check(pawn);
+    pawn->SetActorLocation(location);
 }
 
 void Aplayer_controller::send_day_updates_to_client(TArray<uint8> const & state)

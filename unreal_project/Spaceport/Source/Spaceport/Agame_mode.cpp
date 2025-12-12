@@ -250,8 +250,26 @@ void Agame_mode::signal_start_of_play()
     // TODO: Move controller pawn to the middle of the map (or the player's
     // home hex).
 
-    if (auto * pc = player_controller()) {
-        // TODO? pc->SetSpawnLocation
+    // TODO: Should use whatever future mapping exists, player <--> nation.
+    int nation_id = 0;
+    check(GetWorld());
+    for (auto it = GetWorld()->GetPlayerControllerIterator(); it; ++it) {
+        auto * pc = Cast<Aplayer_controller>(it->Get());
+        check(pc);
+
+        // TODO: Send full state.
+        game_state_t game_state = {0};
+        game_state.map_width = gs.map_width;
+        game_state.map_height = gs.map_height;
+        game_state.nations.resize(nation_id + 1);
+        nation_t & nation = game_state.nations.back();
+        nation.id = nation_id;
+        auto const hc = hex_coord_t{gs.map_width / 2, gs.map_height / 2};
+        nation.hexes_seen.push_back(to_index(hc, gs.map_width));
+        TArray<uint8> state = to_tarray(game_state);
+        pc->client_recv_initial_game_state(nation_id, state);
+
+        ++nation_id;
     }
 
     cast(GameState)->play_state_ = play_state::playing;
