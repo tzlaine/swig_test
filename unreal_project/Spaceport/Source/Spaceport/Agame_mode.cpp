@@ -247,9 +247,6 @@ void Agame_mode::signal_start_of_play()
         }
     }
 
-    // TODO: Move controller pawn to the middle of the map (or the player's
-    // home hex).
-
     // TODO: Should use whatever future mapping exists, player <--> nation.
     int nation_id = 0;
     check(GetWorld());
