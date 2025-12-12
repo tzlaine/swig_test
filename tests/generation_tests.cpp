@@ -35,12 +35,14 @@ void print_simple_hexes(std::ostream & os, game_state_t const & game_state)
     for (int j = 0; j < game_state.map_height; ++j) {
         for (int i = 0; i < game_state.map_width; ++i) {
             auto const & hex = game_state.hexes[j * game_state.map_width + i];
-            switch (hex.province_id) {
-            case prov_off_map: os << ":"; break;
-            case prov_galactic_bulge: os << "X"; break;
-            case prov_galactic_center: os << "C"; break;
-            default: os << "N"; break;
-            };
+            if (hex.province_id == prov_off_map)
+                os << ":";
+            else if (hex.province_id == prov_galactic_bulge)
+                os << "X";
+            else if (hex.province_id == prov_galactic_center)
+                os << "C";
+            else
+                os << "N";
         }
         os << "\n";
     }
@@ -160,28 +162,27 @@ TEST(generation_tests, growth_factor_and_effects)
 {
     // rocky
     planet_t const earth{
-        .planet_type=planet_type_t::rocky,
-        .mass_kg=earth_mass_kg,
-        .radius_km=earth_radius_km,
-        .orbit_au=1,
-        .orbital_period_y=1,
-        .gravity_g=1,
-        .axial_tilt_d=23,
-        .day_h=24,
-        .surface_temperature_k=earth_temperature_k,
-        .magnetosphere_strength=1,
-        .atmopsheric_pressure=1,
-        .o2_co2_suitability=1,
-        .ocean_coverage=earth_ocean_coverage,
-        .growth_factor=base_pop_growth_factor,
-        .atmosphere_type=atmosphere_type_t::oxidized_type_b,
-        .water=100,
-        .food=100,
-        .energy=100,
-        .metal=100,
-        .fuel=100,
-        .max_population=100
-    };
+        .planet_type = planet_type_t::rocky,
+        .mass_kg = earth_mass_kg,
+        .radius_km = earth_radius_km,
+        .orbit_au = 1,
+        .orbital_period_y = 1,
+        .gravity_g = 1,
+        .axial_tilt_d = 23,
+        .day_h = 24,
+        .surface_temperature_k = (float)earth_temperature_k,
+        .magnetosphere_strength = 1,
+        .atmopsheric_pressure = 1,
+        .o2_co2_suitability = 1,
+        .ocean_coverage = (float)earth_ocean_coverage,
+        .growth_factor = base_pop_growth_factor,
+        .atmosphere_type = atmosphere_type_t::oxidized_type_b,
+        .water = 100,
+        .food = 100,
+        .energy = 100,
+        .metal = 100,
+        .fuel = 100,
+        .max_population = 100};
 
     {
         // Earth had better have the base habitability, and no effects.
@@ -1217,12 +1218,11 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_EQ(planet.effects.size(), 1u);
         truncate(planet.effects[0].amount, 2);
         planet_effect_t const expected = {
-            .name="uninhabitably_hot_avg_surface_temp"_name,
-            .description="uninhabitably_hot_avg_surface_temp_desc"_name,
-            .amount=growth_uninhabitable,
-            .target=planet_effect_target_t::growth_factor,
-            .operation=effect_op_t::add
-        };
+            .name = "uninhabitably_hot_avg_surface_temp"_name,
+            .description = "uninhabitably_hot_avg_surface_temp_desc"_name,
+            .amount = (float)growth_uninhabitable,
+            .target = planet_effect_target_t::growth_factor,
+            .operation = effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
 
@@ -1288,11 +1288,11 @@ TEST(generation_tests, growth_factor_and_effects)
         .gravity_g=1000,
         .axial_tilt_d=10,
         .day_h=36,
-        .surface_temperature_k=earth_temperature_k / 2,
+        .surface_temperature_k=float(earth_temperature_k / 2),
         .magnetosphere_strength=5,
-        .atmopsheric_pressure=atmos_millions,
-        .o2_co2_suitability=n_a,
-        .ocean_coverage=n_a,
+        .atmopsheric_pressure=(float)atmos_millions,
+        .o2_co2_suitability = (float)n_a,
+        .ocean_coverage = (float)n_a,
         .growth_factor=base_pop_growth_factor,
         .atmosphere_type=atmosphere_type_t::gas_giant_atmosphere,
         .water=0,
@@ -1327,11 +1327,11 @@ TEST(generation_tests, growth_factor_and_effects)
         .gravity_g=8 * 8 * 8,
         .axial_tilt_d=10,
         .day_h=12,
-        .surface_temperature_k=earth_temperature_k / 10,
+        .surface_temperature_k=float(earth_temperature_k / 10),
         .magnetosphere_strength=2,
-        .atmopsheric_pressure=atmos_thousands,
-        .o2_co2_suitability=n_a,
-        .ocean_coverage=n_a,
+        .atmopsheric_pressure = (float)atmos_thousands,
+        .o2_co2_suitability = (float)n_a,
+        .ocean_coverage = (float)n_a,
         .growth_factor=base_pop_growth_factor,
         .atmosphere_type=atmosphere_type_t::ice_giant_atmosphere,
         .water=0,
