@@ -19,6 +19,13 @@
 
 namespace {
     Aplaying_hud * cast(AHUD * base) { return Cast<Aplaying_hud>(base); }
+
+    bool dragging(FVector2D first, FVector2D last)
+    {
+        float const min_drag_distance = 5.0f;
+        float const min_dist_sq = min_drag_distance * min_drag_distance;
+        return min_dist_sq < (first - last).SquaredLength();
+    }
 }
 
 Aplayer_controller::Aplayer_controller() {}
@@ -34,7 +41,7 @@ void Aplayer_controller::Tick(float delta)
 {
     Super::Tick(delta);
 
-    if (selection_box_first_ != selection_box_last_)
+    if (dragging(selection_box_first_, selection_box_last_))
         return;
 
     FHitResult hit_result;
@@ -86,23 +93,29 @@ void Aplayer_controller::SetupInputComponent()
             check(hud);
             GetMousePosition(selection_box_last_.X, selection_box_last_.Y);
             hud->set_selection_box_last(selection_box_last_);
-            if (selection_box_first_ != selection_box_last_)
+            if (dragging(selection_box_first_, selection_box_last_))
                 dehover_all();
         });
     eic->BindActionValueLambda(
         select_object_action_, ETriggerEvent::Completed, [this](auto const &) {
-            if (selection_box_first_ != selection_box_last_) {
-                select_in_box(
-                    alternate_selection_key_down_ ? map_pawn_kind::system
-                                                  : map_pawn_kind::fleet,
-                    keep_selected_key_down_ ? deselect::no : deselect::yes);
+            auto const remove_drag_box = [this] {
                 selection_box_first_ = selection_box_last_ = FVector2D();
                 auto * hud = cast(GetHUD());
                 check(hud);
                 hud->set_selection_box_first(FVector2D());
                 hud->set_selection_box_last(FVector2D());
+            };
+
+            if (dragging(selection_box_first_, selection_box_last_)) {
+                select_in_box(
+                    alternate_selection_key_down_ ? map_pawn_kind::system
+                                                  : map_pawn_kind::fleet,
+                    keep_selected_key_down_ ? deselect::no : deselect::yes);
+                remove_drag_box();
                 return;
             }
+
+            remove_drag_box();
 
             FHitResult hit_result;
             if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
@@ -346,10 +359,12 @@ void Aplayer_controller::select(
     for (auto * p : pawns) {
         if (p->kind() != kind)
             continue;
-        FVector2D xy;
-        ProjectWorldLocationToScreen(p->GetActorLocation(), xy);
-        if (!box.IsInsideOrOn(xy))
-            continue;
+        if (dragging(selection_box_first_, selection_box_last_)) {
+            FVector2D xy;
+            ProjectWorldLocationToScreen(p->GetActorLocation(), xy);
+            if (!box.IsInsideOrOn(xy))
+                continue;
+        }
         p->select(true);
         curr_selections_.push_back(p);
     }
