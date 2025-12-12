@@ -1,5 +1,6 @@
 #include "Agame_mode_base.h"
 #include "Agame_state_base.h"
+#include "Aplayer_state.h"
 #include "game_instance.h"
 #include "utility.hpp"
 
@@ -14,6 +15,23 @@ namespace {
 Agame_mode_base::Agame_mode_base(FObjectInitializer const & init) :
     AGameModeBase(init)
 {}
+
+void Agame_mode_base::PostLogin(APlayerController * player)
+{
+    Super::PostLogin(player);
+
+    UE_LOG(LogTemp, Log, TEXT("Player logged in."));
+
+    if (!player)
+        return;
+
+    auto * ps = Cast<Aplayer_state>(player->PlayerState);
+    if (!ps)
+        return;
+
+    ps->player_id(players_);
+    ++players_;
+}
 
 void Agame_mode_base::multicast_load_playing_Implementation()
 {

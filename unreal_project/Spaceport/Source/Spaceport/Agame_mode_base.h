@@ -13,6 +13,8 @@ class Agame_mode_base : public AGameModeBase
 public:
     Agame_mode_base(FObjectInitializer const & init);
 
+    void PostLogin(APlayerController * player) override;
+
     UFUNCTION(NetMulticast, Reliable)
     void multicast_load_playing();
     void multicast_load_playing_Implementation();
@@ -22,4 +24,7 @@ public:
     void load_and_start_game_Implementation(FString const & filename);
 
     void publish_save_files();
+
+private:
+    int players_ = 0;
 };
