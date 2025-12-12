@@ -41,6 +41,9 @@ void Aplayer_controller::Tick(float delta)
 {
     Super::Tick(delta);
 
+    if (showing_main_menu())
+        return;
+
     if (dragging(selection_box_first_, selection_box_last_))
         return;
 
@@ -80,15 +83,31 @@ void Aplayer_controller::SetupInputComponent()
         return;
     }
 
+    auto const end_drag = [this] {
+        selection_box_first_ = selection_box_last_ = FVector2D();
+        auto * hud = cast(GetHUD());
+        check(hud);
+        hud->set_selection_box_first(FVector2D());
+        hud->set_selection_box_last(FVector2D());
+    };
+
     eic->BindActionValueLambda(
         select_object_action_, ETriggerEvent::Started, [this](auto const &) {
+            if (showing_main_menu())
+                return;
             auto * hud = cast(GetHUD());
             check(hud);
             GetMousePosition(selection_box_first_.X, selection_box_first_.Y);
             hud->set_selection_box_first(selection_box_first_);
         });
     eic->BindActionValueLambda(
-        select_object_action_, ETriggerEvent::Triggered, [this](auto const &) {
+        select_object_action_,
+        ETriggerEvent::Triggered,
+        [end_drag, this](auto const &) {
+            if (showing_main_menu()) {
+                end_drag();
+                return;
+            }
             auto * hud = cast(GetHUD());
             check(hud);
             GetMousePosition(selection_box_last_.X, selection_box_last_.Y);
@@ -97,25 +116,24 @@ void Aplayer_controller::SetupInputComponent()
                 dehover_all();
         });
     eic->BindActionValueLambda(
-        select_object_action_, ETriggerEvent::Completed, [this](auto const &) {
-            auto const remove_drag_box = [this] {
-                selection_box_first_ = selection_box_last_ = FVector2D();
-                auto * hud = cast(GetHUD());
-                check(hud);
-                hud->set_selection_box_first(FVector2D());
-                hud->set_selection_box_last(FVector2D());
-            };
+        select_object_action_,
+        ETriggerEvent::Completed,
+        [end_drag, this](auto const &) {
+            if (showing_main_menu()) {
+                end_drag();
+                return;
+            }
 
             if (dragging(selection_box_first_, selection_box_last_)) {
                 select_in_box(
                     alternate_selection_key_down_ ? map_pawn_kind::system
                                                   : map_pawn_kind::fleet,
                     keep_selected_key_down_ ? deselect::no : deselect::yes);
-                remove_drag_box();
+                end_drag();
                 return;
             }
 
-            remove_drag_box();
+            end_drag();
 
             FHitResult hit_result;
             if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
@@ -148,12 +166,16 @@ void Aplayer_controller::SetupInputComponent()
 
     eic->BindActionValueLambda(
         order_selected_action_, ETriggerEvent::Completed, [this](auto const &) {
+            if (showing_main_menu())
+                return;
             // TODO
         });
 
     eic->BindActionValueLambda(
         pause_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
-            // TODO
+            if (showing_main_menu())
+                return;
+            // TODO: Ask the server to pause.
         });
 
     eic->BindActionValueLambda(

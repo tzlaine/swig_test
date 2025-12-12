@@ -189,6 +189,16 @@ void Aplayer_controller_base::save_user_input_mappings()
     }
 }
 
+void Aplayer_controller_base::showing_main_menu(bool b)
+{
+    showing_main_menu_ = b;
+}
+
+bool Aplayer_controller_base::showing_main_menu() const
+{
+    return showing_main_menu_;
+}
+
 UInputMappingContext const &
 Aplayer_controller_base::input_mapping_context() const
 {

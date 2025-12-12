@@ -51,8 +51,14 @@ public:
     Uaudio_assets_t const & audio_assets();
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
+    void showing_main_menu(bool b);
+
+protected:
+    bool showing_main_menu() const;
 
 private:
+    bool showing_main_menu_ = false;
+
     UPROPERTY(
         EditAnywhere,
         Category = "Asset classes",

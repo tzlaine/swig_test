@@ -59,6 +59,10 @@ void Ahud_base::show_main_menu()
         saves = !gs->saves_.IsEmpty();
     }
     main_menu_->have_saves(saves);
+    if (auto * pc = player_controller_base()) {
+        pc->showing_main_menu(true);
+        UE_LOG(LogTemp, Log, TEXT("Showing main menu"))
+    }
 }
 
 void Ahud_base::show_save_load_dlg(bool saving)
@@ -86,6 +90,11 @@ void Ahud_base::escape_pressed()
         if (Uactivatable_widget * w = Cast<Uactivatable_widget>(activatable)) {
             if (w->cancelable()) {
                 w->cancel();
+                if (auto * pc = player_controller_base();
+                    pc && main_menu_ && w->wraps(*main_menu_)) {
+                    pc->showing_main_menu(false);
+                    UE_LOG(LogTemp, Log, TEXT("No longer showing main menu"));
+                }
                 modal_stack()->RemoveWidget(*activatable);
             }
             return;
@@ -180,6 +189,11 @@ void Ahud_base::remove_widget(Shud_widget_base & hud_widget)
     for (auto * activatable : modal_stack()->GetWidgetList()) {
         check(Cast<Uactivatable_widget>(activatable));
         if (Cast<Uactivatable_widget>(activatable)->wraps(hud_widget)) {
+            if (auto * pc = player_controller_base();
+                pc && main_menu_ && &hud_widget == main_menu_.Get()) {
+                pc->showing_main_menu(false);
+                UE_LOG(LogTemp, Log, TEXT("No longer showing main menu"));
+            }
             modal_stack()->RemoveWidget(*activatable);
             return;
         }
