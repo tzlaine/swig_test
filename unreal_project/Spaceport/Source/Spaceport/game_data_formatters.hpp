@@ -179,6 +179,11 @@ struct std::formatter<game_start_params_t> {
         out = std::format_to(out, " habitable_systems_per_hex_plus_minus={}", x.habitable_systems_per_hex_plus_minus);
         out = std::format_to(out, " systems_per_hex={}", x.systems_per_hex);
         out = std::format_to(out, " map_height={}", x.map_height);
+        out = std::format_to(out, " player_id_to_nation_id={{");
+        for (auto && [key, value] : x.player_id_to_nation_id) {
+            out = std::format_to(out, " {}:{}", key, value);
+        };
+        out = std::format_to(out, " }}");
 
         return std::format_to(out, " )");
     }

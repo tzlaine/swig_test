@@ -36,6 +36,9 @@ pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_param
     retval.set_habitable_systems_per_hex_plus_minus(value.habitable_systems_per_hex_plus_minus);
     retval.set_systems_per_hex(value.systems_per_hex);
     retval.set_map_height(value.map_height);
+    for (const auto& x : value.player_id_to_nation_id) {
+        (*retval.mutable_player_id_to_nation_id())[x.first] = x.second;
+    }
     return retval;
 }
 
@@ -46,6 +49,11 @@ pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_param
     retval.habitable_systems_per_hex_plus_minus = msg.habitable_systems_per_hex_plus_minus();
     retval.systems_per_hex = msg.systems_per_hex();
     retval.map_height = msg.map_height();
+    {
+        for (const auto& x : msg.player_id_to_nation_id()) {
+            retval.player_id_to_nation_id[x.first] = x.second;
+        }
+    }
     return retval;
 }
 

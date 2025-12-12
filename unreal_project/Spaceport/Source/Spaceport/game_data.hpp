@@ -96,6 +96,7 @@ struct game_start_params_t
     float habitable_systems_per_hex_plus_minus;
     int systems_per_hex;
     int map_height;
+    boost::container::flat_map<int, int> player_id_to_nation_id;
     bool operator==(game_start_params_t const &) const = default;
 };
 

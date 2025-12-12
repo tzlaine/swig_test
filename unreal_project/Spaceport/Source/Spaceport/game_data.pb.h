@@ -52,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[18]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[19]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -76,6 +76,9 @@ extern fleets_t_FleetIdsEntry_DoNotUseDefaultTypeInternal _fleets_t_FleetIdsEntr
 class game_start_params_t;
 class game_start_params_tDefaultTypeInternal;
 extern game_start_params_tDefaultTypeInternal _game_start_params_t_default_instance_;
+class game_start_params_t_PlayerIdToNationIdEntry_DoNotUse;
+class game_start_params_t_PlayerIdToNationIdEntry_DoNotUseDefaultTypeInternal;
+extern game_start_params_t_PlayerIdToNationIdEntry_DoNotUseDefaultTypeInternal _game_start_params_t_PlayerIdToNationIdEntry_DoNotUse_default_instance_;
 class game_state_t;
 class game_state_tDefaultTypeInternal;
 extern game_state_tDefaultTypeInternal _game_state_t_default_instance_;
@@ -123,6 +126,7 @@ template<> ::pb_message::game_data::fleet_t* Arena::CreateMaybeMessage<::pb_mess
 template<> ::pb_message::game_data::fleets_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleets_t>(Arena*);
 template<> ::pb_message::game_data::fleets_t_FleetIdsEntry_DoNotUse* Arena::CreateMaybeMessage<::pb_message::game_data::fleets_t_FleetIdsEntry_DoNotUse>(Arena*);
 template<> ::pb_message::game_data::game_start_params_t* Arena::CreateMaybeMessage<::pb_message::game_data::game_start_params_t>(Arena*);
+template<> ::pb_message::game_data::game_start_params_t_PlayerIdToNationIdEntry_DoNotUse* Arena::CreateMaybeMessage<::pb_message::game_data::game_start_params_t_PlayerIdToNationIdEntry_DoNotUse>(Arena*);
 template<> ::pb_message::game_data::game_state_t* Arena::CreateMaybeMessage<::pb_message::game_data::game_state_t>(Arena*);
 template<> ::pb_message::game_data::hex_t* Arena::CreateMaybeMessage<::pb_message::game_data::hex_t>(Arena*);
 template<> ::pb_message::game_data::location_object_t* Arena::CreateMaybeMessage<::pb_message::game_data::location_object_t>(Arena*);
@@ -470,6 +474,36 @@ class nation_and_object_id_t PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class game_start_params_t_PlayerIdToNationIdEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<game_start_params_t_PlayerIdToNationIdEntry_DoNotUse, 
+    ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32,
+    0 > {
+public:
+  typedef ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<game_start_params_t_PlayerIdToNationIdEntry_DoNotUse, 
+    ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32,
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32,
+    0 > SuperType;
+  game_start_params_t_PlayerIdToNationIdEntry_DoNotUse();
+  explicit game_start_params_t_PlayerIdToNationIdEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void MergeFrom(const game_start_params_t_PlayerIdToNationIdEntry_DoNotUse& other);
+  static const game_start_params_t_PlayerIdToNationIdEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<const game_start_params_t_PlayerIdToNationIdEntry_DoNotUse*>(&_game_start_params_t_PlayerIdToNationIdEntry_DoNotUse_default_instance_); }
+  static bool ValidateKey(void*) { return true; }
+  static bool ValidateValue(void*) { return true; }
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& other) final;
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[1];
+  }
+
+  public:
+};
+
+// -------------------------------------------------------------------
+
 class game_start_params_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.game_start_params_t) */ {
  public:
@@ -512,7 +546,7 @@ class game_start_params_t PROTOBUF_FINAL :
                &_game_start_params_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(game_start_params_t& a, game_start_params_t& b) {
     a.Swap(&b);
@@ -580,14 +614,33 @@ class game_start_params_t PROTOBUF_FINAL :
 
   // nested types ----------------------------------------------------
 
+
   // accessors -------------------------------------------------------
 
   enum : int {
+    kPlayerIdToNationIdFieldNumber = 5,
     kHabitableSystemsPerHexMeanFieldNumber = 1,
     kHabitableSystemsPerHexPlusMinusFieldNumber = 2,
     kSystemsPerHexFieldNumber = 3,
     kMapHeightFieldNumber = 4,
   };
+  // map<int32, int32> player_id_to_nation_id = 5;
+  int player_id_to_nation_id_size() const;
+  private:
+  int _internal_player_id_to_nation_id_size() const;
+  public:
+  void clear_player_id_to_nation_id();
+  private:
+  const ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >&
+      _internal_player_id_to_nation_id() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >*
+      _internal_mutable_player_id_to_nation_id();
+  public:
+  const ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >&
+      player_id_to_nation_id() const;
+  ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >*
+      mutable_player_id_to_nation_id();
+
   // float habitable_systems_per_hex_mean = 1;
   void clear_habitable_systems_per_hex_mean();
   float habitable_systems_per_hex_mean() const;
@@ -631,6 +684,12 @@ class game_start_params_t PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::MapField<
+      game_start_params_t_PlayerIdToNationIdEntry_DoNotUse,
+      ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32,
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32,
+      0 > player_id_to_nation_id_;
   float habitable_systems_per_hex_mean_;
   float habitable_systems_per_hex_plus_minus_;
   ::PROTOBUF_NAMESPACE_ID::int32 systems_per_hex_;
@@ -682,7 +741,7 @@ class unit_design_t PROTOBUF_FINAL :
                &_unit_design_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(unit_design_t& a, unit_design_t& b) {
     a.Swap(&b);
@@ -949,7 +1008,7 @@ class unit_t PROTOBUF_FINAL :
                &_unit_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(unit_t& a, unit_t& b) {
     a.Swap(&b);
@@ -1106,7 +1165,7 @@ class fleet_position_t PROTOBUF_FINAL :
                &_fleet_position_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(fleet_position_t& a, fleet_position_t& b) {
     a.Swap(&b);
@@ -1309,7 +1368,7 @@ class fleet_t PROTOBUF_FINAL :
                &_fleet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(fleet_t& a, fleet_t& b) {
     a.Swap(&b);
@@ -1530,7 +1589,7 @@ public:
   private:
   static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
     ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
-    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[6];
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[7];
   }
 
   public:
@@ -1580,7 +1639,7 @@ class fleets_t PROTOBUF_FINAL :
                &_fleets_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(fleets_t& a, fleets_t& b) {
     a.Swap(&b);
@@ -1731,7 +1790,7 @@ class planet_effect_t PROTOBUF_FINAL :
                &_planet_effect_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(planet_effect_t& a, planet_effect_t& b) {
     a.Swap(&b);
@@ -1959,7 +2018,7 @@ class planet_t PROTOBUF_FINAL :
                &_planet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(planet_t& a, planet_t& b) {
     a.Swap(&b);
@@ -2422,7 +2481,7 @@ class location_object_t PROTOBUF_FINAL :
                &_location_object_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(location_object_t& a, location_object_t& b) {
     a.Swap(&b);
@@ -2579,7 +2638,7 @@ class system_location_t PROTOBUF_FINAL :
                &_system_location_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(system_location_t& a, system_location_t& b) {
     a.Swap(&b);
@@ -2745,7 +2804,7 @@ class star_t PROTOBUF_FINAL :
                &_star_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(star_t& a, star_t& b) {
     a.Swap(&b);
@@ -2926,7 +2985,7 @@ class system_t PROTOBUF_FINAL :
                &_system_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(system_t& a, system_t& b) {
     a.Swap(&b);
@@ -3194,7 +3253,7 @@ class hex_t PROTOBUF_FINAL :
                &_hex_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(hex_t& a, hex_t& b) {
     a.Swap(&b);
@@ -3373,7 +3432,7 @@ class province_t PROTOBUF_FINAL :
                &_province_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(province_t& a, province_t& b) {
     a.Swap(&b);
@@ -3539,7 +3598,7 @@ class nation_t PROTOBUF_FINAL :
                &_nation_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(nation_t& a, nation_t& b) {
     a.Swap(&b);
@@ -3862,7 +3921,7 @@ class game_state_t PROTOBUF_FINAL :
                &_game_state_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(game_state_t& a, game_state_t& b) {
     a.Swap(&b);
@@ -4135,6 +4194,8 @@ inline void nation_and_object_id_t::set_object_id(::PROTOBUF_NAMESPACE_ID::int32
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 // game_start_params_t
 
 // float habitable_systems_per_hex_mean = 1;
@@ -4215,6 +4276,35 @@ inline void game_start_params_t::_internal_set_map_height(::PROTOBUF_NAMESPACE_I
 inline void game_start_params_t::set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_map_height(value);
   // @@protoc_insertion_point(field_set:pb_message.game_data.game_start_params_t.map_height)
+}
+
+// map<int32, int32> player_id_to_nation_id = 5;
+inline int game_start_params_t::_internal_player_id_to_nation_id_size() const {
+  return player_id_to_nation_id_.size();
+}
+inline int game_start_params_t::player_id_to_nation_id_size() const {
+  return _internal_player_id_to_nation_id_size();
+}
+inline void game_start_params_t::clear_player_id_to_nation_id() {
+  player_id_to_nation_id_.Clear();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >&
+game_start_params_t::_internal_player_id_to_nation_id() const {
+  return player_id_to_nation_id_.GetMap();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >&
+game_start_params_t::player_id_to_nation_id() const {
+  // @@protoc_insertion_point(field_map:pb_message.game_data.game_start_params_t.player_id_to_nation_id)
+  return _internal_player_id_to_nation_id();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >*
+game_start_params_t::_internal_mutable_player_id_to_nation_id() {
+  return player_id_to_nation_id_.MutableMap();
+}
+inline ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::int32 >*
+game_start_params_t::mutable_player_id_to_nation_id() {
+  // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.game_start_params_t.player_id_to_nation_id)
+  return _internal_mutable_player_id_to_nation_id();
 }
 
 // -------------------------------------------------------------------
@@ -7668,6 +7758,8 @@ inline void game_state_t::set_play_speed(::PROTOBUF_NAMESPACE_ID::int32 value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

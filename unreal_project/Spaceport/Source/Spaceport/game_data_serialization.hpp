@@ -71,6 +71,7 @@ namespace detail {
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.habitable_systems_per_hex_plus_minus, 2, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_per_hex, 3, os);
         retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_height, 4, os);
+        retval += detail::serialize_impl<Op, ser_field_op::write>(x.player_id_to_nation_id, 5, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -80,13 +81,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "game_start_params_t"sv;
-        constexpr std::array<std::string_view, 5> field_names = {{"<UNKOWN_FIELD>"sv,
-          "habitable_systems_per_hex_mean"sv, "habitable_systems_per_hex_plus_minus"sv, "systems_per_hex"sv, "map_height"sv}};
-        std::array<int, 4> expected_field_numbers = {{
-          1, 2, 3, 4}};
+        constexpr std::array<std::string_view, 6> field_names = {{"<UNKOWN_FIELD>"sv,
+          "habitable_systems_per_hex_mean"sv, "habitable_systems_per_hex_plus_minus"sv, "systems_per_hex"sv, "map_height"sv, "player_id_to_nation_id"sv}};
+        std::array<int, 5> expected_field_numbers = {{
+          1, 2, 3, 4, 5}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 4;
+        constexpr int hi_field_number = 5;
     
         auto read_field = [] (game_start_params_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -94,6 +95,7 @@ namespace detail {
             case 2: return detail::deserialize_impl(x.habitable_systems_per_hex_plus_minus, src);
             case 3: return detail::deserialize_impl(x.systems_per_hex, src);
             case 4: return detail::deserialize_impl(x.map_height, src);
+            case 5: return detail::deserialize_impl(x.player_id_to_nation_id, src);
             default: return src; // unreachable
             }
         };
