@@ -1,4 +1,5 @@
 #include "Amap_system.h"
+#include "Agame_mode.h"
 #include "constants.hpp"
 #include "utility.hpp"
 

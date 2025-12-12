@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Amap_pawn_base.h"
-#include "Agame_mode.h"
 #include "constants.hpp"
 
 #include <CoreMinimal.h>
 #include "Amap_system.generated.h"
 
 
+class Agame_mode;
 class UMaterialInstanceDynamic;
 class USceneComponent;
 class USphereComponent;

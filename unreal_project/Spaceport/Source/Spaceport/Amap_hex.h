@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Amap_pawn_base.h"
-#include "Agame_mode.h"
 
 #include <CoreMinimal.h>
 #include "Amap_hex.generated.h"
 
 
+class Agame_mode;
 class USceneComponent;
 class UStaticMeshComponent;
 

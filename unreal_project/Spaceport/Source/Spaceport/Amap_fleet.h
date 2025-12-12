@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Amap_pawn_base.h"
-#include "Agame_mode.h"
 #include "constants.hpp"
+#include "game_data.hpp"
 
 #include <CoreMinimal.h>
 #include "Amap_fleet.generated.h"
 
 
+class Agame_mode;
 class UFloatingPawnMovement;
 class UStaticMeshComponent;
 
