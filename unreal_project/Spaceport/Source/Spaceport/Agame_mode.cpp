@@ -5,6 +5,7 @@
 #include "Amap_system.h"
 #include "Aplaying_hud.h"
 #include "Aplayer_controller.h"
+#include "Aplayer_state.h"
 #include "game_instance.h"
 #include "map_util.hpp"
 #include "materials.h"
@@ -105,6 +106,7 @@ void Agame_mode::setup_for_game_start_Implementation(
     percent_complete_ = std::make_unique<concurrent_queue<int>>();
 
     auto params = from_tarray<game_start_params_t>(params_);
+    player_id_to_nation_id_ = params.player_id_to_nation_id;
     generation_thread_ =
         std::jthread([&, params = std::move(params), this] {
             model_.generate_galaxy(
@@ -247,12 +249,14 @@ void Agame_mode::signal_start_of_play()
         }
     }
 
-    // TODO: Should use whatever future mapping exists, player <--> nation.
-    int nation_id = 0;
     check(GetWorld());
     for (auto it = GetWorld()->GetPlayerControllerIterator(); it; ++it) {
         auto * pc = Cast<Aplayer_controller>(it->Get());
         check(pc);
+
+        auto * ps = Cast<Aplayer_state>(pc->PlayerState);
+        check(ps);
+        int const nation_id = player_id_to_nation_id_[ps->player_id()];
 
         // TODO: Send full state.
         game_state_t game_state = {0};
@@ -265,8 +269,6 @@ void Agame_mode::signal_start_of_play()
         nation.hexes_seen.push_back(to_index(hc, gs.map_width));
         TArray<uint8> state = to_tarray(game_state);
         pc->client_recv_initial_game_state(nation_id, state);
-
-        ++nation_id;
     }
 
     cast(GameState)->play_state_ = play_state::playing;

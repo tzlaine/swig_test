@@ -1,6 +1,7 @@
 #include "Sgame_setup.h"
 #include "Agame_mode.h"
 #include "Aplayer_controller.h"
+#include "Aplayer_state.h"
 #include "game_instance.h"
 #include "utility.hpp"
 #include "widgets/Sstyled_button.h"
@@ -8,6 +9,7 @@
 #include "widgets/Sstyled_text_block.h"
 #include <ui_defaults.h>
 
+#include <EngineUtils.h>
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SCanvas.h>
@@ -25,6 +27,11 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void Sgame_setup::Construct(FArguments const & args)
 {
+    for (TActorIterator<APlayerState> it(::world()); it; ++it) {
+        auto * ps = Cast<Aplayer_state>(*it);
+        params_.player_id_to_nation_id[ps->player_id()] = ps->player_id();
+    }
+
     UFont * title_font = ui_defaults().title_font_.Get();
 
     TSharedPtr<SVerticalBox> vbox;

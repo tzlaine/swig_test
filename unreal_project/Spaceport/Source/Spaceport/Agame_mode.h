@@ -54,6 +54,9 @@ private:
     float seconds_since_last_day_tick_ = 0.0;
     model model_;
 
+    // game setup
+    boost::container::flat_map<int, int> player_id_to_nation_id_;
+
     // generating the galaxy
     std::jthread generation_thread_;
     std::unique_ptr<concurrent_queue<int>> percent_complete_;
