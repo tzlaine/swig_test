@@ -10,15 +10,51 @@
 #include <EnhancedInputSubsystems.h>
 #include <InputAction.h>
 #include <InputMappingContext.h>
+#include <Components/InstancedStaticMeshComponent.h>
 #include <Engine/LocalPlayer.h>
 #include <Engine/World.h>
 
 
 namespace {
     Aplaying_hud * cast(AHUD * base) { return Cast<Aplaying_hud>(base); }
+
+    FTransform const hidden_xform = [] {
+        FTransform retval;
+        retval.SetLocation(FVector(-100000, -100000, -100000));
+        return retval;
+    }();
 }
 
-Aplayer_controller::Aplayer_controller() {}
+Aplayer_controller::Aplayer_controller()
+{
+    selected_systems_ = CreateDefaultSubobject<UInstancedStaticMeshComponent>(
+        TEXT("selected_systems"));
+    hovered_systems_ = CreateDefaultSubobject<UInstancedStaticMeshComponent>(
+        TEXT("hovered_systems"));
+
+    RootComponent->SetMobility(EComponentMobility::Static);
+
+    selected_systems_->SetupAttachment(RootComponent);
+    hovered_systems_->SetupAttachment(RootComponent);
+
+    // collisions
+    selected_systems_->SetCollisionProfileName(
+        UCollisionProfile::NoCollision_ProfileName);
+    hovered_systems_->SetCollisionProfileName(
+        UCollisionProfile::NoCollision_ProfileName);
+
+    // mobility
+    selected_systems_->SetMobility(EComponentMobility::Static);
+    hovered_systems_->SetMobility(EComponentMobility::Static);
+
+    // shadows
+    selected_systems_->SetCastShadow(false);
+    hovered_systems_->bReceiveMobileCSMShadows = false;
+
+    // ticks
+    selected_systems_->SetComponentTickEnabled(false);
+    hovered_systems_->SetComponentTickEnabled(false);
+}
 
 void Aplayer_controller::BeginPlay()
 {
@@ -268,6 +304,17 @@ void Aplayer_controller::dehover_all()
         p->hover(false);
     }
     curr_hovers_.clear();
+
+    for (int i : curr_system_hovers_new_) {
+        hovered_systems_->UpdateInstanceTransform(i, hidden_xform, true);
+    }
+    if (!curr_system_hovers_new_.empty()) {
+        hovered_systems_->UpdateInstanceTransform(
+            curr_system_hovers_new_.back(), hidden_xform, true, true);
+    }
+    curr_system_hovers_new_.clear();
+
+    // TODO: Same must be done for fleet hovers.
 }
 
 void Aplayer_controller::deselect_all()
@@ -278,15 +325,56 @@ void Aplayer_controller::deselect_all()
     curr_selections_.clear();
 }
 
+void ensure_instances_includes(UInstancedStaticMeshComponent * ismc, int id)
+{
+    int const curr_instances = ismc->GetNumInstances();
+    for (int i = curr_instances; i <= id; ++i) {
+        ismc->AddInstance(hidden_xform, true);
+    }
+}
+
 void Aplayer_controller::hover(Amap_pawn_base * pawn)
 {
     dehover_all();
+#if 0
     if (std::ranges::any_of(
             curr_selections_, [pawn](auto * e) { return e == pawn; })) {
         return;
     }
     pawn->hover(true);
     curr_hovers_.push_back(pawn);
+#endif
+
+    switch (pawn->kind()) {
+    case map_pawn_kind::hex: return;
+
+    case map_pawn_kind::system: {
+        auto * system = Cast<Amap_system>(pawn);
+        int const id = system->system_id();
+        if (std::ranges::any_of(curr_system_selections_new_, [id](int e) {
+                return e == id;
+            })) {
+            return;
+        }
+        ensure_instances_includes(hovered_systems_, id);
+        FTransform xform;
+        xform.SetLocation(pawn->GetActorLocation() - FVector(0, 0, 10));
+        xform.SetRotation(FQuat(FVector::ZAxisVector, 180));
+        hovered_systems_->UpdateInstanceTransform(id, xform, true, true);
+        curr_system_hovers_new_.push_back(id);
+        break;
+    }
+
+    case map_pawn_kind::fleet: {
+        auto * fleet = Cast<Amap_fleet>(pawn);
+        // TODO
+        break;
+    }
+
+    case map_pawn_kind::unknown:
+    case map_pawn_kind::any:
+    default: check(false); // unreachable
+    }
 }
 
 void Aplayer_controller::select(Amap_pawn_base * pawn, deselect deselect_curr)

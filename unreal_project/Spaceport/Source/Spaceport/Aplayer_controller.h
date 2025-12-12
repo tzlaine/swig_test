@@ -14,6 +14,7 @@ class Amap_pawn_base;
 class Agame_mode;
 struct FInputActionValue;
 class UInputAction;
+class UInstancedStaticMeshComponent;
 
 UCLASS()
 class Aplayer_controller : public Aplayer_controller_base
@@ -90,6 +91,23 @@ private:
     bool alternate_selection_key_down_ = false;
     FVector2D selection_box_first_;
     FVector2D selection_box_last_;
+
+    std::vector<int> curr_system_selections_new_;
+    std::vector<int> curr_system_hovers_new_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Components",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInstancedStaticMeshComponent> selected_systems_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Components",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInstancedStaticMeshComponent> hovered_systems_;
 
     UPROPERTY(
         EditAnywhere,
