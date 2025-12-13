@@ -6,6 +6,7 @@
 
 UENUM(BlueprintType)
 enum class play_state : uint8 {
+    start_menu,
     setup,            // SP, or game host in MP
     waiting_for_game, // non-hosts in MP
     generating,

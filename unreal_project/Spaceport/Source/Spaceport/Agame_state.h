@@ -35,7 +35,9 @@ public:
     void save_file_changes_changed();
 
     UPROPERTY(ReplicatedUsing = play_state_changed)
-    play_state play_state_ = play_state::setup;
+    play_state prev_play_state_ = play_state::start_menu;
+    UPROPERTY(ReplicatedUsing = play_state_changed)
+    play_state play_state_ = play_state::start_menu;
     UFUNCTION()
     void play_state_changed();
 

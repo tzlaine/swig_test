@@ -26,6 +26,14 @@ namespace {
         return Cast<Agame_state>(base);
     }
 
+    void set_play_state(AGameStateBase * gs_, play_state s)
+    {
+        auto * gs = cast(gs_);
+        gs->prev_play_state_ = gs->play_state_;
+        gs->play_state_ = s;
+        gs->play_state_changed();
+    }
+
     float seconds_between_day_ticks(int speed)
     {
         check(1 <= speed && speed <= 5);
@@ -101,8 +109,7 @@ void Agame_mode::setup_for_game_start_Implementation(
     if (auto * hud_ptr = playing_hud())
         hud_ptr->show_generating_galaxy();
 
-    cast(GameState)->play_state_ = play_state::generating;
-    cast(GameState)->play_state_changed();
+    set_play_state(GameState, play_state::generating);
     percent_complete_ = std::make_unique<concurrent_queue<int>>();
 
     auto params = from_tarray<game_start_params_t>(params_);
@@ -123,17 +130,18 @@ void Agame_mode::save_game(FString const & filename)
 
 void Agame_mode::toggle_pause()
 {
-    if (cast(GameState)->play_state_ != play_state::playing &&
-        cast(GameState)->play_state_ != play_state::paused) {
-        return;
-    }
     if (cast(GameState)->play_state_ == play_state::playing) {
         // TODO: Give a notification of duration of pause in MP.
-        cast(GameState)->play_state_ = play_state::paused;
+        set_play_state(GameState, play_state::paused);
+    } else if (cast(GameState)->play_state_ == play_state::paused) {
+        set_play_state(GameState, play_state::playing);
     } else {
-        cast(GameState)->play_state_ = play_state::playing;
+        UE_LOG(
+            LogTemp,
+            Error,
+            TEXT("Agame_mode::toggle_pause() Called when the game is not in "
+                 "session."));
     }
-    cast(GameState)->play_state_changed();
 }
 
 void Agame_mode::play_speed(int speed)
@@ -154,8 +162,7 @@ void Agame_mode::ready_for_sp_game()
 {
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
     if (load_path.empty()) {
-        cast(GameState)->play_state_ = play_state::setup;
-        cast(GameState)->play_state_changed();
+        set_play_state(GameState, play_state::setup);
         if (auto * hud_ptr = playing_hud())
             hud_ptr->show_game_setup();
     } else {
@@ -273,6 +280,5 @@ void Agame_mode::signal_start_of_play()
         pc->client_recv_initial_game_state(nation_id, state);
     }
 
-    cast(GameState)->play_state_ = play_state::paused;
-    cast(GameState)->play_state_changed();
+    set_play_state(GameState, play_state::paused);
 }

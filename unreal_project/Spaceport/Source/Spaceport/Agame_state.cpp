@@ -43,7 +43,8 @@ void Agame_state::play_state_changed()
     UE_LOG(
         LogTemp,
         Warning,
-        TEXT("Client: play state changed to %s"),
+        TEXT("Client: play state changed, %s -> %s"),
+        *UEnum::GetValueAsString(prev_play_state_),
         *UEnum::GetValueAsString(play_state_));
 }
 
@@ -58,6 +59,7 @@ void Agame_state::GetLifetimeReplicatedProps(
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     DOREPLIFETIME(Agame_state, saves_);
     DOREPLIFETIME(Agame_state, save_file_changes_);
+    DOREPLIFETIME(Agame_state, prev_play_state_);
     DOREPLIFETIME(Agame_state, play_state_);
     DOREPLIFETIME(Agame_state, play_speed_);
 }
