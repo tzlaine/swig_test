@@ -6,6 +6,26 @@
 #include <Net/UnrealNetwork.h>
 
 
+namespace {
+    struct state_transtion
+    {
+        FString name_;
+        std::function<void()> f_;
+    };
+    static_assert((int)play_state::ended + 1 == 7);
+    std::array<
+        std::array<state_transtion, (int)play_state::ended + 1>,
+        (int)play_state::ended + 1>
+        g_state_transitions = {
+            {{{{}, {}, {}, {}, {}, {}, {}}},
+             {{{}, {}, {}, {}, {}, {}, {}}},
+             {{{}, {}, {}, {}, {}, {}, {}}},
+             {{{}, {}, {}, {}, {}, {}, {}}},
+             {{{}, {}, {}, {}, {}, {}, {}}},
+             {{{}, {}, {}, {}, {}, {}, {}}},
+             {{{}, {}, {}, {}, {}, {}, {}}}}};
+}
+
 Agame_state::Agame_state()
 {
     bReplicates = true;
@@ -46,6 +66,17 @@ void Agame_state::play_state_changed()
         TEXT("Client: play state changed, %s -> %s"),
         *UEnum::GetValueAsString(prev_play_state_),
         *UEnum::GetValueAsString(play_state_));
+
+    if (auto const & transition =
+            g_state_transitions[(int)prev_play_state_][(int)play_state_];
+        transition.f_) {
+        UE_LOG(
+            LogTemp,
+            Log,
+            TEXT("Executing associated transition '%s'..."),
+            *transition.name_);
+        transition.f_();
+    }
 }
 
 void Agame_state::play_speed_changed()
