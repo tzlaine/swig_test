@@ -13,3 +13,8 @@ enum class play_state : uint8 {
     paused,
     ended
 };
+
+inline bool playing_or_paused(play_state s)
+{
+    return s == play_state::playing || s == play_state::paused;
+}

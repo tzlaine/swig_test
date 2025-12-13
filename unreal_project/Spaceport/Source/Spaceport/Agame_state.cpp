@@ -13,6 +13,11 @@ Agame_state::Agame_state()
     bOnlyRelevantToOwner = false;
 }
 
+bool Agame_state::playing_or_paused() const
+{
+    return ::playing_or_paused(play_state_);
+}
+
 void Agame_state::saves_changed()
 {
     UE_LOG(

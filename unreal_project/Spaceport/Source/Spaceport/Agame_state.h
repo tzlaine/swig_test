@@ -16,6 +16,8 @@ class Agame_state : public AGameStateBase
 public:
     Agame_state();
 
+    bool playing_or_paused() const;
+
     UPROPERTY(
         ReplicatedUsing = saves_changed,
         BlueprintReadOnly,

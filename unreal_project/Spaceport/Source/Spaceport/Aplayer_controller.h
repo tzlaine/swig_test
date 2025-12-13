@@ -96,6 +96,7 @@ public:
     TArray<FEnhancedActionKeyMapping>
     player_mappable_action_key_mappings() const;
     TMap<FKey, FKey> current_to_default_keys() const;
+    int nation_id() const { return nation_id_; }
 
     Uui_defaults_t const & ui_defaults();
     Umaterials_t const & materials();
@@ -104,8 +105,6 @@ public:
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
     void showing_main_menu(bool b);
-
-    int nation_id() const { return nation_id_; }
 
 protected:
     bool showing_main_menu() const;

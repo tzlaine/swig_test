@@ -102,6 +102,19 @@ void Aplayer_controller::SetupInputComponent()
         return;
     }
 
+    // always in use
+    eic->BindActionValueLambda(
+        menu_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
+            if (auto * hud = hud_base(GetHUD()))
+                hud->escape_pressed();
+        });
+
+    auto const use_map_actions = [this] {
+        auto * gs = GetWorld()->GetGameState<Agame_state>();
+        check(gs);
+        return gs->playing_or_paused();
+    };
+
     auto const end_drag = [this] {
         selection_box_first_ = selection_box_last_ = FVector2D();
         auto * hud = cast(GetHUD());
@@ -111,13 +124,11 @@ void Aplayer_controller::SetupInputComponent()
     };
 
     eic->BindActionValueLambda(
-        menu_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
-            if (auto * hud = hud_base(GetHUD()))
-                hud->escape_pressed();
-        });
-
-    eic->BindActionValueLambda(
-        select_object_action_, ETriggerEvent::Started, [this](auto const &) {
+        select_object_action_,
+        ETriggerEvent::Started,
+        [use_map_actions, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu())
                 return;
             auto * hud = cast(GetHUD());
@@ -128,7 +139,9 @@ void Aplayer_controller::SetupInputComponent()
     eic->BindActionValueLambda(
         select_object_action_,
         ETriggerEvent::Triggered,
-        [end_drag, this](auto const &) {
+        [use_map_actions, end_drag, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu()) {
                 end_drag();
                 return;
@@ -143,7 +156,9 @@ void Aplayer_controller::SetupInputComponent()
     eic->BindActionValueLambda(
         select_object_action_,
         ETriggerEvent::Completed,
-        [end_drag, this](auto const &) {
+        [use_map_actions, end_drag, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu()) {
                 end_drag();
                 return;
@@ -190,7 +205,11 @@ void Aplayer_controller::SetupInputComponent()
         });
 
     eic->BindActionValueLambda(
-        order_selected_action_, ETriggerEvent::Completed, [this](auto const &) {
+        order_selected_action_,
+        ETriggerEvent::Completed,
+        [use_map_actions, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu())
                 return;
             // TODO
@@ -199,7 +218,9 @@ void Aplayer_controller::SetupInputComponent()
     eic->BindActionValueLambda(
         incr_play_speed_action_,
         ETriggerEvent::Completed,
-        [this](auto const &) {
+        [use_map_actions, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu())
                 return;
             auto * gs = GetWorld()->GetGameState<Agame_state>();
@@ -211,7 +232,9 @@ void Aplayer_controller::SetupInputComponent()
     eic->BindActionValueLambda(
         decr_play_speed_action_,
         ETriggerEvent::Completed,
-        [this](auto const &) {
+        [use_map_actions, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu())
                 return;
             auto * gs = GetWorld()->GetGameState<Agame_state>();
@@ -221,7 +244,11 @@ void Aplayer_controller::SetupInputComponent()
         });
 
     eic->BindActionValueLambda(
-        pause_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
+        pause_toggle_action_,
+        ETriggerEvent::Completed,
+        [use_map_actions, this](auto const &) {
+            if (!use_map_actions())
+                return;
             if (showing_main_menu())
                 return;
             server_toggle_pause();
