@@ -138,11 +138,13 @@ void Agame_mode::toggle_pause()
 
 void Agame_mode::play_speed(int speed)
 {
-    if (cast(GameState)->play_state_ != play_state::playing)
+    if (cast(GameState)->play_state_ != play_state::playing &&
+        cast(GameState)->play_state_ != play_state::paused) {
         return;
+    }
     // TODO: Give a notification of speed change a bit before changing it in
     // MP.
-    speed = std::clamp(1, 5, speed);
+    speed = std::clamp(speed, 1, 5);
     model_.set_speed(speed);
     cast(GameState)->play_speed_ = speed;
     cast(GameState)->play_speed_changed();

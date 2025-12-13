@@ -1,6 +1,7 @@
 #include "Aplayer_controller.h"
 #include "Acontroller_pawn.h"
 #include "Agame_mode.h"
+#include "Agame_state.h"
 #include "Amap_fleet.h"
 #include "Amap_system.h"
 #include "Amap_hex.h"
@@ -74,6 +75,7 @@ void Aplayer_controller::SetupInputComponent()
     check(eic);
 
     if (!select_object_action_ || !order_selected_action_ ||
+        !incr_play_speed_action_ || !decr_play_speed_action_ ||
         !pause_toggle_action_ || !keep_selected_action_ ||
         !alternate_selection_action_) {
         UE_LOG(
@@ -172,10 +174,34 @@ void Aplayer_controller::SetupInputComponent()
         });
 
     eic->BindActionValueLambda(
+        incr_play_speed_action_,
+        ETriggerEvent::Completed,
+        [this](auto const &) {
+            if (showing_main_menu())
+                return;
+            auto * gs = GetWorld()->GetGameState<Agame_state>();
+            check(gs);
+            if (gs->play_speed_ < 5)
+                server_change_play_speed(gs->play_speed_ + 1);
+        });
+
+    eic->BindActionValueLambda(
+        decr_play_speed_action_,
+        ETriggerEvent::Completed,
+        [this](auto const &) {
+            if (showing_main_menu())
+                return;
+            auto * gs = GetWorld()->GetGameState<Agame_state>();
+            check(gs);
+            if (1 < gs->play_speed_)
+                server_change_play_speed(gs->play_speed_ - 1);
+        });
+
+    eic->BindActionValueLambda(
         pause_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
             if (showing_main_menu())
                 return;
-            // TODO: Ask the server to pause.
+            server_toggle_pause();
         });
 
     eic->BindActionValueLambda(

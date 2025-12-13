@@ -110,6 +110,20 @@ private:
         BlueprintReadOnly,
         Category = "Input",
         meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> incr_play_speed_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> decr_play_speed_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UInputAction> pause_toggle_action_;
 
     UPROPERTY(

@@ -21,7 +21,7 @@ public:
     void play_state_changed();
 
     UPROPERTY(ReplicatedUsing = play_speed_changed)
-    int play_speed_ = 0;
+    int play_speed_ = 1;
     UFUNCTION()
     void play_speed_changed();
 
