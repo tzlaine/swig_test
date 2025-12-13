@@ -28,8 +28,8 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void Sgame_setup::Construct(FArguments const & args)
 {
     for (TActorIterator<APlayerState> it(::world()); it; ++it) {
-        auto * ps = Cast<Aplayer_state>(*it);
-        params_.player_id_to_nation_id[ps->player_id()] = ps->player_id();
+        if (auto * ps = Cast<Aplayer_state>(*it))
+            params_.player_id_to_nation_id[ps->player_id()] = ps->player_id();
     }
 
     UFont * title_font = ui_defaults().title_font_.Get();

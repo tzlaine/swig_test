@@ -216,7 +216,7 @@ void Ahud_t::remove_widget(Shud_widget_base & hud_widget)
 
 void Ahud_t::remove_all_widgets()
 {
-    auto const & all_widgets = modal_stack()->GetWidgetList();
+    auto const all_widgets = modal_stack()->GetWidgetList();
     for (auto * activatable : all_widgets) {
         modal_stack()->RemoveWidget(*activatable);
     }

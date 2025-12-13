@@ -318,7 +318,7 @@ void Aplayer_controller::server_new_game_Implementation(
         return;
     Ugame_instance::get()->game_kind(kind);
     Ugame_instance::get()->game_to_load(*save.FilePath);
-    gm->multicast_load_playing();
+    gm->ready_for_game();
 }
 
 void Aplayer_controller::server_load_game_Implementation(
@@ -357,7 +357,7 @@ void Aplayer_controller::server_start_game_Implementation(
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
-    gm->setup_for_game_start(params);
+    gm->load_or_generate(params);
 }
 
 void Aplayer_controller::server_save_game_Implementation(
