@@ -46,20 +46,14 @@ namespace {
 Agame_mode::Agame_mode(FObjectInitializer const & init) : Agame_mode_base(init)
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode CTOR"));
-    HUDClass = Aplaying_hud::StaticClass();
-    PlayerControllerClass = Aplayer_controller::StaticClass();
-    GameStateClass = Agame_state::StaticClass();
-    UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode CTOR"));
-
     PrimaryActorTick.bCanEverTick = true;
-    bReplicates = true;
-    bAlwaysRelevant = true;
-    bOnlyRelevantToOwner = true;
+    UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode CTOR"));
 }
 
 void Agame_mode::BeginPlay()
 {
-    Super::BeginPlay();
+    // Explicitly NOT calling Super::EndPlay.
+    AGameModeBase::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::BeginPlay()"));
     if (Ugame_instance::get()->game_kind() == game_kind::sp)
         ready_for_sp_game();
@@ -91,6 +85,12 @@ void Agame_mode::Tick(float secs)
 
     // TODO: Update moving actors on the map; do the next day/month/year tick(s)
     // if necessary; send out model updates to clients.
+}
+
+void Agame_mode::EndPlay(EEndPlayReason::Type reason)
+{
+    // Explicitly NOT calling Super::EndPlay.
+    AGameModeBase::EndPlay(reason);
 }
 
 void Agame_mode::multicast_quit_to_menu_Implementation()

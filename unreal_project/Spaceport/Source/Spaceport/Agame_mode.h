@@ -31,6 +31,7 @@ public:
 
     void BeginPlay() override;
     void Tick(float secs) override;
+    void EndPlay(EEndPlayReason::Type reason) override;
 
     UFUNCTION(NetMulticast, Reliable)
     void multicast_quit_to_menu();

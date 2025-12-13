@@ -1,5 +1,6 @@
 #include "Aplayer_controller.h"
 #include "Acontroller_pawn.h"
+#include "Agame_mode_base.h"
 #include "Agame_mode.h"
 #include "Agame_state.h"
 #include "Ahud_t.h"
@@ -12,7 +13,6 @@
 #include "textures.h"
 #include "ui_defaults.h"
 #include "utility.hpp"
-#include "huds/Amain_menu_game_mode.h"
 
 #include <EnhancedInputComponent.h>
 #include <EnhancedInputSubsystems.h>
@@ -333,7 +333,7 @@ void Aplayer_controller::server_load_game_Implementation(
 
 void Aplayer_controller::server_load_newest_game_Implementation()
 {
-    auto * gm = GetWorld()->GetAuthGameMode<Amain_menu_game_mode>();
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
     if (!gm)
         return;
 
