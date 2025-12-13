@@ -273,6 +273,6 @@ void Agame_mode::signal_start_of_play()
         pc->client_recv_initial_game_state(nation_id, state);
     }
 
-    cast(GameState)->play_state_ = play_state::playing;
+    cast(GameState)->play_state_ = play_state::paused;
     cast(GameState)->play_state_changed();
 }
