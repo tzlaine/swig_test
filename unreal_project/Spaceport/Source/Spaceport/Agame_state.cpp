@@ -13,17 +13,38 @@ namespace {
         std::function<void()> f_;
     };
     static_assert((int)play_state::ended + 1 == 7);
+    state_transtion const remove_all{TEXT("remove_all_widgets"), [] {
+                                         if (auto * hud = ::hud_base())
+                                             hud->remove_all_widgets();
+                                     }};
+    state_transtion const show_main_menu{TEXT("show_main_menu"), [] {
+                                             if (auto * hud = ::hud_base()) {
+                                                 hud->remove_all_widgets();
+                                                 hud->show_main_menu(false);
+                                             }
+                                         }};
+
+    // Anything that needs to be done -- especially to the UI -- on a
+    // play_state transition should go in the table below.  Note that
+    // transitions like start_menu -> setup and setup -> generating do not,
+    // because each simply pushes a modal (UCommonActivatableWidget) widget
+    // onto the stack, hiding the previous widget(s).
+
+    // clang-format off
     std::array<
         std::array<state_transtion, (int)play_state::ended + 1>,
         (int)play_state::ended + 1>
-        g_state_transitions = {
-            {{{{}, {}, {}, {}, {}, {}, {}}},
-             {{{}, {}, {}, {}, {}, {}, {}}},
-             {{{}, {}, {}, {}, {}, {}, {}}},
-             {{{}, {}, {}, {}, {}, {}, {}}},
-             {{{}, {}, {}, {}, {}, {}, {}}},
-             {{{}, {}, {}, {}, {}, {}, {}}},
-             {{{}, {}, {}, {}, {}, {}, {}}}}};
+        g_state_transitions = {{
+//                  start_menu        setup  waiting generating playing          paused        ended
+/* start_menu  */ {{{},               {},    {},     {},        {},              {},           {}}},
+/* setup       */ {{{},               {},    {},     {},        {},              {},           {}}},
+/* waiting_... */ {{{},               {},    {},     {},        {remove_all},    {remove_all}, {}}},
+/* generating  */ {{{},               {},    {},     {},        {remove_all},    {remove_all}, {}}},
+/* playing     */ {{{show_main_menu}, {},    {},     {},        {},              {},           {}}},
+/* paused      */ {{{show_main_menu}, {},    {},     {},        {},              {},           {}}},
+/* ended       */ {{{show_main_menu}, {},    {},     {},        {},              {},           {}}}
+        }};
+    // clang-format on
 }
 
 Agame_state::Agame_state()

@@ -28,7 +28,7 @@ void Amain_menu_hud::BeginPlay()
 {
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
-    show_main_menu();
+    show_main_menu(false);
     show_deferred_notifications(level::start);
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
 }

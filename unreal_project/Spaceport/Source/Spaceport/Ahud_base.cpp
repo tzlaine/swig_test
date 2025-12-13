@@ -49,9 +49,9 @@ void Ahud_base::in_game(bool b)
     in_game_ = b;
 }
 
-void Ahud_base::show_main_menu()
+void Ahud_base::show_main_menu(bool in_game)
 {
-    allocate_widgets();
+    main_menu_ = SNew(Smain_menu).in_game(in_game);
     push_modal(main_menu_);
     bool saves = false;
     if (auto * gs = Cast<Agame_state>(
@@ -113,7 +113,7 @@ void Ahud_base::escape_pressed()
 #endif
 
     if (in_game_)
-        show_main_menu();
+        show_main_menu(true);
 }
 
 void Ahud_base::do_after_confirming(std::function<void()> action,
@@ -200,19 +200,20 @@ void Ahud_base::remove_widget(Shud_widget_base & hud_widget)
     }
 }
 
+void Ahud_base::remove_all_widgets()
+{
+    auto const & all_widgets = modal_stack()->GetWidgetList();
+    for (auto * activatable : all_widgets) {
+        modal_stack()->RemoveWidget(*activatable);
+    }
+}
+
 void Ahud_base::show_deferred_notifications(level l)
 {
     auto notifications = Ugame_instance::get()->deferred_notifications(l);
     for (auto & n : notifications) {
         notify_user(std::move(n.title_), std::move(n.msg_));
     }
-}
-
-void Ahud_base::allocate_widgets()
-{
-    if (main_menu_)
-        return;
-    main_menu_ = SNew(Smain_menu).in_game(in_game_);
 }
 
 UCommonActivatableWidgetStack * Ahud_base::modal_stack()

@@ -34,7 +34,7 @@ public:
 
     void in_game(bool b);
 
-    void show_main_menu();
+    void show_main_menu(bool in_game);
     void show_save_load_dlg(bool saving);
     void show_options();
 
@@ -56,6 +56,7 @@ public:
     void push_modal(TSharedPtr<Shud_widget_base> widget);
     void remove_widget(Shud_widget_base & w);
     // TODO: Need to handle the modeless case.
+    void remove_all_widgets();
 
 protected:
     void show_deferred_notifications(level l);
