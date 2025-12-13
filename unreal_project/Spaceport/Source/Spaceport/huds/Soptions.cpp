@@ -601,11 +601,11 @@ namespace {
                 remapping();
             }
             remappings->clear();
-            if (auto * pc = player_controller_base())
+            if (auto * pc = player_controller())
                 pc->save_user_input_mappings();
         };
 
-        auto * pc = player_controller_base();
+        auto * pc = player_controller();
         check(pc);
         TMap<FKey, FKey> current_to_default_keys =
             pc->current_to_default_keys();

@@ -68,7 +68,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     // here.
                     Ugame_instance::get()->play_sound_across_level_loads(
                         audio_assets().click_cue_);
-                    if (auto * pc = player_controller_base())
+                    if (auto * pc = player_controller())
                         pc->server_load_game(filename_);
                 },
                 TEXT("confirm_load"),
@@ -79,7 +79,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
             // off by the level load.  We have to explicitly play it here.
             Ugame_instance::get()->play_sound_across_level_loads(
                 audio_assets().click_cue_);
-            if (auto * pc = player_controller_base())
+            if (auto * pc = player_controller())
                 pc->server_load_game(filename_);
         }
         return FReply::Handled();

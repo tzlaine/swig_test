@@ -1,6 +1,6 @@
 #include "space_creator_actor_config.hpp"
 
-#include "Aplayer_controller_base.h"
+#include "Aplayer_controller.h"
 #include "Amap_system.h"
 #include "constants.hpp"
 #include "materials.h"

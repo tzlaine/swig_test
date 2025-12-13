@@ -5,7 +5,7 @@
 #include "game_user_settings.generated.h"
 
 
-class Aplayer_controller_base;
+class Aplayer_controller;
 
 UCLASS(config=GameUserSettings)
 class Ugame_user_settings : public UGameUserSettings
@@ -15,7 +15,7 @@ class Ugame_user_settings : public UGameUserSettings
 public:
     Ugame_user_settings(FObjectInitializer const & init);
 
-    void apply_console_settings(Aplayer_controller_base & pc);
+    void apply_console_settings(Aplayer_controller & pc);
     void apply_volume_settings();
 
     void LoadSettings(bool b = false) override;

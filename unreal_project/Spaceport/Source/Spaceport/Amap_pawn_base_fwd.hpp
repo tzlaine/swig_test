@@ -7,3 +7,5 @@ enum struct map_pawn_kind : unsigned int {
     fleet = 1 << 2,
     any = hex | system | fleet
 };
+
+class Amap_pawn_base;

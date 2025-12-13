@@ -3,20 +3,28 @@
 #include "Amap_pawn_base_fwd.hpp"
 #include "constants.hpp"
 
+#include <adobe/name.hpp>
+
+#include <functional>
+#include <map>
 #include <span>
 
-#include <Aplayer_controller_base.h>
+#include <CoreMinimal.h>
+#include <UserSettings/EnhancedInputUserSettings.h>
 #include <GameFramework/PlayerController.h>
 #include "Aplayer_controller.generated.h"
 
 
-class Amap_pawn_base;
-class Agame_mode;
-struct FInputActionValue;
+class UMaterialInterface;
+class UInputMappingContext;
 class UInputAction;
+class Uaudio_assets_t;
+class Umaterials_t;
+class Utextures_t;
+class Uui_defaults_t;
 
 UCLASS()
-class Aplayer_controller : public Aplayer_controller_base
+class Aplayer_controller : public APlayerController
 {
     GENERATED_BODY()
 
@@ -24,8 +32,24 @@ public:
     Aplayer_controller();
 
     void BeginPlay() override;
-    void Tick(float delta) override;
     void SetupInputComponent() override;
+    void Tick(float delta) override;
+
+    UFUNCTION(Server, Reliable)
+    void server_req_save_files();
+    void server_req_save_files_Implementation();
+
+    UFUNCTION(Server, Reliable)
+    void server_new_game(game_kind kind, FFilePath const & save);
+    void server_new_game_Implementation(game_kind kind, FFilePath const & save);
+
+    UFUNCTION(Server, Reliable)
+    void server_load_game(FString const & filename);
+    void server_load_game_Implementation(FString const & filename);
+
+    UFUNCTION(Server, Reliable)
+    void server_load_newest_game();
+    void server_load_newest_game_Implementation();
 
     UFUNCTION(Server, Reliable)
     void server_quit_to_menu();
@@ -68,7 +92,23 @@ public:
     void server_change_play_speed(int speed);
     void server_change_play_speed_Implementation(int speed);
 
+    UInputMappingContext const & input_mapping_context() const;
+    TArray<FEnhancedActionKeyMapping>
+    player_mappable_action_key_mappings() const;
+    TMap<FKey, FKey> current_to_default_keys() const;
+
+    Uui_defaults_t const & ui_defaults();
+    Umaterials_t const & materials();
+    Utextures_t const & textures();
+    Uaudio_assets_t const & audio_assets();
+    void remap_key(FName name, FKey key);
+    void save_user_input_mappings();
+    void showing_main_menu(bool b);
+
     int nation_id() const { return nation_id_; }
+
+protected:
+    bool showing_main_menu() const;
 
 private:
     enum struct deselect { no, yes };
@@ -90,6 +130,45 @@ private:
     bool alternate_selection_key_down_ = false;
     FVector2D selection_box_first_;
     FVector2D selection_box_last_;
+
+    bool showing_main_menu_ = false;
+
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Asset classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Uui_defaults_t> ui_defaults_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Asset classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Umaterials_t> materials_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Asset classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Utextures_t> textures_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Asset classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Uaudio_assets_t> audio_assets_class_;
+
+    UPROPERTY()
+    TObjectPtr<Uui_defaults_t> ui_defaults_;
+    UPROPERTY()
+    TObjectPtr<Umaterials_t> materials_;
+    UPROPERTY()
+    TObjectPtr<Utextures_t> textures_;
+    UPROPERTY()
+    TObjectPtr<Uaudio_assets_t> audio_assets_;
+
+    UPROPERTY(
+        EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputMappingContext> input_mapping_ctx_;
+    UPROPERTY(
+        EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> menu_toggle_action_;
 
     UPROPERTY(
         EditAnywhere,
@@ -139,6 +218,4 @@ private:
         Category = "Input",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UInputAction> alternate_selection_action_;
-
-    friend Agame_mode;
 };

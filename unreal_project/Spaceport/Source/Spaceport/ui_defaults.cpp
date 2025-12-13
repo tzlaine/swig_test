@@ -1,6 +1,6 @@
 #include "ui_defaults.h"
 
-#include "Aplayer_controller_base.h"
+#include "Aplayer_controller.h"
 #include "utility.hpp"
 #include "widgets/Sstyled_text_block.h"
 
@@ -23,7 +23,7 @@ TSharedRef<ITableRow> Uui_defaults_t::make_row(
 
 Uui_defaults_t const & ui_defaults()
 {
-    auto * pc = player_controller_base();
+    auto * pc = player_controller();
     check(pc);
     return pc->ui_defaults();
 }

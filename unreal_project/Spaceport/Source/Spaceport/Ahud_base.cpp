@@ -59,7 +59,7 @@ void Ahud_base::show_main_menu()
         saves = !gs->saves_.IsEmpty();
     }
     main_menu_->have_saves(saves);
-    if (auto * pc = player_controller_base()) {
+    if (auto * pc = player_controller()) {
         pc->showing_main_menu(true);
         UE_LOG(LogTemp, Log, TEXT("Showing main menu"))
     }
@@ -69,7 +69,7 @@ void Ahud_base::show_save_load_dlg(bool saving)
 {
     save_load_dlg_ = SNew(Ssave_load_dlg).in_game(in_game_).saving(saving);
     push_modal(save_load_dlg_);
-    if (auto * pc = player_controller_base())
+    if (auto * pc = player_controller())
         pc->server_req_save_files();
     // TODO: Sign up for dir watching while the main menu is up (in_game_ ==
     // true only); cancel it afterward.
@@ -90,7 +90,7 @@ void Ahud_base::escape_pressed()
         if (Uactivatable_widget * w = Cast<Uactivatable_widget>(activatable)) {
             if (w->cancelable()) {
                 w->cancel();
-                if (auto * pc = player_controller_base();
+                if (auto * pc = player_controller();
                     pc && main_menu_ && w->wraps(*main_menu_)) {
                     pc->showing_main_menu(false);
                     UE_LOG(LogTemp, Log, TEXT("No longer showing main menu"));
@@ -189,7 +189,7 @@ void Ahud_base::remove_widget(Shud_widget_base & hud_widget)
     for (auto * activatable : modal_stack()->GetWidgetList()) {
         check(Cast<Uactivatable_widget>(activatable));
         if (Cast<Uactivatable_widget>(activatable)->wraps(hud_widget)) {
-            if (auto * pc = player_controller_base();
+            if (auto * pc = player_controller();
                 pc && main_menu_ && &hud_widget == main_menu_.Get()) {
                 pc->showing_main_menu(false);
                 UE_LOG(LogTemp, Log, TEXT("No longer showing main menu"));

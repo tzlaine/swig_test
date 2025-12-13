@@ -1,6 +1,6 @@
 #include "textures.h"
 
-#include "Aplayer_controller_base.h"
+#include "Aplayer_controller.h"
 #include "rng.hpp"
 #include "utility.hpp"
 
@@ -40,7 +40,7 @@ UTexture * Utextures_t::random_planet_texture() const
 
 Utextures_t const & textures()
 {
-    auto * pc = player_controller_base();
+    auto * pc = player_controller();
     check(pc);
     return pc->textures();
 }

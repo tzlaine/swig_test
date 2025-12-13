@@ -52,7 +52,7 @@ public:
     {
         if (listening_for_) {
             auto const do_rebind = [&] {
-                auto * pc = player_controller_base();
+                auto * pc = player_controller();
                 check(pc);
                 pc->remap_key(name_, e.GetKey());
                 listening_for_->set_text(

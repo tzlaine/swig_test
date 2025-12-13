@@ -1,4 +1,4 @@
-#include "Aplayer_controller_base.h"
+#include "Aplayer_controller.h"
 #include "audio_assets.h"
 #include "game_user_settings.h"
 #include "utility.hpp"
@@ -28,7 +28,7 @@ Ugame_user_settings::Ugame_user_settings(FObjectInitializer const & init) :
     planet_detail(3)
 {}
 
-void Ugame_user_settings::apply_console_settings(Aplayer_controller_base & pc)
+void Ugame_user_settings::apply_console_settings(Aplayer_controller & pc)
 {
     IConsoleVariable * aa_method_var =
         IConsoleManager::Get().FindConsoleVariable(
@@ -127,7 +127,7 @@ void Ugame_user_settings::apply_impl()
 {
     Super::SetTextureQuality(texture_quality);
     if (auto * w = ::world()) {
-        if (auto * pc = player_controller_base()) {
+        if (auto * pc = player_controller()) {
             apply_console_settings(*pc);
         }
     }

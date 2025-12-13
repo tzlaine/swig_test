@@ -3,7 +3,6 @@
 #include "game_instance.h"
 #include "Aplayer_controller.h"
 #include "Aplaying_hud.h"
-#include "huds/Amain_menu_controller.h"
 #include "text/beman_utf_view/utf_view.hpp"
 
 #include <algorithm>
@@ -155,16 +154,6 @@ T from_tarray(TArray<uint8> const & buf)
     decltype(to_protobuf(std::declval<T>())) as_protobuf;
     as_protobuf.ParseFromArray(buf.GetData(), buf.Num());
     return from_protobuf(as_protobuf);
-}
-
-inline Aplayer_controller_base * player_controller_base()
-{
-    return Cast<Aplayer_controller_base>(::world()->GetFirstPlayerController());
-}
-
-inline Amain_menu_controller * main_menu_controller()
-{
-    return Cast<Amain_menu_controller>(::world()->GetFirstPlayerController());
 }
 
 inline Aplayer_controller * player_controller()

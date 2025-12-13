@@ -1,6 +1,5 @@
 #include "Smain_menu.h"
 #include "utility.hpp"
-#include "Amain_menu_controller.h"
 #include "Aplayer_controller.h"
 #include "Aplaying_hud.h"
 #include "widgets/Sstyled_text_block.h"
@@ -114,7 +113,7 @@ void Smain_menu::rebuild()
                 // off by the level load.  We have to explicitly play it here.
                 Ugame_instance::get()->play_sound_across_level_loads(
                     audio_assets().click_cue_);
-                if (auto * pc = main_menu_controller())
+                if (auto * pc = player_controller())
                     pc->server_load_newest_game();
             }
             return FReply::Handled();
@@ -140,7 +139,7 @@ void Smain_menu::rebuild()
                 // off by the level load.  We have to explicitly play it here.
                 Ugame_instance::get()->play_sound_across_level_loads(
                     audio_assets().click_cue_);
-                if (auto * pc = main_menu_controller())
+                if (auto * pc = player_controller())
                     pc->server_new_game(game_kind::sp, FFilePath());
                 return FReply::Handled();
             })];

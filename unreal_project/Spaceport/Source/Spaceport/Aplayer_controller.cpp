@@ -2,20 +2,26 @@
 #include "Acontroller_pawn.h"
 #include "Agame_mode.h"
 #include "Agame_state.h"
+#include "Ahud_base.h"
 #include "Amap_fleet.h"
-#include "Amap_system.h"
 #include "Amap_hex.h"
-#include "Aplaying_hud.h"
-#include "hex_operations.hpp"
-#include "map_util.hpp"
+#include "Amap_system.h"
+#include "audio_assets.h"
+#include "game_user_settings.h"
+#include "materials.h"
+#include "textures.h"
+#include "ui_defaults.h"
 #include "utility.hpp"
+#include "huds/Amain_menu_game_mode.h"
 
 #include <EnhancedInputComponent.h>
 #include <EnhancedInputSubsystems.h>
 #include <InputAction.h>
 #include <InputMappingContext.h>
+#include <Materials/MaterialInterface.h>
 #include <Engine/LocalPlayer.h>
 #include <Engine/World.h>
+#include <UObject/ConstructorHelpers.h>
 
 
 namespace {
@@ -29,55 +35,66 @@ namespace {
     }
 }
 
-Aplayer_controller::Aplayer_controller() {}
+Aplayer_controller::Aplayer_controller()
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    bOnlyRelevantToOwner = true;
+}
 
 void Aplayer_controller::BeginPlay()
 {
     Super::BeginPlay();
-    UE_LOG(LogTemp, Log, TEXT("ENTER Aplayer_controller::BeginPlay()"));
-    UE_LOG(LogTemp, Log, TEXT("EXIT Aplayer_controller::BeginPlay()"));
-}
 
-void Aplayer_controller::Tick(float delta)
-{
-    Super::Tick(delta);
+    FInputModeGameAndUI input_mode;
+    input_mode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+    input_mode.SetHideCursorDuringCapture(false);
+    SetInputMode(input_mode);
+    SetShowMouseCursor(true);
+    SetIgnoreLookInput(true);
 
-    if (showing_main_menu())
-        return;
+    check(input_mapping_ctx_);
 
-    if (dragging(selection_box_first_, selection_box_last_))
-        return;
-
-    FHitResult hit_result;
-    if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
-        Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
-        if (fleet)
-            hover(fleet);
-    } else if (GetHitResultUnderCursor(star_channel, false, hit_result)) {
-        Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
-        if (system)
-            hover(system);
-    } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
-        Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
-        if (hex)
-            hover(hex);
-    } else {
-        dehover_all();
+    if (ULocalPlayer * local_player = GetLocalPlayer()) {
+        if (auto * input_sys =
+                local_player
+                    ->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                if (!user_settings->IsMappingContextRegistered(
+                        input_mapping_ctx_))
+                    user_settings->RegisterInputMappingContext(
+                        input_mapping_ctx_);
+            }
+            if (!input_sys->HasMappingContext(input_mapping_ctx_)) {
+                FModifyContextOptions options = {};
+                options.bNotifyUserSettings = true;
+                input_sys->AddMappingContext(input_mapping_ctx_, 0, options);
+            }
+        }
     }
+
+    // KLUDGE: Since this player controller is unavailable at the time
+    // Ugame_user_settings::LoadSettings() gets called, it cannot apply the
+    // audio settings yet.  Now that this player controller is within its
+    // lifetime, let's give the Ugame_user_settings a chance to apply any
+    // deferred audio settings.
+    Ugame_user_settings::get()->apply_volume_settings();
 }
 
 void Aplayer_controller::SetupInputComponent()
 {
     Super::SetupInputComponent();
 
-    UEnhancedInputComponent * eic =
-        Cast<UEnhancedInputComponent>(InputComponent);
+    EnableInput(this);
+
+    auto * eic = Cast<UEnhancedInputComponent>(InputComponent);
     check(eic);
 
-    if (!select_object_action_ || !order_selected_action_ ||
-        !incr_play_speed_action_ || !decr_play_speed_action_ ||
-        !pause_toggle_action_ || !keep_selected_action_ ||
-        !alternate_selection_action_) {
+    if (!menu_toggle_action_ || !select_object_action_ ||
+        !order_selected_action_ || !incr_play_speed_action_ ||
+        !decr_play_speed_action_ || !pause_toggle_action_ ||
+        !keep_selected_action_ || !alternate_selection_action_) {
         UE_LOG(
             LogTemp,
             Error,
@@ -92,6 +109,12 @@ void Aplayer_controller::SetupInputComponent()
         hud->set_selection_box_first(FVector2D());
         hud->set_selection_box_last(FVector2D());
     };
+
+    eic->BindActionValueLambda(
+        menu_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
+            if (auto * hud = hud_base(GetHUD()))
+                hud->escape_pressed();
+        });
 
     eic->BindActionValueLambda(
         select_object_action_, ETriggerEvent::Started, [this](auto const &) {
@@ -223,6 +246,73 @@ void Aplayer_controller::SetupInputComponent()
         [this](auto const &) { alternate_selection_key_down_ = false; });
 }
 
+void Aplayer_controller::Tick(float delta)
+{
+    Super::Tick(delta);
+
+    if (showing_main_menu())
+        return;
+
+    if (dragging(selection_box_first_, selection_box_last_))
+        return;
+
+    FHitResult hit_result;
+    if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
+        Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
+        if (fleet)
+            hover(fleet);
+    } else if (GetHitResultUnderCursor(star_channel, false, hit_result)) {
+        Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
+        if (system)
+            hover(system);
+    } else if (GetHitResultUnderCursor(hex_channel, false, hit_result)) {
+        Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
+        if (hex)
+            hover(hex);
+    } else {
+        dehover_all();
+    }
+}
+
+void Aplayer_controller::server_req_save_files_Implementation()
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    if (!gm)
+        return;
+
+    gm->publish_save_files();
+}
+
+void Aplayer_controller::server_new_game_Implementation(
+    game_kind kind, FFilePath const & save)
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    if (!gm)
+        return;
+    Ugame_instance::get()->game_kind(kind);
+    Ugame_instance::get()->game_to_load(*save.FilePath);
+    gm->multicast_load_playing();
+}
+
+void Aplayer_controller::server_load_game_Implementation(
+    FString const & filename)
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    if (!gm)
+        return;
+
+    gm->load_and_start_game(filename);
+}
+
+void Aplayer_controller::server_load_newest_game_Implementation()
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Amain_menu_game_mode>();
+    if (!gm)
+        return;
+
+    gm->load_and_start_newest_game();
+}
+
 void Aplayer_controller::server_quit_to_menu_Implementation()
 {
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
@@ -303,7 +393,8 @@ void Aplayer_controller::client_recv_month_updates_Implementation(
     // TODO
 }
 
-void Aplayer_controller::send_year_updates_to_client(TArray<uint8> const & state)
+void Aplayer_controller::send_year_updates_to_client(
+    TArray<uint8> const & state)
 {
     if (HasAuthority())
         client_recv_year_updates(state);
@@ -331,6 +422,120 @@ void Aplayer_controller::server_change_play_speed_Implementation(int speed)
     if (!gm)
         return;
     gm->play_speed(speed);
+}
+
+UInputMappingContext const & Aplayer_controller::input_mapping_context() const
+{
+    UInputMappingContext * imc = input_mapping_ctx_.Get();
+    check(imc);
+    return *imc;
+}
+
+TArray<FEnhancedActionKeyMapping>
+Aplayer_controller::player_mappable_action_key_mappings() const
+{
+    ULocalPlayer * local_player = GetLocalPlayer();
+    check(local_player);
+    auto * input_sys =
+        local_player->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+    check(input_sys);
+    return input_sys->GetAllPlayerMappableActionKeyMappings();
+}
+
+TMap<FKey, FKey> Aplayer_controller::current_to_default_keys() const
+{
+    TMap<FKey, FKey> retval;
+
+    if (ULocalPlayer * local_player = GetLocalPlayer()) {
+        if (auto * input_sys =
+                local_player
+                    ->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()) {
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                if (auto * profile = user_settings->GetActiveKeyProfile()) {
+                    auto const & rows = profile->GetPlayerMappingRows();
+                    for (auto && [_, row] : rows) {
+                        for (auto && mapping : row.Mappings) {
+                            retval.Add(
+                                mapping.GetCurrentKey(),
+                                mapping.GetDefaultKey());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return retval;
+}
+
+Uui_defaults_t const & Aplayer_controller::ui_defaults()
+{
+    if (!ui_defaults_)
+        ui_defaults_ = NewObject<Uui_defaults_t>(this, ui_defaults_class_);
+    return *ui_defaults_;
+}
+
+Umaterials_t const & Aplayer_controller::materials()
+{
+    if (!materials_)
+        materials_ = NewObject<Umaterials_t>(this, materials_class_);
+    return *materials_;
+}
+
+Utextures_t const & Aplayer_controller::textures()
+{
+    if (!textures_)
+        textures_ = NewObject<Utextures_t>(this, textures_class_);
+    return *textures_;
+}
+
+Uaudio_assets_t const & Aplayer_controller::audio_assets()
+{
+    if (!audio_assets_)
+        audio_assets_ = NewObject<Uaudio_assets_t>(this, audio_assets_class_);
+    return *audio_assets_;
+}
+
+void Aplayer_controller::remap_key(FName name, FKey key)
+{
+    if (auto * local_player = GetLocalPlayer()) {
+        if (auto * input_sys =
+                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+                    local_player)) {
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                FMapPlayerKeyArgs args = {};
+                args.MappingName = name;
+                args.Slot = EPlayerMappableKeySlot::First;
+                args.NewKey = key;
+                FGameplayTagContainer failure;
+                user_settings->MapPlayerKey(args, failure);
+                check(failure.IsEmpty());
+            }
+        }
+    }
+}
+
+void Aplayer_controller::save_user_input_mappings()
+{
+    if (auto * local_player = GetLocalPlayer()) {
+        if (auto * input_sys =
+                ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+                    local_player)) {
+            if (UEnhancedInputUserSettings * user_settings =
+                    input_sys->GetUserSettings()) {
+                user_settings->SaveSettings();
+            }
+        }
+    }
+}
+
+void Aplayer_controller::showing_main_menu(bool b) { showing_main_menu_ = b; }
+
+bool Aplayer_controller::showing_main_menu() const
+{
+    return showing_main_menu_;
 }
 
 void Aplayer_controller::dehover_all()
