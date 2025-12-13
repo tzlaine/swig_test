@@ -1,14 +1,14 @@
 #include "Agame_mode_base.h"
-#include "Agame_state_base.h"
+#include "Agame_state.h"
 #include "Aplayer_state.h"
 #include "game_instance.h"
 #include "utility.hpp"
 
 
 namespace {
-    Agame_state_base * cast(AGameStateBase * base)
+    Agame_state* cast(AGameStateBase * base)
     {
-        return Cast<Agame_state_base>(base);
+        return Cast<Agame_state>(base);
     }
 }
 

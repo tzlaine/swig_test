@@ -1,5 +1,5 @@
 #include "Ahud_base.h"
-#include "Agame_state_base.h"
+#include "Agame_state.h"
 #include "game_instance.h"
 #include "utility.hpp"
 #include "huds/Smain_menu.h"
@@ -54,7 +54,7 @@ void Ahud_base::show_main_menu()
     allocate_widgets();
     push_modal(main_menu_);
     bool saves = false;
-    if (auto * gs = Cast<Agame_state_base>(
+    if (auto * gs = Cast<Agame_state>(
             UGameplayStatics::GetGameState(GetWorld()))) {
         saves = !gs->saves_.IsEmpty();
     }

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Agame_state_base.h"
+#include "Agame_mode_fwd.h"
+#include "dir_watcher.h"
 
 #include <CoreMinimal.h>
 #include <GameFramework/GameStateBase.h>
@@ -8,12 +9,28 @@
 
 
 UCLASS()
-class Agame_state : public Agame_state_base
+class Agame_state : public AGameStateBase
 {
     GENERATED_BODY()
 
 public:
     Agame_state();
+
+    UPROPERTY(
+        ReplicatedUsing = saves_changed,
+        BlueprintReadOnly,
+        Category = "Game State")
+    TArray<FString> saves_;
+    UFUNCTION()
+    void saves_changed();
+
+    UPROPERTY(
+        ReplicatedUsing = save_file_changes_changed,
+        BlueprintReadOnly,
+        Category = "Game State")
+    TArray<Ffile_change> save_file_changes_;
+    UFUNCTION()
+    void save_file_changes_changed();
 
     UPROPERTY(ReplicatedUsing = play_state_changed)
     play_state play_state_ = play_state::setup;

@@ -1,5 +1,5 @@
 #include "Amain_menu_game_mode.h"
-#include "Amain_menu_game_state.h"
+#include "Agame_state.h"
 #include "Amain_menu_hud.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
@@ -7,9 +7,9 @@
 
 
 namespace {
-    Amain_menu_game_state * cast(AGameStateBase * base)
+    Agame_state * cast(AGameStateBase * base)
     {
-        return Cast<Amain_menu_game_state>(base);
+        return Cast<Agame_state>(base);
     }
 }
 
@@ -19,7 +19,7 @@ Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode CTOR"));
     HUDClass = Amain_menu_hud::StaticClass();
     PlayerControllerClass = Aplayer_controller::StaticClass();
-    GameStateClass = Amain_menu_game_state::StaticClass();
+    GameStateClass = Agame_state::StaticClass();
 
     bReplicates = true;
     bAlwaysRelevant = true;
