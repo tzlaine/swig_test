@@ -78,7 +78,8 @@ TArray<Amap_pawn_base *> & Aplaying_hud::selected_in_box()
 
 void Aplaying_hud::BeginPlay()
 {
-    Super::BeginPlay();
+    // Intentially NOT calling Super::BeginPlay().
+    AHUD::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Aplaying_hud::BeginPlay()"));
     allocate_widgets();
     show_deferred_notifications(level::playing);

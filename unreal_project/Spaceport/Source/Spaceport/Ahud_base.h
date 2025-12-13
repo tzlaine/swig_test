@@ -26,6 +26,7 @@ class Ahud_base : public AHUD
 public:
     Ahud_base(FObjectInitializer const & init);
 
+    void BeginPlay() override;
     void Tick(float dt) override;
     void EndPlay(EEndPlayReason::Type reason) override;
 

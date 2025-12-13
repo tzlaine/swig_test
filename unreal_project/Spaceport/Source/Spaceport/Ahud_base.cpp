@@ -8,7 +8,19 @@
 #include "huds/Uactivatable_widget.h"
 
 
-Ahud_base::Ahud_base(FObjectInitializer const & init) : AHUD(init) {}
+Ahud_base::Ahud_base(FObjectInitializer const & init) : AHUD(init)
+{
+    in_game(false);
+}
+
+void Ahud_base::BeginPlay()
+{
+    Super::BeginPlay();
+    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
+    show_main_menu(false);
+    show_deferred_notifications(level::start);
+    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
+}
 
 void Ahud_base::Tick(float dt)
 {
@@ -40,6 +52,8 @@ void Ahud_base::saves_list(TArray<FString> const & saves)
         *FString::Join(saves, TEXT(", ")));
     if (save_load_dlg_)
         save_load_dlg_->saves_changed(saves);
+    if (main_menu_)
+        main_menu_->have_saves(!saves.IsEmpty());
 }
 
 void Ahud_base::saves_changed(TArray<Ffile_change> const & changes) {}
