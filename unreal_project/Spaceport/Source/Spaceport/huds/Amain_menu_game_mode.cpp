@@ -1,6 +1,6 @@
 #include "Amain_menu_game_mode.h"
 #include "Agame_state.h"
-#include "Amain_menu_hud.h"
+#include "Ahud_t.h"
 #include "Aplayer_controller.h"
 #include "game_instance.h"
 #include "utility.hpp"
@@ -17,7 +17,7 @@ Amain_menu_game_mode::Amain_menu_game_mode(FObjectInitializer const & init) :
     Agame_mode_base(init)
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_game_mode CTOR"));
-    HUDClass = Amain_menu_hud::StaticClass();
+    HUDClass = Ahud_t::StaticClass();
     PlayerControllerClass = Aplayer_controller::StaticClass();
     GameStateClass = Agame_state::StaticClass();
 
