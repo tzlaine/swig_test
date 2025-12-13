@@ -1,8 +1,13 @@
 // WARNING: Generated code.
-// This file was generated from base_types (proto3)
 #pragma once
 
+#include "config.hpp"
+PUSH_WARNING
+DISABLE_WARNING(4996)
+DISABLE_WARNING(4127)
+DISABLE_WARNING(4100)
 #include <base_types.pb.h>
+POP_WARNING
 
 
 #include <flags.hpp>

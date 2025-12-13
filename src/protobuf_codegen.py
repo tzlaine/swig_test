@@ -126,7 +126,13 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 // This file was generated from {0} ({1})
 #pragma once
 
+#include "config.hpp"
+PUSH_WARNING
+DISABLE_WARNING(4996)
+DISABLE_WARNING(4127)
+DISABLE_WARNING(4100)
 #include <{0}.pb.h>
+POP_WARNING
 {2}
 
 #include <flags.hpp>

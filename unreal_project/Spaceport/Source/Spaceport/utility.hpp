@@ -144,7 +144,7 @@ TArray<uint8> to_tarray(T const & x)
 {
     auto as_protobuf = to_protobuf(x);
     TArray<uint8> buf;
-    buf.SetNum(as_protobuf.ByteSize());
+    buf.SetNum(as_protobuf.ByteSizeLong());
     as_protobuf.SerializeWithCachedSizesToArray(buf.GetData());
     return std::move(buf);
 }

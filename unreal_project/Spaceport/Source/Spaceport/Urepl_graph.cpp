@@ -28,6 +28,7 @@
 #include "Amap_fleet.h"
 #include "Amap_hex.h"
 #include "Amap_system.h"
+#include "config.hpp"
 
 #include <Engine/LevelScriptActor.h>
 #include <GameFramework/Pawn.h>
@@ -68,7 +69,9 @@ namespace {
         // approach.
         AActor * cdo = class_->GetDefaultObject<AActor>();
         if (spatial) {
+            PUSH_DISABLE_WARNING(4996)
             info.SetCullDistanceSquared(cdo->NetCullDistanceSquared);
+            POP_WARNING
             UE_LOG(
                 LogReplicationGraph,
                 Log,
@@ -78,10 +81,12 @@ namespace {
                 FMath::Sqrt(info.GetCullDistanceSquared()));
         }
 
+            PUSH_DISABLE_WARNING(4996)
         info.ReplicationPeriodFrame = std::max(
             (uint32)FMath::RoundToFloat(
                 server_max_tick_rate / cdo->NetUpdateFrequency),
             1u);
+            POP_WARNING
 
         UClass * native_class = class_;
         while (!native_class->IsNative() && native_class->GetSuperClass() &&
@@ -89,6 +94,7 @@ namespace {
             native_class = native_class->GetSuperClass();
         }
 
+            PUSH_DISABLE_WARNING(4996)
         UE_LOG(
             LogReplicationGraph,
             Log,
@@ -97,6 +103,7 @@ namespace {
             *native_class->GetName(),
             info.ReplicationPeriodFrame,
             cdo->NetUpdateFrequency);
+            POP_WARNING
     }
 
     UClass const * parent_native_class_of(UClass const * class_)
@@ -237,15 +244,16 @@ void Urepl_graph::InitGlobalActorClassSettings()
             class_info,
             repl_class,
             spatial(class_to_routing_.GetChecked(repl_class)),
+            PUSH_DISABLE_WARNING(4996)
             NetDriver->NetServerMaxTickRate);
+        POP_WARNING
         GlobalActorReplicationInfoMap.SetClassInfo(repl_class, class_info);
     }
-
 
     // Print out what we came up with
     UE_LOG(LogReplicationGraph, Log, TEXT(""));
     UE_LOG(LogReplicationGraph, Log, TEXT("Class Routing Map: "));
-    UEnum * Enum = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
+    UEnum const * Enum = StaticEnum<Erepl_node_kind>();
     for (auto it = class_to_routing_.CreateIterator(); it; ++it) {
         UClass * class_ = CastChecked<UClass>(it.Key().ResolveObjectPtr());
         Erepl_node_kind const routing = it.Value();
@@ -374,7 +382,7 @@ void Urepl_graph::RemoveClientConnection(UNetConnection * net_conn)
                 ensure(!found);
                 // Nofity this to handle something - remove from team list
                 OnRemoveConnectionGraphNodes(ConnectionManager);
-                Connections.RemoveAtSwap(idx, 1, false);
+                Connections.RemoveAtSwap(idx, 1, EAllowShrinking::No);
                 found = true;
             } else {
                 ConnectionManager->ConnectionOrderNum = ConnectionId++;
@@ -458,8 +466,7 @@ void Urepl_graph::ResetGameWorldState()
     // all actor will be destroyed. just reset it.
     pending_actors_.clear();
     pending_team_requests_.clear();
-#pragma warning(push)
-#pragma warning(disable : 4458)
+    PUSH_DISABLE_WARNING(4458)
     auto EmptyConnectionNode =
         [](TArray<UNetReplicationGraphConnection *> & Connections) {
             for (UNetReplicationGraphConnection * conn_base : Connections) {
@@ -470,7 +477,7 @@ void Urepl_graph::ResetGameWorldState()
                 }
             }
         };
-#pragma warning(pop)
+    POP_WARNING
     EmptyConnectionNode(PendingConnections);
     EmptyConnectionNode(Connections);
 
@@ -496,8 +503,10 @@ void Urepl_graph::AddDependentActor(
 
         if (FGlobalActorReplicationInfo * ReplicationInfo =
                 GlobalActorReplicationInfoMap.Find(ReplicatorActor)) {
+            PUSH_DISABLE_WARNING(4996)
             if (!ReplicationInfo->GetDependentActorList().Contains(
                     DependentActor)) {
+                POP_WARNING
                 GlobalActorReplicationInfoMap.AddDependentActor(
                     ReplicatorActor, DependentActor);
             }
@@ -686,7 +695,7 @@ void Urepl_graph::OnGameplayDebuggerOwnerChange(
 
 void Urepl_graph::print_rep_node_kinds()
 {
-    UEnum * enum_ = FindObject<UEnum>(ANY_PACKAGE, TEXT("Erepl_node_kind"));
+    UEnum const * enum_ = StaticEnum<Erepl_node_kind>();
     if (!enum_)
         return;
 

@@ -2,7 +2,13 @@
 // This file was generated from game_data (proto3)
 #pragma once
 
+#include "config.hpp"
+PUSH_WARNING
+DISABLE_WARNING(4996)
+DISABLE_WARNING(4127)
+DISABLE_WARNING(4100)
 #include <game_data.pb.h>
+POP_WARNING
 #include <base_types.hpp>
 
 #include <flags.hpp>

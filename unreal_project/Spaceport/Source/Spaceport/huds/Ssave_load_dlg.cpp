@@ -124,7 +124,10 @@ void Ssave_load_dlg::Construct(FArguments const & args)
 
             +SVerticalBox::Slot().FillHeight(100).HAlign(HAlign_Fill)[
                 SAssignNew(list_box_, Sstyled_list_view<item_data>)
+#pragma warning(push)
+#pragma warning(disable : 4996)
                 .ItemHeight(ui_defaults().font_size_)
+#pragma warning(pop)
                 .ListItemsSource(&items_)
                 .OnGenerateRow_Lambda(
                     [](TSharedPtr<FString> text,

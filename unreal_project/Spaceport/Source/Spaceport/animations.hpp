@@ -17,7 +17,7 @@ struct animation
         FString const & curve_object_path,
         float dur,
         std::function<void(float)> apply_value) :
-        curve_(curve_object_path),
+        // TODO curve_(curve_object_path),
         apply_value_(std::move(apply_value)),
         dur_(dur)
     {

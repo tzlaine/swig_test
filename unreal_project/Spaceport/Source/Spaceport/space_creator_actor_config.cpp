@@ -349,11 +349,11 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         FLinearColor(0x67, 0x06, 0x00, 0xFF);
     FLinearColor const k_low_zones_color = FLinearColor(0xFF, 0x17, 0x00, 0xFF);
 
-    FLinearColor atmosphere_color;
-    FLinearColor explosions_color;
-    FLinearColor ejections_color;
-    FLinearColor dark_filaments_color;
-    FLinearColor low_zones_color;
+    FLinearColor atmosphere_color = {};
+    FLinearColor explosions_color = {};
+    FLinearColor ejections_color = {};
+    FLinearColor dark_filaments_color = {};
+    FLinearColor low_zones_color = {};
     switch (star.star_class) {
     case star_class_t::o:
         atmosphere_color = o_atmosphere_color;
