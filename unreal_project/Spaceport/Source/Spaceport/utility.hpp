@@ -169,19 +169,19 @@ inline Aplaying_hud * playing_hud()
     return Cast<Aplaying_hud>(pc->GetHUD());
 }
 
-inline Ahud_base * hud_base()
+inline Ahud_t * hud_base()
 {
     auto * pc = ::world()->GetFirstPlayerController();
     if (!pc)
         return nullptr;
-    return Cast<Ahud_base>(pc->GetHUD());
+    return Cast<Ahud_t>(pc->GetHUD());
 }
 
-inline Ahud_base * hud_base(AHUD * hud)
+inline Ahud_t * hud_base(AHUD * hud)
 {
     if (!hud)
         return nullptr;
-    return Cast<Ahud_base>(hud);
+    return Cast<Ahud_t>(hud);
 }
 
 inline USoundClass * sound_class_of(USoundMix const * mix)

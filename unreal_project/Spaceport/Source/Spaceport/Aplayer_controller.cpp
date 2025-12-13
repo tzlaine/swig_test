@@ -2,7 +2,7 @@
 #include "Acontroller_pawn.h"
 #include "Agame_mode.h"
 #include "Agame_state.h"
-#include "Ahud_base.h"
+#include "Ahud_t.h"
 #include "Amap_fleet.h"
 #include "Amap_hex.h"
 #include "Amap_system.h"

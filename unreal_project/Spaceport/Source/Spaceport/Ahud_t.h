@@ -10,7 +10,7 @@
 
 #include <CoreMinimal.h>
 #include <GameFramework/HUD.h>
-#include "Ahud_base.generated.h"
+#include "Ahud_t.generated.h"
 
 
 struct Ffile_change;
@@ -19,12 +19,12 @@ class Ssave_load_dlg;
 class Soptions;
 
 UCLASS()
-class Ahud_base : public AHUD
+class Ahud_t : public AHUD
 {
     GENERATED_BODY()
 
 public:
-    Ahud_base(FObjectInitializer const & init);
+    Ahud_t(FObjectInitializer const & init);
 
     void BeginPlay() override;
     void Tick(float dt) override;

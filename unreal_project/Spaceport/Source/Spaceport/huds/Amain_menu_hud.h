@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ahud_base.h"
+#include "Ahud_t.h"
 
 #include <CoreMinimal.h>
 #include <GameFramework/HUD.h>
@@ -11,7 +11,7 @@ class Smain_menu;
 struct Ffile_change;
 
 UCLASS()
-class Amain_menu_hud : public Ahud_base
+class Amain_menu_hud : public Ahud_t
 {
     GENERATED_BODY()
 

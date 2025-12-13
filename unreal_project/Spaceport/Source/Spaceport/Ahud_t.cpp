@@ -1,4 +1,4 @@
-#include "Ahud_base.h"
+#include "Ahud_t.h"
 #include "Agame_state.h"
 #include "game_instance.h"
 #include "utility.hpp"
@@ -8,12 +8,12 @@
 #include "huds/Uactivatable_widget.h"
 
 
-Ahud_base::Ahud_base(FObjectInitializer const & init) : AHUD(init)
+Ahud_t::Ahud_t(FObjectInitializer const & init) : AHUD(init)
 {
     in_game(false);
 }
 
-void Ahud_base::BeginPlay()
+void Ahud_t::BeginPlay()
 {
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
@@ -22,7 +22,7 @@ void Ahud_base::BeginPlay()
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
 }
 
-void Ahud_base::Tick(float dt)
+void Ahud_t::Tick(float dt)
 {
     Super::Tick(dt);
 
@@ -36,19 +36,19 @@ void Ahud_base::Tick(float dt)
     });
 }
 
-void Ahud_base::EndPlay(EEndPlayReason::Type reason)
+void Ahud_t::EndPlay(EEndPlayReason::Type reason)
 {
     Super::EndPlay(reason);
-    UE_LOG(LogTemp, Log, TEXT("ENTER Ahud_base::EndPlay()"));
-    UE_LOG(LogTemp, Log, TEXT("EXIT Ahud_base::EndPlay()"));
+    UE_LOG(LogTemp, Log, TEXT("ENTER Ahud_t::EndPlay()"));
+    UE_LOG(LogTemp, Log, TEXT("EXIT Ahud_t::EndPlay()"));
 }
 
-void Ahud_base::saves_list(TArray<FString> const & saves)
+void Ahud_t::saves_list(TArray<FString> const & saves)
 {
     UE_LOG(
         LogTemp,
         Log,
-        TEXT("Ahud_base::saves_list(): new files: %s"),
+        TEXT("Ahud_t::saves_list(): new files: %s"),
         *FString::Join(saves, TEXT(", ")));
     if (save_load_dlg_)
         save_load_dlg_->saves_changed(saves);
@@ -56,14 +56,14 @@ void Ahud_base::saves_list(TArray<FString> const & saves)
         main_menu_->have_saves(!saves.IsEmpty());
 }
 
-void Ahud_base::saves_changed(TArray<Ffile_change> const & changes) {}
+void Ahud_t::saves_changed(TArray<Ffile_change> const & changes) {}
 
-void Ahud_base::in_game(bool b)
+void Ahud_t::in_game(bool b)
 {
     in_game_ = b;
 }
 
-void Ahud_base::show_main_menu(bool in_game)
+void Ahud_t::show_main_menu(bool in_game)
 {
     main_menu_ = SNew(Smain_menu).in_game(in_game);
     push_modal(main_menu_);
@@ -79,7 +79,7 @@ void Ahud_base::show_main_menu(bool in_game)
     }
 }
 
-void Ahud_base::show_save_load_dlg(bool saving)
+void Ahud_t::show_save_load_dlg(bool saving)
 {
     save_load_dlg_ = SNew(Ssave_load_dlg).in_game(in_game_).saving(saving);
     push_modal(save_load_dlg_);
@@ -89,13 +89,13 @@ void Ahud_base::show_save_load_dlg(bool saving)
     // true only); cancel it afterward.
 }
 
-void Ahud_base::show_options()
+void Ahud_t::show_options()
 {
     options_ = SNew(Soptions);
     push_modal(options_);
 }
 
-void Ahud_base::escape_pressed()
+void Ahud_t::escape_pressed()
 {
     UE_LOG(LogTemp, Warning, TEXT("ESCAPE!"));
 
@@ -130,7 +130,7 @@ void Ahud_base::escape_pressed()
         show_main_menu(true);
 }
 
-void Ahud_base::do_after_confirming(std::function<void()> action,
+void Ahud_t::do_after_confirming(std::function<void()> action,
                                     FString title,
                                     FString message,
                                     FString yes_button,
@@ -151,7 +151,7 @@ void Ahud_base::do_after_confirming(std::function<void()> action,
     push_modal(confirm_dlg);
 }
 
-void Ahud_base::notify_user(FString title, FString message, FString button)
+void Ahud_t::notify_user(FString title, FString message, FString button)
 {
     confirm_dlg_infos_.push_back({});
     TSharedPtr<Sconfirm_dlg> confirm_dlg =
@@ -166,7 +166,7 @@ void Ahud_base::notify_user(FString title, FString message, FString button)
     push_modal(confirm_dlg);
 }
 
-void Ahud_base::notify_user(FString title, FText message, FString button)
+void Ahud_t::notify_user(FString title, FText message, FString button)
 {
     confirm_dlg_infos_.push_back({});
     TSharedPtr<Sconfirm_dlg> confirm_dlg =
@@ -186,7 +186,7 @@ namespace {
     TSharedPtr<Shud_widget_base> g_content_shared_ptr;
 }
 
-void Ahud_base::push_modal(TSharedPtr<Shud_widget_base> widget)
+void Ahud_t::push_modal(TSharedPtr<Shud_widget_base> widget)
 {
     g_content_shared_ptr = widget;
     modal_stack()->AddWidget<Uactivatable_widget>(
@@ -198,7 +198,7 @@ void Ahud_base::push_modal(TSharedPtr<Shud_widget_base> widget)
         });
 }
 
-void Ahud_base::remove_widget(Shud_widget_base & hud_widget)
+void Ahud_t::remove_widget(Shud_widget_base & hud_widget)
 {
     for (auto * activatable : modal_stack()->GetWidgetList()) {
         check(Cast<Uactivatable_widget>(activatable));
@@ -214,7 +214,7 @@ void Ahud_base::remove_widget(Shud_widget_base & hud_widget)
     }
 }
 
-void Ahud_base::remove_all_widgets()
+void Ahud_t::remove_all_widgets()
 {
     auto const & all_widgets = modal_stack()->GetWidgetList();
     for (auto * activatable : all_widgets) {
@@ -222,7 +222,7 @@ void Ahud_base::remove_all_widgets()
     }
 }
 
-void Ahud_base::show_deferred_notifications(level l)
+void Ahud_t::show_deferred_notifications(level l)
 {
     auto notifications = Ugame_instance::get()->deferred_notifications(l);
     for (auto & n : notifications) {
@@ -230,7 +230,7 @@ void Ahud_base::show_deferred_notifications(level l)
     }
 }
 
-UCommonActivatableWidgetStack * Ahud_base::modal_stack()
+UCommonActivatableWidgetStack * Ahud_t::modal_stack()
 {
     check(stack_wrapper_);
     if (!stack_wrapper_->IsInViewport())

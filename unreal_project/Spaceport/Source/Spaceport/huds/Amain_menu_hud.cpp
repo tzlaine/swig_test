@@ -7,21 +7,20 @@
 #include <Widgets/SViewport.h>
 
 
-Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) :
-    Ahud_base(init)
+Amain_menu_hud::Amain_menu_hud(FObjectInitializer const & init) : Ahud_t(init)
 {
     in_game(false);
 }
 
 void Amain_menu_hud::saves_list(TArray<FString> const & saves)
 {
-    Ahud_base::saves_list(saves);
+    Ahud_t::saves_list(saves);
     have_saves(!saves.IsEmpty());
 }
 
 void Amain_menu_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
-    Ahud_base::saves_changed(changes);
+    Ahud_t::saves_changed(changes);
 }
 
 void Amain_menu_hud::BeginPlay()

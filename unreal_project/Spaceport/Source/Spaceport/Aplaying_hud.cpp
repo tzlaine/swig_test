@@ -11,21 +11,21 @@
 #include <Widgets/SViewport.h>
 
 
-Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_base(init)
+Aplaying_hud::Aplaying_hud(FObjectInitializer const & init) : Ahud_t(init)
 {
     in_game(true);
 }
 
 void Aplaying_hud::saves_list(TArray<FString> const & saves)
 {
-    Ahud_base::saves_list(saves);
+    Ahud_t::saves_list(saves);
     if (main_menu_)
         main_menu_->have_saves(!saves.IsEmpty());
 }
 
 void Aplaying_hud::saves_changed(TArray<Ffile_change> const & changes)
 {
-    Ahud_base::saves_changed(changes);
+    Ahud_t::saves_changed(changes);
 }
 
 void Aplaying_hud::show_game_setup()
