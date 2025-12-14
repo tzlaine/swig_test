@@ -174,14 +174,14 @@ void dir_watcher::process_changes(unsigned int err, unsigned int bytes)
         &w32_callback);
 
     if (!success) {
-        DWORD const err = GetLastError();
+        DWORD const error = GetLastError();
         UE_LOG(
             LogTemp,
             Display,
             TEXT("Call to ReadDirectoryChangesW for '%s' failed (code: [%d], "
                  "handle: [%p]); trying again."),
             reinterpret_cast<TCHAR const *>(dir_.c_str()),
-            err,
+            error,
             handle_);
         shut_down();
         return;
