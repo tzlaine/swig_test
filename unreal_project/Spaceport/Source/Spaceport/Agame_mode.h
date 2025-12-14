@@ -36,19 +36,10 @@ public:
     void EndPlay(EEndPlayReason::Type reason) override;
 
     void ready_for_game();
-
-    UFUNCTION(NetMulticast, Reliable)
     void load_and_start_newest_game();
-    void load_and_start_game_Implementation();
-
-    UFUNCTION(NetMulticast, Reliable)
     void load_and_start_game(FString const & filename);
-    void load_and_start_game_Implementation(FString const & filename);
-
     // Load game iff params.IsEmpty(); generate a new galaxy otherwise.
-    UFUNCTION(NetMulticast, Reliable)
     void load_or_generate(TArray<uint8> const & params);
-    void load_or_generate_Implementation(TArray<uint8> const & params);
 
     void quit_to_menu(
         Fuser_notification const & notification = Fuser_notification());

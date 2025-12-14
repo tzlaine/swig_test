@@ -133,7 +133,7 @@ void Agame_mode::ready_for_game()
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::ready_for_game()"));
 }
 
-void Agame_mode::load_and_start_newest_game_Implementation()
+void Agame_mode::load_and_start_newest_game()
 {
     TArray<FString> const saves = find_save_files(true);
     std::filesystem::path newest;
@@ -163,8 +163,7 @@ void Agame_mode::load_and_start_newest_game_Implementation()
     }
 }
 
-void Agame_mode::load_and_start_game_Implementation(
-    FString const & filename)
+void Agame_mode::load_and_start_game(FString const & filename)
 {
     auto f = to_path(filename);
     f += TEXT(".sav");
@@ -173,8 +172,7 @@ void Agame_mode::load_and_start_game_Implementation(
     ready_for_game();
 }
 
-void Agame_mode::load_or_generate_Implementation(
-    TArray<uint8> const & params_)
+void Agame_mode::load_or_generate(TArray<uint8> const & params_)
 {
     if (params_.IsEmpty()) {
         signal_start_of_play();
