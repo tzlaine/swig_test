@@ -44,11 +44,11 @@ void Ssave_load_dlg::Construct(FArguments const & args)
     auto do_action = [this] {
         if (saving_) {
             if (filename_is_in_list()) {
-                playing_hud()->do_after_confirming(
+                hud()->do_after_confirming(
                     [this] {
                         if (auto * pc = player_controller())
                             pc->server_save_game(filename_);
-                        if (auto * hud = playing_hud())
+                        if (auto * hud = hud())
                             hud->remove_widget(*this);
                     },
                     TEXT("confirm_save_over"),
@@ -57,11 +57,11 @@ void Ssave_load_dlg::Construct(FArguments const & args)
             } else {
                 if (auto * pc = player_controller())
                     pc->server_save_game(filename_);
-                if (auto * hud = playing_hud())
+                if (auto * hud = ::hud())
                     hud->remove_widget(*this);
             }
         } else if (in_game_) {
-            playing_hud()->do_after_confirming(
+            hud()->do_after_confirming(
                 [this] {
                     // The button click sounds that should paly normally gets
                     // cut off by the level load.  We have to explicitly play it
@@ -165,7 +165,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                 +SHorizontalBox::Slot().FillWidth(50).Padding(10, 0, 10, 0)[
                     SNew(Sstyled_button).Text(loc_text(TEXT("cancel")))
                     .OnClicked_Lambda([this] {
-                        if (auto * hud = hud_base())
+                        if (auto * hud = ::hud())
                             hud->remove_widget(*this);
                         return FReply::Handled();
                     })]

@@ -3,7 +3,7 @@
 #include "Amap_fleet.h"
 #include "Amap_hex.h"
 #include "Amap_system.h"
-#include "Aplaying_hud.h"
+#include "Ahud_t.h"
 #include "Aplayer_controller.h"
 #include "Aplayer_state.h"
 #include "game_instance.h"
@@ -86,13 +86,13 @@ void Agame_mode::Tick(float secs)
     if (cast(GameState)->play_state_ == play_state::generating) {
         int percent_update = 0;
         if (percent_complete_->try_pop(percent_update)) {
-            if (auto * hud_ptr = playing_hud())
+            if (auto * hud_ptr = ::hud())
                 hud_ptr->generating_percent_update(percent_update);
         }
 
         if (generation_complete_) {
             signal_start_of_play();
-            if (auto * hud_ptr = playing_hud())
+            if (auto * hud_ptr = ::hud())
                 hud_ptr->remove_generating_widget();
         }
     }
@@ -145,7 +145,7 @@ void Agame_mode::load_and_start_newest_game_Implementation()
     }
 
     if (newest.empty()) {
-        if (auto * hud = hud_base()) {
+        if (auto * hud = ::hud()) {
             hud->notify_user(
                 TEXT("load_game_failed"),
                 TEXT("continue_failed_no_saves"));
@@ -173,7 +173,7 @@ void Agame_mode::load_or_generate_Implementation(
         return;
     }
 
-    if (auto * hud_ptr = playing_hud())
+    if (auto * hud_ptr = ::hud())
         hud_ptr->show_generating_galaxy();
 
     set_play_state(GameState, play_state::generating);
@@ -234,7 +234,7 @@ void Agame_mode::ready_for_sp_game()
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
     if (load_path.empty()) {
         set_play_state(GameState, play_state::setup);
-        if (auto * hud_ptr = playing_hud())
+        if (auto * hud_ptr = ::hud())
             hud_ptr->show_game_setup();
     } else {
         try {

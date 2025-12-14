@@ -24,7 +24,7 @@
 
 
 namespace {
-    Aplaying_hud * cast(AHUD * base) { return Cast<Aplaying_hud>(base); }
+    Ahud_t * cast(AHUD * base) { return Cast<Ahud_t>(base); }
 
     bool dragging(FVector2D first, FVector2D last)
     {
@@ -104,7 +104,7 @@ void Aplayer_controller::SetupInputComponent()
     // always in use
     eic->BindActionValueLambda(
         menu_toggle_action_, ETriggerEvent::Completed, [this](auto const &) {
-            if (auto * hud = hud_base(GetHUD()))
+            if (auto * hud = ::hud(GetHUD()))
                 hud->escape_pressed();
         });
 

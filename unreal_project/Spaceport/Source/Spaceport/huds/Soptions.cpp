@@ -778,7 +778,7 @@ void Soptions::Construct(FArguments const & args)
                 SNew(Sstyled_button)
                 .Text(loc_text(TEXT("cancel")))
                 .OnClicked_Lambda([this] {
-                    if (auto * hud = hud_base())
+                    if (auto * hud = ::hud())
                         hud->remove_widget(*this);
                     return FReply::Handled();
                 })

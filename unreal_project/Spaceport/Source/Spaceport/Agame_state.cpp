@@ -14,11 +14,11 @@ namespace {
     };
     static_assert((int)play_state::ended + 1 == 7);
     state_transtion const remove_all{TEXT("remove_all_widgets"), [] {
-                                         if (auto * hud = ::hud_base())
+                                         if (auto * hud = ::hud())
                                              hud->remove_all_widgets();
                                      }};
     state_transtion const show_main_menu{TEXT("show_main_menu"), [] {
-                                             if (auto * hud = ::hud_base()) {
+                                             if (auto * hud = ::hud()) {
                                                  hud->remove_all_widgets();
                                                  hud->show_main_menu(false);
                                              }
@@ -67,7 +67,7 @@ void Agame_state::saves_changed()
         TEXT("List of saves changed to: %s"),
         *FString::Join(saves_, TEXT(", ")));
 
-    if (auto * const hud = hud_base())
+    if (auto * const hud = ::hud())
         hud->saves_list(saves_);
 }
 
@@ -75,7 +75,7 @@ void Agame_state::save_file_changes_changed()
 {
     UE_LOG(LogTemp, Warning, TEXT("List of save file changes changed"));
 
-    if (auto * const hud = hud_base())
+    if (auto * const hud = ::hud())
         hud->saves_changed(save_file_changes_);
 }
 

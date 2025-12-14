@@ -1,7 +1,11 @@
 #include "Ahud_t.h"
 #include "Agame_state.h"
+#include "Amap_pawn_base.h"
 #include "game_instance.h"
+#include "ui_defaults.h"
 #include "utility.hpp"
+#include "huds/Sgame_setup.h"
+#include "huds/Sgenerating_galaxy.h"
 #include "huds/Smain_menu.h"
 #include "huds/Ssave_load_dlg.h"
 #include "huds/Soptions.h"
@@ -18,7 +22,7 @@ void Ahud_t::BeginPlay()
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
     show_main_menu(false);
-    show_deferred_notifications(level::start);
+    // TODO show_deferred_notifications(level::start);
     UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
 }
 
@@ -36,11 +40,43 @@ void Ahud_t::Tick(float dt)
     });
 }
 
-void Ahud_t::EndPlay(EEndPlayReason::Type reason)
+void Ahud_t::DrawHUD()
 {
-    Super::EndPlay(reason);
-    UE_LOG(LogTemp, Log, TEXT("ENTER Ahud_t::EndPlay()"));
-    UE_LOG(LogTemp, Log, TEXT("EXIT Ahud_t::EndPlay()"));
+    Super::DrawHUD();
+
+    if (selection_box_first_ == selection_box_last_)
+        return;
+
+    FLinearColor const color = ui_defaults().drag_selection_box_color_;
+
+    DrawLine(
+        selection_box_first_.X,
+        selection_box_first_.Y,
+        selection_box_first_.X,
+        selection_box_last_.Y,
+        color);
+    DrawLine(
+        selection_box_last_.X,
+        selection_box_first_.Y,
+        selection_box_last_.X,
+        selection_box_last_.Y,
+        color);
+    DrawLine(
+        selection_box_first_.X,
+        selection_box_first_.Y,
+        selection_box_last_.X,
+        selection_box_first_.Y,
+        color);
+    DrawLine(
+        selection_box_first_.X,
+        selection_box_last_.Y,
+        selection_box_last_.X,
+        selection_box_last_.Y,
+        color);
+
+    selected_pawns_.Empty();
+    GetActorsInSelectionRectangle<Amap_pawn_base>(
+        selection_box_first_, selection_box_last_, selected_pawns_);
 }
 
 void Ahud_t::saves_list(TArray<FString> const & saves)
@@ -128,6 +164,36 @@ void Ahud_t::escape_pressed()
 
     if (in_game_)
         show_main_menu(true);
+}
+
+void Ahud_t::show_game_setup()
+{
+    allocate_widgets();
+    push_modal(game_setup_);
+}
+void Ahud_t::remove_game_setup_widget()
+{
+    check(game_setup_);
+    remove_widget(*game_setup_);
+}
+
+void Ahud_t::show_generating_galaxy()
+{
+    allocate_widgets();
+    push_modal(generating_galaxy_);
+    generating_progress_ = 0;
+}
+void Ahud_t::generating_percent_update(int u)
+{
+    if (!generating_galaxy_)
+        return;
+    generating_progress_ += u;
+    generating_galaxy_->percent_complete(generating_progress_);
+}
+void Ahud_t::remove_generating_widget()
+{
+    check(generating_galaxy_);
+    remove_widget(*generating_galaxy_);
 }
 
 void Ahud_t::do_after_confirming(std::function<void()> action,
@@ -222,12 +288,39 @@ void Ahud_t::remove_all_widgets()
     }
 }
 
-void Ahud_t::show_deferred_notifications(level l)
+void Ahud_t::set_selection_box_first(FVector2D first)
+{
+    selection_box_first_ = first;
+    UE_LOG(
+        LogTemp, Log, TEXT("selection box starts at %f,%f"), first.X, first.Y);
+}
+
+void Ahud_t::set_selection_box_last(FVector2D last)
+{
+    selection_box_last_ = last;
+    UE_LOG(LogTemp, Log, TEXT("selection box stops at %f,%f"), last.X, last.Y);
+}
+
+TArray<Amap_pawn_base *> & Ahud_t::selected_in_box()
+{
+    return selected_pawns_;
+}
+
+void Ahud_t::show_deferred_notifications(level l) // TODO
 {
     auto notifications = Ugame_instance::get()->deferred_notifications(l);
     for (auto & n : notifications) {
         notify_user(std::move(n.title_), std::move(n.msg_));
     }
+}
+
+void Ahud_t::allocate_widgets()
+{
+    if (options_)
+        return;
+    options_ = SNew(Soptions);
+    game_setup_ = SNew(Sgame_setup);
+    generating_galaxy_ = SNew(Sgenerating_galaxy);
 }
 
 UCommonActivatableWidgetStack * Ahud_t::modal_stack()

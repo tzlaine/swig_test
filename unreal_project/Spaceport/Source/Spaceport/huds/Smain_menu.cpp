@@ -1,7 +1,7 @@
 #include "Smain_menu.h"
 #include "utility.hpp"
 #include "Aplayer_controller.h"
-#include "Aplaying_hud.h"
+#include "Ahud_t.h"
 #include "widgets/Sstyled_text_block.h"
 #include "text/grapheme_break.hpp"
 #include "text/beman_utf_view/utf_view.hpp"
@@ -106,7 +106,7 @@ void Smain_menu::rebuild()
         .Text(loc_text(TEXT("continue_game")))
         .OnClicked_Lambda([in_game = in_game_, this] {
             if (in_game) {
-                if (auto * hud = playing_hud())
+                if (auto * hud = ::hud())
                     hud->remove_widget(*this);
             } else {
                 // The button click sounds that should paly normally gets cut
@@ -126,7 +126,7 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("save_game")))
             .OnClicked_Lambda([] {
-                if (auto * hud = hud_base())
+                if (auto * hud = ::hud())
                     hud->show_save_load_dlg(true);
                 return FReply::Handled();
             })];
@@ -151,7 +151,7 @@ void Smain_menu::rebuild()
         SAssignNew(load_game_bn_, Sstyled_button)
         .Text(loc_text(TEXT("load_game")))
         .OnClicked_Lambda([] {
-            if (auto * hud = hud_base())
+            if (auto * hud = ::hud())
                 hud->show_save_load_dlg(false);
             return FReply::Handled();
         })];
@@ -163,7 +163,7 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("exit_to_main_menu")))
             .OnClicked_Lambda([] {
-                playing_hud()->do_after_confirming([]{
+                hud()->do_after_confirming([]{
                     // The button click sounds that should paly normally gets
                     // cut off by the level load.  We have to explicitly play
                     // it here.
@@ -190,7 +190,7 @@ void Smain_menu::rebuild()
         SNew(Sstyled_button)
         .Text(loc_text(TEXT("options")))
         .OnClicked_Lambda([] {
-            if (auto * hud = hud_base())
+            if (auto * hud = ::hud())
                 hud->show_options();
             return FReply::Handled();
         })];
@@ -204,7 +204,7 @@ void Smain_menu::rebuild()
             // TODO: Do something different in mp, if this user is not the
             // host.
             if (in_game)
-                playing_hud()->do_after_confirming([]{quit_game();});
+                hud()->do_after_confirming([]{quit_game();});
             else
                 quit_game();
             return FReply::Handled();

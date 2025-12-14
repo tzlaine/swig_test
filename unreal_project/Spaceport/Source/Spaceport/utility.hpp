@@ -2,7 +2,7 @@
 
 #include "game_instance.h"
 #include "Aplayer_controller.h"
-#include "Aplaying_hud.h"
+#include "Ahud_t.h"
 #include "text/beman_utf_view/utf_view.hpp"
 
 #include <algorithm>
@@ -161,15 +161,7 @@ inline Aplayer_controller * player_controller()
     return Cast<Aplayer_controller>(::world()->GetFirstPlayerController());
 }
 
-inline Aplaying_hud * playing_hud()
-{
-    auto * pc = ::world()->GetFirstPlayerController();
-    if (!pc)
-        return nullptr;
-    return Cast<Aplaying_hud>(pc->GetHUD());
-}
-
-inline Ahud_t * hud_base()
+inline Ahud_t * hud()
 {
     auto * pc = ::world()->GetFirstPlayerController();
     if (!pc)
@@ -177,7 +169,7 @@ inline Ahud_t * hud_base()
     return Cast<Ahud_t>(pc->GetHUD());
 }
 
-inline Ahud_t * hud_base(AHUD * hud)
+inline Ahud_t * hud(AHUD * hud)
 {
     if (!hud)
         return nullptr;
