@@ -1,6 +1,5 @@
 #include "Aplayer_controller.h"
 #include "Acontroller_pawn.h"
-#include "Agame_mode_base.h"
 #include "Agame_mode.h"
 #include "Agame_state.h"
 #include "Ahud_t.h"
@@ -303,7 +302,7 @@ void Aplayer_controller::Tick(float delta)
 
 void Aplayer_controller::server_req_save_files_Implementation()
 {
-    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
 
@@ -313,7 +312,7 @@ void Aplayer_controller::server_req_save_files_Implementation()
 void Aplayer_controller::server_new_game_Implementation(
     game_kind kind, FFilePath const & save)
 {
-    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
     Ugame_instance::get()->game_kind(kind);
@@ -324,7 +323,7 @@ void Aplayer_controller::server_new_game_Implementation(
 void Aplayer_controller::server_load_game_Implementation(
     FString const & filename)
 {
-    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
 
@@ -333,7 +332,7 @@ void Aplayer_controller::server_load_game_Implementation(
 
 void Aplayer_controller::server_load_newest_game_Implementation()
 {
-    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode_base>();
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
 
