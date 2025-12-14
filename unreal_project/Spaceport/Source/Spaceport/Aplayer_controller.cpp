@@ -6,6 +6,7 @@
 #include "Amap_fleet.h"
 #include "Amap_hex.h"
 #include "Amap_system.h"
+#include "Aplayer_state.h"
 #include "audio_assets.h"
 #include "game_user_settings.h"
 #include "materials.h"
@@ -25,6 +26,11 @@
 
 namespace {
     Ahud_t * cast(AHUD * base) { return Cast<Ahud_t>(base); }
+
+    Aplayer_state * cast(APlayerState * base)
+    {
+        return Cast<Aplayer_state>(base);
+    }
 
     bool dragging(FVector2D first, FVector2D last)
     {
@@ -318,6 +324,12 @@ void Aplayer_controller::server_req_save_files_Implementation()
     gm->publish_save_files();
 }
 
+bool Aplayer_controller::server_new_game_Validate(
+    game_kind kind, FFilePath const & save)
+{
+    return hosting_or_sp();
+}
+
 void Aplayer_controller::server_new_game_Implementation(
     game_kind kind, FFilePath const & save)
 {
@@ -336,6 +348,11 @@ void Aplayer_controller::client_galaxy_generation_update_Implementation(
         hud->generating_percent_update(percent_update);
 }
 
+bool Aplayer_controller::server_load_game_Validate(FString const & filename)
+{
+    return hosting_or_sp();
+}
+
 void Aplayer_controller::server_load_game_Implementation(
     FString const & filename)
 {
@@ -344,6 +361,11 @@ void Aplayer_controller::server_load_game_Implementation(
         return;
 
     gm->load_and_start_game(filename);
+}
+
+bool Aplayer_controller::server_load_newest_game_Validate()
+{
+    return hosting_or_sp();
 }
 
 void Aplayer_controller::server_load_newest_game_Implementation()
@@ -355,12 +377,23 @@ void Aplayer_controller::server_load_newest_game_Implementation()
     gm->load_and_start_newest_game();
 }
 
+bool Aplayer_controller::server_quit_to_menu_Validate()
+{
+    return hosting_or_sp();
+}
+
 void Aplayer_controller::server_quit_to_menu_Implementation()
 {
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
     gm->quit_to_menu();
+}
+
+bool Aplayer_controller::server_start_game_Validate(
+    TArray<uint8> const & params)
+{
+    return hosting_or_sp();
 }
 
 void Aplayer_controller::server_start_game_Implementation(
@@ -373,6 +406,11 @@ void Aplayer_controller::server_start_game_Implementation(
     if (!gm)
         return;
     gm->load_or_generate(params);
+}
+
+bool Aplayer_controller::server_save_game_Validate(FString const & filename)
+{
+    return hosting_or_sp();
 }
 
 void Aplayer_controller::server_save_game_Implementation(
@@ -406,47 +444,21 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
     pawn->SetActorLocation(location);
 }
 
-void Aplayer_controller::send_day_updates_to_client(TArray<uint8> const & state)
-{
-    if (HasAuthority())
-        client_recv_day_updates(state);
-}
-
 void Aplayer_controller::client_recv_day_updates_Implementation(
     TArray<uint8> const & state)
 {
-    if (HasAuthority())
-        return;
     // TODO
-}
-
-void Aplayer_controller::send_month_updates_to_client(
-    TArray<uint8> const & state)
-{
-    if (HasAuthority())
-        client_recv_month_updates(state);
 }
 
 void Aplayer_controller::client_recv_month_updates_Implementation(
     TArray<uint8> const & state)
 {
-    if (HasAuthority())
-        return;
     // TODO
-}
-
-void Aplayer_controller::send_year_updates_to_client(
-    TArray<uint8> const & state)
-{
-    if (HasAuthority())
-        client_recv_year_updates(state);
 }
 
 void Aplayer_controller::client_recv_year_updates_Implementation(
     TArray<uint8> const & state)
 {
-    if (HasAuthority())
-        return;
     // TODO
 }
 
@@ -678,4 +690,9 @@ void Aplayer_controller::select_in_box(
         std::span<Amap_pawn_base *>(begin(pawns), end(pawns)),
         deselect_curr,
         selecting);
+}
+
+bool Aplayer_controller::hosting_or_sp() const
+{
+    return cast(PlayerState)->player_id() == 0;
 }

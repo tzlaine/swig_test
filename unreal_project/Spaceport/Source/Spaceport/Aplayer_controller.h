@@ -45,32 +45,38 @@ public:
     void server_req_save_files();
     void server_req_save_files_Implementation();
 
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(Server, Reliable, WithValidation)
     void server_new_game(game_kind kind, FFilePath const & save);
+    bool server_new_game_Validate(game_kind kind, FFilePath const & save);
     void server_new_game_Implementation(game_kind kind, FFilePath const & save);
 
     UFUNCTION(NetMulticast, Unreliable)
     void client_galaxy_generation_update(int percent_update);
     void client_galaxy_generation_update_Implementation(int percent_update);
 
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(Server, Reliable, WithValidation)
     void server_load_game(FString const & filename);
+    bool server_load_game_Validate(FString const & filename);
     void server_load_game_Implementation(FString const & filename);
 
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(Server, Reliable, WithValidation)
     void server_load_newest_game();
+    bool server_load_newest_game_Validate();
     void server_load_newest_game_Implementation();
 
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(Server, Reliable, WithValidation)
     void server_quit_to_menu();
+    bool server_quit_to_menu_Validate();
     void server_quit_to_menu_Implementation();
 
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(Server, Reliable, WithValidation)
     void server_start_game(TArray<uint8> const & params);
+    bool server_start_game_Validate(TArray<uint8> const & params);
     void server_start_game_Implementation(TArray<uint8> const & params);
 
     UFUNCTION(Server, Reliable)
     void server_save_game(FString const & filename);
+    bool server_save_game_Validate(FString const & filename);
     void server_save_game_Implementation(FString const & filename);
 
     UFUNCTION(Client, Reliable)
@@ -79,17 +85,14 @@ public:
     void client_recv_initial_game_state_Implementation(
         int nation_id, TArray<uint8> const & state);
 
-    void send_day_updates_to_client(TArray<uint8> const & state);
     UFUNCTION(Client, Reliable)
     void client_recv_day_updates(TArray<uint8> const & state);
     void client_recv_day_updates_Implementation(TArray<uint8> const & state);
 
-    void send_month_updates_to_client(TArray<uint8> const & state);
     UFUNCTION(Client, Reliable)
     void client_recv_month_updates(TArray<uint8> const & state);
     void client_recv_month_updates_Implementation(TArray<uint8> const & state);
 
-    void send_year_updates_to_client(TArray<uint8> const & state);
     UFUNCTION(Client, Reliable)
     void client_recv_year_updates(TArray<uint8> const & state);
     void client_recv_year_updates_Implementation(TArray<uint8> const & state);
@@ -131,6 +134,7 @@ private:
         deselect deselect_curr,
         map_pawn_kind kind);
     void select_in_box(map_pawn_kind selecting, deselect deselect_curr);
+    bool hosting_or_sp() const;
 
     int nation_id_ = nation_none;
     std::vector<Amap_pawn_base *> curr_hovers_;
