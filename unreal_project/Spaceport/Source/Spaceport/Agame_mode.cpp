@@ -21,7 +21,7 @@
 
 
 namespace {
-    Agame_state* cast(AGameStateBase * base)
+    Agame_state * cast(AGameStateBase * base)
     {
         return Cast<Agame_state>(base);
     }
@@ -87,9 +87,8 @@ void Agame_mode::BeginPlay()
     Super::BeginPlay();
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::BeginPlay()"));
     publish_save_files();
-    Ugame_instance::get()->watch_save_game_dir([this](auto changes) {
-        saves_dir_changed(std::move(changes));
-    });
+    Ugame_instance::get()->watch_save_game_dir(
+        [this](auto changes) { saves_dir_changed(std::move(changes)); });
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::BeginPlay()"));
 }
 
@@ -258,12 +257,15 @@ void Agame_mode::play_speed(int speed)
     cast(GameState)->play_speed_changed();
 }
 
-void Agame_mode::saves_dir_changed(
-    std::vector<Ffile_change> changes)
+void Agame_mode::saves_dir_changed(std::vector<Ffile_change> changes)
 {
     for (auto const & c : changes) {
-        UE_LOG(LogTemp, Log, TEXT("File change detected: %s, Change Type: %d"),
-               *c.file, (int)c.kind);
+        UE_LOG(
+            LogTemp,
+            Log,
+            TEXT("File change detected: %s, Change Type: %d"),
+            *c.file,
+            (int)c.kind);
     }
 
     publish_save_files();
@@ -346,7 +348,7 @@ void Agame_mode::signal_start_of_play()
             auto const & system = gs.systems[i];
             auto const system_location =
                 FVector(system.world_pos_x, system.world_pos_y, 0) *
-                    ui_defaults().map_scale_;
+                ui_defaults().map_scale_;
             Amap_system * system_pawn = GetWorld()->SpawnActor<Amap_system>(
                 system_class_,
                 system_location,
