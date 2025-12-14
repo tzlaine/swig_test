@@ -48,7 +48,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     [this] {
                         if (auto * pc = player_controller())
                             pc->server_save_game(filename_);
-                        if (auto * hud = hud())
+                        if (auto * hud = ::hud())
                             hud->remove_widget(*this);
                     },
                     TEXT("confirm_save_over"),
@@ -63,11 +63,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
         } else if (in_game_) {
             hud()->do_after_confirming(
                 [this] {
-                    // The button click sounds that should paly normally gets
-                    // cut off by the level load.  We have to explicitly play it
-                    // here.
-                    Ugame_instance::get()->play_sound_across_level_loads(
-                        audio_assets().click_cue_);
+                    if (auto * hud = ::hud())
+                        hud->remove_widget(*this);
                     if (auto * pc = player_controller())
                         pc->server_load_game(filename_);
                 },
@@ -75,10 +72,8 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                 TEXT("unsaved_progress_lost"),
                 TEXT("load_game"));
         } else {
-            // The button click sounds that should paly normally gets cut
-            // off by the level load.  We have to explicitly play it here.
-            Ugame_instance::get()->play_sound_across_level_loads(
-                audio_assets().click_cue_);
+            if (auto * hud = ::hud())
+                hud->remove_widget(*this);
             if (auto * pc = player_controller())
                 pc->server_load_game(filename_);
         }

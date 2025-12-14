@@ -27,6 +27,15 @@ class Ahud_t : public AHUD
 {
     GENERATED_BODY()
 
+    struct confirm_dlg_info
+    {
+        void then(std::function<void()> action) { action_ = std::move(action); }
+
+        TSharedPtr<Sconfirm_dlg> dlg_;
+        std::function<void()> action_;
+        Sconfirm_dlg::result result_ = Sconfirm_dlg::result::waiting_for_user;
+    };
+
 public:
     Ahud_t(FObjectInitializer const & init);
 
@@ -36,8 +45,6 @@ public:
 
     void saves_list(TArray<FString> const & saves);
     void saves_changed(TArray<Ffile_change> const & changes);
-
-    void in_game(bool b);
 
     void show_main_menu(bool in_game);
     void show_save_load_dlg(bool saving);
@@ -57,10 +64,10 @@ public:
                              FString message = TEXT("unsaved_progress_lost"),
                              FString yes_button = TEXT("leave_game"),
                              FString no_button = TEXT("cancel"));
-    void notify_user(
-        FString title, FString message, FString button = TEXT("ok"));
-    void notify_user(
-        FString title, FText message, FString button = TEXT("ok"));
+    confirm_dlg_info &
+    notify_user(FString title, FString message, FString button = TEXT("ok"));
+    confirm_dlg_info &
+    notify_user(FString title, FText message, FString button = TEXT("ok"));
 
     void push_modal(TSharedPtr<Shud_widget_base> widget);
     void remove_widget(Shud_widget_base & w);
@@ -72,7 +79,6 @@ public:
     TArray<Amap_pawn_base *> & selected_in_box();
 
 private:
-    void show_deferred_notifications(level l);
     void allocate_widgets();
     UCommonActivatableWidgetStack * modal_stack();
 
@@ -83,20 +89,11 @@ private:
     TSharedPtr<Sgenerating_galaxy> generating_galaxy_;
     int generating_progress_ = 0;
 
-    struct confirm_dlg_info
-    {
-        TSharedPtr<Sconfirm_dlg> dlg_;
-        std::function<void()> action_;
-        Sconfirm_dlg::result result_ =
-            Sconfirm_dlg::result::waiting_for_user;
-    };
     std::list<confirm_dlg_info> confirm_dlg_infos_;
 
     FVector2D selection_box_first_;
     FVector2D selection_box_last_;
     TArray<Amap_pawn_base *> selected_pawns_;
-
-    bool in_game_ = false;
 
     UPROPERTY(
         EditAnywhere, Category = "ui", meta = (AllowPrivateAccess = "true"))

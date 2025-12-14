@@ -35,14 +35,14 @@ namespace {
         std::array<state_transtion, (int)play_state::ended + 1>,
         (int)play_state::ended + 1>
         g_state_transitions = {{
-//                  start_menu        setup  waiting generating playing          paused        ended
-/* start_menu  */ {{{},               {},    {},     {},        {},              {},           {}}},
-/* setup       */ {{{},               {},    {},     {},        {},              {},           {}}},
-/* waiting_... */ {{{},               {},    {},     {},        {remove_all},    {remove_all}, {}}},
-/* generating  */ {{{},               {},    {},     {},        {remove_all},    {remove_all}, {}}},
-/* playing     */ {{{show_main_menu}, {},    {},     {},        {},              {},           {}}},
-/* paused      */ {{{show_main_menu}, {},    {},     {},        {},              {},           {}}},
-/* ended       */ {{{show_main_menu}, {},    {},     {},        {},              {},           {}}}
+// from:       to:  start_menu        setup  waiting generating playing       paused        ended
+/* start_menu  */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
+/* setup       */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
+/* waiting_... */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
+/* generating  */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
+/* playing     */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
+/* paused      */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
+/* ended       */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}}
         }};
     // clang-format on
 }

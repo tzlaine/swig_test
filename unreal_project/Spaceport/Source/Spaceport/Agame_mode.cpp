@@ -41,10 +41,20 @@ namespace {
             return 0.0f;
         return 1.0f / speed;
     }
+
+    template<typename T>
+    void destroy_actors_of_class(
+        UWorld * w, TSubclassOf<T> subclass, TArray<AActor *> & actors)
+    {
+        UGameplayStatics::GetAllActorsOfClass(w, subclass, actors);
+        for (auto * a : actors) {
+            a->Destroy();
+        }
+    }
 }
 
 Agame_mode::Agame_mode(FObjectInitializer const & init) :
-    AGameModeBase(init)
+    AGameModeBase(init), model_(std::make_unique<model>())
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode CTOR"));
     PrimaryActorTick.bCanEverTick = true;
@@ -109,7 +119,7 @@ void Agame_mode::EndPlay(EEndPlayReason::Type reason)
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::EndPlay()"));
     Super::EndPlay(reason);
 
-    Ugame_instance::get()->unwatch_save_game_dir();
+    Ugame_instance::get()->unwatch_save_game_dir(); // TODO
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::EndPlay()"));
 }
 
@@ -121,8 +131,6 @@ void Agame_mode::ready_for_game()
     else
         ready_for_mp_game();
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::ready_for_game()"));
-
-    // TODO Ugame_instance::get()->load(level::playing);
 }
 
 void Agame_mode::load_and_start_newest_game_Implementation()
@@ -162,6 +170,7 @@ void Agame_mode::load_and_start_game_Implementation(
     auto f = to_path(filename);
     f += TEXT(".sav");
     Ugame_instance::get()->game_to_load(save_dir_path() / f);
+    tear_down_game();
     ready_for_game();
 }
 
@@ -181,16 +190,16 @@ void Agame_mode::load_or_generate_Implementation(
 
     auto params = from_tarray<game_start_params_t>(params_);
     player_id_to_nation_id_ = params.player_id_to_nation_id;
-    generation_thread_ =
-        std::jthread([&, params = std::move(params), this] {
-            model_.generate_galaxy(
-                params, *percent_complete_, generation_complete_);
-        });
+    generation_thread_ = std::jthread([&, params = std::move(params), this] {
+        model_->generate_galaxy(
+            params, *percent_complete_, generation_complete_);
+    });
 }
 
-void Agame_mode::multicast_quit_to_menu_Implementation()
+void Agame_mode::quit_to_menu()
 {
-    Ugame_instance::get()->load(level::playing); // TODO
+    tear_down_game();
+    set_play_state(GameState, play_state::start_menu);
 }
 
 void Agame_mode::publish_save_files()
@@ -215,6 +224,43 @@ void Agame_mode::publish_save_files()
     cast(GameState)->saves_changed();
 }
 
+void Agame_mode::save_game(FString const & filename)
+{
+    auto f = to_path(filename);
+    f += TEXT(".sav");
+    model_->save(save_dir_path() / f);
+}
+
+void Agame_mode::toggle_pause()
+{
+    if (cast(GameState)->play_state_ == play_state::playing) {
+        // TODO: Give a notification of duration of pause in MP.
+        set_play_state(GameState, play_state::paused);
+    } else if (cast(GameState)->play_state_ == play_state::paused) {
+        set_play_state(GameState, play_state::playing);
+    } else {
+        UE_LOG(
+            LogTemp,
+            Error,
+            TEXT("Agame_mode::toggle_pause() Called when the game is not in "
+                 "session."));
+    }
+}
+
+void Agame_mode::play_speed(int speed)
+{
+    if (cast(GameState)->play_state_ != play_state::playing &&
+        cast(GameState)->play_state_ != play_state::paused) {
+        return;
+    }
+    // TODO: Give a notification of speed change a bit before changing it in
+    // MP.
+    speed = std::clamp(speed, 1, 5);
+    model_->set_speed(speed);
+    cast(GameState)->play_speed_ = speed;
+    cast(GameState)->play_speed_changed();
+}
+
 void Agame_mode::saves_dir_changed(
     std::vector<Ffile_change> changes)
 {
@@ -229,6 +275,8 @@ void Agame_mode::saves_dir_changed(
     cast(GameState)->save_file_changes_changed();
 }
 
+// TODO: None of the references to the HUD work from this object in MP; fix!
+
 void Agame_mode::ready_for_sp_game()
 {
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
@@ -238,15 +286,18 @@ void Agame_mode::ready_for_sp_game()
             hud_ptr->show_game_setup();
     } else {
         try {
-            model_.load(load_path);
+            model_->load(load_path);
             load_or_generate(TArray<uint8>{});
         } catch (failed_deserialization const & e) {
             FText message = FText::Format(
                 loc_text(TEXT("load_game_failed_message")),
                 FText::FromString(FString(e.what())));
-            Ugame_instance::get()->defer_notification(
-                level::start, TEXT("load_game_failed"), std::move(message));
-            multicast_quit_to_menu();
+            if (auto * hud = ::hud()) {
+                hud->notify_user(TEXT("load_game_failed"), std::move(message))
+                    .then([this] { quit_to_menu(); });
+            } else {
+                quit_to_menu();
+            }
         }
     }
 }
@@ -258,10 +309,10 @@ void Agame_mode::ready_for_mp_game()
 
 void Agame_mode::signal_start_of_play()
 {
-    check(model_.game_state());
-    auto const & gs = *model_.game_state();
+    check(model_->game_state());
+    auto const & gs = *model_->game_state();
 
-    for (auto const & hex : model_.hexes()) {
+    for (auto const & hex : model_->hexes()) {
         if (hex.province_id == prov_galactic_bulge ||
             hex.province_id == prov_off_map) {
             continue;
@@ -354,39 +405,16 @@ void Agame_mode::signal_start_of_play()
     set_play_state(GameState, play_state::paused);
 }
 
-void Agame_mode::save_game(FString const & filename)
+void Agame_mode::tear_down_game()
 {
-    auto f = to_path(filename);
-    f += TEXT(".sav");
-    model_.save(save_dir_path() / f);
-}
+    // despawn all our map actors
+    TArray<AActor *> actors;
+    destroy_actors_of_class(GetWorld(), fleet_pawn_class_, actors);
+    destroy_actors_of_class(GetWorld(), system_class_, actors);
+    destroy_actors_of_class(GetWorld(), hex_class_, actors);
+    destroy_actors_of_class(GetWorld(), spiral_galaxy_arms_class_, actors);
+    destroy_actors_of_class(GetWorld(), galactic_core_glow_class_, actors);
 
-void Agame_mode::toggle_pause()
-{
-    if (cast(GameState)->play_state_ == play_state::playing) {
-        // TODO: Give a notification of duration of pause in MP.
-        set_play_state(GameState, play_state::paused);
-    } else if (cast(GameState)->play_state_ == play_state::paused) {
-        set_play_state(GameState, play_state::playing);
-    } else {
-        UE_LOG(
-            LogTemp,
-            Error,
-            TEXT("Agame_mode::toggle_pause() Called when the game is not in "
-                 "session."));
-    }
-}
-
-void Agame_mode::play_speed(int speed)
-{
-    if (cast(GameState)->play_state_ != play_state::playing &&
-        cast(GameState)->play_state_ != play_state::paused) {
-        return;
-    }
-    // TODO: Give a notification of speed change a bit before changing it in
-    // MP.
-    speed = std::clamp(speed, 1, 5);
-    model_.set_speed(speed);
-    cast(GameState)->play_speed_ = speed;
-    cast(GameState)->play_speed_changed();
+    model_ = std::make_unique<model>();
+    generation_complete_ = false;
 }

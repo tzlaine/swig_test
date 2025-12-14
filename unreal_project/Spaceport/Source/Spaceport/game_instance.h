@@ -5,6 +5,7 @@
 #include <array>
 #include <filesystem>
 #include <functional>
+#include <vector>
 
 #include <AssetRegistry/AssetRegistryModule.h>
 #include <CoreMinimal.h>
@@ -20,15 +21,7 @@
 
 
 UENUM(BlueprintType)
-enum class game_kind : uint8 {
-    sp,
-    mp
-};
-
-enum class level {
-    start,
-    playing
-};
+enum class game_kind : uint8 { sp, mp };
 
 UCLASS()
 class SPACEPORT_API Ugame_instance : public UGameInstance
@@ -62,76 +55,40 @@ public:
     void unwatch_save_game_dir()
     {
         if (dir_watch_updates_handle_.IsValid()) {
-            GetWorld()->GetTimerManager().ClearTimer(
-                dir_watch_updates_handle_);
+            GetWorld()->GetTimerManager().ClearTimer(dir_watch_updates_handle_);
         }
         dir_watcher_.reset();
         UE_LOG(LogTemp, Log, TEXT("No longer watching save dir for changes"));
     }
 
-    void load(level l);
+    ::game_kind game_kind() const { return game_kind_; }
+    void game_kind(::game_kind kind) { game_kind_ = kind; }
 
-    ::game_kind game_kind() const
-    {
-        return game_kind_;
-    }
-    void game_kind(::game_kind kind)
-    {
-        game_kind_ = kind;
-    }
-
-    std::filesystem::path const & game_to_load() const
-    {
-        return game_to_load_;
-    }
+    std::filesystem::path const & game_to_load() const { return game_to_load_; }
     void game_to_load(std::filesystem::path path)
     {
         game_to_load_ = std::move(path);
     }
 
-    struct deferred_notification
-    {
-        FString title_;
-        FText msg_;
-    };
-    std::vector<deferred_notification> deferred_notifications(level l)
-    {
-        return std::move(deferred_notifications_[(int)l]);
-    }
-    void defer_notification(level l, FString title, FText msg)
-    {
-        deferred_notifications_[(int)l].emplace_back(
-            std::move(title), std::move(msg));
-    }
-
     FText loc_text(FTextKey const & key)
     {
-        if (string_table_id_.IsNone()) {
-            string_table_id_ =
-                string_table_.LoadSynchronous()->GetStringTableId();
-        }
+        if (string_table_id_.IsNone())
+            string_table_id_ = string_table_->GetStringTableId();
         return FText::FromStringTable(string_table_id_, key);
     }
 
-    void play_sound_across_level_loads(USoundBase * sound);
-
-    static Ugame_instance * get()
-    {
-        return self_ptr_;
-    }
+    static Ugame_instance * get() { return self_ptr_; }
 
 private:
-    UPROPERTY(EditAnywhere, Category = "Localization", meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UStringTable> string_table_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "Localization",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UStringTable> string_table_;
 
     FName string_table_id_;
     ::game_kind game_kind_;
     std::filesystem::path game_to_load_;
-
-    UPROPERTY(EditAnywhere, Category = "Levels", meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UWorld> start_level_;
-    UPROPERTY(EditAnywhere, Category = "Levels", meta = (AllowPrivateAccess = "true"))
-    TSoftObjectPtr<UWorld> playing_level_;
 
     void dir_watch_update()
     {
@@ -143,17 +100,10 @@ private:
     FTimerHandle dir_watch_updates_handle_;
     std::function<void(std::vector<Ffile_change>)> dir_watcher_cb_;
 
-    std::array<std::vector<deferred_notification>, 2> deferred_notifications_;
-
-    TObjectPtr<UAudioComponent> audio_component_;
-
     inline static Ugame_instance * self_ptr_ = nullptr;
 };
 
-inline UWorld * world()
-{
-    return Ugame_instance::get()->GetWorld();
-}
+inline UWorld * world() { return Ugame_instance::get()->GetWorld(); }
 
 inline FText loc_text(FTextKey const & key)
 {

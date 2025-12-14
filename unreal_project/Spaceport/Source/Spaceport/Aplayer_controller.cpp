@@ -344,7 +344,7 @@ void Aplayer_controller::server_quit_to_menu_Implementation()
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
     if (!gm)
         return;
-    gm->multicast_quit_to_menu();
+    gm->quit_to_menu();
 }
 
 void Aplayer_controller::server_start_game_Implementation(

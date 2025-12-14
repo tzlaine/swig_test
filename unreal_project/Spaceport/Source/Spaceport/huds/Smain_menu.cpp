@@ -109,10 +109,6 @@ void Smain_menu::rebuild()
                 if (auto * hud = ::hud())
                     hud->remove_widget(*this);
             } else {
-                // The button click sounds that should paly normally gets cut
-                // off by the level load.  We have to explicitly play it here.
-                Ugame_instance::get()->play_sound_across_level_loads(
-                    audio_assets().click_cue_);
                 if (auto * pc = player_controller())
                     pc->server_load_newest_game();
             }
@@ -135,10 +131,6 @@ void Smain_menu::rebuild()
             SNew(Sstyled_button)
             .Text(loc_text(TEXT("new_game")))
             .OnClicked_Lambda([] {
-                // The button click sounds that should paly normally gets cut
-                // off by the level load.  We have to explicitly play it here.
-                Ugame_instance::get()->play_sound_across_level_loads(
-                    audio_assets().click_cue_);
                 if (auto * pc = player_controller())
                     pc->server_new_game(game_kind::sp, FFilePath());
                 return FReply::Handled();
@@ -164,11 +156,6 @@ void Smain_menu::rebuild()
             .Text(loc_text(TEXT("exit_to_main_menu")))
             .OnClicked_Lambda([] {
                 hud()->do_after_confirming([]{
-                    // The button click sounds that should paly normally gets
-                    // cut off by the level load.  We have to explicitly play
-                    // it here.
-                    Ugame_instance::get()->play_sound_across_level_loads(
-                        audio_assets().click_cue_);
                     if (auto * pc = player_controller())
                         pc->server_quit_to_menu();
                 });

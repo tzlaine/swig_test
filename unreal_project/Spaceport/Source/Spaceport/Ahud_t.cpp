@@ -12,18 +12,23 @@
 #include "huds/Uactivatable_widget.h"
 
 
-Ahud_t::Ahud_t(FObjectInitializer const & init) : AHUD(init)
-{
-    in_game(false);
+namespace {
+    bool in_game(UWorld * w)
+    {
+        if (auto * gs = Cast<Agame_state>(UGameplayStatics::GetGameState(w)))
+            return gs->playing_or_paused();
+        return false;
+    }
 }
+
+Ahud_t::Ahud_t(FObjectInitializer const & init) : AHUD(init) {}
 
 void Ahud_t::BeginPlay()
 {
     Super::BeginPlay();
-    UE_LOG(LogTemp, Log, TEXT("ENTER Amain_menu_hud::BeginPlay()"));
+    UE_LOG(LogTemp, Log, TEXT("ENTER Ahud_t::BeginPlay()"));
     show_main_menu(false);
-    // TODO show_deferred_notifications(level::start);
-    UE_LOG(LogTemp, Log, TEXT("EXIT Amain_menu_hud::BeginPlay()"));
+    UE_LOG(LogTemp, Log, TEXT("EXIT Ahud_t::BeginPlay()"));
 }
 
 void Ahud_t::Tick(float dt)
@@ -94,11 +99,6 @@ void Ahud_t::saves_list(TArray<FString> const & saves)
 
 void Ahud_t::saves_changed(TArray<Ffile_change> const & changes) {}
 
-void Ahud_t::in_game(bool b)
-{
-    in_game_ = b;
-}
-
 void Ahud_t::show_main_menu(bool in_game)
 {
     main_menu_ = SNew(Smain_menu).in_game(in_game);
@@ -117,11 +117,12 @@ void Ahud_t::show_main_menu(bool in_game)
 
 void Ahud_t::show_save_load_dlg(bool saving)
 {
-    save_load_dlg_ = SNew(Ssave_load_dlg).in_game(in_game_).saving(saving);
+    save_load_dlg_ =
+        SNew(Ssave_load_dlg).in_game(in_game(GetWorld())).saving(saving);
     push_modal(save_load_dlg_);
     if (auto * pc = player_controller())
         pc->server_req_save_files();
-    // TODO: Sign up for dir watching while the main menu is up (in_game_ ==
+    // TODO: Sign up for dir watching while the main menu is up (in_game() ==
     // true only); cancel it afterward.
 }
 
@@ -162,7 +163,7 @@ void Ahud_t::escape_pressed()
     }
 #endif
 
-    if (in_game_)
+    if (in_game(GetWorld()))
         show_main_menu(true);
 }
 
@@ -217,7 +218,8 @@ void Ahud_t::do_after_confirming(std::function<void()> action,
     push_modal(confirm_dlg);
 }
 
-void Ahud_t::notify_user(FString title, FString message, FString button)
+Ahud_t::confirm_dlg_info &
+Ahud_t::notify_user(FString title, FString message, FString button)
 {
     confirm_dlg_infos_.push_back({});
     TSharedPtr<Sconfirm_dlg> confirm_dlg =
@@ -230,9 +232,11 @@ void Ahud_t::notify_user(FString title, FString message, FString button)
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
     push_modal(confirm_dlg);
+    return confirm_dlg_infos_.back();
 }
 
-void Ahud_t::notify_user(FString title, FText message, FString button)
+Ahud_t::confirm_dlg_info &
+Ahud_t::notify_user(FString title, FText message, FString button)
 {
     confirm_dlg_infos_.push_back({});
     TSharedPtr<Sconfirm_dlg> confirm_dlg =
@@ -245,6 +249,7 @@ void Ahud_t::notify_user(FString title, FText message, FString button)
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
     push_modal(confirm_dlg);
+    return confirm_dlg_infos_.back();
 }
 
 namespace {
@@ -254,6 +259,7 @@ namespace {
 
 void Ahud_t::push_modal(TSharedPtr<Shud_widget_base> widget)
 {
+    check(widget);
     g_content_shared_ptr = widget;
     modal_stack()->AddWidget<Uactivatable_widget>(
         Uactivatable_widget::StaticClass(), [](Uactivatable_widget & w) {
@@ -286,6 +292,9 @@ void Ahud_t::remove_all_widgets()
     for (auto * activatable : all_widgets) {
         modal_stack()->RemoveWidget(*activatable);
     }
+    main_menu_.Reset();
+    if (auto * pc = player_controller())
+        pc->showing_main_menu(false);
 }
 
 void Ahud_t::set_selection_box_first(FVector2D first)
@@ -304,14 +313,6 @@ void Ahud_t::set_selection_box_last(FVector2D last)
 TArray<Amap_pawn_base *> & Ahud_t::selected_in_box()
 {
     return selected_pawns_;
-}
-
-void Ahud_t::show_deferred_notifications(level l) // TODO
-{
-    auto notifications = Ugame_instance::get()->deferred_notifications(l);
-    for (auto & n : notifications) {
-        notify_user(std::move(n.title_), std::move(n.msg_));
-    }
 }
 
 void Ahud_t::allocate_widgets()
