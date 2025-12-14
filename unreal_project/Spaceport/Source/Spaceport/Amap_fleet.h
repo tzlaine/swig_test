@@ -9,7 +9,6 @@
 
 
 class Agame_mode;
-class Agame_mode_base;
 class UFloatingPawnMovement;
 class UStaticMeshComponent;
 
@@ -107,5 +106,4 @@ private:
     float map_rotate_eps_ = 0.01f;
 
     friend Agame_mode;
-    friend Agame_mode_base;
 };

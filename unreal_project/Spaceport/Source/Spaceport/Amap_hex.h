@@ -7,7 +7,6 @@
 
 
 class Agame_mode;
-class Agame_mode_base;
 class USceneComponent;
 class UStaticMeshComponent;
 
@@ -62,5 +61,4 @@ private:
     TObjectPtr<UStaticMeshComponent> selection_indicator_;
 
     friend Agame_mode;
-    friend Agame_mode_base;
 };

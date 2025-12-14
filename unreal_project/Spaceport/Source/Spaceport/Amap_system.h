@@ -8,7 +8,6 @@
 
 
 class Agame_mode;
-class Agame_mode_base;
 class UMaterialInstanceDynamic;
 class USceneComponent;
 class USphereComponent;
@@ -93,5 +92,4 @@ private:
     TObjectPtr<UTextRenderComponent> system_name_;
 
     friend Agame_mode;
-    friend Agame_mode_base;
 };
