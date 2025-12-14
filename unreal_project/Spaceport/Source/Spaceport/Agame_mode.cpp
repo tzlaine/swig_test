@@ -69,7 +69,7 @@ void Agame_mode::PostLogin(APlayerController * player)
 {
     Super::PostLogin(player);
 
-    UE_LOG(LogTemp, Log, TEXT("Player logged in."));
+    UE_LOG(LogTemp, Log, TEXT("Player %d logged in."), players_);
 
     if (!player)
         return;
