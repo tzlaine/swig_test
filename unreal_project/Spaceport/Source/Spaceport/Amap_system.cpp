@@ -1,6 +1,7 @@
 #include "Amap_system.h"
 #include "Agame_mode.h"
 #include "constants.hpp"
+#include "space_creator_actor_config.hpp"
 #include "utility.hpp"
 
 #include <Components/SphereComponent.h>
@@ -8,6 +9,7 @@
 #include <Components/TextRenderComponent.h>
 #include <Engine/CollisionProfile.h>
 #include <Materials/MaterialInstanceDynamic.h>
+#include <Net/UnrealNetwork.h>
 
 
 Amap_system::Amap_system()
@@ -96,6 +98,11 @@ void Amap_system::hover(bool b)
     hover_indicator_->SetHiddenInGame(!b);
 }
 
+void Amap_system::generate_graphical_properties(system_t const & system)
+{
+    graphical_properties_ = configure_map_star(system);
+}
+
 void Amap_system::main_material(UMaterialInstanceDynamic * mid)
 {
     main_mid_ = mid;
@@ -109,4 +116,16 @@ void Amap_system::selection_materials(
     hovered_mid_ = hovered;
     selection_indicator_->SetMaterial(0, selected_mid_);
     hover_indicator_->SetMaterial(0, hovered_mid_);
+}
+
+void Amap_system::GetLifetimeReplicatedProps(
+    TArray<FLifetimeProperty> & OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(Amap_system, graphical_properties_);
+}
+
+void Amap_system::OnRep_graphical_properties()
+{
+    configure_map_star(*this, graphical_properties_);
 }

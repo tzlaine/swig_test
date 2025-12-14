@@ -49,8 +49,10 @@ public:
     UPROPERTY(EditAnywhere, Category = "Textures")
     TObjectPtr<UTexture> planet_texture_8_;
 
-    UTexture * random_wide_lens_flare() const;
-    UTexture * random_small_lens_flare() const;
+    int random_wide_lens_flare() const;
+    int random_small_lens_flare() const;
+    UTexture * wide_lens_flare(int i) const;
+    UTexture * small_lens_flare(int i) const;
     UTexture * random_planet_texture() const;
 };
 

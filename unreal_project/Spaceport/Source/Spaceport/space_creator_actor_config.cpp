@@ -244,47 +244,68 @@ double seasons_intensity_factor(planet_t const & planet)
 
 // TODO: Move all the utilities above here somewhere else.
 
-void configure_map_star(Amap_system * star_actor, system_t const & system)
+Fsystem_graphical_properties configure_map_star(system_t const & system)
 {
-    check(star_actor);
+    Fsystem_graphical_properties retval;
 
     star_t const & star = system.star;
     check(star_class_t::invalid_star_class < star.star_class);
     check(star.star_class <= star_class_t::m);
 
+    retval.star_class = (int32)star.star_class;
+
+    switch (star.star_class) {
+    case star_class_t::o:
+    case star_class_t::b:
+    case star_class_t::a:
+    case star_class_t::f:
+    case star_class_t::g: break;
+    case star_class_t::k: retval.material_index = random_int(0, 1); break;
+    case star_class_t::m: retval.material_index = random_int(0, 2); break;
+    default: break;
+    }
+
+    retval.lens_flare_index = textures().random_small_lens_flare();
+
+    return retval;
+}
+
+void configure_map_star(
+    Amap_system & system, Fsystem_graphical_properties const & props)
+{
     auto const & materials = ::materials();
     UMaterialInterface * material = nullptr;
-    switch (star.star_class) {
+    switch ((star_class_t)props.star_class) {
     case star_class_t::o: material = materials.blue_map_star_; break;
     case star_class_t::b:
     case star_class_t::a: material = materials.blue_white_map_star_; break;
     case star_class_t::f: material = materials.white_map_star_; break;
     case star_class_t::g:
     case star_class_t::k:
-        material = random_int(0, 1) ? materials.yellow_map_star_0_
-                                    : materials.yellow_map_star_1_;
+        material = props.material_index ? materials.yellow_map_star_0_
+                                        : materials.yellow_map_star_1_;
         break;
-    case star_class_t::m: {
-        int const choice = random_int(0, 2);
-        if (choice == 0)
+    case star_class_t::m:
+        if (props.material_index == 0)
             material = materials.red_map_star_0_;
-        else if (choice == 1)
+        else if (props.material_index == 1)
             material = materials.red_map_star_1_;
         else
             material = materials.red_map_star_2_;
         break;
-    }
     default: break;
     }
 
     UMaterialInstanceDynamic * instance =
-        UMaterialInstanceDynamic::Create(material, star_actor);
+        UMaterialInstanceDynamic::Create(material, &system);
 
     {
-        UTexture * texture = textures().random_small_lens_flare();
+        UTexture * texture =
+            textures().small_lens_flare(props.lens_flare_index);
         instance->SetTextureParameterValue(TEXT("T_MainFlare"), texture);
 
-#if 0 // TODO
+        // TODO
+#if 0
         // https://en.wikipedia.org/wiki/Stellar_classification
         // Class A and brighter are >= 5x the sun.
         bool const highly_luminous = 5.0 < star.solar_luminosities;
@@ -295,11 +316,17 @@ void configure_map_star(Amap_system * star_actor, system_t const & system)
 #endif
     }
 
-    star_actor->main_material(instance);
+    system.main_material(instance);
 
-    // TODO: Need to fogure out how the halo part of the Space Creator
-    // material works, at least enough to pull part of it out and use it for
-    // these stars.
+    UMaterialInstanceDynamic * selected_mid =
+        UMaterialInstanceDynamic::Create(materials.system_selected_, &system);
+    selected_mid->SetVectorParameterValue(
+        TEXT("color"), ui_defaults().system_selected_color_);
+    UMaterialInstanceDynamic * hovered_mid =
+        UMaterialInstanceDynamic::Create(materials.system_selected_, &system);
+    hovered_mid->SetVectorParameterValue(
+        TEXT("color"), ui_defaults().system_hovered_color_);
+    system.selection_materials(selected_mid, hovered_mid);
 }
 
 void configure_system_star(AActor * star_actor, star_t const & star)

@@ -5,7 +5,11 @@
 #include "utility.hpp"
 
 
-UTexture * Utextures_t::random_wide_lens_flare() const
+int Utextures_t::random_wide_lens_flare() const { return random_int(0, 4); }
+
+int Utextures_t::random_small_lens_flare() const { return random_int(0, 1); }
+
+UTexture * Utextures_t::wide_lens_flare(int i) const
 {
     std::array<UTexture *, 5> textures = {
         {wide_lens_flare_0_,
@@ -13,14 +17,14 @@ UTexture * Utextures_t::random_wide_lens_flare() const
          wide_lens_flare_2_,
          wide_lens_flare_3_,
          wide_lens_flare_4_}};
-    return textures[random_int(0, 4)];
+    return textures[std::clamp(i, 0, 4)];
 }
 
-UTexture * Utextures_t::random_small_lens_flare() const
+UTexture * Utextures_t::small_lens_flare(int i) const
 {
     std::array<UTexture *, 2> textures = {
         {small_lens_flare_0_, small_lens_flare_1_}};
-    return textures[random_int(0, 1)];
+    return textures[std::clamp(i, 0, 1)];
 }
 
 UTexture * Utextures_t::random_planet_texture() const

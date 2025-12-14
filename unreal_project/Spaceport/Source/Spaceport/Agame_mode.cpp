@@ -364,18 +364,8 @@ void Agame_mode::signal_start_of_play()
                 system_location,
                 FRotator(0, random_double(0, 360), 0),
                 FActorSpawnParameters());
-            configure_map_star(system_pawn, system);
-            UMaterialInstanceDynamic * selected_mid =
-                UMaterialInstanceDynamic::Create(
-                    materials().system_selected_, system_pawn);
-            selected_mid->SetVectorParameterValue(
-                TEXT("color"), ui_defaults().system_selected_color_);
-            UMaterialInstanceDynamic * hovered_mid =
-                UMaterialInstanceDynamic::Create(
-                    materials().system_selected_, system_pawn);
-            hovered_mid->SetVectorParameterValue(
-                TEXT("color"), ui_defaults().system_hovered_color_);
-            system_pawn->selection_materials(selected_mid, hovered_mid);
+            system_pawn->generate_graphical_properties(system);
+            system_pawn->OnRep_graphical_properties();
             system_pawn->system_id(i);
         }
     }

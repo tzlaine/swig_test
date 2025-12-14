@@ -13,6 +13,22 @@ class USceneComponent;
 class USphereComponent;
 class UStaticMeshComponent;
 class UTextRenderComponent;
+struct system_t;
+
+USTRUCT()
+struct Fsystem_graphical_properties
+{
+    GENERATED_BODY()
+
+    UPROPERTY()
+    int32 star_class = 0;
+
+    UPROPERTY()
+    int32 material_index = 0;
+
+    UPROPERTY()
+    int32 lens_flare_index = 0;
+};
 
 UCLASS()
 class Amap_system : public Amap_pawn_base
@@ -31,16 +47,25 @@ public:
 
     int system_id() { return system_id_; }
 
+    void generate_graphical_properties(system_t const & system);
     void main_material(UMaterialInstanceDynamic * mid);
-
     void selection_materials(
         UMaterialInstanceDynamic * selected,
         UMaterialInstanceDynamic * hovered);
+
+protected:
+    void GetLifetimeReplicatedProps(
+        TArray<FLifetimeProperty> & props) const override;
 
 private:
     void system_id(int id) { system_id_ = id; }
 
     int system_id_ = system_none;
+
+    UPROPERTY(ReplicatedUsing = OnRep_graphical_properties)
+    Fsystem_graphical_properties graphical_properties_;
+    UFUNCTION()
+    void OnRep_graphical_properties();
 
     UPROPERTY()
     TObjectPtr<UMaterialInstanceDynamic> main_mid_;
