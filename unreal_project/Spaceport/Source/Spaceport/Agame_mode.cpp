@@ -285,6 +285,9 @@ void Agame_mode::ready_for_sp_game()
             FText message = FText::Format(
                 loc_text(TEXT("load_game_failed_message")),
                 FText::FromString(FString(e.what())));
+            // TODO: This is flaky.  We should instead send a message to the
+            // client, and then have it defer the quit_to_menu call until the
+            // user hits 'Ok'.
             quit_to_menu(Fuser_notification(TEXT("load_game_failed"), message));
         }
     }
