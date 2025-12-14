@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model.hpp"
+#include "user_notification.h"
 
 #include <vector>
 
@@ -49,7 +50,8 @@ public:
     void load_or_generate(TArray<uint8> const & params);
     void load_or_generate_Implementation(TArray<uint8> const & params);
 
-    void quit_to_menu();
+    void quit_to_menu(
+        Fuser_notification const & notification = Fuser_notification());
 
     void publish_save_files();
     void save_game(FString const & filename);

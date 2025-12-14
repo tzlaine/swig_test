@@ -23,6 +23,16 @@ namespace {
                                                  hud->show_main_menu(false);
                                              }
                                          }};
+    state_transtion const show_setup{TEXT("show_setup"), [] {
+                                         if (auto * hud = ::hud()) {
+                                             hud->show_game_setup();
+                                         }
+                                     }};
+    state_transtion const show_generating{TEXT("show_generating"), [] {
+                                              if (auto * hud = ::hud()) {
+                                                  hud->show_generating_galaxy();
+                                              }
+                                          }};
 
     // Anything that needs to be done -- especially to the UI -- on a
     // play_state transition should go in the table below.  Note that
@@ -35,14 +45,14 @@ namespace {
         std::array<state_transtion, (int)play_state::ended + 1>,
         (int)play_state::ended + 1>
         g_state_transitions = {{
-// from:       to:  start_menu        setup  waiting generating playing       paused        ended
-/* start_menu  */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
-/* setup       */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
-/* waiting_... */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
-/* generating  */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
-/* playing     */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
-/* paused      */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}},
-/* ended       */ {{{show_main_menu}, {},    {},     {},        {remove_all}, {remove_all}, {}}}
+// from:       to:  start_menu        setup         waiting generating         playing       paused        ended
+/* start_menu  */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* setup       */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* waiting_... */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* generating  */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* playing     */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* paused      */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* ended       */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}}
         }};
     // clang-format on
 }
@@ -98,6 +108,16 @@ void Agame_state::play_state_changed()
             *transition.name_);
         transition.f_();
     }
+
+    if (!deferred_notification_.title_.IsEmpty()) {
+        if (auto * const hud = ::hud()) {
+            hud->notify_user(
+                deferred_notification_.title_,
+                deferred_notification_.message_,
+                deferred_notification_.button_);
+        }
+        deferred_notification_ = Fuser_notification();
+    }
 }
 
 void Agame_state::play_speed_changed()
@@ -114,4 +134,5 @@ void Agame_state::GetLifetimeReplicatedProps(
     DOREPLIFETIME(Agame_state, prev_play_state_);
     DOREPLIFETIME(Agame_state, play_state_);
     DOREPLIFETIME(Agame_state, play_speed_);
+    DOREPLIFETIME(Agame_state, deferred_notification_);
 }

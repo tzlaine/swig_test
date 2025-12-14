@@ -3,7 +3,6 @@
 #include "Amap_fleet.h"
 #include "Amap_hex.h"
 #include "Amap_system.h"
-#include "Ahud_t.h"
 #include "Aplayer_controller.h"
 #include "Aplayer_state.h"
 #include "game_instance.h"
@@ -12,6 +11,7 @@
 #include "rng.hpp"
 #include "space_creator_actor_config.hpp"
 #include "ui_defaults.h"
+#include "user_notification.h"
 #include "utility.hpp"
 
 #include <filesystem>
@@ -26,11 +26,15 @@ namespace {
         return Cast<Agame_state>(base);
     }
 
-    void set_play_state(AGameStateBase * gs_, play_state s)
+    void set_play_state(
+        AGameStateBase * gs_,
+        play_state s,
+        Fuser_notification const & notification = Fuser_notification())
     {
         auto * gs = cast(gs_);
         gs->prev_play_state_ = gs->play_state_;
         gs->play_state_ = s;
+        gs->deferred_notification_ = notification;
         gs->play_state_changed();
     }
 
@@ -96,15 +100,12 @@ void Agame_mode::Tick(float secs)
     if (cast(GameState)->play_state_ == play_state::generating) {
         int percent_update = 0;
         if (percent_complete_->try_pop(percent_update)) {
-            if (auto * hud_ptr = ::hud())
-                hud_ptr->generating_percent_update(percent_update);
+            player_controller()->client_galaxy_generation_update(
+                percent_update);
         }
 
-        if (generation_complete_) {
+        if (generation_complete_)
             signal_start_of_play();
-            if (auto * hud_ptr = ::hud())
-                hud_ptr->remove_generating_widget();
-        }
     }
 
     if (cast(GameState)->play_state_ == play_state::paused)
@@ -153,10 +154,9 @@ void Agame_mode::load_and_start_newest_game_Implementation()
     }
 
     if (newest.empty()) {
-        if (auto * hud = ::hud()) {
-            hud->notify_user(
-                TEXT("load_game_failed"),
-                TEXT("continue_failed_no_saves"));
+        if (auto * pc = player_controller()) {
+            pc->clients_notify_users(Fuser_notification(
+                TEXT("load_game_failed"), TEXT("continue_failed_no_saves")));
         }
     } else {
         Ugame_instance::get()->game_to_load(newest);
@@ -182,9 +182,6 @@ void Agame_mode::load_or_generate_Implementation(
         return;
     }
 
-    if (auto * hud_ptr = ::hud())
-        hud_ptr->show_generating_galaxy();
-
     set_play_state(GameState, play_state::generating);
     percent_complete_ = std::make_unique<concurrent_queue<int>>();
 
@@ -196,10 +193,10 @@ void Agame_mode::load_or_generate_Implementation(
     });
 }
 
-void Agame_mode::quit_to_menu()
+void Agame_mode::quit_to_menu(Fuser_notification const & notification)
 {
     tear_down_game();
-    set_play_state(GameState, play_state::start_menu);
+    set_play_state(GameState, play_state::start_menu, notification);
 }
 
 void Agame_mode::publish_save_files()
@@ -275,15 +272,11 @@ void Agame_mode::saves_dir_changed(
     cast(GameState)->save_file_changes_changed();
 }
 
-// TODO: None of the references to the HUD work from this object in MP; fix!
-
 void Agame_mode::ready_for_sp_game()
 {
     std::filesystem::path load_path = Ugame_instance::get()->game_to_load();
     if (load_path.empty()) {
         set_play_state(GameState, play_state::setup);
-        if (auto * hud_ptr = ::hud())
-            hud_ptr->show_game_setup();
     } else {
         try {
             model_->load(load_path);
@@ -292,12 +285,7 @@ void Agame_mode::ready_for_sp_game()
             FText message = FText::Format(
                 loc_text(TEXT("load_game_failed_message")),
                 FText::FromString(FString(e.what())));
-            if (auto * hud = ::hud()) {
-                hud->notify_user(TEXT("load_game_failed"), std::move(message))
-                    .then([this] { quit_to_menu(); });
-            } else {
-                quit_to_menu();
-            }
+            quit_to_menu(Fuser_notification(TEXT("load_game_failed"), message));
         }
     }
 }

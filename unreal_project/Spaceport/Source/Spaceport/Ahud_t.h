@@ -64,10 +64,10 @@ public:
                              FString message = TEXT("unsaved_progress_lost"),
                              FString yes_button = TEXT("leave_game"),
                              FString no_button = TEXT("cancel"));
-    confirm_dlg_info &
+
+    void
     notify_user(FString title, FString message, FString button = TEXT("ok"));
-    confirm_dlg_info &
-    notify_user(FString title, FText message, FString button = TEXT("ok"));
+    void notify_user(FString title, FText message, FString button = TEXT("ok"));
 
     void push_modal(TSharedPtr<Shud_widget_base> widget);
     void remove_widget(Shud_widget_base & w);

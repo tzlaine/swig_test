@@ -2,6 +2,7 @@
 
 #include "Agame_mode_fwd.h"
 #include "dir_watcher.h"
+#include "user_notification.h"
 
 #include <CoreMinimal.h>
 #include <GameFramework/GameStateBase.h>
@@ -38,6 +39,8 @@ public:
     play_state prev_play_state_ = play_state::start_menu;
     UPROPERTY(ReplicatedUsing = play_state_changed)
     play_state play_state_ = play_state::start_menu;
+    UPROPERTY(ReplicatedUsing = play_state_changed)
+    Fuser_notification deferred_notification_;
     UFUNCTION()
     void play_state_changed();
 

@@ -2,6 +2,7 @@
 
 #include "Amap_pawn_base_fwd.hpp"
 #include "constants.hpp"
+#include "user_notification.h"
 
 #include <adobe/name.hpp>
 
@@ -35,6 +36,11 @@ public:
     void SetupInputComponent() override;
     void Tick(float delta) override;
 
+    UFUNCTION(NetMulticast, Reliable)
+    void clients_notify_users(Fuser_notification const & notification);
+    void clients_notify_users_Implementation(
+        Fuser_notification const & notification);
+
     UFUNCTION(Server, Reliable)
     void server_req_save_files();
     void server_req_save_files_Implementation();
@@ -42,6 +48,10 @@ public:
     UFUNCTION(Server, Reliable)
     void server_new_game(game_kind kind, FFilePath const & save);
     void server_new_game_Implementation(game_kind kind, FFilePath const & save);
+
+    UFUNCTION(NetMulticast, Unreliable)
+    void client_galaxy_generation_update(int percent_update);
+    void client_galaxy_generation_update_Implementation(int percent_update);
 
     UFUNCTION(Server, Reliable)
     void server_load_game(FString const & filename);

@@ -218,8 +218,7 @@ void Ahud_t::do_after_confirming(std::function<void()> action,
     push_modal(confirm_dlg);
 }
 
-Ahud_t::confirm_dlg_info &
-Ahud_t::notify_user(FString title, FString message, FString button)
+void Ahud_t::notify_user(FString title, FString message, FString button)
 {
     confirm_dlg_infos_.push_back({});
     TSharedPtr<Sconfirm_dlg> confirm_dlg =
@@ -232,11 +231,9 @@ Ahud_t::notify_user(FString title, FString message, FString button)
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
     push_modal(confirm_dlg);
-    return confirm_dlg_infos_.back();
 }
 
-Ahud_t::confirm_dlg_info &
-Ahud_t::notify_user(FString title, FText message, FString button)
+void Ahud_t::notify_user(FString title, FText message, FString button)
 {
     confirm_dlg_infos_.push_back({});
     TSharedPtr<Sconfirm_dlg> confirm_dlg =
@@ -249,7 +246,6 @@ Ahud_t::notify_user(FString title, FText message, FString button)
             .result_ptr(&confirm_dlg_infos_.back().result_);
     confirm_dlg_infos_.back().dlg_ = confirm_dlg;
     push_modal(confirm_dlg);
-    return confirm_dlg_infos_.back();
 }
 
 namespace {

@@ -300,6 +300,15 @@ void Aplayer_controller::Tick(float delta)
     }
 }
 
+void Aplayer_controller::clients_notify_users_Implementation(
+    Fuser_notification const & notification)
+{
+    if (auto * hud = ::hud(GetHUD())) {
+        hud->notify_user(
+            notification.title_, notification.message_, notification.button_);
+    }
+}
+
 void Aplayer_controller::server_req_save_files_Implementation()
 {
     auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
@@ -318,6 +327,13 @@ void Aplayer_controller::server_new_game_Implementation(
     Ugame_instance::get()->game_kind(kind);
     Ugame_instance::get()->game_to_load(*save.FilePath);
     gm->ready_for_game();
+}
+
+void Aplayer_controller::client_galaxy_generation_update_Implementation(
+    int percent_update)
+{
+    if (auto * hud = ::hud(GetHUD()))
+        hud->generating_percent_update(percent_update);
 }
 
 void Aplayer_controller::server_load_game_Implementation(
