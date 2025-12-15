@@ -2,6 +2,8 @@
 
 #include "Amap_pawn_base_fwd.hpp"
 #include "constants.hpp"
+#include "game_data.hpp"
+#include "model.hpp"
 #include "user_notification.h"
 
 #include <adobe/name.hpp>
@@ -143,6 +145,9 @@ private:
     bool alternate_selection_key_down_ = false;
     FVector2D selection_box_first_;
     FVector2D selection_box_last_;
+
+    game_state_t game_state_;
+    client_view client_view_;
 
     bool showing_main_menu_ = false;
 

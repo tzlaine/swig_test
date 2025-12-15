@@ -172,7 +172,7 @@ message planet_t
 
     float orbital_pos_r = 24;
     int32 max_population = 25;
-    int32 owner = 26;
+    int32 owner = 26; // TODO: Ownership of planets should go away.
     int32 original_owner = 27;
     // TODO: language, culture, religion
     // TODO: visual properties (incl. rings)
@@ -183,7 +183,7 @@ message planet_t
 
 message location_object_t
 {
-    nation_and_object_id_t bases = 1;
+    repeated nation_and_object_id_t bases = 1;
     uint64 planet_id = 2; // no planet if < 0
     // TODO: orbital position, if planet is nonzero
     // TODO: other kinds of things as well?
@@ -252,7 +252,7 @@ message nation_t
     repeated nation_and_object_id_t foreign_designs_seen = 6;
     repeated nation_and_object_id_t foreign_designs_glimpsed = 7;
     repeated int32 hexes_seen = 8;
-    repeated int32 systems_seen = 9;
+    repeated int32 systems_visited = 9;
     bool defeated = 10;
 }
 

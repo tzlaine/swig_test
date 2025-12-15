@@ -415,7 +415,11 @@ struct std::formatter<location_object_t> {
         auto out = ctx.out();
         out = std::format_to(out, "location_object_t(");
 
-        out = std::format_to(out, " bases={}", x.bases);
+        out = std::format_to(out, " bases=[");
+        for (auto && e : x.bases) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
         out = std::format_to(out, " planet_id={}", x.planet_id);
 
         return std::format_to(out, " )");
@@ -605,8 +609,8 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " systems_seen=[");
-        for (auto && e : x.systems_seen) {
+        out = std::format_to(out, " systems_visited=[");
+        for (auto && e : x.systems_visited) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");

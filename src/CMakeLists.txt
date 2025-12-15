@@ -10,12 +10,13 @@ generate_protobuf(game_data game_data_message_target)
 add_library(
     game_data
     STATIC
-    ${unreal_src_dir}/constants.cpp
-    ${unreal_src_dir}/model.cpp
-    ${unreal_src_dir}/json2pb.cc
     ${unreal_src_dir}/base_types.cpp
+    ${unreal_src_dir}/constants.cpp
     ${unreal_src_dir}/game_data.cpp
     ${unreal_src_dir}/generate_galaxy.cpp
+    ${unreal_src_dir}/json2pb.cc
+    ${unreal_src_dir}/model.cpp
+    ${unreal_src_dir}/serialization.cpp
     ${unreal_src_dir}/base_types.pb.cc
     ${unreal_src_dir}/game_data.pb.cc
 )

@@ -210,7 +210,7 @@ struct planet_t
 
 struct location_object_t
 {
-    nation_and_object_id_t bases;
+    std::vector<nation_and_object_id_t> bases;
     std::size_t planet_id;
     bool operator==(location_object_t const &) const = default;
 };
@@ -272,7 +272,7 @@ struct nation_t
     std::vector<nation_and_object_id_t> foreign_designs_seen;
     std::vector<nation_and_object_id_t> foreign_designs_glimpsed;
     std::vector<int> hexes_seen;
-    std::vector<int> systems_seen;
+    std::vector<int> systems_visited;
     bool defeated;
     bool operator==(nation_t const &) const = default;
 };

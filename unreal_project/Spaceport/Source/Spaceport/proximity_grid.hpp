@@ -136,6 +136,8 @@ struct proximity_grid
                      allied(gs, owner_id, owner(other_ptr)))) {
                     continue;
                 }
+                // TODO: Looks like the autodetection of allied units is
+                // missing here.
                 if (dist_sq(position(ptr), position(other_ptr)) <
                     detection_dist_sq(gs, ptr, other_ptr)) {
                     push_back(retval, other_ptr);

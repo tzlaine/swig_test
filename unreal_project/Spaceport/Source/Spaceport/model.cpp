@@ -14,6 +14,53 @@
 #include "rng.hpp"
 
 
+client_view::client_view(std::span<std::byte const> src)
+{
+    hexes_.clear();
+    systems_.clear();
+    planets_.clear();
+    nations_.clear();
+    detail::deserialize_for_client(
+        map_width_, map_height_, hexes_, systems_, planets_, nations_, src);
+}
+
+boost::optional<hex_t const &> client_view::hex(int i) const
+{
+    auto const it = std::ranges::lower_bound(
+        hexes_, i, std::ranges::less{}, &indexed_object<hex_t>::index_);
+    if (it == hexes_.end() || it->index_ != i)
+        return {};
+    return it->object_;
+}
+
+boost::optional<system_t const &> client_view::system(int i) const
+{
+    auto const it = std::ranges::lower_bound(
+        systems_, i, std::ranges::less{}, &indexed_object<system_t>::index_);
+    if (it == systems_.end() || it->index_ != i)
+        return {};
+    return it->object_;
+}
+
+boost::optional<planet_t const &> client_view::planet(int i) const
+{
+    auto const it = std::ranges::lower_bound(
+        planets_, i, std::ranges::less{}, &indexed_object<planet_t>::index_);
+    if (it == planets_.end() || it->index_ != i)
+        return {};
+    return it->object_;
+}
+
+boost::optional<nation_t const &> client_view::nation(int i) const
+{
+    auto const it = std::ranges::lower_bound(
+        nations_, i, std::ranges::less{}, &indexed_object<nation_t>::index_);
+    if (it == nations_.end() || it->index_ != i)
+        return {};
+    return it->object_;
+}
+
+
 model::model () : save_thread_(&model::save_worker, this) {}
 
 model::~model ()
@@ -22,13 +69,13 @@ model::~model ()
 }
 
 #if !defined(BUILD_FOR_TEST)
-TArray<uint8> model::serialize_for_client(int nation_id) const
+TArray<uint8> model::serialize_for_client(int nation_id)
 {
     check(game_state_);
     TArray<uint8> retval;
     detail::ostream_tarray_facade oss(retval);
-    std::ptrdiff_t bytes =
-        detail::serialize_for_client(nation_id, *game_state_, &oss);
+    detail::serialize_for_client(
+        nation_id, proximity_grid_, *game_state_, &oss);
     return std::move(retval);
 }
 #endif

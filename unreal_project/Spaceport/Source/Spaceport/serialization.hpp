@@ -1,14 +1,18 @@
 #pragma once
 
+#include "effects.hpp"
 #include "logging.hpp"
 #include "memmap.hpp"
 #include "sparse_vector.hpp"
+#include "model_util.hpp"
 #include "model_visibility.hpp"
+#include "proximity_grid.hpp"
 
 #include <adobe/name.hpp>
 #include <boost/container/flat_map.hpp>
 #include <google/protobuf/io/coded_stream.h>
 
+#include <algorithm>
 #include <array>
 #include <exception>
 #include <filesystem>
@@ -50,7 +54,22 @@ private:
 };
 
 namespace detail {
-#if !defined(BUILD_FOR_TEST)
+#if defined(BUILD_FOR_TEST)
+    struct ostream_tarray_facade
+    {
+        ostream_tarray_facade(std::vector<char> & target) : target_(&target) {}
+
+        void write(char const * ptr, std::ptrdiff_t size)
+        {
+            std::ptrdiff_t prev_size = target_->size();
+            target_->resize(prev_size + size);
+            std::memcpy(target_->data() + prev_size, ptr, size);
+        }
+
+    private:
+        std::vector<char> * target_;
+    };
+#else
     struct ostream_tarray_facade
     {
         ostream_tarray_facade(TArray<uint8> & target) : target_(&target) {}
@@ -554,74 +573,194 @@ namespace detail {
         return src;
     }
 
-    template<typename T, typename OStream>
-    std::ptrdiff_t serialize_for_client(
+    void serialize_for_client(
         game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        unit_design_t const & x,
+        visibility_kind vis,
+        ostream_tarray_facade * os);
+
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        unit_t const & x,
+        visibility_kind vis,
+        ostream_tarray_facade * os);
+
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        fleet_t const & x,
+        visibility_kind vis,
+        ostream_tarray_facade * os);
+
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        hex_t const & x,
+        visibility_kind vis,
+        int,
+        ostream_tarray_facade * os);
+
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        system_t const & x,
+        visibility_kind vis,
+        int system_index,
+        ostream_tarray_facade * os);
+
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        planet_t const & x,
+        visibility_kind vis,
+        int,
+        ostream_tarray_facade * os);
+
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
+        int nation_id,
+        nation_t const & x,
+        visibility_kind vis,
+        int,
+        ostream_tarray_facade * os);
+
+    // For top-level sequences in game_data_t.
+    template<typename T>
+    void serialize_for_client(
+        game_state_t const & gs,
+        std::vector<fleet_t const *> const & visible_fleets,
         int nation_id,
         std::vector<T> const & x,
         int field_number,
-        OStream * os)
+        ostream_tarray_facade * os,
+        std::vector<visibility_kind> & visibility)
     {
-        std::ptrdiff_t retval = 0;
+        std::ptrdiff_t count = 0;
 
         uint8_t buf[64];
         uint8_t * out = buf;
 
-        auto const vis = [](auto & gs, int nation_id, T const & e, int i) {
-            if constexpr (requires { visibility_of(gs, nation_id, e, i); })
-                return visibility_of(gs, nation_id, e, i);
-            else
-                return visibility_of(gs, nation_id, e);
-        };
+        visibility.clear();
+        visibility.resize(x.size());
+        {
+            int i = 0;
+            std::ranges::transform(x, visibility.begin(), [&](auto const & e) {
+                return ::visibility_of(gs, visible_fleets, nation_id, e, i++);
+            });
+        }
 
         out = os::WriteVarint32ToArray(field_number, out);
         {
-            int i = 0;
-            int const size = std::ranges::count_if(x, [&](auto const & e) {
-                return vis(gs, nation_id, e, i++) != visibility_kind::unseen;
-            });
+            int const size =
+                x.size() -
+                std::ranges::count(visibility, visibility_kind::unseen);
             out = os::WriteVarint32ToArray(size, out);
-            detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
+            detail::count_or_write<ser_op::write>(count, buf, out - buf, os);
         }
-        int i = 0;
-        for (auto const & e : x) {
-            if (vis(gs, nation_id, e, i) == visibility_kind::unseen) {
-                ++i;
+
+        for (int i = 0, last = (int)x.size(); i < last; ++i) {
+            if (visibility[i] == visibility_kind::unseen)
                 continue;
-            }
-            out = os::WriteVarint32ToArray(i++, out);
-            detail::count_or_write<ser_op::write>(retval, buf, out - buf, os);
-            auto element = view_of(gs, nation_id, e);
-            retval +=
-                detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
-                    element, 0, os);
+            auto const & e = x[i];
+            out = os::WriteVarint32ToArray(i, out);
+            detail::count_or_write<ser_op::write>(count, buf, out - buf, os);
+            serialize_for_client(
+                gs, visible_fleets, nation_id, e, visibility[i], i, os);
+            ++i;
+        }
+    }
+
+    // For top-level sequences in client_view.
+    template<typename T>
+    std::span<std::byte const> deserialize_for_client(
+        std::vector<indexed_object<T>> & x, std::span<std::byte const> src)
+    {
+        uint32_t size = -1;
+        src = detail::read_varint(size, src);
+        x.resize(size);
+
+        for (int i = 0; i < (int)size; ++i) {
+            uint32_t index = -1;
+            src = detail::read_varint(index, src);
+            x[i].index_ = index;
+            src = detail::deserialize_message_impl(x[i].object_, src);
         }
 
-        return retval;
+        return src;
     }
 
-    template<typename OStream>
-    std::ptrdiff_t
-    serialize_for_client(int nation_id, game_state_t const & gs, OStream * os)
+    template<typename T>
+    void serialize_for_client(
+        int nation_id,
+        proximity_grid<T> & grid,
+        game_state_t const & gs,
+        ostream_tarray_facade * os)
     {
-        std::ptrdiff_t retval = 0;
+        std::vector<fleet_t const *> owned_fleets;
+        owned_fleets.reserve(gs.nations[nation_id].fleets.size());
+        visit_fleets(gs, [&](auto & fleet) { owned_fleets.push_back(&fleet); });
 
-        retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
+        std::vector<fleet_t const *> visible_fleets;
+        grid.gather_visible_objects(
+            visible_fleets, nation_id, owned_fleets, gs, find_visible::all);
+        // TODO: This is missing detection of fleets by planets.
+        sort_by_id(visible_fleets);
+
+        std::vector<visibility_kind> visibility_scratch;
+
+        detail::serialize_impl<ser_op::write, ser_field_op::write>(
             gs.map_width, 1, os);
-        retval += detail::serialize_impl<ser_op::write, ser_field_op::write>(
+        detail::serialize_impl<ser_op::write, ser_field_op::write>(
             gs.map_height, 2, os);
-        retval += detail::serialize_for_client(gs, nation_id, gs.hexes, 3, os);
-        retval +=
-            detail::serialize_for_client(gs, nation_id, gs.systems, 4, os);
-        retval +=
-            detail::serialize_for_client(gs, nation_id, gs.planets, 5, os);
-        retval +=
-            detail::serialize_for_client(gs, nation_id, gs.nations, 6, os);
+        detail::serialize_for_client(
+            gs, visible_fleets, nation_id, gs.hexes, 3, os, visibility_scratch);
+        detail::serialize_for_client(
+            gs,
+            visible_fleets,
+            nation_id,
+            gs.systems,
+            4,
+            os,
+            visibility_scratch);
+        detail::serialize_for_client(
+            gs,
+            visible_fleets,
+            nation_id,
+            gs.planets,
+            5,
+            os,
+            visibility_scratch);
+        detail::serialize_for_client(
+            gs,
+            visible_fleets,
+            nation_id,
+            gs.nations,
+            6,
+            os,
+            visibility_scratch);
 
-        retval += detail::serialize_message_end<ser_op::write>(os);
+        // TODO: Alliances too.
 
-        return retval;
+        detail::serialize_message_end<ser_op::write>(os);
     }
+
+    void deserialize_for_client(
+        int map_width,
+        int map_height,
+        std::vector<indexed_object<hex_t>> & hexes,
+        std::vector<indexed_object<system_t>> & systems,
+        std::vector<indexed_object<planet_t>> & planets,
+        std::vector<indexed_object<nation_t>> & nations,
+        std::span<std::byte const> src);
 }
 
 template<typename T>

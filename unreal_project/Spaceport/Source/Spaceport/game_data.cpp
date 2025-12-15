@@ -300,7 +300,9 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
 pb_message::game_data::location_object_t to_protobuf (const ::location_object_t& value)
 {
     pb_message::game_data::location_object_t retval;
-    retval.mutable_bases()->CopyFrom(to_protobuf(value.bases));
+    for (const auto& x : value.bases) {
+        retval.add_bases()->CopyFrom(to_protobuf(x));
+    }
     retval.set_planet_id(value.planet_id);
     return retval;
 }
@@ -308,7 +310,13 @@ pb_message::game_data::location_object_t to_protobuf (const ::location_object_t&
 ::location_object_t from_protobuf (const pb_message::game_data::location_object_t& msg)
 {
     ::location_object_t retval;
-    retval.bases = from_protobuf(msg.bases());
+    {
+        retval.bases.resize(msg.bases_size());
+        auto it = retval.bases.begin();
+        for (const auto& x : msg.bases()) {
+            *it++ = from_protobuf(x);
+        }
+    }
     retval.planet_id = msg.planet_id();
     return retval;
 }
@@ -474,8 +482,8 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.hexes_seen) {
         retval.add_hexes_seen(x);
     }
-    for (const auto& x : value.systems_seen) {
-        retval.add_systems_seen(x);
+    for (const auto& x : value.systems_visited) {
+        retval.add_systems_visited(x);
     }
     retval.set_defeated(value.defeated);
     return retval;
@@ -535,9 +543,9 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         }
     }
     {
-        retval.systems_seen.resize(msg.systems_seen_size());
-        auto it = retval.systems_seen.begin();
-        for (const auto& x : msg.systems_seen()) {
+        retval.systems_visited.resize(msg.systems_visited_size());
+        auto it = retval.systems_visited.begin();
+        for (const auto& x : msg.systems_visited()) {
             *it++ = x;
         }
     }

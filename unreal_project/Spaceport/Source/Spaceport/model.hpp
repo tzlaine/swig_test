@@ -10,6 +10,7 @@
 #include "proximity_grid.hpp"
 
 
+#include <boost/optional.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
 #include <boost/container/flat_set.hpp>
@@ -18,44 +19,12 @@
 #include <fstream>
 
 
-inline constexpr nation_and_object_id_t invalid_nation_and_object{-1, -1};
-
-inline bool invalid(fleet_t const & f)
-{
-    return f.id == invalid_nation_and_object;
-}
-
 namespace detail {
     inline double plus_minus_to_sigma(double plus_minus)
     {
         return plus_minus / 3.0;
     }
 
-    enum struct fleet_visitation { garrisons, no_garrisons };
-
-    template<typename GameState, typename F>
-    void visit_fleets(
-        GameState & gs,
-        F && f,
-        int nation_id = nation_none,
-        fleet_visitation garrisons = fleet_visitation::no_garrisons)
-    {
-        std::span<nation_t> nations;
-        if (nation_id == nation_none) {
-            nations = std::span(gs.nations);
-        } else {
-            auto const first = gs.nations.data() + nation_id;
-            nations = std::span(first, first + 1);
-        }
-        for (auto & nation : nations) {
-            for (auto & fleet : nation.fleets) {
-                if (!fleet.position.is_garrison ||
-                    garrisons == fleet_visitation::garrisons) {
-                    f(fleet);
-                }
-            }
-        }
-    }
 #if defined(BUILD_FOR_TEST)
     inline double g_testing_detection_dist = 1.0;
 #endif
@@ -81,6 +50,27 @@ inline double detection_dist_sq(
     return dist * dist;
 }
 
+struct client_view
+{
+    client_view() = default;
+    client_view(std::span<std::byte const> src);
+
+    int map_width() const { return map_width_; }
+    int map_height() const { return map_height_; }
+
+    boost::optional<hex_t const &> hex(int i) const;
+    boost::optional<system_t const &> system(int i) const;
+    boost::optional<planet_t const &> planet(int i) const;
+    boost::optional<nation_t const &> nation(int i) const;
+
+private:
+    int map_width_ = 0;
+    int map_height_ = 0;
+    std::vector<indexed_object<hex_t>> hexes_;
+    std::vector<indexed_object<system_t>> systems_;
+    std::vector<indexed_object<planet_t>> planets_;
+    std::vector<indexed_object<nation_t>> nations_;
+};
 
 struct model
 {
@@ -120,8 +110,10 @@ struct model
     }
 
 #if !defined(BUILD_FOR_TEST)
-    TArray<uint8> serialize_for_client(int nation_id) const;
+    TArray<uint8> serialize_for_client(int nation_id);
 #endif
+
+    proximity_grid<fleet_t const> & proximity() { return proximity_grid_; }
 
     // TODO: Need to generate nations, resize .alliances, etc.
     void generate_galaxy(game_start_params_t const & params,
@@ -179,7 +171,7 @@ private:
     {
         proximity_grid_.clear_pointers();
         auto f = [this](auto & fleet) { proximity_grid_.insert(fleet); };
-        detail::visit_fleets(*game_state_, f);
+        visit_fleets(*game_state_, f);
     }
 
     std::atomic_int saving_{0};

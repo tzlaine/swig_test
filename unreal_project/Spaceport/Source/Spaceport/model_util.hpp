@@ -1,5 +1,76 @@
 #pragma once
 
+#include "game_data.hpp"
+#include "map_util.hpp"
+
+#include <algorithm>
+#include <span>
+#include <vector>
+
+
+enum struct fleet_visitation { garrisons, no_garrisons };
+
+template<typename GameState, typename F>
+void visit_fleets(
+    GameState & gs,
+    F && f,
+    int nation_id = nation_none,
+    fleet_visitation garrisons = fleet_visitation::no_garrisons)
+{
+    std::span<nation_t const> nations;
+    if (nation_id == nation_none) {
+        nations = std::span(gs.nations);
+    } else {
+        auto const first = gs.nations.data() + nation_id;
+        nations = std::span(first, first + 1);
+    }
+    for (auto & nation : nations) {
+        for (auto & fleet : nation.fleets) {
+            if (!fleet.position.is_garrison ||
+                garrisons == fleet_visitation::garrisons) {
+                f(fleet);
+            }
+        }
+    }
+}
+
+template<typename T>
+struct indexed_object
+{
+    int index_;
+    T object_;
+};
+
+inline auto ptr_to_id(fleet_t const * f) { return f->id; };
+
+auto const fleet_id_cmp = [](auto a, auto b) {
+    if (a.nation_id < b.nation_id)
+        return true;
+    if (b.nation_id < a.nation_id)
+        return false;
+    return a.object_id < b.object_id;
+};
+
+inline void sort_by_id(std::vector<fleet_t const *> & visible_fleets)
+{
+    std::ranges::sort(visible_fleets, fleet_id_cmp, ptr_to_id);
+}
+
+inline bool visible_fleet(
+    std::vector<fleet_t const *> const & visible_fleets,
+    nation_and_object_id_t fleet_id)
+{
+    return std::ranges::binary_search(
+        visible_fleets, fleet_id, fleet_id_cmp, ptr_to_id);
+}
+
+inline constexpr nation_and_object_id_t invalid_nation_and_object{-1, -1};
+
+inline bool invalid(fleet_t const & f)
+{
+    return f.id == invalid_nation_and_object;
+}
+
 inline game_start_params_t default_game_start_params()
 {
     return {
