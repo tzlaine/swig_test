@@ -1,4 +1,5 @@
 // WARNING: Generated code.
+// This file was generated from base_types (proto3)
 #pragma once
 
 #include "config.hpp"

@@ -12,8 +12,8 @@
 
 namespace detail {
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream>
-    std::ptrdiff_t serialize_message_impl(hex_coord_t const & x, int field_number, OStream * os)
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
+    std::ptrdiff_t serialize_message_impl(hex_coord_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
     {
         std::ptrdiff_t retval = 0;
     
@@ -24,8 +24,10 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.x, 1, os);
-        retval += detail::serialize_impl<Op, ser_field_op::write>(x.y, 2, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.x, 1, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.y, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);
     

@@ -506,10 +506,11 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     all_decl_data.append(decl_data)
 
 def print_serialization(depth, this_message_name, this_message_fields):
-    serialize_ops = '\n'.join(map(lambda tup: f'{indent_str(depth)}    retval += detail::serialize_impl<Op, ser_field_op::write>(x.{tup[0]}, {tup[1]}, os);', this_message_fields))
+    serialize_ops = '\n'.join(map(lambda tup: f'''{indent_str(depth)}    if (std::ranges::none_of(elisions, [](int i) {{ return i == {tup[1]}; }}))
+{indent_str(depth)}        retval += detail::serialize_impl<Op, ser_field_op::write>(x.{tup[0]}, {tup[1]}, os);''', this_message_fields))
 
-    serialization_file.write('''{0}template<ser_op Op, ser_field_op FieldOp, typename OStream>
-{0}std::ptrdiff_t serialize_message_impl({1} const & x, int field_number, OStream * os)
+    serialization_file.write('''{0}template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
+{0}std::ptrdiff_t serialize_message_impl({1} const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{{{0}}}})
 {0}{{
 {0}    std::ptrdiff_t retval = 0;
 {0}
