@@ -636,7 +636,7 @@ template<typename T>
 void serialize_message(T const & x, std::filesystem::path const & path)
 {
     auto const dir = path.parent_path();
-    if (!exists(dir))
+    if (!dir.empty() && !exists(dir))
         create_directories(dir);
     std::ofstream ofs(path, std::ios::binary);
     if (!ofs) {
