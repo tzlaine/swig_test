@@ -18,6 +18,7 @@ struct std::formatter<mission_t> : std::formatter<std::string_view> {
         std::string_view name;
         using namespace std::literals;
         switch (t) {
+            case mission_t::invalid_mission: name = "INVALID"sv; break;
             case mission_t::no_mission: name = "no_mission"sv; break;
             case mission_t::explore: name = "explore"sv; break;
             case mission_t::attack: name = "attack"sv; break;

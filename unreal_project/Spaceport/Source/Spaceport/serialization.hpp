@@ -436,6 +436,7 @@ namespace detail {
             x.reserve(size);
             typename T::value_type e;
             for (int i = 0; i < (int)size; ++i) {
+                e = typename T::value_type{};
                 src = detail::deserialize_impl(e, src);
                 x.push_back(std::move(e));
             }
@@ -449,6 +450,7 @@ namespace detail {
             uint32_t index = 0;
             typename T::value_type e;
             for (int i = 0; i < (int)size; ++i) {
+                e = typename T::value_type{};
                 src = detail::read_varint(index, src);
                 src = detail::deserialize_impl(e, src);
                 x.emplace_back(index, std::move(e));
@@ -462,6 +464,8 @@ namespace detail {
             typename T::key_type k;
             typename T::mapped_type v;
             for (int i = 0; i < (int)size; ++i) {
+                k = typename T::key_type{};
+                v = typename T::mapped_type{};
                 src = detail::deserialize_impl(k, src);
                 src = detail::deserialize_impl(v, src);
                 x.emplace(std::move(k), std::move(v));

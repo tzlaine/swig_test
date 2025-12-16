@@ -325,6 +325,32 @@ def field_type(field_descriptor_proto, lang):
             typename = '{}[]'.format(typename)
     return typename
 
+def initializer_expr(field_descriptor_proto, lang):
+    if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
+        return ' = {}'
+
+    if field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
+        typename = type_without_namespace(field_descriptor_proto, protobuf_namespace)
+        return f' = {typename}::invalid_{typename[:-2]}'
+
+    typename = field_type(field_descriptor_proto, lang)
+    if typename == 'nation_and_object_id_t':
+        return ' = {-1, -1}'
+    if typename == 'adobe::name_t':
+        return ' = adobe::name_t("")'
+    if typename == 'unsigned int':
+        return ' = 0'
+    if typename == 'int':
+        return ' = -1'
+    if typename == 'float':
+        return ' = -1.0f'
+    if typename == 'double':
+        return ' = -1.0'
+    if typename == 'bool':
+        return ' = false'
+
+    return ''
+
 def to_csharp_namespace(namespace):
     def pascal_case(s):
         s_pieces = s.split('_')
@@ -408,7 +434,8 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, pa
 '''.format(indent_str(depth - 1)))
     else:
         typename = field_type(field_descriptor_proto, 'cpp')
-        hpp_file.write('{}{} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
+        initializer = initializer_expr(field_descriptor_proto, 'cpp')
+        hpp_file.write('{}{} {}{};\n'.format(indent_str(depth), typename, field_descriptor_proto.name, initializer))
         if repeated(field_descriptor_proto):
             formatters_file.write('''{0}        out = std::format_to(out, " {1}=[");
 '''.format(indent_str(depth - 1), field_descriptor_proto.name))

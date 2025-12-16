@@ -66,16 +66,17 @@ PROTOBUF_NAMESPACE_CLOSE
 namespace pb_message {
 
 enum mission_t : int {
-  no_mission = 0,
-  explore = 1,
-  attack = 2,
-  evade = 3,
-  intercept = 4,
-  convoy_guard = 5,
-  ground_attack = 6,
-  privateer = 7,
-  found_coloy = 8,
-  expand_colony = 9,
+  invalid_mission = 0,
+  no_mission = 1,
+  explore = 2,
+  attack = 3,
+  evade = 4,
+  intercept = 5,
+  convoy_guard = 6,
+  ground_attack = 7,
+  privateer = 8,
+  found_coloy = 9,
+  expand_colony = 10,
   deliver_armies = 64,
   deliver_repair_yard = 65,
   deliver_mobile_base = 66,
@@ -86,7 +87,7 @@ enum mission_t : int {
   mission_t_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool mission_t_IsValid(int value);
-constexpr mission_t mission_t_MIN = no_mission;
+constexpr mission_t mission_t_MIN = invalid_mission;
 constexpr mission_t mission_t_MAX = upgrade_base;
 constexpr int mission_t_ARRAYSIZE = mission_t_MAX + 1;
 

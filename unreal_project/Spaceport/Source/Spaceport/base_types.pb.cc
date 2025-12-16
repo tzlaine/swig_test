@@ -57,15 +57,15 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_base_5ftypes_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\020base_types.proto\022\npb_message\"#\n\013hex_co"
-  "ord_t\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005*\245\002\n\tmission_"
-  "t\022\016\n\nno_mission\020\000\022\013\n\007explore\020\001\022\n\n\006attack"
-  "\020\002\022\t\n\005evade\020\003\022\r\n\tintercept\020\004\022\020\n\014convoy_g"
-  "uard\020\005\022\021\n\rground_attack\020\006\022\r\n\tprivateer\020\007"
-  "\022\017\n\013found_coloy\020\010\022\021\n\rexpand_colony\020\t\022\022\n\016"
-  "deliver_armies\020@\022\027\n\023deliver_repair_yard\020"
-  "A\022\027\n\023deliver_mobile_base\020B\022\021\n\rbuild_outp"
-  "ost\020C\022\022\n\016build_starbase\020D\022\020\n\014upgrade_bas"
-  "e\020Eb\006proto3"
+  "ord_t\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005*\272\002\n\tmission_"
+  "t\022\023\n\017invalid_mission\020\000\022\016\n\nno_mission\020\001\022\013"
+  "\n\007explore\020\002\022\n\n\006attack\020\003\022\t\n\005evade\020\004\022\r\n\tin"
+  "tercept\020\005\022\020\n\014convoy_guard\020\006\022\021\n\rground_at"
+  "tack\020\007\022\r\n\tprivateer\020\010\022\017\n\013found_coloy\020\t\022\021"
+  "\n\rexpand_colony\020\n\022\022\n\016deliver_armies\020@\022\027\n"
+  "\023deliver_repair_yard\020A\022\027\n\023deliver_mobile"
+  "_base\020B\022\021\n\rbuild_outpost\020C\022\022\n\016build_star"
+  "base\020D\022\020\n\014upgrade_base\020Eb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_base_5ftypes_2eproto_deps[1] = {
 };
@@ -74,7 +74,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_bas
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_base_5ftypes_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_base_5ftypes_2eproto = {
-  false, false, descriptor_table_protodef_base_5ftypes_2eproto, "base_types.proto", 371,
+  false, false, descriptor_table_protodef_base_5ftypes_2eproto, "base_types.proto", 392,
   &descriptor_table_base_5ftypes_2eproto_once, descriptor_table_base_5ftypes_2eproto_sccs, descriptor_table_base_5ftypes_2eproto_deps, 1, 0,
   schemas, file_default_instances, TableStruct_base_5ftypes_2eproto::offsets,
   file_level_metadata_base_5ftypes_2eproto, 1, file_level_enum_descriptors_base_5ftypes_2eproto, file_level_service_descriptors_base_5ftypes_2eproto,
@@ -99,6 +99,7 @@ bool mission_t_IsValid(int value) {
     case 7:
     case 8:
     case 9:
+    case 10:
     case 64:
     case 65:
     case 66:

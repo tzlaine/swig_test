@@ -205,6 +205,8 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="very_low_grav"_name,
             .description="very_low_grav_desc"_name,
             .amount=-0.2,
+            .months_of_effect=0,
+            .months_remaining=0,
             .target=planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
@@ -220,7 +222,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="low_grav"_name,
             .description="low_grav_desc"_name,
             .amount=-0.05,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -236,7 +240,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="high_grav"_name,
             .description="high_grav_desc"_name,
             .amount=0.01,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -252,7 +258,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="very_high_grav"_name,
             .description="very_high_grav_desc"_name,
             .amount=-0.2,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -269,7 +277,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="no_seasons"_name,
             .description="no_seasons_desc"_name,
             .amount=0.05,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -284,7 +294,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="mild_seasons"_name,
             .description="mild_seasons_desc"_name,
             .amount=0.025,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -300,7 +312,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="short_seasons"_name,
             .description="short_seasons_desc"_name,
             .amount=0.0125,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -313,21 +327,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="long_seasons"_name,
-                .description="long_seasons_desc"_name,
-                .amount=-0.1,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_seasons_infra_cost_effect"_name,
-                .description="long_seasons_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "long_seasons"_name,
+             .description = "long_seasons_desc"_name,
+             .amount = -0.1,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_seasons_infra_cost_effect"_name,
+             .description = "long_seasons_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -340,28 +353,27 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="long_seasons"_name,
-                .description="long_seasons_desc"_name,
-                .amount=-0.2,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_seasons_infra_cost_effect"_name,
-                .description="long_seasons_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="only_equatorial_band_habitable"_name,
-                .description="only_equatorial_band_habitable_desc"_name,
-                .amount=only_equatorial_region_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "long_seasons"_name,
+             .description = "long_seasons_desc"_name,
+             .amount = -0.2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_seasons_infra_cost_effect"_name,
+             .description = "long_seasons_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply},
+            {.name = "only_equatorial_band_habitable"_name,
+             .description = "only_equatorial_band_habitable_desc"_name,
+             .amount = only_equatorial_region_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
         EXPECT_EQ(planet.effects[2], expected[2]);
@@ -377,7 +389,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="intense_seasons"_name,
             .description="intense_seasons_desc"_name,
             .amount=-0.05,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -390,20 +404,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor  - 0.05 + 0.0125, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="short_seasons"_name,
-                .description="short_seasons_desc"_name,
-                .amount=0.0125,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "short_seasons"_name,
+             .description = "short_seasons_desc"_name,
+             .amount = 0.0125,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -417,28 +431,27 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.065, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_seasons"_name,
-                .description="long_seasons_desc"_name,
-                .amount=-0.065,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_intense_seasons_infra_cost_effect"_name,
-                .description="long_intense_seasons_infra_cost_effect_desc"_name,
-                .amount=1.5,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_seasons"_name,
+             .description = "long_seasons_desc"_name,
+             .amount = -0.065,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_intense_seasons_infra_cost_effect"_name,
+             .description = "long_intense_seasons_infra_cost_effect_desc"_name,
+             .amount = 1.5,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
         EXPECT_EQ(planet.effects[2], expected[2]);
@@ -452,35 +465,34 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_seasons"_name,
-                .description="long_seasons_desc"_name,
-                .amount=-0.2,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_intense_seasons_infra_cost_effect"_name,
-                .description="long_intense_seasons_infra_cost_effect_desc"_name,
-                .amount=1.5,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="only_equatorial_band_habitable"_name,
-                .description="only_equatorial_band_habitable_desc"_name,
-                .amount=only_equatorial_region_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_seasons"_name,
+             .description = "long_seasons_desc"_name,
+             .amount = -0.2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_intense_seasons_infra_cost_effect"_name,
+             .description = "long_intense_seasons_infra_cost_effect_desc"_name,
+             .amount = 1.5,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply},
+            {.name = "only_equatorial_band_habitable"_name,
+             .description = "only_equatorial_band_habitable_desc"_name,
+             .amount = only_equatorial_region_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
         EXPECT_EQ(planet.effects[2], expected[2]);
@@ -494,21 +506,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="only_equatorial_band_habitable"_name,
-                .description="only_equatorial_band_habitable_desc"_name,
-                .amount=only_equatorial_region_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "only_equatorial_band_habitable"_name,
+             .description = "only_equatorial_band_habitable_desc"_name,
+             .amount = only_equatorial_region_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -521,27 +532,27 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor  - 0.05 + 0.0125, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="short_seasons"_name,
-                .description="short_seasons_desc"_name,
-                .amount=0.0125,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="only_equatorial_band_habitable"_name,
-                .description="only_equatorial_band_habitable_desc"_name,
-                .amount=only_equatorial_region_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "short_seasons"_name,
+             .description = "short_seasons_desc"_name,
+             .amount = 0.0125,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "only_equatorial_band_habitable"_name,
+             .description = "only_equatorial_band_habitable_desc"_name,
+             .amount = only_equatorial_region_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -556,35 +567,34 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.065, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_seasons"_name,
-                .description="long_seasons_desc"_name,
-                .amount=-0.065,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_intense_seasons_infra_cost_effect"_name,
-                .description="long_intense_seasons_infra_cost_effect_desc"_name,
-                .amount=1.5,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="only_equatorial_band_habitable"_name,
-                .description="only_equatorial_band_habitable_desc"_name,
-                .amount=only_equatorial_region_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_seasons"_name,
+             .description = "long_seasons_desc"_name,
+             .amount = -0.065,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_intense_seasons_infra_cost_effect"_name,
+             .description = "long_intense_seasons_infra_cost_effect_desc"_name,
+             .amount = 1.5,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply},
+            {.name = "only_equatorial_band_habitable"_name,
+             .description = "only_equatorial_band_habitable_desc"_name,
+             .amount = only_equatorial_region_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
         EXPECT_EQ(planet.effects[2], expected[2]);
@@ -599,35 +609,34 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
-            {
-                .name="intense_seasons"_name,
-                .description="intense_seasons_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_seasons"_name,
-                .description="long_seasons_desc"_name,
-                .amount=-0.2,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_intense_seasons_infra_cost_effect"_name,
-                .description="long_intense_seasons_infra_cost_effect_desc"_name,
-                .amount=1.5,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="only_equatorial_band_habitable"_name,
-                .description="only_equatorial_band_habitable_desc"_name,
-                .amount=only_equatorial_region_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "intense_seasons"_name,
+             .description = "intense_seasons_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_seasons"_name,
+             .description = "long_seasons_desc"_name,
+             .amount = -0.2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_intense_seasons_infra_cost_effect"_name,
+             .description = "long_intense_seasons_infra_cost_effect_desc"_name,
+             .amount = 1.5,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply},
+            {.name = "only_equatorial_band_habitable"_name,
+             .description = "only_equatorial_band_habitable_desc"_name,
+             .amount = only_equatorial_region_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
         EXPECT_EQ(planet.effects[2], expected[2]);
@@ -643,21 +652,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor -0.2, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="short_days"_name,
-                .description="short_days_desc"_name,
-                .amount=-0.2,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="short_days_infra_cost_effect"_name,
-                .description="short_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "short_days"_name,
+             .description = "short_days_desc"_name,
+             .amount = -0.2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "short_days_infra_cost_effect"_name,
+             .description = "short_days_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -669,21 +677,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="long_days"_name,
-                .description="long_days_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_days_infra_cost_effect"_name,
-                .description="long_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "long_days"_name,
+             .description = "long_days_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_days_infra_cost_effect"_name,
+             .description = "long_days_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -695,21 +702,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="long_days"_name,
-                .description="long_days_desc"_name,
-                .amount=-0.1,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="long_days_infra_cost_effect"_name,
-                .description="long_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "long_days"_name,
+             .description = "long_days_desc"_name,
+             .amount = -0.1,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "long_days_infra_cost_effect"_name,
+             .description = "long_days_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -721,21 +727,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.15, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="very_long_days"_name,
-                .description="very_long_days_desc"_name,
-                .amount=-0.15,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="very_long_days_infra_cost_effect"_name,
-                .description="very_long_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "very_long_days"_name,
+             .description = "very_long_days_desc"_name,
+             .amount = -0.15,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "very_long_days_infra_cost_effect"_name,
+             .description = "very_long_days_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -747,21 +752,20 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
-            {
-                .name="very_long_days"_name,
-                .description="very_long_days_desc"_name,
-                .amount=-0.2,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="very_long_days_infra_cost_effect"_name,
-                .description="very_long_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            }
-        };
+            {.name = "very_long_days"_name,
+             .description = "very_long_days_desc"_name,
+             .amount = -0.2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "very_long_days_infra_cost_effect"_name,
+             .description = "very_long_days_infra_cost_effect_desc"_name,
+             .amount = agri_equip_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .operation = effect_op_t::multiply}};
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
     }
@@ -780,7 +784,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="poor_o2_co2_suitab"_name,
             .description="poor_o2_co2_suitab_desc"_name,
             .amount=-0.045,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -795,28 +801,31 @@ TEST(generation_tests, growth_factor_and_effects)
         truncate(planet.effects[1].amount, 2);
         truncate(planet.effects[2].amount, 2);
         planet_effect_t const expected[] = {
-            {
-                .name="very_poor_o2_co2_suitab"_name,
-                .description="very_poor_o2_co2_suitab_desc"_name,
-                .amount=-0.12,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect"_name,
-                .description="very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
-                .amount=2,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="very_poor_o2_co2_suitab_habs_and_masks_pop_effect"_name,
-                .description="very_poor_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
-                .amount=0.25,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "very_poor_o2_co2_suitab"_name,
+             .description = "very_poor_o2_co2_suitab_desc"_name,
+             .amount = -0.12,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect"_name,
+             .description =
+                 "very_poor_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
+             .amount = 2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "very_poor_o2_co2_suitab_habs_and_masks_pop_effect"_name,
+             .description =
+                 "very_poor_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
+             .amount = 0.25,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -833,28 +842,31 @@ TEST(generation_tests, growth_factor_and_effects)
         truncate(planet.effects[1].amount, 2);
         truncate(planet.effects[2].amount, 2);
         planet_effect_t const expected[] = {
-            {
-                .name="marginal_o2_co2_suitab"_name,
-                .description="marginal_o2_co2_suitab_desc"_name,
-                .amount=-0.14,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect"_name,
-                .description="marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
-                .amount=habs_and_masks_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="marginal_o2_co2_suitab_habs_and_masks_pop_effect"_name,
-                .description="marginal_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
-                .amount=habs_and_masks_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "marginal_o2_co2_suitab"_name,
+             .description = "marginal_o2_co2_suitab_desc"_name,
+             .amount = -0.14,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect"_name,
+             .description =
+                 "marginal_o2_co2_suitab_habs_and_masks_infra_cost_effect_desc"_name,
+             .amount = habs_and_masks_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "marginal_o2_co2_suitab_habs_and_masks_pop_effect"_name,
+             .description =
+                 "marginal_o2_co2_suitab_habs_and_masks_pop_effect_desc"_name,
+             .amount = habs_and_masks_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -871,28 +883,32 @@ TEST(generation_tests, growth_factor_and_effects)
         truncate(planet.effects[1].amount, 2);
         truncate(planet.effects[2].amount, 2);
         planet_effect_t const expected[] = {
-            {
-                .name="insufficient_o2_co2_suitab"_name,
-                .description="insufficient_o2_co2_suitab_desc"_name,
-                .amount=-0.2,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect"_name,
-                .description="insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="insufficient_o2_co2_suitab_habs_and_suits_pop_effect"_name,
-                .description="insufficient_o2_co2_suitab_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "insufficient_o2_co2_suitab"_name,
+             .description = "insufficient_o2_co2_suitab_desc"_name,
+             .amount = -0.2,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "insufficient_o2_co2_suitab_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name =
+                 "insufficient_o2_co2_suitab_habs_and_suits_pop_effect"_name,
+             .description =
+                 "insufficient_o2_co2_suitab_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -911,28 +927,31 @@ TEST(generation_tests, growth_factor_and_effects)
         truncate(planet.effects[1].amount, 2);
         truncate(planet.effects[2].amount, 2);
         planet_effect_t const expected[] = {
-            {
-                .name="high_press_n2_narcosis"_name,
-                .description="high_press_n2_narcosis_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
-                .description="high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
-                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "high_press_n2_narcosis"_name,
+             .description = "high_press_n2_narcosis_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
+             .description =
+                 "high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -946,35 +965,38 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor + 2 * habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
-            {
-                .name="high_press_n2_narcosis"_name,
-                .description="high_press_n2_narcosis_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="very_high_press_o2_toxicity"_name,
-                .description="very_high_press_o2_toxicity_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
-                .description="high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
-                .description="high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "high_press_n2_narcosis"_name,
+             .description = "high_press_n2_narcosis_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "very_high_press_o2_toxicity"_name,
+             .description = "very_high_press_o2_toxicity_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "high_press_n2_narcosis_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "high_press_n2_narcosis_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "high_press_n2_narcosis_habs_and_suits_pop_effect"_name,
+             .description =
+                 "high_press_n2_narcosis_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -991,28 +1013,30 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="very_weak_magneto"_name,
-                .description="very_weak_magneto_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
-                .description="very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="very_weak_magneto_habs_and_suits_pop_effect"_name,
-                .description="very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "very_weak_magneto"_name,
+             .description = "very_weak_magneto_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "very_weak_magneto_habs_and_suits_pop_effect"_name,
+             .description =
+                 "very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -1026,28 +1050,29 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.5, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="weak_magneto"_name,
-                .description="weak_magneto_desc"_name,
-                .amount=-0.5,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="weak_magneto_habs_and_masks_infra_cost_effect"_name,
-                .description="weak_magneto_habs_and_masks_infra_cost_effect_desc"_name,
-                .amount=habs_and_masks_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="weak_magneto_habs_and_masks_pop_effect"_name,
-                .description="weak_magneto_habs_and_masks_pop_effect_desc"_name,
-                .amount=habs_and_masks_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "weak_magneto"_name,
+             .description = "weak_magneto_desc"_name,
+             .amount = -0.5,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "weak_magneto_habs_and_masks_infra_cost_effect"_name,
+             .description =
+                 "weak_magneto_habs_and_masks_infra_cost_effect_desc"_name,
+             .amount = habs_and_masks_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "weak_magneto_habs_and_masks_pop_effect"_name,
+             .description = "weak_magneto_habs_and_masks_pop_effect_desc"_name,
+             .amount = habs_and_masks_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -1061,12 +1086,13 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor - 0.25, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {
-                .name="weak_magneto"_name,
-                .description="weak_magneto_desc"_name,
-                .amount=-0.25,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-        };
+            .name = "weak_magneto"_name,
+            .description = "weak_magneto_desc"_name,
+            .amount = -0.25,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
+            .operation = effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
     {
@@ -1081,7 +1107,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="strong_magneto"_name,
             .description="strong_magneto_desc"_name,
             .amount=0.01,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add
         };
         EXPECT_EQ(planet.effects[0], expected);
@@ -1096,28 +1124,32 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="extremely_cold_avg_surface_temp"_name,
-                .description="extremely_cold_avg_surface_temp_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
-                .description="extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect"_name,
-                .description="extremely_cold_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "extremely_cold_avg_surface_temp"_name,
+             .description = "extremely_cold_avg_surface_temp_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "extremely_cold_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name =
+                 "extremely_cold_avg_surface_temp_habs_and_suits_pop_effect"_name,
+             .description =
+                 "extremely_cold_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -1135,7 +1167,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="very_cold_avg_surface_temp"_name,
             .description="very_cold_avg_surface_temp_desc"_name,
             .amount=-0.6,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add
         };
         EXPECT_EQ(planet.effects[0], expected);
@@ -1152,7 +1186,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="hot_avg_surface_temp"_name,
             .description="hot_avg_surface_temp_desc"_name,
             .amount=-0.1,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add
         };
         EXPECT_EQ(planet.effects[0], expected);
@@ -1169,7 +1205,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="very_hot_avg_surface_temp"_name,
             .description="very_hot_avg_surface_temp_desc"_name,
             .amount=-0.6,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add
         };
         EXPECT_EQ(planet.effects[0], expected);
@@ -1182,28 +1220,32 @@ TEST(generation_tests, growth_factor_and_effects)
         EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
-            {
-                .name="extremely_hot_avg_surface_temp"_name,
-                .description="extremely_hot_avg_surface_temp_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
-                .description="extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect"_name,
-                .description="extremely_hot_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "extremely_hot_avg_surface_temp"_name,
+             .description = "extremely_hot_avg_surface_temp_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name =
+                 "extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "extremely_hot_avg_surface_temp_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name =
+                 "extremely_hot_avg_surface_temp_habs_and_suits_pop_effect"_name,
+             .description =
+                 "extremely_hot_avg_surface_temp_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -1221,6 +1263,8 @@ TEST(generation_tests, growth_factor_and_effects)
             .name = "uninhabitably_hot_avg_surface_temp"_name,
             .description = "uninhabitably_hot_avg_surface_temp_desc"_name,
             .amount = (float)growth_uninhabitable,
+            .months_of_effect = 0,
+            .months_remaining = 0,
             .target = planet_effect_target_t::growth_factor,
             .operation = effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
@@ -1242,35 +1286,37 @@ TEST(generation_tests, growth_factor_and_effects)
         truncate(planet.effects[2].amount, 2);
         truncate(planet.effects[3].amount, 2);
         planet_effect_t const expected[] = {
-            {
-                .name="very_weak_magneto"_name,
-                .description="very_weak_magneto_desc"_name,
-                .amount=habs_and_suits_growth_modifier,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="low_grav"_name,
-                .description="low_grav_desc"_name,
-                .amount=-0.05,
-                .target=planet_effect_target_t::growth_factor,
-                .operation=effect_op_t::add
-            },
-            {
-                .name="very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
-                .description="very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=(unsigned int)planet_effect_mod_t::cost,
-                .operation=effect_op_t::multiply
-            },
-            {
-                .name="very_weak_magneto_habs_and_suits_pop_effect"_name,
-                .description="very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
-                .amount=habs_and_suits_habitable_factor,
-                .target=planet_effect_target_t::max_population,
-                .operation=effect_op_t::multiply
-            },
+            {.name = "very_weak_magneto"_name,
+             .description = "very_weak_magneto_desc"_name,
+             .amount = habs_and_suits_growth_modifier,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "low_grav"_name,
+             .description = "low_grav_desc"_name,
+             .amount = -0.05,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::growth_factor,
+             .operation = effect_op_t::add},
+            {.name = "very_weak_magneto_habs_and_suits_infra_cost_effect"_name,
+             .description =
+                 "very_weak_magneto_habs_and_suits_infra_cost_effect_desc"_name,
+             .amount = habs_and_suits_infra_cost_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::infrastructure,
+             .target_modifiers = (unsigned int)planet_effect_mod_t::cost,
+             .operation = effect_op_t::multiply},
+            {.name = "very_weak_magneto_habs_and_suits_pop_effect"_name,
+             .description =
+                 "very_weak_magneto_habs_and_suits_pop_effect_desc"_name,
+             .amount = habs_and_suits_habitable_factor,
+             .months_of_effect = 0,
+             .months_remaining = 0,
+             .target = planet_effect_target_t::max_population,
+             .operation = effect_op_t::multiply},
         };
         EXPECT_EQ(planet.effects[0], expected[0]);
         EXPECT_EQ(planet.effects[1], expected[1]);
@@ -1312,7 +1358,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="uninhab_non_rocky_planet"_name,
             .description="uninhab_non_rocky_planet_desc"_name,
             .amount=-1000,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }
@@ -1351,7 +1399,9 @@ TEST(generation_tests, growth_factor_and_effects)
             .name="uninhab_non_rocky_planet"_name,
             .description="uninhab_non_rocky_planet_desc"_name,
             .amount=-1000,
-            .target=planet_effect_target_t::growth_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::growth_factor,
             .operation=effect_op_t::add};
         EXPECT_EQ(planet.effects[0], expected);
     }

@@ -53,12 +53,13 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             record("long_seasons"_name, "long_seasons_desc"_name,
                    -0.05 * planet.orbital_period_y);
             planet.effects.push_back(planet_effect_t{
-                    .name="long_seasons_infra_cost_effect"_name,
-                    .description="long_seasons_infra_cost_effect_desc"_name,
-                    .amount=agri_equip_infra_cost_factor,
-                    .target=planet_effect_target_t::infrastructure,
-                    .operation=effect_op_t::multiply
-                });
+                .name = "long_seasons_infra_cost_effect"_name,
+                .description = "long_seasons_infra_cost_effect_desc"_name,
+                .amount = agri_equip_infra_cost_factor,
+                .months_of_effect = 0,
+                .months_remaining = 0,
+                .target = planet_effect_target_t::infrastructure,
+                .operation = effect_op_t::multiply});
             if (3.0 < planet.orbital_period_y)
                 only_equatorial_band_habitable();
         }
@@ -73,12 +74,14 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                    "long_seasons_desc"_name,
                    -0.05 * planet.orbital_period_y);
             planet.effects.push_back(planet_effect_t{
-                    .name="long_intense_seasons_infra_cost_effect"_name,
-                    .description="long_intense_seasons_infra_cost_effect_desc"_name,
-                    .amount=1.5,
-                    .target=planet_effect_target_t::infrastructure,
-                    .operation=effect_op_t::multiply
-                });
+                .name = "long_intense_seasons_infra_cost_effect"_name,
+                .description =
+                    "long_intense_seasons_infra_cost_effect_desc"_name,
+                .amount = 1.5,
+                .months_of_effect = 0,
+                .months_remaining = 0,
+                .target = planet_effect_target_t::infrastructure,
+                .operation = effect_op_t::multiply});
             if (1.5 < planet.orbital_period_y)
                 only_equatorial_band_habitable();
         }
@@ -93,12 +96,14 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                    "long_seasons_desc"_name,
                    -0.05 * planet.orbital_period_y);
             planet.effects.push_back(planet_effect_t{
-                    .name="long_intense_seasons_infra_cost_effect"_name,
-                    .description="long_intense_seasons_infra_cost_effect_desc"_name,
-                    .amount=1.5,
-                    .target=planet_effect_target_t::infrastructure,
-                    .operation=effect_op_t::multiply
-                });
+                .name = "long_intense_seasons_infra_cost_effect"_name,
+                .description =
+                    "long_intense_seasons_infra_cost_effect_desc"_name,
+                .amount = 1.5,
+                .months_of_effect = 0,
+                .months_remaining = 0,
+                .target = planet_effect_target_t::infrastructure,
+                .operation = effect_op_t::multiply});
         }
         only_equatorial_band_habitable();
     } else if (/*60 < */planet.axial_tilt_d < 75.0f) {
@@ -109,12 +114,13 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             record("long_seasons"_name, "long_seasons_desc"_name,
                    -0.05 * planet.orbital_period_y);
             planet.effects.push_back(planet_effect_t{
-                    .name="long_seasons_infra_cost_effect"_name,
-                    .description="long_seasons_infra_cost_effect_desc"_name,
-                    .amount=agri_equip_infra_cost_factor,
-                    .target=planet_effect_target_t::infrastructure,
-                    .operation=effect_op_t::multiply
-                });
+                .name = "long_seasons_infra_cost_effect"_name,
+                .description = "long_seasons_infra_cost_effect_desc"_name,
+                .amount = agri_equip_infra_cost_factor,
+                .months_of_effect = 0,
+                .months_remaining = 0,
+                .target = planet_effect_target_t::infrastructure,
+                .operation = effect_op_t::multiply});
         }
         only_equatorial_band_habitable();
     } else if (/*75 < */planet.axial_tilt_d < 85.0f) {
@@ -130,34 +136,37 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         record("short_days"_name, "short_days_desc"_name,
                -24.0 / planet.day_h * 0.1);
         planet.effects.push_back(planet_effect_t{
-                .name="short_days_infra_cost_effect"_name,
-                .description="short_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            });
+            .name = "short_days_infra_cost_effect"_name,
+            .description = "short_days_infra_cost_effect_desc"_name,
+            .amount = agri_equip_infra_cost_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::infrastructure,
+            .operation = effect_op_t::multiply});
     } else if (planet.day_h < 24.0f * 1.1f) {
         // no effect
     } else if (planet.day_h < 48.0f) {
         record("long_days"_name, "long_days_desc"_name,
                -std::min((planet.day_h - 24.0) * 0.01, 0.1));
         planet.effects.push_back(planet_effect_t{
-                .name="long_days_infra_cost_effect"_name,
-                .description="long_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            });
+            .name = "long_days_infra_cost_effect"_name,
+            .description = "long_days_infra_cost_effect_desc"_name,
+            .amount = agri_equip_infra_cost_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::infrastructure,
+            .operation = effect_op_t::multiply});
     } else {
         record("very_long_days"_name, "very_long_days_desc"_name,
                -0.1 - std::min((planet.day_h - 48.0) * 0.01, 0.1));
         planet.effects.push_back(planet_effect_t{
-                .name="very_long_days_infra_cost_effect"_name,
-                .description="very_long_days_infra_cost_effect_desc"_name,
-                .amount=agri_equip_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .operation=effect_op_t::multiply
-            });
+            .name = "very_long_days_infra_cost_effect"_name,
+            .description = "very_long_days_infra_cost_effect_desc"_name,
+            .amount = agri_equip_infra_cost_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::infrastructure,
+            .operation = effect_op_t::multiply});
     }
     // TODO: Require habs+suits if the day is long enough?
 
@@ -187,13 +196,14 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         desc_scratch = name_scratch;
         desc_scratch += "_desc";
         planet.effects.push_back(planet_effect_t{
-                .name=adobe::name_t(name_scratch.c_str()),
-                .description=adobe::name_t(desc_scratch.c_str()),
-                .amount=habs_and_masks_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=flags(planet_effect_mod_t::cost),
-                .operation=effect_op_t::multiply
-            });
+            .name = adobe::name_t(name_scratch.c_str()),
+            .description = adobe::name_t(desc_scratch.c_str()),
+            .amount = habs_and_masks_infra_cost_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::infrastructure,
+            .target_modifiers = flags(planet_effect_mod_t::cost),
+            .operation = effect_op_t::multiply});
     };
     auto const habs_and_suits_required = [&](std::string_view name_prefix) {
         if (habs_and_suits_already_required)
@@ -218,13 +228,14 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         desc_scratch = name_scratch;
         desc_scratch += "_desc";
         planet.effects.push_back(planet_effect_t{
-                .name=adobe::name_t(name_scratch.c_str()),
-                .description=adobe::name_t(desc_scratch.c_str()),
-                .amount=habs_and_suits_infra_cost_factor,
-                .target=planet_effect_target_t::infrastructure,
-                .target_modifiers=flags(planet_effect_mod_t::cost),
-                .operation=effect_op_t::multiply
-            });
+            .name = adobe::name_t(name_scratch.c_str()),
+            .description = adobe::name_t(desc_scratch.c_str()),
+            .amount = habs_and_suits_infra_cost_factor,
+            .months_of_effect = 0,
+            .months_remaining = 0,
+            .target = planet_effect_target_t::infrastructure,
+            .target_modifiers = flags(planet_effect_mod_t::cost),
+            .operation = effect_op_t::multiply});
 
         ++habs_and_suits_already_required;
     };

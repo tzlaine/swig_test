@@ -22,16 +22,17 @@ POP_WARNING
 
 
 enum class mission_t {
-    no_mission = 0,
-    explore = 1,
-    attack = 2,
-    evade = 3,
-    intercept = 4,
-    convoy_guard = 5,
-    ground_attack = 6,
-    privateer = 7,
-    found_coloy = 8,
-    expand_colony = 9,
+    invalid_mission = 0,
+    no_mission = 1,
+    explore = 2,
+    attack = 3,
+    evade = 4,
+    intercept = 5,
+    convoy_guard = 6,
+    ground_attack = 7,
+    privateer = 8,
+    found_coloy = 9,
+    expand_colony = 10,
     deliver_armies = 64,
     deliver_repair_yard = 65,
     deliver_mobile_base = 66,
@@ -43,8 +44,8 @@ inline auto operator<=>(mission_t x, mission_t y) { return (int)x <=> (int)y; }
 
 struct hex_coord_t
 {
-    int x;
-    int y;
+    int x = -1;
+    int y = -1;
     bool operator==(hex_coord_t const &) const = default;
 };
 

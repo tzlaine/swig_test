@@ -151,16 +151,16 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_EQ(client_design.id, design.id);
             EXPECT_EQ(client_design.hull, design.hull);
 
-            EXPECT_EQ(client_design.armor, 0);
-            EXPECT_EQ(client_design.propulsion, 0);
-            EXPECT_EQ(client_design.weapons, 0);
-            EXPECT_EQ(client_design.shields, 0);
-            EXPECT_EQ(client_design.detection, 0);
-            EXPECT_EQ(client_design.stealth, 0);
-            EXPECT_EQ(client_design.automation, 0);
-            EXPECT_EQ(client_design.attack, 0);
-            EXPECT_EQ(client_design.defense, 0);
-            EXPECT_EQ(client_design.ground_attack, 0);
+            EXPECT_EQ(client_design.armor, -1);
+            EXPECT_EQ(client_design.propulsion, -1);
+            EXPECT_EQ(client_design.weapons, -1);
+            EXPECT_EQ(client_design.shields, -1);
+            EXPECT_EQ(client_design.detection, -1);
+            EXPECT_EQ(client_design.stealth, -1);
+            EXPECT_EQ(client_design.automation, -1);
+            EXPECT_EQ(client_design.attack, -1);
+            EXPECT_EQ(client_design.defense, -1);
+            EXPECT_EQ(client_design.ground_attack, -1);
         }
     }
 }

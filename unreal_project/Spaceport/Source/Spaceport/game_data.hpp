@@ -91,67 +91,67 @@ inline auto operator<=>(star_class_t x, star_class_t y) { return (int)x <=> (int
 
 struct nation_and_object_id_t
 {
-    int nation_id;
-    int object_id;
+    int nation_id = -1;
+    int object_id = -1;
     bool operator==(nation_and_object_id_t const &) const = default;
 };
 
 struct game_start_params_t
 {
-    float habitable_systems_per_hex_mean;
-    float habitable_systems_per_hex_plus_minus;
-    int systems_per_hex;
-    int map_height;
+    float habitable_systems_per_hex_mean = -1.0f;
+    float habitable_systems_per_hex_plus_minus = -1.0f;
+    int systems_per_hex = -1;
+    int map_height = -1;
     boost::container::flat_map<int, int> player_id_to_nation_id;
     bool operator==(game_start_params_t const &) const = default;
 };
 
 struct unit_design_t
 {
-    nation_and_object_id_t id;
-    int hull;
-    int armor;
-    int propulsion;
-    int weapons;
-    int shields;
-    int detection;
-    int stealth;
-    int automation;
-    int attack;
-    int defense;
-    int ground_attack;
+    nation_and_object_id_t id = {};
+    int hull = -1;
+    int armor = -1;
+    int propulsion = -1;
+    int weapons = -1;
+    int shields = -1;
+    int detection = -1;
+    int stealth = -1;
+    int automation = -1;
+    int attack = -1;
+    int defense = -1;
+    int ground_attack = -1;
     bool operator==(unit_design_t const &) const = default;
 };
 
 struct unit_t
 {
-    nation_and_object_id_t id;
-    int health;
+    nation_and_object_id_t id = {};
+    int health = -1;
     bool operator==(unit_t const &) const = default;
 };
 
 struct fleet_position_t
 {
-    double world_pos_x;
-    double world_pos_y;
-    int system_id;
-    bool at_permanent_location;
-    int location_index;
-    int object_index;
-    bool is_garrison;
+    double world_pos_x = -1.0;
+    double world_pos_y = -1.0;
+    int system_id = -1;
+    bool at_permanent_location = false;
+    int location_index = -1;
+    int object_index = -1;
+    bool is_garrison = false;
     bool operator==(fleet_position_t const &) const = default;
 };
 
 struct fleet_t
 {
-    nation_and_object_id_t id;
-    mission_t mission;
-    std::vector<unit_t> units;
-    float fuel;
-    int rounds;
-    int missiles;
-    int fighters;
-    fleet_position_t position;
+    nation_and_object_id_t id = {};
+    mission_t mission = mission_t::invalid_mission;
+    std::vector<unit_t> units = {};
+    float fuel = -1.0f;
+    int rounds = -1;
+    int missiles = -1;
+    int fighters = -1;
+    fleet_position_t position = {};
     bool operator==(fleet_t const &) const = default;
 };
 
@@ -163,84 +163,84 @@ struct fleets_t
 
 struct planet_effect_t
 {
-    adobe::name_t name;
-    adobe::name_t description;
-    float amount;
-    int months_of_effect;
-    int months_remaining;
-    planet_effect_target_t target;
-    unsigned int target_modifiers;
-    effect_op_t operation;
+    adobe::name_t name = adobe::name_t("");
+    adobe::name_t description = adobe::name_t("");
+    float amount = -1.0f;
+    int months_of_effect = -1;
+    int months_remaining = -1;
+    planet_effect_target_t target = planet_effect_target_t::invalid_planet_effect_target;
+    unsigned int target_modifiers = 0;
+    effect_op_t operation = effect_op_t::invalid_effect_op;
     bool operator==(planet_effect_t const &) const = default;
 };
 
 struct planet_t
 {
-    int system_id;
-    planet_type_t planet_type;
-    double mass_kg;
-    double radius_km;
-    float orbit_au;
-    float orbital_period_y;
-    float gravity_g;
-    float axial_tilt_d;
-    float day_h;
-    float surface_temperature_k;
-    float magnetosphere_strength;
-    float atmopsheric_pressure;
-    float o2_co2_suitability;
-    float ocean_coverage;
-    float growth_factor;
-    atmosphere_type_t atmosphere_type;
-    int water;
-    int food;
-    int energy;
-    int metal;
-    int fuel;
-    float population;
-    float infrastructure;
-    float orbital_pos_r;
-    int max_population;
-    int owner;
-    int original_owner;
-    nation_and_object_id_t garrison;
-    std::vector<planet_effect_t> effects;
+    int system_id = -1;
+    planet_type_t planet_type = planet_type_t::invalid_planet_type;
+    double mass_kg = -1.0;
+    double radius_km = -1.0;
+    float orbit_au = -1.0f;
+    float orbital_period_y = -1.0f;
+    float gravity_g = -1.0f;
+    float axial_tilt_d = -1.0f;
+    float day_h = -1.0f;
+    float surface_temperature_k = -1.0f;
+    float magnetosphere_strength = -1.0f;
+    float atmopsheric_pressure = -1.0f;
+    float o2_co2_suitability = -1.0f;
+    float ocean_coverage = -1.0f;
+    float growth_factor = -1.0f;
+    atmosphere_type_t atmosphere_type = atmosphere_type_t::invalid_atmosphere_type;
+    int water = -1;
+    int food = -1;
+    int energy = -1;
+    int metal = -1;
+    int fuel = -1;
+    float population = -1.0f;
+    float infrastructure = -1.0f;
+    float orbital_pos_r = -1.0f;
+    int max_population = -1;
+    int owner = -1;
+    int original_owner = -1;
+    nation_and_object_id_t garrison = {};
+    std::vector<planet_effect_t> effects = {};
     bool operator==(planet_t const &) const = default;
 };
 
 struct location_object_t
 {
-    std::vector<nation_and_object_id_t> bases;
+    std::vector<nation_and_object_id_t> bases = {};
     std::size_t planet_id;
     bool operator==(location_object_t const &) const = default;
 };
 
 struct system_location_t
 {
-    std::vector<location_object_t> objects;
-    fleets_t units;
+    std::vector<location_object_t> objects = {};
+    fleets_t units = {};
     bool operator==(system_location_t const &) const = default;
 };
 
 struct star_t
 {
-    star_class_t star_class;
-    double temperature_k;
-    double solar_masses;
-    double solar_luminosities;
-    double solar_radii;
+    star_class_t star_class = star_class_t::invalid_star_class;
+    double temperature_k = -1.0;
+    double solar_masses = -1.0;
+    double solar_luminosities = -1.0;
+    double solar_radii = -1.0;
     bool operator==(star_t const &) const = default;
 };
 
 struct system_t
 {
-    adobe::name_t name;
-    hex_coord_t coord;
-    star_t star;
-    std::vector<system_location_t> permanent_locations;
-    std::vector<system_location_t> temporary_locations;
-    double world_pos_x;
-    double world_pos_y;
+    adobe::name_t name = adobe::name_t("");
+    hex_coord_t coord = {};
+    star_t star = {};
+    std::vector<system_location_t> permanent_locations = {};
+    std::vector<system_location_t> temporary_locations = {};
+    double world_pos_x = -1.0;
+    double world_pos_y = -1.0;
     std::size_t first_planet;
     std::size_t last_planet;
     bool operator==(system_t const &) const = default;
@@ -248,8 +248,8 @@ struct system_t
 
 struct hex_t
 {
-    hex_coord_t coord;
-    int province_id;
+    hex_coord_t coord = {};
+    int province_id = -1;
     std::size_t first_system;
     std::size_t last_system;
     bool operator==(hex_t const &) const = default;
@@ -257,36 +257,36 @@ struct hex_t
 
 struct province_t
 {
-    nation_and_object_id_t id;
-    std::vector<hex_coord_t> hex_coords;
+    nation_and_object_id_t id = {};
+    std::vector<hex_coord_t> hex_coords = {};
     bool operator==(province_t const &) const = default;
 };
 
 struct nation_t
 {
-    int id;
-    std::vector<unit_design_t> unit_designs;
-    std::vector<province_t> provinces;
-    std::vector<fleet_t> fleets;
+    int id = -1;
+    std::vector<unit_design_t> unit_designs = {};
+    std::vector<province_t> provinces = {};
+    std::vector<fleet_t> fleets = {};
     std::vector<int> planets;
-    std::vector<nation_and_object_id_t> foreign_designs_seen;
-    std::vector<nation_and_object_id_t> foreign_designs_glimpsed;
+    std::vector<nation_and_object_id_t> foreign_designs_seen = {};
+    std::vector<nation_and_object_id_t> foreign_designs_glimpsed = {};
     std::vector<int> hexes_seen;
     std::vector<int> systems_visited;
-    bool defeated;
+    bool defeated = false;
     bool operator==(nation_t const &) const = default;
 };
 
 struct game_state_t
 {
-    int map_width;
-    int map_height;
-    std::vector<hex_t> hexes;
-    std::vector<system_t> systems;
-    std::vector<planet_t> planets;
-    std::vector<nation_t> nations;
+    int map_width = -1;
+    int map_height = -1;
+    std::vector<hex_t> hexes = {};
+    std::vector<system_t> systems = {};
+    std::vector<planet_t> planets = {};
+    std::vector<nation_t> nations = {};
     std::vector<unsigned int> alliances;
-    int play_speed;
+    int play_speed = -1;
     bool operator==(game_state_t const &) const = default;
 };
 

@@ -141,7 +141,7 @@ struct model
 
     void load(std::filesystem::path const & path)
     {
-        game_state_ = boost::shared_ptr<game_state_t>(new game_state_t);
+        game_state_ = boost::shared_ptr<game_state_t>(new game_state_t{});
         deserialize_message(*game_state_, path);
         proximity_grid_ = proximity_grid<fleet_t const>(*game_state_);
         repopulate_grid();
