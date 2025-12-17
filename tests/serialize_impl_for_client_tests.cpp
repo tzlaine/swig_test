@@ -443,9 +443,12 @@ struct fleet_t2
 #include <boost/callable_traits.hpp>
 #include <boost/type_index/ctti_type_index.hpp>
 
-struct bad_any_ref_cast : std::exception
+#include <bit>
+
+
+struct bad_any_cast : std::exception
 {
-    bad_any_ref_cast(std::string msg) : msg_(msg) {}
+    bad_any_cast(std::string msg) : msg_(msg) {}
 
     char const * what() const override { return msg_.c_str(); }
 
@@ -496,6 +499,11 @@ namespace detail {
     struct expr_op_members
     {
         void * impl_ = nullptr;
+#if 0 // TODO
+        boost::typeindex::ctti_type_index ctti_;
+        intptr_t number_ = 0;
+        numeric_type numeric_type_ = numeric_type::not_numeric;
+#endif
     };
 }
 
@@ -523,16 +531,16 @@ struct any_ref
     friend T & cast(any_ref const & a)
     {
         if (!a.members_.ptr_)
-            throw bad_any_ref_cast("Attempted to cast an empty any_ref.");
+            throw bad_any_cast("Attempted to cast an empty any_ref.");
         if (boost::typeindex::ctti_type_index::type_id<T>() !=
             a.members_.ctti_) {
-            throw bad_any_ref_cast(
+            throw bad_any_cast(
                 "Attempted to cast an any_ref to the wrong type.");
         }
         if constexpr (std::is_const_v<T>) {
             return *static_cast<T *>(a.members_.ptr_);
         } else if (a.members_.const_) {
-            throw bad_any_ref_cast(
+            throw bad_any_cast(
                 "Attempted to cast a const-typed any_ref to a non-const type.");
         } else {
             return *static_cast<T *>(a.members_.ptr_);
@@ -604,18 +612,42 @@ namespace detail {
 // TODO: Merge with any_ref.
 struct expr_op
 {
+    struct ref_t
+    {};
+
+    static constexpr ref_t ref = {};
+
     using iterator = expr_op_stack::iterator;
 
-    expr_op() = default;
-    expr_op(expr_op && other) { std::swap(members_.impl_, other.members_.impl_); }
+    expr_op() : members_{.impl_ = nullptr} {}
+    expr_op(expr_op && other) : members_{.impl_ = nullptr}
+    {
+        if (other.reference())
+            ref_members_ = other.ref_members_;
+        else
+            std::swap(members_.impl_, other.members_.impl_);
+    }
     expr_op & operator=(expr_op && other)
     {
-        delete get_impl();
-        members_.impl_ = nullptr;
-        std::swap(members_.impl_, other.members_.impl_);
+        if (!reference()) {
+            delete get_impl();
+            members_.impl_ = nullptr;
+        }
+
+        if (other.reference()) {
+            ref_members_ = other.ref_members_;
+        } else {
+            members_.impl_ = nullptr;
+            std::swap(members_.impl_, other.members_.impl_);
+        }
+
         return *this;
     }
-    ~expr_op() { delete get_impl(); }
+    ~expr_op()
+    {
+        if (!reference())
+            delete get_impl();
+    }
 
     template<typename T>
         requires(!std::same_as<std::remove_cvref_t<T>, expr_op>)
@@ -625,29 +657,72 @@ struct expr_op
                 static_cast<void *>(new impl<std::remove_cvref_t<T>>((T &&)x))}
     {}
 
+    template<typename T>
+        requires(!std::same_as<std::remove_cvref_t<T>, expr_op>)
+    expr_op(T & x, ref_t) :
+        ref_members_{
+            .ptr_ = const_cast<std::remove_const_t<T> *>(std::addressof(x)),
+            .ctti_ = boost::typeindex::ctti_type_index::type_id<T>(),
+            .const_ = std::is_const_v<T>,
+            .numeric_type_ = detail::numeric_type_of(x)}
+    {
+        ref_members_.ptr_ = std::bit_cast<void *>(
+            std::bit_cast<uintptr_t>(ref_members_.ptr_) | 0x1);
+    }
+
     bool empty() const { return !members_.impl_; }
+    bool reference() const
+    {
+        return std::bit_cast<uintptr_t>(members_.impl_) & 0x1;
+    }
     bool numeric() const
     {
         return get_numeric_type() != numeric_type::not_numeric;
     }
-    int arity() const { return get_impl()->arity(); }
-    numeric_type get_numeric_type() const { return get_impl()->get_numeric_type(); }
+    int arity() const { return reference() ? -1 : get_impl()->arity(); }
+    numeric_type get_numeric_type() const
+    {
+        return reference() ? ref_members_.numeric_type_
+                           : get_impl()->get_numeric_type();
+    }
 
     expr_op operator()(iterator first, iterator last) const
     {
+        assert(!reference());
         return get_impl()->apply(first, last);
     }
 
     template<typename T>
     friend T & cast(expr_op const & o)
     {
-        if (!o.members_.impl_)
-            throw bad_any_ref_cast("Attempted to cast an empty expr_op.");
-        if (boost::typeindex::ctti_type_index::type_id<T>() != o.ctti()) {
-            throw bad_any_ref_cast(
-                "Attempted to cast an expr_op to the wrong type.");
+        if (o.reference()) {
+            if (!o.ref_members_.ptr_)
+                throw bad_any_cast(
+                    "Attempted to cast an empty (reference) expr_op.");
+            if (boost::typeindex::ctti_type_index::type_id<T>() !=
+                o.ref_members_.ctti_) {
+                throw bad_any_cast(
+                    "Attempted to cast an (reference) expr_op to the wrong "
+                    "type.");
+            }
+            if constexpr (std::is_const_v<T>) {
+                return *static_cast<T *>(o.get_ptr());
+            } else if (o.ref_members_.const_) {
+                throw bad_any_cast(
+                    "Attempted to cast a const-typed (reference) expr_op to a "
+                    "non-const type.");
+            } else {
+                return *static_cast<T *>(o.get_ptr());
+            }
+        } else {
+            if (!o.members_.impl_)
+                throw bad_any_cast("Attempted to cast an empty expr_op.");
+            if (boost::typeindex::ctti_type_index::type_id<T>() != o.ctti()) {
+                throw bad_any_cast(
+                    "Attempted to cast an expr_op to the wrong type.");
+            }
+            return *static_cast<T *>(o.get_impl()->value());
         }
-        return *static_cast<T *>(o.get_impl()->value());
     }
 
 private:
@@ -717,11 +792,18 @@ private:
         return static_cast<impl_base const *>(members_.impl_);
     }
     impl_base * get_impl() { return static_cast<impl_base *>(members_.impl_); }
+    void * get_ptr() const
+    {
+        return std::bit_cast<void *>(
+            std::bit_cast<uintptr_t>(ref_members_.ptr_) & ~uintptr_t(1));
+    }
 
-    detail::expr_op_members members_;
+    union
+    {
+        detail::expr_op_members members_;
+        detail::any_ref_members ref_members_;
+    };
 };
-
-int arity(expr_op x) { return 0; } // TODO
 
 expr_op evaluate(std::vector<expr_op> & stack)
 {
@@ -740,8 +822,6 @@ expr_op evaluate(std::vector<expr_op> & stack)
         }
     }
 }
-
-constexpr int num_members = -1000;
 
 struct name_and_index
 {
@@ -882,7 +962,7 @@ TEST(any_ref_tests, all)
     try {
         int & lang_ref = cast<int>(empty_ref);
         EXPECT_FALSE("Previous line should have thrown.");
-    } catch (bad_any_ref_cast const & e) {
+    } catch (bad_any_cast const & e) {
     }
 
     any_ref cd_ref(cd);
@@ -890,12 +970,12 @@ TEST(any_ref_tests, all)
     try {
         int const & int_lang_ref = cast<int const>(cd_ref);
         EXPECT_FALSE("Previous line should have thrown.");
-    } catch (bad_any_ref_cast const & e) {
+    } catch (bad_any_cast const & e) {
     }
     try {
         double & cd_mut_lang_ref = cast<double>(cd_ref);
         EXPECT_FALSE("Previous line should have thrown.");
-    } catch (bad_any_ref_cast const & e) {
+    } catch (bad_any_cast const & e) {
     }
     EXPECT_EQ(cast<double const>(cd_ref), cd);
 
@@ -903,20 +983,68 @@ TEST(any_ref_tests, all)
     try {
         int const & int_lang_ref = cast<int const>(cd_ref);
         EXPECT_FALSE("Previous line should have thrown.");
-    } catch (bad_any_ref_cast const & e) {
+    } catch (bad_any_cast const & e) {
     }
     EXPECT_FALSE(md_ref.empty());
     EXPECT_EQ(cast<double>(md_ref), md);
     EXPECT_EQ(cast<double const>(md_ref), md);
 }
 
-TEST(foo, bar)
+TEST(expr_op_tests, all)
 {
+    // ref logic
     {
-        expr_op op(42.0);
+        double const cd = 13.0;
+        double md = 42.0;
+
+        expr_op cd_ref(cd, expr_op::ref);
+        EXPECT_FALSE(cd_ref.empty());
+        EXPECT_TRUE(cd_ref.reference());
+        try {
+            int const & int_lang_ref = cast<int const>(cd_ref);
+            EXPECT_FALSE("Previous line should have thrown.");
+        } catch (bad_any_cast const & e) {
+        }
+        try {
+            double & cd_mut_lang_ref = cast<double>(cd_ref);
+            EXPECT_FALSE("Previous line should have thrown.");
+        } catch (bad_any_cast const & e) {
+        }
+        EXPECT_EQ(cast<double const>(cd_ref), cd);
+
+        expr_op md_ref(md, expr_op::ref);
+        EXPECT_FALSE(md_ref.empty());
+        EXPECT_TRUE(md_ref.reference());
+        try {
+            int const & int_lang_ref = cast<int const>(cd_ref);
+            EXPECT_FALSE("Previous line should have thrown.");
+        } catch (bad_any_cast const & e) {
+        }
+        EXPECT_FALSE(md_ref.empty());
+        EXPECT_EQ(cast<double>(md_ref), md);
+        EXPECT_EQ(cast<double const>(md_ref), md);
+    }
+
+    {
+        expr_op empty;
+        EXPECT_TRUE(empty.empty());
+        try {
+            int & lang_ref = cast<int>(empty);
+            EXPECT_FALSE("Previous line should have thrown.");
+        } catch (bad_any_cast const & e) {
+        }
     }
     {
-        expr_op op([] { return expr_op{}; });
+        expr_op op(42.0);
+        EXPECT_EQ(cast<double>(op), 42.0);
+        EXPECT_EQ(cast<double const>(op), 42.0);
+    }
+    {
+        expr_op op([] { return expr_op{1}; });
+        std::vector<expr_op> stack;
+        expr_op const result = op(stack.begin(), stack.end());
+        EXPECT_EQ(cast<int>(result), 1);
+        EXPECT_EQ(cast<int const>(result), 1);
     }
 }
 
