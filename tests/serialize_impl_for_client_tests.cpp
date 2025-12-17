@@ -484,6 +484,19 @@ namespace detail {
     {
         return numeric_type::double_;
     }
+
+    struct any_ref_members
+    {
+        void * ptr_ = nullptr;
+        boost::typeindex::ctti_type_index ctti_;
+        bool const_ = false;
+        numeric_type numeric_type_ = numeric_type::not_numeric;
+    };
+
+    struct expr_op_members
+    {
+        void * impl_ = nullptr;
+    };
 }
 
 struct any_ref
@@ -492,40 +505,42 @@ struct any_ref
 
     template<typename T>
     any_ref(T & x) :
-        ctti_(boost::typeindex::ctti_type_index::type_id<T>()),
-        ptr_(const_cast<std::remove_const_t<T> *>(std::addressof(x))),
-        const_(std::is_const_v<T>),
-        numeric_type_(detail::numeric_type_of(x))
+        members_{
+            .ptr_ = const_cast<std::remove_const_t<T> *>(std::addressof(x)),
+            .ctti_ = boost::typeindex::ctti_type_index::type_id<T>(),
+            .const_ = std::is_const_v<T>,
+            .numeric_type_ = detail::numeric_type_of(x)}
     {}
 
-    bool empty() const { return !ptr_; }
-    bool numeric() const { return numeric_type_ != numeric_type::not_numeric; }
-    numeric_type get_numeric_type() const { return numeric_type_; }
+    bool empty() const { return !members_.ptr_; }
+    bool numeric() const
+    {
+        return members_.numeric_type_ != numeric_type::not_numeric;
+    }
+    numeric_type get_numeric_type() const { return members_.numeric_type_; }
 
     template<typename T>
     friend T & cast(any_ref const & a)
     {
-        if (!a.ptr_)
+        if (!a.members_.ptr_)
             throw bad_any_ref_cast("Attempted to cast an empty any_ref.");
-        if (boost::typeindex::ctti_type_index::type_id<T>() != a.ctti_) {
+        if (boost::typeindex::ctti_type_index::type_id<T>() !=
+            a.members_.ctti_) {
             throw bad_any_ref_cast(
                 "Attempted to cast an any_ref to the wrong type.");
         }
         if constexpr (std::is_const_v<T>) {
-            return *static_cast<T *>(a.ptr_);
-        } else if (a.const_) {
+            return *static_cast<T *>(a.members_.ptr_);
+        } else if (a.members_.const_) {
             throw bad_any_ref_cast(
                 "Attempted to cast a const-typed any_ref to a non-const type.");
         } else {
-            return *static_cast<T *>(a.ptr_);
+            return *static_cast<T *>(a.members_.ptr_);
         }
     }
 
 private:
-    boost::typeindex::ctti_type_index ctti_;
-    void * ptr_ = nullptr;
-    bool const_ = false;
-    numeric_type numeric_type_ = numeric_type::not_numeric;
+    detail::any_ref_members members_;
 };
 
 enum struct operator_kind {
@@ -592,44 +607,50 @@ struct expr_op
     using iterator = expr_op_stack::iterator;
 
     expr_op() = default;
+    expr_op(expr_op && other) { std::swap(members_.impl_, other.members_.impl_); }
+    expr_op & operator=(expr_op && other)
+    {
+        delete get_impl();
+        members_.impl_ = nullptr;
+        std::swap(members_.impl_, other.members_.impl_);
+        return *this;
+    }
+    ~expr_op() { delete get_impl(); }
 
     template<typename T>
         requires(!std::same_as<std::remove_cvref_t<T>, expr_op>)
     expr_op(T && x) :
-        impl_(std::make_unique<impl<std::remove_cvref_t<T>>>((T &&)x))
+        members_{
+            .impl_ =
+                static_cast<void *>(new impl<std::remove_cvref_t<T>>((T &&)x))}
     {}
 
-    bool empty() const { return !impl_; }
+    bool empty() const { return !members_.impl_; }
     bool numeric() const
     {
         return get_numeric_type() != numeric_type::not_numeric;
     }
-    int arity() const { return impl_->arity(); }
-    numeric_type get_numeric_type() const { return impl_->get_numeric_type(); }
+    int arity() const { return get_impl()->arity(); }
+    numeric_type get_numeric_type() const { return get_impl()->get_numeric_type(); }
 
     expr_op operator()(iterator first, iterator last) const
     {
-        return impl_->apply(first, last);
+        return get_impl()->apply(first, last);
     }
 
     template<typename T>
     friend T & cast(expr_op const & o)
     {
-        if (!o.impl_)
+        if (!o.members_.impl_)
             throw bad_any_ref_cast("Attempted to cast an empty expr_op.");
         if (boost::typeindex::ctti_type_index::type_id<T>() != o.ctti()) {
             throw bad_any_ref_cast(
                 "Attempted to cast an expr_op to the wrong type.");
         }
-        return *static_cast<T *>(o.impl_->value());
+        return *static_cast<T *>(o.get_impl()->value());
     }
 
 private:
-    boost::typeindex::ctti_type_index ctti() const
-    {
-        return impl_->ctti();
-    }
-
     struct impl_base
     {
         virtual ~impl_base() {}
@@ -687,7 +708,17 @@ private:
         T op_;
     };
 
-    std::unique_ptr<impl_base> impl_;
+    boost::typeindex::ctti_type_index ctti() const
+    {
+        return get_impl()->ctti();
+    }
+    impl_base const * get_impl() const
+    {
+        return static_cast<impl_base const *>(members_.impl_);
+    }
+    impl_base * get_impl() { return static_cast<impl_base *>(members_.impl_); }
+
+    detail::expr_op_members members_;
 };
 
 int arity(expr_op x) { return 0; } // TODO
