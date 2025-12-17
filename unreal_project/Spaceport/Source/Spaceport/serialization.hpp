@@ -136,8 +136,10 @@ namespace detail {
         uint8_t * out = buf;
 
         if constexpr (std::is_same_v<T, bool>) {
-            buf[0] = x;
-            detail::count_or_write<Op>(retval, buf, 1, os);
+            if constexpr (FieldOp == ser_field_op::write)
+                out = os::WriteVarint32ToArray(field_number, out);
+            *out++ = x;
+            detail::count_or_write<Op>(retval, buf, out - buf, os);
         } else if constexpr (std::is_enum_v<T>) {
             auto const underlying = static_cast<std::underlying_type_t<T>>(x);
             retval += detail::serialize_impl<Op, FieldOp>(

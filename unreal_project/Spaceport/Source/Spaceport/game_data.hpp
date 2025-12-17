@@ -268,11 +268,13 @@ struct nation_t
     std::vector<unit_design_t> unit_designs = {};
     std::vector<province_t> provinces = {};
     std::vector<fleet_t> fleets = {};
-    std::vector<int> planets;
+    std::vector<int> hexes_seen;
+    std::vector<int> systems_present_in;
+    std::vector<int> systems_visited;
+    std::vector<int> planets_present_on;
+    std::vector<int> planets_surveyed;
     std::vector<nation_and_object_id_t> foreign_designs_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_glimpsed = {};
-    std::vector<int> hexes_seen;
-    std::vector<int> systems_visited;
     bool defeated = false;
     bool operator==(nation_t const &) const = default;
 };

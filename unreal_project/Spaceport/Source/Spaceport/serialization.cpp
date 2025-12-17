@@ -18,6 +18,8 @@ namespace detail {
                 {3, 4, 5, 6, 7, 8, 9, 10, 11, 12}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                 x, 0, os, fields_to_elide);
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
         }
     }
 
@@ -35,6 +37,8 @@ namespace detail {
             std::array<int, 1> fields_to_elide = {{2}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                 x, 0, os, fields_to_elide);
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
         }
     }
 
@@ -49,9 +53,15 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
+            fleet_t copy = x;
+            for (auto & unit : copy.units) {
+                unit.health = -1;
+            }
             std::array<int, 5> fields_to_elide = {{2, 4, 5, 6, 7}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                x, 0, os, fields_to_elide);
+                copy, 0, os, fields_to_elide);
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
         }
     }
 
@@ -64,8 +74,12 @@ namespace detail {
         int,
         ostream_tarray_facade * os)
     {
-        if (vis == visibility_kind::owner)
+        if (vis == visibility_kind::owner ||
+            vis == visibility_kind::neutral_or_enemy) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
+        }
     }
 
     void serialize_for_client(
@@ -80,16 +94,11 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            if (!std::ranges::binary_search(
-                    gs.nations[nation_id].systems_visited, system_index)) {
-                std::array<int, 4> fields_to_elide = {{4, 5, 8, 9}};
-                serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                    x, 0, os, fields_to_elide);
-            } else {
-                std::array<int, 1> fields_to_elide = {{5}};
-                serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                    x, 0, os, fields_to_elide);
-            }
+            std::array<int, 4> fields_to_elide = {{4, 5, 8, 9}};
+            serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
+                x, 0, os, fields_to_elide);
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
         }
     }
 
@@ -119,6 +128,8 @@ namespace detail {
                 serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                     x, 0, os, fields_to_elide);
             }
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
         }
     }
 
@@ -195,7 +206,9 @@ namespace detail {
             }
 
             detail::serialize_impl<ser_op::write, ser_field_op::write>(
-                x.defeated, 10, os);
+                x.defeated, 12, os);
+        } else {
+            detail::serialize_message_end<ser_op::write>(os);
         }
     }
 

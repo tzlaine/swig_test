@@ -43,7 +43,7 @@ struct indexed_object
 
 inline auto ptr_to_id(fleet_t const * f) { return f->id; };
 
-auto const fleet_id_cmp = [](auto a, auto b) {
+auto const obj_id_cmp = [](auto a, auto b) {
     if (a.nation_id < b.nation_id)
         return true;
     if (b.nation_id < a.nation_id)
@@ -53,7 +53,7 @@ auto const fleet_id_cmp = [](auto a, auto b) {
 
 inline void sort_by_id(std::vector<fleet_t const *> & visible_fleets)
 {
-    std::ranges::sort(visible_fleets, fleet_id_cmp, ptr_to_id);
+    std::ranges::sort(visible_fleets, obj_id_cmp, ptr_to_id);
 }
 
 inline bool visible_fleet(
@@ -61,7 +61,7 @@ inline bool visible_fleet(
     nation_and_object_id_t fleet_id)
 {
     return std::ranges::binary_search(
-        visible_fleets, fleet_id, fleet_id_cmp, ptr_to_id);
+        visible_fleets, fleet_id, obj_id_cmp, ptr_to_id);
 }
 
 inline constexpr nation_and_object_id_t invalid_nation_and_object{-1, -1};

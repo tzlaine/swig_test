@@ -470,20 +470,26 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.fleets) {
         retval.add_fleets()->CopyFrom(to_protobuf(x));
     }
-    for (const auto& x : value.planets) {
-        retval.add_planets(x);
+    for (const auto& x : value.hexes_seen) {
+        retval.add_hexes_seen(x);
+    }
+    for (const auto& x : value.systems_present_in) {
+        retval.add_systems_present_in(x);
+    }
+    for (const auto& x : value.systems_visited) {
+        retval.add_systems_visited(x);
+    }
+    for (const auto& x : value.planets_present_on) {
+        retval.add_planets_present_on(x);
+    }
+    for (const auto& x : value.planets_surveyed) {
+        retval.add_planets_surveyed(x);
     }
     for (const auto& x : value.foreign_designs_seen) {
         retval.add_foreign_designs_seen()->CopyFrom(to_protobuf(x));
     }
     for (const auto& x : value.foreign_designs_glimpsed) {
         retval.add_foreign_designs_glimpsed()->CopyFrom(to_protobuf(x));
-    }
-    for (const auto& x : value.hexes_seen) {
-        retval.add_hexes_seen(x);
-    }
-    for (const auto& x : value.systems_visited) {
-        retval.add_systems_visited(x);
     }
     retval.set_defeated(value.defeated);
     return retval;
@@ -515,9 +521,37 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         }
     }
     {
-        retval.planets.resize(msg.planets_size());
-        auto it = retval.planets.begin();
-        for (const auto& x : msg.planets()) {
+        retval.hexes_seen.resize(msg.hexes_seen_size());
+        auto it = retval.hexes_seen.begin();
+        for (const auto& x : msg.hexes_seen()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.systems_present_in.resize(msg.systems_present_in_size());
+        auto it = retval.systems_present_in.begin();
+        for (const auto& x : msg.systems_present_in()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.systems_visited.resize(msg.systems_visited_size());
+        auto it = retval.systems_visited.begin();
+        for (const auto& x : msg.systems_visited()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.planets_present_on.resize(msg.planets_present_on_size());
+        auto it = retval.planets_present_on.begin();
+        for (const auto& x : msg.planets_present_on()) {
+            *it++ = x;
+        }
+    }
+    {
+        retval.planets_surveyed.resize(msg.planets_surveyed_size());
+        auto it = retval.planets_surveyed.begin();
+        for (const auto& x : msg.planets_surveyed()) {
             *it++ = x;
         }
     }
@@ -533,20 +567,6 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         auto it = retval.foreign_designs_glimpsed.begin();
         for (const auto& x : msg.foreign_designs_glimpsed()) {
             *it++ = from_protobuf(x);
-        }
-    }
-    {
-        retval.hexes_seen.resize(msg.hexes_seen_size());
-        auto it = retval.hexes_seen.begin();
-        for (const auto& x : msg.hexes_seen()) {
-            *it++ = x;
-        }
-    }
-    {
-        retval.systems_visited.resize(msg.systems_visited_size());
-        auto it = retval.systems_visited.begin();
-        for (const auto& x : msg.systems_visited()) {
-            *it++ = x;
         }
     }
     retval.defeated = msg.defeated();

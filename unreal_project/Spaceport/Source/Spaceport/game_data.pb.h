@@ -3672,13 +3672,15 @@ class nation_t PROTOBUF_FINAL :
     kUnitDesignsFieldNumber = 2,
     kProvincesFieldNumber = 3,
     kFleetsFieldNumber = 4,
-    kPlanetsFieldNumber = 5,
-    kForeignDesignsSeenFieldNumber = 6,
-    kForeignDesignsGlimpsedFieldNumber = 7,
-    kHexesSeenFieldNumber = 8,
-    kSystemsVisitedFieldNumber = 9,
+    kHexesSeenFieldNumber = 5,
+    kSystemsPresentInFieldNumber = 6,
+    kSystemsVisitedFieldNumber = 7,
+    kPlanetsPresentOnFieldNumber = 8,
+    kPlanetsSurveyedFieldNumber = 9,
+    kForeignDesignsSeenFieldNumber = 10,
+    kForeignDesignsGlimpsedFieldNumber = 11,
     kIdFieldNumber = 1,
-    kDefeatedFieldNumber = 10,
+    kDefeatedFieldNumber = 12,
   };
   // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
   int unit_designs_size() const;
@@ -3734,65 +3736,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >&
       fleets() const;
 
-  // repeated int32 planets = 5;
-  int planets_size() const;
-  private:
-  int _internal_planets_size() const;
-  public:
-  void clear_planets();
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_planets(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
-      _internal_planets() const;
-  void _internal_add_planets(::PROTOBUF_NAMESPACE_ID::int32 value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
-      _internal_mutable_planets();
-  public:
-  ::PROTOBUF_NAMESPACE_ID::int32 planets(int index) const;
-  void set_planets(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
-  void add_planets(::PROTOBUF_NAMESPACE_ID::int32 value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
-      planets() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
-      mutable_planets();
-
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 6;
-  int foreign_designs_seen_size() const;
-  private:
-  int _internal_foreign_designs_seen_size() const;
-  public:
-  void clear_foreign_designs_seen();
-  ::pb_message::game_data::nation_and_object_id_t* mutable_foreign_designs_seen(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
-      mutable_foreign_designs_seen();
-  private:
-  const ::pb_message::game_data::nation_and_object_id_t& _internal_foreign_designs_seen(int index) const;
-  ::pb_message::game_data::nation_and_object_id_t* _internal_add_foreign_designs_seen();
-  public:
-  const ::pb_message::game_data::nation_and_object_id_t& foreign_designs_seen(int index) const;
-  ::pb_message::game_data::nation_and_object_id_t* add_foreign_designs_seen();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
-      foreign_designs_seen() const;
-
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
-  int foreign_designs_glimpsed_size() const;
-  private:
-  int _internal_foreign_designs_glimpsed_size() const;
-  public:
-  void clear_foreign_designs_glimpsed();
-  ::pb_message::game_data::nation_and_object_id_t* mutable_foreign_designs_glimpsed(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
-      mutable_foreign_designs_glimpsed();
-  private:
-  const ::pb_message::game_data::nation_and_object_id_t& _internal_foreign_designs_glimpsed(int index) const;
-  ::pb_message::game_data::nation_and_object_id_t* _internal_add_foreign_designs_glimpsed();
-  public:
-  const ::pb_message::game_data::nation_and_object_id_t& foreign_designs_glimpsed(int index) const;
-  ::pb_message::game_data::nation_and_object_id_t* add_foreign_designs_glimpsed();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
-      foreign_designs_glimpsed() const;
-
-  // repeated int32 hexes_seen = 8;
+  // repeated int32 hexes_seen = 5;
   int hexes_seen_size() const;
   private:
   int _internal_hexes_seen_size() const;
@@ -3814,7 +3758,29 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_hexes_seen();
 
-  // repeated int32 systems_visited = 9;
+  // repeated int32 systems_present_in = 6;
+  int systems_present_in_size() const;
+  private:
+  int _internal_systems_present_in_size() const;
+  public:
+  void clear_systems_present_in();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_systems_present_in(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      _internal_systems_present_in() const;
+  void _internal_add_systems_present_in(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      _internal_mutable_systems_present_in();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::int32 systems_present_in(int index) const;
+  void set_systems_present_in(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
+  void add_systems_present_in(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      systems_present_in() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      mutable_systems_present_in();
+
+  // repeated int32 systems_visited = 7;
   int systems_visited_size() const;
   private:
   int _internal_systems_visited_size() const;
@@ -3836,6 +3802,86 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_systems_visited();
 
+  // repeated int32 planets_present_on = 8;
+  int planets_present_on_size() const;
+  private:
+  int _internal_planets_present_on_size() const;
+  public:
+  void clear_planets_present_on();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_planets_present_on(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      _internal_planets_present_on() const;
+  void _internal_add_planets_present_on(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      _internal_mutable_planets_present_on();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::int32 planets_present_on(int index) const;
+  void set_planets_present_on(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
+  void add_planets_present_on(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      planets_present_on() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      mutable_planets_present_on();
+
+  // repeated int32 planets_surveyed = 9;
+  int planets_surveyed_size() const;
+  private:
+  int _internal_planets_surveyed_size() const;
+  public:
+  void clear_planets_surveyed();
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_planets_surveyed(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      _internal_planets_surveyed() const;
+  void _internal_add_planets_surveyed(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      _internal_mutable_planets_surveyed();
+  public:
+  ::PROTOBUF_NAMESPACE_ID::int32 planets_surveyed(int index) const;
+  void set_planets_surveyed(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
+  void add_planets_surveyed(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+      planets_surveyed() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+      mutable_planets_surveyed();
+
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 10;
+  int foreign_designs_seen_size() const;
+  private:
+  int _internal_foreign_designs_seen_size() const;
+  public:
+  void clear_foreign_designs_seen();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_foreign_designs_seen(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+      mutable_foreign_designs_seen();
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_foreign_designs_seen(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_add_foreign_designs_seen();
+  public:
+  const ::pb_message::game_data::nation_and_object_id_t& foreign_designs_seen(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* add_foreign_designs_seen();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+      foreign_designs_seen() const;
+
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 11;
+  int foreign_designs_glimpsed_size() const;
+  private:
+  int _internal_foreign_designs_glimpsed_size() const;
+  public:
+  void clear_foreign_designs_glimpsed();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_foreign_designs_glimpsed(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+      mutable_foreign_designs_glimpsed();
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_foreign_designs_glimpsed(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_add_foreign_designs_glimpsed();
+  public:
+  const ::pb_message::game_data::nation_and_object_id_t& foreign_designs_glimpsed(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* add_foreign_designs_glimpsed();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+      foreign_designs_glimpsed() const;
+
   // int32 id = 1;
   void clear_id();
   ::PROTOBUF_NAMESPACE_ID::int32 id() const;
@@ -3845,7 +3891,7 @@ class nation_t PROTOBUF_FINAL :
   void _internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // bool defeated = 10;
+  // bool defeated = 12;
   void clear_defeated();
   bool defeated() const;
   void set_defeated(bool value);
@@ -3864,14 +3910,18 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::unit_design_t > unit_designs_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::province_t > provinces_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t > fleets_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > planets_;
-  mutable std::atomic<int> _planets_cached_byte_size_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_seen_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_glimpsed_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > hexes_seen_;
   mutable std::atomic<int> _hexes_seen_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > systems_present_in_;
+  mutable std::atomic<int> _systems_present_in_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > systems_visited_;
   mutable std::atomic<int> _systems_visited_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > planets_present_on_;
+  mutable std::atomic<int> _planets_present_on_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 > planets_surveyed_;
+  mutable std::atomic<int> _planets_surveyed_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_seen_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_glimpsed_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
   bool defeated_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -7205,132 +7255,7 @@ nation_t::fleets() const {
   return fleets_;
 }
 
-// repeated int32 planets = 5;
-inline int nation_t::_internal_planets_size() const {
-  return planets_.size();
-}
-inline int nation_t::planets_size() const {
-  return _internal_planets_size();
-}
-inline void nation_t::clear_planets() {
-  planets_.Clear();
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_planets(int index) const {
-  return planets_.Get(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::planets(int index) const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.planets)
-  return _internal_planets(index);
-}
-inline void nation_t::set_planets(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
-  planets_.Set(index, value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.planets)
-}
-inline void nation_t::_internal_add_planets(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  planets_.Add(value);
-}
-inline void nation_t::add_planets(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_add_planets(value);
-  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.planets)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
-nation_t::_internal_planets() const {
-  return planets_;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
-nation_t::planets() const {
-  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.planets)
-  return _internal_planets();
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
-nation_t::_internal_mutable_planets() {
-  return &planets_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
-nation_t::mutable_planets() {
-  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.planets)
-  return _internal_mutable_planets();
-}
-
-// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 6;
-inline int nation_t::_internal_foreign_designs_seen_size() const {
-  return foreign_designs_seen_.size();
-}
-inline int nation_t::foreign_designs_seen_size() const {
-  return _internal_foreign_designs_seen_size();
-}
-inline void nation_t::clear_foreign_designs_seen() {
-  foreign_designs_seen_.Clear();
-}
-inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_foreign_designs_seen(int index) {
-  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.foreign_designs_seen)
-  return foreign_designs_seen_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
-nation_t::mutable_foreign_designs_seen() {
-  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.foreign_designs_seen)
-  return &foreign_designs_seen_;
-}
-inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_foreign_designs_seen(int index) const {
-  return foreign_designs_seen_.Get(index);
-}
-inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::foreign_designs_seen(int index) const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.foreign_designs_seen)
-  return _internal_foreign_designs_seen(index);
-}
-inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_add_foreign_designs_seen() {
-  return foreign_designs_seen_.Add();
-}
-inline ::pb_message::game_data::nation_and_object_id_t* nation_t::add_foreign_designs_seen() {
-  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.foreign_designs_seen)
-  return _internal_add_foreign_designs_seen();
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
-nation_t::foreign_designs_seen() const {
-  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.foreign_designs_seen)
-  return foreign_designs_seen_;
-}
-
-// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 7;
-inline int nation_t::_internal_foreign_designs_glimpsed_size() const {
-  return foreign_designs_glimpsed_.size();
-}
-inline int nation_t::foreign_designs_glimpsed_size() const {
-  return _internal_foreign_designs_glimpsed_size();
-}
-inline void nation_t::clear_foreign_designs_glimpsed() {
-  foreign_designs_glimpsed_.Clear();
-}
-inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_foreign_designs_glimpsed(int index) {
-  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.foreign_designs_glimpsed)
-  return foreign_designs_glimpsed_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
-nation_t::mutable_foreign_designs_glimpsed() {
-  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.foreign_designs_glimpsed)
-  return &foreign_designs_glimpsed_;
-}
-inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_foreign_designs_glimpsed(int index) const {
-  return foreign_designs_glimpsed_.Get(index);
-}
-inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::foreign_designs_glimpsed(int index) const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.foreign_designs_glimpsed)
-  return _internal_foreign_designs_glimpsed(index);
-}
-inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_add_foreign_designs_glimpsed() {
-  return foreign_designs_glimpsed_.Add();
-}
-inline ::pb_message::game_data::nation_and_object_id_t* nation_t::add_foreign_designs_glimpsed() {
-  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.foreign_designs_glimpsed)
-  return _internal_add_foreign_designs_glimpsed();
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
-nation_t::foreign_designs_glimpsed() const {
-  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.foreign_designs_glimpsed)
-  return foreign_designs_glimpsed_;
-}
-
-// repeated int32 hexes_seen = 8;
+// repeated int32 hexes_seen = 5;
 inline int nation_t::_internal_hexes_seen_size() const {
   return hexes_seen_.size();
 }
@@ -7377,7 +7302,54 @@ nation_t::mutable_hexes_seen() {
   return _internal_mutable_hexes_seen();
 }
 
-// repeated int32 systems_visited = 9;
+// repeated int32 systems_present_in = 6;
+inline int nation_t::_internal_systems_present_in_size() const {
+  return systems_present_in_.size();
+}
+inline int nation_t::systems_present_in_size() const {
+  return _internal_systems_present_in_size();
+}
+inline void nation_t::clear_systems_present_in() {
+  systems_present_in_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_systems_present_in(int index) const {
+  return systems_present_in_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::systems_present_in(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.systems_present_in)
+  return _internal_systems_present_in(index);
+}
+inline void nation_t::set_systems_present_in(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
+  systems_present_in_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.systems_present_in)
+}
+inline void nation_t::_internal_add_systems_present_in(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  systems_present_in_.Add(value);
+}
+inline void nation_t::add_systems_present_in(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_add_systems_present_in(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.systems_present_in)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::_internal_systems_present_in() const {
+  return systems_present_in_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::systems_present_in() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.systems_present_in)
+  return _internal_systems_present_in();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::_internal_mutable_systems_present_in() {
+  return &systems_present_in_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::mutable_systems_present_in() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.systems_present_in)
+  return _internal_mutable_systems_present_in();
+}
+
+// repeated int32 systems_visited = 7;
 inline int nation_t::_internal_systems_visited_size() const {
   return systems_visited_.size();
 }
@@ -7424,7 +7396,179 @@ nation_t::mutable_systems_visited() {
   return _internal_mutable_systems_visited();
 }
 
-// bool defeated = 10;
+// repeated int32 planets_present_on = 8;
+inline int nation_t::_internal_planets_present_on_size() const {
+  return planets_present_on_.size();
+}
+inline int nation_t::planets_present_on_size() const {
+  return _internal_planets_present_on_size();
+}
+inline void nation_t::clear_planets_present_on() {
+  planets_present_on_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_planets_present_on(int index) const {
+  return planets_present_on_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::planets_present_on(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.planets_present_on)
+  return _internal_planets_present_on(index);
+}
+inline void nation_t::set_planets_present_on(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
+  planets_present_on_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.planets_present_on)
+}
+inline void nation_t::_internal_add_planets_present_on(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  planets_present_on_.Add(value);
+}
+inline void nation_t::add_planets_present_on(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_add_planets_present_on(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.planets_present_on)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::_internal_planets_present_on() const {
+  return planets_present_on_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::planets_present_on() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.planets_present_on)
+  return _internal_planets_present_on();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::_internal_mutable_planets_present_on() {
+  return &planets_present_on_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::mutable_planets_present_on() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.planets_present_on)
+  return _internal_mutable_planets_present_on();
+}
+
+// repeated int32 planets_surveyed = 9;
+inline int nation_t::_internal_planets_surveyed_size() const {
+  return planets_surveyed_.size();
+}
+inline int nation_t::planets_surveyed_size() const {
+  return _internal_planets_surveyed_size();
+}
+inline void nation_t::clear_planets_surveyed() {
+  planets_surveyed_.Clear();
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_planets_surveyed(int index) const {
+  return planets_surveyed_.Get(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::planets_surveyed(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.planets_surveyed)
+  return _internal_planets_surveyed(index);
+}
+inline void nation_t::set_planets_surveyed(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
+  planets_surveyed_.Set(index, value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.planets_surveyed)
+}
+inline void nation_t::_internal_add_planets_surveyed(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  planets_surveyed_.Add(value);
+}
+inline void nation_t::add_planets_surveyed(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_add_planets_surveyed(value);
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.planets_surveyed)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::_internal_planets_surveyed() const {
+  return planets_surveyed_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
+nation_t::planets_surveyed() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.planets_surveyed)
+  return _internal_planets_surveyed();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::_internal_mutable_planets_surveyed() {
+  return &planets_surveyed_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
+nation_t::mutable_planets_surveyed() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.planets_surveyed)
+  return _internal_mutable_planets_surveyed();
+}
+
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 10;
+inline int nation_t::_internal_foreign_designs_seen_size() const {
+  return foreign_designs_seen_.size();
+}
+inline int nation_t::foreign_designs_seen_size() const {
+  return _internal_foreign_designs_seen_size();
+}
+inline void nation_t::clear_foreign_designs_seen() {
+  foreign_designs_seen_.Clear();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_foreign_designs_seen(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.foreign_designs_seen)
+  return foreign_designs_seen_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+nation_t::mutable_foreign_designs_seen() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.foreign_designs_seen)
+  return &foreign_designs_seen_;
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_foreign_designs_seen(int index) const {
+  return foreign_designs_seen_.Get(index);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::foreign_designs_seen(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.foreign_designs_seen)
+  return _internal_foreign_designs_seen(index);
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_add_foreign_designs_seen() {
+  return foreign_designs_seen_.Add();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::add_foreign_designs_seen() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.foreign_designs_seen)
+  return _internal_add_foreign_designs_seen();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+nation_t::foreign_designs_seen() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.foreign_designs_seen)
+  return foreign_designs_seen_;
+}
+
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 11;
+inline int nation_t::_internal_foreign_designs_glimpsed_size() const {
+  return foreign_designs_glimpsed_.size();
+}
+inline int nation_t::foreign_designs_glimpsed_size() const {
+  return _internal_foreign_designs_glimpsed_size();
+}
+inline void nation_t::clear_foreign_designs_glimpsed() {
+  foreign_designs_glimpsed_.Clear();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_foreign_designs_glimpsed(int index) {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return foreign_designs_glimpsed_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+nation_t::mutable_foreign_designs_glimpsed() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return &foreign_designs_glimpsed_;
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_foreign_designs_glimpsed(int index) const {
+  return foreign_designs_glimpsed_.Get(index);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::foreign_designs_glimpsed(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return _internal_foreign_designs_glimpsed(index);
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_add_foreign_designs_glimpsed() {
+  return foreign_designs_glimpsed_.Add();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::add_foreign_designs_glimpsed() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return _internal_add_foreign_designs_glimpsed();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+nation_t::foreign_designs_glimpsed() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.nation_t.foreign_designs_glimpsed)
+  return foreign_designs_glimpsed_;
+}
+
+// bool defeated = 12;
 inline void nation_t::clear_defeated() {
   defeated_ = false;
 }

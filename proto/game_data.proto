@@ -248,12 +248,14 @@ message nation_t
     repeated unit_design_t unit_designs = 2;
     repeated province_t provinces = 3;
     repeated fleet_t fleets = 4; // may contain gaps, in the form of invalid fleets
-    repeated int32 planets = 5;
-    repeated nation_and_object_id_t foreign_designs_seen = 6;
-    repeated nation_and_object_id_t foreign_designs_glimpsed = 7;
-    repeated int32 hexes_seen = 8;
-    repeated int32 systems_visited = 9;
-    bool defeated = 10;
+    repeated int32 hexes_seen = 5; // all these lists of IDs must be kept sorted
+    repeated int32 systems_present_in = 6;
+    repeated int32 systems_visited = 7;
+    repeated int32 planets_present_on = 8;
+    repeated int32 planets_surveyed = 9;
+    repeated nation_and_object_id_t foreign_designs_seen = 10;
+    repeated nation_and_object_id_t foreign_designs_glimpsed = 11;
+    bool defeated = 12;
 }
 
 message game_state_t

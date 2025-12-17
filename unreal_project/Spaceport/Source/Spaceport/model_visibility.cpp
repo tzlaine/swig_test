@@ -2,6 +2,7 @@
 
 #include "effects.hpp"
 #include "model.hpp"
+#include "model_util.hpp"
 
 
 visibility_kind visibility_of(
@@ -13,13 +14,12 @@ visibility_kind visibility_of(
     nation_t const & nation = gs.nations[nation_id];
     if (nation_id == x.id.nation_id || allied(gs, nation_id, x.id.nation_id))
         return visibility_kind::owner;
-    // TODO: Keep these sorted?
-    if (std::ranges::find(nation.foreign_designs_seen, x.id) !=
-        nation.foreign_designs_seen.end()) {
+    if (std::ranges::binary_search(
+            nation.foreign_designs_seen, x.id, obj_id_cmp)) {
         return visibility_kind::owner;
     }
-    if (std::ranges::find(nation.foreign_designs_glimpsed, x.id) !=
-        nation.foreign_designs_seen.end()) {
+    if (std::ranges::binary_search(
+            nation.foreign_designs_glimpsed, x.id, obj_id_cmp)) {
         return visibility_kind::neutral_or_enemy;
     }
     return visibility_kind::unseen;
@@ -136,11 +136,14 @@ visibility_kind visibility_of(
     int system_index)
 {
     nation_t const & nation = gs.nations[nation_id];
-    // TODO: Keep sorted?
     int const hex_index = to_index(x.coord, gs.map_width);
-    if (std::ranges::find(nation.systems_visited, system_index) !=
-        nation.systems_visited.end()) {
+    if (std::ranges::binary_search(
+            gs.nations[nation_id].systems_present_in, system_index)) {
         return visibility_kind::owner;
+    }
+    if (std::ranges::binary_search(
+            gs.nations[nation_id].systems_visited, system_index)) {
+        return visibility_kind::neutral_or_enemy;
     }
     return visibility_kind::unseen;
 }
@@ -153,9 +156,8 @@ visibility_kind visibility_of(
     int)
 {
     nation_t const & nation = gs.nations[nation_id];
-    // TODO: Keep sorted?
-    if (std::ranges::find(nation.hexes_seen, to_index(x.coord, gs.map_width)) !=
-        nation.hexes_seen.end()) {
+    if (std::ranges::binary_search(
+            nation.hexes_seen, to_index(x.coord, gs.map_width))) {
         return visibility_kind::owner;
     }
     // TODO: What about the province_id?

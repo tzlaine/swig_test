@@ -589,8 +589,28 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " planets=[");
-        for (auto && e : x.planets) {
+        out = std::format_to(out, " hexes_seen=[");
+        for (auto && e : x.hexes_seen) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " systems_present_in=[");
+        for (auto && e : x.systems_present_in) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " systems_visited=[");
+        for (auto && e : x.systems_visited) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " planets_present_on=[");
+        for (auto && e : x.planets_present_on) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " planets_surveyed=[");
+        for (auto && e : x.planets_surveyed) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
@@ -601,16 +621,6 @@ struct std::formatter<nation_t> {
         out = std::format_to(out, " ]");
         out = std::format_to(out, " foreign_designs_glimpsed=[");
         for (auto && e : x.foreign_designs_glimpsed) {
-            out = std::format_to(out, " {}", e);
-        };
-        out = std::format_to(out, " ]");
-        out = std::format_to(out, " hexes_seen=[");
-        for (auto && e : x.hexes_seen) {
-            out = std::format_to(out, " {}", e);
-        };
-        out = std::format_to(out, " ]");
-        out = std::format_to(out, " systems_visited=[");
-        for (auto && e : x.systems_visited) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
