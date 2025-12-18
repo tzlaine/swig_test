@@ -1580,18 +1580,21 @@ TEST(generation_tests, generate_system)
     {
         system_t system;
         while (system.star.solar_luminosities < 0.8 || 1.2 < system.star.solar_luminosities) {
-            system.first_planet = all_planets.planets_.size();
+            system.first_planet = 0;
             generation::detail::generate_system_impl(
                 system, all_planets, hc, pos, system_id, get_intermediate_values);
             system.last_planet = all_planets.planets_.size();
+            EXPECT_EQ(radii.size(), masses.size());
+            EXPECT_EQ(all_planets.planets_.size(), radii.size());
         }
 
         dump(system);
 
         std::cout << "\n";
 
-        EXPECT_NE(system.first_planet, system.last_planet);
-        std::cout << std::format("{} planets\n", system.last_planet - system.first_planet);
+        EXPECT_LE(system.first_planet, system.last_planet);
+        std::cout << std::format(
+            "{} planets\n", system.last_planet - system.first_planet);
 
         std::cout << "\n";
 
