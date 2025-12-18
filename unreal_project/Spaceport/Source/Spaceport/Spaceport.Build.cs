@@ -39,6 +39,7 @@ public class Spaceport : ModuleRules
 
         LoadProtobuf(Target);
         LoadJansson(Target);
+        LoadLua(Target);
 
         bEnableExceptions = true;
     }
@@ -59,7 +60,6 @@ public class Spaceport : ModuleRules
 
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, protobuf_lib));
         PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Protobuf", "Includes"));
-        //PublicDefinitions.Add(string.Format("USE_PROTOBUF=1"));
         PublicDefinitions.Add("GOOGLE_PROTOBUF_NO_RTTI");
 
         return true;
@@ -81,7 +81,26 @@ public class Spaceport : ModuleRules
 
         PublicAdditionalLibraries.Add(Path.Combine(libraries_path, jansson_lib));
         PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Jansson", "Includes"));
-        //PublicDefinitions.Add(string.Format("USE_JANSSON=1"));
+
+        return true;
+    }
+
+    public bool LoadLua(ReadOnlyTargetRules Target)
+    {
+        string libraries_path = Path.Combine(ThirdPartyPath, "Lua", "Libraries");
+
+        string Lua_lib;
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+        {
+            Lua_lib = "Lua.lib";
+        }
+        else // TODO: Untested!
+        {
+            Lua_lib = "libLua.a";
+        }
+
+        PublicAdditionalLibraries.Add(Path.Combine(libraries_path, Lua_lib));
+        PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "Lua", "Includes"));
 
         return true;
     }

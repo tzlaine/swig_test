@@ -34,6 +34,8 @@ set(unreal_root ${CMAKE_HOME_DIRECTORY}/unreal_project/Spaceport)
 set(unreal_src_dir ${unreal_root}/Source/Spaceport)
 set(unreal_3rd_party_root ${unreal_root}/ThirdParty)
 
+include(cmake/lua.cmake)
+
 add_definitions(-DGOOGLE_PROTOBUF_NO_RTTI)
 set(protobuf_dir protobuf-3.13.0)
 add_subdirectory(${protobuf_dir}/cmake)
