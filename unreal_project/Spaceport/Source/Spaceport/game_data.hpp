@@ -169,7 +169,7 @@ struct planet_effect_t
     int months_of_effect = -1;
     int months_remaining = -1;
     planet_effect_target_t target = planet_effect_target_t::invalid_planet_effect_target;
-    unsigned int target_modifiers = 0;
+    unsigned int target_modifiers = 0u - 1;
     effect_op_t operation = effect_op_t::invalid_effect_op;
     bool operator==(planet_effect_t const &) const = default;
 };
@@ -211,7 +211,7 @@ struct planet_t
 struct location_object_t
 {
     std::vector<nation_and_object_id_t> bases = {};
-    std::size_t planet_id;
+    std::size_t planet_id = std::size_t(0) - 1;
     bool operator==(location_object_t const &) const = default;
 };
 
@@ -241,8 +241,8 @@ struct system_t
     std::vector<system_location_t> temporary_locations = {};
     double world_pos_x = -1.0;
     double world_pos_y = -1.0;
-    std::size_t first_planet;
-    std::size_t last_planet;
+    std::size_t first_planet = std::size_t(0) - 1;
+    std::size_t last_planet = std::size_t(0) - 1;
     bool operator==(system_t const &) const = default;
 };
 
@@ -250,8 +250,8 @@ struct hex_t
 {
     hex_coord_t coord = {};
     int province_id = -1;
-    std::size_t first_system;
-    std::size_t last_system;
+    std::size_t first_system = std::size_t(0) - 1;
+    std::size_t last_system = std::size_t(0) - 1;
     bool operator==(hex_t const &) const = default;
 };
 

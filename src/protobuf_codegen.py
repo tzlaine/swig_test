@@ -365,7 +365,9 @@ def initializer_expr(field_descriptor_proto, lang, map_fields):
     if typename == 'adobe::name_t':
         return ' = adobe::name_t("")'
     if typename == 'unsigned int':
-        return ' = 0'
+        return ' = 0u - 1'
+    if typename == 'std::size_t':
+        return ' = std::size_t(0) - 1'
     if typename == 'int':
         return ' = -1'
     if typename == 'float':

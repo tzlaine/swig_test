@@ -410,7 +410,16 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             auto const bytes =
                 deserialize_impl(client_system, byte_span_of(serialized));
             EXPECT_TRUE(bytes.empty());
-            EXPECT_EQ(client_system, system);
+
+            EXPECT_EQ(client_system.name, system.name);
+            EXPECT_EQ(client_system.coord, system.coord);
+            EXPECT_EQ(client_system.star, system.star);
+            EXPECT_TRUE(client_system.permanent_locations.empty());
+            EXPECT_TRUE(client_system.temporary_locations.empty());
+            EXPECT_EQ(client_system.world_pos_x, system.world_pos_x);
+            EXPECT_EQ(client_system.world_pos_y, system.world_pos_y);
+            EXPECT_EQ(client_system.first_planet, size_t(0) - 1);
+            EXPECT_EQ(client_system.last_planet, size_t(0) - 1);
         }
         {
             serialized.clear();

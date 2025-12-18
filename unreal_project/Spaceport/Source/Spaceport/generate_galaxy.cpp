@@ -59,6 +59,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 .months_of_effect = 0,
                 .months_remaining = 0,
                 .target = planet_effect_target_t::infrastructure,
+                .target_modifiers = 0,
                 .operation = effect_op_t::multiply});
             if (3.0 < planet.orbital_period_y)
                 only_equatorial_band_habitable();
@@ -81,6 +82,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 .months_of_effect = 0,
                 .months_remaining = 0,
                 .target = planet_effect_target_t::infrastructure,
+                .target_modifiers = 0,
                 .operation = effect_op_t::multiply});
             if (1.5 < planet.orbital_period_y)
                 only_equatorial_band_habitable();
@@ -103,6 +105,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 .months_of_effect = 0,
                 .months_remaining = 0,
                 .target = planet_effect_target_t::infrastructure,
+                .target_modifiers = 0,
                 .operation = effect_op_t::multiply});
         }
         only_equatorial_band_habitable();
@@ -120,6 +123,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
                 .months_of_effect = 0,
                 .months_remaining = 0,
                 .target = planet_effect_target_t::infrastructure,
+                .target_modifiers = 0,
                 .operation = effect_op_t::multiply});
         }
         only_equatorial_band_habitable();
@@ -142,6 +146,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             .months_of_effect = 0,
             .months_remaining = 0,
             .target = planet_effect_target_t::infrastructure,
+            .target_modifiers = 0,
             .operation = effect_op_t::multiply});
     } else if (planet.day_h < 24.0f * 1.1f) {
         // no effect
@@ -155,6 +160,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             .months_of_effect = 0,
             .months_remaining = 0,
             .target = planet_effect_target_t::infrastructure,
+            .target_modifiers = 0,
             .operation = effect_op_t::multiply});
     } else {
         record("very_long_days"_name, "very_long_days_desc"_name,
@@ -166,6 +172,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
             .months_of_effect = 0,
             .months_remaining = 0,
             .target = planet_effect_target_t::infrastructure,
+            .target_modifiers = 0,
             .operation = effect_op_t::multiply});
     }
     // TODO: Require habs+suits if the day is long enough?
