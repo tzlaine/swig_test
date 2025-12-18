@@ -99,13 +99,26 @@ auto visible_fleets(int nation_id, game_state_t const & gs)
          &gs.nations[(nation_id + 2) % 3].fleets[0]});
 }
 
-game_state_t const gs = [] {
-    task_system ts(4);
-    game_state_t retval;
-    generation::generate_galaxy(default_game_start_params(), retval, &ts);
-    retval.nations = {nation(0, retval), nation(1, retval), nation(2, retval)};
+game_state_t const & gs()
+{
+    static game_state_t retval = [] {
+        task_system ts(4);
+        game_state_t retval;
+        std::atomic_bool fully_complete = false;
+        generation::generate_galaxy(
+            default_game_start_params(), retval, &ts, nullptr, &fully_complete);
+        while (!fully_complete) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        retval.nations = {
+            nation(0, retval), nation(1, retval), nation(2, retval)};
+        EXPECT_FALSE(retval.hexes.empty());
+        EXPECT_FALSE(retval.systems.empty());
+        EXPECT_FALSE(retval.planets.empty());
+        return retval;
+    }();
     return retval;
-}();
+}
 
 TEST(client_serialization_tests, serialize_for_client_single_object)
 {
@@ -122,7 +135,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 design,
@@ -138,7 +151,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 design,
@@ -170,7 +183,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 design,
@@ -192,7 +205,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 unit,
@@ -208,7 +221,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 unit,
@@ -229,7 +242,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 unit,
@@ -251,7 +264,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 fleet,
@@ -267,7 +280,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 fleet,
@@ -302,7 +315,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 fleet,
@@ -319,12 +332,12 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         ostream_tarray_facade oss(serialized);
         int const nation_id = 0;
         std::vector<fleet_t const *> visible_fleets;
-        hex_t const hex = gs.hexes.front();
+        hex_t const hex = gs().hexes.front();
 
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 hex,
@@ -341,7 +354,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 hex,
@@ -358,7 +371,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 hex,
@@ -376,12 +389,12 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         ostream_tarray_facade oss(serialized);
         int const nation_id = 0;
         std::vector<fleet_t const *> visible_fleets;
-        system_t const system = gs.systems.front();
+        system_t const system = gs().systems.front();
 
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 system,
@@ -398,7 +411,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 system,
@@ -411,6 +424,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
                 deserialize_impl(client_system, byte_span_of(serialized));
             EXPECT_TRUE(bytes.empty());
 
+            system_t const default_system;
             EXPECT_EQ(client_system.name, system.name);
             EXPECT_EQ(client_system.coord, system.coord);
             EXPECT_EQ(client_system.star, system.star);
@@ -418,16 +432,111 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_TRUE(client_system.temporary_locations.empty());
             EXPECT_EQ(client_system.world_pos_x, system.world_pos_x);
             EXPECT_EQ(client_system.world_pos_y, system.world_pos_y);
-            EXPECT_EQ(client_system.first_planet, size_t(0) - 1);
-            EXPECT_EQ(client_system.last_planet, size_t(0) - 1);
+            EXPECT_EQ(client_system.first_planet, default_system.first_planet);
+            EXPECT_EQ(client_system.last_planet, default_system.last_planet);
         }
         {
             serialized.clear();
             serialize_for_client(
-                gs,
+                gs(),
                 visible_fleets,
                 nation_id,
                 system,
+                visibility_kind::unseen,
+                0,
+                &oss);
+            EXPECT_EQ(byte_span_of(serialized).size(), 1u);
+            EXPECT_EQ(byte_span_of(serialized)[0], std::byte(0));
+        }
+    }
+
+    // planet_t
+    {
+        std::vector<char> serialized;
+        ostream_tarray_facade oss(serialized);
+        int const nation_id = 0;
+        std::vector<fleet_t const *> visible_fleets;
+        planet_t const planet = gs().planets.front();
+
+        {
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                planet,
+                visibility_kind::owner,
+                0,
+                &oss);
+
+            planet_t client_planet = {};
+            auto const bytes =
+                deserialize_impl(client_planet, byte_span_of(serialized));
+            EXPECT_TRUE(bytes.empty());
+            EXPECT_EQ(client_planet, planet);
+        }
+        {
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                planet,
+                visibility_kind::neutral_or_enemy,
+                0,
+                &oss);
+
+            planet_t client_planet = {};
+            auto const bytes =
+                deserialize_impl(client_planet, byte_span_of(serialized));
+            EXPECT_TRUE(bytes.empty());
+
+            planet_t const default_planet;
+            EXPECT_EQ(client_planet.system_id, planet.system_id);
+            EXPECT_EQ(client_planet.planet_type, planet.planet_type);
+            EXPECT_EQ(client_planet.mass_kg, planet.mass_kg);
+            EXPECT_EQ(client_planet.radius_km, planet.radius_km);
+            EXPECT_EQ(client_planet.orbit_au, planet.orbit_au);
+            EXPECT_EQ(client_planet.orbital_period_y, planet.orbital_period_y);
+            EXPECT_EQ(client_planet.gravity_g, planet.gravity_g);
+            EXPECT_EQ(client_planet.axial_tilt_d, planet.axial_tilt_d);
+            EXPECT_EQ(client_planet.day_h, planet.day_h);
+            EXPECT_EQ(
+                client_planet.surface_temperature_k,
+                planet.surface_temperature_k);
+            EXPECT_EQ(
+                client_planet.magnetosphere_strength,
+                planet.magnetosphere_strength);
+            EXPECT_EQ(
+                client_planet.atmopsheric_pressure,
+                planet.atmopsheric_pressure);
+            EXPECT_EQ(
+                client_planet.o2_co2_suitability, planet.o2_co2_suitability);
+            EXPECT_EQ(client_planet.ocean_coverage, planet.ocean_coverage);
+            EXPECT_EQ(client_planet.growth_factor, planet.growth_factor);
+            EXPECT_EQ(client_planet.atmosphere_type, planet.atmosphere_type);
+            EXPECT_EQ(client_planet.water, default_planet.water);
+            EXPECT_EQ(client_planet.food, default_planet.food);
+            EXPECT_EQ(client_planet.energy, default_planet.energy);
+            EXPECT_EQ(client_planet.metal, default_planet.metal);
+            EXPECT_EQ(client_planet.fuel, default_planet.fuel);
+            EXPECT_EQ(client_planet.population, default_planet.population);
+            EXPECT_EQ(
+                client_planet.infrastructure, default_planet.infrastructure);
+            EXPECT_EQ(client_planet.orbital_pos_r, planet.orbital_pos_r);
+            EXPECT_EQ(client_planet.max_population, planet.max_population);
+            EXPECT_EQ(client_planet.owner, planet.owner);
+            EXPECT_EQ(client_planet.original_owner, planet.original_owner);
+            EXPECT_EQ(client_planet.garrison, default_planet.garrison);
+            EXPECT_EQ(client_planet.effects, planet.effects);
+        }
+        {
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                planet,
                 visibility_kind::unseen,
                 0,
                 &oss);
