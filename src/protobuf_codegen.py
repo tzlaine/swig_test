@@ -151,6 +151,7 @@ POP_WARNING
 
     formatters_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
+#pragma once
 
 #include "{}"
 {}
@@ -165,6 +166,7 @@ POP_WARNING
 
     serialization_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
+#pragma once
 
 #include "{}"
 {}
@@ -180,6 +182,7 @@ namespace detail {{
 
     metadata_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
+#pragma once
 
 #include <metadata.hpp>
 

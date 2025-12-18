@@ -1,5 +1,6 @@
 // WARNING: Generated code.
 // This file was generated from base_types.proto (proto3)
+#pragma once
 
 #include <metadata.hpp>
 
