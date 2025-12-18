@@ -1,4 +1,6 @@
 #include "serialization.hpp"
+
+#include "game_data_metadata.hpp"
 #include "model.hpp"
 
 
@@ -15,7 +17,16 @@ namespace detail {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
             std::array<int, 10> fields_to_elide = {
-                {3, 4, 5, 6, 7, 8, 9, 10, 11, 12}};
+                {metadata<unit_design_t>::armor().index_,
+                 metadata<unit_design_t>::propulsion().index_,
+                 metadata<unit_design_t>::weapons().index_,
+                 metadata<unit_design_t>::shields().index_,
+                 metadata<unit_design_t>::detection().index_,
+                 metadata<unit_design_t>::stealth().index_,
+                 metadata<unit_design_t>::automation().index_,
+                 metadata<unit_design_t>::attack().index_,
+                 metadata<unit_design_t>::defense().index_,
+                 metadata<unit_design_t>::ground_attack().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                 x, 0, os, fields_to_elide);
         } else {
@@ -34,7 +45,8 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            std::array<int, 1> fields_to_elide = {{2}};
+            std::array<int, 1> fields_to_elide = {
+                {metadata<unit_t>::health().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                 x, 0, os, fields_to_elide);
         } else {
@@ -57,7 +69,12 @@ namespace detail {
             for (auto & unit : copy.units) {
                 unit.health = -1;
             }
-            std::array<int, 5> fields_to_elide = {{2, 4, 5, 6, 7}};
+            std::array<int, 5> fields_to_elide = {
+                {metadata<fleet_t>::mission().index_,
+                 metadata<fleet_t>::fuel().index_,
+                 metadata<fleet_t>::rounds().index_,
+                 metadata<fleet_t>::missiles().index_,
+                 metadata<fleet_t>::fighters().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                 copy, 0, os, fields_to_elide);
         } else {
@@ -94,7 +111,11 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            std::array<int, 4> fields_to_elide = {{4, 5, 8, 9}};
+            std::array<int, 4> fields_to_elide = {
+                {metadata<system_t>::permanent_locations().index_,
+                 metadata<system_t>::temporary_locations().index_,
+                 metadata<system_t>::first_planet().index_,
+                 metadata<system_t>::last_planet().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                 x, 0, os, fields_to_elide);
         } else {
@@ -115,7 +136,14 @@ namespace detail {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
             std::array<int, 8> fields_to_elide = {
-                {17, 18, 19, 20, 21, 22, 23, 28}};
+                {metadata<planet_t>::water().index_,
+                 metadata<planet_t>::food().index_,
+                 metadata<planet_t>::energy().index_,
+                 metadata<planet_t>::metal().index_,
+                 metadata<planet_t>::fuel().index_,
+                 metadata<planet_t>::population().index_,
+                 metadata<planet_t>::infrastructure().index_,
+                 metadata<planet_t>::garrison().index_}};
             auto const nonowner_effect = [](auto const & e) {
                 return transitory(e);
             };
