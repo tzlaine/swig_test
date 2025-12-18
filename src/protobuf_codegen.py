@@ -25,6 +25,7 @@ cpp_file = open(args.file_root + '.cpp', 'w')
 hpp_file = open(args.file_root + '.hpp', 'w')
 formatters_file = open(args.file_root + '_formatters.hpp', 'w')
 serialization_file = open(args.file_root + '_serialization.hpp', 'w')
+metadata_file = open(args.file_root + '_metadata.hpp', 'w')
 
 proto_contents = args.proto_file.read()
 
@@ -97,17 +98,20 @@ def indent(i):
     hpp_file.write(indent_str(i))
     formatters_file.write(indent_str(i))
     serialization_file.write(indent_str(i))
+    metadata_file.write(indent_str(i))
 
 def newline():
     cpp_file.write('\n')
     hpp_file.write('\n')
     formatters_file.write('\n')
     serialization_file.write('\n')
+    metadata_file.write('\n')
 
 def add_header_comment_and_includes(proto_source, syntax, deps):
     cpp_deps = '\n'.join(map(lambda x: '#include <{}.hpp>'.format(x), deps))
     formatters_deps = cpp_deps.replace('.hpp', '_formatters.hpp')
     serialization_deps = cpp_deps.replace('.hpp', '_serialization.hpp')
+    metadata_deps = cpp_deps.replace('.hpp', '_metadata.hpp')
 
     cpp_file.write('''// WARNING: Generated code.
 // This file was generated from {} ({})
@@ -174,11 +178,24 @@ POP_WARNING
 namespace detail {{
 '''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, serialization_deps))
 
+    metadata_file.write('''// WARNING: Generated code.
+// This file was generated from {} ({})
+
+#include <metadata.hpp>
+
+#include "{}"
+{}
+{}
+
+namespace detail {{
+'''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, metadata_deps))
+
 def open_namespace(namespace, depth=0):
     indent(depth)
     for name in namespace:
         cpp_file.write('namespace {} {{ '.format(name))
         hpp_file.write('namespace {} {{ '.format(name))
+        metadata_file.write('namespace {} {{ '.format(name))
         formatters_file.write('namespace {} {{ '.format(name))
     newline()
     return depth + (len(namespace) and 1 or 0)
@@ -189,6 +206,7 @@ def close_namespace(namespace, depth=0):
     for name in namespace:
         cpp_file.write('} ')
         hpp_file.write('} ')
+        metadata_file.write('} ')
         formatters_file.write('} ')
     newline()
 
@@ -316,16 +334,21 @@ def field_element_type(field_descriptor_proto, lang):
             typename = get_csharp_type(field_descriptor_proto.type)
     return typename
 
-def field_type(field_descriptor_proto, lang):
+def field_type(field_descriptor_proto, lang, map_fields):
+    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     typename = field_element_type(field_descriptor_proto, lang)
-    if repeated(field_descriptor_proto):
+    if leaf_type in map_fields:
+        key_type = field_type(map_fields[leaf_type].field[0], 'cpp', map_fields)
+        value_type = field_type(map_fields[leaf_type].field[1], 'cpp', map_fields)
+        typename = f'boost::container::flat_map<{key_type}, {value_type}>'
+    elif repeated(field_descriptor_proto):
         if lang == 'cpp':
             typename = 'std::vector<{}>'.format(typename)
         else:
             typename = '{}[]'.format(typename)
     return typename
 
-def initializer_expr(field_descriptor_proto, lang):
+def initializer_expr(field_descriptor_proto, lang, map_fields):
     if field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
         return ' = {}'
 
@@ -333,7 +356,7 @@ def initializer_expr(field_descriptor_proto, lang):
         typename = type_without_namespace(field_descriptor_proto, protobuf_namespace)
         return f' = {typename}::invalid_{typename[:-2]}'
 
-    typename = field_type(field_descriptor_proto, lang)
+    typename = field_type(field_descriptor_proto, lang, map_fields)
     if typename == 'nation_and_object_id_t':
         return ' = {-1, -1}'
     if typename == 'adobe::name_t':
@@ -418,11 +441,9 @@ def make_return_type(decl_data, kind):
 def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, path):
     # TODO if tuple(path) in special_comments:
     # TODO     print(f'{field_descriptor_proto.name} has special comment {special_comments[tuple(path)]}')
-    leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
-    if leaf_type in map_fields:
-        key_type = field_type(map_fields[leaf_type].field[0], 'cpp')
-        value_type = field_type(map_fields[leaf_type].field[1], 'cpp')
-        hpp_file.write('{}boost::container::flat_map<{}, {}> {};\n'.format(indent_str(depth), key_type, value_type, field_descriptor_proto.name))
+    typename = field_type(field_descriptor_proto, 'cpp', map_fields)
+    if 'boost::container::flat_map' in typename:
+        hpp_file.write('{}{} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
         formatters_file.write('''{0}        out = std::format_to(out, " {1}={{{{");
 '''.format(indent_str(depth - 1), field_descriptor_proto.name))
         formatters_file.write('''{0}        for (auto && [key, value] : x.{1}) {{
@@ -433,8 +454,7 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, pa
 {0}        out = std::format_to(out, " }}}}");
 '''.format(indent_str(depth - 1)))
     else:
-        typename = field_type(field_descriptor_proto, 'cpp')
-        initializer = initializer_expr(field_descriptor_proto, 'cpp')
+        initializer = initializer_expr(field_descriptor_proto, 'cpp', map_fields)
         hpp_file.write('{}{} {}{};\n'.format(indent_str(depth), typename, field_descriptor_proto.name, initializer))
         if repeated(field_descriptor_proto):
             formatters_file.write('''{0}        out = std::format_to(out, " {1}=[");
@@ -448,14 +468,6 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, pa
 '''.format(indent_str(depth - 1)))
         else:
             formatters_file.write('{0}        out = std::format_to(out, " {1}={{}}", x.{1});\n'.format(indent_str(depth - 1), field_descriptor_proto.name))
-    if args.cs_file:
-        if leaf_type in map_fields:
-            key_type = field_type(map_fields[leaf_type].field[0], 'csharp')
-            value_type = field_type(map_fields[leaf_type].field[1], 'csharp')
-            args.cs_file.write('{}public Dictionary<{}, {}> {};\n'.format(indent_str(depth), key_type, value_type, field_descriptor_proto.name))
-        else:
-            typename = field_type(field_descriptor_proto, 'csharp')
-            args.cs_file.write('{}public {} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
 
 def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespace, depth, scope, all_decl_data, map_fields, path):
     hpp_file.write('\n')
@@ -504,8 +516,12 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
         new_path = path + [field_path_constant, index]
         index += 1
         declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, new_path)
-        this_message_fields.append((field_descriptor_proto.name, field_descriptor_proto.number))
+        this_message_fields.append((
+            field_descriptor_proto.name,
+            field_descriptor_proto.number,
+            field_type(field_descriptor_proto, 'cpp', map_fields)))
     print_serialization(depth, this_message_name, this_message_fields)
+    print_metadata(depth, this_message_name, this_message_fields)
     depth -= 1
     hpp_file.write('''{0}    bool operator==({1} const &) const = default;
 {0}}};
@@ -601,6 +617,31 @@ def print_serialization(depth, this_message_name, this_message_fields):
 
 '''.format(indent_str(depth), this_message_name, hi + 1, field_names, len(fields_dict), field_numbers, lo, hi, deserialize_ops))
 
+def print_metadata(depth, this_message_name, this_message_fields):
+    member_metadata = '\n'.join(map(lambda tup: f'''{indent_str(depth)}    static constexpr metadatum<{this_message_name}, {tup[2]}> {tup[0]}()
+{indent_str(depth)}    {{
+{indent_str(depth)}        using namespace std::literals;
+{indent_str(depth)}        return {{"{tup[0]}"sv, {tup[1]}, &{this_message_name}::{tup[0]}}};
+{indent_str(depth)}    }}''', this_message_fields))
+
+    lo = min(map(lambda tup: tup[1], this_message_fields))
+    hi = max(map(lambda tup: tup[1], this_message_fields))
+
+    metadata_file.write('''{0}template<> struct metadata<{1}>
+{0}{{
+{0}    static constexpr std::string_view struct_name()
+{0}    {{
+{0}        using namespace std::literals;
+{0}        return "{1}"sv;
+{0}    }}
+{0}    static constexpr int lo_field_number() {{ return {2}; }}
+{0}    static constexpr int hi_field_number() {{ return {3}; }}
+
+{4}
+{0}}};
+
+'''.format(indent_str(depth), this_message_name, lo, hi, member_metadata))
+
 def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)
     proto_ns = '::'.join(type_namespace(field_descriptor_proto, protobuf_namespace).split('.'))
@@ -616,7 +657,7 @@ def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
             if value_field.type is value_field.TYPE_MESSAGE:
                 cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = to_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
             elif value_field.type is value_field.TYPE_ENUM:
-                value_type = field_type(value_field, 'cpp')
+                value_type = field_type(value_field, 'cpp', map_fields)
                 cpp_file.write('{0}(*retval.mutable_{1}())[x.first{4}] = static_cast< {2}::{3} >(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, proto_ns, to_cpp_namespace(leaf_type), key_suffix))
             else:
                 cpp_file.write('{0}(*retval.mutable_{1}())[x.first{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_suffix))
@@ -675,14 +716,14 @@ def define_cpp_from_pb_impl_field(field_descriptor_proto, depth, map_fields):
             if value_field.type is value_field.TYPE_MESSAGE:
                 cpp_file.write('{0}retval.{1}[{2}] = from_protobuf(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
             elif value_field.type is value_field.TYPE_ENUM:
-                value_type = field_type(value_field, 'cpp')
+                value_type = field_type(value_field, 'cpp', map_fields)
                 cpp_file.write('{0}retval.{1}[{2}] = static_cast<std::remove_reference<decltype(retval.{1}[x.first])>::type>(x.second);\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
             else:
                 cpp_file.write('{0}retval.{1}[{2}] = x.second;\n'.format(indent_str(depth), field_descriptor_proto.name, key_expr))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_MESSAGE:
             cpp_file.write('{0}*it++ = from_protobuf(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_ENUM:
-            value_type = field_type(field_descriptor_proto, 'cpp')
+            value_type = field_type(field_descriptor_proto, 'cpp', map_fields)
             cpp_file.write('{0}*it++ = static_cast<std::remove_reference<decltype(*it++)>::type>(x);\n'.format(indent_str(depth)))
         elif field_descriptor_proto.type is field_descriptor_proto.TYPE_STRING:
             cpp_file.write('{0}*it++ = adobe::name_t(x.c_str());\n'.format(indent_str(depth), field_descriptor_proto.name))
@@ -1124,6 +1165,7 @@ public class convert
 ''')
 
     serialization_file.write('}\n')
+    metadata_file.write('}\n')
 
     close_namespace(user_namespace)
 

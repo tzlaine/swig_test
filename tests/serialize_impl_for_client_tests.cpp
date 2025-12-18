@@ -1,3 +1,4 @@
+#include <game_data_metadata.hpp>
 #include <generate_galaxy.hpp>
 #include <model.hpp>
 #include <serialization.hpp>
@@ -427,87 +428,39 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
     }
 }
 
-#include <metadata.hpp>
-
-struct fleet_t2
+TEST(client_serialization_tests, metadata)
 {
-    nation_and_object_id_t id = {};
-    mission_t mission = mission_t::invalid_mission;
-    std::vector<unit_t> units = {};
-    float fuel = -1.0f;
-    int rounds = -1;
-    int missiles = -1;
-    int fighters = -1;
-    fleet_position_t position = {};
-    bool operator==(fleet_t2 const &) const = default;
-};
+    constexpr auto name = detail::metadata<fleet_t>::struct_name();
+    EXPECT_EQ(name, "fleet_t");
 
-template<>
-struct metadata<fleet_t2>
-{
-    static constexpr std::string_view name()
-    {
-        using namespace std::literals;
-        return "fleet_t2"sv;
-    }
-    static constexpr int lo_field_number() { return 1; }
-    static constexpr int hi_field_number() { return 8; }
+    constexpr int lo_field_number =
+        detail::metadata<fleet_t>::lo_field_number();
+    EXPECT_EQ(lo_field_number, 1);
+    constexpr int hi_field_number =
+        detail::metadata<fleet_t>::hi_field_number();
 
-    static constexpr metadatum<fleet_t2, nation_and_object_id_t> id()
-    {
-        using namespace std::literals;
-        return {"id"sv, 1, &fleet_t2::id};
-    }
-    static constexpr metadatum<fleet_t2, mission_t> mission()
-    {
-        using namespace std::literals;
-        return {"mission"sv, 2, &fleet_t2::mission};
-    }
-    static constexpr metadatum<fleet_t2, std::vector<unit_t>> units()
-    {
-        using namespace std::literals;
-        return {"units"sv, 34, &fleet_t2::units};
-    }
-    static constexpr metadatum<fleet_t2, float> fuel()
-    {
-        using namespace std::literals;
-        return {"fuel"sv, 4, &fleet_t2::fuel};
-    }
-    static constexpr metadatum<fleet_t2, int> rounds()
-    {
-        using namespace std::literals;
-        return {"rounds"sv, 5, &fleet_t2::rounds};
-    }
-    static constexpr metadatum<fleet_t2, int> missiles()
-    {
-        using namespace std::literals;
-        return {"missiles"sv, 6, &fleet_t2::missiles};
-    }
-    static constexpr metadatum<fleet_t2, int> fighters()
-    {
-        using namespace std::literals;
-        return {"fighters"sv, 7, &fleet_t2::fighters};
-    }
-    static constexpr metadatum<fleet_t2, fleet_position_t> position()
-    {
-        using namespace std::literals;
-        return {"position"sv, 8, &fleet_t2::position};
-    }
-};
-
-TEST(client_serialization_tests, TODO)
-{
-    constexpr auto name = metadata<fleet_t2>::name();
-
-    constexpr auto lo_field_number = metadata<fleet_t2>::lo_field_number();
-    constexpr auto hi_field_number = metadata<fleet_t2>::hi_field_number();
-
-    constexpr auto id_meta = metadata<fleet_t2>::id();
-    constexpr auto mission_meta = metadata<fleet_t2>::mission();
-    constexpr auto units_meta = metadata<fleet_t2>::units();
-    constexpr auto fuel_meta = metadata<fleet_t2>::fuel();
-    constexpr auto rounds_meta = metadata<fleet_t2>::rounds();
-    constexpr auto missiles_meta = metadata<fleet_t2>::missiles();
-    constexpr auto fighters_meta = metadata<fleet_t2>::fighters();
-    constexpr auto position_meta = metadata<fleet_t2>::position();
+    constexpr auto id_meta = detail::metadata<fleet_t>::id();
+    EXPECT_EQ(id_meta.name_, "id");
+    EXPECT_EQ(id_meta.ptr_, &fleet_t::id);
+    constexpr auto mission_meta = detail::metadata<fleet_t>::mission();
+    EXPECT_EQ(mission_meta.name_, "mission");
+    EXPECT_EQ(mission_meta.ptr_, &fleet_t::mission);
+    constexpr auto units_meta = detail::metadata<fleet_t>::units();
+    EXPECT_EQ(units_meta.name_, "units");
+    EXPECT_EQ(units_meta.ptr_, &fleet_t::units);
+    constexpr auto fuel_meta = detail::metadata<fleet_t>::fuel();
+    EXPECT_EQ(fuel_meta.name_, "fuel");
+    EXPECT_EQ(fuel_meta.ptr_, &fleet_t::fuel);
+    constexpr auto rounds_meta = detail::metadata<fleet_t>::rounds();
+    EXPECT_EQ(rounds_meta.name_, "rounds");
+    EXPECT_EQ(rounds_meta.ptr_, &fleet_t::rounds);
+    constexpr auto missiles_meta = detail::metadata<fleet_t>::missiles();
+    EXPECT_EQ(missiles_meta.name_, "missiles");
+    EXPECT_EQ(missiles_meta.ptr_, &fleet_t::missiles);
+    constexpr auto fighters_meta = detail::metadata<fleet_t>::fighters();
+    EXPECT_EQ(fighters_meta.name_, "fighters");
+    EXPECT_EQ(fighters_meta.ptr_, &fleet_t::fighters);
+    constexpr auto position_meta = detail::metadata<fleet_t>::position();
+    EXPECT_EQ(position_meta.name_, "position");
+    EXPECT_EQ(position_meta.ptr_, &fleet_t::position);
 }
