@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 
 
-// TODO: Put this in its own test file?
 TEST(effects_tests, lua_bindings)
 {
     {
@@ -31,6 +30,28 @@ TEST(effects_tests, lua_bindings)
         EXPECT_TRUE(opt);
         EXPECT_EQ(*opt, nation_and_object_id_t{});
     }
+
+    {
+        sol::optional<planet_t> opt = lua().script("return planet_t.new()");
+        EXPECT_TRUE(opt);
+        EXPECT_EQ(*opt, planet_t{});
+    }
+
+    {
+        sol::optional<planet_t> opt = lua().script("return planet_t.new()");
+        EXPECT_TRUE(opt);
+        EXPECT_EQ(*opt, planet_t{});
+    }
+
+    {
+        sol::optional<atmosphere_type_t> opt =
+            lua().script("return atmosphere_type_t.high_temperature");
+        EXPECT_TRUE(opt);
+        EXPECT_EQ(*opt, atmosphere_type_t::high_temperature);
+    }
 }
 
-TEST(effects_tests, TODO) {}
+TEST(effects_tests, TODO)
+{
+    // TODO
+}
