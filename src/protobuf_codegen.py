@@ -26,6 +26,7 @@ hpp_file = open(args.file_root + '.hpp', 'w')
 formatters_file = open(args.file_root + '_formatters.hpp', 'w')
 serialization_file = open(args.file_root + '_serialization.hpp', 'w')
 metadata_file = open(args.file_root + '_metadata.hpp', 'w')
+enum_lua_bindings_file = open(args.file_root + '_enum_lua_bindings.hpp', 'w')
 
 proto_contents = args.proto_file.read()
 
@@ -99,6 +100,7 @@ def indent(i):
     formatters_file.write(indent_str(i))
     serialization_file.write(indent_str(i))
     metadata_file.write(indent_str(i))
+    enum_lua_bindings_file.write(indent_str(i))
 
 def newline():
     cpp_file.write('\n')
@@ -106,6 +108,7 @@ def newline():
     formatters_file.write('\n')
     serialization_file.write('\n')
     metadata_file.write('\n')
+    enum_lua_bindings_file.write('\n')
 
 def add_header_comment_and_includes(proto_source, syntax, deps):
     cpp_deps = '\n'.join(map(lambda x: '#include <{}.hpp>'.format(x), deps))
@@ -193,6 +196,21 @@ namespace detail {{
 namespace detail {{
 '''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, metadata_deps))
 
+    enum_lua_bindings_file.write('''// WARNING: Generated code.
+// This file was generated from {} ({})
+#pragma once
+
+#include "lua.hpp"
+
+#include "{}"
+{}
+
+namespace detail {{
+
+    inline void {}_register_enums(sol::state & l)
+    {{
+'''.format(proto_source, syntax, os.path.basename(hpp_file.name), cpp_deps, os.path.basename(hpp_file.name)[:-4]))
+
 def open_namespace(namespace, depth=0):
     indent(depth)
     for name in namespace:
@@ -242,6 +260,8 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
 
     hpp_file.write('''{}enum class {} {}{{
 '''.format(indent_str(depth), enum_descriptor_proto.name, flags_enum and ': unsigned int ' or ''))
+    enum_lua_bindings_file.write('''{0}auto {1}_enum = l.new_enum<{1}>("{1}", {{
+'''.format(indent_str(depth + 2), enum_descriptor_proto.name))
 
     # If we see even one U"foo" comment, we know we need to have two printing
     # modes -- one for debug dumps, and one for users.
@@ -287,6 +307,8 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
             first = False
         else:
             ored_enumerators += f' | {enum_descriptor_proto.name}::{enum_value_descriptor_proto.name}'
+        enum_lua_bindings_file.write('''{0}{{"{1}", {2}::{1}}},
+'''.format(indent_str(depth + 3), enum_value_descriptor_proto.name, enum_descriptor_proto.name))
 
     if user_strings_available:
         write_formatter_switch(enum_descriptor_proto, depth, path, True)
@@ -312,14 +334,9 @@ def handle_enum_descriptor_proto(enum_descriptor_proto, depth, path):
 
 '''.format(indent_str(depth)))
 
-    if args.cs_file:
-        args.cs_file.write('\n')
-        args.cs_file.write('{}public enum {} {{\n'.format(indent_str(depth), enum_descriptor_proto.name))
-        depth += 1
-        for enum_value_descriptor_proto in enum_descriptor_proto.value:
-            args.cs_file.write('{}{} = {},\n'.format(indent_str(depth), enum_value_descriptor_proto.name, enum_value_descriptor_proto.number))
-        depth -= 1
-        args.cs_file.write('{}}};\n'.format(indent_str(depth)))
+    enum_lua_bindings_file.write('''{0}}});
+
+'''.format(indent_str(depth + 2)))
 
 def repeated(field_descriptor_proto):
     return field_descriptor_proto.label is field_descriptor_proto.LABEL_REPEATED
@@ -1179,6 +1196,7 @@ public class convert
 
     serialization_file.write('}\n')
     metadata_file.write('}\n')
+    enum_lua_bindings_file.write('    }\n}\n')
 
     close_namespace(user_namespace)
 

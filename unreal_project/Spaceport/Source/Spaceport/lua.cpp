@@ -71,6 +71,8 @@ default_game_start_params.map_height = small_map_height
 
         detail::lua_register_1(retval);
         detail::lua_register_2(retval);
+        detail::lua_register_3(retval);
+        detail::lua_register_4(retval);
 
         once = false;
     }
