@@ -629,6 +629,8 @@ def print_metadata(depth, this_message_name, this_message_fields):
 {indent_str(depth)}        return {{"{tup[0]}"sv, {tup[1]}, &{this_message_name}::{tup[0]}}};
 {indent_str(depth)}    }}''', this_message_fields))
 
+    for_each_body = '\n'.join(map(lambda tup: f'{indent_str(depth)}        f({tup[0]}());', this_message_fields))
+
     lo = min(map(lambda tup: tup[1], this_message_fields))
     hi = max(map(lambda tup: tup[1], this_message_fields))
 
@@ -643,9 +645,15 @@ def print_metadata(depth, this_message_name, this_message_fields):
 {0}    static constexpr int hi_field_number() {{ return {3}; }}
 
 {4}
+
+{0}    template<typename F>
+{0}    static void foreach_member(F && f)
+{0}    {{
+{5}
+{0}    }}
 {0}}};
 
-'''.format(indent_str(depth), this_message_name, lo, hi, member_metadata))
+'''.format(indent_str(depth), this_message_name, lo, hi, member_metadata, for_each_body))
 
 def define_cpp_to_pb_impl_field(field_descriptor_proto, depth, map_fields):
     leaf_type = type_without_namespace(field_descriptor_proto, protobuf_namespace)

@@ -30,6 +30,13 @@ namespace detail {
             using namespace std::literals;
             return {"y"sv, 2, &hex_coord_t::y};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(x());
+            f(y());
+        }
     };
 
 }

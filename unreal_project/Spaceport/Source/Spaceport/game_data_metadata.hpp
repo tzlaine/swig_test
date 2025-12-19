@@ -30,6 +30,13 @@ namespace detail {
             using namespace std::literals;
             return {"object_id"sv, 2, &nation_and_object_id_t::object_id};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(nation_id());
+            f(object_id());
+        }
     };
 
     template<> struct metadata<game_start_params_t>
@@ -66,6 +73,16 @@ namespace detail {
         {
             using namespace std::literals;
             return {"player_id_to_nation_id"sv, 5, &game_start_params_t::player_id_to_nation_id};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(habitable_systems_per_hex_mean());
+            f(habitable_systems_per_hex_plus_minus());
+            f(systems_per_hex());
+            f(map_height());
+            f(player_id_to_nation_id());
         }
     };
 
@@ -139,6 +156,23 @@ namespace detail {
             using namespace std::literals;
             return {"ground_attack"sv, 12, &unit_design_t::ground_attack};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(id());
+            f(hull());
+            f(armor());
+            f(propulsion());
+            f(weapons());
+            f(shields());
+            f(detection());
+            f(stealth());
+            f(automation());
+            f(attack());
+            f(defense());
+            f(ground_attack());
+        }
     };
 
     template<> struct metadata<unit_t>
@@ -160,6 +194,13 @@ namespace detail {
         {
             using namespace std::literals;
             return {"health"sv, 2, &unit_t::health};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(id());
+            f(health());
         }
     };
 
@@ -207,6 +248,18 @@ namespace detail {
         {
             using namespace std::literals;
             return {"is_garrison"sv, 7, &fleet_position_t::is_garrison};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(world_pos_x());
+            f(world_pos_y());
+            f(system_id());
+            f(at_permanent_location());
+            f(location_index());
+            f(object_index());
+            f(is_garrison());
         }
     };
 
@@ -260,6 +313,19 @@ namespace detail {
             using namespace std::literals;
             return {"position"sv, 8, &fleet_t::position};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(id());
+            f(mission());
+            f(units());
+            f(fuel());
+            f(rounds());
+            f(missiles());
+            f(fighters());
+            f(position());
+        }
     };
 
     template<> struct metadata<fleets_t>
@@ -276,6 +342,12 @@ namespace detail {
         {
             using namespace std::literals;
             return {"fleet_ids"sv, 1, &fleets_t::fleet_ids};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(fleet_ids());
         }
     };
 
@@ -328,6 +400,19 @@ namespace detail {
         {
             using namespace std::literals;
             return {"operation"sv, 8, &planet_effect_t::operation};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(name());
+            f(description());
+            f(amount());
+            f(months_of_effect());
+            f(months_remaining());
+            f(target());
+            f(target_modifiers());
+            f(operation());
         }
     };
 
@@ -486,6 +571,40 @@ namespace detail {
             using namespace std::literals;
             return {"effects"sv, 29, &planet_t::effects};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(system_id());
+            f(planet_type());
+            f(mass_kg());
+            f(radius_km());
+            f(orbit_au());
+            f(orbital_period_y());
+            f(gravity_g());
+            f(axial_tilt_d());
+            f(day_h());
+            f(surface_temperature_k());
+            f(magnetosphere_strength());
+            f(atmopsheric_pressure());
+            f(o2_co2_suitability());
+            f(ocean_coverage());
+            f(growth_factor());
+            f(atmosphere_type());
+            f(water());
+            f(food());
+            f(energy());
+            f(metal());
+            f(fuel());
+            f(population());
+            f(infrastructure());
+            f(orbital_pos_r());
+            f(max_population());
+            f(owner());
+            f(original_owner());
+            f(garrison());
+            f(effects());
+        }
     };
 
     template<> struct metadata<location_object_t>
@@ -508,6 +627,13 @@ namespace detail {
             using namespace std::literals;
             return {"planet_id"sv, 2, &location_object_t::planet_id};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(bases());
+            f(planet_id());
+        }
     };
 
     template<> struct metadata<system_location_t>
@@ -529,6 +655,13 @@ namespace detail {
         {
             using namespace std::literals;
             return {"units"sv, 2, &system_location_t::units};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(objects());
+            f(units());
         }
     };
 
@@ -566,6 +699,16 @@ namespace detail {
         {
             using namespace std::literals;
             return {"solar_radii"sv, 5, &star_t::solar_radii};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(star_class());
+            f(temperature_k());
+            f(solar_masses());
+            f(solar_luminosities());
+            f(solar_radii());
         }
     };
 
@@ -624,6 +767,20 @@ namespace detail {
             using namespace std::literals;
             return {"last_planet"sv, 9, &system_t::last_planet};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(name());
+            f(coord());
+            f(star());
+            f(permanent_locations());
+            f(temporary_locations());
+            f(world_pos_x());
+            f(world_pos_y());
+            f(first_planet());
+            f(last_planet());
+        }
     };
 
     template<> struct metadata<hex_t>
@@ -656,6 +813,15 @@ namespace detail {
             using namespace std::literals;
             return {"last_system"sv, 4, &hex_t::last_system};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(coord());
+            f(province_id());
+            f(first_system());
+            f(last_system());
+        }
     };
 
     template<> struct metadata<province_t>
@@ -677,6 +843,13 @@ namespace detail {
         {
             using namespace std::literals;
             return {"hex_coords"sv, 2, &province_t::hex_coords};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(id());
+            f(hex_coords());
         }
     };
 
@@ -750,6 +923,23 @@ namespace detail {
             using namespace std::literals;
             return {"defeated"sv, 12, &nation_t::defeated};
         }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(id());
+            f(unit_designs());
+            f(provinces());
+            f(fleets());
+            f(hexes_seen());
+            f(systems_present_in());
+            f(systems_visited());
+            f(planets_present_on());
+            f(planets_surveyed());
+            f(foreign_designs_seen());
+            f(foreign_designs_glimpsed());
+            f(defeated());
+        }
     };
 
     template<> struct metadata<game_state_t>
@@ -801,6 +991,19 @@ namespace detail {
         {
             using namespace std::literals;
             return {"play_speed"sv, 8, &game_state_t::play_speed};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(map_width());
+            f(map_height());
+            f(hexes());
+            f(systems());
+            f(planets());
+            f(nations());
+            f(alliances());
+            f(play_speed());
         }
     };
 
