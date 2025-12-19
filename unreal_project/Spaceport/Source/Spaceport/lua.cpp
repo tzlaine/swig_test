@@ -1,23 +1,32 @@
 #include "lua.hpp"
 
+#if !defined(BUILD_FOR_TEST)
 #include <CoreMinimal.h>
 #include <Misc/Paths.h>
+#endif
 
 
 namespace {
     void ue_log_impl(std::string const & msg)
     {
+#if !defined(BUILD_FOR_TEST)
         UE_LOG(LogTemp, Log, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
+#endif
     }
     void ue_warn_impl(std::string const & msg)
+
     {
+#if !defined(BUILD_FOR_TEST)
         UE_LOG(
             LogTemp, Warning, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
+#endif
     }
     void ue_err_impl(std::string const & msg)
     {
+#if !defined(BUILD_FOR_TEST)
         UE_LOG(
             LogTemp, Error, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
+#endif
     }
 }
 
@@ -44,10 +53,14 @@ sol::state & lua()
 
 std::string script_path(std::string const & script_)
 {
+#if defined(BUILD_FOR_TEST)
+    return "../../unreal_project/Spaceport/Content/script/" + script_;
+#else
     FString script(UTF8_TO_TCHAR(script_.c_str()));
     FString full_path =
         FPaths::Combine(*FPaths::ProjectContentDir(), TEXT("script"), *script);
     return std::string(TCHAR_TO_UTF8(*full_path));
+#endif
 }
 
 void script_file(std::string const & script)

@@ -11,12 +11,11 @@ include_directories(
 )
 
 macro (add_executable_and_test target)
-    add_executable(${target} ${target}.cpp ${ARGN})
+    add_executable(${target} ${target}.cpp ${lua_source_files} ${ARGN})
     target_link_libraries(
         ${target}
         game_data
         adobe_name
-        jansson
         gtest
         gtest_main
     )
