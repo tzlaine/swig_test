@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game_data.hpp"
+#include "lua.hpp"
 #include "map_util.hpp"
 
 #include <algorithm>
@@ -73,12 +74,7 @@ inline bool invalid(fleet_t const & f)
 
 inline game_start_params_t default_game_start_params()
 {
-    return {
-        .habitable_systems_per_hex_mean = 5.0f,
-        .habitable_systems_per_hex_plus_minus = 2.0f,
-        .systems_per_hex = default_systems_per_hex,
-        .map_height = 11
-    };
+    return lua()["default_game_start_params"];
 }
 
 inline box_2d world_map_extent(game_state_t const & game_state)

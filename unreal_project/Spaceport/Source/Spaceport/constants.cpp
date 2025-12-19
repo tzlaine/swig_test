@@ -6,13 +6,6 @@
 #include <numbers>
 
 
-namespace {
-    bool const dummy = [] {
-        script_file("constants.lua");
-        return true;
-    }();
-}
-
 const double G_ = 6.67e-11;
 const double sun_temperature_k = 5772.0;
 const double sun_radius_km = 696342.0;

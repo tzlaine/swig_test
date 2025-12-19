@@ -1,5 +1,7 @@
 #include "lua.hpp"
 
+#include "game_data_metadata.hpp"
+
 #if !defined(BUILD_FOR_TEST)
 #include <CoreMinimal.h>
 #include <Misc/Paths.h>
@@ -45,6 +47,30 @@ sol::state & lua()
         retval.set_function("UE_LOG", &ue_log_impl);
         retval.set_function("UE_WARN", &ue_warn_impl);
         retval.set_function("UE_ERR", &ue_err_impl);
+
+        // Load this first, since it contains the lowest-level cosntant calues
+        // that are used everywhere else.
+        retval.script_file(script_path("constants.lua"));
+
+        REGISTER_GAME_DATA_TYPE(retval, hex_coord_t);
+        retval.script("invalid_hex_coord = hex_coord_t.new(-1, -1)");
+
+        REGISTER_GAME_DATA_TYPE(retval, nation_and_object_id_t);
+        retval.script(
+            "invalid_nation_and_object = nation_and_object_id_t.new(-1, -1)");
+
+        REGISTER_GAME_DATA_TYPE(retval, game_start_params_t);
+        // TODO: Put this in a file script.
+        retval.script(
+            R"(default_game_start_params = game_start_params_t.new()
+default_game_start_params.habitable_systems_per_hex_mean = 5.0
+default_game_start_params.habitable_systems_per_hex_plus_minus = 2.0
+default_game_start_params.systems_per_hex = default_systems_per_hex
+default_game_start_params.map_height = small_map_height
+)");
+
+        detail::lua_register_1(retval);
+        detail::lua_register_2(retval);
 
         once = false;
     }

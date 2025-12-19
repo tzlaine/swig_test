@@ -40,6 +40,7 @@ add_executable_and_test(serialize_impl_for_client_tests)
 add_executable_and_test(
     dir_watcher_tests
     ${CMAKE_SOURCE_DIR}/unreal_project/Spaceport/Source/Spaceport/dir_watcher.cpp)
+add_executable_and_test(effects_tests)
 
 if (false)
 add_executable_and_test(graph_tests)
