@@ -10,9 +10,5 @@ void detail::lua_register_1(sol::state & l)
     REGISTER_GAME_DATA_TYPE(l, fleet_position_t);
     REGISTER_GAME_DATA_TYPE(l, fleet_t);
     REGISTER_GAME_DATA_TYPE(l, fleets_t);
-#if 0 // TODO: adode::name_t
     REGISTER_GAME_DATA_TYPE(l, planet_effect_t);
-#endif
-    REGISTER_GAME_DATA_TYPE(l, planet_t);
-    REGISTER_GAME_DATA_TYPE(l, location_object_t);
 }

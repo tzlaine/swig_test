@@ -18,6 +18,7 @@ add_library(
     ${unreal_src_dir}/lua.cpp
     ${unreal_src_dir}/lua_register_1.cpp
     ${unreal_src_dir}/lua_register_2.cpp
+    ${unreal_src_dir}/lua_register_3.cpp
     ${unreal_src_dir}/model.cpp
     ${unreal_src_dir}/serialization.cpp
     ${unreal_src_dir}/base_types.pb.cc
