@@ -177,7 +177,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     }
     // TODO: Require habs+suits if the day is long enough?
 
-    // TODO: Should hte day length effects apply to planets that are very
+    // TODO: Should the day length effects apply to planets that are very
     // highly tilted, like >= 75 deg?
 
     // TODO: The O2/CO2 mix of a planet should either be something you can
@@ -439,7 +439,8 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     // Arbitrary line between the gas giants and the ice giants, taken
     // from the boundary between the Saturn and Uranus orbits, and scaled
     // by solar masses of this system's star..
-    double const ice_distance_au = 15.0 * system.star.solar_masses;
+    double const ice_distance_au =
+        ice_giant_distance_factor * system.star.solar_masses;
 
     double density = 0.0; // in kg/km^3
 #if defined(BUILD_FOR_TEST)
@@ -474,8 +475,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     planet.axial_tilt_d =
         std::min(std::abs(random_number(tilt_dist)), 90.0);
 
-    // 15 is made up.
-    planet.day_h = 15.0 * random_number(day_dist);
+    planet.day_h = day_length_factor * random_number(day_dist);
 
     // Kepler's third law: T^2 = (4pi^2/GM)a^3
     double const a = planet.orbit_au * km_per_au * m_per_km;
@@ -498,28 +498,25 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         } else {
             planet.magnetosphere_strength = 0.0;
         }
-        // 50 is made up.
-        if (earth_temperature_k + 50 < planet.surface_temperature_k) {
+        if (high_temp_k < planet.surface_temperature_k) {
             planet.atmosphere_type = atmosphere_type_t::high_temperature;
-            // 5 is made up.
-            planet.atmopsheric_pressure = 5 * random_number(atmos_dist) *
-                planet.mass_kg / earth_mass_kg;
+            planet.atmopsheric_pressure = high_temp_atmosphere_pressure_factor *
+                                          random_number(atmos_dist) *
+                                          planet.mass_kg / earth_mass_kg;
         } else if (planet.magnetosphere_strength < 0.01) {
             double const no_mag_roll = random_unit_double();
             if (no_mag_roll < prob_no_magnetosphere_rocky_planet_is_reduced) {
                 planet.atmosphere_type =
                     atmosphere_type_t::reduced_type_a;
-                // 0.05 is made up.
                 planet.atmopsheric_pressure =
-                    0.05 * random_number(atmos_dist) *
-                    planet.mass_kg / earth_mass_kg;
+                    reduced_rocky_planet_pressure_factor *
+                    random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
             } else {
                 planet.atmosphere_type =
                     atmosphere_type_t::carbon_rich_type_c;
-                // 0.2 is made up.
                 planet.atmopsheric_pressure =
-                    0.2 * random_number(atmos_dist) *
-                    planet.mass_kg / earth_mass_kg;
+                    nonreduced_rocky_planet_pressure_factor *
+                    random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
             }
         } else {
             planet.atmosphere_type = atmosphere_type_t::oxidized_type_b;
@@ -734,10 +731,6 @@ void generation::generate_galaxy(game_start_params_t const & params,
        ts.async_exec([=, &hex, &game_state, &params, &hex_scratch_,
                       &hexes_generated, &ts] {
            int const finished = hexes_generated.load();
-           // TODO: Hook this up to UI code, to show a janky-ass progress bar.
-           // There should probably e a therad dedicated just to reading off
-           // of a UI-update queue, and the code below should feed one end of
-           // a threadsafe queue that pushes updates to that thread.
            if (percent_complete && (finished + 1) % five_percent == 0)
                percent_complete->push(update_percentage);
            detail::generate_hex(hex, hex_index, game_state, params,
