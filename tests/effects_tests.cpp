@@ -49,6 +49,27 @@ TEST(effects_tests, lua_bindings)
         EXPECT_TRUE(opt);
         EXPECT_EQ(*opt, atmosphere_type_t::high_temperature);
     }
+
+    {
+        bool b = lua().script(
+            "return atmosphere_type_t.high_temperature < "
+            "atmosphere_type_t.reduced_type_a");
+        EXPECT_FALSE(b);
+    }
+
+    {
+        bool b = lua().script(
+            "return atmosphere_type_t.high_temperature < "
+            "atmosphere_type_t.gas_giant_atmosphere");
+        EXPECT_TRUE(b);
+    }
+
+    {
+        bool b = lua().script(
+            "return atmosphere_type_t.high_temperature ~= "
+            "atmosphere_type_t.gas_giant_atmosphere");
+        EXPECT_TRUE(b);
+    }
 }
 
 TEST(effects_tests, TODO)
