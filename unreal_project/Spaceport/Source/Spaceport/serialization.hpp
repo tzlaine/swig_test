@@ -1,6 +1,7 @@
 #pragma once
 
 #include "effects.hpp"
+#include "game_data_metadata.hpp"
 #include "logging.hpp"
 #include "memmap.hpp"
 #include "sparse_vector.hpp"
@@ -650,11 +651,6 @@ namespace detail {
         ostream_tarray_facade * os,
         std::vector<visibility_kind> & visibility)
     {
-        std::ptrdiff_t count = 0;
-
-        uint8_t buf[64];
-        uint8_t * out = buf;
-
         visibility.clear();
         visibility.resize(x.size());
         {
@@ -664,24 +660,23 @@ namespace detail {
             });
         }
 
-        out = os::WriteVarint32ToArray(field_number, out);
         {
-            int const size =
+            uint32_t const size =
                 x.size() -
                 std::ranges::count(visibility, visibility_kind::unseen);
-            out = os::WriteVarint32ToArray(size, out);
-            detail::count_or_write<ser_op::write>(count, buf, out - buf, os);
+            serialize_impl<ser_op::write, ser_field_op::write>(
+                size, field_number, os);
         }
 
         for (int i = 0, last = (int)x.size(); i < last; ++i) {
             if (visibility[i] == visibility_kind::unseen)
                 continue;
             auto const & e = x[i];
-            out = os::WriteVarint32ToArray(i, out);
-            detail::count_or_write<ser_op::write>(count, buf, out - buf, os);
+            uint32_t const index = i;
+            serialize_impl<ser_op::write, ser_field_op::dont_write>(
+                index, 0, os);
             serialize_for_client(
                 gs, visible_fleets, nation_id, e, visibility[i], i, os);
-            ++i;
         }
     }
 
@@ -724,17 +719,23 @@ namespace detail {
         std::vector<visibility_kind> visibility_scratch;
 
         detail::serialize_impl<ser_op::write, ser_field_op::write>(
-            gs.map_width, 1, os);
+            gs.map_width, metadata<game_state_t>::map_width().index_, os);
         detail::serialize_impl<ser_op::write, ser_field_op::write>(
-            gs.map_height, 2, os);
+            gs.map_height, metadata<game_state_t>::map_height().index_, os);
         detail::serialize_for_client(
-            gs, visible_fleets, nation_id, gs.hexes, 3, os, visibility_scratch);
+            gs,
+            visible_fleets,
+            nation_id,
+            gs.hexes,
+            metadata<game_state_t>::hexes().index_,
+            os,
+            visibility_scratch);
         detail::serialize_for_client(
             gs,
             visible_fleets,
             nation_id,
             gs.systems,
-            4,
+            metadata<game_state_t>::systems().index_,
             os,
             visibility_scratch);
         detail::serialize_for_client(
@@ -742,7 +743,7 @@ namespace detail {
             visible_fleets,
             nation_id,
             gs.planets,
-            5,
+            metadata<game_state_t>::planets().index_,
             os,
             visibility_scratch);
         detail::serialize_for_client(
@@ -750,7 +751,7 @@ namespace detail {
             visible_fleets,
             nation_id,
             gs.nations,
-            6,
+            metadata<game_state_t>::nations().index_,
             os,
             visibility_scratch);
 

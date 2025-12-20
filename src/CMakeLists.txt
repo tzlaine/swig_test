@@ -21,6 +21,7 @@ add_library(
     ${unreal_src_dir}/lua_register_3.cpp
     ${unreal_src_dir}/lua_register_4.cpp
     ${unreal_src_dir}/model.cpp
+    ${unreal_src_dir}/model_visibility.cpp
     ${unreal_src_dir}/serialization.cpp
     ${unreal_src_dir}/base_types.pb.cc
     ${unreal_src_dir}/game_data.pb.cc

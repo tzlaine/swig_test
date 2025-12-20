@@ -70,7 +70,7 @@ nation_t nation(int nation_id, game_state_t const & gs)
     nation_t retval = {
         .id = nation_id,
         .unit_designs =
-            {design(nation_id, 0), design(nation_id, 0), design(nation_id, 0)},
+            {design(nation_id, 0), design(nation_id, 1), design(nation_id, 2)},
         .provinces = {},
         .fleets = {fleet(nation_id)},
         .hexes_seen =
@@ -87,8 +87,10 @@ nation_t nation(int nation_id, game_state_t const & gs)
         .planets_surveyed = {home_planet},
         .foreign_designs_seen =
             {{.nation_id = (nation_id + 1) % 3, .object_id = 1}},
-        .foreign_designs_glimpsed = {},
+        .foreign_designs_glimpsed =
+            {{.nation_id = (nation_id + 1) % 3, .object_id = 2}},
         .defeated = false};
+    std::ranges::sort(retval.hexes_seen);
     return retval;
 }
 
@@ -112,6 +114,7 @@ game_state_t const & gs()
         }
         retval.nations = {
             nation(0, retval), nation(1, retval), nation(2, retval)};
+        retval.alliances.resize(detail::blocks_needed_for_nations(3));
         EXPECT_FALSE(retval.hexes.empty());
         EXPECT_FALSE(retval.systems.empty());
         EXPECT_FALSE(retval.planets.empty());
@@ -542,6 +545,327 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
                 &oss);
             EXPECT_EQ(byte_span_of(serialized).size(), 1u);
             EXPECT_EQ(byte_span_of(serialized)[0], std::byte(0));
+        }
+    }
+
+    // nation_t
+    {
+        std::vector<char> serialized;
+        ostream_tarray_facade oss(serialized);
+
+        {
+            int const nation_id = 1;
+            nation_t const nation = gs().nations.front();
+            std::vector<fleet_t const *> visible_fleets;
+
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                nation,
+                visibility_kind::owner,
+                0,
+                &oss);
+
+            nation_t client_nation = {};
+            auto const bytes =
+                deserialize_impl(client_nation, byte_span_of(serialized));
+            EXPECT_TRUE(bytes.empty());
+            EXPECT_EQ(client_nation, nation);
+        }
+        {
+            int const nation_id = 1;
+            nation_t const nation = gs().nations.front();
+            std::vector<fleet_t const *> visible_fleets =
+                ::visible_fleets(nation_id, gs());
+
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                nation,
+                visibility_kind::neutral_or_enemy,
+                0,
+                &oss);
+
+            nation_t client_nation = {};
+            auto const bytes =
+                deserialize_impl(client_nation, byte_span_of(serialized));
+            EXPECT_TRUE(bytes.empty());
+
+            nation_t const default_nation;
+            unit_design_t const default_unit_design;
+            EXPECT_EQ(client_nation.id, nation.id);
+
+            EXPECT_EQ(client_nation.unit_designs.size(), 3u);
+            EXPECT_EQ(
+                client_nation.unit_designs.size(), nation.unit_designs.size());
+            EXPECT_NE(client_nation.unit_designs[0], nation.unit_designs[0]);
+            EXPECT_EQ(
+                client_nation.unit_designs[0].id, invalid_nation_and_object);
+            EXPECT_EQ(
+                client_nation.unit_designs[0].hull, default_unit_design.hull);
+            EXPECT_EQ(
+                client_nation.unit_designs[1].id, invalid_nation_and_object);
+            EXPECT_EQ(
+                client_nation.unit_designs[1].hull, default_unit_design.hull);
+            EXPECT_EQ(
+                client_nation.unit_designs[2].id, invalid_nation_and_object);
+            EXPECT_EQ(
+                client_nation.unit_designs[2].hull, default_unit_design.hull);
+
+            EXPECT_EQ(client_nation.provinces, default_nation.provinces);
+
+            EXPECT_EQ(client_nation.fleets.size(), 1u);
+            EXPECT_EQ(client_nation.fleets.size(), nation.fleets.size());
+            EXPECT_NE(client_nation.fleets[0], nation.fleets[0]);
+            EXPECT_EQ(client_nation.fleets[0].id, nation.fleets[0].id);
+            EXPECT_EQ(
+                client_nation.fleets[0].position, nation.fleets[0].position);
+
+            EXPECT_EQ(client_nation.hexes_seen, default_nation.hexes_seen);
+            EXPECT_EQ(
+                client_nation.systems_present_in,
+                default_nation.systems_present_in);
+            EXPECT_EQ(
+                client_nation.systems_visited, default_nation.systems_visited);
+            EXPECT_EQ(
+                client_nation.planets_present_on,
+                default_nation.planets_present_on);
+            EXPECT_EQ(
+                client_nation.planets_surveyed,
+                default_nation.planets_surveyed);
+            EXPECT_EQ(
+                client_nation.foreign_designs_seen,
+                default_nation.foreign_designs_seen);
+            EXPECT_EQ(
+                client_nation.foreign_designs_glimpsed,
+                default_nation.foreign_designs_glimpsed);
+            EXPECT_EQ(client_nation.defeated, nation.defeated);
+        }
+        {
+            // As above, but fully exercising the unit_designs code paths.
+            int const nation_id = 0;
+            nation_t const nation = gs().nations[1];
+            std::vector<fleet_t const *> visible_fleets =
+                ::visible_fleets(nation_id, gs());
+
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                nation,
+                visibility_kind::neutral_or_enemy,
+                0,
+                &oss);
+
+            nation_t client_nation = {};
+            auto const bytes =
+                deserialize_impl(client_nation, byte_span_of(serialized));
+            EXPECT_TRUE(bytes.empty());
+
+            nation_t const default_nation;
+            unit_design_t const default_unit_design;
+            EXPECT_EQ(client_nation.id, nation.id);
+
+            EXPECT_EQ(client_nation.unit_designs.size(), 3u);
+            EXPECT_EQ(
+                client_nation.unit_designs.size(), nation.unit_designs.size());
+            EXPECT_NE(client_nation.unit_designs[0], nation.unit_designs[0]);
+            EXPECT_EQ(
+                client_nation.unit_designs[0].id, invalid_nation_and_object);
+            EXPECT_EQ(
+                client_nation.unit_designs[0].hull, default_unit_design.hull);
+            EXPECT_EQ(client_nation.unit_designs[1], nation.unit_designs[1]);
+            EXPECT_EQ(
+                client_nation.unit_designs[2].id, nation.unit_designs[2].id);
+            EXPECT_EQ(
+                client_nation.unit_designs[2].hull,
+                nation.unit_designs[2].hull);
+
+            EXPECT_EQ(client_nation.provinces, default_nation.provinces);
+
+            EXPECT_EQ(client_nation.fleets.size(), 1u);
+            EXPECT_EQ(client_nation.fleets.size(), nation.fleets.size());
+            EXPECT_NE(client_nation.fleets[0], nation.fleets[0]);
+            EXPECT_EQ(client_nation.fleets[0].id, nation.fleets[0].id);
+            EXPECT_EQ(
+                client_nation.fleets[0].position, nation.fleets[0].position);
+
+            EXPECT_EQ(client_nation.hexes_seen, default_nation.hexes_seen);
+            EXPECT_EQ(
+                client_nation.systems_present_in,
+                default_nation.systems_present_in);
+            EXPECT_EQ(
+                client_nation.systems_visited, default_nation.systems_visited);
+            EXPECT_EQ(
+                client_nation.planets_present_on,
+                default_nation.planets_present_on);
+            EXPECT_EQ(
+                client_nation.planets_surveyed,
+                default_nation.planets_surveyed);
+            EXPECT_EQ(
+                client_nation.foreign_designs_seen,
+                default_nation.foreign_designs_seen);
+            EXPECT_EQ(
+                client_nation.foreign_designs_glimpsed,
+                default_nation.foreign_designs_glimpsed);
+            EXPECT_EQ(client_nation.defeated, nation.defeated);
+        }
+        {
+            int const nation_id = 1;
+            nation_t const nation = gs().nations.front();
+            std::vector<fleet_t const *> visible_fleets;
+
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                nation,
+                visibility_kind::unseen,
+                0,
+                &oss);
+            EXPECT_EQ(byte_span_of(serialized).size(), 1u);
+            EXPECT_EQ(byte_span_of(serialized)[0], std::byte(0));
+        }
+    }
+}
+
+TEST(client_serialization_tests, serialize_for_client_array)
+{
+    using namespace detail;
+
+    // hexes
+    {
+        std::vector<char> serialized;
+        std::vector<visibility_kind> visibility;
+        ostream_tarray_facade oss(serialized);
+        int const nation_id = 0;
+        std::vector<fleet_t const *> visible_fleets;
+
+        {
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                gs().hexes,
+                42,
+                &oss,
+                visibility);
+
+            uint32_t field_number = -1;
+            auto bytes = read_varint(field_number, byte_span_of(serialized));
+            EXPECT_EQ(field_number, 42);
+
+            std::vector<indexed_object<hex_t>> client_hexes;
+            bytes = deserialize_for_client(client_hexes, bytes);
+            EXPECT_TRUE(bytes.empty());
+            EXPECT_EQ(client_hexes.size(), 7u);
+            EXPECT_EQ(
+                client_hexes[0].object_, gs().hexes[client_hexes[0].index_]);
+            EXPECT_EQ(
+                client_hexes[1].object_, gs().hexes[client_hexes[1].index_]);
+            EXPECT_EQ(
+                client_hexes[2].object_, gs().hexes[client_hexes[2].index_]);
+            EXPECT_EQ(
+                client_hexes[3].object_, gs().hexes[client_hexes[3].index_]);
+            EXPECT_EQ(
+                client_hexes[4].object_, gs().hexes[client_hexes[4].index_]);
+            EXPECT_EQ(
+                client_hexes[5].object_, gs().hexes[client_hexes[5].index_]);
+            EXPECT_EQ(
+                client_hexes[6].object_, gs().hexes[client_hexes[6].index_]);
+        }
+    }
+
+    // nations
+    {
+        std::vector<char> serialized;
+        std::vector<visibility_kind> visibility;
+        ostream_tarray_facade oss(serialized);
+        int const nation_id = 0;
+        std::vector<fleet_t const *> visible_fleets =
+            ::visible_fleets(nation_id, gs());
+
+        {
+            serialized.clear();
+            serialize_for_client(
+                gs(),
+                visible_fleets,
+                nation_id,
+                gs().nations,
+                42,
+                &oss,
+                visibility);
+
+            uint32_t field_number = -1;
+            auto bytes = read_varint(field_number, byte_span_of(serialized));
+            EXPECT_EQ(field_number, 42);
+
+            std::vector<indexed_object<nation_t>> client_nations;
+            bytes = deserialize_for_client(client_nations, bytes);
+            EXPECT_TRUE(bytes.empty());
+            EXPECT_EQ(client_nations.size(), 3u);
+
+            unit_design_t const default_unit_design;
+
+            EXPECT_EQ(
+                client_nations[0].object_,
+                gs().nations[client_nations[0].index_]);
+
+            {
+                auto const & this_nation = client_nations[1].object_;
+
+                unit_design_t expected_glimsped_design = default_unit_design;
+                expected_glimsped_design.id = {1, 2};
+                expected_glimsped_design.hull = 3;
+
+                EXPECT_EQ(this_nation.unit_designs[0], default_unit_design);
+                EXPECT_EQ(
+                    this_nation.unit_designs[1],
+                    gs().nations[this_nation.id].unit_designs[1]);
+                EXPECT_EQ(
+                    this_nation.unit_designs[2], expected_glimsped_design);
+                EXPECT_EQ(this_nation.fleets.size(), 1u);
+
+                fleet_t expected_fleet = fleet_t{};
+                expected_fleet.id = gs().nations[this_nation.id].fleets[0].id;
+                expected_fleet.units =
+                    gs().nations[this_nation.id].fleets[0].units;
+                expected_fleet.units[0].health = unit_t{}.health;
+                expected_fleet.units[1].health = unit_t{}.health;
+                expected_fleet.units[2].health = unit_t{}.health;
+                expected_fleet.position =
+                    gs().nations[this_nation.id].fleets[0].position;
+
+                EXPECT_EQ(this_nation.fleets[0], expected_fleet);
+            }
+
+            {
+                auto const & this_nation = client_nations[2].object_;
+
+                EXPECT_EQ(this_nation.unit_designs[0], default_unit_design);
+                EXPECT_EQ(this_nation.unit_designs[1], default_unit_design);
+                EXPECT_EQ(this_nation.unit_designs[2], default_unit_design);
+                EXPECT_EQ(this_nation.fleets.size(), 1u);
+
+                fleet_t expected_fleet = fleet_t{};
+                expected_fleet.id = gs().nations[this_nation.id].fleets[0].id;
+                expected_fleet.units =
+                    gs().nations[this_nation.id].fleets[0].units;
+                expected_fleet.units[0].health = unit_t{}.health;
+                expected_fleet.units[1].health = unit_t{}.health;
+                expected_fleet.units[2].health = unit_t{}.health;
+                expected_fleet.position =
+                    gs().nations[this_nation.id].fleets[0].position;
+
+                EXPECT_EQ(this_nation.fleets[0], expected_fleet);
+            }
         }
     }
 }

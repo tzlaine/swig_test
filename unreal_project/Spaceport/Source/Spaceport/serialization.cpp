@@ -1,7 +1,8 @@
 #include "serialization.hpp"
 
-#include "game_data_metadata.hpp"
 #include "model.hpp"
+
+#include <boost/container/small_vector.hpp>
 
 
 namespace detail {
@@ -174,13 +175,13 @@ namespace detail {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
             detail::serialize_impl<ser_op::write, ser_field_op::write>(
-                x.id, 1, os);
+                x.id, metadata<nation_t>::id().index_, os);
 
             // field number, size, then elements
-            detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
-                2, 0, os);
-            detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
-                x.unit_designs.size(), 0, os);
+            detail::serialize_impl<ser_op::write, ser_field_op::write>(
+                x.unit_designs.size(),
+                metadata<nation_t>::unit_designs().index_,
+                os);
             for (auto const & e : x.unit_designs) {
                 auto it = std::ranges::find(
                     gs.nations[nation_id].foreign_designs_seen, e.id);
@@ -197,7 +198,8 @@ namespace detail {
 
                 it = std::ranges::find(
                     gs.nations[nation_id].foreign_designs_glimpsed, e.id);
-                if (it != gs.nations[nation_id].foreign_designs_seen.end()) {
+                if (it !=
+                    gs.nations[nation_id].foreign_designs_glimpsed.end()) {
                     serialize_for_client(
                         gs,
                         visible_fleets,
@@ -218,23 +220,36 @@ namespace detail {
                     os);
             }
 
-            // field number, size, then elements
-            detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
-                4, 0, os);
-            detail::serialize_impl<ser_op::write, ser_field_op::dont_write>(
-                x.fleets.size(), 0, os);
-            for (auto const & e : x.fleets) {
-                serialize_for_client(
-                    gs,
-                    visible_fleets,
-                    nation_id,
-                    e,
-                    visibility_kind::neutral_or_enemy,
+            {
+                // field number, size, then elements
+                boost::container::small_vector<visibility_kind, 1024> fleet_vis(
+                    x.fleets.size(), visibility_kind::unseen);
+                uint32_t num_visible_fleets = 0;
+                for (auto * f : visible_fleets) {
+                    if (f->id.nation_id == x.id) {
+                        fleet_vis[f->id.object_id] =
+                            visibility_kind::neutral_or_enemy;
+                        ++num_visible_fleets;
+                    }
+                }
+                detail::serialize_impl<ser_op::write, ser_field_op::write>(
+                    num_visible_fleets,
+                    metadata<nation_t>::fleets().index_,
                     os);
+                int i = 0;
+                for (auto const & e : x.fleets) {
+                    if (fleet_vis[i] == visibility_kind::unseen)
+                        continue;
+                    serialize_for_client(
+                        gs, visible_fleets, nation_id, e, fleet_vis[i], os);
+                    ++i;
+                }
             }
 
             detail::serialize_impl<ser_op::write, ser_field_op::write>(
-                x.defeated, 12, os);
+                x.defeated, metadata<nation_t>::defeated().index_, os);
+
+            detail::serialize_message_end<ser_op::write>(os);
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }
@@ -250,61 +265,74 @@ namespace detail {
         std::span<std::byte const> src)
     {
         uint32_t field_number = -1;
+        uint32_t expected_field_number =
+            metadata<game_state_t>::map_width().index_;
         src = detail::read_varint(field_number, src);
-        if (field_number != 1) {
+        if (field_number != expected_field_number) {
             throw failed_deserialization(std::format(
-                "deserialize_for_client(): Expected field #1 while reading "
+                "deserialize_for_client(): Expected field #{} while reading "
                 "message; got {} instead.",
+                expected_field_number,
                 field_number));
         }
         src = detail::deserialize_impl(map_width, src);
 
         field_number = -1;
+        expected_field_number = metadata<game_state_t>::map_height().index_;
         src = detail::read_varint(field_number, src);
-        if (field_number != 2) {
+        if (field_number != expected_field_number) {
             throw failed_deserialization(std::format(
-                "deserialize_for_client(): Expected field #2 while reading "
+                "deserialize_for_client(): Expected field #{} while reading "
                 "message; got {} instead.",
+                expected_field_number,
                 field_number));
         }
         src = detail::deserialize_impl(map_height, src);
 
         field_number = -1;
+        expected_field_number = metadata<game_state_t>::hexes().index_;
         src = detail::read_varint(field_number, src);
-        if (field_number != 3) {
+        if (field_number != expected_field_number) {
             throw failed_deserialization(std::format(
-                "deserialize_for_client(): Expected field #3 while reading "
+                "deserialize_for_client(): Expected field #{} while reading "
                 "message; got {} instead.",
+                expected_field_number,
                 field_number));
         }
         src = detail::deserialize_for_client(hexes, src);
 
         field_number = -1;
+        expected_field_number = metadata<game_state_t>::systems().index_;
         src = detail::read_varint(field_number, src);
-        if (field_number != 4) {
+        if (field_number != expected_field_number) {
             throw failed_deserialization(std::format(
-                "deserialize_for_client(): Expected field #4 while reading "
+                "deserialize_for_client(): Expected field #{} while reading "
                 "message; got {} instead.",
+                expected_field_number,
                 field_number));
         }
         src = detail::deserialize_for_client(systems, src);
 
         field_number = -1;
+        expected_field_number = metadata<game_state_t>::planets().index_;
         src = detail::read_varint(field_number, src);
-        if (field_number != 5) {
+        if (field_number != expected_field_number) {
             throw failed_deserialization(std::format(
-                "deserialize_for_client(): Expected field #5 while reading "
+                "deserialize_for_client(): Expected field #{} while reading "
                 "message; got {} instead.",
+                expected_field_number,
                 field_number));
         }
         src = detail::deserialize_for_client(planets, src);
 
         field_number = -1;
+        expected_field_number = metadata<game_state_t>::nations().index_;
         src = detail::read_varint(field_number, src);
-        if (field_number != 6) {
+        if (field_number != expected_field_number) {
             throw failed_deserialization(std::format(
-                "deserialize_for_client(): Expected field #6 while reading "
+                "deserialize_for_client(): Expected field #{} while reading "
                 "message; got {} instead.",
+                expected_field_number,
                 field_number));
         }
         src = detail::deserialize_for_client(nations, src);

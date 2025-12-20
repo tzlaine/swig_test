@@ -186,7 +186,17 @@ visibility_kind visibility_of(
     nation_t const & nation = gs.nations[nation_id];
     if (nation_id == x.id || allied(gs, nation_id, x.id))
         return visibility_kind::owner;
-    // TODO: This should return visibility_kind::neutral_or_enemy if nation_id
-    // can see any of their fleets.
+    for (auto * f : visible_fleets) {
+        if (f->id.nation_id == x.id)
+            return visibility_kind::neutral_or_enemy;
+    }
+    for (auto id : nation.foreign_designs_seen) {
+        if (id.nation_id == x.id)
+            return visibility_kind::neutral_or_enemy;
+    }
+    for (auto id : nation.foreign_designs_glimpsed) {
+        if (id.nation_id == x.id)
+            return visibility_kind::neutral_or_enemy;
+    }
     return visibility_kind::unseen;
 }
