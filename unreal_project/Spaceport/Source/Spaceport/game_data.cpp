@@ -245,6 +245,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_fuel(value.fuel);
     retval.set_population(value.population);
     retval.set_infrastructure(value.infrastructure);
+    retval.set_infrastructure_cost_factor(value.infrastructure_cost_factor);
     retval.set_orbital_pos_r(value.orbital_pos_r);
     retval.set_max_population(value.max_population);
     retval.set_owner(value.owner);
@@ -282,6 +283,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.fuel = msg.fuel();
     retval.population = msg.population();
     retval.infrastructure = msg.infrastructure();
+    retval.infrastructure_cost_factor = msg.infrastructure_cost_factor();
     retval.orbital_pos_r = msg.orbital_pos_r();
     retval.max_population = msg.max_population();
     retval.owner = msg.owner();

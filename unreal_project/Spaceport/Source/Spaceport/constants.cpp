@@ -20,9 +20,9 @@ const double earth_radius_km = 6371.0;
 const double earth_ocean_coverage = 0.71;
 const double earth_o2_percentage = 20.9;
 const double harmless_low_o2_percentage = 19.5;
-const double effective_o2_percentage_la_paz_bolivia =13.2;
-const double effective_o2_percentage_aconcagua =8.7;
-const double effective_o2_percentage_mt_everest_peak =6.9;
+const double effective_o2_percentage_la_paz_bolivia = 13.2;
+const double effective_o2_percentage_aconcagua = 8.7;
+const double effective_o2_percentage_mt_everest_peak = 6.9;
 const double mass_of_solar_system_planets_kg = 3.3e23 + 4.87e24 + 5.97e24 +
                                                6.42e23 + 1.90e27 + 5.68e26 +
                                                1.02e26 + 8.68e25;

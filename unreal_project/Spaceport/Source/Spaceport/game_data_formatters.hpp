@@ -387,6 +387,7 @@ struct std::formatter<planet_t> {
         out = std::format_to(out, " fuel={}", x.fuel);
         out = std::format_to(out, " population={}", x.population);
         out = std::format_to(out, " infrastructure={}", x.infrastructure);
+        out = std::format_to(out, " infrastructure_cost_factor={}", x.infrastructure_cost_factor);
         out = std::format_to(out, " orbital_pos_r={}", x.orbital_pos_r);
         out = std::format_to(out, " max_population={}", x.max_population);
         out = std::format_to(out, " owner={}", x.owner);

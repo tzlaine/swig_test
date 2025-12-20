@@ -169,16 +169,17 @@ message planet_t
     // property is the truncated integral value though.
     float population = 22;
     float infrastructure = 23;
+    float infrastructure_cost_factor = 24;
 
-    float orbital_pos_r = 24;
-    int32 max_population = 25;
-    int32 owner = 26; // TODO: Ownership of planets should go away.
-    int32 original_owner = 27;
+    float orbital_pos_r = 25;
+    int32 max_population = 26;
+    int32 owner = 27; // TODO: Ownership of planets should go away.
+    int32 original_owner = 28;
     // TODO: language, culture, religion
     // TODO: visual properties (incl. rings)
-    nation_and_object_id_t garrison = 28;
+    nation_and_object_id_t garrison = 29;
     // TODO: ground-to-space defenses
-    repeated planet_effect_t effects = 29;
+    repeated planet_effect_t effects = 30;
 }
 
 message location_object_t

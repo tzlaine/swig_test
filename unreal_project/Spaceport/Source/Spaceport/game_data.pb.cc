@@ -538,6 +538,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, fuel_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, population_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, infrastructure_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, infrastructure_cost_factor_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, orbital_pos_r_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, max_population_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, owner_),
@@ -641,14 +642,14 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 84, -1, sizeof(::pb_message::game_data::fleets_t)},
   { 90, -1, sizeof(::pb_message::game_data::planet_effect_t)},
   { 103, -1, sizeof(::pb_message::game_data::planet_t)},
-  { 137, -1, sizeof(::pb_message::game_data::location_object_t)},
-  { 144, -1, sizeof(::pb_message::game_data::system_location_t)},
-  { 151, -1, sizeof(::pb_message::game_data::star_t)},
-  { 161, -1, sizeof(::pb_message::game_data::system_t)},
-  { 175, -1, sizeof(::pb_message::game_data::hex_t)},
-  { 184, -1, sizeof(::pb_message::game_data::province_t)},
-  { 191, -1, sizeof(::pb_message::game_data::nation_t)},
-  { 208, -1, sizeof(::pb_message::game_data::game_state_t)},
+  { 138, -1, sizeof(::pb_message::game_data::location_object_t)},
+  { 145, -1, sizeof(::pb_message::game_data::system_location_t)},
+  { 152, -1, sizeof(::pb_message::game_data::star_t)},
+  { 162, -1, sizeof(::pb_message::game_data::system_t)},
+  { 176, -1, sizeof(::pb_message::game_data::hex_t)},
+  { 185, -1, sizeof(::pb_message::game_data::province_t)},
+  { 192, -1, sizeof(::pb_message::game_data::nation_t)},
+  { 209, -1, sizeof(::pb_message::game_data::game_state_t)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -715,7 +716,7 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "essage.game_data.planet_effect_target_t\022"
   "\030\n\020target_modifiers\030\007 \001(\r\0224\n\toperation\030\010"
   " \001(\0162!.pb_message.game_data.effect_op_t\""
-  "\215\006\n\010planet_t\022\021\n\tsystem_id\030\001 \001(\005\0228\n\013plane"
+  "\261\006\n\010planet_t\022\021\n\tsystem_id\030\001 \001(\005\0228\n\013plane"
   "t_type\030\002 \001(\0162#.pb_message.game_data.plan"
   "et_type_t\022\017\n\007mass_kg\030\003 \001(\001\022\021\n\tradius_km\030"
   "\004 \001(\001\022\020\n\010orbit_au\030\005 \001(\002\022\030\n\020orbital_perio"
@@ -729,76 +730,77 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "a.atmosphere_type_t\022\r\n\005water\030\021 \001(\005\022\014\n\004fo"
   "od\030\022 \001(\005\022\016\n\006energy\030\023 \001(\005\022\r\n\005metal\030\024 \001(\005\022"
   "\014\n\004fuel\030\025 \001(\005\022\022\n\npopulation\030\026 \001(\002\022\026\n\016inf"
-  "rastructure\030\027 \001(\002\022\025\n\rorbital_pos_r\030\030 \001(\002"
-  "\022\026\n\016max_population\030\031 \001(\005\022\r\n\005owner\030\032 \001(\005\022"
-  "\026\n\016original_owner\030\033 \001(\005\022>\n\010garrison\030\034 \001("
-  "\0132,.pb_message.game_data.nation_and_obje"
-  "ct_id_t\0226\n\007effects\030\035 \003(\0132%.pb_message.ga"
-  "me_data.planet_effect_t\"c\n\021location_obje"
-  "ct_t\022;\n\005bases\030\001 \003(\0132,.pb_message.game_da"
-  "ta.nation_and_object_id_t\022\021\n\tplanet_id\030\002"
-  " \001(\004\"|\n\021system_location_t\0228\n\007objects\030\001 \003"
-  "(\0132\'.pb_message.game_data.location_objec"
-  "t_t\022-\n\005units\030\002 \001(\0132\036.pb_message.game_dat"
-  "a.fleets_t\"\236\001\n\006star_t\0226\n\nstar_class\030\001 \001("
-  "\0162\".pb_message.game_data.star_class_t\022\025\n"
-  "\rtemperature_k\030\002 \001(\001\022\024\n\014solar_masses\030\003 \001"
-  "(\001\022\032\n\022solar_luminosities\030\004 \001(\001\022\023\n\013solar_"
-  "radii\030\005 \001(\001\"\315\002\n\010system_t\022\014\n\004name\030\001 \001(\t\022&"
-  "\n\005coord\030\002 \001(\0132\027.pb_message.hex_coord_t\022*"
-  "\n\004star\030\003 \001(\0132\034.pb_message.game_data.star"
-  "_t\022D\n\023permanent_locations\030\004 \003(\0132\'.pb_mes"
-  "sage.game_data.system_location_t\022D\n\023temp"
-  "orary_locations\030\005 \003(\0132\'.pb_message.game_"
-  "data.system_location_t\022\023\n\013world_pos_x\030\006 "
-  "\001(\001\022\023\n\013world_pos_y\030\007 \001(\001\022\024\n\014first_planet"
-  "\030\010 \001(\004\022\023\n\013last_planet\030\t \001(\004\"o\n\005hex_t\022&\n\005"
-  "coord\030\001 \001(\0132\027.pb_message.hex_coord_t\022\023\n\013"
-  "province_id\030\002 \001(\005\022\024\n\014first_system\030\003 \001(\004\022"
-  "\023\n\013last_system\030\004 \001(\004\"s\n\nprovince_t\0228\n\002id"
-  "\030\001 \001(\0132,.pb_message.game_data.nation_and"
-  "_object_id_t\022+\n\nhex_coords\030\002 \003(\0132\027.pb_me"
-  "ssage.hex_coord_t\"\342\003\n\010nation_t\022\n\n\002id\030\001 \001"
-  "(\005\0229\n\014unit_designs\030\002 \003(\0132#.pb_message.ga"
-  "me_data.unit_design_t\0223\n\tprovinces\030\003 \003(\013"
-  "2 .pb_message.game_data.province_t\022-\n\006fl"
-  "eets\030\004 \003(\0132\035.pb_message.game_data.fleet_"
-  "t\022\022\n\nhexes_seen\030\005 \003(\005\022\032\n\022systems_present"
-  "_in\030\006 \003(\005\022\027\n\017systems_visited\030\007 \003(\005\022\032\n\022pl"
-  "anets_present_on\030\010 \003(\005\022\030\n\020planets_survey"
-  "ed\030\t \003(\005\022J\n\024foreign_designs_seen\030\n \003(\0132,"
-  ".pb_message.game_data.nation_and_object_"
-  "id_t\022N\n\030foreign_designs_glimpsed\030\013 \003(\0132,"
-  ".pb_message.game_data.nation_and_object_"
-  "id_t\022\020\n\010defeated\030\014 \001(\010\"\233\002\n\014game_state_t\022"
-  "\021\n\tmap_width\030\001 \001(\005\022\022\n\nmap_height\030\002 \001(\005\022*"
-  "\n\005hexes\030\003 \003(\0132\033.pb_message.game_data.hex"
-  "_t\022/\n\007systems\030\004 \003(\0132\036.pb_message.game_da"
-  "ta.system_t\022/\n\007planets\030\005 \003(\0132\036.pb_messag"
-  "e.game_data.planet_t\022/\n\007nations\030\006 \003(\0132\036."
-  "pb_message.game_data.nation_t\022\021\n\tallianc"
-  "es\030\007 \003(\r\022\022\n\nplay_speed\030\010 \001(\005*Q\n\rplanet_t"
-  "ype_t\022\027\n\023invalid_planet_type\020\000\022\t\n\005rocky\020"
-  "\001\022\r\n\tgas_giant\020\002\022\r\n\tice_giant\020\003*\273\001\n\021atmo"
-  "sphere_type_t\022\033\n\027invalid_atmosphere_type"
-  "\020\000\022\022\n\016reduced_type_a\020\001\022\023\n\017oxidized_type_"
-  "b\020\002\022\026\n\022carbon_rich_type_c\020\003\022\024\n\020high_temp"
-  "erature\020\004\022\030\n\024gas_giant_atmosphere\020\005\022\030\n\024i"
-  "ce_giant_atmosphere\020\006*\310\002\n\026planet_effect_"
-  "target_t\022 \n\034invalid_planet_effect_target"
-  "\020\000\022\013\n\007gravity\020\001\022\016\n\naxial_tilt\020\002\022\007\n\003day\020\003"
-  "\022\027\n\023surface_temperature\020\004\022\032\n\026magnetosphe"
-  "re_strength\020\005\022\030\n\024atmopsheric_pressure\020\006\022"
-  "\026\n\022o2_co2_suitability\020\007\022\021\n\rgrowth_factor"
-  "\020\010\022\t\n\005water\020\t\022\010\n\004food\020\n\022\n\n\006energy\020\013\022\t\n\005m"
-  "etal\020\014\022\010\n\004fuel\020\r\022\016\n\npopulation\020\016\022\022\n\016infr"
-  "astructure\020\017\022\022\n\016max_population\020\020*K\n\023plan"
-  "et_effect_mod_t\022\035\n\031invalid_planet_effect"
-  "_mod\020\000\022\013\n\007monthly\020\001\022\010\n\004cost\020\002*;\n\013effect_"
-  "op_t\022\025\n\021invalid_effect_op\020\000\022\007\n\003add\020\001\022\014\n\010"
-  "multiply\020\002*W\n\014star_class_t\022\026\n\022invalid_st"
-  "ar_class\020\000\022\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n\001a\020\003\022\005\n\001f\020\004\022\005"
-  "\n\001g\020\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006proto3"
+  "rastructure\030\027 \001(\002\022\"\n\032infrastructure_cost"
+  "_factor\030\030 \001(\002\022\025\n\rorbital_pos_r\030\031 \001(\002\022\026\n\016"
+  "max_population\030\032 \001(\005\022\r\n\005owner\030\033 \001(\005\022\026\n\016o"
+  "riginal_owner\030\034 \001(\005\022>\n\010garrison\030\035 \001(\0132,."
+  "pb_message.game_data.nation_and_object_i"
+  "d_t\0226\n\007effects\030\036 \003(\0132%.pb_message.game_d"
+  "ata.planet_effect_t\"c\n\021location_object_t"
+  "\022;\n\005bases\030\001 \003(\0132,.pb_message.game_data.n"
+  "ation_and_object_id_t\022\021\n\tplanet_id\030\002 \001(\004"
+  "\"|\n\021system_location_t\0228\n\007objects\030\001 \003(\0132\'"
+  ".pb_message.game_data.location_object_t\022"
+  "-\n\005units\030\002 \001(\0132\036.pb_message.game_data.fl"
+  "eets_t\"\236\001\n\006star_t\0226\n\nstar_class\030\001 \001(\0162\"."
+  "pb_message.game_data.star_class_t\022\025\n\rtem"
+  "perature_k\030\002 \001(\001\022\024\n\014solar_masses\030\003 \001(\001\022\032"
+  "\n\022solar_luminosities\030\004 \001(\001\022\023\n\013solar_radi"
+  "i\030\005 \001(\001\"\315\002\n\010system_t\022\014\n\004name\030\001 \001(\t\022&\n\005co"
+  "ord\030\002 \001(\0132\027.pb_message.hex_coord_t\022*\n\004st"
+  "ar\030\003 \001(\0132\034.pb_message.game_data.star_t\022D"
+  "\n\023permanent_locations\030\004 \003(\0132\'.pb_message"
+  ".game_data.system_location_t\022D\n\023temporar"
+  "y_locations\030\005 \003(\0132\'.pb_message.game_data"
+  ".system_location_t\022\023\n\013world_pos_x\030\006 \001(\001\022"
+  "\023\n\013world_pos_y\030\007 \001(\001\022\024\n\014first_planet\030\010 \001"
+  "(\004\022\023\n\013last_planet\030\t \001(\004\"o\n\005hex_t\022&\n\005coor"
+  "d\030\001 \001(\0132\027.pb_message.hex_coord_t\022\023\n\013prov"
+  "ince_id\030\002 \001(\005\022\024\n\014first_system\030\003 \001(\004\022\023\n\013l"
+  "ast_system\030\004 \001(\004\"s\n\nprovince_t\0228\n\002id\030\001 \001"
+  "(\0132,.pb_message.game_data.nation_and_obj"
+  "ect_id_t\022+\n\nhex_coords\030\002 \003(\0132\027.pb_messag"
+  "e.hex_coord_t\"\342\003\n\010nation_t\022\n\n\002id\030\001 \001(\005\0229"
+  "\n\014unit_designs\030\002 \003(\0132#.pb_message.game_d"
+  "ata.unit_design_t\0223\n\tprovinces\030\003 \003(\0132 .p"
+  "b_message.game_data.province_t\022-\n\006fleets"
+  "\030\004 \003(\0132\035.pb_message.game_data.fleet_t\022\022\n"
+  "\nhexes_seen\030\005 \003(\005\022\032\n\022systems_present_in\030"
+  "\006 \003(\005\022\027\n\017systems_visited\030\007 \003(\005\022\032\n\022planet"
+  "s_present_on\030\010 \003(\005\022\030\n\020planets_surveyed\030\t"
+  " \003(\005\022J\n\024foreign_designs_seen\030\n \003(\0132,.pb_"
+  "message.game_data.nation_and_object_id_t"
+  "\022N\n\030foreign_designs_glimpsed\030\013 \003(\0132,.pb_"
+  "message.game_data.nation_and_object_id_t"
+  "\022\020\n\010defeated\030\014 \001(\010\"\233\002\n\014game_state_t\022\021\n\tm"
+  "ap_width\030\001 \001(\005\022\022\n\nmap_height\030\002 \001(\005\022*\n\005he"
+  "xes\030\003 \003(\0132\033.pb_message.game_data.hex_t\022/"
+  "\n\007systems\030\004 \003(\0132\036.pb_message.game_data.s"
+  "ystem_t\022/\n\007planets\030\005 \003(\0132\036.pb_message.ga"
+  "me_data.planet_t\022/\n\007nations\030\006 \003(\0132\036.pb_m"
+  "essage.game_data.nation_t\022\021\n\talliances\030\007"
+  " \003(\r\022\022\n\nplay_speed\030\010 \001(\005*Q\n\rplanet_type_"
+  "t\022\027\n\023invalid_planet_type\020\000\022\t\n\005rocky\020\001\022\r\n"
+  "\tgas_giant\020\002\022\r\n\tice_giant\020\003*\273\001\n\021atmosphe"
+  "re_type_t\022\033\n\027invalid_atmosphere_type\020\000\022\022"
+  "\n\016reduced_type_a\020\001\022\023\n\017oxidized_type_b\020\002\022"
+  "\026\n\022carbon_rich_type_c\020\003\022\024\n\020high_temperat"
+  "ure\020\004\022\030\n\024gas_giant_atmosphere\020\005\022\030\n\024ice_g"
+  "iant_atmosphere\020\006*\310\002\n\026planet_effect_targ"
+  "et_t\022 \n\034invalid_planet_effect_target\020\000\022\013"
+  "\n\007gravity\020\001\022\016\n\naxial_tilt\020\002\022\007\n\003day\020\003\022\027\n\023"
+  "surface_temperature\020\004\022\032\n\026magnetosphere_s"
+  "trength\020\005\022\030\n\024atmopsheric_pressure\020\006\022\026\n\022o"
+  "2_co2_suitability\020\007\022\021\n\rgrowth_factor\020\010\022\t"
+  "\n\005water\020\t\022\010\n\004food\020\n\022\n\n\006energy\020\013\022\t\n\005metal"
+  "\020\014\022\010\n\004fuel\020\r\022\016\n\npopulation\020\016\022\022\n\016infrastr"
+  "ucture\020\017\022\022\n\016max_population\020\020*K\n\023planet_e"
+  "ffect_mod_t\022\035\n\031invalid_planet_effect_mod"
+  "\020\000\022\013\n\007monthly\020\001\022\010\n\004cost\020\002*;\n\013effect_op_t"
+  "\022\025\n\021invalid_effect_op\020\000\022\007\n\003add\020\001\022\014\n\010mult"
+  "iply\020\002*W\n\014star_class_t\022\026\n\022invalid_star_c"
+  "lass\020\000\022\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n\001a\020\003\022\005\n\001f\020\004\022\005\n\001g\020"
+  "\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fdata_2eproto_deps[1] = {
   &::descriptor_table_base_5ftypes_2eproto,
@@ -826,7 +828,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gam
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fdata_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fdata_2eproto = {
-  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4987,
+  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 5023,
   &descriptor_table_game_5fdata_2eproto_once, descriptor_table_game_5fdata_2eproto_sccs, descriptor_table_game_5fdata_2eproto_deps, 19, 1,
   schemas, file_default_instances, TableStruct_game_5fdata_2eproto::offsets,
   file_level_metadata_game_5fdata_2eproto, 19, file_level_enum_descriptors_game_5fdata_2eproto, file_level_service_descriptors_game_5fdata_2eproto,
@@ -3915,51 +3917,58 @@ const char* planet_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // float orbital_pos_r = 24;
+      // float infrastructure_cost_factor = 24;
       case 24:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 197)) {
+          infrastructure_cost_factor_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else goto handle_unusual;
+        continue;
+      // float orbital_pos_r = 25;
+      case 25:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 205)) {
           orbital_pos_r_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // int32 max_population = 25;
-      case 25:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 200)) {
+      // int32 max_population = 26;
+      case 26:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 208)) {
           max_population_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 owner = 26;
-      case 26:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 208)) {
+      // int32 owner = 27;
+      case 27:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 216)) {
           owner_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 original_owner = 27;
-      case 27:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 216)) {
+      // int32 original_owner = 28;
+      case 28:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 224)) {
           original_owner_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .pb_message.game_data.nation_and_object_id_t garrison = 28;
-      case 28:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 226)) {
+      // .pb_message.game_data.nation_and_object_id_t garrison = 29;
+      case 29:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 234)) {
           ptr = ctx->ParseMessage(_internal_mutable_garrison(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.planet_effect_t effects = 29;
-      case 29:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 234)) {
+      // repeated .pb_message.game_data.planet_effect_t effects = 30;
+      case 30:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 242)) {
           ptr -= 2;
           do {
             ptr += 2;
             ptr = ctx->ParseMessage(_internal_add_effects(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<234>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<242>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -4130,44 +4139,50 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(23, this->_internal_infrastructure(), target);
   }
 
-  // float orbital_pos_r = 24;
+  // float infrastructure_cost_factor = 24;
+  if (!(this->infrastructure_cost_factor() <= 0 && this->infrastructure_cost_factor() >= 0)) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(24, this->_internal_infrastructure_cost_factor(), target);
+  }
+
+  // float orbital_pos_r = 25;
   if (!(this->orbital_pos_r() <= 0 && this->orbital_pos_r() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(24, this->_internal_orbital_pos_r(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(25, this->_internal_orbital_pos_r(), target);
   }
 
-  // int32 max_population = 25;
+  // int32 max_population = 26;
   if (this->max_population() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(25, this->_internal_max_population(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(26, this->_internal_max_population(), target);
   }
 
-  // int32 owner = 26;
+  // int32 owner = 27;
   if (this->owner() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(26, this->_internal_owner(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(27, this->_internal_owner(), target);
   }
 
-  // int32 original_owner = 27;
+  // int32 original_owner = 28;
   if (this->original_owner() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(27, this->_internal_original_owner(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(28, this->_internal_original_owner(), target);
   }
 
-  // .pb_message.game_data.nation_and_object_id_t garrison = 28;
+  // .pb_message.game_data.nation_and_object_id_t garrison = 29;
   if (this->has_garrison()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        28, _Internal::garrison(this), target, stream);
+        29, _Internal::garrison(this), target, stream);
   }
 
-  // repeated .pb_message.game_data.planet_effect_t effects = 29;
+  // repeated .pb_message.game_data.planet_effect_t effects = 30;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_effects_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(29, this->_internal_effects(i), target, stream);
+      InternalWriteMessage(30, this->_internal_effects(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4186,14 +4201,14 @@ size_t planet_t::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .pb_message.game_data.planet_effect_t effects = 29;
+  // repeated .pb_message.game_data.planet_effect_t effects = 30;
   total_size += 2UL * this->_internal_effects_size();
   for (const auto& msg : this->effects_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // .pb_message.game_data.nation_and_object_id_t garrison = 28;
+  // .pb_message.game_data.nation_and_object_id_t garrison = 29;
   if (this->has_garrison()) {
     total_size += 2 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -4329,26 +4344,31 @@ size_t planet_t::ByteSizeLong() const {
     total_size += 2 + 4;
   }
 
-  // float orbital_pos_r = 24;
+  // float infrastructure_cost_factor = 24;
+  if (!(this->infrastructure_cost_factor() <= 0 && this->infrastructure_cost_factor() >= 0)) {
+    total_size += 2 + 4;
+  }
+
+  // float orbital_pos_r = 25;
   if (!(this->orbital_pos_r() <= 0 && this->orbital_pos_r() >= 0)) {
     total_size += 2 + 4;
   }
 
-  // int32 max_population = 25;
+  // int32 max_population = 26;
   if (this->max_population() != 0) {
     total_size += 2 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->_internal_max_population());
   }
 
-  // int32 owner = 26;
+  // int32 owner = 27;
   if (this->owner() != 0) {
     total_size += 2 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->_internal_owner());
   }
 
-  // int32 original_owner = 27;
+  // int32 original_owner = 28;
   if (this->original_owner() != 0) {
     total_size += 2 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
@@ -4458,6 +4478,9 @@ void planet_t::MergeFrom(const planet_t& from) {
   }
   if (!(from.infrastructure() <= 0 && from.infrastructure() >= 0)) {
     _internal_set_infrastructure(from._internal_infrastructure());
+  }
+  if (!(from.infrastructure_cost_factor() <= 0 && from.infrastructure_cost_factor() >= 0)) {
+    _internal_set_infrastructure_cost_factor(from._internal_infrastructure_cost_factor());
   }
   if (!(from.orbital_pos_r() <= 0 && from.orbital_pos_r() >= 0)) {
     _internal_set_orbital_pos_r(from._internal_orbital_pos_r());

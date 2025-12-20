@@ -424,7 +424,7 @@ namespace detail {
             return "planet_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 29; }
+        static constexpr int hi_field_number() { return 30; }
 
         static constexpr metadatum<planet_t, int> system_id()
         {
@@ -541,35 +541,40 @@ namespace detail {
             using namespace std::literals;
             return {"infrastructure"sv, 23, &planet_t::infrastructure};
         }
+        static constexpr metadatum<planet_t, float> infrastructure_cost_factor()
+        {
+            using namespace std::literals;
+            return {"infrastructure_cost_factor"sv, 24, &planet_t::infrastructure_cost_factor};
+        }
         static constexpr metadatum<planet_t, float> orbital_pos_r()
         {
             using namespace std::literals;
-            return {"orbital_pos_r"sv, 24, &planet_t::orbital_pos_r};
+            return {"orbital_pos_r"sv, 25, &planet_t::orbital_pos_r};
         }
         static constexpr metadatum<planet_t, int> max_population()
         {
             using namespace std::literals;
-            return {"max_population"sv, 25, &planet_t::max_population};
+            return {"max_population"sv, 26, &planet_t::max_population};
         }
         static constexpr metadatum<planet_t, int> owner()
         {
             using namespace std::literals;
-            return {"owner"sv, 26, &planet_t::owner};
+            return {"owner"sv, 27, &planet_t::owner};
         }
         static constexpr metadatum<planet_t, int> original_owner()
         {
             using namespace std::literals;
-            return {"original_owner"sv, 27, &planet_t::original_owner};
+            return {"original_owner"sv, 28, &planet_t::original_owner};
         }
         static constexpr metadatum<planet_t, nation_and_object_id_t> garrison()
         {
             using namespace std::literals;
-            return {"garrison"sv, 28, &planet_t::garrison};
+            return {"garrison"sv, 29, &planet_t::garrison};
         }
         static constexpr metadatum<planet_t, std::vector<planet_effect_t>> effects()
         {
             using namespace std::literals;
-            return {"effects"sv, 29, &planet_t::effects};
+            return {"effects"sv, 30, &planet_t::effects};
         }
 
         template<typename F>
@@ -598,6 +603,7 @@ namespace detail {
             f(fuel());
             f(population());
             f(infrastructure());
+            f(infrastructure_cost_factor());
             f(orbital_pos_r());
             f(max_population());
             f(owner());

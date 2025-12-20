@@ -2089,8 +2089,8 @@ class planet_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kEffectsFieldNumber = 29,
-    kGarrisonFieldNumber = 28,
+    kEffectsFieldNumber = 30,
+    kGarrisonFieldNumber = 29,
     kSystemIdFieldNumber = 1,
     kPlanetTypeFieldNumber = 2,
     kMassKgFieldNumber = 3,
@@ -2114,12 +2114,13 @@ class planet_t PROTOBUF_FINAL :
     kFuelFieldNumber = 21,
     kPopulationFieldNumber = 22,
     kInfrastructureFieldNumber = 23,
-    kOrbitalPosRFieldNumber = 24,
-    kMaxPopulationFieldNumber = 25,
-    kOwnerFieldNumber = 26,
-    kOriginalOwnerFieldNumber = 27,
+    kInfrastructureCostFactorFieldNumber = 24,
+    kOrbitalPosRFieldNumber = 25,
+    kMaxPopulationFieldNumber = 26,
+    kOwnerFieldNumber = 27,
+    kOriginalOwnerFieldNumber = 28,
   };
-  // repeated .pb_message.game_data.planet_effect_t effects = 29;
+  // repeated .pb_message.game_data.planet_effect_t effects = 30;
   int effects_size() const;
   private:
   int _internal_effects_size() const;
@@ -2137,7 +2138,7 @@ class planet_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::planet_effect_t >&
       effects() const;
 
-  // .pb_message.game_data.nation_and_object_id_t garrison = 28;
+  // .pb_message.game_data.nation_and_object_id_t garrison = 29;
   bool has_garrison() const;
   private:
   bool _internal_has_garrison() const;
@@ -2362,7 +2363,16 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_infrastructure(float value);
   public:
 
-  // float orbital_pos_r = 24;
+  // float infrastructure_cost_factor = 24;
+  void clear_infrastructure_cost_factor();
+  float infrastructure_cost_factor() const;
+  void set_infrastructure_cost_factor(float value);
+  private:
+  float _internal_infrastructure_cost_factor() const;
+  void _internal_set_infrastructure_cost_factor(float value);
+  public:
+
+  // float orbital_pos_r = 25;
   void clear_orbital_pos_r();
   float orbital_pos_r() const;
   void set_orbital_pos_r(float value);
@@ -2371,7 +2381,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_orbital_pos_r(float value);
   public:
 
-  // int32 max_population = 25;
+  // int32 max_population = 26;
   void clear_max_population();
   ::PROTOBUF_NAMESPACE_ID::int32 max_population() const;
   void set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -2380,7 +2390,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 owner = 26;
+  // int32 owner = 27;
   void clear_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 owner() const;
   void set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -2389,7 +2399,7 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 original_owner = 27;
+  // int32 original_owner = 28;
   void clear_original_owner();
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner() const;
   void set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -2430,6 +2440,7 @@ class planet_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::int32 fuel_;
   float population_;
   float infrastructure_;
+  float infrastructure_cost_factor_;
   float orbital_pos_r_;
   ::PROTOBUF_NAMESPACE_ID::int32 max_population_;
   ::PROTOBUF_NAMESPACE_ID::int32 owner_;
@@ -5971,7 +5982,27 @@ inline void planet_t::set_infrastructure(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure)
 }
 
-// float orbital_pos_r = 24;
+// float infrastructure_cost_factor = 24;
+inline void planet_t::clear_infrastructure_cost_factor() {
+  infrastructure_cost_factor_ = 0;
+}
+inline float planet_t::_internal_infrastructure_cost_factor() const {
+  return infrastructure_cost_factor_;
+}
+inline float planet_t::infrastructure_cost_factor() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.infrastructure_cost_factor)
+  return _internal_infrastructure_cost_factor();
+}
+inline void planet_t::_internal_set_infrastructure_cost_factor(float value) {
+  
+  infrastructure_cost_factor_ = value;
+}
+inline void planet_t::set_infrastructure_cost_factor(float value) {
+  _internal_set_infrastructure_cost_factor(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.infrastructure_cost_factor)
+}
+
+// float orbital_pos_r = 25;
 inline void planet_t::clear_orbital_pos_r() {
   orbital_pos_r_ = 0;
 }
@@ -5991,7 +6022,7 @@ inline void planet_t::set_orbital_pos_r(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.orbital_pos_r)
 }
 
-// int32 max_population = 25;
+// int32 max_population = 26;
 inline void planet_t::clear_max_population() {
   max_population_ = 0;
 }
@@ -6011,7 +6042,7 @@ inline void planet_t::set_max_population(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.max_population)
 }
 
-// int32 owner = 26;
+// int32 owner = 27;
 inline void planet_t::clear_owner() {
   owner_ = 0;
 }
@@ -6031,7 +6062,7 @@ inline void planet_t::set_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.owner)
 }
 
-// int32 original_owner = 27;
+// int32 original_owner = 28;
 inline void planet_t::clear_original_owner() {
   original_owner_ = 0;
 }
@@ -6051,7 +6082,7 @@ inline void planet_t::set_original_owner(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.original_owner)
 }
 
-// .pb_message.game_data.nation_and_object_id_t garrison = 28;
+// .pb_message.game_data.nation_and_object_id_t garrison = 29;
 inline bool planet_t::_internal_has_garrison() const {
   return this != internal_default_instance() && garrison_ != nullptr;
 }
@@ -6134,7 +6165,7 @@ inline void planet_t::set_allocated_garrison(::pb_message::game_data::nation_and
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.planet_t.garrison)
 }
 
-// repeated .pb_message.game_data.planet_effect_t effects = 29;
+// repeated .pb_message.game_data.planet_effect_t effects = 30;
 inline int planet_t::_internal_effects_size() const {
   return effects_.size();
 }

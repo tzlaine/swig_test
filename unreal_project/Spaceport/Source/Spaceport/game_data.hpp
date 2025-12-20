@@ -199,6 +199,7 @@ struct planet_t
     int fuel = -1;
     float population = -1.0f;
     float infrastructure = -1.0f;
+    float infrastructure_cost_factor = -1.0f;
     float orbital_pos_r = -1.0f;
     int max_population = -1;
     int owner = -1;
