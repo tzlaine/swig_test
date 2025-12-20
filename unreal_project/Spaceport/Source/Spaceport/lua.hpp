@@ -26,14 +26,14 @@ namespace detail {
 
     // Get/set an adobe::name_t, which sol3 knows nothing about.
     template<typename T, auto MemPtr>
-    std::string get_name(T const & x)
+    char const * get_name(T const & x)
     {
         return (x.*MemPtr).c_str();
     }
     template<typename T, auto MemPtr>
-    void set_name(T & x, std::string const & s)
+    void set_name(T & x, char const * s)
     {
-        x.*MemPtr = adobe::name_t(s.c_str());
+        x.*MemPtr = adobe::name_t(s);
     }
 
     void lua_register_1(sol::state & l);
