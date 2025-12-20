@@ -1,6 +1,3 @@
--- physical constants
-earth_temperature_k = 279
-
 -- **************
 -- game constants
 -- **************
