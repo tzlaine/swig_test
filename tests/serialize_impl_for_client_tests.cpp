@@ -107,8 +107,13 @@ game_state_t const & gs()
         task_system ts(4);
         game_state_t retval;
         std::atomic_bool fully_complete = false;
+        game_start_params_t const params = game_start_params_t{
+            .habitable_systems_per_hex_mean = 5.0,
+            .habitable_systems_per_hex_plus_minus = 2.0,
+            .systems_per_hex = 20,
+            .map_height = 11};
         generation::generate_galaxy(
-            default_game_start_params(), retval, &ts, nullptr, &fully_complete);
+            params, retval, &ts, nullptr, &fully_complete);
         while (!fully_complete) {
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }

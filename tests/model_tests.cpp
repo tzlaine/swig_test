@@ -23,7 +23,12 @@ TEST(model_tests, generate_save_load)
     std::atomic_bool complete = false;
     std::cout << "generating";
     auto start_time = std::chrono::high_resolution_clock::now();
-    m.generate_galaxy(default_game_start_params(), q, complete);
+    game_start_params_t const params = game_start_params_t{
+        .habitable_systems_per_hex_mean = 5.0,
+        .habitable_systems_per_hex_plus_minus = 2.0,
+        .systems_per_hex = 20,
+        .map_height = 11};
+    m.generate_galaxy(params, q, complete);
     print_time(start_time);
 
     std::filesystem::path path = "save_0";

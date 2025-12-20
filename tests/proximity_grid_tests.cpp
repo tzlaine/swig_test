@@ -9,7 +9,11 @@ void generate_hexes_and_nations(
     game_state_t & gs, int nations, std::pair<int, int> allied)
 {
     generation::detail::g_skip_system_generation_for_testing = true;
-    game_start_params_t params = default_game_start_params();
+    game_start_params_t const params = game_start_params_t{
+        .habitable_systems_per_hex_mean = 5.0,
+        .habitable_systems_per_hex_plus_minus = 2.0,
+        .systems_per_hex = 20,
+        .map_height = 11};
     generation::generate_galaxy(params, gs);
     gs.nations.resize(nations);
     int i = 0;

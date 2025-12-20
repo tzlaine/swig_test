@@ -45,7 +45,11 @@ TEST(generation_tests, hex_shape_of_map)
     generation::detail::g_skip_system_generation_for_testing = true;
 
     {
-        game_start_params_t params = default_game_start_params();
+        game_start_params_t params = game_start_params_t{
+            .habitable_systems_per_hex_mean = 5.0,
+            .habitable_systems_per_hex_plus_minus = 2.0,
+            .systems_per_hex = 20,
+            .map_height = 11};
         params.map_height = 11;
         game_state_t game_state;
         generation::generate_galaxy(params, game_state);
@@ -114,7 +118,11 @@ NNNNNNXNNNNNN
     }
 
     {
-        game_start_params_t params = default_game_start_params();
+        game_start_params_t params = game_start_params_t{
+            .habitable_systems_per_hex_mean = 5.0,
+            .habitable_systems_per_hex_plus_minus = 2.0,
+            .systems_per_hex = 20,
+            .map_height = 11};
         params.map_height = 15;
         game_state_t game_state;
         generation::generate_galaxy(params, game_state);
@@ -1224,7 +1232,11 @@ TEST(generation_tests, generate_planet)
 
 TEST(generation_tests, generate_hex)
 {
-    game_start_params_t const params = default_game_start_params();
+    game_start_params_t const params = game_start_params_t{
+        .habitable_systems_per_hex_mean = 5.0,
+        .habitable_systems_per_hex_plus_minus = 2.0,
+        .systems_per_hex = 20,
+        .map_height = 11};
     int const first_hex_index = 3;
     int const last_hex_index = 10;
     int const habitable_systems_per_hex = 5;
@@ -1260,7 +1272,11 @@ task_system ts(4);
 
 TEST(generation_tests, generate_galaxy)
 {
-    game_start_params_t params = default_game_start_params();
+    game_start_params_t const params = game_start_params_t{
+        .habitable_systems_per_hex_mean = 5.0,
+        .habitable_systems_per_hex_plus_minus = 2.0,
+        .systems_per_hex = 20,
+        .map_height = 11};
     game_state_t game_state;
     generation::generate_galaxy(params, game_state, &ts);
     EXPECT_FALSE(game_state.hexes.empty());
