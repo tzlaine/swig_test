@@ -44,7 +44,11 @@ namespace detail {
 
 
 #define REGISTER_GAME_DATA_TYPE(lua, T)                                        \
-    sol::usertype<T> T##_type = lua.new_usertype<T>(#T, sol::no_constructor);  \
+    sol::usertype<T> T##_type = lua.new_usertype<T>(                           \
+        #T,                                                                    \
+        sol::no_constructor,                                                   \
+        sol::meta_function::to_string,                                         \
+        [](T const & x) { return std::format("{}", x); });                     \
     T##_type["new"] = &detail::make_default<T>;                                \
     detail::metadata<T>::foreach_member([&](auto meta) {                       \
         if constexpr (std::same_as<                                            \

@@ -1,5 +1,6 @@
 #include "lua.hpp"
 
+#include "game_data_formatters.hpp"
 #include "game_data_metadata.hpp"
 
 

@@ -2,6 +2,7 @@
 
 #include "constants.hpp"
 #include "game_data_metadata.hpp"
+#include "game_data_formatters.hpp"
 
 #if defined(BUILD_FOR_TEST)
 #include <iostream>
