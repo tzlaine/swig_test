@@ -98,7 +98,11 @@ sol::state & lua()
 std::string script_path(std::string const & script_)
 {
 #if defined(BUILD_FOR_TEST)
+#if defined(_MSC_VER)
     return "../../unreal_project/Spaceport/Content/script/" + script_;
+#else
+#error "Need a CMake-build script_path() implementation for your paltform."
+#endif
 #else
     FString script(UTF8_TO_TCHAR(script_.c_str()));
     FString full_path =
