@@ -59,10 +59,19 @@ namespace detail {
     })
 
 
+// Returns a sol3 lua state, initialized with all our project-specific Lua
+// code.
 sol::state make_lua_state();
 
+// Returns a reference to a thread-local singleton sol3 lua state created by
+// make_lua_state().
 sol::state & lua();
 
+// Maps a Lua file like 'foo.lua' to the full path to that script, regardless
+// of which build we're in (CMake or Unreal), and regardless of whether we're
+// running in the Unreal editor, or a packaged build.
 std::string script_path(std::string const & script);
 
+// Executes the script file `script` as if by
+// `lua().script_file(script_path(script))`.
 void script_file(std::string const & script);
