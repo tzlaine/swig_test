@@ -2,7 +2,9 @@
 
 #include "game_data_metadata.hpp"
 
-#if !defined(BUILD_FOR_TEST)
+#if defined(BUILD_FOR_TEST)
+#include <iostream>
+#else
 #include <CoreMinimal.h>
 #include <Misc/Paths.h>
 #endif
@@ -11,21 +13,27 @@
 namespace {
     void ue_log_impl(std::string const & msg)
     {
-#if !defined(BUILD_FOR_TEST)
+#if defined(BUILD_FOR_TEST)
+        std::cout << "LOG: " << msg << "\n";
+#else
         UE_LOG(LogTemp, Log, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
 #endif
     }
     void ue_warn_impl(std::string const & msg)
 
     {
-#if !defined(BUILD_FOR_TEST)
+#if defined(BUILD_FOR_TEST)
+        std::cout << "WARNING: " << msg << "\n";
+#else
         UE_LOG(
             LogTemp, Warning, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
 #endif
     }
     void ue_err_impl(std::string const & msg)
     {
-#if !defined(BUILD_FOR_TEST)
+#if defined(BUILD_FOR_TEST)
+        std::cout << "ERROR: " << msg << "\n";
+#else
         UE_LOG(
             LogTemp, Error, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
 #endif
