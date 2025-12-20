@@ -1,50 +1,36 @@
 #pragma once
 
 #include "game_data.hpp"
+#include "lua.hpp"
+
+#include <mutex>
 
 
-// TODO: In code that evaluates/applies these effects, some may need to
-// recompute the effects of modifiying the affected target(s), producing
-// knockon effects (e.g. changing o2_co2_suit. will need to create an effect
-// that adjusts max_pop).
-
-inline planet_effect_t onetime_growth_factor_effect(
-    adobe::name_t name, adobe::name_t description, float amount,
-    effect_op_t op = effect_op_t::add)
-{
-    planet_effect_t retval{
-        .name=name,
-        .description=description,
-        .amount=amount,
-        .months_of_effect=0,
-        .months_remaining=0,
-        .target=planet_effect_target_t::growth_factor,
-        .target_modifiers=0,
-        .operation=op
-    };
-
-    return retval;
+#if 0 // TODO
+namespace detail{
+    inline void ensure_effects_loaded()
+    {
+        static std::once_flag once;
+        std::call_once(once, [] { script_file("effects.lua"); });
+    }
 }
+#endif
 
-inline planet_effect_t onetime_max_population_effect(
-    adobe::name_t name, adobe::name_t description, float amount,
-    effect_op_t op = effect_op_t::add)
+inline void apply_planet_effect(planet_t & planet, planet_effect_t const & pe)
 {
-    planet_effect_t retval{
-        .name=name,
-        .description=description,
-        .amount=amount,
-        .months_of_effect=0,
-        .months_remaining=0,
-        .target=planet_effect_target_t::max_population,
-        .target_modifiers=0,
-        .operation=op
-    };
-
-    return retval;
+    sol::table planet_effects = lua()["planet_effects"];
+    assert(planet_effects);
+    sol::table effect = planet_effects[pe.name.c_str()];
+    assert(effect);
+    sol::function apply = effect["apply"];
+    sol::object expr = effect["expr"];
+    if (expr)
+        apply(effect, planet);
+    else
+        apply(effect, planet, pe.value);
 }
 
 inline bool transitory(planet_effect_t const & effect)
 {
-    return effect.months_of_effect != 0;
+    return false; // TODO
 }

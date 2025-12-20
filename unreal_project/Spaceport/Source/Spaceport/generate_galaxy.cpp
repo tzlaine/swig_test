@@ -7,6 +7,13 @@
 #include <numbers>
 
 
+// TODO: Need to add a way to reset the Lua state, when running in the editor.
+// Otherwise, since all Lua states are initialized at static-init time,
+// multiple editor runs will all use the original version of the Lua scripts.
+
+// TODO: Get rid of the remaining magic numbers in this file (put them in a
+// Lua file).
+
 // MAINTENANCE NOTE: Any calls to the lambda habs_and_suits_required (but not
 // the masks one) should come before any other effects, since it clears out
 // all previous effects.  Any effects that affect colonists living in
@@ -14,166 +21,102 @@
 float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 {
     using namespace adobe::literals;
-    using namespace std::literals;
 
-    float retval = base_pop_growth_factor;
-
-    auto const record = [&](adobe::name_t effect_name,
-                            adobe::name_t effect_desc, float amount) {
-        retval += amount;
-        planet.effects.push_back(
-            onetime_growth_factor_effect(effect_name, effect_desc, amount));
+    auto const effect = [&](auto name) {
+        planet.effects.push_back(planet_effect_t{name});
     };
 
-    auto const only_equatorial_band_habitable = [&] {
-        planet.effects.push_back(onetime_max_population_effect(
-                                     "only_equatorial_band_habitable"_name,
-                                     "only_equatorial_band_habitable_desc"_name,
-                                     only_equatorial_region_habitable_factor,
-                                     effect_op_t::multiply));
-    };
+    planet.growth_factor = base_pop_growth_factor;
 
     if (planet.planet_type != planet_type_t::rocky) {
-        record("uninhab_non_rocky_planet"_name,
-               "uninhab_non_rocky_planet_desc"_name, growth_uninhabitable);
-        return retval;
+        effect("uninhab_non_rocky_planet"_name);
+        planet.growth_factor += growth_uninhabitable;
+        return planet.growth_factor;
     }
 
     // tilt
     if (planet.axial_tilt_d < 5.0f) {
-        record("no_seasons"_name, "no_seasons_desc"_name, 0.05);
-    } else if (/*5 < */planet.axial_tilt_d < 15.0f) {
-        record("mild_seasons"_name, "mild_seasons_desc"_name, 0.025);
-    } else if (/*15 < */planet.axial_tilt_d < 30.0f) {
+        effect("no_seasons"_name);
+    } else if (/*5 < */ planet.axial_tilt_d < 15.0f) {
+        effect("mild_seasons"_name);
+    } else if (/*15 < */ planet.axial_tilt_d < 30.0f) {
         // normal seasons
         if (planet.orbital_period_y < 0.8) {
-            record("short_seasons"_name, "short_seasons_desc"_name,
-                   0.025 * (1 - planet.orbital_period_y));
+            effect("short_seasons"_name);
         } else if (1.2 < planet.orbital_period_y) {
-            record("long_seasons"_name, "long_seasons_desc"_name,
-                   -0.05 * planet.orbital_period_y);
+            effect("long_seasons"_name);
             planet.effects.push_back(planet_effect_t{
-                .name = "long_seasons_infra_cost_effect"_name,
-                .description = "long_seasons_infra_cost_effect_desc"_name,
-                .amount = agri_equip_infra_cost_factor,
-                .months_of_effect = 0,
-                .months_remaining = 0,
-                .target = planet_effect_target_t::infrastructure,
-                .target_modifiers = 0,
-                .operation = effect_op_t::multiply});
+                .name = "infra_cost"_name,
+                .reason = "long_seasons"_name,
+                .value = agri_equip_infra_cost_factor});
             if (3.0 < planet.orbital_period_y)
-                only_equatorial_band_habitable();
+                effect("only_equatorial_band_habitable"_name);
         }
-    } else if (/*30 < */planet.axial_tilt_d < 45.0f) {
-        record("intense_seasons"_name, "intense_seasons_desc"_name, -0.05);
+    } else if (/*30 < */ planet.axial_tilt_d < 45.0f) {
+        effect("intense_seasons"_name);
         if (planet.orbital_period_y < 0.8) {
-            record("short_seasons"_name,
-                   "short_seasons_desc"_name,
-                   0.025 * (1 - planet.orbital_period_y));
+            effect("short_seasons"_name);
         } else if (1.2 < planet.orbital_period_y) {
-            record("long_seasons"_name,
-                   "long_seasons_desc"_name,
-                   -0.05 * planet.orbital_period_y);
+            effect("long_seasons"_name);
             planet.effects.push_back(planet_effect_t{
-                .name = "long_intense_seasons_infra_cost_effect"_name,
-                .description =
-                    "long_intense_seasons_infra_cost_effect_desc"_name,
-                .amount = 1.5,
-                .months_of_effect = 0,
-                .months_remaining = 0,
-                .target = planet_effect_target_t::infrastructure,
-                .target_modifiers = 0,
-                .operation = effect_op_t::multiply});
+                .name = "infra_cost"_name,
+                .reason = "long_intense_seasons"_name,
+                .value = 1.5});
             if (1.5 < planet.orbital_period_y)
-                only_equatorial_band_habitable();
+                effect("only_equatorial_band_habitable"_name);
         }
-    } else if (/*45 < */planet.axial_tilt_d < 60.0f) {
-        record("intense_seasons"_name, "intense_seasons_desc"_name, -0.05);
+    } else if (/*45 < */ planet.axial_tilt_d < 60.0f) {
+        effect("intense_seasons"_name);
         if (planet.orbital_period_y < 0.8) {
-            record("short_seasons"_name,
-                   "short_seasons_desc"_name,
-                   0.025 * (1 - planet.orbital_period_y));
+            effect("short_seasons"_name);
         } else if (1.2 < planet.orbital_period_y) {
-            record("long_seasons"_name,
-                   "long_seasons_desc"_name,
-                   -0.05 * planet.orbital_period_y);
+            effect("long_seasons"_name);
             planet.effects.push_back(planet_effect_t{
-                .name = "long_intense_seasons_infra_cost_effect"_name,
-                .description =
-                    "long_intense_seasons_infra_cost_effect_desc"_name,
-                .amount = 1.5,
-                .months_of_effect = 0,
-                .months_remaining = 0,
-                .target = planet_effect_target_t::infrastructure,
-                .target_modifiers = 0,
-                .operation = effect_op_t::multiply});
+                .name = "infra_cost"_name,
+                .reason = "long_intense_seasons"_name,
+                .value = 1.5});
         }
-        only_equatorial_band_habitable();
-    } else if (/*60 < */planet.axial_tilt_d < 75.0f) {
+        effect("only_equatorial_band_habitable"_name);
+    } else if (/*60 < */ planet.axial_tilt_d < 75.0f) {
         if (planet.orbital_period_y < 0.8) {
-            record("short_seasons"_name, "short_seasons_desc"_name,
-                   0.025 * (1 - planet.orbital_period_y));
+            effect("short_seasons"_name);
         } else if (1.2 < planet.orbital_period_y) {
-            record("long_seasons"_name, "long_seasons_desc"_name,
-                   -0.05 * planet.orbital_period_y);
+            effect("long_seasons"_name);
             planet.effects.push_back(planet_effect_t{
-                .name = "long_seasons_infra_cost_effect"_name,
-                .description = "long_seasons_infra_cost_effect_desc"_name,
-                .amount = agri_equip_infra_cost_factor,
-                .months_of_effect = 0,
-                .months_remaining = 0,
-                .target = planet_effect_target_t::infrastructure,
-                .target_modifiers = 0,
-                .operation = effect_op_t::multiply});
+                .name = "infra_cost"_name,
+                .reason = "long_seasons"_name,
+                .value = agri_equip_infra_cost_factor});
         }
-        only_equatorial_band_habitable();
-    } else if (/*75 < */planet.axial_tilt_d < 85.0f) {
-        record("mild_seasons"_name, "mild_seasons_desc"_name, 0.025);
-        only_equatorial_band_habitable();
+        effect("only_equatorial_band_habitable"_name);
+    } else if (/*75 < */ planet.axial_tilt_d < 85.0f) {
+        effect("mild_seasons"_name);
+        effect("only_equatorial_band_habitable"_name);
     } else {
-        record("no_seasons"_name, "no_seasons_desc"_name, 0.05);
-        only_equatorial_band_habitable();
+        effect("no_seasons"_name);
+        effect("only_equatorial_band_habitable"_name);
     }
 
     // day length
     if (planet.day_h < 24.0f * 0.9f) {
-        record("short_days"_name, "short_days_desc"_name,
-               -24.0 / planet.day_h * 0.1);
+        effect("short_days"_name);
         planet.effects.push_back(planet_effect_t{
-            .name = "short_days_infra_cost_effect"_name,
-            .description = "short_days_infra_cost_effect_desc"_name,
-            .amount = agri_equip_infra_cost_factor,
-            .months_of_effect = 0,
-            .months_remaining = 0,
-            .target = planet_effect_target_t::infrastructure,
-            .target_modifiers = 0,
-            .operation = effect_op_t::multiply});
+            .name = "infra_cost"_name,
+            .reason = "short_days"_name,
+            .value = agri_equip_infra_cost_factor});
     } else if (planet.day_h < 24.0f * 1.1f) {
         // no effect
     } else if (planet.day_h < 48.0f) {
-        record("long_days"_name, "long_days_desc"_name,
-               -std::min((planet.day_h - 24.0) * 0.01, 0.1));
+        effect("long_days"_name);
         planet.effects.push_back(planet_effect_t{
-            .name = "long_days_infra_cost_effect"_name,
-            .description = "long_days_infra_cost_effect_desc"_name,
-            .amount = agri_equip_infra_cost_factor,
-            .months_of_effect = 0,
-            .months_remaining = 0,
-            .target = planet_effect_target_t::infrastructure,
-            .target_modifiers = 0,
-            .operation = effect_op_t::multiply});
+            .name = "infra_cost"_name,
+            .reason = "long_days"_name,
+            .value = agri_equip_infra_cost_factor});
     } else {
-        record("very_long_days"_name, "very_long_days_desc"_name,
-               -0.1 - std::min((planet.day_h - 48.0) * 0.01, 0.1));
+        effect("very_long_days"_name);
         planet.effects.push_back(planet_effect_t{
-            .name = "very_long_days_infra_cost_effect"_name,
-            .description = "very_long_days_infra_cost_effect_desc"_name,
-            .amount = agri_equip_infra_cost_factor,
-            .months_of_effect = 0,
-            .months_remaining = 0,
-            .target = planet_effect_target_t::infrastructure,
-            .target_modifiers = 0,
-            .operation = effect_op_t::multiply});
+            .name = "infra_cost"_name,
+            .reason = "very_long_days"_name,
+            .value = agri_equip_infra_cost_factor});
     }
     // TODO: Require habs+suits if the day is long enough?
 
@@ -188,61 +131,28 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     int habs_and_suits_already_required = 0;
     std::string name_scratch;
     std::string desc_scratch;
-    auto const habs_and_masks_required = [&](std::string_view name_prefix) {
-        name_scratch = name_prefix;
-        name_scratch += "_habs_and_masks_pop_effect";
-        desc_scratch = name_scratch;
-        desc_scratch += "_desc";
-        planet.effects.push_back(
-            onetime_max_population_effect(
-                adobe::name_t(name_scratch.c_str()),
-                adobe::name_t(desc_scratch.c_str()),
-                habs_and_masks_habitable_factor, effect_op_t::multiply));
-        name_scratch = name_prefix;
-        name_scratch += "_habs_and_masks_infra_cost_effect";
-        desc_scratch = name_scratch;
-        desc_scratch += "_desc";
+    auto const habs_and_masks_required = [&](adobe::name_t reason) {
         planet.effects.push_back(planet_effect_t{
-            .name = adobe::name_t(name_scratch.c_str()),
-            .description = adobe::name_t(desc_scratch.c_str()),
-            .amount = habs_and_masks_infra_cost_factor,
-            .months_of_effect = 0,
-            .months_remaining = 0,
-            .target = planet_effect_target_t::infrastructure,
-            .target_modifiers = flags(planet_effect_mod_t::cost),
-            .operation = effect_op_t::multiply});
+            .name = "habs_and_masks_required"_name, .reason = reason});
+        planet.effects.push_back(planet_effect_t{
+            .name = "infra_cost"_name,
+            .reason = reason,
+            .value = habs_and_masks_infra_cost_factor});
     };
-    auto const habs_and_suits_required = [&](std::string_view name_prefix) {
+    auto const habs_and_suits_required = [&](adobe::name_t reason) {
         if (habs_and_suits_already_required)
             return;
 
         // Dump all previous effects.  Living in a hab+suit obviates almost
         // all other effects.
         planet.effects.clear();
-        retval = base_pop_growth_factor;
 
-        name_scratch = name_prefix;
-        name_scratch += "_habs_and_suits_pop_effect";
-        desc_scratch = name_scratch;
-        desc_scratch += "_desc";
-        planet.effects.push_back(
-            onetime_max_population_effect(
-                adobe::name_t(name_scratch.c_str()),
-                adobe::name_t(desc_scratch.c_str()),
-                habs_and_suits_habitable_factor, effect_op_t::multiply));
-        name_scratch = name_prefix;
-        name_scratch += "_habs_and_suits_infra_cost_effect";
-        desc_scratch = name_scratch;
-        desc_scratch += "_desc";
         planet.effects.push_back(planet_effect_t{
-            .name = adobe::name_t(name_scratch.c_str()),
-            .description = adobe::name_t(desc_scratch.c_str()),
-            .amount = habs_and_suits_infra_cost_factor,
-            .months_of_effect = 0,
-            .months_remaining = 0,
-            .target = planet_effect_target_t::infrastructure,
-            .target_modifiers = flags(planet_effect_mod_t::cost),
-            .operation = effect_op_t::multiply});
+            .name = "habs_and_suits_required"_name, .reason = reason});
+        planet.effects.push_back(planet_effect_t{
+            .name = "infra_cost"_name,
+            .reason = reason,
+            .value = habs_and_suits_infra_cost_factor});
 
         ++habs_and_suits_already_required;
     };
@@ -255,134 +165,114 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
         planet.o2_co2_suitability * planet.atmopsheric_pressure;
     if (harmless_o2_threshold < effective_o2) {
         // no effect
-    } else if (effective_o2_percentage_la_paz_bolivia / earth_o2_percentage <
-               effective_o2) {
-        record("poor_o2_co2_suitab"_name,
-               "poor_o2_co2_suitab_desc"_name,
-               -(harmless_o2_threshold - effective_o2) * 0.25);
-    } else if (effective_o2_percentage_aconcagua / earth_o2_percentage <
-               effective_o2) {
-        record("very_poor_o2_co2_suitab"_name,
-               "very_poor_o2_co2_suitab_desc"_name,
-               -(harmless_o2_threshold - effective_o2) * 0.25);
-        habs_and_masks_required("very_poor_o2_co2_suitab"sv);
-    } else if (effective_o2_percentage_mt_everest_peak / earth_o2_percentage <
-               effective_o2) {
-        record("marginal_o2_co2_suitab"_name,
-               "marginal_o2_co2_suitab_desc"_name,
-               -(harmless_o2_threshold - effective_o2) * 0.25);
-        habs_and_masks_required("marginal_o2_co2_suitab"sv);
+    } else if (
+        effective_o2_percentage_la_paz_bolivia / earth_o2_percentage <
+        effective_o2) {
+        effect("poor_o2_co2_suitab"_name);
+    } else if (
+        effective_o2_percentage_aconcagua / earth_o2_percentage <
+        effective_o2) {
+        effect("very_poor_o2_co2_suitab"_name);
+        habs_and_masks_required("very_poor_o2_co2_suitab"_name);
+    } else if (
+        effective_o2_percentage_mt_everest_peak / earth_o2_percentage <
+        effective_o2) {
+        effect("marginal_o2_co2_suitab"_name);
+        habs_and_masks_required("marginal_o2_co2_suitab"_name);
     } else {
-        habs_and_suits_required("insufficient_o2_co2_suitab"sv);
-        record("insufficient_o2_co2_suitab"_name,
-               "insufficient_o2_co2_suitab_desc"_name,
-               habs_and_suits_growth_modifier);
+        habs_and_suits_required("insufficient_o2_co2_suitab"_name);
+        effect("insufficient_o2_co2_suitab"_name);
     }
 
     // atmospheric pressure (< 1 cases handled with o2_co2_suitability
     // above)
     if (4.0f < planet.atmopsheric_pressure) {
-        habs_and_suits_required("high_press_n2_narcosis"sv);
-        record("high_press_n2_narcosis"_name,
-               "high_press_n2_narcosis_desc"_name,
-               habs_and_suits_growth_modifier);
+        habs_and_suits_required("high_press_n2_narcosis"_name);
+        effect("high_press_n2_narcosis"_name);
     }
     if (7.0f < effective_o2) {
-        habs_and_suits_required("very_high_press_o2_toxicity"sv);
-        record("very_high_press_o2_toxicity"_name,
-               "very_high_press_o2_toxicity_desc"_name,
-               habs_and_suits_growth_modifier);
+        habs_and_suits_required("very_high_press_o2_toxicity"_name);
+        effect("very_high_press_o2_toxicity"_name);
     }
 
     // magnetosphere
     if (planet.magnetosphere_strength < 0.33) {
-        habs_and_suits_required("very_weak_magneto"sv);
-        record("very_weak_magneto"_name,
-               "very_weak_magneto_desc"_name,
-               habs_and_suits_growth_modifier);
-    } else if (/*0.33 < */planet.magnetosphere_strength < 0.9) {
-        record("weak_magneto"_name,
-               "weak_magneto_desc"_name,
-               -(1 - planet.magnetosphere_strength));
+        habs_and_suits_required("very_weak_magneto"_name);
+        effect("very_weak_magneto"_name);
+    } else if (/*0.33 < */ planet.magnetosphere_strength < 0.9) {
+        effect("weak_magneto"_name);
         if (planet.magnetosphere_strength < 0.67)
-            habs_and_masks_required("weak_magneto"sv);
-    } else if (/*0.9 < */planet.magnetosphere_strength < 1.1) {
+            habs_and_masks_required("weak_magneto"_name);
+    } else if (/*0.9 < */ planet.magnetosphere_strength < 1.1) {
         // no effect
     } else if (1.1 < planet.magnetosphere_strength) {
-        record("strong_magneto"_name,
-               "strong_magneto_desc"_name,
-               (planet.magnetosphere_strength - 1.1) * 0.02);
+        effect("strong_magneto"_name);
     }
 
     // temperature
     if (planet.surface_temperature_k < min_habitable_nonsuit_temp_k) {
-        habs_and_suits_required("extremely_cold_avg_surface_temp"sv);
-        record("extremely_cold_avg_surface_temp"_name,
-               "extremely_cold_avg_surface_temp_desc"_name,
-               habs_and_suits_growth_modifier);
-    } else if (/*earth - 44 < */planet.surface_temperature_k < earth_temperature_k - 22) {
-        record("very_cold_avg_surface_temp"_name,
-               "very_cold_avg_surface_temp_desc"_name,
-               -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.03);
-    } else if (/*earth - 22 < */planet.surface_temperature_k < earth_temperature_k - 11) {
-        record("cold_avg_surface_temp"_name,
-               "cold_avg_surface_temp_desc"_name,
-               -(earth_temperature_k - 11 - planet.surface_temperature_k) * 0.01);
-    } else if (/*earth - 11 < */planet.surface_temperature_k < earth_temperature_k + 11) {
+        habs_and_suits_required("extremely_cold_avg_surface_temp"_name);
+        effect("extremely_cold_avg_surface_temp"_name);
+    } else if (
+        /*earth - 44 < */ planet.surface_temperature_k <
+        earth_temperature_k - 22) {
+        effect("very_cold_avg_surface_temp"_name);
+    } else if (
+        /*earth - 22 < */ planet.surface_temperature_k <
+        earth_temperature_k - 11) {
+        effect("cold_avg_surface_temp"_name);
+    } else if (
+        /*earth - 11 < */ planet.surface_temperature_k <
+        earth_temperature_k + 11) {
         // no effect
-    } else if (/*earth + 11 < */planet.surface_temperature_k < earth_temperature_k + 22) {
-        record("hot_avg_surface_temp"_name,
-               "hot_avg_surface_temp_desc"_name,
-               -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.01);
-    } else if (/*earth + 22 < */planet.surface_temperature_k < earth_temperature_k + 33) {
-        record("very_hot_avg_surface_temp"_name,
-               "very_hot_avg_surface_temp_desc"_name,
-               -(planet.surface_temperature_k - (earth_temperature_k + 11)) * 0.03);
-    } else if (/*earth + 33 < */planet.surface_temperature_k < max_habitable_temp_k) {
-        habs_and_suits_required("extremely_hot_avg_surface_temp"sv);
-        record("extremely_hot_avg_surface_temp"_name,
-               "extremely_hot_avg_surface_temp_desc"_name,
-               habs_and_suits_growth_modifier);
+    } else if (
+        /*earth + 11 < */ planet.surface_temperature_k <
+        earth_temperature_k + 22) {
+        effect("hot_avg_surface_temp"_name);
+    } else if (
+        /*earth + 22 < */ planet.surface_temperature_k <
+        earth_temperature_k + 33) {
+        effect("very_hot_avg_surface_temp"_name);
+    } else if (
+        /*earth + 33 < */ planet.surface_temperature_k < max_habitable_temp_k) {
+        habs_and_suits_required("extremely_hot_avg_surface_temp"_name);
+        effect("extremely_hot_avg_surface_temp"_name);
     } else {
-        record("uninhabitably_hot_avg_surface_temp"_name,
-               "uninhabitably_hot_avg_surface_temp_desc"_name, growth_uninhabitable);
+        effect("uninhabitably_hot_avg_surface_temp"_name);
     }
 
     // gravity
-    if (planet.gravity_g < 0.1f) {
-        record("very_low_grav"_name, "very_low_grav_desc"_name, -0.2);
-    } else if (planet.gravity_g < 0.9f) {
-        record("low_grav"_name, "low_grav_desc"_name,
-               -0.1f * (1 - planet.gravity_g));
-    } else if (planet.gravity_g < 1.1f) {
-        // no effect
-    } else if (planet.gravity_g < 1.3f) {
-        record("high_grav"_name, "high_grav_desc"_name,
-               0.1 * (planet.gravity_g - 1.1f));
-    } else {
-        record("very_high_grav"_name, "very_high_grav_desc"_name,
-               -(planet.gravity_g - 1.3f));
+    if (planet.gravity_g < 0.1f)
+        effect("very_low_grav"_name);
+    else if (planet.gravity_g < 0.9f)
+        effect("low_grav"_name);
+    else if (planet.gravity_g < 1.1f)
+        ; // no effect
+    else if (planet.gravity_g < 1.3f)
+        effect("high_grav"_name);
+    else
+        effect("very_high_grav"_name);
+
+    for (auto const & e : planet.effects) {
+        apply_planet_effect(planet, e);
     }
 
-    resort_effects(planet);
-
-    return retval;
+    return planet.growth_factor;
 }
 
 // See: https://en.wikipedia.org/wiki/Sun
 
 // TODO: See if generating 100s or 1000s of rolls at once is faster.
-star_t generation::detail::generate_star(double roll/* = random_unit_double()*/)
+star_t
+generation::detail::generate_star(double roll /* = random_unit_double()*/)
 {
     star_t retval;
 
-    auto it = std::ranges::find_if(
-        star_properties,
-        [&](auto const & elem) {
-            bool const retval = roll < elem.frequency_;
-            roll -= elem.frequency_;
-            return retval;
-        });
+    auto it = std::ranges::find_if(star_properties, [&](auto const & elem) {
+        bool const retval = roll < elem.frequency_;
+        roll -= elem.frequency_;
+        return retval;
+    });
     if (it == std::ranges::begin(star_properties) ||
         it == std::ranges::end(star_properties)) {
         it = std::ranges::begin(star_properties) + 5;
@@ -390,19 +280,19 @@ star_t generation::detail::generate_star(double roll/* = random_unit_double()*/)
     retval.star_class = it->class_;
 
     auto const & ranges = *it;
-    retval.temperature_k = std::lerp(ranges.temperature_.first,
-                                     ranges.temperature_.second,
-                                     random_unit_double());
-    retval.solar_masses = std::lerp(ranges.mass_.first,
-                                    ranges.mass_.second,
-                                    random_unit_double());
-    retval.solar_luminosities = std::lerp(ranges.luminosity_.first,
-                                          ranges.luminosity_.second,
-                                          random_unit_double());
+    retval.temperature_k = std::lerp(
+        ranges.temperature_.first,
+        ranges.temperature_.second,
+        random_unit_double());
+    retval.solar_masses = std::lerp(
+        ranges.mass_.first, ranges.mass_.second, random_unit_double());
+    retval.solar_luminosities = std::lerp(
+        ranges.luminosity_.first,
+        ranges.luminosity_.second,
+        random_unit_double());
 
     retval.solar_radii = solar_radius(
-        retval.solar_luminosities,
-        retval.temperature_k / sun_temperature_k);
+        retval.solar_luminosities, retval.temperature_k / sun_temperature_k);
 
     return retval;
 }
@@ -417,7 +307,8 @@ star_t generation::detail::generate_star(double roll/* = random_unit_double()*/)
 // Uranus 1270 kg/m^3 1.02e26 kg
 // Neptune 1638 kg/m^3 8.68e25 kg
 
-bool generation::detail::generate_planet(planet_t & planet, system_t const & system)
+bool generation::detail::generate_planet(
+    planet_t & planet, system_t const & system)
 {
     // According to Google, planets < 0.3 Jupiter masses are rocky.
     constexpr double rockiness_mass_threshold = 5.7e26;
@@ -451,9 +342,10 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         density = random_number(gas_giant_density_dist);
     else if (planet.planet_type == planet_type_t::ice_giant)
         density = random_number(ice_giant_density_dist);
-    if (density) {} else
+    if (density) {
+    } else
 #endif
-    if (planet.mass_kg < rockiness_mass_threshold) {
+        if (planet.mass_kg < rockiness_mass_threshold) {
         density = random_number(rocky_density_dist);
         planet.planet_type = planet_type_t::rocky;
     } else if (planet.orbit_au < ice_distance_au) {
@@ -468,12 +360,12 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
 
     planet.radius_km = std::cbrt(0.75 * volume / std::numbers::pi);
 
-    double const surface_gravity = G_ * planet.mass_kg /
+    double const surface_gravity =
+        G_ * planet.mass_kg /
         (planet.radius_km * m_per_km * planet.radius_km * m_per_km);
     planet.gravity_g = surface_gravity / earth_gravity;
 
-    planet.axial_tilt_d =
-        std::min(std::abs(random_number(tilt_dist)), 90.0);
+    planet.axial_tilt_d = std::min(std::abs(random_number(tilt_dist)), 90.0);
 
     planet.day_h = day_length_factor * random_number(day_dist);
 
@@ -485,10 +377,10 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         std::sqrt(4 * std::numbers::pi * std::numbers::pi / (G_ * M) * a3) /
         secs_per_year;
 
-    planet.surface_temperature_k =
-        system.star.temperature_k *
-        std::sqrt(system.star.solar_radii * sun_radius_km /
-                  (2 * planet.orbit_au * km_per_au));
+    planet.surface_temperature_k = system.star.temperature_k *
+                                   std::sqrt(
+                                       system.star.solar_radii * sun_radius_km /
+                                       (2 * planet.orbit_au * km_per_au));
 
     planet.o2_co2_suitability = 0.0;
     if (planet.planet_type == planet_type_t::rocky) {
@@ -506,14 +398,12 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         } else if (planet.magnetosphere_strength < 0.01) {
             double const no_mag_roll = random_unit_double();
             if (no_mag_roll < prob_no_magnetosphere_rocky_planet_is_reduced) {
-                planet.atmosphere_type =
-                    atmosphere_type_t::reduced_type_a;
+                planet.atmosphere_type = atmosphere_type_t::reduced_type_a;
                 planet.atmopsheric_pressure =
                     reduced_rocky_planet_pressure_factor *
                     random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
             } else {
-                planet.atmosphere_type =
-                    atmosphere_type_t::carbon_rich_type_c;
+                planet.atmosphere_type = atmosphere_type_t::carbon_rich_type_c;
                 planet.atmopsheric_pressure =
                     nonreduced_rocky_planet_pressure_factor *
                     random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
@@ -521,21 +411,17 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
         } else {
             planet.atmosphere_type = atmosphere_type_t::oxidized_type_b;
             double const scale = o2_dist.max() - o2_dist.min();
-            planet.o2_co2_suitability =
-                1.0 - random_number(o2_dist) / scale;
-            planet.atmopsheric_pressure = random_number(atmos_dist) *
-                planet.mass_kg / earth_mass_kg;
+            planet.o2_co2_suitability = 1.0 - random_number(o2_dist) / scale;
+            planet.atmopsheric_pressure =
+                random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
         }
     } else {
-        planet.magnetosphere_strength =
-            random_number(giant_magnetosphere_dist);
+        planet.magnetosphere_strength = random_number(giant_magnetosphere_dist);
         if (planet.planet_type == planet_type_t::gas_giant) {
-            planet.atmosphere_type =
-                atmosphere_type_t::gas_giant_atmosphere;
+            planet.atmosphere_type = atmosphere_type_t::gas_giant_atmosphere;
             planet.atmopsheric_pressure = atmos_millions;
         } else {
-            planet.atmosphere_type =
-                atmosphere_type_t::ice_giant_atmosphere;
+            planet.atmosphere_type = atmosphere_type_t::ice_giant_atmosphere;
             planet.atmopsheric_pressure = atmos_thousands;
         }
     }
@@ -549,15 +435,13 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
             planet.ocean_coverage /
             (earth_radius_km * earth_radius_km * earth_radius_km) /
             earth_ocean_coverage;
-        planet.max_population =
-            std::round(max_earth_pops * earth_pop_scale);
+        planet.max_population = std::round(max_earth_pops * earth_pop_scale);
     } else {
         planet.ocean_coverage = n_a;
         planet.max_population = 0;
     }
 
-    double const growth_factor =
-        determine_growth_factor_and_effects(planet);
+    double const growth_factor = determine_growth_factor_and_effects(planet);
     planet.growth_factor = growth_factor;
 
     auto clamp_res = [](int x) {
@@ -576,8 +460,7 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
             planet.water = clamp_res(random_number(resource_dist));
         }
     } else {
-        planet.water = clamp_res(
-            moon_factor * random_number(resource_dist));
+        planet.water = clamp_res(moon_factor * random_number(resource_dist));
     }
 
     if (planet.planet_type == planet_type_t::rocky &&
@@ -594,28 +477,24 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
             energy_from_solar + energy_from_wind +
             random_number(resource_dist));
     } else {
-        planet.energy = clamp_res(
-            moon_factor * random_number(resource_dist));
+        planet.energy = clamp_res(moon_factor * random_number(resource_dist));
     }
 
     // TODO: Give each hex a bias (+ive or -ive) for fuel and metal, since
     // presence of heavy elements is stellar-neighborhood-dependent.
 
     if (planet.planet_type == planet_type_t::rocky) {
-        double const scale = planet.magnetosphere_strength ?
-            planet.magnetosphere_strength : 1.0;
-        planet.metal = clamp_res(
-            scale * random_number(resource_dist));
+        double const scale =
+            planet.magnetosphere_strength ? planet.magnetosphere_strength : 1.0;
+        planet.metal = clamp_res(scale * random_number(resource_dist));
     } else {
-        planet.metal = clamp_res(
-            moon_factor * random_number(resource_dist));
+        planet.metal = clamp_res(moon_factor * random_number(resource_dist));
     }
 
     if (planet.planet_type == planet_type_t::rocky) {
         planet.fuel = clamp_res(random_number(resource_dist));
     } else {
-        planet.fuel = clamp_res(
-            moon_factor * random_number(resource_dist));
+        planet.fuel = clamp_res(moon_factor * random_number(resource_dist));
     }
 
     planet.population = 0;
@@ -628,14 +507,17 @@ bool generation::detail::generate_planet(planet_t & planet, system_t const & sys
     return growth_factor_considered_habitable < growth_factor;
 }
 
-void generation::detail::generate_hex(hex_t & hex, int hex_index,
-                                      game_state_t & game_state,
-                                      game_start_params_t const & params,
-                                      double map_radius, double bulge_radius,
-                                      hex_coord_t center_hex,
-                                      point_2d center_hex_pos,
-                                      int habitable_systems,
-                                      hex_scratch & scratch)
+void generation::detail::generate_hex(
+    hex_t & hex,
+    int hex_index,
+    game_state_t & game_state,
+    game_start_params_t const & params,
+    double map_radius,
+    double bulge_radius,
+    hex_coord_t center_hex,
+    point_2d center_hex_pos,
+    int habitable_systems,
+    hex_scratch & scratch)
 {
     assert(habitable_systems < params.systems_per_hex);
 
@@ -674,8 +556,12 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     for (int i = 0; i < params.systems_per_hex; ++i) {
         auto & planets = scratch.systems_[i];
         int const system_index = hex.first_system + i;
-        if (detail::generate_system(game_state.systems[system_index], planets,
-                                    hc, pos, system_index)) {
+        if (detail::generate_system(
+                game_state.systems[system_index],
+                planets,
+                hc,
+                pos,
+                system_index)) {
             auto first_uninhabitable_it =
                 scratch.systems_.begin() + first_uninhabitable_index;
             if (first_uninhabitable_it != scratch.systems_.end())
@@ -689,92 +575,112 @@ void generation::detail::generate_hex(hex_t & hex, int hex_index,
     while (first_uninhabitable_index < habitable_systems) {
         auto & planets = scratch.systems_[first_uninhabitable_index];
         int const system_index = hex.first_system + first_uninhabitable_index;
-        if (detail::generate_system(game_state.systems[system_index], planets,
-                                    hc, pos, system_index)) {
+        if (detail::generate_system(
+                game_state.systems[system_index],
+                planets,
+                hc,
+                pos,
+                system_index)) {
             ++first_uninhabitable_index;
         }
     }
 }
 
-void generation::generate_galaxy(game_start_params_t const & params,
-                                 game_state_t & game_state,
-                                 task_system * ts_ptr,
-                                 concurrent_queue<int> * percent_complete,
-                                 std::atomic_bool * fully_complete)
+void generation::generate_galaxy(
+    game_start_params_t const & params,
+    game_state_t & game_state,
+    task_system * ts_ptr,
+    concurrent_queue<int> * percent_complete,
+    std::atomic_bool * fully_complete)
 {
     auto [map_radius, bulge_radius, center_hex, center_hex_pos] =
         detail::galaxy_shape(params, game_state);
 
-   std::normal_distribution<double> habitable_systems_dist(
-       params.habitable_systems_per_hex_mean,
+    std::normal_distribution<double> habitable_systems_dist(
+        params.habitable_systems_per_hex_mean,
         ::detail::plus_minus_to_sigma(
             params.habitable_systems_per_hex_plus_minus));
 
-   detail::scratch_space scratch(game_state.hexes.size());
-   game_state.systems.resize(game_state.hexes.size() * params.systems_per_hex);
+    detail::scratch_space scratch(game_state.hexes.size());
+    game_state.systems.resize(game_state.hexes.size() * params.systems_per_hex);
 
-   std::atomic_int hexes_generated = 0;
+    std::atomic_int hexes_generated = 0;
 
-   std::unique_ptr<task_system> local_ts_ptr;
-   if (!ts_ptr)
-       local_ts_ptr.reset(new task_system(4));
-   task_system & ts = ts_ptr ? *ts_ptr : *local_ts_ptr;
+    std::unique_ptr<task_system> local_ts_ptr;
+    if (!ts_ptr)
+        local_ts_ptr.reset(new task_system(4));
+    task_system & ts = ts_ptr ? *ts_ptr : *local_ts_ptr;
 
-   int const update_percentage = 5;
-   int const five_percent = game_state.hexes.size() * update_percentage / 100;
+    int const update_percentage = 5;
+    int const five_percent = game_state.hexes.size() * update_percentage / 100;
 
-   int hex_index = 0;
-   for (auto & hex : game_state.hexes) {
-       auto const habitable_systems =
-           int(std::round(random_number(habitable_systems_dist)));
-       auto & hex_scratch_ = scratch.hexes_[hex_index];
-       ts.async_exec([=, &hex, &game_state, &params, &hex_scratch_,
-                      &hexes_generated, &ts] {
-           int const finished = hexes_generated.load();
-           if (percent_complete && (finished + 1) % five_percent == 0)
-               percent_complete->push(update_percentage);
-           detail::generate_hex(hex, hex_index, game_state, params,
-                                map_radius, bulge_radius,
-                                center_hex, center_hex_pos,
-                                habitable_systems, hex_scratch_);
-           ++hexes_generated;
-       });
-       ++hex_index;
-   }
+    int hex_index = 0;
+    for (auto & hex : game_state.hexes) {
+        auto const habitable_systems =
+            int(std::round(random_number(habitable_systems_dist)));
+        auto & hex_scratch_ = scratch.hexes_[hex_index];
+        ts.async_exec([=,
+                       &hex,
+                       &game_state,
+                       &params,
+                       &hex_scratch_,
+                       &hexes_generated,
+                       &ts] {
+            int const finished = hexes_generated.load();
+            if (percent_complete && (finished + 1) % five_percent == 0)
+                percent_complete->push(update_percentage);
+            detail::generate_hex(
+                hex,
+                hex_index,
+                game_state,
+                params,
+                map_radius,
+                bulge_radius,
+                center_hex,
+                center_hex_pos,
+                habitable_systems,
+                hex_scratch_);
+            ++hexes_generated;
+        });
+        ++hex_index;
+    }
 
-   while (hexes_generated.load() < game_state.hexes.size()) {
-       std::this_thread::sleep_for(std::chrono::milliseconds(10));
-   }
-   if (percent_complete)
-       percent_complete->done();
+    while (hexes_generated.load() < game_state.hexes.size()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    }
+    if (percent_complete)
+        percent_complete->done();
 
-   hex_index = 0;
-   int system_id = 0;
-   for (auto & hex : game_state.hexes) {
-       auto & hex_scratch_ = scratch.hexes_[hex_index];
-       auto system_it = game_state.systems.begin() + system_id;
-       for (auto & system_scratch_ : hex_scratch_.systems_) {
-           auto const prev_size = game_state.planets.size();
-           game_state.planets.resize(prev_size + system_scratch_.planets_.size());
-           for (auto & planet : system_scratch_.planets_) {
-               planet.system_id = system_id;
-           }
-           std::ranges::move(
-               system_scratch_.planets_,
-               game_state.planets.begin() + prev_size);
-           system_it->first_planet = prev_size;
-           system_it->last_planet = game_state.planets.size();
-           assert(game_state.planets[system_it->first_planet].system_id ==
-                  system_id);
-           assert(game_state.planets[system_it->last_planet - 1].system_id ==
-                  system_id);
-           ++system_it;
-           ++system_id;
-       }
+    hex_index = 0;
+    int system_id = 0;
+    for (auto & hex : game_state.hexes) {
+        auto & hex_scratch_ = scratch.hexes_[hex_index];
+        auto system_it = game_state.systems.begin() + system_id;
+        for (auto & system_scratch_ : hex_scratch_.systems_) {
+            auto const prev_size = game_state.planets.size();
+            game_state.planets.resize(
+                prev_size + system_scratch_.planets_.size());
+            for (auto & planet : system_scratch_.planets_) {
+                planet.system_id = system_id;
+            }
+            std::ranges::move(
+                system_scratch_.planets_,
+                game_state.planets.begin() + prev_size);
+            system_it->first_planet = prev_size;
+            system_it->last_planet = game_state.planets.size();
+            assert(
+                game_state.planets[system_it->first_planet].system_id ==
+                system_id);
+            assert(
+                game_state.planets[system_it->last_planet - 1].system_id ==
+                system_id);
+            ++system_it;
+            ++system_id;
+        }
 
-       ++hex_index;
-   }
+        ++hex_index;
+    }
 
-   if (fully_complete)
-       *fully_complete = true;
+    if (fully_complete)
+        *fully_complete = true;
 }

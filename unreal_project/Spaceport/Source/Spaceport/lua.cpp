@@ -32,50 +32,58 @@ namespace {
     }
 }
 
-sol::state & lua()
+
+sol::state make_lua_state()
 {
-    static sol::state retval;
-    static bool once = true;
-    if (once) {
-        retval.open_libraries(
-            sol::lib::base,
-            sol::lib::package,
-            sol::lib::string,
-            sol::lib::math,
-            sol::lib::table);
+    sol::state retval;
 
-        retval.set_function("UE_LOG", &ue_log_impl);
-        retval.set_function("UE_WARN", &ue_warn_impl);
-        retval.set_function("UE_ERR", &ue_err_impl);
+    retval.open_libraries(
+        sol::lib::base,
+        sol::lib::package,
+        sol::lib::string,
+        sol::lib::math,
+        sol::lib::table);
 
-        // Load this first, since it contains the lowest-level cosntant calues
-        // that are used everywhere else.
-        retval.script_file(script_path("constants.lua"));
+    retval.set_function("UE_LOG", &ue_log_impl);
+    retval.set_function("UE_WARN", &ue_warn_impl);
+    retval.set_function("UE_ERR", &ue_err_impl);
 
-        REGISTER_GAME_DATA_TYPE(retval, hex_coord_t);
-        retval.script("invalid_hex_coord = hex_coord_t.new(-1, -1)");
+    // Load this first, since it contains the lowest-level cosntant calues
+    // that are used everywhere else.
+    retval.script_file(script_path("constants.lua"));
 
-        REGISTER_GAME_DATA_TYPE(retval, nation_and_object_id_t);
-        retval.script(
-            "invalid_nation_and_object = nation_and_object_id_t.new(-1, -1)");
+    // TODO: constants that are not configurable, but are used in the Lua code
 
-        REGISTER_GAME_DATA_TYPE(retval, game_start_params_t);
-        // TODO: Put this in a file script.
-        retval.script(
-            R"(default_game_start_params = game_start_params_t.new()
+    REGISTER_GAME_DATA_TYPE(retval, hex_coord_t);
+    retval.script("invalid_hex_coord = hex_coord_t.new(-1, -1)");
+
+    REGISTER_GAME_DATA_TYPE(retval, nation_and_object_id_t);
+    retval.script(
+        "invalid_nation_and_object = nation_and_object_id_t.new(-1, -1)");
+
+    REGISTER_GAME_DATA_TYPE(retval, game_start_params_t);
+    // TODO: Put this in a file script.
+    retval.script(
+        R"(default_game_start_params = game_start_params_t.new()
 default_game_start_params.habitable_systems_per_hex_mean = 5.0
 default_game_start_params.habitable_systems_per_hex_plus_minus = 2.0
 default_game_start_params.systems_per_hex = default_systems_per_hex
 default_game_start_params.map_height = small_map_height
 )");
 
-        detail::lua_register_1(retval);
-        detail::lua_register_2(retval);
-        detail::lua_register_3(retval);
-        detail::lua_register_4(retval);
+    detail::lua_register_1(retval);
+    detail::lua_register_2(retval);
+    detail::lua_register_3(retval);
+    detail::lua_register_4(retval);
 
-        once = false;
-    }
+    retval.script_file(script_path("effects.lua"));
+
+    return retval;
+}
+
+sol::state & lua()
+{
+    static thread_local sol::state retval = make_lua_state();
     return retval;
 }
 

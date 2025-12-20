@@ -80,8 +80,8 @@ message fleets_t
 enum planet_type_t {
     invalid_planet_type = 0;
     rocky = 1;
-    gas_giant = 2;              // U"gas giant"
-    ice_giant = 3;              // U"ice giant"
+    gas_giant = 2;
+    ice_giant = 3;
 }
 
 enum atmosphere_type_t {
@@ -94,53 +94,15 @@ enum atmosphere_type_t {
     ice_giant_atmosphere = 6;
 }
 
-enum planet_effect_target_t {
-    invalid_planet_effect_target = 0;
-    gravity = 1;
-    axial_tilt = 2;
-    day = 3;
-    surface_temperature = 4;
-    magnetosphere_strength = 5;
-    atmopsheric_pressure = 6;
-    o2_co2_suitability = 7;
-    growth_factor = 8;
-    water = 9;
-    food = 10;
-    energy = 11;
-    metal = 12;
-    fuel = 13;
-    population = 14;
-    infrastructure = 15;
-    max_population = 16;
-}
-
-// FLAGS
-enum planet_effect_mod_t {
-    invalid_planet_effect_mod = 0;
-    monthly = 1;   // Apply op monthly, rather than one time.
-    cost = 2;      // Applies to the cost of the target property, not the property itself.
-}
-
-enum effect_op_t {
-    invalid_effect_op = 0;
-    add = 1;
-    multiply = 2;
-}
-
 message planet_effect_t
 {
     string name = 1;
-    string description = 2;
-    float amount = 3;
-    int32 months_of_effect = 4;
-    int32 months_remaining = 5;
-    planet_effect_target_t target = 6;
-    uint32 target_modifiers = 7;
-    effect_op_t operation = 8;
+    string reason = 2;
+    float value = 3;
 }
 
 // TODO: We should add a notion of a settlement, so that there can be more
-// than one on a planet (one each from each neation present)
+// than one on a planet (one each from each nation present)
 message planet_t
 {
     int32 system_id = 1;
@@ -169,8 +131,8 @@ message planet_t
     // property is the truncated integral value though.
     float population = 22;
     float infrastructure = 23;
-    float infrastructure_cost_factor = 24;
 
+    float infrastructure_cost_factor = 24;
     float orbital_pos_r = 25;
     int32 max_population = 26;
     int32 owner = 27; // TODO: Ownership of planets should go away.

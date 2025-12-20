@@ -14,30 +14,11 @@
 
 template <>
 struct std::formatter<planet_type_t> : std::formatter<std::string_view> {
-    template<class ParseContext>
-    constexpr auto parse(ParseContext & ctx) {
-        auto f = ctx.begin();
-        auto const l = ctx.end();
-        if (f != l && *f == 'u') {
-            ++f;
-            printing_for_user_ = true;
-        }
-        if (f != l && *f != '}')
-            throw std::format_error("Invalid format specifier.");
-        return f;
-    }
-    bool printing_for_user_ = false;
     template <typename FormatContext>
     auto format(planet_type_t t, FormatContext & ctx) const {
         std::string_view name;
         using namespace std::literals;
-        if (printing_for_user_) switch (t) {
-            case planet_type_t::invalid_planet_type: name = "INVALID"sv; break;
-            case planet_type_t::rocky: name = "rocky"sv; break;
-            case planet_type_t::gas_giant: name = "gas giant"sv; break;
-            case planet_type_t::ice_giant: name = "ice giant"sv; break;
-        }
-        if (!printing_for_user_) switch (t) {
+        switch (t) {
             case planet_type_t::invalid_planet_type: name = "INVALID"sv; break;
             case planet_type_t::rocky: name = "rocky"sv; break;
             case planet_type_t::gas_giant: name = "gas_giant"sv; break;
@@ -61,65 +42,6 @@ struct std::formatter<atmosphere_type_t> : std::formatter<std::string_view> {
             case atmosphere_type_t::high_temperature: name = "high_temperature"sv; break;
             case atmosphere_type_t::gas_giant_atmosphere: name = "gas_giant_atmosphere"sv; break;
             case atmosphere_type_t::ice_giant_atmosphere: name = "ice_giant_atmosphere"sv; break;
-        }
-        return std::formatter<std::string_view>::format(name, ctx);
-    }
-};
-
-template <>
-struct std::formatter<planet_effect_target_t> : std::formatter<std::string_view> {
-    template <typename FormatContext>
-    auto format(planet_effect_target_t t, FormatContext & ctx) const {
-        std::string_view name;
-        using namespace std::literals;
-        switch (t) {
-            case planet_effect_target_t::invalid_planet_effect_target: name = "INVALID"sv; break;
-            case planet_effect_target_t::gravity: name = "gravity"sv; break;
-            case planet_effect_target_t::axial_tilt: name = "axial_tilt"sv; break;
-            case planet_effect_target_t::day: name = "day"sv; break;
-            case planet_effect_target_t::surface_temperature: name = "surface_temperature"sv; break;
-            case planet_effect_target_t::magnetosphere_strength: name = "magnetosphere_strength"sv; break;
-            case planet_effect_target_t::atmopsheric_pressure: name = "atmopsheric_pressure"sv; break;
-            case planet_effect_target_t::o2_co2_suitability: name = "o2_co2_suitability"sv; break;
-            case planet_effect_target_t::growth_factor: name = "growth_factor"sv; break;
-            case planet_effect_target_t::water: name = "water"sv; break;
-            case planet_effect_target_t::food: name = "food"sv; break;
-            case planet_effect_target_t::energy: name = "energy"sv; break;
-            case planet_effect_target_t::metal: name = "metal"sv; break;
-            case planet_effect_target_t::fuel: name = "fuel"sv; break;
-            case planet_effect_target_t::population: name = "population"sv; break;
-            case planet_effect_target_t::infrastructure: name = "infrastructure"sv; break;
-            case planet_effect_target_t::max_population: name = "max_population"sv; break;
-        }
-        return std::formatter<std::string_view>::format(name, ctx);
-    }
-};
-
-template <>
-struct std::formatter<planet_effect_mod_t> : std::formatter<std::string_view> {
-    template <typename FormatContext>
-    auto format(planet_effect_mod_t t, FormatContext & ctx) const {
-        std::string_view name;
-        using namespace std::literals;
-        switch (t) {
-            case planet_effect_mod_t::invalid_planet_effect_mod: name = "INVALID"sv; break;
-            case planet_effect_mod_t::monthly: name = "monthly"sv; break;
-            case planet_effect_mod_t::cost: name = "cost"sv; break;
-        }
-        return std::formatter<std::string_view>::format(name, ctx);
-    }
-};
-
-template <>
-struct std::formatter<effect_op_t> : std::formatter<std::string_view> {
-    template <typename FormatContext>
-    auto format(effect_op_t t, FormatContext & ctx) const {
-        std::string_view name;
-        using namespace std::literals;
-        switch (t) {
-            case effect_op_t::invalid_effect_op: name = "INVALID"sv; break;
-            case effect_op_t::add: name = "add"sv; break;
-            case effect_op_t::multiply: name = "multiply"sv; break;
         }
         return std::formatter<std::string_view>::format(name, ctx);
     }
@@ -338,13 +260,8 @@ struct std::formatter<planet_effect_t> {
         out = std::format_to(out, "planet_effect_t(");
 
         out = std::format_to(out, " name={}", x.name);
-        out = std::format_to(out, " description={}", x.description);
-        out = std::format_to(out, " amount={}", x.amount);
-        out = std::format_to(out, " months_of_effect={}", x.months_of_effect);
-        out = std::format_to(out, " months_remaining={}", x.months_remaining);
-        out = std::format_to(out, " target={}", x.target);
-        out = std::format_to(out, " target_modifiers={}", x.target_modifiers);
-        out = std::format_to(out, " operation={}", x.operation);
+        out = std::format_to(out, " reason={}", x.reason);
+        out = std::format_to(out, " value={}", x.value);
 
         return std::format_to(out, " )");
     }

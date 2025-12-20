@@ -412,19 +412,9 @@ namespace detail {
         if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.name, 1, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.description, 2, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.reason, 2, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.amount, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.months_of_effect, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.months_remaining, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.target, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.target_modifiers, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.operation, 8, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.value, 3, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -434,24 +424,19 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "planet_effect_t"sv;
-        constexpr std::array<std::string_view, 9> field_names = {{"<UNKOWN_FIELD>"sv,
-          "name"sv, "description"sv, "amount"sv, "months_of_effect"sv, "months_remaining"sv, "target"sv, "target_modifiers"sv, "operation"sv}};
-        std::array<int, 8> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8}};
+        constexpr std::array<std::string_view, 4> field_names = {{"<UNKOWN_FIELD>"sv,
+          "name"sv, "reason"sv, "value"sv}};
+        std::array<int, 3> expected_field_numbers = {{
+          1, 2, 3}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 8;
+        constexpr int hi_field_number = 3;
     
         auto read_field = [] (planet_effect_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
             case 1: return detail::deserialize_impl(x.name, src);
-            case 2: return detail::deserialize_impl(x.description, src);
-            case 3: return detail::deserialize_impl(x.amount, src);
-            case 4: return detail::deserialize_impl(x.months_of_effect, src);
-            case 5: return detail::deserialize_impl(x.months_remaining, src);
-            case 6: return detail::deserialize_impl(x.target, src);
-            case 7: return detail::deserialize_impl(x.target_modifiers, src);
-            case 8: return detail::deserialize_impl(x.operation, src);
+            case 2: return detail::deserialize_impl(x.reason, src);
+            case 3: return detail::deserialize_impl(x.value, src);
             default: return src; // unreachable
             }
         };

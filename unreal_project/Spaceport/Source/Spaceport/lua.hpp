@@ -59,6 +59,8 @@ namespace detail {
     })
 
 
+sol::state make_lua_state();
+
 sol::state & lua();
 
 std::string script_path(std::string const & script);

@@ -195,13 +195,8 @@ pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& val
 {
     pb_message::game_data::planet_effect_t retval;
     retval.set_name(value.name.c_str());
-    retval.set_description(value.description.c_str());
-    retval.set_amount(value.amount);
-    retval.set_months_of_effect(value.months_of_effect);
-    retval.set_months_remaining(value.months_remaining);
-    retval.set_target(static_cast< pb_message::game_data::planet_effect_target_t >(value.target));
-    retval.set_target_modifiers(value.target_modifiers);
-    retval.set_operation(static_cast< pb_message::game_data::effect_op_t >(value.operation));
+    retval.set_reason(value.reason.c_str());
+    retval.set_value(value.value);
     return retval;
 }
 
@@ -209,13 +204,8 @@ pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& val
 {
     ::planet_effect_t retval;
     retval.name = adobe::name_t(msg.name().c_str());
-    retval.description = adobe::name_t(msg.description().c_str());
-    retval.amount = msg.amount();
-    retval.months_of_effect = msg.months_of_effect();
-    retval.months_remaining = msg.months_remaining();
-    retval.target = static_cast<std::remove_reference<decltype(retval.target)>::type>(msg.target());
-    retval.target_modifiers = msg.target_modifiers();
-    retval.operation = static_cast<std::remove_reference<decltype(retval.operation)>::type>(msg.operation());
+    retval.reason = adobe::name_t(msg.reason().c_str());
+    retval.value = msg.value();
     return retval;
 }
 

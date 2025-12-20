@@ -359,60 +359,30 @@ namespace detail {
             return "planet_effect_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 8; }
+        static constexpr int hi_field_number() { return 3; }
 
         static constexpr metadatum<planet_effect_t, adobe::name_t> name()
         {
             using namespace std::literals;
             return {"name"sv, 1, &planet_effect_t::name};
         }
-        static constexpr metadatum<planet_effect_t, adobe::name_t> description()
+        static constexpr metadatum<planet_effect_t, adobe::name_t> reason()
         {
             using namespace std::literals;
-            return {"description"sv, 2, &planet_effect_t::description};
+            return {"reason"sv, 2, &planet_effect_t::reason};
         }
-        static constexpr metadatum<planet_effect_t, float> amount()
+        static constexpr metadatum<planet_effect_t, float> value()
         {
             using namespace std::literals;
-            return {"amount"sv, 3, &planet_effect_t::amount};
-        }
-        static constexpr metadatum<planet_effect_t, int> months_of_effect()
-        {
-            using namespace std::literals;
-            return {"months_of_effect"sv, 4, &planet_effect_t::months_of_effect};
-        }
-        static constexpr metadatum<planet_effect_t, int> months_remaining()
-        {
-            using namespace std::literals;
-            return {"months_remaining"sv, 5, &planet_effect_t::months_remaining};
-        }
-        static constexpr metadatum<planet_effect_t, planet_effect_target_t> target()
-        {
-            using namespace std::literals;
-            return {"target"sv, 6, &planet_effect_t::target};
-        }
-        static constexpr metadatum<planet_effect_t, unsigned int> target_modifiers()
-        {
-            using namespace std::literals;
-            return {"target_modifiers"sv, 7, &planet_effect_t::target_modifiers};
-        }
-        static constexpr metadatum<planet_effect_t, effect_op_t> operation()
-        {
-            using namespace std::literals;
-            return {"operation"sv, 8, &planet_effect_t::operation};
+            return {"value"sv, 3, &planet_effect_t::value};
         }
 
         template<typename F>
         static void foreach_member(F && f)
         {
             f(name());
-            f(description());
-            f(amount());
-            f(months_of_effect());
-            f(months_remaining());
-            f(target());
-            f(target_modifiers());
-            f(operation());
+            f(reason());
+            f(value());
         }
     };
 

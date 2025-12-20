@@ -40,43 +40,6 @@ enum class atmosphere_type_t {
 };
 inline auto operator<=>(atmosphere_type_t x, atmosphere_type_t y) { return (int)x <=> (int)y; }
 
-enum class planet_effect_target_t {
-    invalid_planet_effect_target = 0,
-    gravity = 1,
-    axial_tilt = 2,
-    day = 3,
-    surface_temperature = 4,
-    magnetosphere_strength = 5,
-    atmopsheric_pressure = 6,
-    o2_co2_suitability = 7,
-    growth_factor = 8,
-    water = 9,
-    food = 10,
-    energy = 11,
-    metal = 12,
-    fuel = 13,
-    population = 14,
-    infrastructure = 15,
-    max_population = 16,
-};
-inline auto operator<=>(planet_effect_target_t x, planet_effect_target_t y) { return (int)x <=> (int)y; }
-
-enum class planet_effect_mod_t : unsigned int {
-    invalid_planet_effect_mod = 0,
-    monthly = 1,
-    cost = 2,
-};
-template<> inline flags<planet_effect_mod_t> all_flags<planet_effect_mod_t>() { return flags(planet_effect_mod_t::invalid_planet_effect_mod) | planet_effect_mod_t::monthly | planet_effect_mod_t::cost; }
-inline flags<planet_effect_mod_t> operator|(planet_effect_mod_t x, planet_effect_mod_t y) { return flags(x) | y; }
-inline flags<planet_effect_mod_t> operator~(planet_effect_mod_t x) { return ~flags(x); }
-
-enum class effect_op_t {
-    invalid_effect_op = 0,
-    add = 1,
-    multiply = 2,
-};
-inline auto operator<=>(effect_op_t x, effect_op_t y) { return (int)x <=> (int)y; }
-
 enum class star_class_t {
     invalid_star_class = 0,
     o = 1,
@@ -164,13 +127,8 @@ struct fleets_t
 struct planet_effect_t
 {
     adobe::name_t name = adobe::name_t("");
-    adobe::name_t description = adobe::name_t("");
-    float amount = -1.0f;
-    int months_of_effect = -1;
-    int months_remaining = -1;
-    planet_effect_target_t target = planet_effect_target_t::invalid_planet_effect_target;
-    unsigned int target_modifiers = 0u - 1;
-    effect_op_t operation = effect_op_t::invalid_effect_op;
+    adobe::name_t reason = adobe::name_t("");
+    float value = -1.0f;
     bool operator==(planet_effect_t const &) const = default;
 };
 

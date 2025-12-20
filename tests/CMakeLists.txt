@@ -29,8 +29,6 @@ macro (add_executable_and_test target)
     add_test(${target} ${CMAKE_BINARY_DIR}/${target} --gtest_catch_exceptions=1)
 endmacro()
 
-add_executable_and_test(flags_tests)
-add_executable_and_test(formatter_tests)
 add_executable_and_test(generation_tests)
 add_executable_and_test(model_tests)
 add_executable_and_test(proximity_grid_tests)

@@ -232,12 +232,10 @@ double seasons_intensity_factor(planet_t const & planet)
     double const max_result = 3.0;
     double retval = 0.0;
     for (auto const & effect : planet.effects) {
-        if (effect.target == planet_effect_target_t::growth_factor) {
-            if (effect.name == "long_seasons"_name)
-                retval += 1.0;
-            else if (effect.name == "intense_seasons"_name)
-                retval += 2.0;
-        }
+        if (effect.name == "long_seasons"_name)
+            retval += 1.0;
+        else if (effect.name == "intense_seasons"_name)
+            retval += 2.0;
     }
     return retval / max_result;
 }

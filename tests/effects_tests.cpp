@@ -74,29 +74,8 @@ TEST(effects_tests, lua_bindings)
     }
 }
 
-struct planet_effect_2
-{
-    adobe::name_t name;
-    adobe::name_t reason;
-    float value = -1.0f;
-};
-
-void apply_planet_effect(planet_t & planet, planet_effect_2 const & pe)
-{
-    sol::table effect = lua()["planet_effects"][pe.name.c_str()];
-    sol::function apply = effect["apply"];
-    sol::object expr = effect["expr"];
-    if (expr)
-        apply(effect, planet);
-    else
-        apply(effect, planet, pe.value);
-}
-
 TEST(effects_tests, planet_effects)
 {
-    script_file("effects.lua");
-    sol::table effects = lua()["planet_effects"];
-
     planet_t const earth{
         .planet_type = planet_type_t::rocky,
         .mass_kg = earth_mass_kg,
@@ -125,34 +104,64 @@ TEST(effects_tests, planet_effects)
 
     using namespace adobe::literals;
 
-    float const eps = 0.001;
+    float const eps = 0.001; // tolerance for testing float closeness.
 
     {
-        planet_t earth_copy = earth;
+        planet_t planet = earth;
         apply_planet_effect(
-            earth_copy, planet_effect_2{"no_seasons"_name, ""_name});
-        EXPECT_LT(
-            std::abs(earth_copy.growth_factor - (earth.growth_factor + 0.05)),
+            planet, planet_effect_t{"no_seasons"_name, ""_name});
+        EXPECT_NEAR(planet.growth_factor, earth.growth_factor + 0.05, eps);
+    }
+
+    {
+        planet_t planet = earth;
+        apply_planet_effect(
+            planet, planet_effect_t{"long_seasons"_name, ""_name});
+        EXPECT_NEAR(planet.growth_factor, earth.growth_factor - 0.05, eps);
+    }
+
+    {
+        planet_t planet = earth;
+        apply_planet_effect(
+            planet, planet_effect_t{"infra_cost"_name, ""_name, 2.0f});
+        EXPECT_NEAR(
+            planet.infrastructure_cost_factor,
+            earth.infrastructure_cost_factor * 2,
             eps);
     }
 
     {
-        planet_t earth_copy = earth;
+        planet_t planet = earth;
         apply_planet_effect(
-            earth_copy, planet_effect_2{"long_seasons"_name, ""_name});
-        EXPECT_LT(
-            std::abs(earth_copy.growth_factor - (earth.growth_factor - 0.05)),
-            eps);
+            planet, planet_effect_t{"habs_and_masks_required"_name, ""_name});
+        EXPECT_NEAR(planet.max_population, earth.max_population * 0.25, eps);
     }
 
     {
-        planet_t earth_copy = earth;
+        planet_t planet = earth;
         apply_planet_effect(
-            earth_copy, planet_effect_2{"infra_cost"_name, ""_name, 2.0f});
-        EXPECT_LT(
-            earth_copy.infrastructure_cost_factor /
-                    earth.infrastructure_cost_factor -
-                2.0f,
+            planet, planet_effect_t{"habs_and_suits_required"_name, ""_name});
+        EXPECT_NEAR(planet.max_population, earth.max_population * 0.1, eps);
+    }
+
+    {
+        planet_t planet = earth;
+        planet.o2_co2_suitability = 0.25f; // 0.75 together
+        planet.atmopsheric_pressure = 3.0f;
+        apply_planet_effect(
+            planet, planet_effect_t{"poor_o2_co2_suitab"_name, ""_name});
+        EXPECT_NEAR(planet.growth_factor, earth.growth_factor - 0.045, eps);
+    }
+
+    {
+        planet_t planet = earth;
+        apply_planet_effect(
+            planet,
+            planet_effect_t{
+                "uninhabitably_hot_avg_surface_temp"_name, ""_name});
+        EXPECT_NEAR(
+            planet.growth_factor,
+            earth.growth_factor + growth_uninhabitable,
             eps);
     }
 }

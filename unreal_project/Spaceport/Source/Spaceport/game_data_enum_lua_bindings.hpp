@@ -29,38 +29,6 @@ namespace detail {
                 {"ice_giant_atmosphere", atmosphere_type_t::ice_giant_atmosphere},
         });
 
-        auto planet_effect_target_t_enum = l.new_enum<planet_effect_target_t>("planet_effect_target_t", {
-                {"invalid_planet_effect_target", planet_effect_target_t::invalid_planet_effect_target},
-                {"gravity", planet_effect_target_t::gravity},
-                {"axial_tilt", planet_effect_target_t::axial_tilt},
-                {"day", planet_effect_target_t::day},
-                {"surface_temperature", planet_effect_target_t::surface_temperature},
-                {"magnetosphere_strength", planet_effect_target_t::magnetosphere_strength},
-                {"atmopsheric_pressure", planet_effect_target_t::atmopsheric_pressure},
-                {"o2_co2_suitability", planet_effect_target_t::o2_co2_suitability},
-                {"growth_factor", planet_effect_target_t::growth_factor},
-                {"water", planet_effect_target_t::water},
-                {"food", planet_effect_target_t::food},
-                {"energy", planet_effect_target_t::energy},
-                {"metal", planet_effect_target_t::metal},
-                {"fuel", planet_effect_target_t::fuel},
-                {"population", planet_effect_target_t::population},
-                {"infrastructure", planet_effect_target_t::infrastructure},
-                {"max_population", planet_effect_target_t::max_population},
-        });
-
-        auto planet_effect_mod_t_enum = l.new_enum<planet_effect_mod_t>("planet_effect_mod_t", {
-                {"invalid_planet_effect_mod", planet_effect_mod_t::invalid_planet_effect_mod},
-                {"monthly", planet_effect_mod_t::monthly},
-                {"cost", planet_effect_mod_t::cost},
-        });
-
-        auto effect_op_t_enum = l.new_enum<effect_op_t>("effect_op_t", {
-                {"invalid_effect_op", effect_op_t::invalid_effect_op},
-                {"add", effect_op_t::add},
-                {"multiply", effect_op_t::multiply},
-        });
-
         auto star_class_t_enum = l.new_enum<star_class_t>("star_class_t", {
                 {"invalid_star_class", star_class_t::invalid_star_class},
                 {"o", star_class_t::o},
