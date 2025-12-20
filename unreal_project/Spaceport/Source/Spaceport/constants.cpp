@@ -31,14 +31,14 @@ const int prov_none = -1;
 const int prov_off_map = -2;
 const int prov_galactic_bulge = -3;
 const int prov_galactic_center = -4;
-const double atmos_thousands = -1.0;
-const double atmos_millions = -2.0;
+const double atmos_thousands = -1234.0;
+const double atmos_millions = -2345.0;
 const double growth_uninhabitable = -1000.0;
 const int nation_none = -1;
 const int hex_none = -1;
 const int system_none = -1;
 const int object_none = -1;
-const double n_a = -3.0;
+const double n_a = -4321.0;
 
 const float base_pop_growth_factor = lua()["base_pop_growth_factor"];
 const double prob_rocky_planet_has_magnetosphere =
