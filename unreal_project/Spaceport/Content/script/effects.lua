@@ -19,14 +19,11 @@ function infra_mul(planet, value)
    planet.infrastructure_cost_factor = planet.infrastructure_cost_factor * x
 end
 
-harmless_low_o2_percentage = 19.5
-earth_o2_percentage = 20.9
 harmless_o2_threshold =
    harmless_low_o2_percentage / earth_o2_percentage
 function effective_o2(planet)
    return planet.o2_co2_suitability * planet.atmopsheric_pressure
 end
-growth_uninhabitable = -1000.0
 
 planet_effects = {
    --[[ example effect

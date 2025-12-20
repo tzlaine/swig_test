@@ -27,18 +27,24 @@ const double mass_of_solar_system_planets_kg = 3.3e23 + 4.87e24 + 5.97e24 +
                                                6.42e23 + 1.90e27 + 5.68e26 +
                                                1.02e26 + 8.68e25;
 
-const int prov_none = -1;
-const int prov_off_map = -2;
-const int prov_galactic_bulge = -3;
-const int prov_galactic_center = -4;
-const double atmos_thousands = -1234.0;
-const double atmos_millions = -2345.0;
-const double growth_uninhabitable = -1000.0;
-const int nation_none = -1;
-const int hex_none = -1;
-const int system_none = -1;
-const int object_none = -1;
-const double n_a = -4321.0;
+const double sin_60 = std::sin(std::numbers::pi / 3.0);
+const double epsilon = 1.0e-3;
+
+const double hex_width = 1.5;
+const double hex_height = 2 * sin_60;
+
+const int prov_none = make_prov_none();
+const int prov_off_map = make_prov_off_map();
+const int prov_galactic_bulge = make_prov_galactic_bulge();
+const int prov_galactic_center = make_prov_galactic_center();
+const double atmos_thousands = make_atmos_thousands();
+const double atmos_millions = make_atmos_millions();
+const double growth_uninhabitable = make_growth_uninhabitable();
+const int nation_none = make_nation_none();
+const int hex_none = make_hex_none();
+const int system_none = make_system_none();
+const int object_none = make_object_none();
+const double n_a = make_n_a();
 
 const float base_pop_growth_factor = lua()["base_pop_growth_factor"];
 const double prob_rocky_planet_has_magnetosphere =
@@ -95,8 +101,15 @@ const ECollisionChannel star_channel = ECollisionChannel::ECC_GameTraceChannel2;
 const ECollisionChannel hex_channel = ECollisionChannel::ECC_GameTraceChannel3;
 #endif
 
-const double sin_60 = std::sin(std::numbers::pi / 3.0);
-const double epsilon = 1.0e-3;
-
-const double hex_width = 1.5;
-const double hex_height = 2 * sin_60;
+int make_prov_none() { return -1; }
+int make_prov_off_map() { return -2; }
+int make_prov_galactic_bulge() { return -3; }
+int make_prov_galactic_center() { return -4; }
+double make_atmos_thousands() { return -1234.0; }
+double make_atmos_millions() { return -2345.0; }
+double make_growth_uninhabitable() { return -1000.0; }
+int make_nation_none() { return -1; }
+int make_hex_none() { return -1; }
+int make_system_none() { return -1; }
+int make_object_none() { return -1; }
+double make_n_a() { return -4321.0; }

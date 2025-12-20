@@ -1,5 +1,6 @@
 #include "lua.hpp"
 
+#include "constants.hpp"
 #include "game_data_metadata.hpp"
 
 #if defined(BUILD_FOR_TEST)
@@ -38,6 +39,56 @@ namespace {
             LogTemp, Error, TEXT("%s"), *FString(UTF8_TO_TCHAR(msg.c_str())));
 #endif
     }
+
+    void lua_register_physical_constants(sol::state & l)
+    {
+#define REGISTER_PHYSICAL_CONSTANT(x) l[#x] = x
+
+        REGISTER_PHYSICAL_CONSTANT(G_);
+        REGISTER_PHYSICAL_CONSTANT(sun_temperature_k);
+        REGISTER_PHYSICAL_CONSTANT(sun_radius_km);
+        REGISTER_PHYSICAL_CONSTANT(sun_mass_kg);
+        REGISTER_PHYSICAL_CONSTANT(m_per_km);
+        REGISTER_PHYSICAL_CONSTANT(km_per_au);
+        REGISTER_PHYSICAL_CONSTANT(secs_per_year);
+        REGISTER_PHYSICAL_CONSTANT(earth_temperature_k);
+        REGISTER_PHYSICAL_CONSTANT(earth_mass_kg);
+        REGISTER_PHYSICAL_CONSTANT(earth_gravity);
+        REGISTER_PHYSICAL_CONSTANT(earth_radius_km);
+        REGISTER_PHYSICAL_CONSTANT(earth_ocean_coverage);
+        REGISTER_PHYSICAL_CONSTANT(earth_o2_percentage);
+        REGISTER_PHYSICAL_CONSTANT(harmless_low_o2_percentage);
+        REGISTER_PHYSICAL_CONSTANT(effective_o2_percentage_la_paz_bolivia);
+        REGISTER_PHYSICAL_CONSTANT(effective_o2_percentage_aconcagua);
+        REGISTER_PHYSICAL_CONSTANT(effective_o2_percentage_mt_everest_peak);
+        REGISTER_PHYSICAL_CONSTANT(mass_of_solar_system_planets_kg);
+        REGISTER_PHYSICAL_CONSTANT(sin_60);
+        REGISTER_PHYSICAL_CONSTANT(epsilon);
+        REGISTER_PHYSICAL_CONSTANT(hex_width);
+        REGISTER_PHYSICAL_CONSTANT(hex_height);
+
+#undef REGISTER_PHYSICAL_CONSTANT
+    }
+
+    void lua_register_sentinels(sol::state & l)
+    {
+#define REGISTER_SENTINEL(x) l[#x] = make_##x()
+
+        REGISTER_SENTINEL(prov_none);
+        REGISTER_SENTINEL(prov_off_map);
+        REGISTER_SENTINEL(prov_galactic_bulge);
+        REGISTER_SENTINEL(prov_galactic_center);
+        REGISTER_SENTINEL(atmos_thousands);
+        REGISTER_SENTINEL(atmos_millions);
+        REGISTER_SENTINEL(growth_uninhabitable);
+        REGISTER_SENTINEL(nation_none);
+        REGISTER_SENTINEL(hex_none);
+        REGISTER_SENTINEL(system_none);
+        REGISTER_SENTINEL(object_none);
+        REGISTER_SENTINEL(n_a);
+
+#undef REGISTER_SENTINEL
+    }
 }
 
 
@@ -55,6 +106,9 @@ sol::state make_lua_state()
     retval.set_function("UE_LOG", &ue_log_impl);
     retval.set_function("UE_WARN", &ue_warn_impl);
     retval.set_function("UE_ERR", &ue_err_impl);
+
+    lua_register_physical_constants(retval);
+    lua_register_sentinels(retval);
 
     // Load this first, since it contains the lowest-level cosntant calues
     // that are used everywhere else.
