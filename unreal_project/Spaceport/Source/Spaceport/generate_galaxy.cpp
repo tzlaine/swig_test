@@ -125,8 +125,6 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 
     // These can come from multiple sources; don't replicate them.
     int habs_and_suits_already_required = 0;
-    std::string name_scratch;
-    std::string desc_scratch;
     auto const habs_and_masks_required = [&](adobe::name_t reason) {
         planet.effects.push_back(planet_effect_t{
             .name = "habs_and_masks_required"_name, .reason = reason});

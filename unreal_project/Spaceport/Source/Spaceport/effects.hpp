@@ -6,16 +6,6 @@
 #include <mutex>
 
 
-#if 0 // TODO
-namespace detail{
-    inline void ensure_effects_loaded()
-    {
-        static std::once_flag once;
-        std::call_once(once, [] { script_file("effects.lua"); });
-    }
-}
-#endif
-
 inline void apply_planet_effect(planet_t & planet, planet_effect_t const & pe)
 {
     sol::table planet_effects = lua()["planet_effects"];
