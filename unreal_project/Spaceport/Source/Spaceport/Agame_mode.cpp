@@ -6,6 +6,7 @@
 #include "Aplayer_controller.h"
 #include "Aplayer_state.h"
 #include "game_instance.h"
+#include "lua.hpp"
 #include "map_util.hpp"
 #include "materials.h"
 #include "rng.hpp"
@@ -89,6 +90,9 @@ void Agame_mode::BeginPlay()
     publish_save_files();
     Ugame_instance::get()->watch_save_game_dir(
         [this](auto changes) { saves_dir_changed(std::move(changes)); });
+#if WITH_EDITOR
+    reset_all_lua_states(); // Force the Lua scripts to be reloaded.
+#endif
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::BeginPlay()"));
 }
 

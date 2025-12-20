@@ -59,6 +59,14 @@ namespace detail {
     })
 
 
+#if WITH_EDITOR
+// Does just what it sounds like.  This should only be necessary to do at the
+// start of an Unreal editor run, since in an editor build, the initial
+// startup code only gets run once, no matter how many times you run the code
+// in the editor.  CALLING THIS AT ANY OTHER TIME IS A BUG.
+void reset_all_lua_states();
+#endif
+
 // Returns a sol3 lua state, initialized with all our project-specific Lua
 // code.
 sol::state make_lua_state();

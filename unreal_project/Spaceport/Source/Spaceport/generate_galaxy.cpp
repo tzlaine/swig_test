@@ -7,10 +7,6 @@
 #include <numbers>
 
 
-// TODO: Need to add a way to reset the Lua state, when running in the editor.
-// Otherwise, since all Lua states are initialized at static-init time,
-// multiple editor runs will all use the original version of the Lua scripts.
-
 // TODO: Get rid of the remaining magic numbers in this file (put them in a
 // Lua file).
 

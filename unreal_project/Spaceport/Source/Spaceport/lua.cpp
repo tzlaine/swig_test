@@ -89,8 +89,16 @@ namespace {
 
 #undef REGISTER_SENTINEL
     }
+
+#if WITH_EDITOR
+    std::atomic_int g_reset_all_lua_states_count = 0;
+#endif
 }
 
+
+#if WITH_EDITOR
+void reset_all_lua_states() { ++g_reset_all_lua_states_count; }
+#endif
 
 sol::state make_lua_state()
 {
@@ -146,6 +154,13 @@ default_game_start_params.map_height = small_map_height
 sol::state & lua()
 {
     static thread_local sol::state retval = make_lua_state();
+#if WITH_EDITOR
+    static thread_local int reset_count = 0;
+    if (reset_count != g_reset_all_lua_states_count) {
+        retval = make_lua_state();
+        reset_count = g_reset_all_lua_states_count;
+    }
+#endif
     return retval;
 }
 
