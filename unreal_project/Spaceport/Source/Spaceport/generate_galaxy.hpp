@@ -16,7 +16,6 @@ struct game_start_params_t;
 struct game_state_t;
 template<typename T>
 struct concurrent_queue;
-struct task_system;
 
 namespace generation {
     namespace detail {
@@ -72,8 +71,6 @@ namespace generation {
             }
             return retval;
         }
-
-        float determine_growth_factor_and_effects(planet_t & planet);
 
         bool generate_planet(planet_t & planet, system_t const & system);
 
@@ -374,9 +371,9 @@ namespace generation {
 #endif
     }
 
-    void generate_galaxy(game_start_params_t const & params,
-                         game_state_t & game_state,
-                         task_system * ts_ptr = nullptr,
-                         concurrent_queue<int> * percent_complete = nullptr,
-                         std::atomic_bool * fully_complete = nullptr);
+    void generate_galaxy(
+        game_start_params_t const & params,
+        game_state_t & game_state,
+        concurrent_queue<int> * percent_complete = nullptr,
+        std::atomic_bool * fully_complete = nullptr);
 }

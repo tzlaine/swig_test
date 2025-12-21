@@ -7,15 +7,15 @@ function eval_effect_value(obj, value)
 end
 
 function growth_factor_add(planet, value)
-   x = eval_effect_value(planet, value)
+   local x = eval_effect_value(planet, value)
    planet.growth_factor = planet.growth_factor + x
 end
 function max_pop_mul(planet, value)
-   x = eval_effect_value(planet, value)
-   planet.max_population = math.tointeger(planet.max_population * x)
+   local x = eval_effect_value(planet, value)
+   planet.max_population = to_integer(planet.max_population * x)
 end
 function infra_mul(planet, value)
-   x = eval_effect_value(planet, value)
+   local x = eval_effect_value(planet, value)
    planet.infrastructure_cost_factor = planet.infrastructure_cost_factor * x
 end
 

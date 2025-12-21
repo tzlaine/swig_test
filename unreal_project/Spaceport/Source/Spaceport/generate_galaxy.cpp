@@ -7,250 +7,6 @@
 #include <numbers>
 
 
-// MAINTENANCE NOTE: Any calls to the lambda habs_and_suits_required (but not
-// the masks one) should come before any other effects, since it clears out
-// all previous effects.  Any effects that affect colonists living in
-// habs+suits should come *after* all calls to habs_and_suits_required.
-float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
-{
-    using namespace adobe::literals;
-
-    auto const effect = [&](auto name) {
-        planet.effects.push_back(planet_effect_t{name});
-    };
-
-    planet.growth_factor = base_pop_growth_factor;
-
-    if (planet.planet_type != planet_type_t::rocky) {
-        effect("uninhab_non_rocky_planet"_name);
-        planet.growth_factor += growth_uninhabitable;
-        return planet.growth_factor;
-    }
-
-    // tilt
-    if (planet.axial_tilt_d < 5.0f) {
-        effect("no_seasons"_name);
-    } else if (/*5 < */ planet.axial_tilt_d < 15.0f) {
-        effect("mild_seasons"_name);
-    } else if (/*15 < */ planet.axial_tilt_d < 30.0f) {
-        // normal seasons
-        if (planet.orbital_period_y < 0.8) {
-            effect("short_seasons"_name);
-        } else if (1.2 < planet.orbital_period_y) {
-            effect("long_seasons"_name);
-            planet.effects.push_back(planet_effect_t{
-                .name = "infra_cost"_name,
-                .reason = "long_seasons"_name,
-                .value = agri_equip_infra_cost_factor});
-            if (3.0 < planet.orbital_period_y)
-                effect("only_equatorial_band_habitable"_name);
-        }
-    } else if (/*30 < */ planet.axial_tilt_d < 45.0f) {
-        effect("intense_seasons"_name);
-        if (planet.orbital_period_y < 0.8) {
-            effect("short_seasons"_name);
-        } else if (1.2 < planet.orbital_period_y) {
-            effect("long_seasons"_name);
-            planet.effects.push_back(planet_effect_t{
-                .name = "infra_cost"_name,
-                .reason = "long_intense_seasons"_name,
-                .value = 1.5});
-            if (1.5 < planet.orbital_period_y)
-                effect("only_equatorial_band_habitable"_name);
-        }
-    } else if (/*45 < */ planet.axial_tilt_d < 60.0f) {
-        effect("intense_seasons"_name);
-        if (planet.orbital_period_y < 0.8) {
-            effect("short_seasons"_name);
-        } else if (1.2 < planet.orbital_period_y) {
-            effect("long_seasons"_name);
-            planet.effects.push_back(planet_effect_t{
-                .name = "infra_cost"_name,
-                .reason = "long_intense_seasons"_name,
-                .value = 1.5});
-        }
-        effect("only_equatorial_band_habitable"_name);
-    } else if (/*60 < */ planet.axial_tilt_d < 75.0f) {
-        if (planet.orbital_period_y < 0.8) {
-            effect("short_seasons"_name);
-        } else if (1.2 < planet.orbital_period_y) {
-            effect("long_seasons"_name);
-            planet.effects.push_back(planet_effect_t{
-                .name = "infra_cost"_name,
-                .reason = "long_seasons"_name,
-                .value = agri_equip_infra_cost_factor});
-        }
-        effect("only_equatorial_band_habitable"_name);
-    } else if (/*75 < */ planet.axial_tilt_d < 85.0f) {
-        effect("mild_seasons"_name);
-        effect("only_equatorial_band_habitable"_name);
-    } else {
-        effect("no_seasons"_name);
-        effect("only_equatorial_band_habitable"_name);
-    }
-
-    // day length
-    if (planet.day_h < 24.0f * 0.9f) {
-        effect("short_days"_name);
-        planet.effects.push_back(planet_effect_t{
-            .name = "infra_cost"_name,
-            .reason = "short_days"_name,
-            .value = agri_equip_infra_cost_factor});
-    } else if (planet.day_h < 24.0f * 1.1f) {
-        // no effect
-    } else if (planet.day_h < 48.0f) {
-        effect("long_days"_name);
-        planet.effects.push_back(planet_effect_t{
-            .name = "infra_cost"_name,
-            .reason = "long_days"_name,
-            .value = agri_equip_infra_cost_factor});
-    } else {
-        effect("very_long_days"_name);
-        planet.effects.push_back(planet_effect_t{
-            .name = "infra_cost"_name,
-            .reason = "very_long_days"_name,
-            .value = agri_equip_infra_cost_factor});
-    }
-    // TODO: Require habs+suits if the day is long enough?
-
-    // TODO: Should the day length effects apply to planets that are very
-    // highly tilted, like >= 75 deg?
-
-    // TODO: The O2/CO2 mix of a planet should either be something you can
-    // adjust at the game start, or should perhaps require one of the
-    // earliest techs.
-
-    // These can come from multiple sources; don't replicate them.
-    int habs_and_suits_already_required = 0;
-    auto const habs_and_masks_required = [&](adobe::name_t reason) {
-        planet.effects.push_back(planet_effect_t{
-            .name = "habs_and_masks_required"_name, .reason = reason});
-        planet.effects.push_back(planet_effect_t{
-            .name = "infra_cost"_name,
-            .reason = reason,
-            .value = habs_and_masks_infra_cost_factor});
-    };
-    auto const habs_and_suits_required = [&](adobe::name_t reason) {
-        if (habs_and_suits_already_required)
-            return;
-
-        // Dump all previous effects.  Living in a hab+suit obviates almost
-        // all other effects.
-        planet.effects.clear();
-
-        planet.effects.push_back(planet_effect_t{
-            .name = "habs_and_suits_required"_name, .reason = reason});
-        planet.effects.push_back(planet_effect_t{
-            .name = "infra_cost"_name,
-            .reason = reason,
-            .value = habs_and_suits_infra_cost_factor});
-
-        ++habs_and_suits_already_required;
-    };
-
-    // O2 (making simplifying assumption of ignoring the CO2 part of this
-    // property)
-    double const harmless_o2_threshold =
-        harmless_low_o2_percentage / earth_o2_percentage;
-    double const effective_o2 =
-        planet.o2_co2_suitability * planet.atmospheric_pressure;
-    if (harmless_o2_threshold < effective_o2) {
-        // no effect
-    } else if (
-        effective_o2_percentage_la_paz_bolivia / earth_o2_percentage <
-        effective_o2) {
-        effect("poor_o2_co2_suitab"_name);
-    } else if (
-        effective_o2_percentage_aconcagua / earth_o2_percentage <
-        effective_o2) {
-        effect("very_poor_o2_co2_suitab"_name);
-        habs_and_masks_required("very_poor_o2_co2_suitab"_name);
-    } else if (
-        effective_o2_percentage_mt_everest_peak / earth_o2_percentage <
-        effective_o2) {
-        effect("marginal_o2_co2_suitab"_name);
-        habs_and_masks_required("marginal_o2_co2_suitab"_name);
-    } else {
-        habs_and_suits_required("insufficient_o2_co2_suitab"_name);
-        effect("insufficient_o2_co2_suitab"_name);
-    }
-
-    // atmospheric pressure (< 1 cases handled with o2_co2_suitability
-    // above)
-    if (4.0f < planet.atmospheric_pressure) {
-        habs_and_suits_required("high_press_n2_narcosis"_name);
-        effect("high_press_n2_narcosis"_name);
-    }
-    if (7.0f < effective_o2) {
-        habs_and_suits_required("very_high_press_o2_toxicity"_name);
-        effect("very_high_press_o2_toxicity"_name);
-    }
-
-    // magnetosphere
-    if (planet.magnetosphere_strength < 0.33) {
-        habs_and_suits_required("very_weak_magneto"_name);
-        effect("very_weak_magneto"_name);
-    } else if (/*0.33 < */ planet.magnetosphere_strength < 0.9) {
-        effect("weak_magneto"_name);
-        if (planet.magnetosphere_strength < 0.67)
-            habs_and_masks_required("weak_magneto"_name);
-    } else if (/*0.9 < */ planet.magnetosphere_strength < 1.1) {
-        // no effect
-    } else if (1.1 < planet.magnetosphere_strength) {
-        effect("strong_magneto"_name);
-    }
-
-    // temperature
-    if (planet.surface_temperature_k < min_habitable_nonsuit_temp_k) {
-        habs_and_suits_required("extremely_cold_avg_surface_temp"_name);
-        effect("extremely_cold_avg_surface_temp"_name);
-    } else if (
-        /*earth - 44 < */ planet.surface_temperature_k <
-        earth_temperature_k - 22) {
-        effect("very_cold_avg_surface_temp"_name);
-    } else if (
-        /*earth - 22 < */ planet.surface_temperature_k <
-        earth_temperature_k - 11) {
-        effect("cold_avg_surface_temp"_name);
-    } else if (
-        /*earth - 11 < */ planet.surface_temperature_k <
-        earth_temperature_k + 11) {
-        // no effect
-    } else if (
-        /*earth + 11 < */ planet.surface_temperature_k <
-        earth_temperature_k + 22) {
-        effect("hot_avg_surface_temp"_name);
-    } else if (
-        /*earth + 22 < */ planet.surface_temperature_k <
-        earth_temperature_k + 33) {
-        effect("very_hot_avg_surface_temp"_name);
-    } else if (
-        /*earth + 33 < */ planet.surface_temperature_k < max_habitable_temp_k) {
-        habs_and_suits_required("extremely_hot_avg_surface_temp"_name);
-        effect("extremely_hot_avg_surface_temp"_name);
-    } else {
-        effect("uninhabitably_hot_avg_surface_temp"_name);
-    }
-
-    // gravity
-    if (planet.gravity_g < 0.1f)
-        effect("very_low_grav"_name);
-    else if (planet.gravity_g < 0.9f)
-        effect("low_grav"_name);
-    else if (planet.gravity_g < 1.1f)
-        ; // no effect
-    else if (planet.gravity_g < 1.3f)
-        effect("high_grav"_name);
-    else
-        effect("very_high_grav"_name);
-
-    for (auto const & e : planet.effects) {
-        apply_planet_effect(planet, e);
-    }
-
-    return planet.growth_factor;
-}
-
 // See: https://en.wikipedia.org/wiki/Sun
 
 // TODO: See if generating 100s or 1000s of rolls at once is faster.
@@ -432,8 +188,9 @@ bool generation::detail::generate_planet(
         planet.max_population = 0;
     }
 
+    sol::function determine_growth_factor_and_effects =
+        lua()["determine_growth_factor_and_effects"];
     double const growth_factor = determine_growth_factor_and_effects(planet);
-    planet.growth_factor = growth_factor;
 
     auto clamp_res = [](int x) {
         return std::clamp(x, min_resource_value, max_resource_value);
@@ -580,7 +337,6 @@ void generation::detail::generate_hex(
 void generation::generate_galaxy(
     game_start_params_t const & params,
     game_state_t & game_state,
-    task_system * ts_ptr,
     concurrent_queue<int> * percent_complete,
     std::atomic_bool * fully_complete)
 {
@@ -597,10 +353,13 @@ void generation::generate_galaxy(
 
     std::atomic_int hexes_generated = 0;
 
-    std::unique_ptr<task_system> local_ts_ptr;
-    if (!ts_ptr)
-        local_ts_ptr.reset(new task_system(4));
-    task_system & ts = ts_ptr ? *ts_ptr : *local_ts_ptr;
+    task_system ts(
+        [] {
+            // Make sure each thread's Lua state contains the needed Lua code.
+            script_file("effects.lua");
+            script_file("generation.lua");
+        },
+        4);
 
     int const update_percentage = 5;
     int const five_percent = game_state.hexes.size() * update_percentage / 100;

@@ -160,6 +160,11 @@ NNNNNNNNNNNNNNNNN
 
 TEST(generation_tests, growth_factor_and_effects)
 {
+    script_file("effects.lua");
+    script_file("generation.lua");
+    sol::function determine_growth_factor_and_effects =
+        lua()["determine_growth_factor_and_effects"];
+
     // rocky
     planet_t const earth{
         .planet_type = planet_type_t::rocky,
@@ -187,8 +192,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         // Earth had better have the base habitability, and no effects.
         planet_t planet = earth;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_EQ(result, base_pop_growth_factor);
         EXPECT_EQ(planet.effects.size(), 0u);
     }
@@ -197,8 +201,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.gravity_g = 0.05f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "very_low_grav"_name};
@@ -207,8 +210,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.gravity_g = 0.5f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "low_grav"_name};
@@ -217,8 +219,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.gravity_g = 1.2f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + 0.01, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "high_grav"_name};
@@ -227,8 +228,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.gravity_g = 1.5f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "very_high_grav"_name};
@@ -239,8 +239,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.axial_tilt_d = 1.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "no_seasons"_name};
@@ -249,8 +248,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.axial_tilt_d = 10.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + 0.025, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "mild_seasons"_name};
@@ -260,8 +258,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 20.0f;
         planet.orbital_period_y = 0.5f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + 0.0125, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "short_seasons"_name};
@@ -271,8 +268,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 20.0f;
         planet.orbital_period_y = 2.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -287,8 +283,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 20.0f;
         planet.orbital_period_y = 4.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -304,8 +299,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.axial_tilt_d = 40.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "intense_seasons"_name};
@@ -315,8 +309,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 40.0f;
         planet.orbital_period_y = 0.5f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor  - 0.05 + 0.0125, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -330,8 +323,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 40.0f;
         planet.orbital_period_y = 1.3f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.065, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -348,8 +340,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 40.0f;
         planet.orbital_period_y = 4.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
@@ -367,8 +358,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.axial_tilt_d = 50.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -381,8 +371,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 50.0f;
         planet.orbital_period_y = 0.5f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor  - 0.05 + 0.0125, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -398,8 +387,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 50.0f;
         planet.orbital_period_y = 1.3f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.065, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
@@ -418,8 +406,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.axial_tilt_d = 50.0f;
         planet.orbital_period_y = 4.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
@@ -439,8 +426,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.day_h = 12.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor -0.2, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -454,8 +440,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.day_h = 29.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -469,8 +454,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.day_h = 36.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -484,8 +468,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.day_h = 53.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.15, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -499,8 +482,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.day_h = 99.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, eps);
         EXPECT_EQ(planet.effects.size(), 2u);
         planet_effect_t const expected[] = {
@@ -517,8 +499,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet_t planet = earth;
         planet.o2_co2_suitability = 0.25f; // 0.75 together
         planet.atmospheric_pressure = 3.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.045, 0.001);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "poor_o2_co2_suitab"_name};
@@ -527,8 +508,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.o2_co2_suitability = 0.45f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.12, 0.005);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -546,8 +526,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.o2_co2_suitability = 0.35f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.14, 0.01);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -565,8 +544,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.o2_co2_suitability = 0.25f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.2, 0.01);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -586,8 +564,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.atmospheric_pressure = 5.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(
             result,
             base_pop_growth_factor + habs_and_suits_growth_modifier,
@@ -608,8 +585,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.atmospheric_pressure = 8.0f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(
             result,
             base_pop_growth_factor + 2 * habs_and_suits_growth_modifier,
@@ -634,8 +610,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.magnetosphere_strength = 0.25f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -653,8 +628,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.magnetosphere_strength = 0.5f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.5, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -672,8 +646,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.magnetosphere_strength = 0.75f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.25, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {.name = "weak_magneto"_name};
@@ -682,8 +655,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.magnetosphere_strength = 1.6f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + 0.01, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {.name = "strong_magneto"_name};
@@ -694,8 +666,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.surface_temperature_k = earth_temperature_k - 50;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -713,8 +684,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.surface_temperature_k = earth_temperature_k - 31;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.6, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {
@@ -724,8 +694,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.surface_temperature_k = earth_temperature_k + 21;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.1, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {.name = "hot_avg_surface_temp"_name};
@@ -734,8 +703,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.surface_temperature_k = earth_temperature_k + 31;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.6, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {
@@ -745,8 +713,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.surface_temperature_k = earth_temperature_k + 54;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, eps);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
@@ -764,8 +731,7 @@ TEST(generation_tests, growth_factor_and_effects)
     {
         planet_t planet = earth;
         planet.surface_temperature_k = earth_temperature_k + 60;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + growth_uninhabitable, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected = {
@@ -780,8 +746,7 @@ TEST(generation_tests, growth_factor_and_effects)
         planet.o2_co2_suitability = 0.45f;     // Comes first.
         planet.magnetosphere_strength = 0.25f; // Requires habs+suits.
         planet.gravity_g = 0.50f;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.05 + habs_and_suits_growth_modifier, 0.005);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
@@ -824,8 +789,7 @@ TEST(generation_tests, growth_factor_and_effects)
         .max_population = 0};
     {
         planet_t planet = a_gas_giant;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + growth_uninhabitable, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "uninhab_non_rocky_planet"_name};
@@ -857,8 +821,7 @@ TEST(generation_tests, growth_factor_and_effects)
         .max_population = 0};
     {
         planet_t planet = an_ice_giant;
-        double const result =
-            generation::detail::determine_growth_factor_and_effects(planet);
+        double const result = determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor + growth_uninhabitable, eps);
         EXPECT_EQ(planet.effects.size(), 1u);
         planet_effect_t const expected{.name = "uninhab_non_rocky_planet"_name};
@@ -1272,8 +1235,6 @@ TEST(generation_tests, generate_hex)
         game_state.systems.size());
 }
 
-task_system ts(4);
-
 TEST(generation_tests, generate_galaxy)
 {
     game_start_params_t const params = game_start_params_t{
@@ -1282,7 +1243,7 @@ TEST(generation_tests, generate_galaxy)
         .systems_per_hex = 20,
         .map_height = 11};
     game_state_t game_state;
-    generation::generate_galaxy(params, game_state, &ts);
+    generation::generate_galaxy(params, game_state);
     EXPECT_FALSE(game_state.hexes.empty());
     EXPECT_FALSE(game_state.systems.empty());
     EXPECT_FALSE(game_state.planets.empty());

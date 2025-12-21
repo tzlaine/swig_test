@@ -104,7 +104,6 @@ auto visible_fleets(int nation_id, game_state_t const & gs)
 game_state_t const & gs()
 {
     static game_state_t retval = [] {
-        task_system ts(4);
         game_state_t retval;
         std::atomic_bool fully_complete = false;
         game_start_params_t const params = game_start_params_t{
@@ -113,7 +112,7 @@ game_state_t const & gs()
             .systems_per_hex = 20,
             .map_height = 11};
         generation::generate_galaxy(
-            params, retval, &ts, nullptr, &fully_complete);
+            params, retval, nullptr, &fully_complete);
         while (!fully_complete) {
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }

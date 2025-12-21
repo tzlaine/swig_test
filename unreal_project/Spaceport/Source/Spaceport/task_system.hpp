@@ -7,21 +7,15 @@ struct task_system
 {
     explicit task_system(int n = std::thread::hardware_concurrency()) : n_(n)
     {
-        if (n < 2) {
-            throw std::runtime_error(
-                "task_system requires at least two threads");
-        }
+        init(n, [] {});
+    }
 
-        if ((int)std::thread::hardware_concurrency() * 2 < n) {
-            throw std::runtime_error(
-                "you have hopelessly oversubscribed task_system; try sticking "
-                "to at most std::thread::hardware_concurrency() threads");
-        }
-
-        threads_.reserve(n_);
-        for (unsigned int j = 0; j < n_; ++j) {
-            threads_.emplace_back([this, j] { run(j); });
-        }
+    template<typename F>
+    explicit task_system(
+        F per_thread_init, int n = std::thread::hardware_concurrency()) :
+        n_(n)
+    {
+        init(n, per_thread_init);
     }
 
     ~task_system()
@@ -45,8 +39,30 @@ struct task_system
     }
 
 private:
-    void run(unsigned int i)
+    template<typename F>
+    void init(int n, F per_thread_init)
     {
+        if (n < 2) {
+            throw std::runtime_error(
+                "task_system requires at least two threads");
+        }
+
+        if ((int)std::thread::hardware_concurrency() * 2 < n) {
+            throw std::runtime_error(
+                "you have hopelessly oversubscribed task_system; try sticking "
+                "to at most std::thread::hardware_concurrency() threads");
+        }
+
+        threads_.reserve(n_);
+        for (unsigned int j = 0; j < n_; ++j) {
+            threads_.emplace_back([=, this] { run(j, per_thread_init); });
+        }
+    }
+
+    template<typename F>
+    void run(unsigned int i, F per_thread_init)
+    {
+        per_thread_init();
         while (true) {
             std::function<void()> f;
             for (unsigned int j = 0; j < n_; ++j) {

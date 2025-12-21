@@ -117,6 +117,8 @@ sol::state make_lua_state()
     retval.set_function("UE_WARN", &ue_warn_impl);
     retval.set_function("UE_ERR", &ue_err_impl);
 
+    retval.script_file(script_path("utility.lua"));
+
     lua_register_physical_constants(retval);
     lua_register_sentinels(retval);
 
