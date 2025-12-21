@@ -292,7 +292,7 @@ struct std::formatter<planet_t> {
         out = std::format_to(out, " day_h={}", x.day_h);
         out = std::format_to(out, " surface_temperature_k={}", x.surface_temperature_k);
         out = std::format_to(out, " magnetosphere_strength={}", x.magnetosphere_strength);
-        out = std::format_to(out, " atmopsheric_pressure={}", x.atmopsheric_pressure);
+        out = std::format_to(out, " atmospheric_pressure={}", x.atmospheric_pressure);
         out = std::format_to(out, " o2_co2_suitability={}", x.o2_co2_suitability);
         out = std::format_to(out, " ocean_coverage={}", x.ocean_coverage);
         out = std::format_to(out, " growth_factor={}", x.growth_factor);

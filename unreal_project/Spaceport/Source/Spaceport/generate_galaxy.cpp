@@ -156,7 +156,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
     double const harmless_o2_threshold =
         harmless_low_o2_percentage / earth_o2_percentage;
     double const effective_o2 =
-        planet.o2_co2_suitability * planet.atmopsheric_pressure;
+        planet.o2_co2_suitability * planet.atmospheric_pressure;
     if (harmless_o2_threshold < effective_o2) {
         // no effect
     } else if (
@@ -180,7 +180,7 @@ float generation::detail::determine_growth_factor_and_effects(planet_t & planet)
 
     // atmospheric pressure (< 1 cases handled with o2_co2_suitability
     // above)
-    if (4.0f < planet.atmopsheric_pressure) {
+    if (4.0f < planet.atmospheric_pressure) {
         habs_and_suits_required("high_press_n2_narcosis"_name);
         effect("high_press_n2_narcosis"_name);
     }
@@ -386,19 +386,19 @@ bool generation::detail::generate_planet(
         }
         if (high_temp_k < planet.surface_temperature_k) {
             planet.atmosphere_type = atmosphere_type_t::high_temperature;
-            planet.atmopsheric_pressure = high_temp_atmosphere_pressure_factor *
+            planet.atmospheric_pressure = high_temp_atmosphere_pressure_factor *
                                           random_number(atmos_dist) *
                                           planet.mass_kg / earth_mass_kg;
         } else if (planet.magnetosphere_strength < 0.01) {
             double const no_mag_roll = random_unit_double();
             if (no_mag_roll < prob_no_magnetosphere_rocky_planet_is_reduced) {
                 planet.atmosphere_type = atmosphere_type_t::reduced_type_a;
-                planet.atmopsheric_pressure =
+                planet.atmospheric_pressure =
                     reduced_rocky_planet_pressure_factor *
                     random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
             } else {
                 planet.atmosphere_type = atmosphere_type_t::carbon_rich_type_c;
-                planet.atmopsheric_pressure =
+                planet.atmospheric_pressure =
                     nonreduced_rocky_planet_pressure_factor *
                     random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
             }
@@ -406,17 +406,17 @@ bool generation::detail::generate_planet(
             planet.atmosphere_type = atmosphere_type_t::oxidized_type_b;
             double const scale = o2_dist.max() - o2_dist.min();
             planet.o2_co2_suitability = 1.0 - random_number(o2_dist) / scale;
-            planet.atmopsheric_pressure =
+            planet.atmospheric_pressure =
                 random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
         }
     } else {
         planet.magnetosphere_strength = random_number(giant_magnetosphere_dist);
         if (planet.planet_type == planet_type_t::gas_giant) {
             planet.atmosphere_type = atmosphere_type_t::gas_giant_atmosphere;
-            planet.atmopsheric_pressure = atmos_millions;
+            planet.atmospheric_pressure = atmos_millions;
         } else {
             planet.atmosphere_type = atmosphere_type_t::ice_giant_atmosphere;
-            planet.atmopsheric_pressure = atmos_thousands;
+            planet.atmospheric_pressure = atmos_thousands;
         }
     }
 

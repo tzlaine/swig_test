@@ -516,8 +516,8 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
                 client_planet.magnetosphere_strength,
                 planet.magnetosphere_strength);
             EXPECT_EQ(
-                client_planet.atmopsheric_pressure,
-                planet.atmopsheric_pressure);
+                client_planet.atmospheric_pressure,
+                planet.atmospheric_pressure);
             EXPECT_EQ(
                 client_planet.o2_co2_suitability, planet.o2_co2_suitability);
             EXPECT_EQ(client_planet.ocean_coverage, planet.ocean_coverage);

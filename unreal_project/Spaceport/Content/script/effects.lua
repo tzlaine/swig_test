@@ -22,7 +22,7 @@ end
 harmless_o2_threshold =
    harmless_low_o2_percentage / earth_o2_percentage
 function effective_o2(planet)
-   return planet.o2_co2_suitability * planet.atmopsheric_pressure
+   return planet.o2_co2_suitability * planet.atmospheric_pressure
 end
 
 planet_effects = {

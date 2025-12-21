@@ -116,7 +116,7 @@ message planet_t
     float day_h = 9;
     float surface_temperature_k = 10;
     float magnetosphere_strength = 11; // Earth-scaled (1.0 is like Earth)
-    float atmopsheric_pressure = 12; // In "atmospheres" (1.0 is like Earth)
+    float atmospheric_pressure = 12; // In "atmospheres" (1.0 is like Earth)
     float o2_co2_suitability = 13; // only applies when atmosphere_type is oxidized_type_b; Earth-scaled
     float ocean_coverage = 14;
     float growth_factor = 15;

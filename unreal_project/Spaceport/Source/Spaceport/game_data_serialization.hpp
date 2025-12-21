@@ -480,7 +480,7 @@ namespace detail {
         if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.magnetosphere_strength, 11, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.atmopsheric_pressure, 12, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.atmospheric_pressure, 12, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 13; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.o2_co2_suitability, 13, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 14; }))
@@ -527,7 +527,7 @@ namespace detail {
         using namespace std::literals;
         constexpr auto this_message_name = "planet_t"sv;
         constexpr std::array<std::string_view, 31> field_names = {{"<UNKOWN_FIELD>"sv,
-          "system_id"sv, "planet_type"sv, "mass_kg"sv, "radius_km"sv, "orbit_au"sv, "orbital_period_y"sv, "gravity_g"sv, "axial_tilt_d"sv, "day_h"sv, "surface_temperature_k"sv, "magnetosphere_strength"sv, "atmopsheric_pressure"sv, "o2_co2_suitability"sv, "ocean_coverage"sv, "growth_factor"sv, "atmosphere_type"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "population"sv, "infrastructure"sv, "infrastructure_cost_factor"sv, "orbital_pos_r"sv, "max_population"sv, "owner"sv, "original_owner"sv, "garrison"sv, "effects"sv}};
+          "system_id"sv, "planet_type"sv, "mass_kg"sv, "radius_km"sv, "orbit_au"sv, "orbital_period_y"sv, "gravity_g"sv, "axial_tilt_d"sv, "day_h"sv, "surface_temperature_k"sv, "magnetosphere_strength"sv, "atmospheric_pressure"sv, "o2_co2_suitability"sv, "ocean_coverage"sv, "growth_factor"sv, "atmosphere_type"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "population"sv, "infrastructure"sv, "infrastructure_cost_factor"sv, "orbital_pos_r"sv, "max_population"sv, "owner"sv, "original_owner"sv, "garrison"sv, "effects"sv}};
         std::array<int, 30> expected_field_numbers = {{
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}};
     
@@ -547,7 +547,7 @@ namespace detail {
             case 9: return detail::deserialize_impl(x.day_h, src);
             case 10: return detail::deserialize_impl(x.surface_temperature_k, src);
             case 11: return detail::deserialize_impl(x.magnetosphere_strength, src);
-            case 12: return detail::deserialize_impl(x.atmopsheric_pressure, src);
+            case 12: return detail::deserialize_impl(x.atmospheric_pressure, src);
             case 13: return detail::deserialize_impl(x.o2_co2_suitability, src);
             case 14: return detail::deserialize_impl(x.ocean_coverage, src);
             case 15: return detail::deserialize_impl(x.growth_factor, src);

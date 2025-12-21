@@ -1955,7 +1955,7 @@ class planet_t PROTOBUF_FINAL :
     kDayHFieldNumber = 9,
     kSurfaceTemperatureKFieldNumber = 10,
     kMagnetosphereStrengthFieldNumber = 11,
-    kAtmopshericPressureFieldNumber = 12,
+    kAtmosphericPressureFieldNumber = 12,
     kO2Co2SuitabilityFieldNumber = 13,
     kOceanCoverageFieldNumber = 14,
     kGrowthFactorFieldNumber = 15,
@@ -2108,13 +2108,13 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_magnetosphere_strength(float value);
   public:
 
-  // float atmopsheric_pressure = 12;
-  void clear_atmopsheric_pressure();
-  float atmopsheric_pressure() const;
-  void set_atmopsheric_pressure(float value);
+  // float atmospheric_pressure = 12;
+  void clear_atmospheric_pressure();
+  float atmospheric_pressure() const;
+  void set_atmospheric_pressure(float value);
   private:
-  float _internal_atmopsheric_pressure() const;
-  void _internal_set_atmopsheric_pressure(float value);
+  float _internal_atmospheric_pressure() const;
+  void _internal_set_atmospheric_pressure(float value);
   public:
 
   // float o2_co2_suitability = 13;
@@ -2281,7 +2281,7 @@ class planet_t PROTOBUF_FINAL :
   float day_h_;
   float surface_temperature_k_;
   float magnetosphere_strength_;
-  float atmopsheric_pressure_;
+  float atmospheric_pressure_;
   float o2_co2_suitability_;
   float ocean_coverage_;
   float growth_factor_;
@@ -5495,24 +5495,24 @@ inline void planet_t::set_magnetosphere_strength(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.magnetosphere_strength)
 }
 
-// float atmopsheric_pressure = 12;
-inline void planet_t::clear_atmopsheric_pressure() {
-  atmopsheric_pressure_ = 0;
+// float atmospheric_pressure = 12;
+inline void planet_t::clear_atmospheric_pressure() {
+  atmospheric_pressure_ = 0;
 }
-inline float planet_t::_internal_atmopsheric_pressure() const {
-  return atmopsheric_pressure_;
+inline float planet_t::_internal_atmospheric_pressure() const {
+  return atmospheric_pressure_;
 }
-inline float planet_t::atmopsheric_pressure() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.atmopsheric_pressure)
-  return _internal_atmopsheric_pressure();
+inline float planet_t::atmospheric_pressure() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.atmospheric_pressure)
+  return _internal_atmospheric_pressure();
 }
-inline void planet_t::_internal_set_atmopsheric_pressure(float value) {
+inline void planet_t::_internal_set_atmospheric_pressure(float value) {
   
-  atmopsheric_pressure_ = value;
+  atmospheric_pressure_ = value;
 }
-inline void planet_t::set_atmopsheric_pressure(float value) {
-  _internal_set_atmopsheric_pressure(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.atmopsheric_pressure)
+inline void planet_t::set_atmospheric_pressure(float value) {
+  _internal_set_atmospheric_pressure(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.atmospheric_pressure)
 }
 
 // float o2_co2_suitability = 13;

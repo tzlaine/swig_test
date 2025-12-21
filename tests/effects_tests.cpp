@@ -87,7 +87,7 @@ TEST(effects_tests, planet_effects)
         .day_h = 24,
         .surface_temperature_k = (float)earth_temperature_k,
         .magnetosphere_strength = 1,
-        .atmopsheric_pressure = 1,
+        .atmospheric_pressure = 1,
         .o2_co2_suitability = 1,
         .ocean_coverage = (float)earth_ocean_coverage,
         .growth_factor = base_pop_growth_factor,
@@ -147,7 +147,7 @@ TEST(effects_tests, planet_effects)
     {
         planet_t planet = earth;
         planet.o2_co2_suitability = 0.25f; // 0.75 together
-        planet.atmopsheric_pressure = 3.0f;
+        planet.atmospheric_pressure = 3.0f;
         apply_planet_effect(
             planet, planet_effect_t{"poor_o2_co2_suitab"_name, ""_name});
         EXPECT_NEAR(planet.growth_factor, earth.growth_factor - 0.045, eps);

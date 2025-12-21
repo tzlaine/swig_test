@@ -172,7 +172,7 @@ TEST(generation_tests, growth_factor_and_effects)
         .day_h = 24,
         .surface_temperature_k = (float)earth_temperature_k,
         .magnetosphere_strength = 1,
-        .atmopsheric_pressure = 1,
+        .atmospheric_pressure = 1,
         .o2_co2_suitability = 1,
         .ocean_coverage = (float)earth_ocean_coverage,
         .growth_factor = base_pop_growth_factor,
@@ -515,8 +515,8 @@ TEST(generation_tests, growth_factor_and_effects)
     // O2
     {
         planet_t planet = earth;
-        planet.o2_co2_suitability = 0.25f;  // 0.75 together
-        planet.atmopsheric_pressure = 3.0f;
+        planet.o2_co2_suitability = 0.25f; // 0.75 together
+        planet.atmospheric_pressure = 3.0f;
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
         EXPECT_NEAR(result, base_pop_growth_factor - 0.045, 0.001);
@@ -585,10 +585,13 @@ TEST(generation_tests, growth_factor_and_effects)
     // atmospheric pressure
     {
         planet_t planet = earth;
-        planet.atmopsheric_pressure = 5.0f;
+        planet.atmospheric_pressure = 5.0f;
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
-        EXPECT_NEAR(result, base_pop_growth_factor + habs_and_suits_growth_modifier, 0.01);
+        EXPECT_NEAR(
+            result,
+            base_pop_growth_factor + habs_and_suits_growth_modifier,
+            0.01);
         EXPECT_EQ(planet.effects.size(), 3u);
         planet_effect_t const expected[] = {
             {.name = "habs_and_suits_required"_name,
@@ -604,10 +607,13 @@ TEST(generation_tests, growth_factor_and_effects)
     }
     {
         planet_t planet = earth;
-        planet.atmopsheric_pressure = 8.0f;
+        planet.atmospheric_pressure = 8.0f;
         double const result =
             generation::detail::determine_growth_factor_and_effects(planet);
-        EXPECT_NEAR(result, base_pop_growth_factor + 2 * habs_and_suits_growth_modifier, eps);
+        EXPECT_NEAR(
+            result,
+            base_pop_growth_factor + 2 * habs_and_suits_growth_modifier,
+            eps);
         EXPECT_EQ(planet.effects.size(), 4u);
         planet_effect_t const expected[] = {
             {.name = "habs_and_suits_required"_name,
@@ -795,28 +801,27 @@ TEST(generation_tests, growth_factor_and_effects)
 
     // gas giant
     planet_t const a_gas_giant{
-        .planet_type=planet_type_t::gas_giant,
-        .mass_kg=earth_mass_kg * 1000,
-        .radius_km=earth_radius_km * 10,
-        .orbit_au=15,
-        .orbital_period_y=30,
-        .gravity_g=1000,
-        .axial_tilt_d=10,
-        .day_h=36,
-        .surface_temperature_k=float(earth_temperature_k / 2),
-        .magnetosphere_strength=5,
-        .atmopsheric_pressure=(float)atmos_millions,
+        .planet_type = planet_type_t::gas_giant,
+        .mass_kg = earth_mass_kg * 1000,
+        .radius_km = earth_radius_km * 10,
+        .orbit_au = 15,
+        .orbital_period_y = 30,
+        .gravity_g = 1000,
+        .axial_tilt_d = 10,
+        .day_h = 36,
+        .surface_temperature_k = float(earth_temperature_k / 2),
+        .magnetosphere_strength = 5,
+        .atmospheric_pressure = (float)atmos_millions,
         .o2_co2_suitability = (float)n_a,
         .ocean_coverage = (float)n_a,
-        .growth_factor=base_pop_growth_factor,
-        .atmosphere_type=atmosphere_type_t::gas_giant_atmosphere,
-        .water=0,
-        .food=0,
-        .energy=3,
-        .metal=3,
-        .fuel=3,
-        .max_population=0
-    };
+        .growth_factor = base_pop_growth_factor,
+        .atmosphere_type = atmosphere_type_t::gas_giant_atmosphere,
+        .water = 0,
+        .food = 0,
+        .energy = 3,
+        .metal = 3,
+        .fuel = 3,
+        .max_population = 0};
     {
         planet_t planet = a_gas_giant;
         double const result =
@@ -829,28 +834,27 @@ TEST(generation_tests, growth_factor_and_effects)
 
     // ice giant
     planet_t const an_ice_giant{
-        .planet_type=planet_type_t::ice_giant,
-        .mass_kg=earth_mass_kg * 8 * 8 * 8,
-        .radius_km=earth_radius_km * 8,
-        .orbit_au=25,
-        .orbital_period_y=90,
-        .gravity_g=8 * 8 * 8,
-        .axial_tilt_d=10,
-        .day_h=12,
-        .surface_temperature_k=float(earth_temperature_k / 10),
-        .magnetosphere_strength=2,
-        .atmopsheric_pressure = (float)atmos_thousands,
+        .planet_type = planet_type_t::ice_giant,
+        .mass_kg = earth_mass_kg * 8 * 8 * 8,
+        .radius_km = earth_radius_km * 8,
+        .orbit_au = 25,
+        .orbital_period_y = 90,
+        .gravity_g = 8 * 8 * 8,
+        .axial_tilt_d = 10,
+        .day_h = 12,
+        .surface_temperature_k = float(earth_temperature_k / 10),
+        .magnetosphere_strength = 2,
+        .atmospheric_pressure = (float)atmos_thousands,
         .o2_co2_suitability = (float)n_a,
         .ocean_coverage = (float)n_a,
-        .growth_factor=base_pop_growth_factor,
-        .atmosphere_type=atmosphere_type_t::ice_giant_atmosphere,
-        .water=0,
-        .food=0,
-        .energy=3,
-        .metal=3,
-        .fuel=3,
-        .max_population=0
-    };
+        .growth_factor = base_pop_growth_factor,
+        .atmosphere_type = atmosphere_type_t::ice_giant_atmosphere,
+        .water = 0,
+        .food = 0,
+        .energy = 3,
+        .metal = 3,
+        .fuel = 3,
+        .max_population = 0};
     {
         planet_t planet = an_ice_giant;
         double const result =
@@ -1052,9 +1056,9 @@ TEST(generation_tests, generate_planet)
         EXPECT_GT(planet.surface_temperature_k, 0.0);
         EXPECT_LT(planet.surface_temperature_k, 2000.0);
         EXPECT_GE(planet.magnetosphere_strength, 0.0);
-        if (planet.atmopsheric_pressure != atmos_thousands &&
-            planet.atmopsheric_pressure != atmos_millions) {
-            EXPECT_GE(planet.atmopsheric_pressure, 0.0);
+        if (planet.atmospheric_pressure != atmos_thousands &&
+            planet.atmospheric_pressure != atmos_millions) {
+            EXPECT_GE(planet.atmospheric_pressure, 0.0);
         }
         EXPECT_GE(planet.o2_co2_suitability, 0.0);
         EXPECT_LE(planet.o2_co2_suitability, 1.0);
@@ -1062,10 +1066,10 @@ TEST(generation_tests, generate_planet)
             EXPECT_GE(planet.ocean_coverage, 0.0);
             EXPECT_LE(planet.ocean_coverage, 1.0);
         }
-        EXPECT_GT(planet.atmosphere_type,
-                  atmosphere_type_t::invalid_atmosphere_type);
-        EXPECT_LE(planet.atmosphere_type,
-                  atmosphere_type_t::ice_giant_atmosphere);
+        EXPECT_GT(
+            planet.atmosphere_type, atmosphere_type_t::invalid_atmosphere_type);
+        EXPECT_LE(
+            planet.atmosphere_type, atmosphere_type_t::ice_giant_atmosphere);
         EXPECT_GE(planet.water, 0);
         EXPECT_LE(planet.water, 100);
         EXPECT_GE(planet.food, 0);
@@ -1109,13 +1113,13 @@ TEST(generation_tests, generate_planet)
         EXPECT_NEAR(planet.surface_temperature_k, earth_temperature_k, 10);
         EXPECT_GE(planet.magnetosphere_strength, 0.0);
         EXPECT_LT(planet.magnetosphere_strength, 5.0);
-        EXPECT_GE(planet.atmopsheric_pressure, 0.0);
+        EXPECT_GE(planet.atmospheric_pressure, 0.0);
         EXPECT_GE(planet.o2_co2_suitability, 0.0);
         EXPECT_LE(planet.o2_co2_suitability, 1.0);
         EXPECT_GE(planet.ocean_coverage, 0.0);
         EXPECT_LE(planet.ocean_coverage, 1.0);
-        EXPECT_GT(planet.atmosphere_type,
-                  atmosphere_type_t::invalid_atmosphere_type);
+        EXPECT_GT(
+            planet.atmosphere_type, atmosphere_type_t::invalid_atmosphere_type);
         EXPECT_LE(planet.atmosphere_type, atmosphere_type_t::high_temperature);
         EXPECT_GE(planet.water, 0);
         EXPECT_LE(planet.water, 100);
@@ -1160,12 +1164,12 @@ TEST(generation_tests, generate_planet)
         EXPECT_GT(planet.surface_temperature_k, 0.0);
         EXPECT_LT(planet.surface_temperature_k, 2000.0);
         EXPECT_GE(planet.magnetosphere_strength, 0.0);
-        EXPECT_EQ(planet.atmopsheric_pressure, atmos_millions);
+        EXPECT_EQ(planet.atmospheric_pressure, atmos_millions);
         EXPECT_GE(planet.o2_co2_suitability, 0.0);
         EXPECT_LE(planet.o2_co2_suitability, 1.0);
         EXPECT_EQ(planet.ocean_coverage, n_a);
-        EXPECT_EQ(planet.atmosphere_type,
-                  atmosphere_type_t::gas_giant_atmosphere);
+        EXPECT_EQ(
+            planet.atmosphere_type, atmosphere_type_t::gas_giant_atmosphere);
         EXPECT_GE(planet.water, 0);
         EXPECT_LE(planet.water, 10);
         EXPECT_EQ(planet.food, 0);
@@ -1208,12 +1212,12 @@ TEST(generation_tests, generate_planet)
         EXPECT_GT(planet.surface_temperature_k, 0.0);
         EXPECT_LT(planet.surface_temperature_k, 2000.0);
         EXPECT_GE(planet.magnetosphere_strength, 0.0);
-        EXPECT_EQ(planet.atmopsheric_pressure, atmos_thousands);
+        EXPECT_EQ(planet.atmospheric_pressure, atmos_thousands);
         EXPECT_GE(planet.o2_co2_suitability, 0.0);
         EXPECT_LE(planet.o2_co2_suitability, 1.0);
         EXPECT_EQ(planet.ocean_coverage, n_a);
-        EXPECT_EQ(planet.atmosphere_type,
-                  atmosphere_type_t::ice_giant_atmosphere);
+        EXPECT_EQ(
+            planet.atmosphere_type, atmosphere_type_t::ice_giant_atmosphere);
         EXPECT_GE(planet.water, 0);
         EXPECT_LE(planet.water, 10);
         EXPECT_EQ(planet.food, 0);

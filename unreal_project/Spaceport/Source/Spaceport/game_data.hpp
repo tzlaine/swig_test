@@ -145,7 +145,7 @@ struct planet_t
     float day_h = -1.0f;
     float surface_temperature_k = -1.0f;
     float magnetosphere_strength = -1.0f;
-    float atmopsheric_pressure = -1.0f;
+    float atmospheric_pressure = -1.0f;
     float o2_co2_suitability = -1.0f;
     float ocean_coverage = -1.0f;
     float growth_factor = -1.0f;

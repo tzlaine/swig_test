@@ -521,7 +521,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, day_h_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, surface_temperature_k_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, magnetosphere_strength_),
-  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, atmopsheric_pressure_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, atmospheric_pressure_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, o2_co2_suitability_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, ocean_coverage_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::planet_t, growth_factor_),
@@ -713,7 +713,7 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "_y\030\006 \001(\002\022\021\n\tgravity_g\030\007 \001(\002\022\024\n\014axial_til"
   "t_d\030\010 \001(\002\022\r\n\005day_h\030\t \001(\002\022\035\n\025surface_temp"
   "erature_k\030\n \001(\002\022\036\n\026magnetosphere_strengt"
-  "h\030\013 \001(\002\022\034\n\024atmopsheric_pressure\030\014 \001(\002\022\032\n"
+  "h\030\013 \001(\002\022\034\n\024atmospheric_pressure\030\014 \001(\002\022\032\n"
   "\022o2_co2_suitability\030\r \001(\002\022\026\n\016ocean_cover"
   "age\030\016 \001(\002\022\025\n\rgrowth_factor\030\017 \001(\002\022@\n\017atmo"
   "sphere_type\030\020 \001(\0162\'.pb_message.game_data"
@@ -3623,10 +3623,10 @@ const char* planet_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
-      // float atmopsheric_pressure = 12;
+      // float atmospheric_pressure = 12;
       case 12:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 101)) {
-          atmopsheric_pressure_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          atmospheric_pressure_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else goto handle_unusual;
         continue;
@@ -3857,10 +3857,10 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(11, this->_internal_magnetosphere_strength(), target);
   }
 
-  // float atmopsheric_pressure = 12;
-  if (!(this->atmopsheric_pressure() <= 0 && this->atmopsheric_pressure() >= 0)) {
+  // float atmospheric_pressure = 12;
+  if (!(this->atmospheric_pressure() <= 0 && this->atmospheric_pressure() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(12, this->_internal_atmopsheric_pressure(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(12, this->_internal_atmospheric_pressure(), target);
   }
 
   // float o2_co2_suitability = 13;
@@ -4064,8 +4064,8 @@ size_t planet_t::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float atmopsheric_pressure = 12;
-  if (!(this->atmopsheric_pressure() <= 0 && this->atmopsheric_pressure() >= 0)) {
+  // float atmospheric_pressure = 12;
+  if (!(this->atmospheric_pressure() <= 0 && this->atmospheric_pressure() >= 0)) {
     total_size += 1 + 4;
   }
 
@@ -4234,8 +4234,8 @@ void planet_t::MergeFrom(const planet_t& from) {
   if (!(from.magnetosphere_strength() <= 0 && from.magnetosphere_strength() >= 0)) {
     _internal_set_magnetosphere_strength(from._internal_magnetosphere_strength());
   }
-  if (!(from.atmopsheric_pressure() <= 0 && from.atmopsheric_pressure() >= 0)) {
-    _internal_set_atmopsheric_pressure(from._internal_atmopsheric_pressure());
+  if (!(from.atmospheric_pressure() <= 0 && from.atmospheric_pressure() >= 0)) {
+    _internal_set_atmospheric_pressure(from._internal_atmospheric_pressure());
   }
   if (!(from.o2_co2_suitability() <= 0 && from.o2_co2_suitability() >= 0)) {
     _internal_set_o2_co2_suitability(from._internal_o2_co2_suitability());

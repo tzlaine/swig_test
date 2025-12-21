@@ -223,7 +223,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_day_h(value.day_h);
     retval.set_surface_temperature_k(value.surface_temperature_k);
     retval.set_magnetosphere_strength(value.magnetosphere_strength);
-    retval.set_atmopsheric_pressure(value.atmopsheric_pressure);
+    retval.set_atmospheric_pressure(value.atmospheric_pressure);
     retval.set_o2_co2_suitability(value.o2_co2_suitability);
     retval.set_ocean_coverage(value.ocean_coverage);
     retval.set_growth_factor(value.growth_factor);
@@ -261,7 +261,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.day_h = msg.day_h();
     retval.surface_temperature_k = msg.surface_temperature_k();
     retval.magnetosphere_strength = msg.magnetosphere_strength();
-    retval.atmopsheric_pressure = msg.atmopsheric_pressure();
+    retval.atmospheric_pressure = msg.atmospheric_pressure();
     retval.o2_co2_suitability = msg.o2_co2_suitability();
     retval.ocean_coverage = msg.ocean_coverage();
     retval.growth_factor = msg.growth_factor();

@@ -451,10 +451,10 @@ namespace detail {
             using namespace std::literals;
             return {"magnetosphere_strength"sv, 11, &planet_t::magnetosphere_strength};
         }
-        static constexpr metadatum<planet_t, float> atmopsheric_pressure()
+        static constexpr metadatum<planet_t, float> atmospheric_pressure()
         {
             using namespace std::literals;
-            return {"atmopsheric_pressure"sv, 12, &planet_t::atmopsheric_pressure};
+            return {"atmospheric_pressure"sv, 12, &planet_t::atmospheric_pressure};
         }
         static constexpr metadatum<planet_t, float> o2_co2_suitability()
         {
@@ -561,7 +561,7 @@ namespace detail {
             f(day_h());
             f(surface_temperature_k());
             f(magnetosphere_strength());
-            f(atmopsheric_pressure());
+            f(atmospheric_pressure());
             f(o2_co2_suitability());
             f(ocean_coverage());
             f(growth_factor());
