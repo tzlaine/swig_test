@@ -264,8 +264,10 @@ struct name_t : boost::totally_ordered<name_t, name_t> {
 
     const char* c_str() const { return ptr_m; }
 
-    const char* begin() const { return ptr_m; }
-    const char* end() const { return begin() + strlen(begin()); }
+    // TZL: These interfere with the Lua bindings (which try to use this type
+    // as a container).
+    // const char* begin() const { return ptr_m; }
+    // const char* end() const { return begin() + strlen(begin()); }
 
     /**
         for use with sorting, e.g.:

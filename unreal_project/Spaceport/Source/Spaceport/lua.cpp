@@ -3,6 +3,7 @@
 #include "constants.hpp"
 #include "game_data_metadata.hpp"
 #include "game_data_formatters.hpp"
+#include "adobe/name.hpp"
 
 #if defined(BUILD_FOR_TEST)
 #include <iostream>
@@ -123,7 +124,12 @@ sol::state make_lua_state()
     // that are used everywhere else.
     retval.script_file(script_path("constants.lua"));
 
-    // TODO: constants that are not configurable, but are used in the Lua code
+    sol::usertype<adobe::name_t> name_type = retval.new_usertype<adobe::name_t>(
+        "name_t",
+        sol::constructors<adobe::name_t(char const *)>{},
+        sol::meta_function::to_string,
+        [](adobe::name_t const & x) { return std::string(x.c_str()); });
+    name_type["c_str"] = &adobe::name_t::c_str;
 
     REGISTER_GAME_DATA_TYPE(retval, hex_coord_t);
     retval.script("invalid_hex_coord = hex_coord_t.new(-1, -1)");

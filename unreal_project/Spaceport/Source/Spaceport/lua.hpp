@@ -24,18 +24,6 @@ namespace detail {
         return T{};
     }
 
-    // Get/set an adobe::name_t, which sol3 knows nothing about.
-    template<typename T, auto MemPtr>
-    char const * get_name(T const & x)
-    {
-        return (x.*MemPtr).c_str();
-    }
-    template<typename T, auto MemPtr>
-    void set_name(T & x, char const * s)
-    {
-        x.*MemPtr = adobe::name_t(s);
-    }
-
     void lua_register_1(sol::state & l);
     void lua_register_2(sol::state & l);
     void lua_register_3(sol::state & l);
@@ -50,17 +38,8 @@ namespace detail {
         sol::meta_function::to_string,                                         \
         [](T const & x) { return std::format("{}", x); });                     \
     T##_type["new"] = &detail::make_default<T>;                                \
-    detail::metadata<T>::foreach_member([&](auto meta) {                       \
-        if constexpr (std::same_as<                                            \
-                          detail::member_type_t<decltype(meta.ptr_)>,          \
-                          adobe::name_t>) {                                    \
-            T##_type[meta.name_] = sol::property(                              \
-                &detail::get_name<T, decltype(meta.ptr_){}>,                   \
-                &detail::set_name<T, decltype(meta.ptr_){}>);                  \
-        } else {                                                               \
-            T##_type[meta.name_] = meta.ptr_;                                  \
-        }                                                                      \
-    })
+    detail::metadata<T>::foreach_member(                                       \
+        [&](auto meta) { T##_type[meta.name_] = meta.ptr_; })
 
 
 #if WITH_EDITOR
