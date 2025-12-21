@@ -1,5 +1,6 @@
 #pragma once
 
+#include "check.hpp"
 #include "game_data.hpp"
 #include "lua.hpp"
 #include "map_util.hpp"

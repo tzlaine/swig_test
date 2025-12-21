@@ -1,4 +1,5 @@
 #pragma once
+#include "check.hpp"
 #include "game_data.hpp"
 
 #include <boost/array.hpp>
@@ -8,7 +9,6 @@
 #include <fstream>
 #endif
 
-#include <cassert>
 #include <string>
 
 
@@ -24,7 +24,7 @@ enum class hex_direction_t {
 
 inline hex_direction_t & operator++ (hex_direction_t & d)
 {
-    assert(d != hex_direction_t::hex_directions);
+    check(d != hex_direction_t::hex_directions);
     const int n = static_cast<int>(hex_direction_t::hex_directions);
     int d_int = static_cast<int>(d);
     d_int = (d_int + 1) % n;
@@ -34,7 +34,7 @@ inline hex_direction_t & operator++ (hex_direction_t & d)
 
 inline hex_direction_t & operator-- (hex_direction_t & d)
 {
-    assert(d != hex_direction_t::hex_directions);
+    check(d != hex_direction_t::hex_directions);
     const int n = static_cast<int>(hex_direction_t::hex_directions);
     int d_int = static_cast<int>(d);
     d_int = (d_int + n - 1) % n;
@@ -499,8 +499,8 @@ inline neighbors_t adjacent_hex_coords (hex_coord_t hc, int width, int height, i
 {
     neighbors_t retval;
 
-    assert(0 < r && r <= 6);
-    assert(on_map(hc, width, height));
+    check(0 < r && r <= 6);
+    check(on_map(hc, width, height));
 
     int const n = max_hexes_at_radius[r];
     hex_coord_t const * const offsets =

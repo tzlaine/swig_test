@@ -1,3 +1,4 @@
+#include "check.hpp"
 #include "constants.hpp"
 #include "effects.hpp"
 #include "generate_galaxy.hpp"
@@ -267,7 +268,7 @@ void generation::detail::generate_hex(
     int habitable_systems,
     hex_scratch & scratch)
 {
-    assert(habitable_systems < params.systems_per_hex);
+    check(habitable_systems < params.systems_per_hex);
 
     hex_coord_t const hc = from_index(hex_index, game_state.map_width);
 
@@ -418,10 +419,10 @@ void generation::generate_galaxy(
                 game_state.planets.begin() + prev_size);
             system_it->first_planet = prev_size;
             system_it->last_planet = game_state.planets.size();
-            assert(
+            check(
                 game_state.planets[system_it->first_planet].system_id ==
                 system_id);
-            assert(
+            check(
                 game_state.planets[system_it->last_planet - 1].system_id ==
                 system_id);
             ++system_it;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "check.hpp"
 #include "game_data.hpp"
 #include "lua.hpp"
 
@@ -9,9 +10,9 @@
 inline void apply_planet_effect(planet_t & planet, planet_effect_t const & pe)
 {
     sol::table planet_effects = lua()["planet_effects"];
-    assert(planet_effects);
+    check(planet_effects);
     sol::table effect = planet_effects[pe.name.c_str()];
-    assert(effect);
+    check(effect);
     sol::function apply = effect["apply"];
     sol::object value = effect["value"];
     if (value)

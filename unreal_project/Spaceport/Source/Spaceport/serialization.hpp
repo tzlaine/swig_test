@@ -1,5 +1,6 @@
 #pragma once
 
+#include "check.hpp"
 #include "effects.hpp"
 #include "game_data_metadata.hpp"
 #include "logging.hpp"
@@ -21,7 +22,6 @@
 #include <string_view>
 #include <type_traits>
 #include <vector>
-#include <cassert>
 
 
 struct failed_deserialization : std::exception
@@ -224,7 +224,7 @@ namespace detail {
     inline std::span<std::byte const> read_varint_impl(
         uint32_t & x, uint32_t first_byte, std::span<std::byte const> src)
     {
-        assert((uint32_t)src.front() == first_byte);
+        check((uint32_t)src.front() == first_byte);
 
         int i = 0;
 
@@ -298,7 +298,7 @@ namespace detail {
     inline std::span<std::byte const>
     read_varint_impl(uint64_t & x, std::span<std::byte const> src)
     {
-        assert(0x80 <= (uint32_t)src[0]);
+        check(0x80 <= (uint32_t)src[0]);
 
         if ((uint32_t)src[1] < 0x80)
             return detail::decode_varint_bytes<2>(x, src);

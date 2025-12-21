@@ -1,5 +1,6 @@
 #pragma once
 
+#include "check.hpp"
 #include "concurrent_queue.hpp"
 #include "constants.hpp"
 #include "game_data.hpp"
@@ -80,7 +81,7 @@ struct model
     hex_t const & hex(hex_coord_t hc) const
     {
         auto const i = hex_index_t(hc, game_state_->map_width);
-        assert(i < (int)game_state_->hexes.size());
+        check(i < (int)game_state_->hexes.size());
         return game_state_->hexes[i];
     }
 

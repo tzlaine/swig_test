@@ -1,5 +1,6 @@
 #pragma once
 
+#include "check.hpp"
 #include "game_data.hpp"
 #include "map_util.hpp"
 #include "model_util.hpp"
@@ -9,8 +10,8 @@ namespace detail {
     inline std::vector<int_point>
     max_radius_offsets(double max_radius, double cell_size)
     {
-        assert(0.0 < max_radius);
-        assert(0.0 < cell_size);
+        check(0.0 < max_radius);
+        check(0.0 < cell_size);
 
         std::vector<int_point> retval;
 
