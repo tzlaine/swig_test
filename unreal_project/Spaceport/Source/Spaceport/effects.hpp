@@ -13,8 +13,8 @@ inline void apply_planet_effect(planet_t & planet, planet_effect_t const & pe)
     sol::table effect = planet_effects[pe.name.c_str()];
     assert(effect);
     sol::function apply = effect["apply"];
-    sol::object expr = effect["expr"];
-    if (expr)
+    sol::object value = effect["value"];
+    if (value)
         apply(effect, planet);
     else
         apply(effect, planet, pe.value);
