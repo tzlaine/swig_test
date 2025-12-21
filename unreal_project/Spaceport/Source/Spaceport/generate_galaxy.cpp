@@ -7,9 +7,6 @@
 #include <numbers>
 
 
-// TODO: Get rid of the remaining magic numbers in this file (put them in a
-// Lua file).
-
 // MAINTENANCE NOTE: Any calls to the lambda habs_and_suits_required (but not
 // the masks one) should come before any other effects, since it clears out
 // all previous effects.  Any effects that affect colonists living in
