@@ -1,9 +1,9 @@
 function apply_planet_effect(planet, e)
    effect = planet_effects[e.name:c_str()]
    if effect.value then
-      effect.apply(effect, planet)
+      effect:apply(planet)
    else
-      effect.apply(effect, planet, e.value)
+      effect:apply(planet, e.value)
    end
 end
 
