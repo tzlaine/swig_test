@@ -1,7 +1,5 @@
 function apply_planet_effect(planet, e)
    effect = planet_effects[e.name:c_str()]
-   instrument(level.trace, e)
-   instrument(level.trace, effect)
    if effect.value then
       effect:apply(planet)
    else
@@ -15,8 +13,6 @@ function determine_growth_factor_and_effects(planet)
       planet.effects:add(pe)
    end
 
-   instrument(level.trace, 'cp 0')
-
    planet.growth_factor = base_pop_growth_factor
 
    if planet.planet_type ~= planet_type_t.rocky then
@@ -29,8 +25,6 @@ function determine_growth_factor_and_effects(planet)
    -- masks one) should come before any other effects, since it clears out all
    -- previous effects.  Any effects that affect colonists living in
    -- habs+suits should come *after* all calls to habs_and_suits_required.
-
-   instrument(level.trace, 'cp 1')
 
    -- tilt
    if planet.axial_tilt_d < 5.0 then
@@ -100,8 +94,6 @@ function determine_growth_factor_and_effects(planet)
       effect(planet, 'only_equatorial_band_habitable')
    end
 
-   instrument(level.trace, 'cp 2')
-
    -- day length
    if planet.day_h < 24.0 * 0.9 then
       effect(planet, 'short_days')
@@ -133,8 +125,6 @@ function determine_growth_factor_and_effects(planet)
    -- TODO: Should the day length effects apply to planets that are very
    -- highly tilted, like >= 75 deg?
 
-   instrument(level.trace, 'cp 3')
-
    local habs_and_suits_already_required = 0
    local habs_and_masks_required = function(planet, reason)
       planet.effects:add(
@@ -165,8 +155,6 @@ function determine_growth_factor_and_effects(planet)
       habs_and_suits_already_required = habs_and_suits_already_required + 1
    end
 
-   instrument(level.trace, 'cp 4')
-
    -- O2 (making simplifying assumption of ignoring the CO2 part of this
    -- property)
    local harmless_o2_threshold = harmless_low_o2_percentage / earth_o2_percentage
@@ -174,24 +162,17 @@ function determine_growth_factor_and_effects(planet)
    if harmless_o2_threshold < effective_o2 then
       -- no effect
    elseif effective_o2_percentage_la_paz_bolivia / earth_o2_percentage < effective_o2 then
-      instrument(level.trace, 'cp 4.1')
       effect(planet, 'poor_o2_co2_suitab')
    elseif effective_o2_percentage_aconcagua / earth_o2_percentage < effective_o2 then
-      instrument(level.trace, 'cp 4.2.0')
       effect(planet, 'very_poor_o2_co2_suitab')
-      instrument(level.trace, 'cp 4.2.1')
       habs_and_masks_required(planet, 'very_poor_o2_co2_suitab')
    elseif effective_o2_percentage_mt_everest_peak / earth_o2_percentage < effective_o2 then
-      instrument(level.trace, 'cp 4.3')
       effect(planet, 'marginal_o2_co2_suitab')
       habs_and_masks_required(planet, 'marginal_o2_co2_suitab')
    else
-      instrument(level.trace, 'cp 4.4')
       habs_and_suits_required(planet, 'insufficient_o2_co2_suitab')
       effect(planet, 'insufficient_o2_co2_suitab')
    end
-
-   instrument(level.trace, 'cp 5')
 
    -- atmospheric pressure (< 1 cases handled with o2_co2_suitability above)
    if 4.0 < planet.atmospheric_pressure then
@@ -202,8 +183,6 @@ function determine_growth_factor_and_effects(planet)
       habs_and_suits_required(planet, 'very_high_press_o2_toxicity')
       effect(planet, 'very_high_press_o2_toxicity')
    end
-
-   instrument(level.trace, 'cp 6')
 
    -- magnetosphere
    if planet.magnetosphere_strength < 0.33 then
@@ -219,8 +198,6 @@ function determine_growth_factor_and_effects(planet)
    elseif 1.1 < planet.magnetosphere_strength then
       effect(planet, 'strong_magneto')
    end
-
-   instrument(level.trace, 'cp 7')
 
    -- temperature
    if planet.surface_temperature_k < min_habitable_nonsuit_temp_k then
@@ -243,8 +220,6 @@ function determine_growth_factor_and_effects(planet)
       effect(planet, 'uninhabitably_hot_avg_surface_temp')
    end
 
-   instrument(level.trace, 'cp 8')
-
    -- gravity
    if planet.gravity_g < 0.1 then
       effect(planet, 'very_low_grav')
@@ -258,13 +233,9 @@ function determine_growth_factor_and_effects(planet)
       effect(planet, 'very_high_grav')
    end
 
-   instrument(level.trace, 'cp 9')
-
    for i = 1, #planet.effects do
       apply_planet_effect(planet, planet.effects:get(i))
    end
-
-   instrument(level.trace, 'cp 10')
 
    return planet.growth_factor
 end
