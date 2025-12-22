@@ -1,15 +1,37 @@
 function apply_planet_effect(planet, e)
-   effect = planet_effects[e.name:c_str()]
-   if effect.value then
-      effect:apply(planet)
-   else
-      effect:apply(planet, e.value)
+   local effect = planet_effects[e.name:c_str()]
+   if effect.apply then
+      if effect.value then
+         effect:apply(planet)
+      else
+         effect:apply(planet, e.value)
+      end
+      return
    end
+   local apply = nil
+   if effect.target == 'growth_factor' then
+      apply = function(planet, value)
+         local x = effect_value(planet, value)
+         planet.growth_factor = planet.growth_factor + x
+      end
+   elseif effect.target == 'max_population' then
+      apply = function(planet, value)
+         local x = effect_value(planet, value)
+         planet.max_population = to_integer(planet.max_population * x)
+      end
+   elseif effect.target == 'infrastructure_cost' then
+      apply = function(planet, value)
+         local x = effect_value(planet, value)
+         planet.infrastructure_cost_factor =
+            planet.infrastructure_cost_factor * x
+      end
+   end
+   apply(planet, effect.value and effect.value or e.value)
 end
 
 function determine_growth_factor_and_effects(planet)
    local effect = function(planet, name)
-      pe = planet_effect_t.new(name)
+      local pe = planet_effect_t.new(name)
       planet.effects:add(pe)
    end
 
