@@ -30,6 +30,8 @@ reduced_rocky_planet_pressure_factor = 0.05
 nonreduced_rocky_planet_pressure_factor = 0.2
 min_habitable_nonsuit_temp_k = earth_temperature_k - 44
 max_habitable_temp_k = earth_temperature_k + 55
+mean_starting_pop = max_earth_pops / 2
+starting_pop_plus_minus = mean_starting_pop / 10
 
 -- game start parameters
 small_map_height = 11

@@ -89,9 +89,13 @@ extern const double reduced_rocky_planet_pressure_factor;
 extern const double nonreduced_rocky_planet_pressure_factor;
 extern const double min_habitable_nonsuit_temp_k;
 extern const double max_habitable_temp_k;
+extern const double mean_starting_pop;
+extern const double starting_pop_plus_minus;
+
 extern const int small_map_height;
 extern const int medium_map_height;
 extern const int large_map_height;
+
 extern const float min_camera_dist;
 extern const float max_camera_dist;
 

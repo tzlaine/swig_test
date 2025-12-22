@@ -261,3 +261,14 @@ function determine_growth_factor_and_effects(planet)
 
    return planet.growth_factor
 end
+
+function starting_planet_score(planet)
+   if planet.growth_factor < growth_factor_considered_habitable or
+      planet.metal < 0.2 * max_resource_value or
+      planet.fuel < 0.2 * max_resource_value or
+      mean_starting_pop + starting_pop_plus_minus < planet.max_population then
+      return -1000.0
+   end
+
+   return planet.max_population
+end

@@ -1242,9 +1242,36 @@ TEST(generation_tests, generate_galaxy)
         .habitable_systems_per_hex_plus_minus = 2.0,
         .systems_per_hex = 20,
         .map_height = 11};
-    game_state_t game_state;
-    generation::generate_galaxy(params, game_state);
-    EXPECT_FALSE(game_state.hexes.empty());
-    EXPECT_FALSE(game_state.systems.empty());
-    EXPECT_FALSE(game_state.planets.empty());
+    game_state_t gs;
+    generation::generate_galaxy(params, gs);
+    EXPECT_FALSE(gs.hexes.empty());
+    EXPECT_FALSE(gs.systems.empty());
+    EXPECT_FALSE(gs.planets.empty());
+
+    sol::function f = lua()["starting_planet_score"];
+    std::vector<candidate_planet> const all_planets_scored =
+        scored_planets(gs, f);
+    for (int i = 0; i < 5; ++i) {
+        std::cout << std::format(
+            "score: {} max_pop: {} metal: {} fuel: {} growth: {}\n\n",
+            all_planets_scored[i].score_,
+            all_planets_scored[i].planet_->max_population,
+            all_planets_scored[i].planet_->metal,
+            all_planets_scored[i].planet_->fuel,
+            all_planets_scored[i].planet_->growth_factor);
+    }
+
+    std::cout << "========================================\n\n";
+
+    std::vector<candidate_planet> const top_n =
+        generation::detail::find_starting_locations(gs, 5);
+    for (auto c : top_n) {
+        std::cout << std::format(
+            "score: {} max_pop: {} metal: {} fuel: {} growth: {}\n\n",
+            c.score_,
+            c.planet_->max_population,
+            c.planet_->metal,
+            c.planet_->fuel,
+            c.planet_->growth_factor);
+    }
 }

@@ -16,6 +16,7 @@ struct game_start_params_t;
 struct game_state_t;
 template<typename T>
 struct concurrent_queue;
+struct candidate_planet;
 
 namespace generation {
     namespace detail {
@@ -72,7 +73,10 @@ namespace generation {
             return retval;
         }
 
-        bool generate_planet(planet_t & planet, system_t const & system);
+        bool generate_planet(
+            planet_t & planet,
+            system_t const & system,
+            bool homeworld_reroll = false);
 
         struct system_scratch
         {
@@ -365,6 +369,9 @@ namespace generation {
                           point_2d center_hex_pos,
                           int habitable_systems,
                           hex_scratch & scratch);
+
+        std::vector<candidate_planet>
+        find_starting_locations(game_state_t & gs, int n);
 
 #if defined(BUILD_FOR_TEST)
         inline bool g_skip_system_generation_for_testing = false;

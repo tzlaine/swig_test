@@ -245,3 +245,32 @@ allies_of(std::vector<int> & retval, game_state_t const & gs, int nation_id)
             retval.push_back(i);
     }
 }
+
+struct candidate_planet
+{
+    double score_;
+    int planet_id_;
+    planet_t * planet_;
+};
+
+template<typename F>
+std::vector<candidate_planet> scored_planets(game_state_t & gs, F && f)
+{
+    std::vector<candidate_planet> retval(gs.planets.size());
+    int i = 0;
+    std::ranges::transform(gs.planets, retval.begin(), [&](auto & e) {
+        return candidate_planet{f(e), i++, &e};
+    });
+    return retval;
+}
+
+inline void only_top_planets(std::vector<candidate_planet> & all_planets, int n)
+{
+    check(n < (int)all_planets.size());
+    std::ranges::partial_sort(
+        all_planets,
+        all_planets.begin() + n,
+        std::ranges::greater{},
+        &candidate_planet::score_);
+    all_planets.resize(n);
+}

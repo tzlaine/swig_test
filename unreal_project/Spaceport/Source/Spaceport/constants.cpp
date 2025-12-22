@@ -88,9 +88,13 @@ const double nonreduced_rocky_planet_pressure_factor =
 const double min_habitable_nonsuit_temp_k =
     lua()["min_habitable_nonsuit_temp_k"];
 const double max_habitable_temp_k = lua()["max_habitable_temp_k"];
+const double mean_starting_pop = lua()["mean_starting_pop"];
+const double starting_pop_plus_minus = lua()["starting_pop_plus_minus"];
+
 const int small_map_height = lua()["small_map_height"];
 const int medium_map_height = lua()["medium_map_height"];
 const int large_map_height = lua()["large_map_height"];
+
 const float min_camera_dist = lua()["min_camera_dist"];
 const float max_camera_dist = lua()["max_camera_dist"];
 

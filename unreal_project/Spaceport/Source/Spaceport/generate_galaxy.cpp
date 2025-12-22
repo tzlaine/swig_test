@@ -2,10 +2,16 @@
 #include "constants.hpp"
 #include "effects.hpp"
 #include "generate_galaxy.hpp"
+#include "model_util.hpp"
 #include "rng.hpp"
 #include "task_system.hpp"
 
 #include <numbers>
+
+#define INSTRUMENT_REROLLS 0
+#if INSTRUMENT_REROLLS
+#include <game_data_formatters.hpp>
+#endif
 
 
 // See: https://en.wikipedia.org/wiki/Sun
@@ -56,8 +62,10 @@ generation::detail::generate_star(double roll /* = random_unit_double()*/)
 // Neptune 1638 kg/m^3 8.68e25 kg
 
 bool generation::detail::generate_planet(
-    planet_t & planet, system_t const & system)
+    planet_t & planet, system_t const & system, bool homeworld_reroll)
 {
+    using namespace adobe::literals;
+
     // According to Google, planets < 0.3 Jupiter masses are rocky.
     constexpr double rockiness_mass_threshold = 5.7e26;
 
@@ -82,6 +90,11 @@ bool generation::detail::generate_planet(
         ice_giant_distance_factor * system.star.solar_masses;
 
     double density = 0.0; // in kg/km^3
+    if (homeworld_reroll) {
+        density = random_number(rocky_density_dist);
+        if (earth_mass_kg < planet.mass_kg)
+            planet.mass_kg *= 0.9;
+    } else
 #if defined(BUILD_FOR_TEST)
     // Alow the test to optionally force a planet type.
     if (planet.planet_type == planet_type_t::rocky)
@@ -117,60 +130,83 @@ bool generation::detail::generate_planet(
 
     planet.day_h = day_length_factor * random_number(day_dist);
 
-    // Kepler's third law: T^2 = (4pi^2/GM)a^3
-    double const a = planet.orbit_au * km_per_au * m_per_km;
-    double const a3 = a * a * a;
-    double const M = system.star.solar_masses * sun_mass_kg;
-    planet.orbital_period_y =
-        std::sqrt(4 * std::numbers::pi * std::numbers::pi / (G_ * M) * a3) /
-        secs_per_year;
+    if (!homeworld_reroll) {
+        // Kepler's third law: T^2 = (4pi^2/GM)a^3
+        double const a = planet.orbit_au * km_per_au * m_per_km;
+        double const a3 = a * a * a;
+        double const M = system.star.solar_masses * sun_mass_kg;
+        planet.orbital_period_y =
+            std::sqrt(4 * std::numbers::pi * std::numbers::pi / (G_ * M) * a3) /
+            secs_per_year;
+    }
 
-    planet.surface_temperature_k = system.star.temperature_k *
-                                   std::sqrt(
-                                       system.star.solar_radii * sun_radius_km /
-                                       (2 * planet.orbit_au * km_per_au));
-
-    planet.o2_co2_suitability = 0.0;
-    if (planet.planet_type == planet_type_t::rocky) {
-        if (random_unit_double() < prob_rocky_planet_has_magnetosphere) {
-            planet.magnetosphere_strength =
-                std::max(0.0, random_number(rocky_magnetosphere_dist));
-        } else {
-            planet.magnetosphere_strength = 0.0;
+    if (homeworld_reroll) {
+        std::normal_distribution<double> dist(1.0, 0.025);
+        planet.o2_co2_suitability = random_number(dist);
+        planet.atmospheric_pressure = random_number(dist);
+        planet.surface_temperature_k -=
+            (planet.surface_temperature_k - earth_temperature_k) / 2;
+        if (planet.magnetosphere_strength < 1.0) {
+            planet.magnetosphere_strength -=
+                (planet.magnetosphere_strength - 1) / 2;
         }
-        if (high_temp_k < planet.surface_temperature_k) {
-            planet.atmosphere_type = atmosphere_type_t::high_temperature;
-            planet.atmospheric_pressure = high_temp_atmosphere_pressure_factor *
-                                          random_number(atmos_dist) *
-                                          planet.mass_kg / earth_mass_kg;
-        } else if (planet.magnetosphere_strength < 0.01) {
-            double const no_mag_roll = random_unit_double();
-            if (no_mag_roll < prob_no_magnetosphere_rocky_planet_is_reduced) {
-                planet.atmosphere_type = atmosphere_type_t::reduced_type_a;
-                planet.atmospheric_pressure =
-                    reduced_rocky_planet_pressure_factor *
-                    random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
+    } else {
+        planet.surface_temperature_k =
+            system.star.temperature_k *
+            std::sqrt(
+                system.star.solar_radii * sun_radius_km /
+                (2 * planet.orbit_au * km_per_au));
+
+        planet.o2_co2_suitability = 0.0;
+        if (planet.planet_type == planet_type_t::rocky) {
+            if (random_unit_double() < prob_rocky_planet_has_magnetosphere) {
+                planet.magnetosphere_strength =
+                    std::max(0.0, random_number(rocky_magnetosphere_dist));
             } else {
-                planet.atmosphere_type = atmosphere_type_t::carbon_rich_type_c;
+                planet.magnetosphere_strength = 0.0;
+            }
+            if (high_temp_k < planet.surface_temperature_k) {
+                planet.atmosphere_type = atmosphere_type_t::high_temperature;
                 planet.atmospheric_pressure =
-                    nonreduced_rocky_planet_pressure_factor *
+                    high_temp_atmosphere_pressure_factor *
+                    random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
+            } else if (planet.magnetosphere_strength < 0.01) {
+                double const no_mag_roll = random_unit_double();
+                if (no_mag_roll <
+                    prob_no_magnetosphere_rocky_planet_is_reduced) {
+                    planet.atmosphere_type = atmosphere_type_t::reduced_type_a;
+                    planet.atmospheric_pressure =
+                        reduced_rocky_planet_pressure_factor *
+                        random_number(atmos_dist) * planet.mass_kg /
+                        earth_mass_kg;
+                } else {
+                    planet.atmosphere_type =
+                        atmosphere_type_t::carbon_rich_type_c;
+                    planet.atmospheric_pressure =
+                        nonreduced_rocky_planet_pressure_factor *
+                        random_number(atmos_dist) * planet.mass_kg /
+                        earth_mass_kg;
+                }
+            } else {
+                planet.atmosphere_type = atmosphere_type_t::oxidized_type_b;
+                double const scale = o2_dist.max() - o2_dist.min();
+                planet.o2_co2_suitability =
+                    1.0 - random_number(o2_dist) / scale;
+                planet.atmospheric_pressure =
                     random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
             }
         } else {
-            planet.atmosphere_type = atmosphere_type_t::oxidized_type_b;
-            double const scale = o2_dist.max() - o2_dist.min();
-            planet.o2_co2_suitability = 1.0 - random_number(o2_dist) / scale;
-            planet.atmospheric_pressure =
-                random_number(atmos_dist) * planet.mass_kg / earth_mass_kg;
-        }
-    } else {
-        planet.magnetosphere_strength = random_number(giant_magnetosphere_dist);
-        if (planet.planet_type == planet_type_t::gas_giant) {
-            planet.atmosphere_type = atmosphere_type_t::gas_giant_atmosphere;
-            planet.atmospheric_pressure = atmos_millions;
-        } else {
-            planet.atmosphere_type = atmosphere_type_t::ice_giant_atmosphere;
-            planet.atmospheric_pressure = atmos_thousands;
+            planet.magnetosphere_strength =
+                random_number(giant_magnetosphere_dist);
+            if (planet.planet_type == planet_type_t::gas_giant) {
+                planet.atmosphere_type =
+                    atmosphere_type_t::gas_giant_atmosphere;
+                planet.atmospheric_pressure = atmos_millions;
+            } else {
+                planet.atmosphere_type =
+                    atmosphere_type_t::ice_giant_atmosphere;
+                planet.atmospheric_pressure = atmos_thousands;
+            }
         }
     }
 
@@ -188,6 +224,9 @@ bool generation::detail::generate_planet(
         planet.ocean_coverage = n_a;
         planet.max_population = 0;
     }
+
+    if (homeworld_reroll)
+        planet.effects.clear();
 
     sol::function determine_growth_factor_and_effects =
         lua()["determine_growth_factor_and_effects"];
@@ -236,12 +275,16 @@ bool generation::detail::generate_planet(
         double const scale =
             planet.magnetosphere_strength ? planet.magnetosphere_strength : 1.0;
         planet.metal = clamp_res(scale * random_number(resource_dist));
+        if (homeworld_reroll)
+            planet.metal = clamp_res(planet.metal + max_resource_value * 0.25);
     } else {
         planet.metal = clamp_res(moon_factor * random_number(resource_dist));
     }
 
     if (planet.planet_type == planet_type_t::rocky) {
         planet.fuel = clamp_res(random_number(resource_dist));
+        if (homeworld_reroll)
+            planet.fuel = clamp_res(planet.fuel + max_resource_value * 0.25);
     } else {
         planet.fuel = clamp_res(moon_factor * random_number(resource_dist));
     }
@@ -333,6 +376,53 @@ void generation::detail::generate_hex(
             ++first_uninhabitable_index;
         }
     }
+}
+
+std::vector<candidate_planet>
+generation::detail::find_starting_locations(game_state_t & gs, int n)
+{
+    sol::function score = lua()["starting_planet_score"];
+    sol::function determine_growth_factor_and_effects =
+        lua()["determine_growth_factor_and_effects"];
+    auto retval = scored_planets(gs, score);
+    only_top_planets(retval, n);
+
+    for (auto & candidate : retval) {
+        system_t const & system = gs.systems[candidate.planet_->system_id];
+#if INSTRUMENT_REROLLS
+        std::cout << std::format(
+            "planet initially: max_pop={} growth_factor={} metal={} fuel={} "
+            "score={}\n{}\n\n",
+            candidate.planet_->max_population,
+            candidate.planet_->growth_factor,
+            candidate.planet_->metal,
+            candidate.planet_->fuel,
+            candidate.score_,
+            *candidate.planet_);
+#endif
+        int max_iterations = 100000;
+        while (starting_pop_plus_minus <
+                   std::abs(
+                       candidate.planet_->max_population - mean_starting_pop) ||
+               candidate.score_ < 0) {
+            if (!--max_iterations)
+                break;
+            generate_planet(*candidate.planet_, system, true);
+            candidate.score_ = score(*candidate.planet_);
+#if INSTRUMENT_REROLLS
+            std::cout << std::format(
+                "planet reroll: max_pop={} growth_factor={} metal={} fuel={} score={}\n{}\n\n",
+                candidate.planet_->max_population,
+                candidate.planet_->growth_factor,
+                candidate.planet_->metal,
+                candidate.planet_->fuel,
+                candidate.score_,
+                *candidate.planet_);
+#endif
+        }
+    }
+
+    return retval;
 }
 
 void generation::generate_galaxy(
