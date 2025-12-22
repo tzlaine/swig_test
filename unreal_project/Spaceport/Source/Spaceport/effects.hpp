@@ -14,8 +14,3 @@ inline void apply_planet_effect(planet_t & planet, planet_effect_t const & pe)
     sol::function apply_planet_effects = lua()["apply_planet_effect"];
     apply_planet_effects(planet, pe);
 }
-
-inline bool transitory(planet_effect_t const & effect)
-{
-    return false; // TODO
-}

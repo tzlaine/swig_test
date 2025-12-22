@@ -77,6 +77,30 @@ message fleets_t
     map<int32, int32> fleet_ids = 1;
 }
 
+message settlement_t
+{
+    nation_and_object_id_t id = 1;
+    int32 planet_id = 2;
+
+    int32 original_owner = 3;
+
+    // These two are floats because they grow over time; the effeective
+    // property is the truncated integral value though.
+    float population = 4;
+    float infrastructure = 5;
+
+    int32 water = 6;
+    int32 food = 7;
+    int32 energy = 8;
+    int32 metal = 9;
+    int32 fuel = 10;
+
+    // TODO: language, culture, religion
+
+    nation_and_object_id_t garrison = 11;
+    // TODO: ground-to-space defenses
+}
+
 enum planet_type_t {
     invalid_planet_type = 0;
     rocky = 1;
@@ -127,21 +151,14 @@ message planet_t
     int32 metal = 20;
     int32 fuel = 21;
 
-    // These two are floats because they grow over time; the effeective
-    // property is the truncated integral value though.
-    float population = 22;
-    float infrastructure = 23;
+    float infrastructure_cost_factor = 22;
+    float orbital_pos_r = 23;
+    int32 max_population = 24;
+    repeated planet_effect_t effects = 25;
 
-    float infrastructure_cost_factor = 24;
-    float orbital_pos_r = 25;
-    int32 max_population = 26;
-    int32 owner = 27; // TODO: Ownership of planets should go away.
-    int32 original_owner = 28;
-    // TODO: language, culture, religion
+    repeated nation_and_object_id_t settlement_ids = 26;
+
     // TODO: visual properties (incl. rings)
-    nation_and_object_id_t garrison = 29;
-    // TODO: ground-to-space defenses
-    repeated planet_effect_t effects = 30;
 }
 
 message location_object_t
@@ -210,15 +227,16 @@ message nation_t
     int32 id = 1;
     repeated unit_design_t unit_designs = 2;
     repeated province_t provinces = 3;
-    repeated fleet_t fleets = 4; // may contain gaps, in the form of invalid fleets
-    repeated int32 hexes_seen = 5; // all these lists of IDs must be kept sorted
-    repeated int32 systems_present_in = 6;
-    repeated int32 systems_visited = 7;
-    repeated int32 planets_present_on = 8;
+    repeated settlement_t settlements = 4; // may contain gaps (gaps have invald IDs)
+    repeated fleet_t fleets = 5; // may contain gaps (gaps have invald IDs)
+    repeated int32 hexes_seen = 6; // these lists of IDs must be kept sorted
+    repeated int32 systems_present_in = 7;
+    repeated int32 systems_visited = 8;
     repeated int32 planets_surveyed = 9;
-    repeated nation_and_object_id_t foreign_designs_seen = 10;
-    repeated nation_and_object_id_t foreign_designs_glimpsed = 11;
-    bool defeated = 12;
+    repeated settlement_t settlements_seen = 10;
+    repeated nation_and_object_id_t foreign_designs_seen = 11;
+    repeated nation_and_object_id_t foreign_designs_glimpsed = 12;
+    bool defeated = 13;
 }
 
 message game_state_t
@@ -230,7 +248,7 @@ message game_state_t
     repeated planet_t planets = 5;
     repeated nation_t nations = 6;
     repeated uint32 alliances = 7; // packed bitfield
-    int32 play_speed = 8; // 0=paused; 1-4 have fixed rates; 5 is as fast as it will go
+    int32 play_speed = 8; // 1-4 have fixed rates; 5 is as fast as it will go
 }
 
 // TODO: Need some kind of system for effects, and another one for

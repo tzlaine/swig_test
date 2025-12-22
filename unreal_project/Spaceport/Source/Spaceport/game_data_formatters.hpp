@@ -250,6 +250,36 @@ inline std::ostream & operator<<(std::ostream & os, fleets_t const & x)
 #endif
 
 template <>
+struct std::formatter<settlement_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(settlement_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "settlement_t(");
+
+        out = std::format_to(out, " id={}", x.id);
+        out = std::format_to(out, " planet_id={}", x.planet_id);
+        out = std::format_to(out, " original_owner={}", x.original_owner);
+        out = std::format_to(out, " population={}", x.population);
+        out = std::format_to(out, " infrastructure={}", x.infrastructure);
+        out = std::format_to(out, " water={}", x.water);
+        out = std::format_to(out, " food={}", x.food);
+        out = std::format_to(out, " energy={}", x.energy);
+        out = std::format_to(out, " metal={}", x.metal);
+        out = std::format_to(out, " fuel={}", x.fuel);
+        out = std::format_to(out, " garrison={}", x.garrison);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, settlement_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<planet_effect_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }
@@ -302,16 +332,16 @@ struct std::formatter<planet_t> {
         out = std::format_to(out, " energy={}", x.energy);
         out = std::format_to(out, " metal={}", x.metal);
         out = std::format_to(out, " fuel={}", x.fuel);
-        out = std::format_to(out, " population={}", x.population);
-        out = std::format_to(out, " infrastructure={}", x.infrastructure);
         out = std::format_to(out, " infrastructure_cost_factor={}", x.infrastructure_cost_factor);
         out = std::format_to(out, " orbital_pos_r={}", x.orbital_pos_r);
         out = std::format_to(out, " max_population={}", x.max_population);
-        out = std::format_to(out, " owner={}", x.owner);
-        out = std::format_to(out, " original_owner={}", x.original_owner);
-        out = std::format_to(out, " garrison={}", x.garrison);
         out = std::format_to(out, " effects=[");
         for (auto && e : x.effects) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
+        out = std::format_to(out, " settlement_ids=[");
+        for (auto && e : x.settlement_ids) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
@@ -503,6 +533,11 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " settlements=[");
+        for (auto && e : x.settlements) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
         out = std::format_to(out, " fleets=[");
         for (auto && e : x.fleets) {
             out = std::format_to(out, " {}", e);
@@ -523,13 +558,13 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " planets_present_on=[");
-        for (auto && e : x.planets_present_on) {
+        out = std::format_to(out, " planets_surveyed=[");
+        for (auto && e : x.planets_surveyed) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " planets_surveyed=[");
-        for (auto && e : x.planets_surveyed) {
+        out = std::format_to(out, " settlements_seen=[");
+        for (auto && e : x.settlements_seen) {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");

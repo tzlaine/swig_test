@@ -61,17 +61,30 @@ fleet_t fleet(int nation_id)
             .is_garrison = true}};
 }
 
-nation_t nation(int nation_id, game_state_t const & gs)
+nation_t nation(int nation_id, game_state_t & gs)
 {
     hex_coord_t const home_hc = {.x = 5, .y = 1 + nation_id};
     int const home_hex = to_index(home_hc, gs.map_width);
     int const home_system = gs.hexes[home_hex].first_system;
     int const home_planet = gs.systems[home_system].first_planet;
+    nation_and_object_id_t const home_settlement_id = {nation_id, 0};
+    gs.planets[home_planet].settlement_ids.push_back(home_settlement_id);
     nation_t retval = {
         .id = nation_id,
         .unit_designs =
             {design(nation_id, 0), design(nation_id, 1), design(nation_id, 2)},
         .provinces = {},
+        .settlements =
+            {{.id = home_settlement_id,
+              .planet_id = home_planet,
+              .original_owner = nation_id,
+              .population = (float)gs.planets[home_planet].max_population,
+              .infrastructure = 100.0f,
+              .water = 100,
+              .food = 50,
+              .energy = 50,
+              .metal = 50,
+              .fuel = 50}},
         .fleets = {fleet(nation_id)},
         .hexes_seen =
             {home_hex,
@@ -83,8 +96,8 @@ nation_t nation(int nation_id, game_state_t const & gs)
              to_index(hex_below_right(home_hc), gs.map_width)},
         .systems_present_in = {home_system},
         .systems_visited = {home_system},
-        .planets_present_on = {home_planet},
         .planets_surveyed = {home_planet},
+        .settlements_seen = {},
         .foreign_designs_seen =
             {{.nation_id = (nation_id + 1) % 3, .object_id = 1}},
         .foreign_designs_glimpsed =
@@ -527,14 +540,8 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_EQ(client_planet.energy, default_planet.energy);
             EXPECT_EQ(client_planet.metal, default_planet.metal);
             EXPECT_EQ(client_planet.fuel, default_planet.fuel);
-            EXPECT_EQ(client_planet.population, default_planet.population);
-            EXPECT_EQ(
-                client_planet.infrastructure, default_planet.infrastructure);
             EXPECT_EQ(client_planet.orbital_pos_r, planet.orbital_pos_r);
             EXPECT_EQ(client_planet.max_population, planet.max_population);
-            EXPECT_EQ(client_planet.owner, planet.owner);
-            EXPECT_EQ(client_planet.original_owner, planet.original_owner);
-            EXPECT_EQ(client_planet.garrison, default_planet.garrison);
             EXPECT_EQ(client_planet.effects, planet.effects);
         }
         {
@@ -636,9 +643,6 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_EQ(
                 client_nation.systems_visited, default_nation.systems_visited);
             EXPECT_EQ(
-                client_nation.planets_present_on,
-                default_nation.planets_present_on);
-            EXPECT_EQ(
                 client_nation.planets_surveyed,
                 default_nation.planets_surveyed);
             EXPECT_EQ(
@@ -705,9 +709,6 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
                 default_nation.systems_present_in);
             EXPECT_EQ(
                 client_nation.systems_visited, default_nation.systems_visited);
-            EXPECT_EQ(
-                client_nation.planets_present_on,
-                default_nation.planets_present_on);
             EXPECT_EQ(
                 client_nation.planets_surveyed,
                 default_nation.planets_surveyed);

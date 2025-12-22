@@ -97,8 +97,6 @@ TEST(effects_tests, planet_effects)
         .energy = 100,
         .metal = 100,
         .fuel = 100,
-        .population = 100,
-        .infrastructure = 10,
         .infrastructure_cost_factor = 1,
         .max_population = 100};
 

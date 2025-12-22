@@ -124,6 +124,38 @@ namespace detail {
         }
     }
 
+    // std::ranges::set_intersection() is tantalizingly close to what we need
+    // below for filtering planet_t::settlement_id.  However, our use below
+    // does not satisfy the mergeable concept.  This is similar, but slightly
+    // simplified, and with the constraints stripped off.
+    template<
+        typename R1,
+        typename R2,
+        typename O,
+        typename Cmp,
+        typename Proj1,
+        typename Proj2>
+    O set_intersection(
+        R1 && r1, R2 && r2, O out, Cmp cmp, Proj1 proj1, Proj2 proj2)
+    {
+        auto f1 = std::ranges::begin(r1);
+        auto const l1 = std::ranges::end(r1);
+        auto f2 = std::ranges::begin(r2);
+        auto const l2 = std::ranges::end(r2);
+        while (f1 != l1 && f2 != l2) {
+            auto const & a = proj1(*f1);
+            auto const & b = proj2(*f2);
+            if (cmp(a, b)) {
+                ++f1;
+                continue;
+            }
+            if (!cmp(b, a))
+                *out++ = *f1++;
+            ++f2;
+        }
+        return out;
+    }
+
     void serialize_for_client(
         game_state_t const & gs,
         std::vector<fleet_t const *> const & visible_fleets,
@@ -141,22 +173,32 @@ namespace detail {
                  metadata<planet_t>::food().index_,
                  metadata<planet_t>::energy().index_,
                  metadata<planet_t>::metal().index_,
-                 metadata<planet_t>::fuel().index_,
-                 metadata<planet_t>::population().index_,
-                 metadata<planet_t>::infrastructure().index_,
-                 metadata<planet_t>::garrison().index_}};
-            auto const nonowner_effect = [](auto const & e) {
-                return transitory(e);
-            };
-            if (std::ranges::any_of(x.effects, nonowner_effect)) {
-                planet_t copy = x;
-                std::erase_if(copy.effects, nonowner_effect);
-                serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                    copy, 0, os, fields_to_elide);
-            } else {
-                serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                    x, 0, os, fields_to_elide);
-            }
+                 metadata<planet_t>::fuel().index_}};
+            auto const & nation = gs.nations[nation_id];
+
+            planet_t copy = x;
+
+            copy.settlement_ids.resize(
+                nation.settlements.size() + nation.settlements_seen.size());
+
+            auto const ids_last = detail::set_intersection(
+                x.settlement_ids,
+                nation.settlements,
+                copy.settlement_ids.begin(),
+                std::ranges::less{},
+                std::identity{},
+                [](auto const & e) { return e.id; });
+            detail::set_intersection(
+                x.settlement_ids,
+                nation.settlements_seen,
+                ids_last,
+                std::ranges::less{},
+                std::identity{},
+                [](auto const & e) { return e.id; });
+            copy.settlement_ids.erase(ids_last, copy.settlement_ids.end());
+
+            serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
+                copy, 0, os, fields_to_elide);
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }

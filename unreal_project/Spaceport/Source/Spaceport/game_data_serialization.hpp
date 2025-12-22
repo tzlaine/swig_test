@@ -398,6 +398,78 @@ namespace detail {
     }
 
     template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
+    std::ptrdiff_t serialize_message_impl(settlement_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    {
+        std::ptrdiff_t retval = 0;
+    
+        if constexpr (FieldOp == ser_field_op::write) {
+            uint8_t buf[16];
+            uint8_t * out = buf;
+            out = os::WriteVarint32ToArray(field_number, out);
+            detail::count_or_write<Op>(retval, buf, out - buf, os);
+        }
+    
+        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.planet_id, 2, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.original_owner, 3, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.population, 4, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure, 5, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.water, 6, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.food, 7, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.energy, 8, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.metal, 9, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 10, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.garrison, 11, os);
+    
+        retval += detail::serialize_message_end<Op>(os);
+    
+        return retval;
+    }
+    template<> inline std::span<std::byte const> deserialize_message_impl<settlement_t>(settlement_t & x, std::span<std::byte const> src)
+    {
+        using namespace std::literals;
+        constexpr auto this_message_name = "settlement_t"sv;
+        constexpr std::array<std::string_view, 12> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "planet_id"sv, "original_owner"sv, "population"sv, "infrastructure"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "garrison"sv}};
+        std::array<int, 11> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
+    
+        constexpr int lo_field_number = 1;
+        constexpr int hi_field_number = 11;
+    
+        auto read_field = [] (settlement_t & x, int i, std::span<std::byte const> src) {
+            switch (i) {
+            case 1: return detail::deserialize_impl(x.id, src);
+            case 2: return detail::deserialize_impl(x.planet_id, src);
+            case 3: return detail::deserialize_impl(x.original_owner, src);
+            case 4: return detail::deserialize_impl(x.population, src);
+            case 5: return detail::deserialize_impl(x.infrastructure, src);
+            case 6: return detail::deserialize_impl(x.water, src);
+            case 7: return detail::deserialize_impl(x.food, src);
+            case 8: return detail::deserialize_impl(x.energy, src);
+            case 9: return detail::deserialize_impl(x.metal, src);
+            case 10: return detail::deserialize_impl(x.fuel, src);
+            case 11: return detail::deserialize_impl(x.garrison, src);
+            default: return src; // unreachable
+            }
+        };
+    
+        return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+            x, src, this_message_name, field_names, expected_field_numbers, read_field);
+    }
+
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
     std::ptrdiff_t serialize_message_impl(planet_effect_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
     {
         std::ptrdiff_t retval = 0;
@@ -500,23 +572,15 @@ namespace detail {
         if (std::ranges::none_of(elisions, [](int i) { return i == 21; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 21, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 22; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.population, 22, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure_cost_factor, 22, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 23; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure, 23, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.orbital_pos_r, 23, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 24; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure_cost_factor, 24, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.max_population, 24, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 25; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.orbital_pos_r, 25, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effects, 25, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 26; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.max_population, 26, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 27; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.owner, 27, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 28; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.original_owner, 28, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 29; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.garrison, 29, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 30; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effects, 30, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlement_ids, 26, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -526,13 +590,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "planet_t"sv;
-        constexpr std::array<std::string_view, 31> field_names = {{"<UNKOWN_FIELD>"sv,
-          "system_id"sv, "planet_type"sv, "mass_kg"sv, "radius_km"sv, "orbit_au"sv, "orbital_period_y"sv, "gravity_g"sv, "axial_tilt_d"sv, "day_h"sv, "surface_temperature_k"sv, "magnetosphere_strength"sv, "atmospheric_pressure"sv, "o2_co2_suitability"sv, "ocean_coverage"sv, "growth_factor"sv, "atmosphere_type"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "population"sv, "infrastructure"sv, "infrastructure_cost_factor"sv, "orbital_pos_r"sv, "max_population"sv, "owner"sv, "original_owner"sv, "garrison"sv, "effects"sv}};
-        std::array<int, 30> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30}};
+        constexpr std::array<std::string_view, 27> field_names = {{"<UNKOWN_FIELD>"sv,
+          "system_id"sv, "planet_type"sv, "mass_kg"sv, "radius_km"sv, "orbit_au"sv, "orbital_period_y"sv, "gravity_g"sv, "axial_tilt_d"sv, "day_h"sv, "surface_temperature_k"sv, "magnetosphere_strength"sv, "atmospheric_pressure"sv, "o2_co2_suitability"sv, "ocean_coverage"sv, "growth_factor"sv, "atmosphere_type"sv, "water"sv, "food"sv, "energy"sv, "metal"sv, "fuel"sv, "infrastructure_cost_factor"sv, "orbital_pos_r"sv, "max_population"sv, "effects"sv, "settlement_ids"sv}};
+        std::array<int, 26> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 30;
+        constexpr int hi_field_number = 26;
     
         auto read_field = [] (planet_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -557,15 +621,11 @@ namespace detail {
             case 19: return detail::deserialize_impl(x.energy, src);
             case 20: return detail::deserialize_impl(x.metal, src);
             case 21: return detail::deserialize_impl(x.fuel, src);
-            case 22: return detail::deserialize_impl(x.population, src);
-            case 23: return detail::deserialize_impl(x.infrastructure, src);
-            case 24: return detail::deserialize_impl(x.infrastructure_cost_factor, src);
-            case 25: return detail::deserialize_impl(x.orbital_pos_r, src);
-            case 26: return detail::deserialize_impl(x.max_population, src);
-            case 27: return detail::deserialize_impl(x.owner, src);
-            case 28: return detail::deserialize_impl(x.original_owner, src);
-            case 29: return detail::deserialize_impl(x.garrison, src);
-            case 30: return detail::deserialize_impl(x.effects, src);
+            case 22: return detail::deserialize_impl(x.infrastructure_cost_factor, src);
+            case 23: return detail::deserialize_impl(x.orbital_pos_r, src);
+            case 24: return detail::deserialize_impl(x.max_population, src);
+            case 25: return detail::deserialize_impl(x.effects, src);
+            case 26: return detail::deserialize_impl(x.settlement_ids, src);
             default: return src; // unreachable
             }
         };
@@ -899,23 +959,25 @@ namespace detail {
         if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.provinces, 3, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 4, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements, 4, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 5, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 5, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_present_in, 6, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 6, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_visited, 7, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_present_in, 7, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets_present_on, 8, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_visited, 8, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets_surveyed, 9, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 10, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements_seen, 10, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 11, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 11, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 12, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 12, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 13; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 13, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -925,28 +987,29 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "nation_t"sv;
-        constexpr std::array<std::string_view, 13> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "unit_designs"sv, "provinces"sv, "fleets"sv, "hexes_seen"sv, "systems_present_in"sv, "systems_visited"sv, "planets_present_on"sv, "planets_surveyed"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "defeated"sv}};
-        std::array<int, 12> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}};
+        constexpr std::array<std::string_view, 14> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "unit_designs"sv, "provinces"sv, "settlements"sv, "fleets"sv, "hexes_seen"sv, "systems_present_in"sv, "systems_visited"sv, "planets_surveyed"sv, "settlements_seen"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "defeated"sv}};
+        std::array<int, 13> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 12;
+        constexpr int hi_field_number = 13;
     
         auto read_field = [] (nation_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
             case 1: return detail::deserialize_impl(x.id, src);
             case 2: return detail::deserialize_impl(x.unit_designs, src);
             case 3: return detail::deserialize_impl(x.provinces, src);
-            case 4: return detail::deserialize_impl(x.fleets, src);
-            case 5: return detail::deserialize_impl(x.hexes_seen, src);
-            case 6: return detail::deserialize_impl(x.systems_present_in, src);
-            case 7: return detail::deserialize_impl(x.systems_visited, src);
-            case 8: return detail::deserialize_impl(x.planets_present_on, src);
+            case 4: return detail::deserialize_impl(x.settlements, src);
+            case 5: return detail::deserialize_impl(x.fleets, src);
+            case 6: return detail::deserialize_impl(x.hexes_seen, src);
+            case 7: return detail::deserialize_impl(x.systems_present_in, src);
+            case 8: return detail::deserialize_impl(x.systems_visited, src);
             case 9: return detail::deserialize_impl(x.planets_surveyed, src);
-            case 10: return detail::deserialize_impl(x.foreign_designs_seen, src);
-            case 11: return detail::deserialize_impl(x.foreign_designs_glimpsed, src);
-            case 12: return detail::deserialize_impl(x.defeated, src);
+            case 10: return detail::deserialize_impl(x.settlements_seen, src);
+            case 11: return detail::deserialize_impl(x.foreign_designs_seen, src);
+            case 12: return detail::deserialize_impl(x.foreign_designs_glimpsed, src);
+            case 13: return detail::deserialize_impl(x.defeated, src);
             default: return src; // unreachable
             }
         };

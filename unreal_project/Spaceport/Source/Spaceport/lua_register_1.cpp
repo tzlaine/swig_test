@@ -23,4 +23,6 @@ void detail::lua_register_1(sol::state & l)
                 adobe::name_t(name), adobe::name_t(reason), value};
         },
         &detail::make_default<planet_effect_t>);
+
+    REGISTER_GAME_DATA_TYPE(l, planet_t);
 }

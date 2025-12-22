@@ -10,6 +10,14 @@
 #include <vector>
 
 
+inline auto
+operator<=>(nation_and_object_id_t const & a, nation_and_object_id_t const & b)
+{
+    if (auto retval = a.nation_id <=> b.nation_id; retval != 0)
+        return retval;
+    return a.object_id <=> b.object_id;
+}
+
 enum struct fleet_visitation { garrisons, no_garrisons };
 
 template<typename GameState, typename F>
@@ -45,17 +53,9 @@ struct indexed_object
 
 inline auto ptr_to_id(fleet_t const * f) { return f->id; };
 
-auto const obj_id_cmp = [](auto a, auto b) {
-    if (a.nation_id < b.nation_id)
-        return true;
-    if (b.nation_id < a.nation_id)
-        return false;
-    return a.object_id < b.object_id;
-};
-
 inline void sort_by_id(std::vector<fleet_t const *> & visible_fleets)
 {
-    std::ranges::sort(visible_fleets, obj_id_cmp, ptr_to_id);
+    std::ranges::sort(visible_fleets, std::ranges::less{}, ptr_to_id);
 }
 
 inline bool visible_fleet(
@@ -63,7 +63,7 @@ inline bool visible_fleet(
     nation_and_object_id_t fleet_id)
 {
     return std::ranges::binary_search(
-        visible_fleets, fleet_id, obj_id_cmp, ptr_to_id);
+        visible_fleets, fleet_id, std::ranges::less{}, ptr_to_id);
 }
 
 inline constexpr nation_and_object_id_t invalid_nation_and_object{-1, -1};

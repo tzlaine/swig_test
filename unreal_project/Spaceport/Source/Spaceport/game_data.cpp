@@ -191,6 +191,40 @@ pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value)
     return retval;
 }
 
+pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value)
+{
+    pb_message::game_data::settlement_t retval;
+    retval.mutable_id()->CopyFrom(to_protobuf(value.id));
+    retval.set_planet_id(value.planet_id);
+    retval.set_original_owner(value.original_owner);
+    retval.set_population(value.population);
+    retval.set_infrastructure(value.infrastructure);
+    retval.set_water(value.water);
+    retval.set_food(value.food);
+    retval.set_energy(value.energy);
+    retval.set_metal(value.metal);
+    retval.set_fuel(value.fuel);
+    retval.mutable_garrison()->CopyFrom(to_protobuf(value.garrison));
+    return retval;
+}
+
+::settlement_t from_protobuf (const pb_message::game_data::settlement_t& msg)
+{
+    ::settlement_t retval;
+    retval.id = from_protobuf(msg.id());
+    retval.planet_id = msg.planet_id();
+    retval.original_owner = msg.original_owner();
+    retval.population = msg.population();
+    retval.infrastructure = msg.infrastructure();
+    retval.water = msg.water();
+    retval.food = msg.food();
+    retval.energy = msg.energy();
+    retval.metal = msg.metal();
+    retval.fuel = msg.fuel();
+    retval.garrison = from_protobuf(msg.garrison());
+    return retval;
+}
+
 pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& value)
 {
     pb_message::game_data::planet_effect_t retval;
@@ -233,16 +267,14 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_energy(value.energy);
     retval.set_metal(value.metal);
     retval.set_fuel(value.fuel);
-    retval.set_population(value.population);
-    retval.set_infrastructure(value.infrastructure);
     retval.set_infrastructure_cost_factor(value.infrastructure_cost_factor);
     retval.set_orbital_pos_r(value.orbital_pos_r);
     retval.set_max_population(value.max_population);
-    retval.set_owner(value.owner);
-    retval.set_original_owner(value.original_owner);
-    retval.mutable_garrison()->CopyFrom(to_protobuf(value.garrison));
     for (const auto& x : value.effects) {
         retval.add_effects()->CopyFrom(to_protobuf(x));
+    }
+    for (const auto& x : value.settlement_ids) {
+        retval.add_settlement_ids()->CopyFrom(to_protobuf(x));
     }
     return retval;
 }
@@ -271,18 +303,20 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.energy = msg.energy();
     retval.metal = msg.metal();
     retval.fuel = msg.fuel();
-    retval.population = msg.population();
-    retval.infrastructure = msg.infrastructure();
     retval.infrastructure_cost_factor = msg.infrastructure_cost_factor();
     retval.orbital_pos_r = msg.orbital_pos_r();
     retval.max_population = msg.max_population();
-    retval.owner = msg.owner();
-    retval.original_owner = msg.original_owner();
-    retval.garrison = from_protobuf(msg.garrison());
     {
         retval.effects.resize(msg.effects_size());
         auto it = retval.effects.begin();
         for (const auto& x : msg.effects()) {
+            *it++ = from_protobuf(x);
+        }
+    }
+    {
+        retval.settlement_ids.resize(msg.settlement_ids_size());
+        auto it = retval.settlement_ids.begin();
+        for (const auto& x : msg.settlement_ids()) {
             *it++ = from_protobuf(x);
         }
     }
@@ -459,6 +493,9 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.provinces) {
         retval.add_provinces()->CopyFrom(to_protobuf(x));
     }
+    for (const auto& x : value.settlements) {
+        retval.add_settlements()->CopyFrom(to_protobuf(x));
+    }
     for (const auto& x : value.fleets) {
         retval.add_fleets()->CopyFrom(to_protobuf(x));
     }
@@ -471,11 +508,11 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.systems_visited) {
         retval.add_systems_visited(x);
     }
-    for (const auto& x : value.planets_present_on) {
-        retval.add_planets_present_on(x);
-    }
     for (const auto& x : value.planets_surveyed) {
         retval.add_planets_surveyed(x);
+    }
+    for (const auto& x : value.settlements_seen) {
+        retval.add_settlements_seen()->CopyFrom(to_protobuf(x));
     }
     for (const auto& x : value.foreign_designs_seen) {
         retval.add_foreign_designs_seen()->CopyFrom(to_protobuf(x));
@@ -502,6 +539,13 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         retval.provinces.resize(msg.provinces_size());
         auto it = retval.provinces.begin();
         for (const auto& x : msg.provinces()) {
+            *it++ = from_protobuf(x);
+        }
+    }
+    {
+        retval.settlements.resize(msg.settlements_size());
+        auto it = retval.settlements.begin();
+        for (const auto& x : msg.settlements()) {
             *it++ = from_protobuf(x);
         }
     }
@@ -534,17 +578,17 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
         }
     }
     {
-        retval.planets_present_on.resize(msg.planets_present_on_size());
-        auto it = retval.planets_present_on.begin();
-        for (const auto& x : msg.planets_present_on()) {
-            *it++ = x;
-        }
-    }
-    {
         retval.planets_surveyed.resize(msg.planets_surveyed_size());
         auto it = retval.planets_surveyed.begin();
         for (const auto& x : msg.planets_surveyed()) {
             *it++ = x;
+        }
+    }
+    {
+        retval.settlements_seen.resize(msg.settlements_seen_size());
+        auto it = retval.settlements_seen.begin();
+        for (const auto& x : msg.settlements_seen()) {
+            *it++ = from_protobuf(x);
         }
     }
     {

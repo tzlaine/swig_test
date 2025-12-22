@@ -1043,10 +1043,6 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.metal, 100);
         EXPECT_GE(planet.fuel, 0);
         EXPECT_LE(planet.fuel, 100);
-        EXPECT_EQ(planet.population, 0.0);
-        EXPECT_EQ(planet.infrastructure, 0.0);
-        EXPECT_EQ(planet.owner, -1);
-        EXPECT_EQ(planet.original_owner, -1);
     }
 
     {
@@ -1094,10 +1090,6 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.metal, 100);
         EXPECT_GE(planet.fuel, 0);
         EXPECT_LE(planet.fuel, 100);
-        EXPECT_EQ(planet.population, 0.0);
-        EXPECT_EQ(planet.infrastructure, 0.0);
-        EXPECT_EQ(planet.owner, -1);
-        EXPECT_EQ(planet.original_owner, -1);
     }
 
     {
@@ -1142,10 +1134,6 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.metal, 10);
         EXPECT_GE(planet.fuel, 0);
         EXPECT_LE(planet.fuel, 10);
-        EXPECT_EQ(planet.population, 0.0);
-        EXPECT_EQ(planet.infrastructure, 0.0);
-        EXPECT_EQ(planet.owner, -1);
-        EXPECT_EQ(planet.original_owner, -1);
     }
 
     {
@@ -1190,10 +1178,6 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.metal, 10);
         EXPECT_GE(planet.fuel, 0);
         EXPECT_LE(planet.fuel, 10);
-        EXPECT_EQ(planet.population, 0.0);
-        EXPECT_EQ(planet.infrastructure, 0.0);
-        EXPECT_EQ(planet.owner, -1);
-        EXPECT_EQ(planet.original_owner, -1);
     }
 }
 

@@ -645,6 +645,7 @@ void configure_rocky_oxidized_planet(
 
     // TODO: Rings!
 
+#if 0 // TODO: Update to use settlements.
     // city lights
     if (planet.population <= 0.0f) {
         set_property(planet_actor, TEXT("City_Lights_Extent"), 0.0);
@@ -668,6 +669,7 @@ void configure_rocky_oxidized_planet(
             TEXT("City_Lights_Color"),
             FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
     }
+#endif
 }
 
 void configure_rocky_reduced_or_carbon_rich_planet(

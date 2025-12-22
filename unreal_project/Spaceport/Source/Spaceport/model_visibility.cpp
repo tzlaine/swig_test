@@ -15,11 +15,11 @@ visibility_kind visibility_of(
     if (nation_id == x.id.nation_id || allied(gs, nation_id, x.id.nation_id))
         return visibility_kind::owner;
     if (std::ranges::binary_search(
-            nation.foreign_designs_seen, x.id, obj_id_cmp)) {
+            nation.foreign_designs_seen, x.id, std::ranges::less{})) {
         return visibility_kind::owner;
     }
     if (std::ranges::binary_search(
-            nation.foreign_designs_glimpsed, x.id, obj_id_cmp)) {
+            nation.foreign_designs_glimpsed, x.id, std::ranges::less{})) {
         return visibility_kind::neutral_or_enemy;
     }
     return visibility_kind::unseen;
@@ -70,9 +70,7 @@ visibility_kind visibility_of(
     int nation_id,
     planet_effect_t const & x)
 {
-    if (!transitory(x))
-        return visibility_kind::owner;
-    return visibility_kind::unseen;
+    return visibility_kind::owner;
 }
 
 visibility_kind visibility_of(
@@ -83,8 +81,6 @@ visibility_kind visibility_of(
     int)
 {
     nation_t const & nation = gs.nations[nation_id];
-    if (nation_id == x.owner || allied(gs, nation_id, x.owner))
-        return visibility_kind::owner;
     if (std::ranges::binary_search(
             gs.nations[nation_id].systems_visited, x.system_id)) {
         return visibility_kind::neutral_or_enemy;

@@ -124,6 +124,22 @@ struct fleets_t
     bool operator==(fleets_t const &) const = default;
 };
 
+struct settlement_t
+{
+    nation_and_object_id_t id = {};
+    int planet_id = -1;
+    int original_owner = -1;
+    float population = -1.0f;
+    float infrastructure = -1.0f;
+    int water = -1;
+    int food = -1;
+    int energy = -1;
+    int metal = -1;
+    int fuel = -1;
+    nation_and_object_id_t garrison = {};
+    bool operator==(settlement_t const &) const = default;
+};
+
 struct planet_effect_t
 {
     adobe::name_t name = adobe::name_t("");
@@ -155,15 +171,11 @@ struct planet_t
     int energy = -1;
     int metal = -1;
     int fuel = -1;
-    float population = -1.0f;
-    float infrastructure = -1.0f;
     float infrastructure_cost_factor = -1.0f;
     float orbital_pos_r = -1.0f;
     int max_population = -1;
-    int owner = -1;
-    int original_owner = -1;
-    nation_and_object_id_t garrison = {};
     std::vector<planet_effect_t> effects = {};
+    std::vector<nation_and_object_id_t> settlement_ids = {};
     bool operator==(planet_t const &) const = default;
 };
 
@@ -226,12 +238,13 @@ struct nation_t
     int id = -1;
     std::vector<unit_design_t> unit_designs = {};
     std::vector<province_t> provinces = {};
+    std::vector<settlement_t> settlements = {};
     std::vector<fleet_t> fleets = {};
     std::vector<int> hexes_seen;
     std::vector<int> systems_present_in;
     std::vector<int> systems_visited;
-    std::vector<int> planets_present_on;
     std::vector<int> planets_surveyed;
+    std::vector<settlement_t> settlements_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_glimpsed = {};
     bool defeated = false;
@@ -273,6 +286,9 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
 
 pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value);
 ::fleets_t from_protobuf (const pb_message::game_data::fleets_t& msg);
+
+pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value);
+::settlement_t from_protobuf (const pb_message::game_data::settlement_t& msg);
 
 pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& value);
 ::planet_effect_t from_protobuf (const pb_message::game_data::planet_effect_t& msg);
