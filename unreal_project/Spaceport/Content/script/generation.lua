@@ -201,7 +201,7 @@ function determine_growth_factor_and_effects(planet)
       habs_and_suits_required(planet, 'high_press_n2_narcosis')
       effect(planet, 'high_press_n2_narcosis')
    end
-   if 7.0 < effective_o2 then
+   if 7.0 < planet.atmospheric_pressure and harmless_o2_threshold < effective_o2 then
       habs_and_suits_required(planet, 'very_high_press_o2_toxicity')
       effect(planet, 'very_high_press_o2_toxicity')
    end
