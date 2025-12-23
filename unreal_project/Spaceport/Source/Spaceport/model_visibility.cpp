@@ -132,7 +132,7 @@ visibility_kind visibility_of(
     int system_index)
 {
     nation_t const & nation = gs.nations[nation_id];
-    int const hex_index = to_index(x.coord, gs.map_width);
+    int const hex_index = x.hex_id;
     if (std::ranges::binary_search(
             gs.nations[nation_id].systems_present_in, system_index)) {
         return visibility_kind::owner;

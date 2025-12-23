@@ -932,7 +932,7 @@ TEST(generation_tests, generate_system)
         while (system.star.solar_luminosities < 0.8 || 1.2 < system.star.solar_luminosities) {
             system.first_planet = 0;
             generation::detail::generate_system_impl(
-                system, all_planets, hc, pos, system_id, get_intermediate_values);
+                system, all_planets, 0, pos, system_id, get_intermediate_values);
             system.last_planet = all_planets.planets_.size();
             EXPECT_EQ(radii.size(), masses.size());
             EXPECT_EQ(all_planets.planets_.size(), radii.size());
@@ -969,7 +969,7 @@ TEST(generation_tests, generate_planet)
 
     system_t const system = {
         .name=adobe::name_t(""),
-        .coord=hex_coord_t{0, 0},
+        .hex_id=0,
         .star=star_t{
             .star_class=star_class_t::g,
             .temperature_k=5650.598319840416,

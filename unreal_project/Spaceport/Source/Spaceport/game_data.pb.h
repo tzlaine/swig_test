@@ -535,6 +535,7 @@ class game_start_params_t PROTOBUF_FINAL :
     kHabitableSystemsPerHexPlusMinusFieldNumber = 2,
     kSystemsPerHexFieldNumber = 3,
     kMapHeightFieldNumber = 4,
+    kAiOpponentsFieldNumber = 6,
   };
   // map<int32, int32> player_id_to_nation_id = 5;
   int player_id_to_nation_id_size() const;
@@ -589,6 +590,15 @@ class game_start_params_t PROTOBUF_FINAL :
   void _internal_set_map_height(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // int32 ai_opponents = 6;
+  void clear_ai_opponents();
+  ::PROTOBUF_NAMESPACE_ID::int32 ai_opponents() const;
+  void set_ai_opponents(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_ai_opponents() const;
+  void _internal_set_ai_opponents(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:pb_message.game_data.game_start_params_t)
  private:
   class _Internal;
@@ -606,6 +616,7 @@ class game_start_params_t PROTOBUF_FINAL :
   float habitable_systems_per_hex_plus_minus_;
   ::PROTOBUF_NAMESPACE_ID::int32 systems_per_hex_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_height_;
+  ::PROTOBUF_NAMESPACE_ID::int32 ai_opponents_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -3148,12 +3159,12 @@ class system_t PROTOBUF_FINAL :
     kPermanentLocationsFieldNumber = 4,
     kTemporaryLocationsFieldNumber = 5,
     kNameFieldNumber = 1,
-    kCoordFieldNumber = 2,
     kStarFieldNumber = 3,
     kWorldPosXFieldNumber = 6,
     kWorldPosYFieldNumber = 7,
     kFirstPlanetFieldNumber = 8,
     kLastPlanetFieldNumber = 9,
+    kHexIdFieldNumber = 2,
   };
   // repeated .pb_message.game_data.system_location_t permanent_locations = 4;
   int permanent_locations_size() const;
@@ -3206,24 +3217,6 @@ class system_t PROTOBUF_FINAL :
   void _internal_set_name(const std::string& value);
   std::string* _internal_mutable_name();
   public:
-
-  // .pb_message.hex_coord_t coord = 2;
-  bool has_coord() const;
-  private:
-  bool _internal_has_coord() const;
-  public:
-  void clear_coord();
-  const ::pb_message::hex_coord_t& coord() const;
-  ::pb_message::hex_coord_t* release_coord();
-  ::pb_message::hex_coord_t* mutable_coord();
-  void set_allocated_coord(::pb_message::hex_coord_t* coord);
-  private:
-  const ::pb_message::hex_coord_t& _internal_coord() const;
-  ::pb_message::hex_coord_t* _internal_mutable_coord();
-  public:
-  void unsafe_arena_set_allocated_coord(
-      ::pb_message::hex_coord_t* coord);
-  ::pb_message::hex_coord_t* unsafe_arena_release_coord();
 
   // .pb_message.game_data.star_t star = 3;
   bool has_star() const;
@@ -3279,6 +3272,15 @@ class system_t PROTOBUF_FINAL :
   void _internal_set_last_planet(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // int32 hex_id = 2;
+  void clear_hex_id();
+  ::PROTOBUF_NAMESPACE_ID::int32 hex_id() const;
+  void set_hex_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_hex_id() const;
+  void _internal_set_hex_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:pb_message.game_data.system_t)
  private:
   class _Internal;
@@ -3289,12 +3291,12 @@ class system_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_location_t > permanent_locations_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::system_location_t > temporary_locations_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  ::pb_message::hex_coord_t* coord_;
   ::pb_message::game_data::star_t* star_;
   double world_pos_x_;
   double world_pos_y_;
   ::PROTOBUF_NAMESPACE_ID::uint64 first_planet_;
   ::PROTOBUF_NAMESPACE_ID::uint64 last_planet_;
+  ::PROTOBUF_NAMESPACE_ID::int32 hex_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -4459,6 +4461,26 @@ inline ::PROTOBUF_NAMESPACE_ID::Map< ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_
 game_start_params_t::mutable_player_id_to_nation_id() {
   // @@protoc_insertion_point(field_mutable_map:pb_message.game_data.game_start_params_t.player_id_to_nation_id)
   return _internal_mutable_player_id_to_nation_id();
+}
+
+// int32 ai_opponents = 6;
+inline void game_start_params_t::clear_ai_opponents() {
+  ai_opponents_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_start_params_t::_internal_ai_opponents() const {
+  return ai_opponents_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 game_start_params_t::ai_opponents() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_start_params_t.ai_opponents)
+  return _internal_ai_opponents();
+}
+inline void game_start_params_t::_internal_set_ai_opponents(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  ai_opponents_ = value;
+}
+inline void game_start_params_t::set_ai_opponents(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_ai_opponents(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.game_start_params_t.ai_opponents)
 }
 
 // -------------------------------------------------------------------
@@ -6782,81 +6804,24 @@ inline void system_t::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.system_t.name)
 }
 
-// .pb_message.hex_coord_t coord = 2;
-inline bool system_t::_internal_has_coord() const {
-  return this != internal_default_instance() && coord_ != nullptr;
+// int32 hex_id = 2;
+inline void system_t::clear_hex_id() {
+  hex_id_ = 0;
 }
-inline bool system_t::has_coord() const {
-  return _internal_has_coord();
+inline ::PROTOBUF_NAMESPACE_ID::int32 system_t::_internal_hex_id() const {
+  return hex_id_;
 }
-inline const ::pb_message::hex_coord_t& system_t::_internal_coord() const {
-  const ::pb_message::hex_coord_t* p = coord_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::hex_coord_t*>(
-      &::pb_message::_hex_coord_t_default_instance_);
+inline ::PROTOBUF_NAMESPACE_ID::int32 system_t::hex_id() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.hex_id)
+  return _internal_hex_id();
 }
-inline const ::pb_message::hex_coord_t& system_t::coord() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.system_t.coord)
-  return _internal_coord();
-}
-inline void system_t::unsafe_arena_set_allocated_coord(
-    ::pb_message::hex_coord_t* coord) {
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(coord_);
-  }
-  coord_ = coord;
-  if (coord) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.system_t.coord)
-}
-inline ::pb_message::hex_coord_t* system_t::release_coord() {
+inline void system_t::_internal_set_hex_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  ::pb_message::hex_coord_t* temp = coord_;
-  coord_ = nullptr;
-  if (GetArena() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-  return temp;
+  hex_id_ = value;
 }
-inline ::pb_message::hex_coord_t* system_t::unsafe_arena_release_coord() {
-  // @@protoc_insertion_point(field_release:pb_message.game_data.system_t.coord)
-  
-  ::pb_message::hex_coord_t* temp = coord_;
-  coord_ = nullptr;
-  return temp;
-}
-inline ::pb_message::hex_coord_t* system_t::_internal_mutable_coord() {
-  
-  if (coord_ == nullptr) {
-    auto* p = CreateMaybeMessage<::pb_message::hex_coord_t>(GetArena());
-    coord_ = p;
-  }
-  return coord_;
-}
-inline ::pb_message::hex_coord_t* system_t::mutable_coord() {
-  // @@protoc_insertion_point(field_mutable:pb_message.game_data.system_t.coord)
-  return _internal_mutable_coord();
-}
-inline void system_t::set_allocated_coord(::pb_message::hex_coord_t* coord) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(coord_);
-  }
-  if (coord) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(coord)->GetArena();
-    if (message_arena != submessage_arena) {
-      coord = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, coord, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  coord_ = coord;
-  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.system_t.coord)
+inline void system_t::set_hex_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_hex_id(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.system_t.hex_id)
 }
 
 // .pb_message.game_data.star_t star = 3;

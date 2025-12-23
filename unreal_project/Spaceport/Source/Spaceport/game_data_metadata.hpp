@@ -47,7 +47,7 @@ namespace detail {
             return "game_start_params_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 5; }
+        static constexpr int hi_field_number() { return 6; }
 
         static constexpr metadatum<game_start_params_t, float> habitable_systems_per_hex_mean()
         {
@@ -74,6 +74,11 @@ namespace detail {
             using namespace std::literals;
             return {"player_id_to_nation_id"sv, 5, &game_start_params_t::player_id_to_nation_id};
         }
+        static constexpr metadatum<game_start_params_t, int> ai_opponents()
+        {
+            using namespace std::literals;
+            return {"ai_opponents"sv, 6, &game_start_params_t::ai_opponents};
+        }
 
         template<typename F>
         static void foreach_member(F && f)
@@ -83,6 +88,7 @@ namespace detail {
             f(systems_per_hex());
             f(map_height());
             f(player_id_to_nation_id());
+            f(ai_opponents());
         }
     };
 
@@ -762,10 +768,10 @@ namespace detail {
             using namespace std::literals;
             return {"name"sv, 1, &system_t::name};
         }
-        static constexpr metadatum<system_t, hex_coord_t> coord()
+        static constexpr metadatum<system_t, int> hex_id()
         {
             using namespace std::literals;
-            return {"coord"sv, 2, &system_t::coord};
+            return {"hex_id"sv, 2, &system_t::hex_id};
         }
         static constexpr metadatum<system_t, star_t> star()
         {
@@ -807,7 +813,7 @@ namespace detail {
         static void foreach_member(F && f)
         {
             f(name());
-            f(coord());
+            f(hex_id());
             f(star());
             f(permanent_locations());
             f(temporary_locations());

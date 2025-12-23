@@ -22,6 +22,7 @@ message game_start_params_t
     int32 map_height = 4; // In hexes; must be an odd number >= 11.
 
     map<int32, int32> player_id_to_nation_id = 5; // size of this is the number of human players
+    int32 ai_opponents = 6;
 }
 
 message unit_design_t
@@ -198,7 +199,7 @@ message star_t
 message system_t
 {
     string name = 1;
-    hex_coord_t coord = 2;
+    int32 hex_id = 2;
     star_t star = 3;
     repeated system_location_t permanent_locations = 4;
     repeated system_location_t temporary_locations = 5;

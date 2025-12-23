@@ -66,6 +66,7 @@ struct game_start_params_t
     int systems_per_hex = -1;
     int map_height = -1;
     boost::container::flat_map<int, int> player_id_to_nation_id;
+    int ai_opponents = -1;
     bool operator==(game_start_params_t const &) const = default;
 };
 
@@ -206,7 +207,7 @@ struct star_t
 struct system_t
 {
     adobe::name_t name = adobe::name_t("");
-    hex_coord_t coord = {};
+    int hex_id = -1;
     star_t star = {};
     std::vector<system_location_t> permanent_locations = {};
     std::vector<system_location_t> temporary_locations = {};

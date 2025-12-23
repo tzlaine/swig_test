@@ -346,7 +346,7 @@ void generation::detail::generate_hex(
         if (detail::generate_system(
                 game_state.systems[system_index],
                 planets,
-                hc,
+                hex_index,
                 pos,
                 system_index)) {
             auto first_uninhabitable_it =
@@ -365,7 +365,7 @@ void generation::detail::generate_hex(
         if (detail::generate_system(
                 game_state.systems[system_index],
                 planets,
-                hc,
+                hex_index,
                 pos,
                 system_index)) {
             ++first_uninhabitable_index;

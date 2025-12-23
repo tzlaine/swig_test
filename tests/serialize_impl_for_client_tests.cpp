@@ -446,7 +446,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
 
             system_t const default_system;
             EXPECT_EQ(client_system.name, system.name);
-            EXPECT_EQ(client_system.coord, system.coord);
+            EXPECT_EQ(client_system.hex_id, system.hex_id);
             EXPECT_EQ(client_system.star, system.star);
             EXPECT_TRUE(client_system.permanent_locations.empty());
             EXPECT_TRUE(client_system.temporary_locations.empty());

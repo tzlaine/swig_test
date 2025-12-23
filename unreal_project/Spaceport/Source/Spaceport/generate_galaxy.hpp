@@ -205,8 +205,11 @@ namespace generation {
 
         template<typename GenPlanetsFn>
         bool generate_system_impl(
-            system_t & system, system_scratch & planets,
-            hex_coord_t hc, point_2d hex_world_pos, int system_id,
+            system_t & system,
+            system_scratch & planets,
+            int hex_id,
+            point_2d hex_world_pos,
+            int system_id,
             GenPlanetsFn && gen_planets)
         {
 #if !defined(BUILD_FOR_TEST)
@@ -221,7 +224,7 @@ namespace generation {
 #endif
 #endif
 
-            system.coord = hc;
+            system.hex_id = hex_id;
             system.star = generate_star();
 
             double x_roll = hex_width * random_unit_double();
@@ -327,11 +330,18 @@ namespace generation {
         }
 
         inline bool generate_system(
-            system_t & system, system_scratch & planets,
-            hex_coord_t hc, point_2d hex_world_pos, int system_id)
+            system_t & system,
+            system_scratch & planets,
+            int hex_id,
+            point_2d hex_world_pos,
+            int system_id)
         {
             return generate_system_impl(
-                system, planets, hc, hex_world_pos, system_id,
+                system,
+                planets,
+                hex_id,
+                hex_world_pos,
+                system_id,
                 &generate_system_planets);
         }
 

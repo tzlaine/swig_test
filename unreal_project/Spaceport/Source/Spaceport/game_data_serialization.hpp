@@ -80,6 +80,8 @@ namespace detail {
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_height, 4, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.player_id_to_nation_id, 5, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.ai_opponents, 6, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -89,13 +91,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "game_start_params_t"sv;
-        constexpr std::array<std::string_view, 6> field_names = {{"<UNKOWN_FIELD>"sv,
-          "habitable_systems_per_hex_mean"sv, "habitable_systems_per_hex_plus_minus"sv, "systems_per_hex"sv, "map_height"sv, "player_id_to_nation_id"sv}};
-        std::array<int, 5> expected_field_numbers = {{
-          1, 2, 3, 4, 5}};
+        constexpr std::array<std::string_view, 7> field_names = {{"<UNKOWN_FIELD>"sv,
+          "habitable_systems_per_hex_mean"sv, "habitable_systems_per_hex_plus_minus"sv, "systems_per_hex"sv, "map_height"sv, "player_id_to_nation_id"sv, "ai_opponents"sv}};
+        std::array<int, 6> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 5;
+        constexpr int hi_field_number = 6;
     
         auto read_field = [] (game_start_params_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -104,6 +106,7 @@ namespace detail {
             case 3: return detail::deserialize_impl(x.systems_per_hex, src);
             case 4: return detail::deserialize_impl(x.map_height, src);
             case 5: return detail::deserialize_impl(x.player_id_to_nation_id, src);
+            case 6: return detail::deserialize_impl(x.ai_opponents, src);
             default: return src; // unreachable
             }
         };
@@ -793,7 +796,7 @@ namespace detail {
         if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.name, 1, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.coord, 2, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hex_id, 2, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.star, 3, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
@@ -818,7 +821,7 @@ namespace detail {
         using namespace std::literals;
         constexpr auto this_message_name = "system_t"sv;
         constexpr std::array<std::string_view, 10> field_names = {{"<UNKOWN_FIELD>"sv,
-          "name"sv, "coord"sv, "star"sv, "permanent_locations"sv, "temporary_locations"sv, "world_pos_x"sv, "world_pos_y"sv, "first_planet"sv, "last_planet"sv}};
+          "name"sv, "hex_id"sv, "star"sv, "permanent_locations"sv, "temporary_locations"sv, "world_pos_x"sv, "world_pos_y"sv, "first_planet"sv, "last_planet"sv}};
         std::array<int, 9> expected_field_numbers = {{
           1, 2, 3, 4, 5, 6, 7, 8, 9}};
     
@@ -828,7 +831,7 @@ namespace detail {
         auto read_field = [] (system_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
             case 1: return detail::deserialize_impl(x.name, src);
-            case 2: return detail::deserialize_impl(x.coord, src);
+            case 2: return detail::deserialize_impl(x.hex_id, src);
             case 3: return detail::deserialize_impl(x.star, src);
             case 4: return detail::deserialize_impl(x.permanent_locations, src);
             case 5: return detail::deserialize_impl(x.temporary_locations, src);

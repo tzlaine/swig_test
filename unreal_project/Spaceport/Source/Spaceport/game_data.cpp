@@ -39,6 +39,7 @@ pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_param
     for (const auto& x : value.player_id_to_nation_id) {
         (*retval.mutable_player_id_to_nation_id())[x.first] = x.second;
     }
+    retval.set_ai_opponents(value.ai_opponents);
     return retval;
 }
 
@@ -54,6 +55,7 @@ pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_param
             retval.player_id_to_nation_id[x.first] = x.second;
         }
     }
+    retval.ai_opponents = msg.ai_opponents();
     return retval;
 }
 
@@ -397,7 +399,7 @@ pb_message::game_data::system_t to_protobuf (const ::system_t& value)
 {
     pb_message::game_data::system_t retval;
     retval.set_name(value.name.c_str());
-    retval.mutable_coord()->CopyFrom(to_protobuf(value.coord));
+    retval.set_hex_id(value.hex_id);
     retval.mutable_star()->CopyFrom(to_protobuf(value.star));
     for (const auto& x : value.permanent_locations) {
         retval.add_permanent_locations()->CopyFrom(to_protobuf(x));
@@ -416,7 +418,7 @@ pb_message::game_data::system_t to_protobuf (const ::system_t& value)
 {
     ::system_t retval;
     retval.name = adobe::name_t(msg.name().c_str());
-    retval.coord = from_protobuf(msg.coord());
+    retval.hex_id = msg.hex_id();
     retval.star = from_protobuf(msg.star());
     {
         retval.permanent_locations.resize(msg.permanent_locations_size());

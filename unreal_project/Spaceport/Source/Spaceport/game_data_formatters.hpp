@@ -107,6 +107,7 @@ struct std::formatter<game_start_params_t> {
             out = std::format_to(out, " {}:{}", key, value);
         };
         out = std::format_to(out, " }}");
+        out = std::format_to(out, " ai_opponents={}", x.ai_opponents);
 
         return std::format_to(out, " )");
     }
@@ -439,7 +440,7 @@ struct std::formatter<system_t> {
         out = std::format_to(out, "system_t(");
 
         out = std::format_to(out, " name={}", x.name);
-        out = std::format_to(out, " coord={}", x.coord);
+        out = std::format_to(out, " hex_id={}", x.hex_id);
         out = std::format_to(out, " star={}", x.star);
         out = std::format_to(out, " permanent_locations=[");
         for (auto && e : x.permanent_locations) {
