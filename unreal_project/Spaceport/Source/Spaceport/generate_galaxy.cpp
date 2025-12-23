@@ -436,12 +436,7 @@ void generation::generate_galaxy(
 
     std::atomic_int hexes_generated = 0;
 
-    task_system ts(
-        [] {
-            // Make sure each thread's Lua state contains the needed Lua code.
-            script_file("generation.lua");
-        },
-        4);
+    task_system ts(4);
 
     int const update_percentage = 5;
     int const five_percent = game_state.hexes.size() * update_percentage / 100;

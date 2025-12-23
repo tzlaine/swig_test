@@ -160,8 +160,6 @@ NNNNNNNNNNNNNNNNN
 
 TEST(generation_tests, growth_factor_and_effects)
 {
-    script_file("effects.lua");
-    script_file("generation.lua");
     sol::function determine_growth_factor_and_effects =
         lua()["determine_growth_factor_and_effects"];
 

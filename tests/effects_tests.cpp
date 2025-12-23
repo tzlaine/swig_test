@@ -104,9 +104,6 @@ TEST(effects_tests, planet_effects)
 
     float const eps = 0.001; // tolerance for testing float closeness.
 
-    script_file("effects.lua");
-    script_file("generation.lua");
-
     {
         planet_t planet = earth;
         call_lua_func(
