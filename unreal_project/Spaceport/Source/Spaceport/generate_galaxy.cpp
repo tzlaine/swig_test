@@ -442,7 +442,6 @@ void generation::generate_galaxy(
     task_system ts(
         [] {
             // Make sure each thread's Lua state contains the needed Lua code.
-            script_file("effects.lua");
             script_file("generation.lua");
         },
         4);
@@ -460,8 +459,7 @@ void generation::generate_galaxy(
                        &game_state,
                        &params,
                        &hex_scratch_,
-                       &hexes_generated,
-                       &ts] {
+                       &hexes_generated] {
             int const finished = hexes_generated.load();
             if (percent_complete && (finished + 1) % five_percent == 0)
                 percent_complete->push(update_percentage);
@@ -487,34 +485,36 @@ void generation::generate_galaxy(
     if (percent_complete)
         percent_complete->done();
 
-    hex_index = 0;
-    int system_id = 0;
-    for (auto & hex : game_state.hexes) {
-        auto & hex_scratch_ = scratch.hexes_[hex_index];
-        auto system_it = game_state.systems.begin() + system_id;
+    int total_planets = 0;
+    for (auto & hex_scratch_ : scratch.hexes_) {
         for (auto & system_scratch_ : hex_scratch_.systems_) {
-            auto const prev_size = game_state.planets.size();
-            game_state.planets.resize(
-                prev_size + system_scratch_.planets_.size());
+            total_planets += (int)system_scratch_.planets_.size();
+        }
+    }
+    game_state.planets.resize(total_planets);
+
+    auto it = game_state.planets.begin();
+    int hex_id = 0;
+    int system_id = 0;
+    for (auto & hex_scratch_ : scratch.hexes_) {
+        auto const province_id = game_state.hexes[hex_id].province_id;
+        for (auto & system_scratch_ : hex_scratch_.systems_) {
+            game_state.systems[system_id].first_planet =
+                std::distance(game_state.planets.begin(), it);
             for (auto & planet : system_scratch_.planets_) {
                 planet.system_id = system_id;
             }
-            std::ranges::move(
-                system_scratch_.planets_,
-                game_state.planets.begin() + prev_size);
-            system_it->first_planet = prev_size;
-            system_it->last_planet = game_state.planets.size();
-            check(
-                game_state.planets[system_it->first_planet].system_id ==
-                system_id);
-            check(
-                game_state.planets[system_it->last_planet - 1].system_id ==
-                system_id);
-            ++system_it;
+            it = std::ranges::move(system_scratch_.planets_, it).out;
+            game_state.systems[system_id].last_planet =
+                std::distance(game_state.planets.begin(), it);
             ++system_id;
         }
+        ++hex_id;
 
-        ++hex_index;
+        // NB: This advances the system_id, even if hex_scratch_.systens_
+        // is empty.  Some are -- the ones in the core and the corners of
+        // the map.
+        system_id = hex_id * params.systems_per_hex;
     }
 
     if (fully_complete)
