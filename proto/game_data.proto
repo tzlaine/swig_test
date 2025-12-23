@@ -98,7 +98,7 @@ message settlement_t
 
     // TODO: language, culture, religion
 
-    nation_and_object_id_t garrison = 11;
+    repeated nation_and_object_id_t garrison = 11;
     // TODO: ground-to-space defenses
 }
 

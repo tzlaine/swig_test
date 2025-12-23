@@ -417,7 +417,7 @@ namespace detail {
             using namespace std::literals;
             return {"fuel"sv, 10, &settlement_t::fuel};
         }
-        static constexpr metadatum<settlement_t, nation_and_object_id_t> garrison()
+        static constexpr metadatum<settlement_t, std::vector<nation_and_object_id_t>> garrison()
         {
             using namespace std::literals;
             return {"garrison"sv, 11, &settlement_t::garrison};

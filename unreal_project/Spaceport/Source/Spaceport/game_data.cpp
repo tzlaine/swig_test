@@ -206,7 +206,9 @@ pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value)
     retval.set_energy(value.energy);
     retval.set_metal(value.metal);
     retval.set_fuel(value.fuel);
-    retval.mutable_garrison()->CopyFrom(to_protobuf(value.garrison));
+    for (const auto& x : value.garrison) {
+        retval.add_garrison()->CopyFrom(to_protobuf(x));
+    }
     return retval;
 }
 
@@ -223,7 +225,13 @@ pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value)
     retval.energy = msg.energy();
     retval.metal = msg.metal();
     retval.fuel = msg.fuel();
-    retval.garrison = from_protobuf(msg.garrison());
+    {
+        retval.garrison.resize(msg.garrison_size());
+        auto it = retval.garrison.begin();
+        for (const auto& x : msg.garrison()) {
+            *it++ = from_protobuf(x);
+        }
+    }
     return retval;
 }
 

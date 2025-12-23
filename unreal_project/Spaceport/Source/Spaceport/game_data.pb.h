@@ -1784,8 +1784,8 @@ class settlement_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kIdFieldNumber = 1,
     kGarrisonFieldNumber = 11,
+    kIdFieldNumber = 1,
     kPlanetIdFieldNumber = 2,
     kOriginalOwnerFieldNumber = 3,
     kPopulationFieldNumber = 4,
@@ -1796,6 +1796,24 @@ class settlement_t PROTOBUF_FINAL :
     kMetalFieldNumber = 9,
     kFuelFieldNumber = 10,
   };
+  // repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
+  int garrison_size() const;
+  private:
+  int _internal_garrison_size() const;
+  public:
+  void clear_garrison();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_garrison(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+      mutable_garrison();
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_garrison(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_add_garrison();
+  public:
+  const ::pb_message::game_data::nation_and_object_id_t& garrison(int index) const;
+  ::pb_message::game_data::nation_and_object_id_t* add_garrison();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+      garrison() const;
+
   // .pb_message.game_data.nation_and_object_id_t id = 1;
   bool has_id() const;
   private:
@@ -1813,24 +1831,6 @@ class settlement_t PROTOBUF_FINAL :
   void unsafe_arena_set_allocated_id(
       ::pb_message::game_data::nation_and_object_id_t* id);
   ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_id();
-
-  // .pb_message.game_data.nation_and_object_id_t garrison = 11;
-  bool has_garrison() const;
-  private:
-  bool _internal_has_garrison() const;
-  public:
-  void clear_garrison();
-  const ::pb_message::game_data::nation_and_object_id_t& garrison() const;
-  ::pb_message::game_data::nation_and_object_id_t* release_garrison();
-  ::pb_message::game_data::nation_and_object_id_t* mutable_garrison();
-  void set_allocated_garrison(::pb_message::game_data::nation_and_object_id_t* garrison);
-  private:
-  const ::pb_message::game_data::nation_and_object_id_t& _internal_garrison() const;
-  ::pb_message::game_data::nation_and_object_id_t* _internal_mutable_garrison();
-  public:
-  void unsafe_arena_set_allocated_garrison(
-      ::pb_message::game_data::nation_and_object_id_t* garrison);
-  ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_garrison();
 
   // int32 planet_id = 2;
   void clear_planet_id();
@@ -1920,8 +1920,8 @@ class settlement_t PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > garrison_;
   ::pb_message::game_data::nation_and_object_id_t* id_;
-  ::pb_message::game_data::nation_and_object_id_t* garrison_;
   ::PROTOBUF_NAMESPACE_ID::int32 planet_id_;
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner_;
   float population_;
@@ -5652,87 +5652,43 @@ inline void settlement_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.fuel)
 }
 
-// .pb_message.game_data.nation_and_object_id_t garrison = 11;
-inline bool settlement_t::_internal_has_garrison() const {
-  return this != internal_default_instance() && garrison_ != nullptr;
+// repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
+inline int settlement_t::_internal_garrison_size() const {
+  return garrison_.size();
 }
-inline bool settlement_t::has_garrison() const {
-  return _internal_has_garrison();
+inline int settlement_t::garrison_size() const {
+  return _internal_garrison_size();
 }
 inline void settlement_t::clear_garrison() {
-  if (GetArena() == nullptr && garrison_ != nullptr) {
-    delete garrison_;
-  }
-  garrison_ = nullptr;
+  garrison_.Clear();
 }
-inline const ::pb_message::game_data::nation_and_object_id_t& settlement_t::_internal_garrison() const {
-  const ::pb_message::game_data::nation_and_object_id_t* p = garrison_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::nation_and_object_id_t*>(
-      &::pb_message::game_data::_nation_and_object_id_t_default_instance_);
-}
-inline const ::pb_message::game_data::nation_and_object_id_t& settlement_t::garrison() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.garrison)
-  return _internal_garrison();
-}
-inline void settlement_t::unsafe_arena_set_allocated_garrison(
-    ::pb_message::game_data::nation_and_object_id_t* garrison) {
-  if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(garrison_);
-  }
-  garrison_ = garrison;
-  if (garrison) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.settlement_t.garrison)
-}
-inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::release_garrison() {
-  
-  ::pb_message::game_data::nation_and_object_id_t* temp = garrison_;
-  garrison_ = nullptr;
-  if (GetArena() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-  return temp;
-}
-inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::unsafe_arena_release_garrison() {
-  // @@protoc_insertion_point(field_release:pb_message.game_data.settlement_t.garrison)
-  
-  ::pb_message::game_data::nation_and_object_id_t* temp = garrison_;
-  garrison_ = nullptr;
-  return temp;
-}
-inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::_internal_mutable_garrison() {
-  
-  if (garrison_ == nullptr) {
-    auto* p = CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(GetArena());
-    garrison_ = p;
-  }
-  return garrison_;
-}
-inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::mutable_garrison() {
+inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::mutable_garrison(int index) {
   // @@protoc_insertion_point(field_mutable:pb_message.game_data.settlement_t.garrison)
-  return _internal_mutable_garrison();
+  return garrison_.Mutable(index);
 }
-inline void settlement_t::set_allocated_garrison(::pb_message::game_data::nation_and_object_id_t* garrison) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
-  if (message_arena == nullptr) {
-    delete garrison_;
-  }
-  if (garrison) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(garrison);
-    if (message_arena != submessage_arena) {
-      garrison = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, garrison, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  garrison_ = garrison;
-  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.settlement_t.garrison)
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >*
+settlement_t::mutable_garrison() {
+  // @@protoc_insertion_point(field_mutable_list:pb_message.game_data.settlement_t.garrison)
+  return &garrison_;
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& settlement_t::_internal_garrison(int index) const {
+  return garrison_.Get(index);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& settlement_t::garrison(int index) const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.garrison)
+  return _internal_garrison(index);
+}
+inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::_internal_add_garrison() {
+  return garrison_.Add();
+}
+inline ::pb_message::game_data::nation_and_object_id_t* settlement_t::add_garrison() {
+  // @@protoc_insertion_point(field_add:pb_message.game_data.settlement_t.garrison)
+  return _internal_add_garrison();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
+settlement_t::garrison() const {
+  // @@protoc_insertion_point(field_list:pb_message.game_data.settlement_t.garrison)
+  return garrison_;
 }
 
 // -------------------------------------------------------------------

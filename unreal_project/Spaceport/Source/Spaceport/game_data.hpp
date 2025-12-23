@@ -137,7 +137,7 @@ struct settlement_t
     int energy = -1;
     int metal = -1;
     int fuel = -1;
-    nation_and_object_id_t garrison = {};
+    std::vector<nation_and_object_id_t> garrison = {};
     bool operator==(settlement_t const &) const = default;
 };
 

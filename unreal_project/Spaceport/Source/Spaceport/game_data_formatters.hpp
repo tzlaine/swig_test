@@ -270,7 +270,11 @@ struct std::formatter<settlement_t> {
         out = std::format_to(out, " energy={}", x.energy);
         out = std::format_to(out, " metal={}", x.metal);
         out = std::format_to(out, " fuel={}", x.fuel);
-        out = std::format_to(out, " garrison={}", x.garrison);
+        out = std::format_to(out, " garrison=[");
+        for (auto && e : x.garrison) {
+            out = std::format_to(out, " {}", e);
+        };
+        out = std::format_to(out, " ]");
 
         return std::format_to(out, " )");
     }

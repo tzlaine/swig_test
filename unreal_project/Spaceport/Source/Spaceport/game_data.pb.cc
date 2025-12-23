@@ -747,7 +747,7 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "pulation\030\004 \001(\002\022\026\n\016infrastructure\030\005 \001(\002\022\r"
   "\n\005water\030\006 \001(\005\022\014\n\004food\030\007 \001(\005\022\016\n\006energy\030\010 "
   "\001(\005\022\r\n\005metal\030\t \001(\005\022\014\n\004fuel\030\n \001(\005\022>\n\010garr"
-  "ison\030\013 \001(\0132,.pb_message.game_data.nation"
+  "ison\030\013 \003(\0132,.pb_message.game_data.nation"
   "_and_object_id_t\">\n\017planet_effect_t\022\014\n\004n"
   "ame\030\001 \001(\t\022\016\n\006reason\030\002 \001(\t\022\r\n\005value\030\003 \001(\002"
   "\"\344\005\n\010planet_t\022\021\n\tsystem_id\030\001 \001(\005\0228\n\013plan"
@@ -3251,41 +3251,31 @@ void fleets_t::InternalSwap(fleets_t* other) {
 void settlement_t::InitAsDefaultInstance() {
   ::pb_message::game_data::_settlement_t_default_instance_._instance.get_mutable()->id_ = const_cast< ::pb_message::game_data::nation_and_object_id_t*>(
       ::pb_message::game_data::nation_and_object_id_t::internal_default_instance());
-  ::pb_message::game_data::_settlement_t_default_instance_._instance.get_mutable()->garrison_ = const_cast< ::pb_message::game_data::nation_and_object_id_t*>(
-      ::pb_message::game_data::nation_and_object_id_t::internal_default_instance());
 }
 class settlement_t::_Internal {
  public:
   static const ::pb_message::game_data::nation_and_object_id_t& id(const settlement_t* msg);
-  static const ::pb_message::game_data::nation_and_object_id_t& garrison(const settlement_t* msg);
 };
 
 const ::pb_message::game_data::nation_and_object_id_t&
 settlement_t::_Internal::id(const settlement_t* msg) {
   return *msg->id_;
 }
-const ::pb_message::game_data::nation_and_object_id_t&
-settlement_t::_Internal::garrison(const settlement_t* msg) {
-  return *msg->garrison_;
-}
 settlement_t::settlement_t(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
+  garrison_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:pb_message.game_data.settlement_t)
 }
 settlement_t::settlement_t(const settlement_t& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      garrison_(from.garrison_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_id()) {
     id_ = new ::pb_message::game_data::nation_and_object_id_t(*from.id_);
   } else {
     id_ = nullptr;
-  }
-  if (from._internal_has_garrison()) {
-    garrison_ = new ::pb_message::game_data::nation_and_object_id_t(*from.garrison_);
-  } else {
-    garrison_ = nullptr;
   }
   ::memcpy(&planet_id_, &from.planet_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&fuel_) -
@@ -3309,7 +3299,6 @@ settlement_t::~settlement_t() {
 void settlement_t::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   if (this != internal_default_instance()) delete id_;
-  if (this != internal_default_instance()) delete garrison_;
 }
 
 void settlement_t::ArenaDtor(void* object) {
@@ -3333,14 +3322,11 @@ void settlement_t::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  garrison_.Clear();
   if (GetArena() == nullptr && id_ != nullptr) {
     delete id_;
   }
   id_ = nullptr;
-  if (GetArena() == nullptr && garrison_ != nullptr) {
-    delete garrison_;
-  }
-  garrison_ = nullptr;
   ::memset(&planet_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&fuel_) -
       reinterpret_cast<char*>(&planet_id_)) + sizeof(fuel_));
@@ -3425,11 +3411,16 @@ const char* settlement_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .pb_message.game_data.nation_and_object_id_t garrison = 11;
+      // repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
       case 11:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 90)) {
-          ptr = ctx->ParseMessage(_internal_mutable_garrison(), ptr);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_garrison(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<90>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -3522,12 +3513,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(10, this->_internal_fuel(), target);
   }
 
-  // .pb_message.game_data.nation_and_object_id_t garrison = 11;
-  if (this->has_garrison()) {
+  // repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_garrison_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        11, _Internal::garrison(this), target, stream);
+      InternalWriteMessage(11, this->_internal_garrison(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3546,18 +3537,18 @@ size_t settlement_t::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
+  total_size += 1UL * this->_internal_garrison_size();
+  for (const auto& msg : this->garrison_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
   // .pb_message.game_data.nation_and_object_id_t id = 1;
   if (this->has_id()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *id_);
-  }
-
-  // .pb_message.game_data.nation_and_object_id_t garrison = 11;
-  if (this->has_garrison()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *garrison_);
   }
 
   // int32 planet_id = 2;
@@ -3650,11 +3641,9 @@ void settlement_t::MergeFrom(const settlement_t& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  garrison_.MergeFrom(from.garrison_);
   if (from.has_id()) {
     _internal_mutable_id()->::pb_message::game_data::nation_and_object_id_t::MergeFrom(from._internal_id());
-  }
-  if (from.has_garrison()) {
-    _internal_mutable_garrison()->::pb_message::game_data::nation_and_object_id_t::MergeFrom(from._internal_garrison());
   }
   if (from.planet_id() != 0) {
     _internal_set_planet_id(from._internal_planet_id());
@@ -3706,6 +3695,7 @@ bool settlement_t::IsInitialized() const {
 void settlement_t::InternalSwap(settlement_t* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  garrison_.InternalSwap(&other->garrison_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(settlement_t, fuel_)
       + sizeof(settlement_t::fuel_)
