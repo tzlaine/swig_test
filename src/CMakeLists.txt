@@ -19,7 +19,8 @@ add_library(
     ${unreal_src_dir}/lua_register_1.cpp
     ${unreal_src_dir}/lua_register_2.cpp
     ${unreal_src_dir}/lua_register_3.cpp
-    ${unreal_src_dir}/lua_register_4.cpp
+    ${unreal_src_dir}/lua_register_enums.cpp
+    ${unreal_src_dir}/lua_register_functions.cpp
     ${unreal_src_dir}/model.cpp
     ${unreal_src_dir}/model_visibility.cpp
     ${unreal_src_dir}/serialization.cpp

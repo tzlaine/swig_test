@@ -153,7 +153,8 @@ default_game_start_params.map_height = small_map_height
     detail::lua_register_1(retval);
     detail::lua_register_2(retval);
     detail::lua_register_3(retval);
-    detail::lua_register_4(retval);
+    detail::lua_register_enums(retval);
+    detail::lua_register_functions(retval);
 
     retval.script_file(script_path("effects.lua"));
 

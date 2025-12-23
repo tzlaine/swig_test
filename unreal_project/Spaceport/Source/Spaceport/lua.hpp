@@ -32,7 +32,8 @@ namespace detail {
     void lua_register_1(sol::state & l);
     void lua_register_2(sol::state & l);
     void lua_register_3(sol::state & l);
-    void lua_register_4(sol::state & l);
+    void lua_register_enums(sol::state & l);
+    void lua_register_functions(sol::state & l);
 }
 
 
