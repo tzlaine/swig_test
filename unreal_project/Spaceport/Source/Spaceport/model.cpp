@@ -88,6 +88,13 @@ void model::generate_galaxy(
     game_state_.reset(new game_state_t);
     generation::generate_galaxy(
         params, *game_state_, &percent_complete, &fully_complete);
+}
+
+void model::generate_after_galaxy(game_start_params_t const & params)
+{
+    generation::generate_nations(params, *game_state_);
+    game_state_->alliances.resize(
+        detail::blocks_needed_for_nations(game_state_->nations.size()));
     proximity_grid_ = proximity_grid<fleet_t const >(*game_state_);
     repopulate_grid();
 #if INSTRUMENT_MODEL_GALAXY_GENERATION

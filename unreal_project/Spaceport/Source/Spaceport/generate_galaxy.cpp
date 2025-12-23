@@ -375,7 +375,9 @@ void generation::detail::generate_hex(
 std::vector<candidate_planet>
 generation::detail::find_starting_locations(game_state_t & gs, int n)
 {
-    sol::protected_function score = lua()["starting_planet_score"];
+    auto const score = [](planet_t const & planet) {
+        return call_lua_func("starting_planet_score", planet);
+    };
     auto retval = scored_planets(gs, score);
     only_top_planets(retval, n);
 

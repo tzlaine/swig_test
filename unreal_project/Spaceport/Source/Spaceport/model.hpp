@@ -116,10 +116,10 @@ struct model
 
     proximity_grid<fleet_t const> & proximity() { return proximity_grid_; }
 
-    // TODO: Need to generate nations, resize .alliances, etc.
     void generate_galaxy(game_start_params_t const & params,
                          concurrent_queue<int> & percent_complete,
                          std::atomic_bool & fully_complete);
+    void generate_after_galaxy(game_start_params_t const & params);
 
     // TODO: These should take a by-ref param that has a map of nation-ID ->
     // updates.  As each mutation to the game_state_t is done, it should be

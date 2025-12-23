@@ -107,8 +107,10 @@ void Agame_mode::Tick(float secs)
                 percent_update);
         }
 
-        if (generation_complete_)
+        if (generation_complete_) {
+            model_->generate_after_galaxy(game_params_);
             signal_start_of_play();
+        }
     }
 
     if (cast(GameState)->play_state_ == play_state::paused)
@@ -176,9 +178,9 @@ void Agame_mode::load_and_start_game(FString const & filename)
     ready_for_game();
 }
 
-void Agame_mode::load_or_generate(TArray<uint8> const & params_)
+void Agame_mode::load_or_generate(TArray<uint8> const & params)
 {
-    if (params_.IsEmpty()) {
+    if (params.IsEmpty()) {
         signal_start_of_play();
         return;
     }
@@ -186,12 +188,12 @@ void Agame_mode::load_or_generate(TArray<uint8> const & params_)
     set_play_state(GameState, play_state::generating);
     percent_complete_ = std::make_unique<concurrent_queue<int>>();
 
-    auto params = from_tarray<game_start_params_t>(params_);
-    player_id_to_nation_id_ = params.player_id_to_nation_id;
-    generation_thread_ = std::jthread([&, params = std::move(params), this] {
-        model_->generate_galaxy(
-            params, *percent_complete_, generation_complete_);
-    });
+    game_params_ = from_tarray<game_start_params_t>(params);
+    generation_thread_ =
+        std::jthread([&, params = std::move(game_params_), this] {
+            model_->generate_galaxy(
+                params, *percent_complete_, generation_complete_);
+        });
 }
 
 void Agame_mode::quit_to_menu(Fuser_notification const & notification)
@@ -372,7 +374,8 @@ void Agame_mode::signal_start_of_play()
 
         auto * ps = Cast<Aplayer_state>(pc->PlayerState);
         check(ps);
-        int const nation_id = player_id_to_nation_id_[ps->player_id()];
+        int const nation_id =
+            game_params_.player_id_to_nation_id[ps->player_id()];
 
         // TODO: Send full state.
         game_state_t game_state = {0};

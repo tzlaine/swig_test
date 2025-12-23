@@ -62,7 +62,7 @@ private:
     std::unique_ptr<model> model_;
 
     // game setup
-    boost::container::flat_map<int, int> player_id_to_nation_id_;
+    game_start_params_t game_params_;
 
     // generating the galaxy
     std::jthread generation_thread_;

@@ -152,6 +152,8 @@ default_game_start_params.habitable_systems_per_hex_mean = 5.0
 default_game_start_params.habitable_systems_per_hex_plus_minus = 2.0
 default_game_start_params.systems_per_hex = default_systems_per_hex
 default_game_start_params.map_height = small_map_height
+default_game_start_params.ai_opponents = to_integer(
+  default_game_start_params.map_height * default_game_start_params.map_height / 10)
 )");
 
     detail::lua_register_1(retval);
