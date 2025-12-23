@@ -83,9 +83,10 @@ bool generation::detail::generate_planet(
     std::uniform_int_distribution<int> resource_dist(
         min_resource_value, max_resource_value);
 
-    // Arbitrary line between the gas giants and the ice giants, taken
-    // from the boundary between the Saturn and Uranus orbits, and scaled
-    // by solar masses of this system's star..
+
+    // Arbitrary line between the gas giants and the ice giants, taken from
+    // the boundary between the Saturn and Uranus orbits, and scaled by solar
+    // masses of this system's star..
     double const ice_distance_au =
         ice_giant_distance_factor * system.star.solar_masses;
 
