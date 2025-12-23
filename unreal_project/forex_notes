@@ -67,7 +67,7 @@ Ships:
 * When a new ship design N is created, that design must be added to the shipyard.  Lets say the old design O is very different.  Then adding the new design would be like adding a new production line from scratch.  If the designs are very similar, the cost (TODO or maybe loss in build speed?) is low-to-no.
 * Shipyards appear in the same zone as the starting outpost and homeworld.
 * The smallest ships have a bonus to their detection, stealth, and propulsion ratings.  The largest have maluses.
-* Transports should exit, and should be very soft targets.  You should have to produce them for resources just like other ships, a la HOI4.
+* Transports should exist, and should be very soft targets.  You should have to produce them for resources just like other ships, a la HOI4.
 
 TODO: Increase the ship factors descibed above by 10, so that we can have increments in between (like transports, which should start with values like 0-3 or something -- well below 10 defense).
 
