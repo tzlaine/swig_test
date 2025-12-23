@@ -1275,7 +1275,12 @@ TEST(generation_tests, generate_nation)
     std::vector<candidate_planet> const top_n =
         generation::detail::find_starting_locations(gs, 5);
 
-    call_lua_func("create_starting_nation", gs, 0, *top_n.front().planet_);
+    call_lua_func(
+        "create_starting_nation",
+        gs,
+        0,
+        *top_n.front().planet_,
+        top_n.front().planet_id_);
 
     std::cout << std::format("{}", gs.nations[0]);
 }

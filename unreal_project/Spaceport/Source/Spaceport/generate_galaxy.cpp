@@ -229,9 +229,8 @@ bool generation::detail::generate_planet(
     if (homeworld_reroll)
         planet.effects.clear();
 
-    sol::function determine_growth_factor_and_effects =
-        lua()["determine_growth_factor_and_effects"];
-    double const growth_factor = determine_growth_factor_and_effects(planet);
+    double const growth_factor =
+        call_lua_func("determine_growth_factor_and_effects", planet);
 
     auto clamp_res = [](int x) {
         return std::clamp(x, min_resource_value, max_resource_value);
@@ -378,8 +377,6 @@ std::vector<candidate_planet>
 generation::detail::find_starting_locations(game_state_t & gs, int n)
 {
     sol::function score = lua()["starting_planet_score"];
-    sol::function determine_growth_factor_and_effects =
-        lua()["determine_growth_factor_and_effects"];
     auto retval = scored_planets(gs, score);
     only_top_planets(retval, n);
 
@@ -531,7 +528,12 @@ void generation::generate_nations(
     std::vector<candidate_planet> const homeworlds =
         generation::detail::find_starting_locations(gs, n);
 
-    gs.nations.resize(n);
-
-    
+    for (int i = 0; i < n; ++i) {
+        call_lua_func(
+            "create_starting_nation",
+            gs,
+            i,
+            *homeworlds[i].planet_,
+            homeworlds[i].planet_id_);
+    }
 }

@@ -345,15 +345,55 @@ function assign_starting_designs(nation)
    nation.unit_designs:add(starting_lifter_design(nation))
 end
 
-function create_home_settlement(gs, nation, planet)
+function create_home_settlement(gs, nation, planet, planet_id)
    local retval = settlement_t.new()
-   -- TODO
+   retval.id = nation_and_object_id_t.new(nation.id, 0)
+   retval.planet_id = planet_id
+   retval.original_owner = nation.id
+   retval.population = planet.max_population
+   retval.infrastructure = 100
+   retval.water = planet.water
+   retval.food = planet.food
+   retval.energy = planet.energy
+   retval.metal = planet.metal
+   retval.fuel = planet.fuel
    return retval
 end
 
 function create_starting_fleet(gs, nation, planet)
    local retval = fleet_t.new()
-   -- TODO
+   retval.id = nation_and_object_id_t.new(nation.id, 0)
+   retval.mission = mission_t.no_mission
+
+   local unit = unit_t.new()
+   unit.id = starting_small_ship_design(nation).id
+   unit.health = 100
+   retval.units:add(unit)
+   retval.units:add(unit)
+   retval.units:add(unit)
+
+   unit = unit_t.new()
+   unit.id = starting_large_ship_design(nation).id
+   unit.health = 100
+   retval.units:add(unit)
+
+   unit = unit_t.new()
+   unit.id = starting_colony_ship_design(nation).id
+   unit.health = 100
+   retval.units:add(unit)
+
+   retval.fuel = 100
+   retval.rounds = 100
+
+   retval.position = fleet_position_t.new()
+   local system = planet_system(gs, planet)
+   retval.position.world_pos_x = system.world_pos_x
+   retval.position.world_pos_y = system.world_pos_y
+   retval.position.system_id = planet.system_id
+   retval.position.at_permanent_location = true
+   retval.position.location_index = 0
+   retval.position.object_index = 0
+
    return retval
 end
 
@@ -401,12 +441,14 @@ function foreach_onmap_hc_around(gs, center_hc, f)
    end
 end
 
-function create_starting_nation(gs, nation_id, home_planet)
+function create_starting_nation(gs, nation_id, home_planet, planet_id)
    nation = nation_t.new()
    nation.id = nation_id
    assign_starting_designs(nation)
-   nation.settlements:add(create_home_settlement(gs, nation, home_planet))
+   nation.settlements:add(create_home_settlement(gs, nation, home_planet, planet_id))
    nation.fleets:add(create_starting_fleet(gs, nation, home_planet))
+   -- TODO: Add a fleet representing the starting outpost.
+   -- TODO: Add starting garrison(s)?
 
    local home_hc = system_hex(gs, planet_system(gs, home_planet)).coord
    nation.hexes_seen:add(hc_to_index(gs, home_hc))
@@ -415,6 +457,20 @@ function create_starting_nation(gs, nation_id, home_planet)
          nation.hexes_seen:add(hc_to_index(gs, hc))
       end
    )
+
+   nation.systems_present_in:add(home_planet.system_id)
+   nation.systems_visited:add(home_planet.system_id)
+   local system = planet_system(gs, home_planet)
+   for i = system.first_planet, system.last_planet - 1 do
+      nation.planets_surveyed:add(i)
+   end
+
+   local location = system_location_t.new()
+   local location_object = location_object_t.new()
+   location_object.planet_id = planet_id
+   -- TODO: Add starting outpost here.
+   location.objects:add(location_object)
+   system.permanent_locations:add(location)
 
    gs.nations:add(nation)
 end

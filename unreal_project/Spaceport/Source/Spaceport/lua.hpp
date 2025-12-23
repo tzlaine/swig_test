@@ -102,4 +102,5 @@ auto call_lua_func(std::string_view name, Args && ...args)
             *FString(UTF8_TO_TCHAR(err.what().c_str())));
 #endif
     }
+    return result;
 }
