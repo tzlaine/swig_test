@@ -134,9 +134,13 @@ sol::state make_lua_state()
     name_type["c_str"] = &adobe::name_t::c_str;
 
     REGISTER_GAME_DATA_TYPE(retval, hex_coord_t);
+    hex_coord_t_type["new"] = [](int x, int y) { return hex_coord_t{x, y}; };
     retval.script("invalid_hex_coord = hex_coord_t.new(-1, -1)");
 
     REGISTER_GAME_DATA_TYPE(retval, nation_and_object_id_t);
+    nation_and_object_id_t_type["new"] = [](int nation_id, int object_id) {
+        return nation_and_object_id_t{nation_id, object_id};
+    };
     retval.script(
         "invalid_nation_and_object = nation_and_object_id_t.new(-1, -1)");
 
