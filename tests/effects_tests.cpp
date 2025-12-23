@@ -109,22 +109,28 @@ TEST(effects_tests, planet_effects)
 
     {
         planet_t planet = earth;
-        apply_planet_effect(
-            planet, planet_effect_t{"no_seasons"_name, ""_name});
+        call_lua_func(
+            "apply_planet_effect",
+            planet,
+            planet_effect_t{"no_seasons"_name, ""_name});
         EXPECT_NEAR(planet.growth_factor, earth.growth_factor + 0.05, eps);
     }
 
     {
         planet_t planet = earth;
-        apply_planet_effect(
-            planet, planet_effect_t{"long_seasons"_name, ""_name});
+        call_lua_func(
+            "apply_planet_effect",
+            planet,
+            planet_effect_t{"long_seasons"_name, ""_name});
         EXPECT_NEAR(planet.growth_factor, earth.growth_factor - 0.05, eps);
     }
 
     {
         planet_t planet = earth;
-        apply_planet_effect(
-            planet, planet_effect_t{"infra_cost"_name, ""_name, 2.0f});
+        call_lua_func(
+            "apply_planet_effect",
+            planet,
+            planet_effect_t{"infra_cost"_name, ""_name, 2.0f});
         EXPECT_NEAR(
             planet.infrastructure_cost_factor,
             earth.infrastructure_cost_factor * 2,
@@ -133,15 +139,19 @@ TEST(effects_tests, planet_effects)
 
     {
         planet_t planet = earth;
-        apply_planet_effect(
-            planet, planet_effect_t{"habs_and_masks_required"_name, ""_name});
+        call_lua_func(
+            "apply_planet_effect",
+            planet,
+            planet_effect_t{"habs_and_masks_required"_name, ""_name});
         EXPECT_NEAR(planet.max_population, earth.max_population * 0.25, eps);
     }
 
     {
         planet_t planet = earth;
-        apply_planet_effect(
-            planet, planet_effect_t{"habs_and_suits_required"_name, ""_name});
+        call_lua_func(
+            "apply_planet_effect",
+            planet,
+            planet_effect_t{"habs_and_suits_required"_name, ""_name});
         EXPECT_NEAR(planet.max_population, earth.max_population * 0.1, eps);
     }
 
@@ -149,14 +159,17 @@ TEST(effects_tests, planet_effects)
         planet_t planet = earth;
         planet.o2_co2_suitability = 0.25f; // 0.75 together
         planet.atmospheric_pressure = 3.0f;
-        apply_planet_effect(
-            planet, planet_effect_t{"poor_o2_co2_suitab"_name, ""_name});
+        call_lua_func(
+            "apply_planet_effect",
+            planet,
+            planet_effect_t{"poor_o2_co2_suitab"_name, ""_name});
         EXPECT_NEAR(planet.growth_factor, earth.growth_factor - 0.045, eps);
     }
 
     {
         planet_t planet = earth;
-        apply_planet_effect(
+        call_lua_func(
+            "apply_planet_effect",
             planet,
             planet_effect_t{
                 "uninhabitably_hot_avg_surface_temp"_name, ""_name});

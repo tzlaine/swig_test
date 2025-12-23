@@ -1,7 +1,6 @@
 #pragma once
 
 #include "check.hpp"
-#include "effects.hpp"
 #include "game_data_metadata.hpp"
 #include "logging.hpp"
 #include "memmap.hpp"

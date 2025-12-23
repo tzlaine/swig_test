@@ -1,6 +1,5 @@
 #include "check.hpp"
 #include "constants.hpp"
-#include "effects.hpp"
 #include "generate_galaxy.hpp"
 #include "model_util.hpp"
 #include "rng.hpp"
@@ -376,7 +375,7 @@ void generation::detail::generate_hex(
 std::vector<candidate_planet>
 generation::detail::find_starting_locations(game_state_t & gs, int n)
 {
-    sol::function score = lua()["starting_planet_score"];
+    sol::protected_function score = lua()["starting_planet_score"];
     auto retval = scored_planets(gs, score);
     only_top_planets(retval, n);
 

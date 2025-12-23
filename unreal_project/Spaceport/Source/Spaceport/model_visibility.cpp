@@ -1,6 +1,5 @@
 #include "model_visibility.hpp"
 
-#include "effects.hpp"
 #include "model.hpp"
 #include "model_util.hpp"
 
