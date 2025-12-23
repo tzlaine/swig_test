@@ -10,6 +10,11 @@ DISABLE_WARNING(4602)
 POP_WARNING
 
 #include <adobe/name.hpp>
+#if defined(BUILD_FOR_TEST)
+#include <iostream>
+#else
+#include <Logging/StructuredLog.h>
+#endif
 
 
 namespace detail {
@@ -72,3 +77,29 @@ std::string script_path(std::string const & script);
 // Executes the script file `script` as if by
 // `lua().script_file(script_path(script))`.
 void script_file(std::string const & script);
+
+// CAlls the Lua function named `name`, passing the arguments `Args...`, and
+// logs any Lua errors that occurred.
+template<typename... Args>
+auto call_lua_func(std::string_view name, Args && ...args)
+{
+    sol::protected_function f = lua()[name];
+    auto result = f((Args &&)args...);
+    if (!result.valid()) {
+        sol::error err = result;
+#if defined(BUILD_FOR_TEST)
+        std::cout << std::format(
+            "Call to Lua function '{}' failed; error: '{}'\n",
+            name,
+            err.what());
+#else
+        std::string name_ = name;
+        UE_LOG(
+            LogTemp,
+            Error,
+            TEXT("Call to Lua function '{%s' failed; error: '%s'"),
+            *FString(UTF8_TO_TCHAR(name_.c_str())),
+            *FString(UTF8_TO_TCHAR(err.what().c_str())));
+#endif
+    }
+}
