@@ -13,7 +13,7 @@ POP_WARNING
 #if defined(BUILD_FOR_TEST)
 #include <iostream>
 #else
-#include <Logging/StructuredLog.h>
+#include <CoreMinimal.h>
 #endif
 
 
@@ -93,13 +93,13 @@ auto call_lua_func(std::string_view name, Args && ...args)
             name,
             err.what());
 #else
-        std::string name_ = name;
+        std::string name_(name.begin(), name.end());
         UE_LOG(
             LogTemp,
             Error,
-            TEXT("Call to Lua function '{%s' failed; error: '%s'"),
+            TEXT("Call to Lua function '%s' failed; error: '%s'"),
             *FString(UTF8_TO_TCHAR(name_.c_str())),
-            *FString(UTF8_TO_TCHAR(err.what().c_str())));
+            *FString(UTF8_TO_TCHAR(err.what())));
 #endif
     }
     return result;
