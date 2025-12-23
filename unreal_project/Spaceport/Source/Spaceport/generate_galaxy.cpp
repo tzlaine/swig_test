@@ -521,3 +521,17 @@ void generation::generate_galaxy(
     if (fully_complete)
         *fully_complete = true;
 }
+
+void generation::generate_nations(
+    game_start_params_t const & params, game_state_t & gs)
+{
+    int const n =
+        (int)params.player_id_to_nation_id.size() + params.ai_opponents;
+
+    std::vector<candidate_planet> const homeworlds =
+        generation::detail::find_starting_locations(gs, n);
+
+    gs.nations.resize(n);
+
+    
+}

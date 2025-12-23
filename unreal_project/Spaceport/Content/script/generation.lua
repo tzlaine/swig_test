@@ -256,7 +256,7 @@ function determine_growth_factor_and_effects(planet)
    end
 
    for i = 1, #planet.effects do
-      apply_planet_effect(planet, planet.effects:get(i))
+      apply_planet_effect(planet, planet.effects[i])
    end
 
    return planet.growth_factor
@@ -271,4 +271,150 @@ function starting_planet_score(planet)
    end
 
    return planet.max_population
+end
+
+function starting_small_ship_design(nation)
+   local retval = unit_design_t.new()
+   retval.id = nation_and_object_id_t.new(nation.id, 0)
+   retval.hull = 10
+   retval.armor = 0
+   retval.propulsion = 1
+   retval.weapons = 1
+   retval.shields = 1
+   retval.detection = 1
+   retval.stealth = 1
+   retval.automation = 1
+   retval.attack = 2
+   retval.defense = 2
+   retval.ground_attack = 0
+   return retval
+end
+function starting_large_ship_design(nation)
+   local retval = unit_design_t.new()
+   retval.id = nation_and_object_id_t.new(nation.id, 1)
+   retval.hull = 25
+   retval.armor = 1
+   retval.propulsion = 1
+   retval.weapons = 1
+   retval.shields = 1
+   retval.detection = 1
+   retval.stealth = 1
+   retval.automation = 1
+   retval.attack = 4
+   retval.defense = 4
+   retval.ground_attack = 0
+   return retval
+end
+function starting_colony_ship_design(nation)
+   local retval = unit_design_t.new()
+   retval.id = nation_and_object_id_t.new(nation.id, 2)
+   retval.hull = 50
+   retval.armor = 0
+   retval.propulsion = 1
+   retval.weapons = 1
+   retval.shields = 1
+   retval.detection = 1
+   retval.stealth = 1
+   retval.automation = 1
+   retval.attack = 0
+   retval.defense = 0
+   retval.ground_attack = 0
+   return retval
+end
+function starting_lifter_design(nation)
+   local retval = unit_design_t.new()
+   retval.id = nation_and_object_id_t.new(nation.id, 3)
+   retval.hull = 40
+   retval.armor = 0
+   retval.propulsion = 1
+   retval.weapons = 1
+   retval.shields = 1
+   retval.detection = 1
+   retval.stealth = 1
+   retval.automation = 1
+   retval.attack = 0
+   retval.defense = 0
+   retval.ground_attack = 0
+   return retval
+end
+
+function assign_starting_designs(nation)
+   nation.unit_designs:add(starting_small_ship_design(nation))
+   nation.unit_designs:add(starting_large_ship_design(nation))
+   nation.unit_designs:add(starting_colony_ship_design(nation))
+   nation.unit_designs:add(starting_lifter_design(nation))
+end
+
+function create_home_settlement(gs, nation, planet)
+   local retval = settlement_t.new()
+   -- TODO
+   return retval
+end
+
+function create_starting_fleet(gs, nation, planet)
+   local retval = fleet_t.new()
+   -- TODO
+   return retval
+end
+
+-- TODO: These need to move to another file for reuse.
+function planet_system(gs, planet)
+   return gs.systems[planet.system_id + 1]
+end
+function system_hex(gs, system)
+   return gs.hexes[system.hex_id + 1]
+end
+function hc_on_map(gs, hc)
+   return cpp_on_map(hc, to_integer(gs.map_width), to_integer(gs.map_height))
+end
+function hc_to_index(gs, hc)
+   return cpp_to_index(hc, gs.map_width)
+end
+function hc_from_index(gs, i)
+   return cpp_from_index(i, gs.map_width)
+end
+function foreach_onmap_hc_around(gs, center_hc, f)
+   local hc = nil
+   hc = hex_above_right(center_hc)
+   if hc_on_map(gs, hc) then
+      f(hc)
+   end
+   hc = hex_above(center_hc)
+   if hc_on_map(gs, hc) then
+      f(hc)
+   end
+   hc = hex_above_left(center_hc)
+   if hc_on_map(gs, hc) then
+      f(hc)
+   end
+   hc = hex_below_left(center_hc)
+   if hc_on_map(gs, hc) then
+      f(hc)
+   end
+   hc = hex_below(center_hc)
+   if hc_on_map(gs, hc) then
+      f(hc)
+   end
+   hc = hex_below_right(center_hc)
+   if hc_on_map(gs, hc) then
+      f(hc)
+   end
+end
+
+function create_starting_nation(gs, nation_id, home_planet)
+   nation = nation_t.new()
+   nation.id = nation_id
+   assign_starting_designs(nation)
+   nation.settlements:add(create_home_settlement(gs, nation, home_planet))
+   nation.fleets:add(create_starting_fleet(gs, nation, home_planet))
+
+   local home_hc = system_hex(gs, planet_system(gs, home_planet)).coord
+   nation.hexes_seen:add(hc_to_index(gs, home_hc))
+   foreach_onmap_hc_around(
+      gs, home_hc, function(hc)
+         nation.hexes_seen:add(hc_to_index(gs, hc))
+      end
+   )
+
+   gs.nations:add(nation)
 end

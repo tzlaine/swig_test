@@ -393,4 +393,7 @@ namespace generation {
         game_state_t & game_state,
         concurrent_queue<int> * percent_complete = nullptr,
         std::atomic_bool * fully_complete = nullptr);
+
+    void generate_nations(
+        game_start_params_t const & params, game_state_t & game_state);
 }

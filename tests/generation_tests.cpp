@@ -1219,15 +1219,22 @@ TEST(generation_tests, generate_hex)
         game_state.systems.size());
 }
 
-TEST(generation_tests, generate_galaxy)
+game_state_t & gs()
 {
+    static game_state_t retval;
     game_start_params_t const params = game_start_params_t{
         .habitable_systems_per_hex_mean = 5.0,
         .habitable_systems_per_hex_plus_minus = 2.0,
         .systems_per_hex = 20,
         .map_height = 11};
-    game_state_t gs;
-    generation::generate_galaxy(params, gs);
+    if (retval.planets.empty())
+        generation::generate_galaxy(params, retval);
+    return retval;
+}
+
+TEST(generation_tests, generate_galaxy)
+{
+    game_state_t & gs = ::gs();
     EXPECT_FALSE(gs.hexes.empty());
     EXPECT_FALSE(gs.systems.empty());
     EXPECT_FALSE(gs.planets.empty());
@@ -1258,4 +1265,17 @@ TEST(generation_tests, generate_galaxy)
             c.planet_->fuel,
             c.planet_->growth_factor);
     }
+}
+
+TEST(generation_tests, generate_nation)
+{
+    game_state_t & gs = ::gs();
+
+    sol::protected_function f = lua()["starting_planet_score"];
+    std::vector<candidate_planet> const top_n =
+        generation::detail::find_starting_locations(gs, 5);
+
+    call_lua_func("create_starting_nation", gs, 0, *top_n.front().planet_);
+
+    std::cout << std::format("{}", gs.nations[0]);
 }
