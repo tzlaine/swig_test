@@ -147,7 +147,7 @@ private:
     FVector2D selection_box_last_;
 
     game_state_t game_state_;
-    client_view client_view_;
+    client_game_state client_gs_;
 
     bool showing_main_menu_ = false;
 

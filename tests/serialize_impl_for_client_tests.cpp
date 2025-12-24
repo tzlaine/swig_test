@@ -894,7 +894,12 @@ TEST(client_serialization_tests, full_game_state)
 
     serialize_for_client(gs, nation_id, grid, &oss);
 
-    client_view cgs(byte_span_of(serialized));
+    client_game_state cgs(byte_span_of(serialized));
+
+    auto opt_nation = cgs.nation(nation_id);
+    check(opt_nation);
+    auto opt_hex = home_hex(cgs, *opt_nation);
+    check(opt_hex);
 
     // No checks; this is a stability test.
 }

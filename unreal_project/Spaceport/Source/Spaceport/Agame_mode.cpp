@@ -377,16 +377,9 @@ void Agame_mode::signal_start_of_play()
         int const nation_id =
             game_params_.player_id_to_nation_id[ps->player_id()];
 
-        // TODO: Send full state.
-        game_state_t game_state = {0};
-        game_state.map_width = gs.map_width;
-        game_state.map_height = gs.map_height;
-        game_state.nations.resize(nation_id + 1);
-        nation_t & nation = game_state.nations.back();
-        nation.id = nation_id;
-        auto const hc = hex_coord_t{gs.map_width / 2, gs.map_height / 2};
-        nation.hexes_seen.push_back(to_index(hc, gs.map_width));
-        TArray<uint8> state = to_tarray(game_state);
+        TArray<uint8> state;
+        detail::ostream_tarray_facade os(state);
+        model_->serialize_for_client(nation_id, os);
         pc->client_recv_initial_game_state(nation_id, state);
     }
 

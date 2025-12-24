@@ -5,10 +5,14 @@
 #include "lua.hpp"
 #include "map_util.hpp"
 
+#include <boost/optional.hpp>
+
 #include <algorithm>
 #include <span>
 #include <vector>
 
+
+struct client_game_state;
 
 inline auto
 operator<=>(nation_and_object_id_t const & a, nation_and_object_id_t const & b)
@@ -105,7 +109,8 @@ inline box_2d world_map_extent(game_state_t const & game_state)
     return box_2d{point_2d{min_x, min_y}, point_2d{max_x, max_y}};
 }
 
-inline double max_detection_radius_before_stealth(game_state_t const & game_state)
+inline double
+max_detection_radius_before_stealth(game_state_t const & game_state)
 {
     return 3.0; // TODO
 }
@@ -201,7 +206,7 @@ namespace detail {
     inline int blocks_needed_for_nations(int n)
     {
         return bits_needed_for_nations(n) / dynamic_bitset_bits_per_block +
-                int(n % dynamic_bitset_bits_per_block != 0);
+               int(n % dynamic_bitset_bits_per_block != 0);
     }
 
     inline alliances_t<true>
@@ -209,7 +214,8 @@ namespace detail {
     {
         return {bits};
     }
-    inline alliances_t<false> alliances(std::vector<dynamic_bitset_block_type> & bits)
+    inline alliances_t<false>
+    alliances(std::vector<dynamic_bitset_block_type> & bits)
     {
         return {bits};
     }
@@ -229,8 +235,7 @@ inline void form_alliance(game_state_t & gs, int nation_id_1, int nation_id_2)
 inline void break_alliance(game_state_t & gs, int nation_id_1, int nation_id_2)
 {
     return detail::alliances(gs.alliances)
-        .break_alliance(
-        nation_id_1, nation_id_2);
+        .break_alliance(nation_id_1, nation_id_2);
 }
 
 inline void
@@ -273,4 +278,125 @@ inline void only_top_planets(std::vector<candidate_planet> & all_planets, int n)
         std::ranges::greater{},
         &candidate_planet::score_);
     all_planets.resize(n);
+}
+
+
+template<typename GameState>
+boost::optional<hex_t const &> hex(GameState const & gs, boost::optional<int> i)
+{
+    if (!i)
+        return {};
+    if constexpr (std::same_as<GameState, game_state_t>) {
+        if (0 <= *i && *i < (int)gs.hexes.size())
+            return {gs.hexes[*i]};
+    } else if constexpr (std::same_as<GameState, client_game_state>) {
+        return gs.hex(*i);
+    } else {
+        static_assert(
+            std::same_as<GameState, game_state_t> ||
+            std::same_as<GameState, client_game_state>);
+    }
+}
+
+template<typename GameState>
+boost::optional<system_t const &>
+system(GameState const & gs, boost::optional<int> i)
+{
+    if (!i)
+        return {};
+    if constexpr (std::same_as<GameState, game_state_t>) {
+        if (0 <= *i && *i < (int)gs.systems.size())
+            return {gs.systems[*i]};
+    } else if constexpr (std::same_as<GameState, client_game_state>) {
+        return gs.system(*i);
+    } else {
+        static_assert(
+            std::same_as<GameState, game_state_t> ||
+            std::same_as<GameState, client_game_state>);
+    }
+}
+
+template<typename GameState>
+boost::optional<planet_t const &>
+planet(GameState const & gs, boost::optional<int> i)
+{
+    if (!i)
+        return boost::none;
+    if constexpr (std::same_as<GameState, game_state_t>) {
+        if (0 <= *i && *i < (int)gs.planets.size())
+            return {gs.planets[*i]};
+    } else if constexpr (std::same_as<GameState, client_game_state>) {
+        return gs.planet(*i);
+    } else {
+        static_assert(
+            std::same_as<GameState, game_state_t> ||
+            std::same_as<GameState, client_game_state>);
+    }
+}
+
+template<typename GameState>
+boost::optional<nation_t const &>
+nation(GameState const & gs, boost::optional<int> i)
+{
+    if (!i)
+        return boost::none;
+    if constexpr (std::same_as<GameState, game_state_t>) {
+        if (0 <= *i && *i < (int)gs.nations.size())
+            return {gs.nations[*i]};
+    } else if constexpr (std::same_as<GameState, client_game_state>) {
+        return gs.nation(*i);
+    } else {
+        static_assert(
+            std::same_as<GameState, game_state_t> ||
+            std::same_as<GameState, client_game_state>);
+    }
+}
+
+inline boost::optional<int> home_planet_index(nation_t const & nation)
+{
+    // TODO: This is fraught.  We should add a home planet ID to nation_t.
+    auto const it = std::ranges::find_if(
+        nation.settlements, [](auto const & e) { return e.id.object_id == 0; });
+    if (it == nation.settlements.end())
+        return {};
+    return {it->planet_id};
+}
+
+template<typename GameState>
+boost::optional<planet_t const &>
+home_planet(GameState const & gs, nation_t const & nation)
+{
+    return planet(gs, home_planet_index(nation));
+}
+
+template<typename GameState>
+boost::optional<int>
+home_system_index(GameState const & gs, nation_t const & nation)
+{
+    if (auto opt_planet = home_planet(gs, nation))
+        return opt_planet->system_id;
+    return {};
+}
+
+template<typename GameState>
+boost::optional<system_t const &>
+home_system(GameState const & gs, nation_t const & nation)
+{
+    return system(gs, home_system_index(gs, nation));
+}
+
+template<typename GameState>
+boost::optional<int>
+home_hex_index(GameState const & gs, nation_t const & nation)
+{
+    if (auto opt_system = home_system(gs, nation))
+        return opt_system->hex_id;
+    return {};
+}
+
+template<typename GameState>
+boost::optional<hex_t const &>
+home_hex(GameState const & gs, nation_t const & nation)
+{
+    return hex(gs, home_hex_index(gs, nation));
 }

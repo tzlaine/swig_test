@@ -433,12 +433,15 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
 
     nation_id_ = nation_id;
 
-    auto game_state = from_tarray<game_state_t>(state);
+    client_gs_ = client_game_state(std::as_bytes(
+        std::span(state.GetData(), state.GetData() + state.Num())));
 
-    auto const home_hc = from_index(
-        game_state.nations[nation_id_].hexes_seen.front(),
-        game_state.map_width);
-    auto const location = map_hex_position(home_hc, game_state.map_height);
+    auto opt_nation = client_gs_.nation(nation_id_);
+    check(opt_nation);
+    auto opt_hex = home_hex(client_gs_, *opt_nation);
+    check(opt_hex);
+    auto const home_hc = opt_hex->coord;
+    auto const location = map_hex_position(home_hc, client_gs_.map_height());
     auto * pawn = Cast<Acontroller_pawn>(GetPawn());
     check(pawn);
     pawn->SetActorLocation(location);

@@ -315,8 +315,8 @@ namespace detail {
     }
 
     void deserialize_for_client(
-        int map_width,
-        int map_height,
+        int & map_width,
+        int & map_height,
         std::vector<indexed_object<hex_t>> & hexes,
         std::vector<indexed_object<system_t>> & systems,
         std::vector<indexed_object<planet_t>> & planets,

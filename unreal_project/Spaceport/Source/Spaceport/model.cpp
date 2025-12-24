@@ -14,7 +14,7 @@
 #include "rng.hpp"
 
 
-client_view::client_view(std::span<std::byte const> src)
+client_game_state::client_game_state(std::span<std::byte const> src)
 {
     hexes_.clear();
     systems_.clear();
@@ -24,7 +24,7 @@ client_view::client_view(std::span<std::byte const> src)
         map_width_, map_height_, hexes_, systems_, planets_, nations_, src);
 }
 
-boost::optional<hex_t const &> client_view::hex(int i) const
+boost::optional<hex_t const &> client_game_state::hex(int i) const
 {
     auto const it = std::ranges::lower_bound(
         hexes_, i, std::ranges::less{}, &indexed_object<hex_t>::index_);
@@ -33,7 +33,7 @@ boost::optional<hex_t const &> client_view::hex(int i) const
     return it->object_;
 }
 
-boost::optional<system_t const &> client_view::system(int i) const
+boost::optional<system_t const &> client_game_state::system(int i) const
 {
     auto const it = std::ranges::lower_bound(
         systems_, i, std::ranges::less{}, &indexed_object<system_t>::index_);
@@ -42,7 +42,7 @@ boost::optional<system_t const &> client_view::system(int i) const
     return it->object_;
 }
 
-boost::optional<planet_t const &> client_view::planet(int i) const
+boost::optional<planet_t const &> client_game_state::planet(int i) const
 {
     auto const it = std::ranges::lower_bound(
         planets_, i, std::ranges::less{}, &indexed_object<planet_t>::index_);
@@ -51,7 +51,7 @@ boost::optional<planet_t const &> client_view::planet(int i) const
     return it->object_;
 }
 
-boost::optional<nation_t const &> client_view::nation(int i) const
+boost::optional<nation_t const &> client_game_state::nation(int i) const
 {
     auto const it = std::ranges::lower_bound(
         nations_, i, std::ranges::less{}, &indexed_object<nation_t>::index_);
@@ -107,6 +107,12 @@ void model::generate_after_galaxy(game_start_params_t const & params)
         game_state_->nations.size(),
         serialized_size(game_state_->nations) / 1024.0 / 1024.0);
 #endif
+}
+
+void model::serialize_for_client(
+    int nation_id, detail::ostream_tarray_facade os)
+{
+    detail::serialize_for_client(*game_state_, nation_id, proximity_grid_, &os);
 }
 
 void model::day_tick()

@@ -531,5 +531,9 @@ void generation::generate_nations(
             i,
             *homeworlds[i].planet_,
             homeworlds[i].planet_id_);
+        std::ranges::sort(gs.nations[i].hexes_seen);
+        std::ranges::sort(gs.nations[i].systems_present_in);
+        std::ranges::sort(gs.nations[i].systems_visited);
+        std::ranges::sort(gs.nations[i].planets_surveyed);
     }
 }

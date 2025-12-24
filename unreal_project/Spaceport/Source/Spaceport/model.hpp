@@ -61,10 +61,10 @@ namespace detail {
     }
 }
 
-struct client_view
+struct client_game_state
 {
-    client_view() = default;
-    client_view(std::span<std::byte const> src);
+    client_game_state() = default;
+    client_game_state(std::span<std::byte const> src);
 
     int map_width() const { return map_width_; }
     int map_height() const { return map_height_; }
@@ -126,6 +126,8 @@ struct model
                          concurrent_queue<int> & percent_complete,
                          std::atomic_bool & fully_complete);
     void generate_after_galaxy(game_start_params_t const & params);
+
+    void serialize_for_client(int nation_id, detail::ostream_tarray_facade os);
 
     // TODO: These should take a by-ref param that has a map of nation-ID ->
     // updates.  As each mutation to the game_state_t is done, it should be
