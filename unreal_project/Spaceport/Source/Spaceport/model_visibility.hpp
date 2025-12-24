@@ -3,7 +3,7 @@
 #include "game_data.hpp"
 
 
-enum struct visibility_kind { owner, ally, neutral_or_enemy, unseen };
+enum struct visibility_kind { owner, neutral_or_enemy, unseen };
 
 visibility_kind visibility_of(
     game_state_t const & gs,

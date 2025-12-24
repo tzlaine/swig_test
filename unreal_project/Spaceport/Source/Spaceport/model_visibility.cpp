@@ -127,11 +127,10 @@ visibility_kind visibility_of(
     game_state_t const & gs,
     std::vector<fleet_t const *> const & visible_fleets,
     int nation_id,
-    system_t const & x,
+    system_t const &,
     int system_index)
 {
     nation_t const & nation = gs.nations[nation_id];
-    int const hex_index = x.hex_id;
     if (std::ranges::binary_search(
             gs.nations[nation_id].systems_present_in, system_index)) {
         return visibility_kind::owner;
