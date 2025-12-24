@@ -68,18 +68,6 @@ model::~model ()
     save_queue_.done();
 }
 
-#if !defined(BUILD_FOR_TEST)
-TArray<uint8> model::serialize_for_client(int nation_id)
-{
-    check(game_state_);
-    TArray<uint8> retval;
-    detail::ostream_tarray_facade oss(retval);
-    detail::serialize_for_client(
-        nation_id, proximity_grid_, *game_state_, &oss);
-    return std::move(retval);
-}
-#endif
-
 void model::generate_galaxy(
     game_start_params_t const & params,
     concurrent_queue<int> & percent_complete,

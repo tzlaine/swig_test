@@ -51,6 +51,16 @@ inline double detection_dist_sq(
     return dist * dist;
 }
 
+namespace detail {
+    inline void repopulate_grid(
+        game_state_t const & gs, proximity_grid<fleet_t const> & grid)
+    {
+        grid.clear_pointers();
+        auto f = [&](auto & fleet) { grid.insert(fleet); };
+        visit_fleets(gs, f);
+    }
+}
+
 struct client_view
 {
     client_view() = default;
@@ -110,10 +120,6 @@ struct model
         return {game_state_};
     }
 
-#if !defined(BUILD_FOR_TEST)
-    TArray<uint8> serialize_for_client(int nation_id);
-#endif
-
     proximity_grid<fleet_t const> & proximity() { return proximity_grid_; }
 
     void generate_galaxy(game_start_params_t const & params,
@@ -170,9 +176,7 @@ private:
     proximity_grid<fleet_t const> proximity_grid_;
     void repopulate_grid()
     {
-        proximity_grid_.clear_pointers();
-        auto f = [this](auto & fleet) { proximity_grid_.insert(fleet); };
-        visit_fleets(*game_state_, f);
+        detail::repopulate_grid(*game_state_, proximity_grid_);
     }
 
     std::atomic_int saving_{0};

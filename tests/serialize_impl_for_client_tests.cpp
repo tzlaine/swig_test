@@ -114,18 +114,20 @@ auto visible_fleets(int nation_id, game_state_t const & gs)
          &gs.nations[(nation_id + 2) % 3].fleets[0]});
 }
 
+game_start_params_t const gs_params = game_start_params_t{
+    .habitable_systems_per_hex_mean = 5.0,
+    .habitable_systems_per_hex_plus_minus = 2.0,
+    .systems_per_hex = 20,
+    .map_height = 11,
+    .ai_opponents = 12};
+
 game_state_t const & gs()
 {
     static game_state_t retval = [] {
         game_state_t retval;
         std::atomic_bool fully_complete = false;
-        game_start_params_t const params = game_start_params_t{
-            .habitable_systems_per_hex_mean = 5.0,
-            .habitable_systems_per_hex_plus_minus = 2.0,
-            .systems_per_hex = 20,
-            .map_height = 11};
         generation::generate_galaxy(
-            params, retval, nullptr, &fully_complete);
+            gs_params, retval, nullptr, &fully_complete);
         while (!fully_complete) {
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
@@ -873,6 +875,28 @@ TEST(client_serialization_tests, serialize_for_client_array)
             }
         }
     }
+}
+
+TEST(client_serialization_tests, full_game_state)
+{
+    using namespace detail;
+
+    std::vector<char> serialized;
+    ostream_tarray_facade oss(serialized);
+    int const nation_id = 0;
+
+    auto gs = ::gs();
+    gs.nations.clear();
+    generation::generate_nations(gs_params, gs);
+    gs.alliances.resize(detail::blocks_needed_for_nations(gs.nations.size()));
+    auto grid = proximity_grid<fleet_t const>(gs);
+    repopulate_grid(gs, grid);
+
+    serialize_for_client(gs, nation_id, grid, &oss);
+
+    client_view cgs(byte_span_of(serialized));
+
+    // No checks; this is a stability test.
 }
 
 TEST(client_serialization_tests, metadata)

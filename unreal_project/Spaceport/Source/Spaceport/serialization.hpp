@@ -1,6 +1,11 @@
 #pragma once
 
+#define INSTRUMENT_DE_SERIALIZE_FOR_CLIENT 0
+
 #include "check.hpp"
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+#include "game_data_formatters.hpp"
+#endif
 #include "game_data_metadata.hpp"
 #include "logging.hpp"
 #include "memmap.hpp"
@@ -639,6 +644,24 @@ namespace detail {
         int,
         ostream_tarray_facade * os);
 
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+#define PRINT_WRITE_OF(x)                                                      \
+    std::cout << std::format(                                                  \
+        "serialize: write field {} ('{}') with value {}\n",                    \
+        metadata<game_state_t>::x().index_,                                    \
+        metadata<game_state_t>::x().name_,                                     \
+        gs.x)
+#define PRINT_READ_OF(x)                                                       \
+    std::cout << std::format(                                                  \
+        "DEserialize: read field {} ('{}') with value {}\n",                   \
+        metadata<game_state_t>::x().index_,                                    \
+        metadata<game_state_t>::x().name_,                                     \
+        x)
+#else
+#define PRINT_WRITE_OF(x)
+#define PRINT_READ_OF(x)
+#endif
+
     // For top-level sequences in game_data_t.
     template<typename T>
     void serialize_for_client(
@@ -659,27 +682,55 @@ namespace detail {
             });
         }
 
-        {
-            uint32_t const size =
-                x.size() -
-                std::ranges::count(visibility, visibility_kind::unseen);
-            serialize_impl<ser_op::write, ser_field_op::write>(
-                size, field_number, os);
-        }
+       uint32_t const size =
+            x.size() - std::ranges::count(visibility, visibility_kind::unseen);
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+        std::cout << std::format(
+            "serialize: writing vector of {} {}'s ...\n",
+            size,
+            metadata<T>::struct_name());
+        std::cout << std::format(
+            "serialize: write field {} ('size') with value {}\n",
+            field_number,
+            size);
+#endif
+        serialize_impl<ser_op::write, ser_field_op::write>(
+            size, field_number, os);
+
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+        int count = 0;
+#endif
 
         for (int i = 0, last = (int)x.size(); i < last; ++i) {
             if (visibility[i] == visibility_kind::unseen)
                 continue;
             auto const & e = x[i];
             uint32_t const index = i;
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+            std::cout << std::format("    {}: ", i);
+#endif
             serialize_impl<ser_op::write, ser_field_op::dont_write>(
                 index, 0, os);
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+            std::cout << std::format("{}\n", e);
+#endif
             serialize_for_client(
                 gs, visible_fleets, nation_id, e, visibility[i], i, os);
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+            ++count;
+#endif
         }
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+        std::cout << std::format(
+            "serialize: DONE writing vector of {} {}'s.  Actually wrote {}.\n",
+            size,
+            metadata<T>::struct_name(),
+            count);
+        check(count == size);
+#endif
     }
 
-    // For top-level sequences in client_view.
+    // For top-level sequences in client_game_state.
     template<typename T>
     std::span<std::byte const> deserialize_for_client(
         std::vector<indexed_object<T>> & x, std::span<std::byte const> src)
@@ -687,22 +738,40 @@ namespace detail {
         uint32_t size = -1;
         src = detail::read_varint(size, src);
         x.resize(size);
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+        std::cout << std::format(
+            "DEserialize: read size {} for vector of {}'s.\n",
+            size,
+            metadata<T>::struct_name());
+#endif
 
         for (int i = 0; i < (int)size; ++i) {
             uint32_t index = -1;
             src = detail::read_varint(index, src);
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+            std::cout << std::format("    {}: ", index);
+#endif
             x[i].index_ = index;
             src = detail::deserialize_message_impl(x[i].object_, src);
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+            std::cout << std::format("{}\n", x[i].object_);
+#endif
         }
+#if INSTRUMENT_DE_SERIALIZE_FOR_CLIENT
+        std::cout << std::format(
+            "DEserialize: DONE reading vector of {} {}'s.\n",
+            size,
+            metadata<T>::struct_name());
+#endif
 
         return src;
     }
 
     template<typename T>
     void serialize_for_client(
+        game_state_t const & gs,
         int nation_id,
         proximity_grid<T> & grid,
-        game_state_t const & gs,
         ostream_tarray_facade * os)
     {
         std::vector<fleet_t const *> owned_fleets;
@@ -717,8 +786,10 @@ namespace detail {
 
         std::vector<visibility_kind> visibility_scratch;
 
+        PRINT_WRITE_OF(map_width);
         detail::serialize_impl<ser_op::write, ser_field_op::write>(
             gs.map_width, metadata<game_state_t>::map_width().index_, os);
+        PRINT_WRITE_OF(map_height);
         detail::serialize_impl<ser_op::write, ser_field_op::write>(
             gs.map_height, metadata<game_state_t>::map_height().index_, os);
         detail::serialize_for_client(
