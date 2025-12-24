@@ -521,13 +521,6 @@ namespace detail {
             }
 
             if (field_number == 0) {
-                std::wstring wthis_message_name(
-                    this_message_name.begin(), this_message_name.end());
-                std::wstring msg = std::format(
-                    L"Encountered unexpected end of messagebefore reading all "
-                    L"the expected fields while reading a {}.",
-                    wthis_message_name);
-                UE_LOG(general, Log, TEXT("{}"), *FSTRINGIZE(msg));
                 read_end_field_number = true;
                 break;
             }
