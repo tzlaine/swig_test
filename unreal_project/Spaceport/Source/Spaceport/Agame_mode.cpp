@@ -5,6 +5,7 @@
 #include "Amap_system.h"
 #include "Aplayer_controller.h"
 #include "Aplayer_state.h"
+#include "Urepl_graph.h"
 #include "game_instance.h"
 #include "lua.hpp"
 #include "map_util.hpp"
@@ -59,7 +60,7 @@ namespace {
 }
 
 Agame_mode::Agame_mode(FObjectInitializer const & init) :
-    AGameModeBase(init), model_(std::make_unique<model>())
+    AGameModeBase(init), model_(std::make_shared<model>())
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode CTOR"));
     PrimaryActorTick.bCanEverTick = true;
@@ -306,6 +307,24 @@ void Agame_mode::ready_for_mp_game()
 
 void Agame_mode::signal_start_of_play()
 {
+    check(GetWorld());
+
+    check(repl_graph_);
+    repl_graph_->use_model(model_);
+
+    for (auto it = GetWorld()->GetPlayerControllerIterator(); it; ++it) {
+        auto * pc = Cast<Aplayer_controller>(it->Get());
+        check(pc);
+
+        auto * ps = Cast<Aplayer_state>(pc->PlayerState);
+        check(ps);
+
+        int const nation_id =
+            game_params_.player_id_to_nation_id[ps->player_id()];
+        pc->nation_id(nation_id);
+        repl_graph_->team_insert(pc);
+    }
+
     check(model_->game_state());
     auto const & gs = *model_->game_state();
 
@@ -350,6 +369,7 @@ void Agame_mode::signal_start_of_play()
         Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
             hex_class_, hex_location, FRotator(), FActorSpawnParameters());
         hex_pawn->hex_id(to_index(hex.coord, gs.map_width));
+        repl_graph_->reinsert_actor(hex_pawn);
 
         for (int i = hex.first_system, last = hex.last_system; i < last; ++i) {
             auto const & system = gs.systems[i];
@@ -364,10 +384,10 @@ void Agame_mode::signal_start_of_play()
             system_pawn->generate_graphical_properties(system);
             system_pawn->OnRep_graphical_properties();
             system_pawn->system_id(i);
+            repl_graph_->reinsert_actor(system_pawn);
         }
     }
 
-    check(GetWorld());
     for (auto it = GetWorld()->GetPlayerControllerIterator(); it; ++it) {
         auto * pc = Cast<Aplayer_controller>(it->Get());
         check(pc);

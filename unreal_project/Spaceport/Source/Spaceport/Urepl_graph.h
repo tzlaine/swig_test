@@ -25,6 +25,12 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#include "Amap_hex.h"
+#include "Amap_system.h"
+#include "constants.hpp"
+#include "model.hpp"
+#include "model_visibility.hpp"
+
 #include <map>
 #include <vector>
 
@@ -33,80 +39,54 @@
 #include "Urepl_graph.generated.h"
 
 
-// class UReplicationGraphNode_GridSpatialization2D;
-class AGameplayDebuggerCategoryReplicator;
+class Aplayer_controller;
 class Urepl_graph_conn;
+struct model;
 
-// NOTE: Console commands for the rep graph plugin are: net.RepGraph.*
+// The use of "team" in this file is somewhat misleading.  The "team" is just
+// the ID of a single nation; there are no actual teams as such.  Each player
+// that is allied with a nation with ID N gets added to team N.  The actors
+// visible to a given player are the actors they own (fleets) or can see
+// (everything else) directly -- since those are in their nation/"team", plus
+// the actors in the various teams/nations with whom they are allied.  Outside
+// of this, the rules for spatially-relevant visibility apply.
 
-// TODO: Move.
-inline constexpr int no_team = -1;
-
-// This is the main enum we use to route actors to the right replication node.
-// Each class maps to one enum.
 UENUM()
 enum class Erepl_node_kind : uint8 {
-    // Requires manual intervention.
     none,
 
-    // Routes to an AlwaysRelevantNode
     always,
-    // Routes to an AlwaysRelevantNode_ForConnection node
     connection,
-    // Routes to an AlwaysRelevantNode_ForTeam node
     team,
 
-    // ONLY SPATIALIZED Enums below here! See Urepl_graph::spatial()
-
-    // Routes to GridNode: these actors don't move and don't need to be updated
-    // every frame.
-    static_spatial,
-    // Routes to GridNode: these actors mode frequently and are updated once per
-    // frame.
+    static_spatial, // TODO
     dynamic_spatial,
-    // Routes to GridNode: While dormant we treat as static. When flushed/not
-    // dormant dynamic. Note this is for things that "move while not dormant".
     dormant_spatial,
 };
 
 UCLASS()
-class UReplicationGraphNode_AlwaysRelevant_WithPending
-    : public UReplicationGraphNode_ActorList
+class Urepl_graph_with_pending_node : public UReplicationGraphNode_ActorList
 {
     GENERATED_BODY()
 
 public:
-    UReplicationGraphNode_AlwaysRelevant_WithPending();
+    Urepl_graph_with_pending_node();
     void PrepareForReplication() override;
 };
 
-// The use of "team" in this file is somewhat misleading.  It comes from the
-// original Locus code.  In this version of things, the "team" is just the ID
-// of a single nation; there are no actual teams as such.  Each player that is
-// allied with a nation with ID N gets added to team N.  The actors visible to
-// a given player are the actors they control directly -- since those are in
-// their "team", plus the actors in the various teams/nations with whom they
-// are allied.  Outside of this, the rules for spatially-relevant visibility
-// apply.
-
 UCLASS()
-class UReplicationGraphNode_AlwaysRelevant_ForTeam
-    : public UReplicationGraphNode_ActorList
+class Urepl_graph_team_node : public UReplicationGraphNode_ActorList
 {
     GENERATED_BODY()
 
 public:
-    // Gather up other team member's list
     void GatherActorListsForConnection(
-        FConnectionGatherActorListParameters const & Params) override;
+        FConnectionGatherActorListParameters const & params) override;
 
-    // Function that calls parent ActorList's GatherActorList...
-    void GatherActorListsForConnectionDefault(
-        FConnectionGatherActorListParameters const & Params);
+private:
+    void gather_impl(FConnectionGatherActorListParameters const & params);
 };
 
-// ReplicationConnectionGraph that holds team information and connection
-// specific nodes.
 UCLASS()
 class Urepl_graph_conn : public UNetReplicationGraphConnection
 {
@@ -114,13 +94,13 @@ class Urepl_graph_conn : public UNetReplicationGraphConnection
 
 public:
     UPROPERTY()
-    UReplicationGraphNode_AlwaysRelevant_ForConnection *
-        AlwaysRelevantForConnectionNode;
+    UReplicationGraphNode_AlwaysRelevant_ForConnection * always_node;
 
     UPROPERTY()
-    UReplicationGraphNode_AlwaysRelevant_ForTeam * TeamConnectionNode;
+    Urepl_graph_team_node * team_node;
 
-    int team = no_team;
+    // aka team
+    int nation_id = nation_none;
 };
 
 UCLASS()
@@ -129,131 +109,44 @@ class Urepl_graph : public UReplicationGraph
     GENERATED_BODY()
 
 public:
-    // How far destruction infos will be sent. When server destroyed an actor
-    // that is NetLoadOnClient tick is on
-    UPROPERTY(
-        EditDefaultsOnly,
-        meta =
-            (ClampMin = "1000.0",
-             ClampMax = "100000.0",
-             UIMin = "1000.0",
-             UIMax = "100000.0"))
-    float DestructionInfoMaxDistance = 30000.f;
-
-    // Cell size of spatial gird.
-    UPROPERTY(
-        EditDefaultsOnly,
-        meta =
-            (ClampMin = "1000.0",
-             ClampMax = "100000.0",
-             UIMin = "1000.0",
-             UIMax = "100000.0"))
-    float SpacialCellSize = 10000.f;
-
-    // Spatial grid out of bound bias. Better not change this.
-    UPROPERTY(EditDefaultsOnly)
-    FVector2D SpatialBias = FVector2D(-150000.f, -200000.f);
-
-    // Should spatial grid rebuilt upon detecting an actor that is out of bias?
-    UPROPERTY(EditDefaultsOnly)
-    bool EnableSpatialRebuilds = false;
-
-public:
     Urepl_graph();
+    ~Urepl_graph();
 
-    // Set up Enums for each uclass of entire actor
     void InitGlobalActorClassSettings() override;
-
-    // initialize global node, like gridnode
     void InitGlobalGraphNodes() override;
-
-    // initialize per connection node, like always relevant node
     void InitConnectionGraphNodes(
         UNetReplicationGraphConnection * repl_graph_conn) override;
-    // deinitialize per connection node
-    void OnRemoveConnectionGraphNodes(
-        UNetReplicationGraphConnection * repl_graph_conn);
-
-    // override to make notification when a connection manager is removed
     void RemoveClientConnection(UNetConnection * net_conn) override;
-
-    // routng actor add/removal
     void RouteAddNetworkActorToNodes(
         FNewReplicatedActorInfo const & actor_info,
         FGlobalActorReplicationInfo & global_info) override;
     void RouteRemoveNetworkActorToNodes(
         FNewReplicatedActorInfo const & actor_info) override;
-
     void ResetGameWorldState() override;
 
-    // gridnode for spatialization handling
-    UPROPERTY()
-    UReplicationGraphNode_GridSpatialization2D * GridNode;
+    void use_model(std::shared_ptr<model> const & m);
 
-    // always relevant for all connection
-    UPROPERTY()
-    UReplicationGraphNode_AlwaysRelevant_WithPending * AlwaysRelevantNode;
+    void team_insert(Aplayer_controller * pc, int nation_id = nation_none);
+    void team_erase(Aplayer_controller * pc, int nation_id);
 
-    // always relevant for all connection but in streaming level, so always
-    // relevant to connection who loaded key level TMap<int,
-    // FActorRepListRefView> AlwaysRelevantStreamingLevelActors; but this is
-    // not needed as AlwaysRelevantNode already handle streaming level
-
-    // Add Dependent Actor to ReplicationActor's Dep List, DependentActor will
-    // relevant according to Replicator's relevancy
-    void AddDependentActor(AActor * ReplicatorActor, AActor * DependentActor);
-    void
-    RemoveDependentActor(AActor * ReplicatorActor, AActor * DependentActor);
-
-    // Change Owner of an actor that is relevant to connection specific
-    void change_owner_to(AActor * a, AActor * owner);
-
-    // SetTeam via Name
-    void set_team_for(APlayerController * pc, int team);
-
-    // to handle actors that has no connection at addnofity execution
-    void RouteAddNetworkActorToConnectionNodes(
-        Erepl_node_kind routing,
-        FNewReplicatedActorInfo const & actor_info,
-        FGlobalActorReplicationInfo & global_info);
-    void RouteRemoveNetworkActorToConnectionNodes(
-        Erepl_node_kind routing, FNewReplicatedActorInfo const & actor_info);
-
-    // handle pending team requests and notifies
-    void process_pendings();
-
-    Urepl_graph_conn * find_connection_graph(AActor const * a);
-
-    // Just copy-pasted from ShooterGame
-#if 0 // WITH_GAMEPLAY_DEBUGGER
-    void OnGameplayDebuggerOwnerChange(
-        AGameplayDebuggerCategoryReplicator * debugger,
-        APlayerController * pc);
-#endif
+    void insert_actor(AActor * a);
+    void erase_actor(AActor * a);
+    void reinsert_actor(AActor * a);
 
     void print_rep_node_kinds();
 
 private:
     struct team_request
     {
-        int team;
-        APlayerController * pc;
+        Aplayer_controller * pc = nullptr;
+        int nation_id = nation_none;
+        bool erase = false;
     };
-
-    Erepl_node_kind routing_for(UClass * class_);
-
-    static bool spatial(Erepl_node_kind k)
+    struct actor_request
     {
-        return Erepl_node_kind::static_spatial <= k;
-    }
-
-    TClassMap<Erepl_node_kind> class_to_routing_;
-
-    friend UReplicationGraphNode_AlwaysRelevant_ForTeam;
-
-    std::map<int, std::vector<Urepl_graph_conn *>> team_to_conn_;
-    std::vector<AActor *> pending_actors_;
-    std::vector<team_request> pending_team_requests_;
+        AActor * a = nullptr;
+        bool erase = false;
+    };
 
     // TODO: FClassReplicationInfo necessary?
     struct class_repl_info : FClassReplicationInfo
@@ -268,7 +161,96 @@ private:
         Erepl_node_kind routing = Erepl_node_kind::none;
     };
 
+    void process_pendings();
+    Urepl_graph_conn * find_connection_graph(Aplayer_controller const * pc);
+    Erepl_node_kind routing_for(AActor * a);
+
+    template<typename F>
+    void insert_erase_actor_impl(AActor * a, F && f, bool erase)
+    {
+        check(a);
+        // TODO: Other enumerators....
+        auto const routing = routing_for(a);
+        switch (routing) {
+        case Erepl_node_kind::none: break;
+        case Erepl_node_kind::always:
+            f(always_node, FNewReplicatedActorInfo(a));
+            break;
+        case Erepl_node_kind::connection: {
+            auto * pc = Cast<Aplayer_controller>(a);
+            check(pc);
+            if (Urepl_graph_conn * conn = find_connection_graph(pc))
+                f(conn->always_node, FNewReplicatedActorInfo(a));
+            else
+                pending_actor_reqs_.push_back({a, erase});
+            break;
+        }
+        case Erepl_node_kind::team: {
+            if (!PendingConnections.IsEmpty()) {
+                pending_actor_reqs_.push_back({a, erase});
+                break;
+            }
+
+            std::shared_ptr<model> m = model_.lock();
+            if (!m) {
+                UE_LOG(
+                    LogReplicationGraph,
+                    Error,
+                    TEXT("Unable to route actor '%s' of type %s (unable "
+                         "get access to model)."),
+                    *a->GetName(),
+                    *a->GetClass()->GetName());
+                break;
+            }
+
+            auto gs = m->game_state();
+            check(gs);
+
+            for (auto * c : Connections) {
+                auto * conn = Cast<Urepl_graph_conn>(c);
+                check(conn);
+                check(conn->nation_id != nation_none);
+                int const nation_id = conn->nation_id;
+                visibility_kind vis = visibility_kind::unseen;
+                if (auto * hex = Cast<Amap_hex>(a)) {
+                    if (hex->hex_id() == hex_none) {
+                        pending_actor_reqs_.push_back({a, erase});
+                        break;
+                    }
+                    vis = visibility_of(
+                        *gs, {}, nation_id, gs->hexes[hex->hex_id()], 0);
+                } else if (auto * system = Cast<Amap_system>(a)) {
+                    if (system->system_id() == system_none) {
+                        pending_actor_reqs_.push_back({a, erase});
+                        break;
+                    }
+                    vis = visibility_of(
+                        *gs,
+                        {},
+                        nation_id,
+                        gs->systems[system->system_id()],
+                        system->system_id());
+                }
+                if (vis != visibility_kind::unseen)
+                    f(conn->team_node, FNewReplicatedActorInfo(a));
+            }
+            break;
+        }
+        }
+    }
+
+    UPROPERTY()
+    Urepl_graph_with_pending_node * always_node;
+
+    TClassMap<Erepl_node_kind> class_to_routing_;
+    std::map<int, std::vector<Urepl_graph_conn *>> team_to_conn_;
+    std::vector<actor_request> pending_actor_reqs_;
+    std::vector<team_request> pending_team_reqs_;
     std::vector<explicit_class> explicit_classes_;
+    std::weak_ptr<model> model_;
+
+    friend Urepl_graph_team_node;
+    friend Urepl_graph_with_pending_node;
 };
 
 inline const bool repl_graph_in_use = [] {

@@ -16,6 +16,7 @@ class Aplaying_hud;
 class Amap_fleet;
 class Amap_system;
 class Amap_hex;
+class Urepl_graph;
 
 UCLASS()
 class Agame_mode : public AGameModeBase
@@ -49,6 +50,13 @@ public:
     void toggle_pause();
     void play_speed(int speed);
 
+    void notify_repl_graph_constructed(Urepl_graph * rg) { repl_graph_ = rg; }
+    void notify_repl_graph_destroyed(Urepl_graph * rg)
+    {
+        if (rg == repl_graph_)
+            repl_graph_ = nullptr;
+    }
+
 private:
     void saves_dir_changed(std::vector<Ffile_change> changes);
     void ready_for_sp_game();
@@ -59,7 +67,9 @@ private:
     int players_ = 0;
 
     float seconds_since_last_day_tick_ = 0.0;
-    std::unique_ptr<model> model_;
+    std::shared_ptr<model> model_;
+
+    Urepl_graph * repl_graph_;
 
     // game setup
     game_start_params_t game_params_;

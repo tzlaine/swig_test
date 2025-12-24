@@ -120,6 +120,7 @@ public:
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
     void showing_main_menu(bool b);
+    void nation_id(int id) { nation_id_ = id; }
 
 protected:
     bool showing_main_menu() const;
