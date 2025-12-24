@@ -251,20 +251,3 @@ message game_state_t
     repeated uint32 alliances = 7; // packed bitfield
     int32 play_speed = 8; // 1-4 have fixed rates; 5 is as fast as it will go
 }
-
-// TODO: Need some kind of system for effects, and another one for
-// predicates/triggers.  These should probably be in their own files.
-// TODO message create_fleet
-// TODO {
-// TODO };
-// TODO 
-// TODO message merge_fleets
-// TODO {
-// TODO     int32 fleet_1 = 1;
-// TODO     int32 fleet_2 = 2;
-// TODO };
-// TODO 
-// TODO message disband_fleet
-// TODO {
-// TODO     int32 fleet = 1;
-// TODO };
