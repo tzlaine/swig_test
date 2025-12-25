@@ -154,6 +154,8 @@ void Sgame_setup::Construct(FArguments const & args)
             })]
     ];
 
+    int const max_ai_opponents = 1000;
+
     vbox->AddSlot().MinSize(50).AutoHeight()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().AutoWidth()[
@@ -165,7 +167,7 @@ void Sgame_setup::Construct(FArguments const & args)
             .MinValue(11)
             .Value_Lambda([this]{ return params_.map_height;})
             .MaxValue(101)
-            .OnValueChanged_Lambda([this](int x) {
+            .OnValueChanged_Lambda([=, this](int x) {
                 if (x == params_.map_height + 1)
                     ++x;
                 else if (x == params_.map_height - 1)
@@ -173,6 +175,23 @@ void Sgame_setup::Construct(FArguments const & args)
                 else if (x % 2 == 0)
                     ++x;
                 params_.map_height = x;
+                params_.ai_opponents = std::min(x * x / 10, max_ai_opponents);
+            })]
+    ];
+
+    vbox->AddSlot().MinSize(50).AutoHeight()[
+        SNew(SHorizontalBox)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_text_block)
+            .Text(loc_text(TEXT("ai_opponents")))]
+        +SHorizontalBox::Slot().FillWidth(1)
+        +SHorizontalBox::Slot().AutoWidth()[
+            SNew(Sstyled_int_spin_box)
+            .MinValue(1)
+            .Value_Lambda([this]{ return params_.ai_opponents;})
+            .MaxValue(max_ai_opponents)
+            .OnValueChanged_Lambda([this](int x) {
+                params_.ai_opponents = x;
             })]
     ];
 }
