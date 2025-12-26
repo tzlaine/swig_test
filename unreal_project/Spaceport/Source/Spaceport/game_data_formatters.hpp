@@ -528,6 +528,8 @@ struct std::formatter<nation_t> {
         out = std::format_to(out, "nation_t(");
 
         out = std::format_to(out, " id={}", x.id);
+        out = std::format_to(out, " home_planet={}", x.home_planet);
+        out = std::format_to(out, " capitol_settlement={}", x.capitol_settlement);
         out = std::format_to(out, " unit_designs=[");
         for (auto && e : x.unit_designs) {
             out = std::format_to(out, " {}", e);

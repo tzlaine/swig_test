@@ -237,6 +237,8 @@ struct province_t
 struct nation_t
 {
     int id = -1;
+    int home_planet = -1;
+    nation_and_object_id_t capitol_settlement = {};
     std::vector<unit_design_t> unit_designs = {};
     std::vector<province_t> provinces = {};
     std::vector<settlement_t> settlements = {};

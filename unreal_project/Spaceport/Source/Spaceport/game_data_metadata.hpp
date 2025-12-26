@@ -902,78 +902,90 @@ namespace detail {
             return "nation_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 13; }
+        static constexpr int hi_field_number() { return 15; }
 
         static constexpr metadatum<nation_t, int> id()
         {
             using namespace std::literals;
             return {"id"sv, 1, &nation_t::id};
         }
+        static constexpr metadatum<nation_t, int> home_planet()
+        {
+            using namespace std::literals;
+            return {"home_planet"sv, 2, &nation_t::home_planet};
+        }
+        static constexpr metadatum<nation_t, nation_and_object_id_t> capitol_settlement()
+        {
+            using namespace std::literals;
+            return {"capitol_settlement"sv, 3, &nation_t::capitol_settlement};
+        }
         static constexpr metadatum<nation_t, std::vector<unit_design_t>> unit_designs()
         {
             using namespace std::literals;
-            return {"unit_designs"sv, 2, &nation_t::unit_designs};
+            return {"unit_designs"sv, 4, &nation_t::unit_designs};
         }
         static constexpr metadatum<nation_t, std::vector<province_t>> provinces()
         {
             using namespace std::literals;
-            return {"provinces"sv, 3, &nation_t::provinces};
+            return {"provinces"sv, 5, &nation_t::provinces};
         }
         static constexpr metadatum<nation_t, std::vector<settlement_t>> settlements()
         {
             using namespace std::literals;
-            return {"settlements"sv, 4, &nation_t::settlements};
+            return {"settlements"sv, 6, &nation_t::settlements};
         }
         static constexpr metadatum<nation_t, std::vector<fleet_t>> fleets()
         {
             using namespace std::literals;
-            return {"fleets"sv, 5, &nation_t::fleets};
+            return {"fleets"sv, 7, &nation_t::fleets};
         }
         static constexpr metadatum<nation_t, std::vector<int>> hexes_seen()
         {
             using namespace std::literals;
-            return {"hexes_seen"sv, 6, &nation_t::hexes_seen};
+            return {"hexes_seen"sv, 8, &nation_t::hexes_seen};
         }
         static constexpr metadatum<nation_t, std::vector<int>> systems_present_in()
         {
             using namespace std::literals;
-            return {"systems_present_in"sv, 7, &nation_t::systems_present_in};
+            return {"systems_present_in"sv, 9, &nation_t::systems_present_in};
         }
         static constexpr metadatum<nation_t, std::vector<int>> systems_visited()
         {
             using namespace std::literals;
-            return {"systems_visited"sv, 8, &nation_t::systems_visited};
+            return {"systems_visited"sv, 10, &nation_t::systems_visited};
         }
         static constexpr metadatum<nation_t, std::vector<int>> planets_surveyed()
         {
             using namespace std::literals;
-            return {"planets_surveyed"sv, 9, &nation_t::planets_surveyed};
+            return {"planets_surveyed"sv, 11, &nation_t::planets_surveyed};
         }
         static constexpr metadatum<nation_t, std::vector<settlement_t>> settlements_seen()
         {
             using namespace std::literals;
-            return {"settlements_seen"sv, 10, &nation_t::settlements_seen};
+            return {"settlements_seen"sv, 12, &nation_t::settlements_seen};
         }
         static constexpr metadatum<nation_t, std::vector<nation_and_object_id_t>> foreign_designs_seen()
         {
             using namespace std::literals;
-            return {"foreign_designs_seen"sv, 11, &nation_t::foreign_designs_seen};
+            return {"foreign_designs_seen"sv, 13, &nation_t::foreign_designs_seen};
         }
         static constexpr metadatum<nation_t, std::vector<nation_and_object_id_t>> foreign_designs_glimpsed()
         {
             using namespace std::literals;
-            return {"foreign_designs_glimpsed"sv, 12, &nation_t::foreign_designs_glimpsed};
+            return {"foreign_designs_glimpsed"sv, 14, &nation_t::foreign_designs_glimpsed};
         }
         static constexpr metadatum<nation_t, bool> defeated()
         {
             using namespace std::literals;
-            return {"defeated"sv, 13, &nation_t::defeated};
+            return {"defeated"sv, 15, &nation_t::defeated};
         }
 
         template<typename F>
         static void foreach_member(F && f)
         {
             f(id());
+            f(home_planet());
+            f(capitol_settlement());
             f(unit_designs());
             f(provinces());
             f(settlements());

@@ -497,6 +497,8 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
 {
     pb_message::game_data::nation_t retval;
     retval.set_id(value.id);
+    retval.set_home_planet(value.home_planet);
+    retval.mutable_capitol_settlement()->CopyFrom(to_protobuf(value.capitol_settlement));
     for (const auto& x : value.unit_designs) {
         retval.add_unit_designs()->CopyFrom(to_protobuf(x));
     }
@@ -538,6 +540,8 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
 {
     ::nation_t retval;
     retval.id = msg.id();
+    retval.home_planet = msg.home_planet();
+    retval.capitol_settlement = from_protobuf(msg.capitol_settlement());
     {
         retval.unit_designs.resize(msg.unit_designs_size());
         auto it = retval.unit_designs.begin();

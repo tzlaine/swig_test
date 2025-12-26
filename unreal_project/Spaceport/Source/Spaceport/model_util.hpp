@@ -352,14 +352,12 @@ nation(GameState const & gs, boost::optional<int> i)
     }
 }
 
-inline boost::optional<int> home_planet_index(nation_t const & nation)
+// TODO: Do same for capitol planet/system/hex.  Maybe generalize so the
+// parttern doesn't need to be rewrittne n times....
+
+inline int home_planet_index(nation_t const & nation)
 {
-    // TODO: This is fraught.  We should add a home planet ID to nation_t.
-    auto const it = std::ranges::find_if(
-        nation.settlements, [](auto const & e) { return e.id.object_id == 0; });
-    if (it == nation.settlements.end())
-        return {};
-    return {it->planet_id};
+    return nation.home_planet;
 }
 
 template<typename GameState>

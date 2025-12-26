@@ -958,29 +958,33 @@ namespace detail {
         if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.unit_designs, 2, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.home_planet, 2, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.provinces, 3, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.capitol_settlement, 3, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements, 4, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.unit_designs, 4, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 5, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.provinces, 5, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 6, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements, 6, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_present_in, 7, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 7, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_visited, 8, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 8, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets_surveyed, 9, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_present_in, 9, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements_seen, 10, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_visited, 10, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 11, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets_surveyed, 11, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 12, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements_seen, 12, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 13; }))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 13, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 13, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 14; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 14, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 15; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 15, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -990,29 +994,31 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "nation_t"sv;
-        constexpr std::array<std::string_view, 14> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "unit_designs"sv, "provinces"sv, "settlements"sv, "fleets"sv, "hexes_seen"sv, "systems_present_in"sv, "systems_visited"sv, "planets_surveyed"sv, "settlements_seen"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "defeated"sv}};
-        std::array<int, 13> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}};
+        constexpr std::array<std::string_view, 16> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "home_planet"sv, "capitol_settlement"sv, "unit_designs"sv, "provinces"sv, "settlements"sv, "fleets"sv, "hexes_seen"sv, "systems_present_in"sv, "systems_visited"sv, "planets_surveyed"sv, "settlements_seen"sv, "foreign_designs_seen"sv, "foreign_designs_glimpsed"sv, "defeated"sv}};
+        std::array<int, 15> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 13;
+        constexpr int hi_field_number = 15;
     
         auto read_field = [] (nation_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
             case 1: return detail::deserialize_impl(x.id, src);
-            case 2: return detail::deserialize_impl(x.unit_designs, src);
-            case 3: return detail::deserialize_impl(x.provinces, src);
-            case 4: return detail::deserialize_impl(x.settlements, src);
-            case 5: return detail::deserialize_impl(x.fleets, src);
-            case 6: return detail::deserialize_impl(x.hexes_seen, src);
-            case 7: return detail::deserialize_impl(x.systems_present_in, src);
-            case 8: return detail::deserialize_impl(x.systems_visited, src);
-            case 9: return detail::deserialize_impl(x.planets_surveyed, src);
-            case 10: return detail::deserialize_impl(x.settlements_seen, src);
-            case 11: return detail::deserialize_impl(x.foreign_designs_seen, src);
-            case 12: return detail::deserialize_impl(x.foreign_designs_glimpsed, src);
-            case 13: return detail::deserialize_impl(x.defeated, src);
+            case 2: return detail::deserialize_impl(x.home_planet, src);
+            case 3: return detail::deserialize_impl(x.capitol_settlement, src);
+            case 4: return detail::deserialize_impl(x.unit_designs, src);
+            case 5: return detail::deserialize_impl(x.provinces, src);
+            case 6: return detail::deserialize_impl(x.settlements, src);
+            case 7: return detail::deserialize_impl(x.fleets, src);
+            case 8: return detail::deserialize_impl(x.hexes_seen, src);
+            case 9: return detail::deserialize_impl(x.systems_present_in, src);
+            case 10: return detail::deserialize_impl(x.systems_visited, src);
+            case 11: return detail::deserialize_impl(x.planets_surveyed, src);
+            case 12: return detail::deserialize_impl(x.settlements_seen, src);
+            case 13: return detail::deserialize_impl(x.foreign_designs_seen, src);
+            case 14: return detail::deserialize_impl(x.foreign_designs_glimpsed, src);
+            case 15: return detail::deserialize_impl(x.defeated, src);
             default: return src; // unreachable
             }
         };

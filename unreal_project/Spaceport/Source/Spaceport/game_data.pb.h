@@ -3760,21 +3760,23 @@ class nation_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUnitDesignsFieldNumber = 2,
-    kProvincesFieldNumber = 3,
-    kSettlementsFieldNumber = 4,
-    kFleetsFieldNumber = 5,
-    kHexesSeenFieldNumber = 6,
-    kSystemsPresentInFieldNumber = 7,
-    kSystemsVisitedFieldNumber = 8,
-    kPlanetsSurveyedFieldNumber = 9,
-    kSettlementsSeenFieldNumber = 10,
-    kForeignDesignsSeenFieldNumber = 11,
-    kForeignDesignsGlimpsedFieldNumber = 12,
+    kUnitDesignsFieldNumber = 4,
+    kProvincesFieldNumber = 5,
+    kSettlementsFieldNumber = 6,
+    kFleetsFieldNumber = 7,
+    kHexesSeenFieldNumber = 8,
+    kSystemsPresentInFieldNumber = 9,
+    kSystemsVisitedFieldNumber = 10,
+    kPlanetsSurveyedFieldNumber = 11,
+    kSettlementsSeenFieldNumber = 12,
+    kForeignDesignsSeenFieldNumber = 13,
+    kForeignDesignsGlimpsedFieldNumber = 14,
+    kCapitolSettlementFieldNumber = 3,
     kIdFieldNumber = 1,
-    kDefeatedFieldNumber = 13,
+    kHomePlanetFieldNumber = 2,
+    kDefeatedFieldNumber = 15,
   };
-  // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
+  // repeated .pb_message.game_data.unit_design_t unit_designs = 4;
   int unit_designs_size() const;
   private:
   int _internal_unit_designs_size() const;
@@ -3792,7 +3794,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::unit_design_t >&
       unit_designs() const;
 
-  // repeated .pb_message.game_data.province_t provinces = 3;
+  // repeated .pb_message.game_data.province_t provinces = 5;
   int provinces_size() const;
   private:
   int _internal_provinces_size() const;
@@ -3810,7 +3812,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::province_t >&
       provinces() const;
 
-  // repeated .pb_message.game_data.settlement_t settlements = 4;
+  // repeated .pb_message.game_data.settlement_t settlements = 6;
   int settlements_size() const;
   private:
   int _internal_settlements_size() const;
@@ -3828,7 +3830,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::settlement_t >&
       settlements() const;
 
-  // repeated .pb_message.game_data.fleet_t fleets = 5;
+  // repeated .pb_message.game_data.fleet_t fleets = 7;
   int fleets_size() const;
   private:
   int _internal_fleets_size() const;
@@ -3846,7 +3848,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >&
       fleets() const;
 
-  // repeated int32 hexes_seen = 6;
+  // repeated int32 hexes_seen = 8;
   int hexes_seen_size() const;
   private:
   int _internal_hexes_seen_size() const;
@@ -3868,7 +3870,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_hexes_seen();
 
-  // repeated int32 systems_present_in = 7;
+  // repeated int32 systems_present_in = 9;
   int systems_present_in_size() const;
   private:
   int _internal_systems_present_in_size() const;
@@ -3890,7 +3892,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_systems_present_in();
 
-  // repeated int32 systems_visited = 8;
+  // repeated int32 systems_visited = 10;
   int systems_visited_size() const;
   private:
   int _internal_systems_visited_size() const;
@@ -3912,7 +3914,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_systems_visited();
 
-  // repeated int32 planets_surveyed = 9;
+  // repeated int32 planets_surveyed = 11;
   int planets_surveyed_size() const;
   private:
   int _internal_planets_surveyed_size() const;
@@ -3934,7 +3936,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_planets_surveyed();
 
-  // repeated .pb_message.game_data.settlement_t settlements_seen = 10;
+  // repeated .pb_message.game_data.settlement_t settlements_seen = 12;
   int settlements_seen_size() const;
   private:
   int _internal_settlements_seen_size() const;
@@ -3952,7 +3954,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::settlement_t >&
       settlements_seen() const;
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 11;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
   int foreign_designs_seen_size() const;
   private:
   int _internal_foreign_designs_seen_size() const;
@@ -3970,7 +3972,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
       foreign_designs_seen() const;
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 12;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
   int foreign_designs_glimpsed_size() const;
   private:
   int _internal_foreign_designs_glimpsed_size() const;
@@ -3988,6 +3990,24 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
       foreign_designs_glimpsed() const;
 
+  // .pb_message.game_data.nation_and_object_id_t capitol_settlement = 3;
+  bool has_capitol_settlement() const;
+  private:
+  bool _internal_has_capitol_settlement() const;
+  public:
+  void clear_capitol_settlement();
+  const ::pb_message::game_data::nation_and_object_id_t& capitol_settlement() const;
+  ::pb_message::game_data::nation_and_object_id_t* release_capitol_settlement();
+  ::pb_message::game_data::nation_and_object_id_t* mutable_capitol_settlement();
+  void set_allocated_capitol_settlement(::pb_message::game_data::nation_and_object_id_t* capitol_settlement);
+  private:
+  const ::pb_message::game_data::nation_and_object_id_t& _internal_capitol_settlement() const;
+  ::pb_message::game_data::nation_and_object_id_t* _internal_mutable_capitol_settlement();
+  public:
+  void unsafe_arena_set_allocated_capitol_settlement(
+      ::pb_message::game_data::nation_and_object_id_t* capitol_settlement);
+  ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_capitol_settlement();
+
   // int32 id = 1;
   void clear_id();
   ::PROTOBUF_NAMESPACE_ID::int32 id() const;
@@ -3997,7 +4017,16 @@ class nation_t PROTOBUF_FINAL :
   void _internal_set_id(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // bool defeated = 13;
+  // int32 home_planet = 2;
+  void clear_home_planet();
+  ::PROTOBUF_NAMESPACE_ID::int32 home_planet() const;
+  void set_home_planet(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_home_planet() const;
+  void _internal_set_home_planet(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // bool defeated = 15;
   void clear_defeated();
   bool defeated() const;
   void set_defeated(bool value);
@@ -4028,7 +4057,9 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::settlement_t > settlements_seen_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_seen_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > foreign_designs_glimpsed_;
+  ::pb_message::game_data::nation_and_object_id_t* capitol_settlement_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
+  ::PROTOBUF_NAMESPACE_ID::int32 home_planet_;
   bool defeated_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
@@ -7309,7 +7340,110 @@ inline void nation_t::set_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.id)
 }
 
-// repeated .pb_message.game_data.unit_design_t unit_designs = 2;
+// int32 home_planet = 2;
+inline void nation_t::clear_home_planet() {
+  home_planet_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_home_planet() const {
+  return home_planet_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::home_planet() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.home_planet)
+  return _internal_home_planet();
+}
+inline void nation_t::_internal_set_home_planet(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  home_planet_ = value;
+}
+inline void nation_t::set_home_planet(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_home_planet(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.home_planet)
+}
+
+// .pb_message.game_data.nation_and_object_id_t capitol_settlement = 3;
+inline bool nation_t::_internal_has_capitol_settlement() const {
+  return this != internal_default_instance() && capitol_settlement_ != nullptr;
+}
+inline bool nation_t::has_capitol_settlement() const {
+  return _internal_has_capitol_settlement();
+}
+inline void nation_t::clear_capitol_settlement() {
+  if (GetArena() == nullptr && capitol_settlement_ != nullptr) {
+    delete capitol_settlement_;
+  }
+  capitol_settlement_ = nullptr;
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::_internal_capitol_settlement() const {
+  const ::pb_message::game_data::nation_and_object_id_t* p = capitol_settlement_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::nation_and_object_id_t*>(
+      &::pb_message::game_data::_nation_and_object_id_t_default_instance_);
+}
+inline const ::pb_message::game_data::nation_and_object_id_t& nation_t::capitol_settlement() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.capitol_settlement)
+  return _internal_capitol_settlement();
+}
+inline void nation_t::unsafe_arena_set_allocated_capitol_settlement(
+    ::pb_message::game_data::nation_and_object_id_t* capitol_settlement) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(capitol_settlement_);
+  }
+  capitol_settlement_ = capitol_settlement;
+  if (capitol_settlement) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.nation_t.capitol_settlement)
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::release_capitol_settlement() {
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = capitol_settlement_;
+  capitol_settlement_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::unsafe_arena_release_capitol_settlement() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.nation_t.capitol_settlement)
+  
+  ::pb_message::game_data::nation_and_object_id_t* temp = capitol_settlement_;
+  capitol_settlement_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::_internal_mutable_capitol_settlement() {
+  
+  if (capitol_settlement_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(GetArena());
+    capitol_settlement_ = p;
+  }
+  return capitol_settlement_;
+}
+inline ::pb_message::game_data::nation_and_object_id_t* nation_t::mutable_capitol_settlement() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.nation_t.capitol_settlement)
+  return _internal_mutable_capitol_settlement();
+}
+inline void nation_t::set_allocated_capitol_settlement(::pb_message::game_data::nation_and_object_id_t* capitol_settlement) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete capitol_settlement_;
+  }
+  if (capitol_settlement) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(capitol_settlement);
+    if (message_arena != submessage_arena) {
+      capitol_settlement = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, capitol_settlement, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  capitol_settlement_ = capitol_settlement;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.nation_t.capitol_settlement)
+}
+
+// repeated .pb_message.game_data.unit_design_t unit_designs = 4;
 inline int nation_t::_internal_unit_designs_size() const {
   return unit_designs_.size();
 }
@@ -7348,7 +7482,7 @@ nation_t::unit_designs() const {
   return unit_designs_;
 }
 
-// repeated .pb_message.game_data.province_t provinces = 3;
+// repeated .pb_message.game_data.province_t provinces = 5;
 inline int nation_t::_internal_provinces_size() const {
   return provinces_.size();
 }
@@ -7387,7 +7521,7 @@ nation_t::provinces() const {
   return provinces_;
 }
 
-// repeated .pb_message.game_data.settlement_t settlements = 4;
+// repeated .pb_message.game_data.settlement_t settlements = 6;
 inline int nation_t::_internal_settlements_size() const {
   return settlements_.size();
 }
@@ -7426,7 +7560,7 @@ nation_t::settlements() const {
   return settlements_;
 }
 
-// repeated .pb_message.game_data.fleet_t fleets = 5;
+// repeated .pb_message.game_data.fleet_t fleets = 7;
 inline int nation_t::_internal_fleets_size() const {
   return fleets_.size();
 }
@@ -7465,7 +7599,7 @@ nation_t::fleets() const {
   return fleets_;
 }
 
-// repeated int32 hexes_seen = 6;
+// repeated int32 hexes_seen = 8;
 inline int nation_t::_internal_hexes_seen_size() const {
   return hexes_seen_.size();
 }
@@ -7512,7 +7646,7 @@ nation_t::mutable_hexes_seen() {
   return _internal_mutable_hexes_seen();
 }
 
-// repeated int32 systems_present_in = 7;
+// repeated int32 systems_present_in = 9;
 inline int nation_t::_internal_systems_present_in_size() const {
   return systems_present_in_.size();
 }
@@ -7559,7 +7693,7 @@ nation_t::mutable_systems_present_in() {
   return _internal_mutable_systems_present_in();
 }
 
-// repeated int32 systems_visited = 8;
+// repeated int32 systems_visited = 10;
 inline int nation_t::_internal_systems_visited_size() const {
   return systems_visited_.size();
 }
@@ -7606,7 +7740,7 @@ nation_t::mutable_systems_visited() {
   return _internal_mutable_systems_visited();
 }
 
-// repeated int32 planets_surveyed = 9;
+// repeated int32 planets_surveyed = 11;
 inline int nation_t::_internal_planets_surveyed_size() const {
   return planets_surveyed_.size();
 }
@@ -7653,7 +7787,7 @@ nation_t::mutable_planets_surveyed() {
   return _internal_mutable_planets_surveyed();
 }
 
-// repeated .pb_message.game_data.settlement_t settlements_seen = 10;
+// repeated .pb_message.game_data.settlement_t settlements_seen = 12;
 inline int nation_t::_internal_settlements_seen_size() const {
   return settlements_seen_.size();
 }
@@ -7692,7 +7826,7 @@ nation_t::settlements_seen() const {
   return settlements_seen_;
 }
 
-// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 11;
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
 inline int nation_t::_internal_foreign_designs_seen_size() const {
   return foreign_designs_seen_.size();
 }
@@ -7731,7 +7865,7 @@ nation_t::foreign_designs_seen() const {
   return foreign_designs_seen_;
 }
 
-// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 12;
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
 inline int nation_t::_internal_foreign_designs_glimpsed_size() const {
   return foreign_designs_glimpsed_.size();
 }
@@ -7770,7 +7904,7 @@ nation_t::foreign_designs_glimpsed() const {
   return foreign_designs_glimpsed_;
 }
 
-// bool defeated = 13;
+// bool defeated = 15;
 inline void nation_t::clear_defeated() {
   defeated_ = false;
 }

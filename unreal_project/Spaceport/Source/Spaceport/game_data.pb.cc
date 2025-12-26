@@ -279,11 +279,11 @@ static void InitDefaultsscc_info_nation_t_game_5fdata_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<5> scc_info_nation_t_game_5fdata_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 5, 0, InitDefaultsscc_info_nation_t_game_5fdata_2eproto}, {
+      &scc_info_nation_and_object_id_t_game_5fdata_2eproto.base,
       &scc_info_unit_design_t_game_5fdata_2eproto.base,
       &scc_info_province_t_game_5fdata_2eproto.base,
       &scc_info_settlement_t_game_5fdata_2eproto.base,
-      &scc_info_fleet_t_game_5fdata_2eproto.base,
-      &scc_info_nation_and_object_id_t_game_5fdata_2eproto.base,}};
+      &scc_info_fleet_t_game_5fdata_2eproto.base,}};
 
 static void InitDefaultsscc_info_planet_effect_t_game_5fdata_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -633,6 +633,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, id_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, home_planet_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, capitol_settlement_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, unit_designs_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, provinces_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, settlements_),
@@ -679,7 +681,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 184, -1, sizeof(::pb_message::game_data::hex_t)},
   { 193, -1, sizeof(::pb_message::game_data::province_t)},
   { 200, -1, sizeof(::pb_message::game_data::nation_t)},
-  { 218, -1, sizeof(::pb_message::game_data::game_state_t)},
+  { 220, -1, sizeof(::pb_message::game_data::game_state_t)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -791,38 +793,40 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "st_system\030\003 \001(\004\022\023\n\013last_system\030\004 \001(\004\"s\n\n"
   "province_t\0228\n\002id\030\001 \001(\0132,.pb_message.game"
   "_data.nation_and_object_id_t\022+\n\nhex_coor"
-  "ds\030\002 \003(\0132\027.pb_message.hex_coord_t\"\275\004\n\010na"
-  "tion_t\022\n\n\002id\030\001 \001(\005\0229\n\014unit_designs\030\002 \003(\013"
-  "2#.pb_message.game_data.unit_design_t\0223\n"
-  "\tprovinces\030\003 \003(\0132 .pb_message.game_data."
-  "province_t\0227\n\013settlements\030\004 \003(\0132\".pb_mes"
-  "sage.game_data.settlement_t\022-\n\006fleets\030\005 "
-  "\003(\0132\035.pb_message.game_data.fleet_t\022\022\n\nhe"
-  "xes_seen\030\006 \003(\005\022\032\n\022systems_present_in\030\007 \003"
-  "(\005\022\027\n\017systems_visited\030\010 \003(\005\022\030\n\020planets_s"
-  "urveyed\030\t \003(\005\022<\n\020settlements_seen\030\n \003(\0132"
-  "\".pb_message.game_data.settlement_t\022J\n\024f"
-  "oreign_designs_seen\030\013 \003(\0132,.pb_message.g"
-  "ame_data.nation_and_object_id_t\022N\n\030forei"
-  "gn_designs_glimpsed\030\014 \003(\0132,.pb_message.g"
-  "ame_data.nation_and_object_id_t\022\020\n\010defea"
-  "ted\030\r \001(\010\"\233\002\n\014game_state_t\022\021\n\tmap_width\030"
-  "\001 \001(\005\022\022\n\nmap_height\030\002 \001(\005\022*\n\005hexes\030\003 \003(\013"
-  "2\033.pb_message.game_data.hex_t\022/\n\007systems"
-  "\030\004 \003(\0132\036.pb_message.game_data.system_t\022/"
-  "\n\007planets\030\005 \003(\0132\036.pb_message.game_data.p"
-  "lanet_t\022/\n\007nations\030\006 \003(\0132\036.pb_message.ga"
-  "me_data.nation_t\022\021\n\talliances\030\007 \003(\r\022\022\n\np"
-  "lay_speed\030\010 \001(\005*Q\n\rplanet_type_t\022\027\n\023inva"
-  "lid_planet_type\020\000\022\t\n\005rocky\020\001\022\r\n\tgas_gian"
-  "t\020\002\022\r\n\tice_giant\020\003*\273\001\n\021atmosphere_type_t"
-  "\022\033\n\027invalid_atmosphere_type\020\000\022\022\n\016reduced"
-  "_type_a\020\001\022\023\n\017oxidized_type_b\020\002\022\026\n\022carbon"
-  "_rich_type_c\020\003\022\024\n\020high_temperature\020\004\022\030\n\024"
-  "gas_giant_atmosphere\020\005\022\030\n\024ice_giant_atmo"
-  "sphere\020\006*W\n\014star_class_t\022\026\n\022invalid_star"
-  "_class\020\000\022\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n\001a\020\003\022\005\n\001f\020\004\022\005\n\001"
-  "g\020\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006proto3"
+  "ds\030\002 \003(\0132\027.pb_message.hex_coord_t\"\234\005\n\010na"
+  "tion_t\022\n\n\002id\030\001 \001(\005\022\023\n\013home_planet\030\002 \001(\005\022"
+  "H\n\022capitol_settlement\030\003 \001(\0132,.pb_message"
+  ".game_data.nation_and_object_id_t\0229\n\014uni"
+  "t_designs\030\004 \003(\0132#.pb_message.game_data.u"
+  "nit_design_t\0223\n\tprovinces\030\005 \003(\0132 .pb_mes"
+  "sage.game_data.province_t\0227\n\013settlements"
+  "\030\006 \003(\0132\".pb_message.game_data.settlement"
+  "_t\022-\n\006fleets\030\007 \003(\0132\035.pb_message.game_dat"
+  "a.fleet_t\022\022\n\nhexes_seen\030\010 \003(\005\022\032\n\022systems"
+  "_present_in\030\t \003(\005\022\027\n\017systems_visited\030\n \003"
+  "(\005\022\030\n\020planets_surveyed\030\013 \003(\005\022<\n\020settleme"
+  "nts_seen\030\014 \003(\0132\".pb_message.game_data.se"
+  "ttlement_t\022J\n\024foreign_designs_seen\030\r \003(\013"
+  "2,.pb_message.game_data.nation_and_objec"
+  "t_id_t\022N\n\030foreign_designs_glimpsed\030\016 \003(\013"
+  "2,.pb_message.game_data.nation_and_objec"
+  "t_id_t\022\020\n\010defeated\030\017 \001(\010\"\233\002\n\014game_state_"
+  "t\022\021\n\tmap_width\030\001 \001(\005\022\022\n\nmap_height\030\002 \001(\005"
+  "\022*\n\005hexes\030\003 \003(\0132\033.pb_message.game_data.h"
+  "ex_t\022/\n\007systems\030\004 \003(\0132\036.pb_message.game_"
+  "data.system_t\022/\n\007planets\030\005 \003(\0132\036.pb_mess"
+  "age.game_data.planet_t\022/\n\007nations\030\006 \003(\0132"
+  "\036.pb_message.game_data.nation_t\022\021\n\tallia"
+  "nces\030\007 \003(\r\022\022\n\nplay_speed\030\010 \001(\005*Q\n\rplanet"
+  "_type_t\022\027\n\023invalid_planet_type\020\000\022\t\n\005rock"
+  "y\020\001\022\r\n\tgas_giant\020\002\022\r\n\tice_giant\020\003*\273\001\n\021at"
+  "mosphere_type_t\022\033\n\027invalid_atmosphere_ty"
+  "pe\020\000\022\022\n\016reduced_type_a\020\001\022\023\n\017oxidized_typ"
+  "e_b\020\002\022\026\n\022carbon_rich_type_c\020\003\022\024\n\020high_te"
+  "mperature\020\004\022\030\n\024gas_giant_atmosphere\020\005\022\030\n"
+  "\024ice_giant_atmosphere\020\006*W\n\014star_class_t\022"
+  "\026\n\022invalid_star_class\020\000\022\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n"
+  "\001a\020\003\022\005\n\001f\020\004\022\005\n\001g\020\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fdata_2eproto_deps[1] = {
   &::descriptor_table_base_5ftypes_2eproto,
@@ -851,7 +855,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gam
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fdata_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fdata_2eproto = {
-  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4665,
+  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4760,
   &descriptor_table_game_5fdata_2eproto_once, descriptor_table_game_5fdata_2eproto_sccs, descriptor_table_game_5fdata_2eproto_deps, 20, 1,
   schemas, file_default_instances, TableStruct_game_5fdata_2eproto::offsets,
   file_level_metadata_game_5fdata_2eproto, 20, file_level_enum_descriptors_game_5fdata_2eproto, file_level_service_descriptors_game_5fdata_2eproto,
@@ -6522,11 +6526,18 @@ void province_t::InternalSwap(province_t* other) {
 // ===================================================================
 
 void nation_t::InitAsDefaultInstance() {
+  ::pb_message::game_data::_nation_t_default_instance_._instance.get_mutable()->capitol_settlement_ = const_cast< ::pb_message::game_data::nation_and_object_id_t*>(
+      ::pb_message::game_data::nation_and_object_id_t::internal_default_instance());
 }
 class nation_t::_Internal {
  public:
+  static const ::pb_message::game_data::nation_and_object_id_t& capitol_settlement(const nation_t* msg);
 };
 
+const ::pb_message::game_data::nation_and_object_id_t&
+nation_t::_Internal::capitol_settlement(const nation_t* msg) {
+  return *msg->capitol_settlement_;
+}
 nation_t::nation_t(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   unit_designs_(arena),
@@ -6558,6 +6569,11 @@ nation_t::nation_t(const nation_t& from)
       foreign_designs_seen_(from.foreign_designs_seen_),
       foreign_designs_glimpsed_(from.foreign_designs_glimpsed_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_capitol_settlement()) {
+    capitol_settlement_ = new ::pb_message::game_data::nation_and_object_id_t(*from.capitol_settlement_);
+  } else {
+    capitol_settlement_ = nullptr;
+  }
   ::memcpy(&id_, &from.id_,
     static_cast<size_t>(reinterpret_cast<char*>(&defeated_) -
     reinterpret_cast<char*>(&id_)) + sizeof(defeated_));
@@ -6566,9 +6582,9 @@ nation_t::nation_t(const nation_t& from)
 
 void nation_t::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_nation_t_game_5fdata_2eproto.base);
-  ::memset(&id_, 0, static_cast<size_t>(
+  ::memset(&capitol_settlement_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&defeated_) -
-      reinterpret_cast<char*>(&id_)) + sizeof(defeated_));
+      reinterpret_cast<char*>(&capitol_settlement_)) + sizeof(defeated_));
 }
 
 nation_t::~nation_t() {
@@ -6579,6 +6595,7 @@ nation_t::~nation_t() {
 
 void nation_t::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
+  if (this != internal_default_instance()) delete capitol_settlement_;
 }
 
 void nation_t::ArenaDtor(void* object) {
@@ -6613,6 +6630,10 @@ void nation_t::Clear() {
   settlements_seen_.Clear();
   foreign_designs_seen_.Clear();
   foreign_designs_glimpsed_.Clear();
+  if (GetArena() == nullptr && capitol_settlement_ != nullptr) {
+    delete capitol_settlement_;
+  }
+  capitol_settlement_ = nullptr;
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&defeated_) -
       reinterpret_cast<char*>(&id_)) + sizeof(defeated_));
@@ -6634,133 +6655,147 @@ const char* nation_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
+      // int32 home_planet = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          home_planet_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .pb_message.game_data.nation_and_object_id_t capitol_settlement = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_capitol_settlement(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .pb_message.game_data.unit_design_t unit_designs = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_unit_designs(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.province_t provinces = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // repeated .pb_message.game_data.province_t provinces = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_provinces(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.settlement_t settlements = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+      // repeated .pb_message.game_data.settlement_t settlements = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_settlements(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.fleet_t fleets = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+      // repeated .pb_message.game_data.fleet_t fleets = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_fleets(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated int32 hexes_seen = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+      // repeated int32 hexes_seen = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_hexes_seen(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64) {
           _internal_add_hexes_seen(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int32 systems_present_in = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+      // repeated int32 systems_present_in = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_systems_present_in(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72) {
           _internal_add_systems_present_in(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int32 systems_visited = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+      // repeated int32 systems_visited = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_systems_visited(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80) {
           _internal_add_systems_visited(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int32 planets_surveyed = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+      // repeated int32 planets_surveyed = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 90)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_planets_surveyed(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 88) {
           _internal_add_planets_surveyed(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.settlement_t settlements_seen = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82)) {
+      // repeated .pb_message.game_data.settlement_t settlements_seen = 12;
+      case 12:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 98)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_settlements_seen(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<82>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<98>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 11;
-      case 11:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 90)) {
+      // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
+      case 13:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 106)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_foreign_designs_seen(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<90>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<106>(ptr));
         } else goto handle_unusual;
         continue;
-      // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 12;
-      case 12:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 98)) {
+      // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
+      case 14:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 114)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_foreign_designs_glimpsed(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<98>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<114>(ptr));
         } else goto handle_unusual;
         continue;
-      // bool defeated = 13;
-      case 13:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 104)) {
+      // bool defeated = 15;
+      case 15:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 120)) {
           defeated_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
@@ -6799,102 +6834,116 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_id(), target);
   }
 
-  // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
+  // int32 home_planet = 2;
+  if (this->home_planet() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_home_planet(), target);
+  }
+
+  // .pb_message.game_data.nation_and_object_id_t capitol_settlement = 3;
+  if (this->has_capitol_settlement()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        3, _Internal::capitol_settlement(this), target, stream);
+  }
+
+  // repeated .pb_message.game_data.unit_design_t unit_designs = 4;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_unit_designs_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, this->_internal_unit_designs(i), target, stream);
+      InternalWriteMessage(4, this->_internal_unit_designs(i), target, stream);
   }
 
-  // repeated .pb_message.game_data.province_t provinces = 3;
+  // repeated .pb_message.game_data.province_t provinces = 5;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_provinces_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, this->_internal_provinces(i), target, stream);
+      InternalWriteMessage(5, this->_internal_provinces(i), target, stream);
   }
 
-  // repeated .pb_message.game_data.settlement_t settlements = 4;
+  // repeated .pb_message.game_data.settlement_t settlements = 6;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_settlements_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, this->_internal_settlements(i), target, stream);
+      InternalWriteMessage(6, this->_internal_settlements(i), target, stream);
   }
 
-  // repeated .pb_message.game_data.fleet_t fleets = 5;
+  // repeated .pb_message.game_data.fleet_t fleets = 7;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_fleets_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(5, this->_internal_fleets(i), target, stream);
+      InternalWriteMessage(7, this->_internal_fleets(i), target, stream);
   }
 
-  // repeated int32 hexes_seen = 6;
+  // repeated int32 hexes_seen = 8;
   {
     int byte_size = _hexes_seen_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          6, _internal_hexes_seen(), byte_size, target);
+          8, _internal_hexes_seen(), byte_size, target);
     }
   }
 
-  // repeated int32 systems_present_in = 7;
+  // repeated int32 systems_present_in = 9;
   {
     int byte_size = _systems_present_in_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          7, _internal_systems_present_in(), byte_size, target);
+          9, _internal_systems_present_in(), byte_size, target);
     }
   }
 
-  // repeated int32 systems_visited = 8;
+  // repeated int32 systems_visited = 10;
   {
     int byte_size = _systems_visited_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          8, _internal_systems_visited(), byte_size, target);
+          10, _internal_systems_visited(), byte_size, target);
     }
   }
 
-  // repeated int32 planets_surveyed = 9;
+  // repeated int32 planets_surveyed = 11;
   {
     int byte_size = _planets_surveyed_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          9, _internal_planets_surveyed(), byte_size, target);
+          11, _internal_planets_surveyed(), byte_size, target);
     }
   }
 
-  // repeated .pb_message.game_data.settlement_t settlements_seen = 10;
+  // repeated .pb_message.game_data.settlement_t settlements_seen = 12;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_settlements_seen_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(10, this->_internal_settlements_seen(i), target, stream);
+      InternalWriteMessage(12, this->_internal_settlements_seen(i), target, stream);
   }
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 11;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_foreign_designs_seen_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(11, this->_internal_foreign_designs_seen(i), target, stream);
+      InternalWriteMessage(13, this->_internal_foreign_designs_seen(i), target, stream);
   }
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 12;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->_internal_foreign_designs_glimpsed_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(12, this->_internal_foreign_designs_glimpsed(i), target, stream);
+      InternalWriteMessage(14, this->_internal_foreign_designs_glimpsed(i), target, stream);
   }
 
-  // bool defeated = 13;
+  // bool defeated = 15;
   if (this->defeated() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(13, this->_internal_defeated(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(15, this->_internal_defeated(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6913,35 +6962,35 @@ size_t nation_t::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .pb_message.game_data.unit_design_t unit_designs = 2;
+  // repeated .pb_message.game_data.unit_design_t unit_designs = 4;
   total_size += 1UL * this->_internal_unit_designs_size();
   for (const auto& msg : this->unit_designs_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .pb_message.game_data.province_t provinces = 3;
+  // repeated .pb_message.game_data.province_t provinces = 5;
   total_size += 1UL * this->_internal_provinces_size();
   for (const auto& msg : this->provinces_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .pb_message.game_data.settlement_t settlements = 4;
+  // repeated .pb_message.game_data.settlement_t settlements = 6;
   total_size += 1UL * this->_internal_settlements_size();
   for (const auto& msg : this->settlements_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .pb_message.game_data.fleet_t fleets = 5;
+  // repeated .pb_message.game_data.fleet_t fleets = 7;
   total_size += 1UL * this->_internal_fleets_size();
   for (const auto& msg : this->fleets_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated int32 hexes_seen = 6;
+  // repeated int32 hexes_seen = 8;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->hexes_seen_);
@@ -6956,7 +7005,7 @@ size_t nation_t::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int32 systems_present_in = 7;
+  // repeated int32 systems_present_in = 9;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->systems_present_in_);
@@ -6971,7 +7020,7 @@ size_t nation_t::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int32 systems_visited = 8;
+  // repeated int32 systems_visited = 10;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->systems_visited_);
@@ -6986,7 +7035,7 @@ size_t nation_t::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int32 planets_surveyed = 9;
+  // repeated int32 planets_surveyed = 11;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->planets_surveyed_);
@@ -7001,25 +7050,32 @@ size_t nation_t::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated .pb_message.game_data.settlement_t settlements_seen = 10;
+  // repeated .pb_message.game_data.settlement_t settlements_seen = 12;
   total_size += 1UL * this->_internal_settlements_seen_size();
   for (const auto& msg : this->settlements_seen_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 11;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
   total_size += 1UL * this->_internal_foreign_designs_seen_size();
   for (const auto& msg : this->foreign_designs_seen_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 12;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
   total_size += 1UL * this->_internal_foreign_designs_glimpsed_size();
   for (const auto& msg : this->foreign_designs_glimpsed_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // .pb_message.game_data.nation_and_object_id_t capitol_settlement = 3;
+  if (this->has_capitol_settlement()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *capitol_settlement_);
   }
 
   // int32 id = 1;
@@ -7029,7 +7085,14 @@ size_t nation_t::ByteSizeLong() const {
         this->_internal_id());
   }
 
-  // bool defeated = 13;
+  // int32 home_planet = 2;
+  if (this->home_planet() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_home_planet());
+  }
+
+  // bool defeated = 15;
   if (this->defeated() != 0) {
     total_size += 1 + 1;
   }
@@ -7076,8 +7139,14 @@ void nation_t::MergeFrom(const nation_t& from) {
   settlements_seen_.MergeFrom(from.settlements_seen_);
   foreign_designs_seen_.MergeFrom(from.foreign_designs_seen_);
   foreign_designs_glimpsed_.MergeFrom(from.foreign_designs_glimpsed_);
+  if (from.has_capitol_settlement()) {
+    _internal_mutable_capitol_settlement()->::pb_message::game_data::nation_and_object_id_t::MergeFrom(from._internal_capitol_settlement());
+  }
   if (from.id() != 0) {
     _internal_set_id(from._internal_id());
+  }
+  if (from.home_planet() != 0) {
+    _internal_set_home_planet(from._internal_home_planet());
   }
   if (from.defeated() != 0) {
     _internal_set_defeated(from._internal_defeated());
@@ -7119,9 +7188,9 @@ void nation_t::InternalSwap(nation_t* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(nation_t, defeated_)
       + sizeof(nation_t::defeated_)
-      - PROTOBUF_FIELD_OFFSET(nation_t, id_)>(
-          reinterpret_cast<char*>(&id_),
-          reinterpret_cast<char*>(&other->id_));
+      - PROTOBUF_FIELD_OFFSET(nation_t, capitol_settlement_)>(
+          reinterpret_cast<char*>(&capitol_settlement_),
+          reinterpret_cast<char*>(&other->capitol_settlement_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata nation_t::GetMetadata() const {

@@ -444,6 +444,8 @@ end
 function create_starting_nation(gs, nation_id, home_planet, planet_id)
    nation = nation_t.new()
    nation.id = nation_id
+   nation.home_planet = planet_id
+   nation.capitol_settlement = nation_and_object_id_t.new(nation_id, 0)
    assign_starting_designs(nation)
    nation.settlements:add(create_home_settlement(gs, nation, home_planet, planet_id))
    nation.fleets:add(create_starting_fleet(gs, nation, home_planet))

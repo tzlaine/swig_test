@@ -226,18 +226,20 @@ message province_t
 message nation_t
 {
     int32 id = 1;
-    repeated unit_design_t unit_designs = 2;
-    repeated province_t provinces = 3;
-    repeated settlement_t settlements = 4; // may contain gaps (gaps have invald IDs)
-    repeated fleet_t fleets = 5; // may contain gaps (gaps have invald IDs)
-    repeated int32 hexes_seen = 6; // these lists of IDs must be kept sorted
-    repeated int32 systems_present_in = 7;
-    repeated int32 systems_visited = 8;
-    repeated int32 planets_surveyed = 9;
-    repeated settlement_t settlements_seen = 10;
-    repeated nation_and_object_id_t foreign_designs_seen = 11;
-    repeated nation_and_object_id_t foreign_designs_glimpsed = 12;
-    bool defeated = 13;
+    int32 home_planet = 2;
+    nation_and_object_id_t capitol_settlement = 3;
+    repeated unit_design_t unit_designs = 4;
+    repeated province_t provinces = 5;
+    repeated settlement_t settlements = 6; // may contain gaps (gaps have invald IDs)
+    repeated fleet_t fleets = 7; // may contain gaps (gaps have invald IDs)
+    repeated int32 hexes_seen = 8; // these lists of IDs must be kept sorted
+    repeated int32 systems_present_in = 9;
+    repeated int32 systems_visited = 10;
+    repeated int32 planets_surveyed = 11;
+    repeated settlement_t settlements_seen = 12;
+    repeated nation_and_object_id_t foreign_designs_seen = 13;
+    repeated nation_and_object_id_t foreign_designs_glimpsed = 14;
+    bool defeated = 15;
 }
 
 message game_state_t
