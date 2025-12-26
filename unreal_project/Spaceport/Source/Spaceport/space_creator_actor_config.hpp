@@ -10,7 +10,7 @@ struct star_t;
 struct system_t;
 struct Fsystem_graphical_properties;
 
-Fsystem_graphical_properties configure_map_star(system_t const & system);
+Fsystem_graphical_properties generate_map_star(system_t const & system);
 void configure_map_star(
     Amap_system & system_actor, Fsystem_graphical_properties const & props);
 

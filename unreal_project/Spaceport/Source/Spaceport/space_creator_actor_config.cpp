@@ -242,7 +242,7 @@ double seasons_intensity_factor(planet_t const & planet)
 
 // TODO: Move all the utilities above here somewhere else.
 
-Fsystem_graphical_properties configure_map_star(system_t const & system)
+Fsystem_graphical_properties generate_map_star(system_t const & system)
 {
     Fsystem_graphical_properties retval;
 

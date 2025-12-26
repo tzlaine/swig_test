@@ -100,7 +100,7 @@ void Amap_system::hover(bool b)
 
 void Amap_system::generate_graphical_properties(system_t const & system)
 {
-    graphical_properties_ = configure_map_star(system);
+    graphical_properties_ = generate_map_star(system);
 }
 
 void Amap_system::main_material(UMaterialInstanceDynamic * mid)
