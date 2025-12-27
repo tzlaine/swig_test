@@ -64,4 +64,8 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
                 min_camera_dist,
                 max_camera_dist);
         });
+
+    GetWorldTimerManager().SetTimerForNextTick([this] {
+        spring_arm_->TargetArmLength -= map_actors_vertical_offset;
+    });
 }
