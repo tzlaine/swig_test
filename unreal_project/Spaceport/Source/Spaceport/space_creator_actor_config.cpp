@@ -208,6 +208,23 @@ inline ADirectionalLight * directional_light(UWorld * w)
 template<typename T>
 void set_property(AActor * a, FName name, T value)
 {
+#if 0 // TODO
+    TMap<FName, FString> all_props;
+    for (TFieldIterator<FProperty> it(
+             a->GetClass(), EFieldIteratorFlags::ExcludeSuper);
+         it;
+         ++it) {
+        FProperty * prop = *it;
+
+        if (prop->IsA<FObjectProperty>())
+            continue;
+
+        FString value_str;
+        if (prop->ExportText_InContainer(0, value_str, a, a, a, PPF_None))
+            all_props.Add(prop->GetFName(), value_str);
+    }
+#endif
+
     FProperty * const p = a->GetClass()->FindPropertyByName(name);
     if (!p) {
         throw std::runtime_error(std::format(
@@ -335,14 +352,14 @@ void configure_system_star(AActor * star_actor, star_t const & star)
 
     set_property(
         star_actor,
-        TEXT("Atmospheric_Phenomena"),
+        TEXT("Atmospheric Phenomena"),
         true); // TODO: Disable based on settings.
-    set_property(star_actor, TEXT("Coronal_Rays_Count"), 128);
-    set_property(star_actor, TEXT("Surface_Explosions_Count"), 8);
-    set_property(star_actor, TEXT("Coronal_Ejections_Count"), 8);
+    set_property(star_actor, TEXT("Coronal Rays Count"), 128);
+    set_property(star_actor, TEXT("Surface Explosions Count"), 8);
+    set_property(star_actor, TEXT("Coronal Ejections Count"), 8);
     set_property(
         star_actor,
-        TEXT("Activate_Surface_Rays"),
+        TEXT("Activate Surface Rays"),
         true); // TODO: Disable based on settings.
 
     // class O
@@ -434,15 +451,15 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         break;
     default: break;
     }
-    set_property(star_actor, TEXT("Atmosphere_Color"), atmosphere_color);
-    set_property(star_actor, TEXT("Explosions_Color"), explosions_color);
-    set_property(star_actor, TEXT("Ejections_Color"), ejections_color);
+    set_property(star_actor, TEXT("Atmosphere Color"), atmosphere_color);
+    set_property(star_actor, TEXT("Explosions Color"), explosions_color);
+    set_property(star_actor, TEXT("Ejections Color"), ejections_color);
     set_property(
-        star_actor, TEXT("Dark_Filaments_Color"), dark_filaments_color);
-    set_property(star_actor, TEXT("Flares_Color"), explosions_color);
-    set_property(star_actor, TEXT("High_Zones_Color"), atmosphere_color);
-    set_property(star_actor, TEXT("Low_Zones_Color"), low_zones_color);
-    set_property(star_actor, TEXT("Rays_Color"), atmosphere_color);
+        star_actor, TEXT("Dark Filaments Color"), dark_filaments_color);
+    set_property(star_actor, TEXT("Flares Color"), explosions_color);
+    set_property(star_actor, TEXT("High Zones Color"), atmosphere_color);
+    set_property(star_actor, TEXT("Low Zones Color"), low_zones_color);
+    set_property(star_actor, TEXT("Rays Color"), atmosphere_color);
 }
 
 // TODO: Aplanet_actor?
@@ -472,10 +489,10 @@ void configure_rocky_oxidized_planet(
         directional_light(planet_actor->GetWorld());
 
     // TODO: Need a graphics setting for this.
-    set_property(planet_actor, TEXT("Shader_Complexity"), 4);
-    set_property(planet_actor, TEXT("Use_Directional_Light"), true);
-    set_property(planet_actor, TEXT("Use_Directional_Light"), light);
-    set_property(planet_actor, TEXT("Night_Brightness"), 0.01);
+    set_property(planet_actor, TEXT("Shader Complexity"), 4);
+    set_property(planet_actor, TEXT("Use Directional Light"), true);
+    set_property(planet_actor, TEXT("Use Directional Light"), light);
+    set_property(planet_actor, TEXT("Night Brightness"), 0.01);
 
     // computed values
 
@@ -487,26 +504,26 @@ void configure_rocky_oxidized_planet(
 
     // Continents
     set_property(
-        planet_actor, TEXT("Continents_Position"), random_double(0.0, 15.0));
+        planet_actor, TEXT("Continents Position"), random_double(0.0, 15.0));
     set_property(
         planet_actor,
-        TEXT("Continents_Spread"),
+        TEXT("Continents Spread"),
         std::clamp(1.0, 10.0, random_number(one_to_ten_gamma_dist)));
     set_property(
         planet_actor,
-        TEXT("Continents_Distortion"),
+        TEXT("Continents Distortion"),
         random_number(around_one_dist));
     set_property(
         planet_actor,
-        TEXT("Continents_Distortion_Scale"),
+        TEXT("Continents Distortion Scale"),
         random_number(distortion_scale_dist));
     set_property(
         planet_actor,
-        TEXT("Plains/Mountains_Transition"),
+        TEXT("Plains/Mountains Transition"),
         random_number(around_one_dist));
     set_property(
         planet_actor,
-        TEXT("Plains/Mountains_Transition_Contrast"),
+        TEXT("Plains/Mountains Transition Contrast"),
         random_number(around_one_dist));
 
     {
@@ -514,7 +531,7 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0x4A, 0x33, 0x20, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color_Mountains_1"),
+            TEXT("Color Mountains 1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -522,7 +539,7 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0xFF, 0xE6, 0x7F, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color_Mountains_2"),
+            TEXT("Color Mountains 2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -530,7 +547,7 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0x1C, 0x2D, 0x16, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color_Plains_1"),
+            TEXT("Color Plains 1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -538,21 +555,21 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0x16, 0x36, 0x0D, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color_Plains_2"),
+            TEXT("Color Plains 2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
 
     set_property(
-        planet_actor, TEXT("T_Mountains"), textures().random_planet_texture());
+        planet_actor, TEXT("T Mountains"), textures().random_planet_texture());
     set_property(
-        planet_actor, TEXT("T_Plains"), textures().random_planet_texture());
+        planet_actor, TEXT("T Plains"), textures().random_planet_texture());
 
     // oceans
-    set_property(planet_actor, TEXT("Sea_Level"), planet.ocean_coverage);
+    set_property(planet_actor, TEXT("Sea Level"), planet.ocean_coverage);
 
     set_property(
         planet_actor,
-        TEXT("Oceans_Color_Transition"),
+        TEXT("Oceans Color Transition"),
         std::lerp(
             0.25,
             1.0,
@@ -564,7 +581,7 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0x05, 0x1D, 0x1A, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Oceans_Color_1"),
+            TEXT("Oceans Color 1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -572,7 +589,7 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0x3A, 0x88, 0xFF, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Oceans_Color_2"),
+            TEXT("Oceans Color 2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -580,7 +597,7 @@ void configure_rocky_oxidized_planet(
         auto const max = FLinearColor(0x28, 0x3D, 0x82, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Oceans_Color_3"),
+            TEXT("Oceans Color 3"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
 
@@ -590,18 +607,18 @@ void configure_rocky_oxidized_planet(
         (max_habitable_temp_k - min_habitable_nonsuit_temp_k);
     set_property(
         planet_actor,
-        TEXT("Ice_Poles_Weight"),
+        TEXT("Ice Poles Weight"),
         std::max(0.0, std::lerp(0.4, 0.6, 1.0 - temperature_alpha)));
     set_property(
         planet_actor,
-        TEXT("Ice_Coverage"),
+        TEXT("Ice Coverage"),
         std::max(0.0, std::lerp(0.1, 0.5, 1.0 - temperature_alpha)));
 
     // clouds
     double clouds_speed = 0.0001;
     if (double alpha = seasons_intensity_factor(planet))
         clouds_speed = std::lerp(0.0001, 0.005, alpha);
-    set_property(planet_actor, TEXT("Clouds_Speed"), clouds_speed);
+    set_property(planet_actor, TEXT("Clouds Speed"), clouds_speed);
 
     double const plentiful_water_alpha =
         growth_factor_considered_habitable < planet.growth_factor
@@ -610,36 +627,36 @@ void configure_rocky_oxidized_planet(
 
     set_property(
         planet_actor,
-        TEXT("Clouds_Opacity"),
+        TEXT("Clouds Opacity"),
         plentiful_water_alpha < 1.0 ? random_double(0.0, 2.0)
                                     : random_double(2.0, 4.0));
-    set_property(planet_actor, TEXT("Clouds_Shadow_Offset"), 6.0);
-    set_property(planet_actor, TEXT("Under_Clouds_Brightness"), 0.5);
+    set_property(planet_actor, TEXT("Clouds Shadow Offset"), 6.0);
+    set_property(planet_actor, TEXT("Under Clouds Brightness"), 0.5);
     set_property(
         planet_actor,
-        TEXT("Clouds_Twilight_Color_1"),
+        TEXT("Clouds Twilight Color 1"),
         FLinearColor(0x5A, 0x55, 0x49, 0xFF));
     set_property(
         planet_actor,
-        TEXT("Clouds_Twilight_Color_2"),
+        TEXT("Clouds Twilight Color 2"),
         FLinearColor(0x65, 0x36, 0x02, 0xFF));
 
     // atmosphere
 
     set_property(
         planet_actor,
-        TEXT("Atmosphere_Direct_Brightness"),
+        TEXT("Atmosphere Direct Brightness"),
         0.1 * plentiful_water_alpha);
     set_property(
         planet_actor,
-        TEXT("Atmosphere_Edge_Brightness"),
+        TEXT("Atmosphere Edge Brightness"),
         1.0 * plentiful_water_alpha);
     {
         auto const min = FLinearColor::White;
         auto const max = FLinearColor(0x2F, 0x73, 0xE0, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Atmosphere_Color"),
+            TEXT("Atmosphere Color"),
             FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
     }
 
@@ -648,25 +665,25 @@ void configure_rocky_oxidized_planet(
 #if 0 // TODO: Update to use settlements.
     // city lights
     if (planet.population <= 0.0f) {
-        set_property(planet_actor, TEXT("City_Lights_Extent"), 0.0);
-        set_property(planet_actor, TEXT("City_Lights_Halo"), 0.0);
+        set_property(planet_actor, TEXT("City Lights Extent"), 0.0);
+        set_property(planet_actor, TEXT("City Lights Halo"), 0.0);
         return;
     }
     set_property(
         planet_actor,
-        TEXT("City_Lights_Extent"),
+        TEXT("City Lights Extent"),
         double(planet.population / planet.max_population));
-    set_property(planet_actor, TEXT("City_Lights_Halo"), 0.005);
+    set_property(planet_actor, TEXT("City Lights Halo"), 0.005);
     set_property(
         planet_actor,
-        TEXT("City_Lights_Intensity"),
+        TEXT("City Lights Intensity"),
         std::lerp(0.0, 20.0, planet.infrastructure / max_infrastructure));
     {
         auto const min = FLinearColor::White;
         auto const max = FLinearColor(0x4E, 0xA7, 0xFF, 0xFF);
         set_property(
             planet_actor,
-            TEXT("City_Lights_Color"),
+            TEXT("City Lights Color"),
             FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
     }
 #endif
