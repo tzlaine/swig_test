@@ -364,32 +364,32 @@ void configure_system_star(AActor * star_actor, star_t const & star)
 
     // class O
     FLinearColor const f_atmosphere_color =
-        FLinearColor(0x06, 0x55, 0xFF, 0xFF);
+        FColor(0x06, 0x55, 0xFF, 0xFF);
     FLinearColor const f_explosions_color =
-        FLinearColor(0x0B, 0x64, 0xFF, 0xFF);
+        FColor(0x0B, 0x64, 0xFF, 0xFF);
     FLinearColor const f_ejections_color = f_explosions_color;
     FLinearColor const f_dark_filaments_color =
-        FLinearColor(0x00, 0x1B, 0x67, 0xFF);
-    FLinearColor const f_low_zones_color = FLinearColor(0x00, 0x40, 0xFF, 0xFF);
+        FColor(0x00, 0x1B, 0x67, 0xFF);
+    FLinearColor const f_low_zones_color = FColor(0x00, 0x40, 0xFF, 0xFF);
 
     // class F
-    FLinearColor const o_atmosphere_color = FLinearColor::White;
+    FLinearColor const o_atmosphere_color = FColor::White;
     FLinearColor const o_explosions_color =
-        FLinearColor(0x54, 0x54, 0x54, 0xFF);
-    FLinearColor const o_ejections_color = FLinearColor::White;
+        FColor(0x54, 0x54, 0x54, 0xFF);
+    FLinearColor const o_ejections_color = FColor::White;
     FLinearColor const o_dark_filaments_color =
-        FLinearColor(0xC5, 0xC5, 0xC5, 0xFF);
-    FLinearColor const o_low_zones_color = FLinearColor(0x55, 0x55, 0x55, 0xFF);
+        FColor(0xC5, 0xC5, 0xC5, 0xFF);
+    FLinearColor const o_low_zones_color = FColor(0x55, 0x55, 0x55, 0xFF);
 
     // class K
     FLinearColor const k_atmosphere_color =
-        FLinearColor(0xFF, 0x33, 0x06, 0xFF);
+        FColor(0xFF, 0x33, 0x06, 0xFF);
     FLinearColor const k_explosions_color =
-        FLinearColor(0xFF, 0x29, 0x0B, 0xFF);
+        FColor(0xFF, 0x29, 0x0B, 0xFF);
     FLinearColor const k_ejections_color = k_explosions_color;
     FLinearColor const k_dark_filaments_color =
-        FLinearColor(0x67, 0x06, 0x00, 0xFF);
-    FLinearColor const k_low_zones_color = FLinearColor(0xFF, 0x17, 0x00, 0xFF);
+        FColor(0x67, 0x06, 0x00, 0xFF);
+    FLinearColor const k_low_zones_color = FColor(0xFF, 0x17, 0x00, 0xFF);
 
     FLinearColor atmosphere_color = {};
     FLinearColor explosions_color = {};
@@ -443,11 +443,11 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         low_zones_color = k_low_zones_color;
         break;
     case star_class_t::m:
-        atmosphere_color = FLinearColor(0xFF, 0x1F, 0x06, 0xFF);
+        atmosphere_color = FColor(0xFF, 0x1F, 0x06, 0xFF);
         ejections_color = explosions_color =
-            FLinearColor(0xFF, 0x15, 0x0B, 0xFF);
-        dark_filaments_color = FLinearColor(0x67, 0x03, 0x00, 0xFF);
-        low_zones_color = FLinearColor(0xFF, 0x02, 0x00, 0xFF);
+            FColor(0xFF, 0x15, 0x0B, 0xFF);
+        dark_filaments_color = FColor(0x67, 0x03, 0x00, 0xFF);
+        low_zones_color = FColor(0xFF, 0x02, 0x00, 0xFF);
         break;
     default: break;
     }
@@ -460,6 +460,8 @@ void configure_system_star(AActor * star_actor, star_t const & star)
     set_property(star_actor, TEXT("High Zones Color"), atmosphere_color);
     set_property(star_actor, TEXT("Low Zones Color"), low_zones_color);
     set_property(star_actor, TEXT("Rays Color"), atmosphere_color);
+
+    set_property(star_actor, TEXT("dirty"), true);
 }
 
 // TODO: Aplanet_actor?
@@ -527,32 +529,32 @@ void configure_rocky_oxidized_planet(
         random_number(around_one_dist));
 
     {
-        auto const min = FLinearColor(0xFF, 0xAF, 0x6F, 0xFF);
-        auto const max = FLinearColor(0x4A, 0x33, 0x20, 0xFF);
+        FLinearColor const min = FColor(0xFF, 0xAF, 0x6F, 0xFF);
+        FLinearColor const max = FColor(0x4A, 0x33, 0x20, 0xFF);
         set_property(
             planet_actor,
             TEXT("Color Mountains 1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
-        auto const min = FLinearColor(0x44, 0x3D, 0x22, 0xFF);
-        auto const max = FLinearColor(0xFF, 0xE6, 0x7F, 0xFF);
+        FLinearColor const min = FColor(0x44, 0x3D, 0x22, 0xFF);
+        FLinearColor const max = FColor(0xFF, 0xE6, 0x7F, 0xFF);
         set_property(
             planet_actor,
             TEXT("Color Mountains 2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
-        auto const min = FLinearColor(0x77, 0xC3, 0x60, 0xFF);
-        auto const max = FLinearColor(0x1C, 0x2D, 0x16, 0xFF);
+        FLinearColor const min = FColor(0x77, 0xC3, 0x60, 0xFF);
+        FLinearColor const max = FColor(0x1C, 0x2D, 0x16, 0xFF);
         set_property(
             planet_actor,
             TEXT("Color Plains 1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
-        auto const min = FLinearColor(0x68, 0xFF, 0x3B, 0xFF);
-        auto const max = FLinearColor(0x16, 0x36, 0x0D, 0xFF);
+        FLinearColor const min = FColor(0x68, 0xFF, 0x3B, 0xFF);
+        FLinearColor const max = FColor(0x16, 0x36, 0x0D, 0xFF);
         set_property(
             planet_actor,
             TEXT("Color Plains 2"),
@@ -577,24 +579,24 @@ void configure_rocky_oxidized_planet(
                 oceans_transition_dist.max()));
 
     {
-        auto const min = FLinearColor(0x2C, 0xFF, 0xE5, 0xFF);
-        auto const max = FLinearColor(0x05, 0x1D, 0x1A, 0xFF);
+        FLinearColor const min = FColor(0x2C, 0xFF, 0xE5, 0xFF);
+        FLinearColor const max = FColor(0x05, 0x1D, 0x1A, 0xFF);
         set_property(
             planet_actor,
             TEXT("Oceans Color 1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
-        auto const min = FLinearColor(0x02, 0x04, 0x07, 0xFF);
-        auto const max = FLinearColor(0x3A, 0x88, 0xFF, 0xFF);
+        FLinearColor const min = FColor(0x02, 0x04, 0x07, 0xFF);
+        FLinearColor const max = FColor(0x3A, 0x88, 0xFF, 0xFF);
         set_property(
             planet_actor,
             TEXT("Oceans Color 2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
-        auto const min = FLinearColor(0x05, 0x07, 0x0F, 0xFF);
-        auto const max = FLinearColor(0x28, 0x3D, 0x82, 0xFF);
+        FLinearColor const min = FColor(0x05, 0x07, 0x0F, 0xFF);
+        FLinearColor const max = FColor(0x28, 0x3D, 0x82, 0xFF);
         set_property(
             planet_actor,
             TEXT("Oceans Color 3"),
@@ -635,11 +637,11 @@ void configure_rocky_oxidized_planet(
     set_property(
         planet_actor,
         TEXT("Clouds Twilight Color 1"),
-        FLinearColor(0x5A, 0x55, 0x49, 0xFF));
+        FColor(0x5A, 0x55, 0x49, 0xFF));
     set_property(
         planet_actor,
         TEXT("Clouds Twilight Color 2"),
-        FLinearColor(0x65, 0x36, 0x02, 0xFF));
+        FColor(0x65, 0x36, 0x02, 0xFF));
 
     // atmosphere
 
@@ -652,8 +654,8 @@ void configure_rocky_oxidized_planet(
         TEXT("Atmosphere Edge Brightness"),
         1.0 * plentiful_water_alpha);
     {
-        auto const min = FLinearColor::White;
-        auto const max = FLinearColor(0x2F, 0x73, 0xE0, 0xFF);
+        FLinearColor const min = FColor::White;
+        FLinearColor const max = FColor(0x2F, 0x73, 0xE0, 0xFF);
         set_property(
             planet_actor,
             TEXT("Atmosphere Color"),
@@ -679,8 +681,8 @@ void configure_rocky_oxidized_planet(
         TEXT("City Lights Intensity"),
         std::lerp(0.0, 20.0, planet.infrastructure / max_infrastructure));
     {
-        auto const min = FLinearColor::White;
-        auto const max = FLinearColor(0x4E, 0xA7, 0xFF, 0xFF);
+        FLinearColor const min = FColor::White;
+        FLinearColor const max = FColor(0x4E, 0xA7, 0xFF, 0xFF);
         set_property(
             planet_actor,
             TEXT("City Lights Color"),
