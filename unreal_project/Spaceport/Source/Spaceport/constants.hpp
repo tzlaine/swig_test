@@ -96,6 +96,7 @@ extern const int small_map_height;
 extern const int medium_map_height;
 extern const int large_map_height;
 
+extern const float map_actors_vertical_offset;
 extern const float min_camera_dist;
 extern const float max_camera_dist;
 extern const float max_double_click_interval_s;

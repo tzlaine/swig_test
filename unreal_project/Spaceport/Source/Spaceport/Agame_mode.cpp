@@ -344,7 +344,7 @@ void Agame_mode::signal_start_of_play()
                 FTransform(
                     FRotator(0, random_double(0, 360), 0),
                     map_hex_position(hex.coord, gs.map_height) +
-                        FVector(0, 0, 20),
+                        FVector(0, 0, 20 + map_actors_vertical_offset),
                     FVector(1)),
                 FActorSpawnParameters());
             arms->SetActorScale3D(FVector(
@@ -356,7 +356,7 @@ void Agame_mode::signal_start_of_play()
                 FTransform(
                     FRotator(),
                     map_hex_position(hex.coord, gs.map_height) +
-                        FVector(0, 0, 10),
+                        FVector(0, 0, 10 + map_actors_vertical_offset),
                     FVector(1)),
                 FActorSpawnParameters());
             glow->SetActorScale3D(FVector(
@@ -365,20 +365,22 @@ void Agame_mode::signal_start_of_play()
             continue;
         }
 
-        auto const hex_location = map_hex_position(hex.coord, gs.map_height);
+        auto const hex_position = map_hex_position(hex.coord, gs.map_height) +
+                                  FVector(0, 0, map_actors_vertical_offset);
         Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
-            hex_class_, hex_location, FRotator(), FActorSpawnParameters());
+            hex_class_, hex_position, FRotator(), FActorSpawnParameters());
         hex_pawn->hex_id(to_index(hex.coord, gs.map_width));
         repl_graph_->reinsert_actor(hex_pawn);
 
         for (int i = hex.first_system, last = hex.last_system; i < last; ++i) {
             auto const & system = gs.systems[i];
-            auto const system_location =
+            auto const system_position =
                 FVector(system.world_pos_x, system.world_pos_y, 0) *
-                ui_defaults().map_scale_;
+                    ui_defaults().map_scale_ +
+                FVector(0, 0, map_actors_vertical_offset);
             Amap_system * system_pawn = GetWorld()->SpawnActor<Amap_system>(
                 system_class_,
-                system_location,
+                system_position,
                 FRotator(0, random_double(0, 360), 0),
                 FActorSpawnParameters());
             system_pawn->generate_graphical_properties(system);

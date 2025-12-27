@@ -95,8 +95,11 @@ const int small_map_height = lua()["small_map_height"];
 const int medium_map_height = lua()["medium_map_height"];
 const int large_map_height = lua()["large_map_height"];
 
-const float min_camera_dist = lua()["min_camera_dist"];
-const float max_camera_dist = lua()["max_camera_dist"];
+const float map_actors_vertical_offset = -200.0f;
+const float min_camera_dist =
+    float(lua()["min_camera_dist"]) - map_actors_vertical_offset;
+const float max_camera_dist =
+    float(lua()["max_camera_dist"]) - map_actors_vertical_offset;
 const float max_double_click_interval_s = lua()["max_double_click_interval_s"];
 
 #if !defined(BUILD_FOR_TEST)
