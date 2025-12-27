@@ -213,14 +213,14 @@ private:
                 int const nation_id = conn->nation_id;
                 visibility_kind vis = visibility_kind::unseen;
                 if (auto * hex = Cast<Amap_hex>(a)) {
-                    if (hex->hex_id() == hex_none) {
+                    if (hex->id() == hex_none) {
                         pending_actor_reqs_.push_back({a, erase});
                         break;
                     }
                     vis = visibility_of(
-                        *gs, {}, nation_id, gs->hexes[hex->hex_id()], 0);
+                        *gs, {}, nation_id, gs->hexes[hex->id()], 0);
                 } else if (auto * system = Cast<Amap_system>(a)) {
-                    if (system->system_id() == system_none) {
+                    if (system->id() == system_none) {
                         pending_actor_reqs_.push_back({a, erase});
                         break;
                     }
@@ -228,8 +228,8 @@ private:
                         *gs,
                         {},
                         nation_id,
-                        gs->systems[system->system_id()],
-                        system->system_id());
+                        gs->systems[system->id()],
+                        system->id());
                 }
                 if (vis != visibility_kind::unseen)
                     f(conn->team_node, FNewReplicatedActorInfo(a));

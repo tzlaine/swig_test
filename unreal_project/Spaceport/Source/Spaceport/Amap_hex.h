@@ -25,12 +25,20 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::hex; }
 
-    int hex_id() { return hex_id_; }
+    int id() { return hex_id_; }
+
+protected:
+    void GetLifetimeReplicatedProps(
+        TArray<FLifetimeProperty> & props) const override;
 
 private:
-    void hex_id(int id) { hex_id_ = id; }
+    void id(int id) { hex_id_ = id; }
 
-    int hex_id_ = hex_none;
+    UPROPERTY(ReplicatedUsing = OnRep_initial_properties)
+    int32 hex_id_ = hex_none;
+
+    UFUNCTION()
+    void OnRep_initial_properties();
 
     UPROPERTY(
         VisibleAnywhere,

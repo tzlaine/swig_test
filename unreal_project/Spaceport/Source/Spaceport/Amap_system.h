@@ -45,7 +45,7 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::system; }
 
-    int system_id() { return system_id_; }
+    int id() { return system_id_; }
 
     void generate_graphical_properties(system_t const & system);
     void main_material(UMaterialInstanceDynamic * mid);
@@ -58,14 +58,15 @@ protected:
         TArray<FLifetimeProperty> & props) const override;
 
 private:
-    void system_id(int id) { system_id_ = id; }
+    void id(int id) { system_id_ = id; }
 
-    int system_id_ = system_none;
-
-    UPROPERTY(ReplicatedUsing = OnRep_graphical_properties)
+    UPROPERTY(ReplicatedUsing = OnRep_initial_properties)
+    int32 system_id_ = system_none;
+    UPROPERTY(ReplicatedUsing = OnRep_initial_properties)
     Fsystem_graphical_properties graphical_properties_;
+
     UFUNCTION()
-    void OnRep_graphical_properties();
+    void OnRep_initial_properties();
 
     UPROPERTY()
     TObjectPtr<UMaterialInstanceDynamic> main_mid_;

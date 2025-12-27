@@ -369,7 +369,8 @@ void Agame_mode::signal_start_of_play()
                                   FVector(0, 0, map_actors_vertical_offset);
         Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
             hex_class_, hex_position, FRotator(), FActorSpawnParameters());
-        hex_pawn->hex_id(to_index(hex.coord, gs.map_width));
+        hex_pawn->id(to_index(hex.coord, gs.map_width));
+        hex_pawn->OnRep_initial_properties();
         repl_graph_->reinsert_actor(hex_pawn);
 
         for (int i = hex.first_system, last = hex.last_system; i < last; ++i) {
@@ -383,9 +384,9 @@ void Agame_mode::signal_start_of_play()
                 system_position,
                 FRotator(0, random_double(0, 360), 0),
                 FActorSpawnParameters());
+            system_pawn->id(i);
             system_pawn->generate_graphical_properties(system);
-            system_pawn->OnRep_graphical_properties();
-            system_pawn->system_id(i);
+            system_pawn->OnRep_initial_properties();
             repl_graph_->reinsert_actor(system_pawn);
         }
     }

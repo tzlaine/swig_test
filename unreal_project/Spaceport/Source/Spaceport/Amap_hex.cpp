@@ -5,6 +5,7 @@
 #include <Components/SceneComponent.h>
 #include <Components/StaticMeshComponent.h>
 #include <Engine/CollisionProfile.h>
+#include <Net/UnrealNetwork.h>
 
 
 Amap_hex::Amap_hex()
@@ -76,4 +77,16 @@ void Amap_hex::hover(bool b)
 {
     Amap_pawn_base::hover(b);
     hover_indicator_->SetHiddenInGame(!b);
+}
+
+void Amap_hex::GetLifetimeReplicatedProps(
+    TArray<FLifetimeProperty> & OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(Amap_hex, hex_id_);
+}
+
+void Amap_hex::OnRep_initial_properties()
+{
+    // TODO
 }

@@ -6,6 +6,7 @@
 #include <GameFramework/FloatingPawnMovement.h>
 #include <Engine/CollisionProfile.h>
 #include <Kismet/KismetMathLibrary.h>
+#include <Net/UnrealNetwork.h>
 
 
 Amap_fleet::Amap_fleet()
@@ -88,11 +89,14 @@ void Amap_fleet::hover(bool b)
     hover_indicator_->SetHiddenInGame(!b);
 }
 
-void Amap_fleet::move_to_system(int system_id, FVector map_location)
+void Amap_fleet::GetLifetimeReplicatedProps(
+    TArray<FLifetimeProperty> & OutLifetimeProps) const
 {
-    // TODO: upate the underlying fleet object in the model.
-    move_to_system_ = system_id;
-    move_to_map_location_ = map_location;
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(Amap_fleet, move_to_map_location_);
+    DOREPLIFETIME(Amap_fleet, move_to_system_);
+    DOREPLIFETIME(Amap_fleet, nation_id_);
+    DOREPLIFETIME(Amap_fleet, fleet_id_);
 }
 
 void Amap_fleet::execute_map_move(float delta)
@@ -125,4 +129,21 @@ void Amap_fleet::execute_map_move(float delta)
     float const speed = 0.1f; // TODO: Get this from the fleet itself.
 
     AddMovementInput(move_dir, speed);
+}
+
+void Amap_fleet::move_to_system(int system_id, FVector map_location)
+{
+    // TODO: upate the underlying fleet object in the model.
+    move_to_system_ = system_id;
+    move_to_map_location_ = map_location;
+}
+
+void Amap_fleet::OnRep_move_target()
+{
+    // TODO
+}
+
+void Amap_fleet::OnRep_initial_properties()
+{
+    // TODO
 }

@@ -122,10 +122,11 @@ void Amap_system::GetLifetimeReplicatedProps(
     TArray<FLifetimeProperty> & OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(Amap_system, system_id_);
     DOREPLIFETIME(Amap_system, graphical_properties_);
 }
 
-void Amap_system::OnRep_graphical_properties()
+void Amap_system::OnRep_initial_properties()
 {
     configure_map_star(*this, graphical_properties_);
 }

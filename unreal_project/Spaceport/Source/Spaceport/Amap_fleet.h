@@ -27,20 +27,36 @@ public:
     void hover(bool b) override;
     map_pawn_kind kind() const override { return map_pawn_kind::fleet; }
 
-    nation_and_object_id_t nation_and_object_id() const
-    {
-        return nation_and_object_id_;
-    }
+    nation_and_object_id_t id() const { return {nation_id_, fleet_id_}; }
 
-    void move_to_system(int system_id, FVector map_location);
+protected:
+    void GetLifetimeReplicatedProps(
+        TArray<FLifetimeProperty> & props) const override;
 
 private:
     void execute_map_move(float delta);
-    void id(nation_and_object_id_t nao_id) { nation_and_object_id_ = nao_id; }
+    void move_to_system(int system_id, FVector map_location);
+    void id(nation_and_object_id_t nao_id)
+    {
+        nation_id_ = nao_id.nation_id;
+        fleet_id_ = nao_id.object_id;
+    }
 
-    FVector move_to_map_location_;
-    int move_to_system_ = system_none;
-    nation_and_object_id_t nation_and_object_id_{nation_none, object_none};
+    UPROPERTY(ReplicatedUsing = OnRep_move_target)
+    FVector move_to_map_location_ = FVector();
+    UPROPERTY(ReplicatedUsing = OnRep_move_target)
+    int32 move_to_system_ = system_none;
+
+    UFUNCTION()
+    void OnRep_move_target();
+
+    UPROPERTY(ReplicatedUsing = OnRep_initial_properties)
+    int32 nation_id_ = nation_none;
+    UPROPERTY(ReplicatedUsing = OnRep_initial_properties)
+    int32 fleet_id_ = object_none;
+
+    UFUNCTION()
+    void OnRep_initial_properties();
 
     UPROPERTY(
         VisibleAnywhere,
