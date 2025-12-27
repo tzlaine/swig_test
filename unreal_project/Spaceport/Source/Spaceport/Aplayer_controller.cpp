@@ -180,10 +180,29 @@ void Aplayer_controller::SetupInputComponent()
 
             end_drag();
 
+            auto double_selected = [&](auto * target) {
+                auto now = std::chrono::system_clock::now();
+                if (!keep_selected_key_down_ && prev_select_target_ == target &&
+                    (now - prev_select_time_) <
+                        std::chrono::duration<float>(
+                            max_double_click_interval_s)) {
+                    double_select(target);
+                    prev_select_target_ = nullptr;
+                    prev_select_time_ =
+                        std::chrono::time_point<std::chrono::system_clock>();
+                    return true;
+                }
+                prev_select_target_ = target;
+                prev_select_time_ = now;
+                return false;
+            };
+
             FHitResult hit_result;
             if (GetHitResultUnderCursor(fleet_channel, false, hit_result)) {
                 Amap_fleet * fleet = Cast<Amap_fleet>(hit_result.GetActor());
                 if (fleet) {
+                    if (double_selected(fleet))
+                        return;
                     select(
                         fleet,
                         keep_selected_key_down_ ? deselect::no : deselect::yes);
@@ -192,6 +211,8 @@ void Aplayer_controller::SetupInputComponent()
                            star_channel, false, hit_result)) {
                 Amap_system * system = Cast<Amap_system>(hit_result.GetActor());
                 if (system) {
+                    if (double_selected(system))
+                        return;
                     select(
                         system,
                         keep_selected_key_down_ ? deselect::no : deselect::yes);
@@ -200,6 +221,8 @@ void Aplayer_controller::SetupInputComponent()
                            hex_channel, false, hit_result)) {
                 Amap_hex * hex = Cast<Amap_hex>(hit_result.GetActor());
                 if (hex) {
+                    if (double_selected(hex))
+                        return;
                     select(
                         hex,
                         keep_selected_key_down_ ? deselect::no : deselect::yes);
@@ -693,6 +716,12 @@ void Aplayer_controller::select_in_box(
         std::span<Amap_pawn_base *>(begin(pawns), end(pawns)),
         deselect_curr,
         selecting);
+}
+
+void Aplayer_controller::double_select(Amap_pawn_base * pawn)
+{
+    // TODO
+    UE_LOG(LogTemp, Warning, TEXT("Double click!"));
 }
 
 bool Aplayer_controller::hosting_or_sp() const

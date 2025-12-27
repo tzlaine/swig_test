@@ -41,3 +41,4 @@ large_map_height = 41
 -- camera
 min_camera_dist = 50.0
 max_camera_dist = 5000.0
+max_double_click_interval_s = 0.5

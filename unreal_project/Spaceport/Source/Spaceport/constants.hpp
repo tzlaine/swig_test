@@ -98,6 +98,7 @@ extern const int large_map_height;
 
 extern const float min_camera_dist;
 extern const float max_camera_dist;
+extern const float max_double_click_interval_s;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

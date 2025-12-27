@@ -8,6 +8,7 @@
 
 #include <adobe/name.hpp>
 
+#include <chrono>
 #include <functional>
 #include <map>
 #include <span>
@@ -137,6 +138,7 @@ private:
         deselect deselect_curr,
         map_pawn_kind kind);
     void select_in_box(map_pawn_kind selecting, deselect deselect_curr);
+    void double_select(Amap_pawn_base * pawn);
     bool hosting_or_sp() const;
 
     int nation_id_ = nation_none;
@@ -151,6 +153,10 @@ private:
     client_game_state client_gs_;
 
     bool showing_main_menu_ = false;
+
+    // double-click tracking
+    Amap_pawn_base * prev_select_target_ = nullptr;
+    std::chrono::time_point<std::chrono::system_clock> prev_select_time_;
 
     UPROPERTY(
         EditAnywhere,
