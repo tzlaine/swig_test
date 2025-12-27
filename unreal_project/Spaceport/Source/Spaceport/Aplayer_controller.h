@@ -173,6 +173,22 @@ private:
         meta = (AllowPrivateAccess = "true"))
     TSubclassOf<Uaudio_assets_t> audio_assets_class_;
 
+    UPROPERTY(
+        EditAnywhere,
+        Category = "BP classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<AActor> system_star_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "BP classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<AActor> rocky_planet_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "BP classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<AActor> gas_ice_giant_class_;
+
     UPROPERTY()
     TObjectPtr<Uui_defaults_t> ui_defaults_;
     UPROPERTY()
