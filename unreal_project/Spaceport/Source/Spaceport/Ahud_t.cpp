@@ -296,20 +296,14 @@ void Ahud_t::remove_all_widgets()
 void Ahud_t::set_selection_box_first(FVector2D first)
 {
     selection_box_first_ = first;
-    UE_LOG(
-        LogTemp, Log, TEXT("selection box starts at %f,%f"), first.X, first.Y);
 }
 
 void Ahud_t::set_selection_box_last(FVector2D last)
 {
     selection_box_last_ = last;
-    UE_LOG(LogTemp, Log, TEXT("selection box stops at %f,%f"), last.X, last.Y);
 }
 
-TArray<Amap_pawn_base *> & Ahud_t::selected_in_box()
-{
-    return selected_pawns_;
-}
+TArray<Amap_pawn_base *> & Ahud_t::selected_in_box() { return selected_pawns_; }
 
 void Ahud_t::allocate_widgets()
 {
