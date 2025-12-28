@@ -3,9 +3,9 @@
 #include "Amap_pawn_base_fwd.hpp"
 #include "constants.hpp"
 #include "game_data.hpp"
+#include "map_transition_fwd.hpp"
 #include "model.hpp"
 #include "user_notification.h"
-#include "ui_util.hpp"
 
 #include <adobe/name.hpp>
 
@@ -158,12 +158,7 @@ private:
     Amap_pawn_base * prev_select_target_ = nullptr;
     std::chrono::time_point<std::chrono::system_clock> prev_select_time_;
 
-    // system view transition
-    map_mode map_mode_ = map_mode::galaxy_map;
-    bool in_transition_ = false;
-    float transition_progress_ = 0.0f;
-    FVector initial_system_star_location_{};
-    FVector final_system_star_location_{};
+    std::shared_ptr<map_transition_state> map_transition_;
 
     // system view
     UPROPERTY()

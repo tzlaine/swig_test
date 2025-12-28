@@ -9,6 +9,7 @@
 #include "Aplayer_state.h"
 #include "audio_assets.h"
 #include "game_user_settings.h"
+#include "map_transition.hpp"
 #include "materials.h"
 #include "rng.hpp"
 #include "space_creator_actor_config.hpp"
@@ -47,6 +48,7 @@ Aplayer_controller::Aplayer_controller()
     bReplicates = true;
     bAlwaysRelevant = true;
     bOnlyRelevantToOwner = true;
+    map_transition_ = std::make_shared<map_transition_state>();
 }
 
 void Aplayer_controller::BeginPlay()
@@ -117,6 +119,8 @@ void Aplayer_controller::SetupInputComponent()
         });
 
     auto const use_map_actions = [this] {
+        if (map_transition_->in_transition())
+            return false;
         auto * gs = GetWorld()->GetGameState<Agame_state>();
         check(gs);
         return gs->playing_or_paused();
@@ -307,27 +311,20 @@ void Aplayer_controller::Tick(float delta)
 {
     Super::Tick(delta);
 
-    if (in_transition_) {
-        float const close_enough = 0.001f;
-        if (system_view_transition_time_s - close_enough <
-            transition_progress_) {
-            in_transition_ = false;
-            map_mode_ = map_mode::system_map; // TODO: handle the other way too.
-        } else {
-            float const smooth_alpha = FMath::SmoothStep(
-                0.0f,
-                1.0f,
-                std::min(
-                    transition_progress_ / system_view_transition_time_s,
-                    1.0f));
-            check(system_star_);
-            FVector new_location = FMath::Lerp(
-                initial_system_star_location_,
-                final_system_star_location_,
-                smooth_alpha);
-            system_star_->SetActorLocation(new_location);
-            transition_progress_ += delta;
-        }
+    map_transition_->tick(delta);
+    auto new_camera_location = map_transition_->new_camera_location();
+    auto new_mode = map_transition_->new_map_mode();
+    if (new_camera_location || new_mode) {
+        auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
+        check(camera_pawn);
+        if (new_camera_location)
+            camera_pawn->camera_location(*new_camera_location);
+        if (new_mode)
+            camera_pawn->map_mode_changed(*new_mode);
+    }
+    if (auto new_star_location = map_transition_->new_star_location()) {
+        check(system_star_);
+        system_star_->SetActorLocation(*new_star_location);
     }
 
     if (showing_main_menu())
@@ -489,10 +486,12 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
     auto opt_hex = home_hex(client_gs_, *opt_nation);
     check(opt_hex);
     auto const home_hc = opt_hex->coord;
-    auto const location = map_hex_position(home_hc, client_gs_.map_height());
+    auto location = map_hex_position(home_hc, client_gs_.map_height());
+    location.Z = 250.0f - map_actors_vertical_offset;
+
     auto * pawn = Cast<Acontroller_pawn>(GetPawn());
     check(pawn);
-    pawn->SetActorLocation(location);
+    pawn->start_game_at(location, map_transition_);
 }
 
 void Aplayer_controller::client_recv_day_updates_Implementation(
@@ -757,17 +756,6 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             *(FVector(system->world_pos_x, system->world_pos_y, 0) *
               ui_defaults().map_scale_)
                  .ToString());
-        camera_pawn->system_view_transition(
-            FVector(system->world_pos_x, system->world_pos_y, 0) *
-                ui_defaults().map_scale_,
-            [this] {
-                in_transition_ = true;
-                transition_progress_ = 0.0f;
-                initial_system_star_location_ =
-                    system_star_->GetActorLocation();
-                final_system_star_location_ = initial_system_star_location_;
-                final_system_star_location_.Z = 0;
-            });
 
         if (system_star_)
             system_star_->Destroy();
@@ -777,19 +765,21 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
         }
 
         double const kms_per_world_unit = 500; // TODO -> constants
+        double const object_scale =
+            system->star.solar_radii * sun_radius_km / kms_per_world_unit;
+
         // the sphere static mesh the BP uses is 200x200x200
         double const system_star_radius = 100;
-        double const star_scale = system->star.solar_radii * sun_radius_km /
-                                  kms_per_world_unit / system_star_radius;
+        double const star_scale = object_scale / system_star_radius;
+
         UE_LOG(LogTemp, Warning, TEXT("star scale %f"), (float)star_scale);
         UE_LOG(
             LogTemp,
             Warning,
             TEXT("star size %f"),
             float(star_scale * system_star_radius));
-
         auto const star_location =
-            FVector(system->world_pos_x, system->world_pos_y, 1000) *
+            FVector(system->world_pos_x, system->world_pos_y, 0) *
             ui_defaults().map_scale_;
         system_star_ = GetWorld()->SpawnActor<AActor>(
             system_star_class_,
@@ -812,6 +802,14 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             }
         }
         check(missing == 0 || missing == (int)system_planets_.Num());
+
+        check(map_transition_);
+        map_transition_->to_system_map(
+            star_location,
+            camera_pawn->camera_location(),
+            system_star_,
+            system_planets_,
+            system_fleets_);
     } else {
         UE_LOG(LogTemp, Warning, TEXT("Double click!")); // TODO
     }

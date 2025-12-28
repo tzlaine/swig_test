@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ui_util.hpp"
+#include "map_transition_fwd.hpp"
 
-#include <functional>
+#include <memory>
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -25,18 +25,17 @@ public:
     Acontroller_pawn();
 
     void SetupPlayerInputComponent(UInputComponent * input) override;
-    void Tick(float delta);
 
-    void system_view_transition(
-        FVector system_location, std::function<void()> done_cb);
+    FVector camera_location() const;
+
+    void start_game_at(
+        FVector location, std::shared_ptr<map_transition_state> map_transition);
+    void camera_location(FVector new_location);
+    void map_mode_changed(map_mode new_mode);
 
 private:
+    std::shared_ptr<map_transition_state> map_transition_;
     map_mode map_mode_ = map_mode::galaxy_map;
-    bool in_transition_ = false;
-    float transition_progress_ = 0.0f;
-    FVector initial_camera_location_ = FVector();
-    FVector desired_camera_location_ = FVector();
-    std::function<void()> transition_done_cb_;
 
     UPROPERTY(
         VisibleAnywhere,

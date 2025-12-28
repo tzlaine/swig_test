@@ -1,6 +1,6 @@
 #include "Acontroller_pawn.h"
 #include "constants.hpp"
-#include "ui_defaults.h"
+#include "map_transition.hpp"
 #include "utility.hpp"
 
 #include <algorithm>
@@ -12,27 +12,9 @@
 #include <GameFramework/FloatingPawnMovement.h>
 
 
-namespace {
-    float min_camera_dist_for(map_mode mode)
-    {
-        float retval = min_camera_dist;
-        if (mode == map_mode::system_map)
-            retval += map_actors_vertical_offset;
-        return retval;
-    }
-    float max_camera_dist_for(map_mode mode)
-    {
-        float retval = max_camera_dist;
-        if (mode == map_mode::system_map)
-            retval = min_camera_dist_for(map_mode::galaxy_map) + 1000;
-        return retval;
-    }
-}
-
 Acontroller_pawn::Acontroller_pawn()
 {
-    PrimaryActorTick.bCanEverTick = true;
-    SetActorTickEnabled(false);
+    PrimaryActorTick.bCanEverTick = false;
 
     capsule_ = CreateDefaultSubobject<UCapsuleComponent>(TEXT("capsule"));
     spring_arm_ =
@@ -66,7 +48,7 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
 
     eic->BindActionValueLambda(
         slide_action_, ETriggerEvent::Triggered, [this](auto const & value) {
-            if (in_transition_)
+            if (map_transition_->in_transition())
                 return;
 
             FVector2D const delta =
@@ -77,7 +59,7 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
 
     eic->BindActionValueLambda(
         zoom_action_, ETriggerEvent::Triggered, [this](auto const & value) {
-            if (in_transition_)
+            if (map_transition_->in_transition())
                 return;
 
             float const delta =
@@ -106,70 +88,39 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
                 min_camera_dist_for(map_mode_),
                 max_camera_dist_for(map_mode_));
             if (map_mode_ == map_mode::system_map &&
-                min_camera_dist_for(map_mode::galaxy_map) <
-                    spring_arm_->TargetArmLength) {
-                // TODO: start transition out of system view
+                -just_inside_system_map < spring_arm_->TargetArmLength) {
+                spring_arm_->TargetArmLength = -just_inside_system_map;
+                if (map_transition_)
+                    map_transition_->to_galaxy_map(camera_location());
             }
         });
-
-    GetWorldTimerManager().SetTimerForNextTick([this] {
-        spring_arm_->TargetArmLength -= map_actors_vertical_offset;
-    });
 }
 
-void Acontroller_pawn::Tick(float delta)
+FVector Acontroller_pawn::camera_location() const
 {
-    Super::Tick(delta);
+    FVector retval = GetActorLocation();
+    retval.Z = -spring_arm_->TargetArmLength;
+    return retval;
+}
 
-    float const close_enough = 0.001f;
-    if (!in_transition_ ||
-        system_view_transition_time_s - close_enough < transition_progress_) {
-        SetActorTickEnabled(false);
-        if (in_transition_ && transition_done_cb_) {
-            map_mode_ = map_mode::system_map; // TODO: handle the other way too.
-            transition_done_cb_();
-        }
-        in_transition_ = false;
-        return;
-    }
+void Acontroller_pawn::start_game_at(
+    FVector location, std::shared_ptr<map_transition_state> map_transition)
+{
+    spring_arm_->TargetArmLength = location.Z;
+    location.Z = 0.0f;
+    SetActorLocation(location);
+    map_mode_ = map_mode::galaxy_map;
+    map_transition_ = std::move(map_transition);
+}
 
-    float const smooth_alpha = FMath::SmoothStep(
-        0.0f,
-        1.0f,
-        std::min(transition_progress_ / system_view_transition_time_s, 1.0f));
-    FVector new_location = FMath::Lerp(
-        initial_camera_location_, desired_camera_location_, smooth_alpha);
-    new_location.Z = FMath::Lerp(
-        initial_camera_location_.Z,
-        desired_camera_location_.Z,
-        FMath::Pow(smooth_alpha, 3));
+void Acontroller_pawn::camera_location(FVector new_location)
+{
     spring_arm_->TargetArmLength = -new_location.Z;
-    FVector const camera_location = new_location;
     new_location.Z = 0.0f;
     SetActorLocation(new_location);
-    transition_progress_ += delta;
 }
 
-void Acontroller_pawn::system_view_transition(
-    FVector system_location, std::function<void()> done_cb)
+void Acontroller_pawn::map_mode_changed(map_mode new_mode)
 {
-    in_transition_ = true;
-    transition_progress_ = 0.0f;
-    initial_camera_location_ = GetActorLocation();
-    initial_camera_location_.Z = -spring_arm_->TargetArmLength;
-    desired_camera_location_ = system_location;
-    desired_camera_location_.Z = map_actors_vertical_offset + 50;
-    transition_done_cb_ = std::move(done_cb);
-    SetActorTickEnabled(true);
-
-    FVector system_star_location{};
-    FVector map_system_location = desired_camera_location_;
-    map_system_location.Z = map_actors_vertical_offset;
-    system_star_location = FMath::RayPlaneIntersection(
-        initial_camera_location_,
-        map_system_location - initial_camera_location_,
-        FPlane(
-            FVector(
-                0, 0, desired_camera_location_.Z - initial_camera_location_.Z),
-            FVector(0, 0, -1)));
+    map_mode_ = new_mode;
 }
