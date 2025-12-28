@@ -759,7 +759,6 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                     system_star_->GetActorLocation();
                 final_system_star_location_ = initial_system_star_location_;
                 final_system_star_location_.Z = 0;
-                UE_LOG(LogTemp, Warning, TEXT("CAMERA MOVEMENT DONE!"));
             });
 
         if (system_star_)
@@ -768,6 +767,18 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             if (p)
                 p->Destroy();
         }
+
+        double const kms_per_world_unit = 500; // TODO -> constants
+        // the sphere static mesh the BP uses is 200x200x200
+        double const system_star_radius = 100;
+        double const star_scale = system->star.solar_radii * sun_radius_km /
+                                  kms_per_world_unit / system_star_radius;
+        UE_LOG(LogTemp, Warning, TEXT("star scale %f"), (float)star_scale);
+        UE_LOG(
+            LogTemp,
+            Warning,
+            TEXT("star size %f"),
+            float(star_scale * system_star_radius));
 
         auto const star_location =
             FVector(system->world_pos_x, system->world_pos_y, 1000) *
@@ -778,6 +789,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             FRotator(0, random_double(0, 360), 0),
             FActorSpawnParameters());
         configure_system_star(system_star_, system->star);
+        system_star_->SetActorScale3D(FVector(star_scale));
 
         system_planets_.SetNum(system->last_planet - system->first_planet);
         int missing = 0;
