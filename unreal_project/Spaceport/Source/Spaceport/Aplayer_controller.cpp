@@ -10,6 +10,8 @@
 #include "audio_assets.h"
 #include "game_user_settings.h"
 #include "materials.h"
+#include "rng.hpp"
+#include "space_creator_actor_config.hpp"
 #include "textures.h"
 #include "ui_defaults.h"
 #include "utility.hpp"
@@ -38,6 +40,69 @@ namespace {
         float const min_dist_sq = min_drag_distance * min_drag_distance;
         return min_dist_sq < (first - last).SquaredLength();
     }
+
+    template<typename T>
+    struct system_view_object
+    {
+        T object_ = {};
+        AActor * actor_ = nullptr;
+    };
+
+    struct system_view
+    {
+        system_view(
+            client_game_state const & gs,
+            int system_id,
+            system_t const & system,
+            FVector system_star_initial_location,
+            UWorld * w,
+            TSubclassOf<AActor> const & system_star_class,
+            TSubclassOf<AActor> const & rocky_planet_class,
+            TSubclassOf<AActor> const & gas_ice_giant_class)
+        {
+            star_.object_ = system.star;
+            auto const star_position =
+                FVector(system.world_pos_x, system.world_pos_y, 0) *
+                    ui_defaults().map_scale_ +
+                FVector(0, 0, map_actors_vertical_offset); // TODO
+            star_.actor_ = w->SpawnActor<AActor>(
+                system_star_class,
+                star_position,
+                FRotator(0, random_double(0, 360), 0),
+                FActorSpawnParameters());
+            configure_system_star(star_.actor_, star_.object_);
+
+            planets_.resize(system.last_planet - system.first_planet);
+            int missing = 0;
+            for (int i = system.first_planet, last = system.last_planet;
+                 i != last;
+                 ++i) {
+                if (auto planet = ::planet(gs, i)) {
+                    planets_[i].object_ = *planet;
+                    // TODO planets_[i].actor_ = TODO;
+                } else {
+                    ++missing;
+                }
+            }
+            check(missing == 0 || missing == (int)planets_.size());
+        }
+
+        ~system_view()
+        {
+            if (star_.actor_)
+                star_.actor_->Destroy();
+            for (auto const & [obj, actor] : planets_) {
+                if (actor)
+                    actor->Destroy();
+            }
+        }
+
+        system_view_object<star_t> star_;
+        std::vector<system_view_object<planet_t>> planets_;
+        int system_id_;
+    };
+
+    std::unique_ptr<system_view> g_system_view;
 }
 
 Aplayer_controller::Aplayer_controller()
@@ -720,8 +785,39 @@ void Aplayer_controller::select_in_box(
 
 void Aplayer_controller::double_select(Amap_pawn_base * pawn)
 {
-    // TODO
-    UE_LOG(LogTemp, Warning, TEXT("Double click!"));
+    if (auto * system = Cast<Amap_system>(pawn)) {
+        auto * pawn = Cast<Acontroller_pawn>(GetPawn());
+        check(pawn);
+        auto system_opt = ::system(client_gs_, system->id());
+        check(system_opt);
+        auto const [system_star_initial_location, initial_camera_location] =
+            pawn->system_view_transition(
+                FVector(system_opt->world_pos_x, system_opt->world_pos_y, 0) *
+                    ui_defaults().map_scale_,
+                [this](FVector new_pos) {
+                    // TODO
+                });
+        return; // TODO
+
+        g_system_view = std::make_unique<system_view>(
+            client_gs_,
+            system->id(),
+            *system_opt,
+            system_star_initial_location,
+            GetWorld(),
+            system_star_class_,
+            rocky_planet_class_,
+            gas_ice_giant_class_);
+        system_star_ = g_system_view->star_.actor_;
+        system_planets_.SetNum(g_system_view->planets_.size());
+        std::ranges::transform(
+            g_system_view->planets_,
+            system_planets_.GetData(),
+            std::identity{},
+            &system_view_object<planet_t>::actor_);
+    } else {
+        UE_LOG(LogTemp, Warning, TEXT("Double click!"));
+    }
 }
 
 bool Aplayer_controller::hosting_or_sp() const

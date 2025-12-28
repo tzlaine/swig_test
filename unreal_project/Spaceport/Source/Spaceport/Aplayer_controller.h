@@ -149,7 +149,6 @@ private:
     FVector2D selection_box_first_;
     FVector2D selection_box_last_;
 
-    game_state_t game_state_;
     client_game_state client_gs_;
 
     bool showing_main_menu_ = false;
@@ -157,6 +156,14 @@ private:
     // double-click tracking
     Amap_pawn_base * prev_select_target_ = nullptr;
     std::chrono::time_point<std::chrono::system_clock> prev_select_time_;
+
+    // system view
+    UPROPERTY()
+    AActor * system_star_ = nullptr;
+    UPROPERTY()
+    TArray<AActor *> system_planets_;
+    UPROPERTY()
+    TArray<AActor *> system_fleets_;
 
     UPROPERTY(
         EditAnywhere,

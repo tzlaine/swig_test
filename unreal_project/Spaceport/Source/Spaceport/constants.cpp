@@ -101,6 +101,7 @@ const float min_camera_dist =
 const float max_camera_dist =
     float(lua()["max_camera_dist"]) - map_actors_vertical_offset;
 const float max_double_click_interval_s = lua()["max_double_click_interval_s"];
+const float system_view_transition_time_s = 3; // TODO
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =

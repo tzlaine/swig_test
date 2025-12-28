@@ -100,6 +100,7 @@ extern const float map_actors_vertical_offset;
 extern const float min_camera_dist;
 extern const float max_camera_dist;
 extern const float max_double_click_interval_s;
+extern const float system_view_transition_time_s;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;
