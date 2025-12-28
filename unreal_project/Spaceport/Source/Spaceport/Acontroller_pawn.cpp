@@ -85,8 +85,8 @@ void Acontroller_pawn::Tick(float delta)
     if (!in_transition_ ||
         system_view_transition_time_s - close_enough < transition_progress_) {
         SetActorTickEnabled(false);
-        if (in_transition_ && tick_update_)
-            tick_update_(FVector()); // TODO
+        if (in_transition_ && transition_done_cb_)
+            transition_done_cb_();
         in_transition_ = false;
         return;
     }
@@ -108,8 +108,8 @@ void Acontroller_pawn::Tick(float delta)
     transition_progress_ += delta;
 }
 
-system_view_transition_result Acontroller_pawn::system_view_transition(
-    FVector system_location, std::function<void(FVector)> tick_update)
+void Acontroller_pawn::system_view_transition(
+    FVector system_location, std::function<void()> done_cb)
 {
     in_transition_ = true;
     transition_progress_ = 0.0f;
@@ -117,7 +117,7 @@ system_view_transition_result Acontroller_pawn::system_view_transition(
     initial_camera_location_.Z = -spring_arm_->TargetArmLength;
     desired_camera_location_ = system_location;
     desired_camera_location_.Z = map_actors_vertical_offset + 50;
-    tick_update_ = std::move(tick_update);
+    transition_done_cb_ = std::move(done_cb);
     SetActorTickEnabled(true);
 
     FVector system_star_location{};
@@ -130,6 +130,4 @@ system_view_transition_result Acontroller_pawn::system_view_transition(
             FVector(
                 0, 0, desired_camera_location_.Z - initial_camera_location_.Z),
             FVector(0, 0, -1)));
-    return system_view_transition_result{
-        system_star_location, initial_camera_location_};
 }

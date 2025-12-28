@@ -752,7 +752,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
         camera_pawn->system_view_transition(
             FVector(system->world_pos_x, system->world_pos_y, 0) *
                 ui_defaults().map_scale_,
-            [this](FVector camera_delta) {
+            [this] {
                 in_transition_ = true;
                 transition_progress_ = 0.0f;
                 initial_system_star_location_ =

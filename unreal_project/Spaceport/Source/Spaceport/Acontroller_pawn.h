@@ -14,12 +14,6 @@ class UInputAction;
 class UInputComponent;
 class USpringArmComponent;
 
-struct system_view_transition_result
-{
-    FVector system_star_location_;
-    FVector camera_location_;
-};
-
 UCLASS()
 class Acontroller_pawn : public APawn
 {
@@ -31,15 +25,15 @@ public:
     void SetupPlayerInputComponent(UInputComponent * input) override;
     void Tick(float delta);
 
-    system_view_transition_result system_view_transition(
-        FVector system_location, std::function<void(FVector)> tick_update);
+    void system_view_transition(
+        FVector system_location, std::function<void()> done_cb);
 
 private:
     bool in_transition_ = false;
     float transition_progress_ = 0.0f;
     FVector initial_camera_location_ = FVector();
     FVector desired_camera_location_ = FVector();
-    std::function<void(FVector)> tick_update_;
+    std::function<void()> transition_done_cb_;
 
     UPROPERTY(
         VisibleAnywhere,
