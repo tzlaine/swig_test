@@ -85,6 +85,8 @@ void Acontroller_pawn::Tick(float delta)
     if (!in_transition_ ||
         system_view_transition_time_s - close_enough < transition_progress_) {
         SetActorTickEnabled(false);
+        if (in_transition_ && tick_update_)
+            tick_update_(FVector()); // TODO
         in_transition_ = false;
         return;
     }
@@ -100,10 +102,9 @@ void Acontroller_pawn::Tick(float delta)
         desired_camera_location_.Z,
         FMath::Pow(smooth_alpha, 3));
     spring_arm_->TargetArmLength = -new_location.Z;
+    FVector const camera_location = new_location;
     new_location.Z = 0.0f;
     SetActorLocation(new_location);
-    if (tick_update_)
-        tick_update_(new_location);
     transition_progress_ += delta;
 }
 
@@ -115,7 +116,7 @@ system_view_transition_result Acontroller_pawn::system_view_transition(
     initial_camera_location_ = GetActorLocation();
     initial_camera_location_.Z = -spring_arm_->TargetArmLength;
     desired_camera_location_ = system_location;
-    desired_camera_location_.Z = map_actors_vertical_offset + 10;
+    desired_camera_location_.Z = map_actors_vertical_offset + 50;
     tick_update_ = std::move(tick_update);
     SetActorTickEnabled(true);
 

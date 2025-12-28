@@ -157,6 +157,12 @@ private:
     Amap_pawn_base * prev_select_target_ = nullptr;
     std::chrono::time_point<std::chrono::system_clock> prev_select_time_;
 
+    // system view transition
+    bool in_transition_ = false;
+    float transition_progress_ = 0.0f;
+    FVector initial_system_star_location_{};
+    FVector final_system_star_location_{};
+
     // system view
     UPROPERTY()
     AActor * system_star_ = nullptr;

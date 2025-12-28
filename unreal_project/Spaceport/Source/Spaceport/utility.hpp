@@ -5,7 +5,10 @@
 #include "Ahud_t.h"
 #include "text/beman_utf_view/utf_view.hpp"
 
+#include <boost/type_index.hpp>
+
 #include <algorithm>
+#include <exception>
 #include <filesystem>
 #include <string>
 
@@ -185,4 +188,42 @@ inline USoundClass * sound_class_of(USoundMix const * mix)
             return o.SoundClassObject;
     }
     return nullptr;
+}
+
+template<typename T>
+void set_property(AActor * a, FName name, T value)
+{
+#if 0 // TODO
+    TMap<FName, FString> all_props;
+    for (TFieldIterator<FProperty> it(
+             a->GetClass(), EFieldIteratorFlags::ExcludeSuper);
+         it;
+         ++it) {
+        FProperty * prop = *it;
+
+        if (prop->IsA<FObjectProperty>())
+            continue;
+
+        FString value_str;
+        if (prop->ExportText_InContainer(0, value_str, a, a, a, PPF_None))
+            all_props.Add(prop->GetFName(), value_str);
+    }
+#endif
+
+    FProperty * const p = a->GetClass()->FindPropertyByName(name);
+    if (!p) {
+        throw std::runtime_error(std::format(
+            "Actor {} does not have property {}.", a->GetName(), name));
+    }
+
+    T * const ptr = p->ContainerPtrToValuePtr<T>(a);
+    if (!ptr) {
+        throw std::runtime_error(std::format(
+            "Could not get property {} of type {} from actor {}.",
+            name,
+            boost::typeindex::type_id<T>().pretty_name(),
+            a->GetName()));
+    }
+
+    *ptr = std::move(value);
 }
