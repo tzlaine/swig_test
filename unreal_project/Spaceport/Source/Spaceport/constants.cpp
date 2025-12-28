@@ -95,7 +95,7 @@ const int small_map_height = lua()["small_map_height"];
 const int medium_map_height = lua()["medium_map_height"];
 const int large_map_height = lua()["large_map_height"];
 
-const float map_actors_vertical_offset = -2500.0f;
+const float map_actors_vertical_offset = -25000.0f;
 const float min_camera_dist =
     float(lua()["min_camera_dist"]) - map_actors_vertical_offset;
 const float max_camera_dist =
