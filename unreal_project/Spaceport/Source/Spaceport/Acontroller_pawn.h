@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ui_util.hpp"
+
 #include <functional>
 
 #include "CoreMinimal.h"
@@ -29,6 +31,7 @@ public:
         FVector system_location, std::function<void()> done_cb);
 
 private:
+    map_mode map_mode_ = map_mode::galaxy_map;
     bool in_transition_ = false;
     float transition_progress_ = 0.0f;
     FVector initial_camera_location_ = FVector();

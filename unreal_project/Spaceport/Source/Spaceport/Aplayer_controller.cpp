@@ -308,18 +308,26 @@ void Aplayer_controller::Tick(float delta)
     Super::Tick(delta);
 
     if (in_transition_) {
-        float const smooth_alpha = FMath::SmoothStep(
-            0.0f,
-            1.0f,
-            std::min(
-                transition_progress_ / system_view_transition_time_s, 1.0f));
-        check(system_star_);
-        FVector new_location = FMath::Lerp(
-            initial_system_star_location_,
-            final_system_star_location_,
-            smooth_alpha);
-        system_star_->SetActorLocation(new_location);
-        transition_progress_ += delta;
+        float const close_enough = 0.001f;
+        if (system_view_transition_time_s - close_enough <
+            transition_progress_) {
+            in_transition_ = false;
+            map_mode_ = map_mode::system_map; // TODO: handle the other way too.
+        } else {
+            float const smooth_alpha = FMath::SmoothStep(
+                0.0f,
+                1.0f,
+                std::min(
+                    transition_progress_ / system_view_transition_time_s,
+                    1.0f));
+            check(system_star_);
+            FVector new_location = FMath::Lerp(
+                initial_system_star_location_,
+                final_system_star_location_,
+                smooth_alpha);
+            system_star_->SetActorLocation(new_location);
+            transition_progress_ += delta;
+        }
     }
 
     if (showing_main_menu())

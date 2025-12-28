@@ -5,6 +5,7 @@
 #include "game_data.hpp"
 #include "model.hpp"
 #include "user_notification.h"
+#include "ui_util.hpp"
 
 #include <adobe/name.hpp>
 
@@ -158,6 +159,7 @@ private:
     std::chrono::time_point<std::chrono::system_clock> prev_select_time_;
 
     // system view transition
+    map_mode map_mode_ = map_mode::galaxy_map;
     bool in_transition_ = false;
     float transition_progress_ = 0.0f;
     FVector initial_system_star_location_{};

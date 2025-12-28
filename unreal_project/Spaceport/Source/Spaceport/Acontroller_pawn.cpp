@@ -12,6 +12,23 @@
 #include <GameFramework/FloatingPawnMovement.h>
 
 
+namespace {
+    float min_camera_dist_for(map_mode mode)
+    {
+        float retval = min_camera_dist;
+        if (mode == map_mode::system_map)
+            retval += map_actors_vertical_offset;
+        return retval;
+    }
+    float max_camera_dist_for(map_mode mode)
+    {
+        float retval = max_camera_dist;
+        if (mode == map_mode::system_map)
+            retval = min_camera_dist_for(map_mode::galaxy_map) + 1000;
+        return retval;
+    }
+}
+
 Acontroller_pawn::Acontroller_pawn()
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -66,10 +83,33 @@ void Acontroller_pawn::SetupPlayerInputComponent(UInputComponent * input)
             float const delta =
                 value.Get<float>() * (ui_defaults().camera_zoom_speed_ +
                                       std::log(spring_arm_->TargetArmLength));
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("BEFORE: spring_arm_->TargetArmLength=%f delta=%f min=%f "
+                     "max=%f"),
+                spring_arm_->TargetArmLength,
+                delta,
+                min_camera_dist_for(map_mode_),
+                max_camera_dist_for(map_mode_));
             spring_arm_->TargetArmLength = std::clamp(
                 spring_arm_->TargetArmLength + delta,
-                min_camera_dist,
-                max_camera_dist);
+                min_camera_dist_for(map_mode_),
+                max_camera_dist_for(map_mode_));
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("AFTER: spring_arm_->TargetArmLength=%f delta=%f min=%f "
+                     "max=%f"),
+                spring_arm_->TargetArmLength,
+                delta,
+                min_camera_dist_for(map_mode_),
+                max_camera_dist_for(map_mode_));
+            if (map_mode_ == map_mode::system_map &&
+                min_camera_dist_for(map_mode::galaxy_map) <
+                    spring_arm_->TargetArmLength) {
+                // TODO: start transition out of system view
+            }
         });
 
     GetWorldTimerManager().SetTimerForNextTick([this] {
@@ -85,8 +125,10 @@ void Acontroller_pawn::Tick(float delta)
     if (!in_transition_ ||
         system_view_transition_time_s - close_enough < transition_progress_) {
         SetActorTickEnabled(false);
-        if (in_transition_ && transition_done_cb_)
+        if (in_transition_ && transition_done_cb_) {
+            map_mode_ = map_mode::system_map; // TODO: handle the other way too.
             transition_done_cb_();
+        }
         in_transition_ = false;
         return;
     }
