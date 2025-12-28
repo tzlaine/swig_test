@@ -344,6 +344,9 @@ void configure_map_star(
     system.selection_materials(selected_mid, hovered_mid);
 }
 
+// TODO: Such simple graphical settings should go into BPs instead.  This
+// should be replaced by an array of each stellar class in the player
+// controller.  The particular one used should be chosen at random.
 void configure_system_star(AActor * star_actor, star_t const & star)
 {
     check(star_actor);
@@ -363,32 +366,24 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         true); // TODO: Disable based on settings.
 
     // class O
-    FLinearColor const f_atmosphere_color =
-        FColor(0x06, 0x55, 0xFF, 0xFF);
-    FLinearColor const f_explosions_color =
-        FColor(0x0B, 0x64, 0xFF, 0xFF);
-    FLinearColor const f_ejections_color = f_explosions_color;
-    FLinearColor const f_dark_filaments_color =
-        FColor(0x00, 0x1B, 0x67, 0xFF);
-    FLinearColor const f_low_zones_color = FColor(0x00, 0x40, 0xFF, 0xFF);
+    FLinearColor const o_atmosphere_color = FColor(0x06, 0x55, 0xFF, 0xFF);
+    FLinearColor const o_explosions_color = FColor(0x0B, 0x64, 0xFF, 0xFF);
+    FLinearColor const o_ejections_color = o_explosions_color;
+    FLinearColor const o_dark_filaments_color = FColor(0x00, 0x1B, 0x67, 0xFF);
+    FLinearColor const o_low_zones_color = FColor(0x00, 0x40, 0xFF, 0xFF);
 
     // class F
-    FLinearColor const o_atmosphere_color = FColor::White;
-    FLinearColor const o_explosions_color =
-        FColor(0x54, 0x54, 0x54, 0xFF);
-    FLinearColor const o_ejections_color = FColor::White;
-    FLinearColor const o_dark_filaments_color =
-        FColor(0xC5, 0xC5, 0xC5, 0xFF);
-    FLinearColor const o_low_zones_color = FColor(0x55, 0x55, 0x55, 0xFF);
+    FLinearColor const f_atmosphere_color = FColor::White;
+    FLinearColor const f_explosions_color = FColor(0x54, 0x54, 0x54, 0xFF);
+    FLinearColor const f_ejections_color = FColor::White;
+    FLinearColor const f_dark_filaments_color = FColor(0xC5, 0xC5, 0xC5, 0xFF);
+    FLinearColor const f_low_zones_color = FColor(0x55, 0x55, 0x55, 0xFF);
 
     // class K
-    FLinearColor const k_atmosphere_color =
-        FColor(0xFF, 0x33, 0x06, 0xFF);
-    FLinearColor const k_explosions_color =
-        FColor(0xFF, 0x29, 0x0B, 0xFF);
+    FLinearColor const k_atmosphere_color = FColor(0xFF, 0x33, 0x06, 0xFF);
+    FLinearColor const k_explosions_color = FColor(0xFF, 0x29, 0x0B, 0xFF);
     FLinearColor const k_ejections_color = k_explosions_color;
-    FLinearColor const k_dark_filaments_color =
-        FColor(0x67, 0x06, 0x00, 0xFF);
+    FLinearColor const k_dark_filaments_color = FColor(0x67, 0x06, 0x00, 0xFF);
     FLinearColor const k_low_zones_color = FColor(0xFF, 0x17, 0x00, 0xFF);
 
     FLinearColor atmosphere_color = {};
@@ -408,14 +403,14 @@ void configure_system_star(AActor * star_actor, star_t const & star)
     case star_class_t::a: {
         double const alpha =
             (star.star_class == star_class_t::b ? 1.0 : 2.0) / 3.0;
-        atmosphere_color = FLinearColor::LerpUsingHSV(
-            f_atmosphere_color, o_atmosphere_color, alpha);
-        ejections_color = explosions_color = FLinearColor::LerpUsingHSV(
-            f_explosions_color, o_explosions_color, alpha);
-        dark_filaments_color = FLinearColor::LerpUsingHSV(
-            f_dark_filaments_color, o_dark_filaments_color, alpha);
-        low_zones_color = FLinearColor::LerpUsingHSV(
-            f_dark_filaments_color, o_dark_filaments_color, alpha);
+        atmosphere_color =
+            f_atmosphere_color * (1 - alpha) + o_atmosphere_color * alpha;
+        ejections_color = explosions_color =
+            f_explosions_color * (1 - alpha) + o_explosions_color * alpha;
+        dark_filaments_color = f_dark_filaments_color * (1 - alpha) +
+                               o_dark_filaments_color * alpha;
+        low_zones_color = f_dark_filaments_color * (1 - alpha) +
+                          o_dark_filaments_color * alpha;
         break;
     }
     case star_class_t::f:
@@ -426,15 +421,8 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         low_zones_color = f_low_zones_color;
         break;
     case star_class_t::g:
-        atmosphere_color = FLinearColor::LerpUsingHSV(
-            f_atmosphere_color, k_atmosphere_color, 0.5);
-        ejections_color = explosions_color = FLinearColor::LerpUsingHSV(
-            f_explosions_color, k_explosions_color, 0.5);
-        dark_filaments_color = FLinearColor::LerpUsingHSV(
-            f_dark_filaments_color, k_dark_filaments_color, 0.5);
-        low_zones_color = FLinearColor::LerpUsingHSV(
-            f_dark_filaments_color, k_dark_filaments_color, 0.5);
-        break;
+        set_property(star_actor, TEXT("dirty"), true);
+        return;
     case star_class_t::k:
         atmosphere_color = k_atmosphere_color;
         explosions_color = k_explosions_color;
@@ -444,8 +432,7 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         break;
     case star_class_t::m:
         atmosphere_color = FColor(0xFF, 0x1F, 0x06, 0xFF);
-        ejections_color = explosions_color =
-            FColor(0xFF, 0x15, 0x0B, 0xFF);
+        ejections_color = explosions_color = FColor(0xFF, 0x15, 0x0B, 0xFF);
         dark_filaments_color = FColor(0x67, 0x03, 0x00, 0xFF);
         low_zones_color = FColor(0xFF, 0x02, 0x00, 0xFF);
         break;
