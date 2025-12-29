@@ -28,21 +28,8 @@ inline std::string to_string(map_mode mode)
     }
 }
 
-inline float min_camera_dist_for(map_mode mode)
-{
-    float retval = min_camera_dist;
-    if (mode == map_mode::system_map)
-        retval += map_actors_vertical_offset;
-    return retval;
-}
-
-inline float max_camera_dist_for(map_mode mode)
-{
-    float retval = max_camera_dist;
-    if (mode == map_mode::system_map)
-        retval = min_camera_dist_for(map_mode::galaxy_map) + 1000;
-    return retval;
-}
+float min_camera_dist_for(map_mode mode);
+float max_camera_dist_for(map_mode mode);
 
 struct map_transition_state
 {

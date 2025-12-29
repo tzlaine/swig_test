@@ -21,6 +21,22 @@ namespace {
     float const system_star_far_z = 100000.0f;
 }
 
+float min_camera_dist_for(map_mode mode)
+{
+    float retval = min_camera_dist;
+    if (mode == map_mode::system_map)
+        retval += map_actors_vertical_offset;
+    return retval;
+}
+
+float max_camera_dist_for(map_mode mode)
+{
+    float retval = max_camera_dist;
+    if (mode == map_mode::system_map)
+        retval = min_camera_dist_for(map_mode::galaxy_map) + 1000;
+    return retval;
+}
+
 void map_transition_state::to_system_map(
     FVector system_location,
     FVector camera_location,
