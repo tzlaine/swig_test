@@ -175,10 +175,27 @@ void Aplayer_controller::SetupInputComponent()
                 delta,
                 min_camera_dist_for(map_transition_->mode()),
                 max_camera_dist_for(map_transition_->mode()));
+
+            float const desired_arm_length =
+                camera_pawn->target_arm_length() + delta;
+
+            // pushing down when already at the bottom of the galaxy map takes
+            // us to the system map, if we're already pointing at a system
+            if (map_transition_->mode() == map_mode::galaxy_map &&
+                camera_pawn->target_arm_length() <
+                    min_camera_dist_for(map_mode::galaxy_map) + 0.1 &&
+                curr_hovers_.size() == 1u) {
+                if (auto * map_system =
+                        Cast<Amap_system>(curr_hovers_.front())) {
+                    double_select(curr_hovers_.front());
+                }
+            }
+
             camera_pawn->target_arm_length(std::clamp(
-                camera_pawn->target_arm_length() + delta,
+                desired_arm_length,
                 min_camera_dist_for(map_transition_->mode()),
                 max_camera_dist_for(map_transition_->mode())));
+
             UE_LOG(
                 LogTemp,
                 Log,
@@ -188,6 +205,9 @@ void Aplayer_controller::SetupInputComponent()
                 delta,
                 min_camera_dist_for(map_transition_->mode()),
                 max_camera_dist_for(map_transition_->mode()));
+
+            // pulling up when already at the top of the system map takes us
+            // to the galaxy map
             if (map_transition_->mode() == map_mode::system_map &&
                 -just_inside_system_map < camera_pawn->target_arm_length()) {
                 camera_pawn->target_arm_length(-just_inside_system_map);
@@ -821,9 +841,9 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                 p->Destroy();
         }
 
-        double const kms_per_world_unit = 500; // TODO -> constants
-        double const object_scale =
-            system->star.solar_radii * sun_radius_km / kms_per_world_unit;
+        double const system_map_kms_per_world_unit = 500; // TODO -> constants
+        double const object_scale = system->star.solar_radii * sun_radius_km /
+                                    system_map_kms_per_world_unit;
 
         // the sphere static mesh the BP uses is 200x200x200
         double const system_star_radius = 100;
