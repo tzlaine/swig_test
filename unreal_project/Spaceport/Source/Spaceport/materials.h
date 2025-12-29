@@ -39,6 +39,8 @@ public:
     TObjectPtr<UMaterialInterface> red_map_star_2_;
     UPROPERTY(EditAnywhere, Category = "Materials")
     TObjectPtr<UMaterialInterface> system_selected_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TObjectPtr<UMaterialInterface> system_star_outline_;
 };
 
 Umaterials_t const & materials();

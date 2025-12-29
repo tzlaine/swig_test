@@ -248,7 +248,9 @@ Fsystem_graphical_properties generate_map_star(system_t const & system)
 }
 
 void configure_map_star(
-    Amap_system & system, Fsystem_graphical_properties const & props)
+    Amap_system & system,
+    Fsystem_graphical_properties const & props,
+    bool capitol)
 {
     auto const & materials = ::materials();
     UMaterialInterface * material = nullptr;
@@ -295,12 +297,14 @@ void configure_map_star(
 
     system.main_material(instance);
 
-    UMaterialInstanceDynamic * selected_mid =
-        UMaterialInstanceDynamic::Create(materials.system_selected_, &system);
+    UMaterialInstanceDynamic * selected_mid = UMaterialInstanceDynamic::Create(
+        capitol ? materials.system_star_outline_ : materials.system_selected_,
+        &system);
     selected_mid->SetVectorParameterValue(
         TEXT("color"), ui_defaults().system_selected_color_);
-    UMaterialInstanceDynamic * hovered_mid =
-        UMaterialInstanceDynamic::Create(materials.system_selected_, &system);
+    UMaterialInstanceDynamic * hovered_mid = UMaterialInstanceDynamic::Create(
+        capitol ? materials.system_star_outline_ : materials.system_selected_,
+        &system);
     hovered_mid->SetVectorParameterValue(
         TEXT("color"), ui_defaults().system_hovered_color_);
     system.selection_materials(selected_mid, hovered_mid);

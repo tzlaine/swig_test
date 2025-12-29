@@ -68,6 +68,19 @@ struct client_game_state
 
     int map_width() const { return map_width_; }
     int map_height() const { return map_height_; }
+    std::vector<indexed_object<hex_t>> const & hexes() const { return hexes_; }
+    std::vector<indexed_object<system_t>> const & systems() const
+    {
+        return systems_;
+    }
+    std::vector<indexed_object<planet_t>> const & planets() const
+    {
+        return planets_;
+    }
+    std::vector<indexed_object<nation_t>> const & nations() const
+    {
+        return nations_;
+    }
 
     boost::optional<hex_t const &> hex(int i) const;
     boost::optional<system_t const &> system(int i) const;

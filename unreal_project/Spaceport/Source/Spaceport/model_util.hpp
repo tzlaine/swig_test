@@ -398,3 +398,16 @@ home_hex(GameState const & gs, nation_t const & nation)
 {
     return hex(gs, home_hex_index(gs, nation));
 }
+
+template<typename GameState>
+bool planet_in_system(
+    GameState const & gs,
+    boost::optional<int> planet_id,
+    boost::optional<int> system_id)
+{
+    auto const & system = ::system(gs, system_id);
+    if (!planet_id || !system)
+        return false;
+    return system->first_planet <= *planet_id &&
+           *planet_id < system->last_planet;
+}

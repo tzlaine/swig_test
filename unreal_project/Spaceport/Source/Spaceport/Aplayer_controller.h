@@ -118,6 +118,7 @@ public:
     TArray<FEnhancedActionKeyMapping>
     player_mappable_action_key_mappings() const;
     TMap<FKey, FKey> current_to_default_keys() const;
+    client_game_state const & gs() const { return client_gs_; }
     int nation_id() const { return nation_id_; }
 
     Uui_defaults_t const & ui_defaults();

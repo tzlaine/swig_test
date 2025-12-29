@@ -65,6 +65,9 @@ private:
     UPROPERTY(ReplicatedUsing = OnRep_initial_properties)
     Fsystem_graphical_properties graphical_properties_;
 
+    // client-side-only property
+    int capitol_for_nation_ = nation_none;
+
     UFUNCTION()
     void OnRep_initial_properties();
 

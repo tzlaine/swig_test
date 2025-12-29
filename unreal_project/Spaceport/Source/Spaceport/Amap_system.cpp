@@ -95,6 +95,8 @@ void Amap_system::select(bool b)
 
 void Amap_system::hover(bool b)
 {
+    if (capitol_for_nation_ != nation_none)
+        return;
     hover_indicator_->SetHiddenInGame(!b);
 }
 
@@ -128,5 +130,17 @@ void Amap_system::GetLifetimeReplicatedProps(
 
 void Amap_system::OnRep_initial_properties()
 {
-    configure_map_star(*this, graphical_properties_);
+    int const nation_id = player_controller()->nation_id();
+    client_game_state const & gs = player_controller()->gs();
+    for (auto const & [id, nation] : gs.nations()) {
+        if (id != nation_id)
+            continue;
+        if (planet_in_system(gs, nation.home_planet, system_id_)) {
+            capitol_for_nation_ = id;
+            hover_indicator_->SetHiddenInGame(false);
+            break;
+        }
+    }
+    configure_map_star(
+        *this, graphical_properties_, capitol_for_nation_ != nation_none);
 }
