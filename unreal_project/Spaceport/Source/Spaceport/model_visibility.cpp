@@ -132,16 +132,16 @@ visibility_kind visibility_of(
 {
     nation_t const & nation = gs.nations[nation_id];
     if (std::ranges::binary_search(
-            gs.nations[nation_id].hexes_seen, system.hex_id)) {
-        return visibility_kind::neutral_or_enemy;
-    }
-    if (std::ranges::binary_search(
             gs.nations[nation_id].systems_present_in, system_index)) {
         return visibility_kind::owner;
     }
     if (std::ranges::binary_search(
             gs.nations[nation_id].systems_visited, system_index)) {
         return visibility_kind::owner;
+    }
+    if (std::ranges::binary_search(
+            gs.nations[nation_id].hexes_seen, system.hex_id)) {
+        return visibility_kind::neutral_or_enemy;
     }
     return visibility_kind::unseen;
 }
