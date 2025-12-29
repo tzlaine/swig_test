@@ -135,6 +135,67 @@ void Aplayer_controller::SetupInputComponent()
     };
 
     eic->BindActionValueLambda(
+        slide_action_,
+        ETriggerEvent::Triggered,
+        [use_map_actions, this](auto const & value) {
+            if (!use_map_actions())
+                return;
+
+            auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
+            check(camera_pawn);
+
+            // TODO: Put the map size in Agame_state, and use that here to
+            // bound how far we can move in any direction.
+
+            FVector2D const delta =
+                value.Get<FVector2D>() * ui_defaults().camera_pan_speed_;
+            camera_pawn->AddMovementInput(FVector::UnitX(), delta.X);
+            camera_pawn->AddMovementInput(FVector::UnitY(), delta.Y);
+        });
+
+    eic->BindActionValueLambda(
+        zoom_action_,
+        ETriggerEvent::Triggered,
+        [use_map_actions, this](auto const & value) {
+            if (!use_map_actions())
+                return;
+
+            auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
+            check(camera_pawn);
+
+            float const delta = value.Get<float>() *
+                                (ui_defaults().camera_zoom_speed_ +
+                                 std::log(camera_pawn->target_arm_length()));
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("BEFORE: spring_arm_->TargetArmLength=%f delta=%f min=%f "
+                     "max=%f"),
+                camera_pawn->target_arm_length(),
+                delta,
+                min_camera_dist_for(map_transition_->mode()),
+                max_camera_dist_for(map_transition_->mode()));
+            camera_pawn->target_arm_length(std::clamp(
+                camera_pawn->target_arm_length() + delta,
+                min_camera_dist_for(map_transition_->mode()),
+                max_camera_dist_for(map_transition_->mode())));
+            UE_LOG(
+                LogTemp,
+                Log,
+                TEXT("AFTER: spring_arm_->TargetArmLength=%f delta=%f min=%f "
+                     "max=%f"),
+                camera_pawn->target_arm_length(),
+                delta,
+                min_camera_dist_for(map_transition_->mode()),
+                max_camera_dist_for(map_transition_->mode()));
+            if (map_transition_->mode() == map_mode::system_map &&
+                -just_inside_system_map < camera_pawn->target_arm_length()) {
+                camera_pawn->target_arm_length(-just_inside_system_map);
+                map_transition_->to_galaxy_map(camera_pawn->camera_location());
+            }
+        });
+
+    eic->BindActionValueLambda(
         select_object_action_,
         ETriggerEvent::Started,
         [use_map_actions, this](auto const &) {
@@ -312,15 +373,11 @@ void Aplayer_controller::Tick(float delta)
     Super::Tick(delta);
 
     map_transition_->tick(delta);
-    auto new_camera_location = map_transition_->new_camera_location();
-    auto new_mode = map_transition_->new_map_mode();
-    if (new_camera_location || new_mode) {
+    if (auto new_camera_location = map_transition_->new_camera_location()) {
         auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
         check(camera_pawn);
         if (new_camera_location)
             camera_pawn->camera_location(*new_camera_location);
-        if (new_mode)
-            camera_pawn->map_mode_changed(*new_mode);
     }
     if (auto new_star_location = map_transition_->new_star_location()) {
         check(system_star_);
@@ -491,7 +548,7 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
 
     auto * pawn = Cast<Acontroller_pawn>(GetPawn());
     check(pawn);
-    pawn->start_game_at(location, map_transition_);
+    pawn->start_game_at(location);
 }
 
 void Aplayer_controller::client_recv_day_updates_Implementation(

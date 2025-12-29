@@ -226,6 +226,20 @@ private:
         BlueprintReadOnly,
         Category = "Input",
         meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> slide_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UInputAction> zoom_action_;
+
+    UPROPERTY(
+        EditAnywhere,
+        BlueprintReadOnly,
+        Category = "Input",
+        meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UInputAction> select_object_action_;
 
     UPROPERTY(

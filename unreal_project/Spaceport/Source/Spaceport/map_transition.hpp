@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "constants.hpp"
@@ -46,6 +47,7 @@ inline float max_camera_dist_for(map_mode mode)
 struct map_transition_state
 {
     bool in_transition() const { return ::in_transition(mode_); }
+    map_mode mode() const { return mode_; }
     std::optional<map_mode> new_map_mode() const { return new_map_mode_; }
     std::optional<FVector> new_camera_location() const
     {

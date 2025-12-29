@@ -1,7 +1,5 @@
 #pragma once
 
-#include "map_transition_fwd.hpp"
-
 #include <memory>
 
 #include "CoreMinimal.h"
@@ -12,8 +10,6 @@
 class UCameraComponent;
 class UCapsuleComponent;
 class UFloatingPawnMovement;
-class UInputAction;
-class UInputComponent;
 class USpringArmComponent;
 
 UCLASS()
@@ -24,19 +20,14 @@ class Acontroller_pawn : public APawn
 public:
     Acontroller_pawn();
 
-    void SetupPlayerInputComponent(UInputComponent * input) override;
-
     FVector camera_location() const;
+    float target_arm_length() const;
 
-    void start_game_at(
-        FVector location, std::shared_ptr<map_transition_state> map_transition);
+    void start_game_at(FVector location);
     void camera_location(FVector new_location);
-    void map_mode_changed(map_mode new_mode);
+    void target_arm_length(float new_length);
 
 private:
-    std::shared_ptr<map_transition_state> map_transition_;
-    map_mode map_mode_ = map_mode::galaxy_map;
-
     UPROPERTY(
         VisibleAnywhere,
         BlueprintReadOnly,
@@ -57,20 +48,6 @@ private:
         Category = "Camera",
         meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UCameraComponent> camera_;
-
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadOnly,
-        Category = "Input",
-        meta = (AllowPrivateAccess = "true"))
-    TObjectPtr<UInputAction> slide_action_;
-
-    UPROPERTY(
-        EditAnywhere,
-        BlueprintReadOnly,
-        Category = "Input",
-        meta = (AllowPrivateAccess = "true"))
-    TObjectPtr<UInputAction> zoom_action_;
 
     UPROPERTY(
         VisibleAnywhere,
