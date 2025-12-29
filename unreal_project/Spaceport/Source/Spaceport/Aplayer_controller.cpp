@@ -9,6 +9,7 @@
 #include "Aplayer_state.h"
 #include "audio_assets.h"
 #include "game_user_settings.h"
+#include "game_data_formatters.hpp"
 #include "map_transition.hpp"
 #include "materials.h"
 #include "rng.hpp"
@@ -862,19 +863,14 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
         }
 
         double const system_map_kms_per_world_unit = 500; // TODO -> constants
-        double const object_scale = system->star.solar_radii * sun_radius_km /
-                                    system_map_kms_per_world_unit;
 
-        // the sphere static mesh the BP uses is 200x200x200
-        double const system_star_radius = 100;
-        double const star_scale = object_scale / system_star_radius;
+        // the sphere static mesh the star+planet BPs use is 200x200x200
+        double const sphere_mesh_radius = 100;
+        double const star_scale = system->star.solar_radii * sun_radius_km /
+                                  system_map_kms_per_world_unit /
+                                  sphere_mesh_radius;
+        // TODO: Have a setting for nonproportional scaling of star+planets?
 
-        UE_LOG(LogTemp, Warning, TEXT("star scale %f"), (float)star_scale);
-        UE_LOG(
-            LogTemp,
-            Warning,
-            TEXT("star size %f"),
-            float(star_scale * system_star_radius));
         auto const star_location =
             FVector(system->world_pos_x, system->world_pos_y, 0) *
             ui_defaults().map_scale_;
@@ -886,13 +882,59 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
         configure_system_star(system_star_, system->star);
         system_star_->SetActorScale3D(FVector(star_scale));
 
-        system_planets_.SetNum(system->last_planet - system->first_planet);
+        FAttachmentTransformRules const planet_attachment_rules(
+            EAttachmentRule::KeepRelative,
+            EAttachmentRule::KeepWorld,
+            EAttachmentRule::KeepWorld,
+            false);
+
+        system_planets_.SetNum(0);
         int missing = 0;
         for (int i = system->first_planet, last = system->last_planet;
              i != last;
              ++i) {
+            continue; // TODO: Skip for now.
             if (auto planet = ::planet(client_gs_, i)) {
-                // *planet;
+                if (planet->planet_type == planet_type_t::rocky) {
+                    auto const planet_location =
+                        FVector(star_scale * 200, 0, 0); // TODO
+                    AActor * planet_actor = GetWorld()->SpawnActor<AActor>(
+                        system_star_class_,
+                        star_location + planet_location,
+                        FRotator(0, planet->axial_tilt_d, 0),
+                        FActorSpawnParameters());
+                    switch (planet->atmosphere_type) {
+                    case atmosphere_type_t::reduced_type_a:
+                    case atmosphere_type_t::carbon_rich_type_c:
+                        configure_rocky_reduced_or_carbon_rich_planet(
+                            planet_actor, *planet);
+                        break;
+                    case atmosphere_type_t::oxidized_type_b:
+                        configure_rocky_oxidized_planet(planet_actor, *planet);
+                        break;
+                    case atmosphere_type_t::high_temperature:
+                        configure_high_temperature_planet(
+                            planet_actor, *planet);
+                        break;
+                    default:
+                        UE_LOG(
+                            LogTemp,
+                            Error,
+                            TEXT("Cannot render rocky planet with unexpected "
+                                 "amtmospheree type '%s'"),
+                            *FString(std::format("{}", planet->atmosphere_type)
+                                         .c_str()));
+                    }
+                    double const scale = planet->radius_km /
+                                         system_map_kms_per_world_unit /
+                                         sphere_mesh_radius;
+                    planet_actor->SetActorScale3D(FVector(scale));
+                    planet_actor->AttachToActor(
+                        system_star_, planet_attachment_rules);
+                    system_planets_.Add(planet_actor);
+                } else {
+                    // TODO
+                }
                 // TODO planets_[i].actor_ = TODO;
             } else {
                 ++missing;
