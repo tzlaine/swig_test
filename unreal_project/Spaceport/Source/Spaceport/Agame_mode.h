@@ -36,11 +36,14 @@ public:
     void Tick(float secs) override;
     void EndPlay(EEndPlayReason::Type reason) override;
 
+    bool waiting_for_client_to_receive_initial_game_state(int nation_id) const;
+
     void ready_for_game();
     void load_and_start_newest_game();
     void load_and_start_game(FString const & filename);
     // Load game iff params.IsEmpty(); generate a new galaxy otherwise.
     void load_or_generate(TArray<uint8> const & params);
+    void client_received_initial_game_state(int nation_id);
 
     void quit_to_menu(
         Fuser_notification const & notification = Fuser_notification());
@@ -62,6 +65,7 @@ private:
     void ready_for_sp_game();
     void ready_for_mp_game();
     void signal_start_of_play();
+    void all_clients_received_initial_game_state();
     void tear_down_game();
 
     int players_ = 0;
@@ -73,6 +77,9 @@ private:
 
     // game setup
     game_start_params_t game_params_;
+    std::vector<int> client_game_state_nation_ids_;
+    std::vector<Amap_hex *> hex_pawns_;
+    std::vector<Amap_system *> system_pawns_;
 
     // generating the galaxy
     std::jthread generation_thread_;

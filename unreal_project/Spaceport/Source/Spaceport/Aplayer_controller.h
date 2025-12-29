@@ -89,6 +89,11 @@ public:
     void client_recv_initial_game_state_Implementation(
         int nation_id, TArray<uint8> const & state);
 
+    UFUNCTION(Server, Reliable, WithValidation)
+    void server_confirm_received_initial_game_state();
+    bool server_confirm_received_initial_game_state_Validate();
+    void server_confirm_received_initial_game_state_Implementation();
+
     UFUNCTION(Client, Reliable)
     void client_recv_day_updates(TArray<uint8> const & state);
     void client_recv_day_updates_Implementation(TArray<uint8> const & state);

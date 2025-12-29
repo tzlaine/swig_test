@@ -569,6 +569,26 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
     auto * pawn = Cast<Acontroller_pawn>(GetPawn());
     check(pawn);
     pawn->start_game_at(location);
+
+    server_confirm_received_initial_game_state();
+}
+
+bool Aplayer_controller::
+    server_confirm_received_initial_game_state_Validate()
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
+    if (!gm)
+        return false;
+    return gm->waiting_for_client_to_receive_initial_game_state(nation_id_);
+}
+
+void Aplayer_controller::
+    server_confirm_received_initial_game_state_Implementation()
+{
+    auto * gm = GetWorld()->GetAuthGameMode<Agame_mode>();
+    if (!gm)
+        return;
+    gm->client_received_initial_game_state(nation_id_);
 }
 
 void Aplayer_controller::client_recv_day_updates_Implementation(

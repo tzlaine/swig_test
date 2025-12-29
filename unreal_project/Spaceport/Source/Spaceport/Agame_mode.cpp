@@ -130,6 +130,13 @@ void Agame_mode::EndPlay(EEndPlayReason::Type reason)
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::EndPlay()"));
 }
 
+bool Agame_mode::waiting_for_client_to_receive_initial_game_state(
+    int nation_id) const
+{
+    return std::ranges::find(client_game_state_nation_ids_, nation_id) !=
+           client_game_state_nation_ids_.end();
+}
+
 void Agame_mode::ready_for_game()
 {
     UE_LOG(LogTemp, Log, TEXT("ENTER Agame_mode::ready_for_game()"));
@@ -195,6 +202,13 @@ void Agame_mode::load_or_generate(TArray<uint8> const & params)
             model_->generate_galaxy(
                 params, *percent_complete_, generation_complete_);
         });
+}
+
+void Agame_mode::client_received_initial_game_state(int nation_id)
+{
+    std::erase(client_game_state_nation_ids_, nation_id);
+    if (client_game_state_nation_ids_.empty())
+        all_clients_received_initial_game_state();
 }
 
 void Agame_mode::quit_to_menu(Fuser_notification const & notification)
@@ -328,6 +342,11 @@ void Agame_mode::signal_start_of_play()
     check(model_->game_state());
     auto const & gs = *model_->game_state();
 
+    hex_pawns_.clear();
+    system_pawns_.clear();
+    hex_pawns_.reserve(model_->hexes().size());
+    system_pawns_.reserve(model_->systems().size());
+
     for (auto const & hex : model_->hexes()) {
         if (hex.province_id == prov_galactic_bulge ||
             hex.province_id == prov_off_map) {
@@ -370,8 +389,7 @@ void Agame_mode::signal_start_of_play()
         Amap_hex * hex_pawn = GetWorld()->SpawnActor<Amap_hex>(
             hex_class_, hex_position, FRotator(), FActorSpawnParameters());
         hex_pawn->id(to_index(hex.coord, gs.map_width));
-        hex_pawn->OnRep_initial_properties();
-        repl_graph_->reinsert_actor(hex_pawn);
+        hex_pawns_.push_back(hex_pawn);
 
         for (int i = hex.first_system, last = hex.last_system; i < last; ++i) {
             auto const & system = gs.systems[i];
@@ -382,15 +400,15 @@ void Agame_mode::signal_start_of_play()
             Amap_system * system_pawn = GetWorld()->SpawnActor<Amap_system>(
                 system_class_,
                 system_position,
-                FRotator(0, random_double(0, 360), 0),
+                FRotator(),
                 FActorSpawnParameters());
             system_pawn->id(i);
             system_pawn->generate_graphical_properties(system);
-            system_pawn->OnRep_initial_properties();
-            repl_graph_->reinsert_actor(system_pawn);
+            system_pawns_.push_back(system_pawn);
         }
     }
 
+    client_game_state_nation_ids_.clear();
     for (auto it = GetWorld()->GetPlayerControllerIterator(); it; ++it) {
         auto * pc = Cast<Aplayer_controller>(it->Get());
         check(pc);
@@ -404,9 +422,31 @@ void Agame_mode::signal_start_of_play()
         detail::ostream_tarray_facade os(state);
         model_->serialize_for_client(nation_id, os);
         pc->client_recv_initial_game_state(nation_id, state);
+        client_game_state_nation_ids_.push_back(nation_id);
     }
 
     set_play_state(GameState, play_state::paused);
+}
+
+void Agame_mode::all_clients_received_initial_game_state()
+{
+    check(repl_graph_);
+
+    // Wait until the model has been pushed to the clients to do this, so that
+    // here, just as in the middle of the game, the client has whatever
+    // knowledge it is supposed to have about these hexes and systems before
+    // seeing their pawns.
+    for (auto * hex_pawn : hex_pawns_) {
+        repl_graph_->reinsert_actor(hex_pawn);
+        hex_pawn->OnRep_initial_properties();
+    }
+    for (auto * system_pawn : system_pawns_) {
+        repl_graph_->reinsert_actor(system_pawn);
+        system_pawn->OnRep_initial_properties();
+    }
+
+    hex_pawns_.clear();
+    system_pawns_.clear();
 }
 
 void Agame_mode::tear_down_game()

@@ -353,7 +353,7 @@ nation(GameState const & gs, boost::optional<int> i)
 }
 
 // TODO: Do same for capitol planet/system/hex.  Maybe generalize so the
-// parttern doesn't need to be rewrittne n times....
+// pattern doesn't need to be rewritten n times....
 
 inline int home_planet_index(nation_t const & nation)
 {
