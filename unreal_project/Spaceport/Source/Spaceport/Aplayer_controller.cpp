@@ -869,7 +869,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
         system_star_->SetActorScale3D(FVector(star_scale));
 
         FAttachmentTransformRules const planet_attachment_rules(
-            EAttachmentRule::KeepRelative,
+            EAttachmentRule::KeepWorld,
             EAttachmentRule::KeepWorld,
             EAttachmentRule::KeepWorld,
             false);
@@ -879,16 +879,22 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
         for (int i = system->first_planet, last = system->last_planet;
              i != last;
              ++i) {
-            continue; // TODO: Skip for now.
             if (auto planet = ::planet(client_gs_, i)) {
                 if (planet->planet_type == planet_type_t::rocky) {
-                    auto const planet_location =
-                        FVector(star_scale * 200, 0, 0); // TODO
+                    float const dist_TODO = star_scale * sphere_mesh_radius +
+                                            sun_radius_km /
+                                                system_map_kms_per_world_unit *
+                                                (2 + i - system->first_planet);
+                    auto const planet_location = FVector(
+                        dist_TODO,
+                        dist_TODO,
+                        0); // TODO
                     AActor * planet_actor = GetWorld()->SpawnActor<AActor>(
-                        system_star_class_,
+                        rocky_planet_class_,
                         star_location + planet_location,
                         FRotator(0, planet->axial_tilt_d, 0),
                         FActorSpawnParameters());
+
                     switch (planet->atmosphere_type) {
                     case atmosphere_type_t::reduced_type_a:
                     case atmosphere_type_t::carbon_rich_type_c:
@@ -896,7 +902,13 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                             planet_actor, *planet);
                         break;
                     case atmosphere_type_t::oxidized_type_b:
-                        configure_rocky_oxidized_planet(planet_actor, *planet);
+                        configure_rocky_oxidized_planet(
+                            planet_actor,
+                            *planet,
+                            population_of_planet_known_to_nation(
+                                client_gs_, i, nation_id_),
+                            mean_infrastructure_of_planet_known_to_nation(
+                                client_gs_, i, nation_id_));
                         break;
                     case atmosphere_type_t::high_temperature:
                         configure_high_temperature_planet(
@@ -907,11 +919,12 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                             LogTemp,
                             Error,
                             TEXT("Cannot render rocky planet with unexpected "
-                                 "amtmospheree type '%s'"),
+                                 "atmospheree type '%s'"),
                             *FString(std::format("{}", planet->atmosphere_type)
                                          .c_str()));
                     }
-                    double const scale = planet->radius_km /
+
+                    double const scale = 10*/*TODO*/planet->radius_km /
                                          system_map_kms_per_world_unit /
                                          sphere_mesh_radius;
                     planet_actor->SetActorScale3D(FVector(scale));

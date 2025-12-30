@@ -3,6 +3,7 @@
 #include "Aplayer_controller.h"
 #include "Amap_system.h"
 #include "constants.hpp"
+#include "game_user_settings.h"
 #include "materials.h"
 #include "game_data.hpp"
 #include "rng.hpp"
@@ -417,68 +418,64 @@ void configure_system_star(AActor * star_actor, star_t const & star)
     set_property(star_actor, TEXT("dirty"), true);
 }
 
-// TODO: Aplanet_actor?
 // TODO: For very cold planets that get terraformed, use the BP_Planet_Ice
 // blueprint from Space_Creator, and reduce the ice over time, as the planet
 // is terraformed.  After the terraforming has gotten close enough to
 // Earthlike conditions common, change it to use the BP_Planet_Terran
 // blueprint, keeping the properties that they have in common.
 void configure_rocky_oxidized_planet(
-    AActor * planet_actor, planet_t const & planet)
+    AActor * planet_actor,
+    planet_t const & planet,
+    float population,
+    float infrastructure)
 {
     check(planet_actor);
 
-    FQuat tilt_rot(
-        FVector(1, 0, 0), FMath::DegreesToRadians(planet.axial_tilt_d));
-    // Rotation, relative to the directional light, based on the planet's
-    // current position within its orbit.  This show each planet as if viewed
-    // from infinitely far away, in the -y direction, looking in the +y
-    // direction.
-    FQuat rot_from_position(FVector(0, 0, 1), -planet.orbital_pos_r);
-    planet_actor->SetActorRotation(tilt_rot * rot_from_position);
+    Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
+    check(game_user_settings);
 
-    // fixed values
+    FVector light_dir{};
+    FMath::PolarToCartesian(
+        1.0, double(planet.orbital_pos_r), light_dir.X, light_dir.Y);
 
-    // Global
-    ADirectionalLight * const light =
-        directional_light(planet_actor->GetWorld());
-
-    // TODO: Need a graphics setting for this.
-    set_property(planet_actor, TEXT("Shader Complexity"), 4);
-    set_property(planet_actor, TEXT("Use Directional Light"), true);
-    set_property(planet_actor, TEXT("Use Directional Light"), light);
-    set_property(planet_actor, TEXT("Night Brightness"), 0.01);
+    set_property(
+        planet_actor,
+        TEXT("Shader_Complexity"),
+        game_user_settings->planet_detail);
+    set_property(planet_actor, TEXT("Use_Directional_Light"), false);
+    set_property(planet_actor, TEXT("light_vector"), light_dir);
+    set_property(planet_actor, TEXT("Night_Brightness"), 0.001f);
+    set_property(planet_actor, TEXT("Day_Brightness"), 1.0f);
 
     // computed values
 
-    // TODO: Move these out of this function?
     std::gamma_distribution<double> one_to_ten_gamma_dist(1, 4);
     std::normal_distribution<double> around_one_dist(0.5, 1.5);
     std::normal_distribution<double> distortion_scale_dist(2.0, 6.0);
     std::chi_squared_distribution oceans_transition_dist(2.5);
 
     // Continents
-    set_property(
-        planet_actor, TEXT("Continents Position"), random_double(0.0, 15.0));
-    set_property(
+    set_property<float>(
+        planet_actor, TEXT("Continents_Position"), random_double(0.0, 15.0));
+    set_property<float>(
         planet_actor,
-        TEXT("Continents Spread"),
+        TEXT("Continents_Spread"),
         std::clamp(1.0, 10.0, random_number(one_to_ten_gamma_dist)));
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Continents Distortion"),
+        TEXT("Continents_Distortion"),
         random_number(around_one_dist));
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Continents Distortion Scale"),
+        TEXT("Continents_Distortion_Scale"),
         random_number(distortion_scale_dist));
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Plains/Mountains Transition"),
+        TEXT("Plains/Mountains_Transition"),
         random_number(around_one_dist));
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Plains/Mountains Transition Contrast"),
+        TEXT("Plains/Mountains_Transition_Contrast"),
         random_number(around_one_dist));
 
     {
@@ -486,7 +483,7 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0x4A, 0x33, 0x20, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color Mountains 1"),
+            TEXT("Color_Mountains_1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -494,7 +491,7 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0xFF, 0xE6, 0x7F, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color Mountains 2"),
+            TEXT("Color_Mountains_2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -502,7 +499,7 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0x1C, 0x2D, 0x16, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color Plains 1"),
+            TEXT("Color_Plains_1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -510,21 +507,21 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0x16, 0x36, 0x0D, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Color Plains 2"),
+            TEXT("Color_Plains_2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
 
     set_property(
-        planet_actor, TEXT("T Mountains"), textures().random_planet_texture());
+        planet_actor, TEXT("T_Mountains"), textures().random_planet_texture());
     set_property(
-        planet_actor, TEXT("T Plains"), textures().random_planet_texture());
+        planet_actor, TEXT("T_Plains"), textures().random_planet_texture());
 
     // oceans
-    set_property(planet_actor, TEXT("Sea Level"), planet.ocean_coverage);
+    set_property(planet_actor, TEXT("Sea_Level"), planet.ocean_coverage);
 
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Oceans Color Transition"),
+        TEXT("Oceans_Color_Transition"),
         std::lerp(
             0.25,
             1.0,
@@ -536,7 +533,7 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0x05, 0x1D, 0x1A, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Oceans Color 1"),
+            TEXT("Oceans_Color_1"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -544,7 +541,7 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0x3A, 0x88, 0xFF, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Oceans Color 2"),
+            TEXT("Oceans_Color_2"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
     {
@@ -552,7 +549,7 @@ void configure_rocky_oxidized_planet(
         FLinearColor const max = FColor(0x28, 0x3D, 0x82, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Oceans Color 3"),
+            TEXT("Oceans_Color_3"),
             FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
     }
 
@@ -560,88 +557,89 @@ void configure_rocky_oxidized_planet(
     double const temperature_alpha =
         (planet.surface_temperature_k - min_habitable_nonsuit_temp_k) /
         (max_habitable_temp_k - min_habitable_nonsuit_temp_k);
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Ice Poles Weight"),
+        TEXT("Ice_Poles_Weight"),
         std::max(0.0, std::lerp(0.4, 0.6, 1.0 - temperature_alpha)));
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Ice Coverage"),
+        TEXT("Ice_Coverage"),
         std::max(0.0, std::lerp(0.1, 0.5, 1.0 - temperature_alpha)));
 
     // clouds
     double clouds_speed = 0.0001;
     if (double alpha = seasons_intensity_factor(planet))
         clouds_speed = std::lerp(0.0001, 0.005, alpha);
-    set_property(planet_actor, TEXT("Clouds Speed"), clouds_speed);
+    set_property<float>(planet_actor, TEXT("Clouds_Speed"), clouds_speed);
 
     double const plentiful_water_alpha =
         growth_factor_considered_habitable < planet.growth_factor
             ? 1.0
             : double(planet.water) / max_resource_value;
 
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Clouds Opacity"),
+        TEXT("Clouds_Opacity"),
         plentiful_water_alpha < 1.0 ? random_double(0.0, 2.0)
                                     : random_double(2.0, 4.0));
-    set_property(planet_actor, TEXT("Clouds Shadow Offset"), 6.0);
-    set_property(planet_actor, TEXT("Under Clouds Brightness"), 0.5);
+    set_property<float>(planet_actor, TEXT("Clouds_Shadow_Offset"), 6.0);
+    set_property<float>(planet_actor, TEXT("Under_Clouds_Brightness"), 0.5);
+
     set_property(
         planet_actor,
-        TEXT("Clouds Twilight Color 1"),
-        FColor(0x5A, 0x55, 0x49, 0xFF));
+        TEXT("Clouds_Twilight_Color_1"),
+        FLinearColor(FColor(0xFF, 0xEE, 0xBE, 0xFF)));
     set_property(
         planet_actor,
-        TEXT("Clouds Twilight Color 2"),
-        FColor(0x65, 0x36, 0x02, 0xFF));
+        TEXT("Clouds_Twilight_Color_2"),
+        FLinearColor(FColor(0xEE, 0xB6, 0x9B, 0xFF)));
 
     // atmosphere
 
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Atmosphere Direct Brightness"),
+        TEXT("Atmosphere_Direct_Brightness"),
         0.1 * plentiful_water_alpha);
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("Atmosphere Edge Brightness"),
+        TEXT("Atmosphere_Edge_Brightness"),
         1.0 * plentiful_water_alpha);
     {
         FLinearColor const min = FColor::White;
         FLinearColor const max = FColor(0x2F, 0x73, 0xE0, 0xFF);
         set_property(
             planet_actor,
-            TEXT("Atmosphere Color"),
+            TEXT("Atmosphere_Color"),
             FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
     }
 
     // TODO: Rings!
 
-#if 0 // TODO: Update to use settlements.
     // city lights
-    if (planet.population <= 0.0f) {
-        set_property(planet_actor, TEXT("City Lights Extent"), 0.0);
-        set_property(planet_actor, TEXT("City Lights Halo"), 0.0);
+    if (population <= 0.0f) {
+        set_property(planet_actor, TEXT("CityLights_Extent"), 0.0f);
+        set_property(planet_actor, TEXT("CityLights_Halo"), 0.0f);
         return;
     }
-    set_property(
+    set_property<float>(
         planet_actor,
-        TEXT("City Lights Extent"),
-        double(planet.population / planet.max_population));
-    set_property(planet_actor, TEXT("City Lights Halo"), 0.005);
-    set_property(
+        TEXT("CityLights_Extent"),
+        population / planet.max_population);
+    set_property(planet_actor, TEXT("CityLights_Halo"), 0.005f);
+    set_property<float>(
         planet_actor,
-        TEXT("City Lights Intensity"),
-        std::lerp(0.0, 20.0, planet.infrastructure / max_infrastructure));
+        TEXT("CityLights_Intensity"),
+        std::lerp(0.0f, 20.0f, infrastructure / max_infrastructure));
     {
         FLinearColor const min = FColor::White;
         FLinearColor const max = FColor(0x4E, 0xA7, 0xFF, 0xFF);
         set_property(
             planet_actor,
-            TEXT("City Lights Color"),
+            TEXT("CityLights_Color"),
             FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
     }
-#endif
+
+    set_property(planet_actor, TEXT("dirty"), true);
 }
 
 void configure_rocky_reduced_or_carbon_rich_planet(

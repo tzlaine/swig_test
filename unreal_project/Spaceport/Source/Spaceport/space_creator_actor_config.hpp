@@ -17,7 +17,10 @@ void configure_map_star(
 void configure_system_star(AActor * star_actor, star_t const & star);
 
 void configure_rocky_oxidized_planet(
-    AActor * planet_actor, planet_t const & planet);
+    AActor * planet_actor,
+    planet_t const & planet,
+    float population,
+    float infrastructure);
 
 void configure_rocky_reduced_or_carbon_rich_planet(
     AActor * planet_actor, planet_t const & planet);
