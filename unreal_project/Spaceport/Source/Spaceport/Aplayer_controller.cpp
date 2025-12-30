@@ -907,6 +907,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                         configure_rocky_oxidized_planet(
                             planet_actor,
                             *planet,
+                            i,
                             population_of_planet_known_to_nation(
                                 client_gs_, i, nation_id_),
                             mean_infrastructure_of_planet_known_to_nation(

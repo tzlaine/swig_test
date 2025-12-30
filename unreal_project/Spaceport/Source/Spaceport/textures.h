@@ -6,6 +6,10 @@
 
 
 class UTexture;
+namespace detail {
+    struct rng_state;
+    extern rng_state g_rng_state;
+}
 
 UCLASS(BlueprintType, Blueprintable)
 class Utextures_t : public UObject
@@ -49,11 +53,14 @@ public:
     UPROPERTY(EditAnywhere, Category = "Textures")
     TObjectPtr<UTexture> planet_texture_8_;
 
-    int random_wide_lens_flare() const;
-    int random_small_lens_flare() const;
+    int random_wide_lens_flare(
+        detail::rng_state & state = detail::g_rng_state) const;
+    int random_small_lens_flare(
+        detail::rng_state & state = detail::g_rng_state) const;
     UTexture * wide_lens_flare(int i) const;
     UTexture * small_lens_flare(int i) const;
-    UTexture * random_planet_texture() const;
+    UTexture * random_planet_texture(
+        detail::rng_state & state = detail::g_rng_state) const;
 };
 
 Utextures_t const & textures();

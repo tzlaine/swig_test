@@ -434,6 +434,7 @@ void configure_system_star(AActor * star_actor, star_t const & star)
 void configure_rocky_oxidized_planet(
     AActor * planet_actor,
     planet_t const & planet,
+    int planet_id,
     float population,
     float infrastructure)
 {
@@ -441,6 +442,10 @@ void configure_rocky_oxidized_planet(
 
     Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
     check(game_user_settings);
+
+    // TODO: Also use a global seed so that system_id=3 and planet_id=4 always
+    // looks the same.
+    auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
 
     set_property(
         planet_actor,
@@ -461,27 +466,29 @@ void configure_rocky_oxidized_planet(
 
     // Continents
     set_property<float>(
-        planet_actor, TEXT("Continents_Position"), random_double(0.0, 15.0));
+        planet_actor,
+        TEXT("Continents_Position"),
+        random_double(0.0, 15.0, rng_state));
     set_property<float>(
         planet_actor,
         TEXT("Continents_Spread"),
-        std::clamp(1.0, 10.0, random_number(one_to_ten_gamma_dist)));
+        std::clamp(1.0, 10.0, random_number(one_to_ten_gamma_dist, rng_state)));
     set_property<float>(
         planet_actor,
         TEXT("Continents_Distortion"),
-        random_number(around_one_dist));
+        random_number(around_one_dist, rng_state));
     set_property<float>(
         planet_actor,
         TEXT("Continents_Distortion_Scale"),
-        random_number(distortion_scale_dist));
+        random_number(distortion_scale_dist, rng_state));
     set_property<float>(
         planet_actor,
         TEXT("Plains/Mountains_Transition"),
-        random_number(around_one_dist));
+        random_number(around_one_dist, rng_state));
     set_property<float>(
         planet_actor,
         TEXT("Plains/Mountains_Transition_Contrast"),
-        random_number(around_one_dist));
+        random_number(around_one_dist, rng_state));
 
     {
         FLinearColor const min = FColor(0xFF, 0xAF, 0x6F, 0xFF);
@@ -489,7 +496,8 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Color_Mountains_1"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
     {
         FLinearColor const min = FColor(0x44, 0x3D, 0x22, 0xFF);
@@ -497,7 +505,8 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Color_Mountains_2"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
     {
         FLinearColor const min = FColor(0x77, 0xC3, 0x60, 0xFF);
@@ -505,7 +514,8 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Color_Plains_1"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
     {
         FLinearColor const min = FColor(0x68, 0xFF, 0x3B, 0xFF);
@@ -513,13 +523,18 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Color_Plains_2"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
 
     set_property(
-        planet_actor, TEXT("T_Mountains"), textures().random_planet_texture());
+        planet_actor,
+        TEXT("T_Mountains"),
+        textures().random_planet_texture(rng_state));
     set_property(
-        planet_actor, TEXT("T_Plains"), textures().random_planet_texture());
+        planet_actor,
+        TEXT("T_Plains"),
+        textures().random_planet_texture(rng_state));
 
     // oceans
     set_property(planet_actor, TEXT("Sea_Level"), planet.ocean_coverage);
@@ -530,7 +545,7 @@ void configure_rocky_oxidized_planet(
         std::lerp(
             0.25,
             1.0,
-            random_number(oceans_transition_dist) /
+            random_number(oceans_transition_dist, rng_state) /
                 oceans_transition_dist.max()));
 
     {
@@ -539,7 +554,8 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Oceans_Color_1"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
     {
         FLinearColor const min = FColor(0x02, 0x04, 0x07, 0xFF);
@@ -547,7 +563,8 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Oceans_Color_2"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
     {
         FLinearColor const min = FColor(0x05, 0x07, 0x0F, 0xFF);
@@ -555,7 +572,8 @@ void configure_rocky_oxidized_planet(
         set_property(
             planet_actor,
             TEXT("Oceans_Color_3"),
-            FLinearColor::LerpUsingHSV(min, max, random_unit_double()));
+            FLinearColor::LerpUsingHSV(
+                min, max, random_unit_double(rng_state)));
     }
 
     // ice
@@ -585,8 +603,8 @@ void configure_rocky_oxidized_planet(
     set_property<float>(
         planet_actor,
         TEXT("Clouds_Opacity"),
-        plentiful_water_alpha < 1.0 ? random_double(0.0, 2.0)
-                                    : random_double(2.0, 4.0));
+        plentiful_water_alpha < 1.0 ? random_double(0.0, 2.0, rng_state)
+                                    : random_double(2.0, 4.0, rng_state));
     set_property<float>(planet_actor, TEXT("Clouds_Shadow_Offset"), 6.0);
     set_property<float>(planet_actor, TEXT("Under_Clouds_Brightness"), 0.5);
 

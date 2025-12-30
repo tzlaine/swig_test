@@ -5,9 +5,15 @@
 #include "utility.hpp"
 
 
-int Utextures_t::random_wide_lens_flare() const { return random_int(0, 4); }
+int Utextures_t::random_wide_lens_flare(detail::rng_state & state) const
+{
+    return random_int(0, 4, state);
+}
 
-int Utextures_t::random_small_lens_flare() const { return random_int(0, 1); }
+int Utextures_t::random_small_lens_flare(detail::rng_state & state) const
+{
+    return random_int(0, 1, state);
+}
 
 UTexture * Utextures_t::wide_lens_flare(int i) const
 {
@@ -27,7 +33,7 @@ UTexture * Utextures_t::small_lens_flare(int i) const
     return textures[std::clamp(i, 0, 1)];
 }
 
-UTexture * Utextures_t::random_planet_texture() const
+UTexture * Utextures_t::random_planet_texture(detail::rng_state & state) const
 {
     std::array<UTexture *, 9> textures = {
         {planet_texture_0_,
@@ -39,7 +45,7 @@ UTexture * Utextures_t::random_planet_texture() const
          planet_texture_6_,
          planet_texture_7_,
          planet_texture_8_}};
-    return textures[random_int(0, 8)];
+    return textures[random_int(0, 8, state)];
 }
 
 Utextures_t const & textures()

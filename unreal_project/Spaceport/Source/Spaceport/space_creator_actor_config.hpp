@@ -19,6 +19,7 @@ void configure_system_star(AActor * star_actor, star_t const & star);
 void configure_rocky_oxidized_planet(
     AActor * planet_actor,
     planet_t const & planet,
+    int planet_id,
     float population,
     float infrastructure);
 
