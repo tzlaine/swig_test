@@ -20,11 +20,13 @@ namespace detail {
 
         repeatable_seed_seq_from() : device_(std::in_place) {}
         repeatable_seed_seq_from(std::vector<element_type> seed) :
-            device_(), seed_(std::move(seed)), use_seed_(true), next_it_(seed_.begin())
+            device_(),
+            seed_(std::move(seed)),
+            use_seed_(true),
+            next_it_(seed_.begin())
         {}
 
-        repeatable_seed_seq_from &
-        operator=(repeatable_seed_seq_from && other)
+        repeatable_seed_seq_from & operator=(repeatable_seed_seq_from && other)
         {
             seed_ = std::move(other.seed_);
             use_seed_ = other.use_seed_;
@@ -48,15 +50,9 @@ namespace detail {
             }
         }
 
-        constexpr std::size_t size() const
-        {
-            return std::random_device::max();
-        }
+        constexpr std::size_t size() const { return std::random_device::max(); }
 
-        std::vector<element_type> const & seed() const
-        {
-            return seed_;
-        }
+        std::vector<element_type> const & seed() const { return seed_; }
 
     private:
         std::optional<std::random_device> device_;
@@ -119,8 +115,10 @@ inline double random_unit_double()
     return random_number(detail::g_rng_state.unit_dist_);
 }
 
-template<template<typename> typename DistTemplate, typename T,
-         std::ranges::range R>
+template<
+    template<typename> typename DistTemplate,
+    typename T,
+    std::ranges::range R>
 std::ranges::borrowed_iterator_t<R>
 random_numbers(DistTemplate<T> & dist, R && r)
 {
@@ -144,8 +142,7 @@ std::ranges::borrowed_iterator_t<R> random_ints(int lo, int hi, R && r)
 }
 
 template<std::ranges::range R>
-std::ranges::borrowed_iterator_t<R>
-random_doubles(double lo, double hi, R && r)
+std::ranges::borrowed_iterator_t<R> random_doubles(double lo, double hi, R && r)
 {
     return random_numbers(detail::g_rng_state.unit_dist_, (R &&)r);
 }
