@@ -171,16 +171,25 @@
 
 /* Gas giant planet notes:
    - Global_Tile_Ratio: 0.1-0.9, linear distribution
-   - Scattering_Color: TODO
-   - Night_Color: Set to linear 02020300
-   - Sunset_Color_1: TODO
-   - Sunset_Color_2: TODO
+   - Scattering_Color: AA907B00 TODO
+   - Night_Color: Set to linear 0.001 each channel
+   - Sunset_Color_1: 8CAFFFFF TODO
+   - Sunset_Color_2: FD9500FF
    - Equator_Clouds_Color_{1,2,3,4}: TODO
    - Tropics_Clouds_Color_{1,2,3,4}: TODO
    - Deep_Clouds_Color_{1,2,3,4}: TODO
    - Poles_Color_{1,2,3,4}:TODO
 
-   - Rings_Opacity: Set to 1.0 if rings are present, 0.0 otherwise.
+   - Equator Clouds Color Shift: 0-1.6 linear
+   - Equator Clouds Color Uniformity: 0-4 linear
+   - Equator Clouds Shadows Size: 0-0.07 normal
+   - Equator Clouds Shadows Strength: 0-4 normal
+
+   - Tropics *: same as above
+
+   - Poles Latitude: 0.5
+
+   - Rings_Opacity: Set to 1.0-8.0 linear if rings are present, 0.0 otherwise.
    - Inner_Radius: 1.25-2.0, gamma dist (mode near 1.5)
 
    - Outer_Radius (actually used as thickness, not outer radius): 0.4-2.5,
@@ -190,8 +199,8 @@
    - Edge_Hardness: 0.75-20.0, linear dist
    - Frequency: 1.25-4.0, linear dist
    - Position: 0.0-10, linear dist
-   - Dark_Side_Brightness: Set to 0.01
-   - Rings_Color_{1,2,3}: TODO
+   - Dark_Side_Brightness: Set to 0.001
+   - Rings_Color_{1,2,3}: TODO (mostly ice; should be very desaturated, like s=0.4-0.45)
    - Rings_Scattering_Color: Set to Rings_Color_3
  */
 
@@ -625,6 +634,8 @@ void configure_rocky_oxidized_planet(
             planet_actor,
             TEXT("CityLights_Intensity"),
             std::lerp(0.0f, 20.0f, infrastructure / max_infrastructure));
+        // TODO: Passing max pop and infra to this function seems to result in
+        // half, not max, values (0.5 extent and 10 intensity).  Fix.
         {
             FLinearColor const min = FColor::White;
             FLinearColor const max = FColor(0x4E, 0xA7, 0xFF, 0xFF);
