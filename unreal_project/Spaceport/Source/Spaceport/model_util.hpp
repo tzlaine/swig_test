@@ -411,3 +411,56 @@ bool planet_in_system(
     return system->first_planet <= *planet_id &&
            *planet_id < system->last_planet;
 }
+
+template<typename GameState>
+float population_of_planet_known_to_nation(
+    GameState const & gs, int planet_id, int nation_id)
+{
+    float retval = 0.0f;
+
+    auto nation = ::nation(gs, nation_id);
+    if (!nation)
+        return retval;
+
+    for (auto const & s : nation->settlements) {
+        if (s.planet_id == planet_id)
+            retval += s.population;
+    }
+    for (auto const & s : nation->settlements_seen) {
+        if (s.planet_id == planet_id)
+            retval += s.population;
+    }
+
+    return retval;
+}
+
+template<typename GameState>
+float mean_infrastructure_of_planet_known_to_nation(
+    GameState const & gs, int planet_id, int nation_id)
+{
+    float retval = 0.0f;
+
+    auto nation = ::nation(gs, nation_id);
+    if (!nation)
+        return retval;
+
+    float pop = 0.0f;
+    for (auto const & s : nation->settlements) {
+        if (s.planet_id == planet_id) {
+            retval += s.infrastructure * s.population;
+            pop = s.population;
+        }
+    }
+    for (auto const & s : nation->settlements_seen) {
+        if (s.planet_id == planet_id) {
+            retval += s.infrastructure * s.population;
+            pop = s.population;
+        }
+    }
+    if (0.00001f < pop)
+        retval /= pop;
+    else
+        retval = 0.0f;
+
+    return retval;
+}
