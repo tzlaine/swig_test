@@ -135,10 +135,14 @@ void Aplayer_controller::SetupInputComponent()
         hud->set_selection_box_last(FVector2D());
     };
 
+    auto const movement_speedup = [this] {
+        return keep_selected_key_down_ ? map_move_modififier_factor : 1.0f;
+    };
+
     eic->BindActionValueLambda(
         slide_action_,
         ETriggerEvent::Triggered,
-        [use_map_actions, this](auto const & value) {
+        [use_map_actions, movement_speedup, this](auto const & value) {
             if (!use_map_actions())
                 return;
 
@@ -148,8 +152,9 @@ void Aplayer_controller::SetupInputComponent()
             // TODO: Put the map size in Agame_state, and use that here to
             // bound how far we can move in any direction.
 
-            FVector2D const delta =
-                value.Get<FVector2D>() * ui_defaults().camera_pan_speed_;
+            FVector2D const delta = value.Get<FVector2D>() *
+                                    ui_defaults().camera_pan_speed_ *
+                                    movement_speedup();
             camera_pawn->AddMovementInput(FVector::UnitX(), delta.X);
             camera_pawn->AddMovementInput(FVector::UnitY(), delta.Y);
         });
@@ -157,7 +162,7 @@ void Aplayer_controller::SetupInputComponent()
     eic->BindActionValueLambda(
         zoom_action_,
         ETriggerEvent::Triggered,
-        [use_map_actions, this](auto const & value) {
+        [use_map_actions, movement_speedup, this](auto const & value) {
             if (!use_map_actions())
                 return;
 
@@ -166,17 +171,8 @@ void Aplayer_controller::SetupInputComponent()
 
             float const delta = value.Get<float>() *
                                 (ui_defaults().camera_zoom_speed_ +
-                                 std::log(camera_pawn->target_arm_length()));
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("BEFORE: spring_arm_->TargetArmLength=%f delta=%f min=%f "
-                     "max=%f"),
-                camera_pawn->target_arm_length(),
-                delta,
-                min_camera_dist_for(map_transition_->mode()),
-                max_camera_dist_for(map_transition_->mode()));
-
+                                 std::log(camera_pawn->target_arm_length())) *
+                                movement_speedup();
             float const desired_arm_length =
                 camera_pawn->target_arm_length() + delta;
 
@@ -196,16 +192,6 @@ void Aplayer_controller::SetupInputComponent()
                 desired_arm_length,
                 min_camera_dist_for(map_transition_->mode()),
                 max_camera_dist_for(map_transition_->mode())));
-
-            UE_LOG(
-                LogTemp,
-                Log,
-                TEXT("AFTER: spring_arm_->TargetArmLength=%f delta=%f min=%f "
-                     "max=%f"),
-                camera_pawn->target_arm_length(),
-                delta,
-                min_camera_dist_for(map_transition_->mode()),
-                max_camera_dist_for(map_transition_->mode()));
 
             // pulling up when already at the top of the system map takes us
             // to the galaxy map
