@@ -195,29 +195,28 @@
    - Rings_Scattering_Color: Set to Rings_Color_3
  */
 
-inline ADirectionalLight * directional_light(UWorld * w)
-{
-    check(w);
-    for (TActorIterator<ADirectionalLight> it(w); it; ++it) {
-        return *it;
+namespace {
+    FVector light_dir(planet_t const & planet)
+    {
+        FVector retval{};
+        FMath::PolarToCartesian(
+            1.0, 1.0 * planet.orbital_pos_r, retval.X, retval.Y);
+        return retval;
     }
-    throw std::runtime_error(
-        "Could not get pointer to the current level's directional light.");
-    return nullptr; // unreachable
-}
 
-double seasons_intensity_factor(planet_t const & planet)
-{
-    using namespace adobe::literals;
-    double const max_result = 3.0;
-    double retval = 0.0;
-    for (auto const & effect : planet.effects) {
-        if (effect.name == "long_seasons"_name)
-            retval += 1.0;
-        else if (effect.name == "intense_seasons"_name)
-            retval += 2.0;
+    double seasons_intensity_factor(planet_t const & planet)
+    {
+        using namespace adobe::literals;
+        double const max_result = 3.0;
+        double retval = 0.0;
+        for (auto const & effect : planet.effects) {
+            if (effect.name == "long_seasons"_name)
+                retval += 1.0;
+            else if (effect.name == "intense_seasons"_name)
+                retval += 2.0;
+        }
+        return retval / max_result;
     }
-    return retval / max_result;
 }
 
 // TODO: Move all the utilities above here somewhere else.
@@ -434,18 +433,15 @@ void configure_rocky_oxidized_planet(
     Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
     check(game_user_settings);
 
-    FVector light_dir{};
-    FMath::PolarToCartesian(
-        1.0, double(planet.orbital_pos_r), light_dir.X, light_dir.Y);
-
     set_property(
         planet_actor,
         TEXT("Shader_Complexity"),
         game_user_settings->planet_detail);
     set_property(planet_actor, TEXT("Use_Directional_Light"), false);
-    set_property(planet_actor, TEXT("light_vector"), light_dir);
+    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
     set_property(planet_actor, TEXT("Night_Brightness"), 0.001f);
     set_property(planet_actor, TEXT("Day_Brightness"), 1.0f);
+    // TODO: Vary with distance to star?
 
     // computed values
 
@@ -619,24 +615,25 @@ void configure_rocky_oxidized_planet(
     if (population <= 0.0f) {
         set_property(planet_actor, TEXT("CityLights_Extent"), 0.0f);
         set_property(planet_actor, TEXT("CityLights_Halo"), 0.0f);
-        return;
-    }
-    set_property<float>(
-        planet_actor,
-        TEXT("CityLights_Extent"),
-        population / planet.max_population);
-    set_property(planet_actor, TEXT("CityLights_Halo"), 0.005f);
-    set_property<float>(
-        planet_actor,
-        TEXT("CityLights_Intensity"),
-        std::lerp(0.0f, 20.0f, infrastructure / max_infrastructure));
-    {
-        FLinearColor const min = FColor::White;
-        FLinearColor const max = FColor(0x4E, 0xA7, 0xFF, 0xFF);
-        set_property(
+    } else {
+        set_property<float>(
             planet_actor,
-            TEXT("CityLights_Color"),
-            FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
+            TEXT("CityLights_Extent"),
+            population / planet.max_population);
+        set_property(planet_actor, TEXT("CityLights_Halo"), 0.005f);
+        set_property<float>(
+            planet_actor,
+            TEXT("CityLights_Intensity"),
+            std::lerp(0.0f, 20.0f, infrastructure / max_infrastructure));
+        {
+            FLinearColor const min = FColor::White;
+            FLinearColor const max = FColor(0x4E, 0xA7, 0xFF, 0xFF);
+            set_property(
+                planet_actor,
+                TEXT("CityLights_Color"),
+                FLinearColor::LerpUsingHSV(
+                    min, max, planet.o2_co2_suitability));
+        }
     }
 
     set_property(planet_actor, TEXT("dirty"), true);
@@ -647,7 +644,21 @@ void configure_rocky_reduced_or_carbon_rich_planet(
 {
     check(planet_actor);
 
+    Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
+    check(game_user_settings);
+
+    set_property(
+        planet_actor,
+        TEXT("Shader_Complexity"),
+        game_user_settings->planet_detail);
+    set_property(planet_actor, TEXT("Use_Directional_Light"), false);
+    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
+    set_property(planet_actor, TEXT("Night_Brightness"), 0.001f);
+    set_property(planet_actor, TEXT("Day_Brightness"), 1.0f);
+
     // TODO
+
+    set_property(planet_actor, TEXT("dirty"), true);
 }
 
 void configure_high_temperature_planet(
@@ -655,19 +666,47 @@ void configure_high_temperature_planet(
 {
     check(planet_actor);
 
+    Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
+    check(game_user_settings);
+
+    set_property(
+        planet_actor,
+        TEXT("Shader_Complexity"),
+        game_user_settings->planet_detail);
+    set_property(planet_actor, TEXT("Use_Directional_Light"), false);
+    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
+    set_property(planet_actor, TEXT("Night_Brightness"), 0.001f);
+    set_property(planet_actor, TEXT("Day_Brightness"), 1.0f);
+
     // TODO
+
+    set_property(planet_actor, TEXT("dirty"), true);
 }
 
 void configure_gas_giant_planet(AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 
+    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
+    set_property(
+        planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
+    set_property(planet_actor, TEXT("Dark_Side_Brightness"), 0.001f);
+
     // TODO
+
+    set_property(planet_actor, TEXT("dirty"), true);
 }
 
 void configure_ice_giant_planet(AActor * planet_actor, planet_t const & planet)
 {
     check(planet_actor);
 
+    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
+    set_property(
+        planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
+    set_property(planet_actor, TEXT("Dark_Side_Brightness"), 0.001f);
+
     // TODO
+
+    set_property(planet_actor, TEXT("dirty"), true);
 }

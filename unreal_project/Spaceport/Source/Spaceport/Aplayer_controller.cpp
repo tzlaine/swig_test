@@ -880,16 +880,18 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
              i != last;
              ++i) {
             if (auto planet = ::planet(client_gs_, i)) {
+                FVector planet_location{};
+                FMath::PolarToCartesian(
+                    planet->orbit_au * km_per_au /
+                        system_map_kms_per_world_unit,
+                    1.0 * planet->orbital_pos_r,
+                    planet_location.X,
+                    planet_location.Y);
+                planet_location /= 100.0; // TODO
+
+                AActor * planet_actor = nullptr;
                 if (planet->planet_type == planet_type_t::rocky) {
-                    float const dist_TODO = star_scale * sphere_mesh_radius +
-                                            sun_radius_km /
-                                                system_map_kms_per_world_unit *
-                                                (2 + i - system->first_planet);
-                    auto const planet_location = FVector(
-                        dist_TODO,
-                        dist_TODO,
-                        0); // TODO
-                    AActor * planet_actor = GetWorld()->SpawnActor<AActor>(
+                    planet_actor = GetWorld()->SpawnActor<AActor>(
                         rocky_planet_class_,
                         star_location + planet_location,
                         FRotator(0, planet->axial_tilt_d, 0),
@@ -919,22 +921,29 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                             LogTemp,
                             Error,
                             TEXT("Cannot render rocky planet with unexpected "
-                                 "atmospheree type '%s'"),
+                                 "atmosphere type '%s'"),
                             *FString(std::format("{}", planet->atmosphere_type)
                                          .c_str()));
                     }
-
-                    double const scale = 10*/*TODO*/planet->radius_km /
-                                         system_map_kms_per_world_unit /
-                                         sphere_mesh_radius;
-                    planet_actor->SetActorScale3D(FVector(scale));
-                    planet_actor->AttachToActor(
-                        system_star_, planet_attachment_rules);
-                    system_planets_.Add(planet_actor);
                 } else {
-                    // TODO
+                    planet_actor = GetWorld()->SpawnActor<AActor>(
+                        gas_ice_giant_class_,
+                        star_location + planet_location,
+                        FRotator(0, planet->axial_tilt_d, 0),
+                        FActorSpawnParameters());
+                    if (planet->planet_type == planet_type_t::gas_giant)
+                        configure_gas_giant_planet(planet_actor, *planet);
+                    else
+                        configure_ice_giant_planet(planet_actor, *planet);
                 }
-                // TODO planets_[i].actor_ = TODO;
+
+                double const scale = 20 * /*TODO*/ planet->radius_km /
+                                     system_map_kms_per_world_unit /
+                                     sphere_mesh_radius;
+                planet_actor->SetActorScale3D(FVector(scale));
+                planet_actor->AttachToActor(
+                    system_star_, planet_attachment_rules);
+                system_planets_.Add(planet_actor);
             } else {
                 ++missing;
             }
