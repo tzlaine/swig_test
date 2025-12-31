@@ -456,6 +456,7 @@ namespace {
         FLinearColor scattering_color;
     };
 
+    // TODO: -> Lua script
     ring_colors const all_ring_colors[] = {
         // barren_planet BP
         ring_colors{
