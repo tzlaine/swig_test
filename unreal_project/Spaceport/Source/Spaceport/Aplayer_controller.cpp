@@ -904,7 +904,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                     planet_actor = GetWorld()->SpawnActor<AActor>(
                         planet_class,
                         star_location + planet_location,
-                        FRotator(0, planet->axial_tilt_d, 0),
+                        FRotator(planet->axial_tilt_d, 0, 0),
                         FActorSpawnParameters());
 
                     switch (planet->atmosphere_type) {
@@ -940,7 +940,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                     planet_actor = GetWorld()->SpawnActor<AActor>(
                         gas_ice_giant_class_,
                         star_location + planet_location,
-                        FRotator(0, planet->axial_tilt_d, 0),
+                        FRotator(planet->axial_tilt_d, 0, 0),
                         FActorSpawnParameters());
                     if (planet->planet_type == planet_type_t::gas_giant)
                         configure_gas_giant_planet(planet_actor, *planet, i);
