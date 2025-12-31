@@ -157,8 +157,6 @@
    - Atmosphere_Color: Interpolate this between linear white and linear
      2F73E0FF, based on O2 suitability
 
-   TODO: Rings!
-
    - City_Lights_Extent: 0.0-1.0, should be based on pop
 
    - City_Lights_Halo: Set to 0 for uncolonized, 0.005 otherwise
@@ -188,9 +186,11 @@
    - Tropics *: same as above
 
    - Poles Latitude: 0.5
+ */
 
+/* rings (for all planet types) notes:
    - Rings_Opacity: Set to 1.0-8.0 linear if rings are present, 0.0 otherwise.
-   - Inner_Radius: 1.25-2.0, gamma dist (mode near 1.5)
+   - Inner_Radius: 1.25-2.0, linear dist
 
    - Outer_Radius (actually used as thickness, not outer radius): 0.4-2.5,
      Inner_Radius implies higher Outer_Radius, but then add some linear
@@ -199,10 +199,9 @@
    - Edge_Hardness: 0.75-20.0, linear dist
    - Frequency: 1.25-4.0, linear dist
    - Position: 0.0-10, linear dist
-   - Dark_Side_Brightness: Set to 0.001
    - Rings_Color_{1,2,3}: TODO (mostly ice; should be very desaturated, like
    s=0.4-0.45)
-   - Rings_Scattering_Color: Set to Rings_Color_3
+   - Rings_Scattering_Color: TODO
  */
 
 /* reduced/carbon-rich planet notes:
@@ -448,6 +447,97 @@ void configure_system_star(AActor * star_actor, star_t const & star)
     set_property(star_actor, TEXT("dirty"), true);
 }
 
+namespace {
+    struct ring_colors
+    {
+        FLinearColor color_1;
+        FLinearColor color_2;
+        FLinearColor color_3;
+        FLinearColor scattering_color;
+    };
+
+    ring_colors const all_ring_colors[] = {
+        // barren_planet BP
+        ring_colors{
+            FColor(0xB8, 0xC6, 0xE7),
+            FColor(0xFF, 0xBF, 0xAB),
+            FColor(0x04, 0x87, 0x9D),
+            FColor(0xF3, 0xEF, 0xFF)},
+        // ice_planet BP
+        ring_colors{
+            FColor(0xD9, 0xC0, 0xD4),
+            FColor(0xBA, 0xC5, 0xE8),
+            FColor(0xCB, 0xFF, 0xFD),
+            FColor(0xFF, 0x9A, 0x94)},
+        // rocky_planet BP (same as giant_planet BP)
+        ring_colors{
+            FColor(0x63, 0x96, 0xFF),
+            FColor(0x6E, 0xD6, 0xF2),
+            FColor(0xFF, 0x9E, 0x4B),
+            FColor(0xFF, 0x9E, 0x4B)}};
+
+    double
+    rings_thickness(planet_t const & planet, detail::rng_state & rng_state)
+    {
+        std::normal_distribution dist{0.0, 0.25};
+        double const roll = random_number(dist, rng_state);
+        return std::min(roll * planet.mass_kg / earth_mass_kg, 2.5);
+    }
+
+    void configure_rings(
+        AActor * planet_actor,
+        planet_t const & planet,
+        detail::rng_state & rng_state)
+    {
+        double const thickness = rings_thickness(planet, rng_state);
+        if (thickness < 0.05)
+            return;
+
+        set_property(
+            planet_actor,
+            TEXT("Rings_Opacity"),
+            random_double(1.0, 8.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Inner_Radius"),
+            random_double(1.25, 2.0, rng_state));
+        set_property(planet_actor, TEXT("Outer_Radius"), thickness);
+        set_property(
+            planet_actor,
+            TEXT("Edge_Hardness"),
+            random_double(0.75, 20.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Frequency"),
+            random_double(0.75, 20.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Position"),
+            random_double(0.0, 10.0, rng_state));
+
+        double const desaturation = random_double(0.3, 0.5, rng_state);
+        ring_colors const & colors = all_ring_colors[random_int(
+            0, std::size(all_ring_colors) - 1, rng_state)];
+
+        set_property(
+            planet_actor,
+            TEXT("Rings_Color_1"),
+            colors.color_1.Desaturate(desaturation));
+        set_property(
+            planet_actor,
+            TEXT("Rings_Color_2"),
+            colors.color_2.Desaturate(desaturation));
+        set_property(
+            planet_actor,
+            TEXT("Rings_Color_3"),
+            colors.color_3.Desaturate(desaturation));
+        set_property(
+            planet_actor,
+            TEXT("Rings_Scattering_Color"),
+            colors.scattering_color.Desaturate(desaturation));
+    }
+}
+
 // TODO: For very cold planets that get terraformed, use the BP_Planet_Ice
 // blueprint from Space_Creator, and reduce the ice over time, as the planet
 // is terraformed.  After the terraforming has gotten close enough to
@@ -659,7 +749,7 @@ void configure_rocky_oxidized_planet(
             FLinearColor::LerpUsingHSV(min, max, planet.o2_co2_suitability));
     }
 
-    // TODO: Rings!
+    configure_rings(planet_actor, planet, rng_state);
 
     // city lights
     if (population <= 0.0f) {
@@ -675,8 +765,6 @@ void configure_rocky_oxidized_planet(
             planet_actor,
             TEXT("CityLights_Intensity"),
             std::lerp(0.0f, 20.0f, infrastructure / max_infrastructure));
-        // TODO: Passing max pop and infra to this function seems to result in
-        // half, not max, values (0.5 extent and 10 intensity).  Fix.
         {
             FLinearColor const min = FColor::White;
             FLinearColor const max = FColor(0x4E, 0xA7, 0xFF, 0xFF);
@@ -818,7 +906,7 @@ void configure_rocky_reduced_or_carbon_rich_planet(
     set_property(planet_actor, TEXT("Twilight_Color_1"), FLinearColor::White);
     set_property(planet_actor, TEXT("Twilight_Color_2"), FLinearColor::White);
 
-    // TODO: Rings!
+    configure_rings(planet_actor, planet, rng_state);
 
     set_property(planet_actor, TEXT("dirty"), true);
 }
@@ -831,6 +919,8 @@ void configure_high_temperature_planet(
     Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
     check(game_user_settings);
 
+    auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
+
     set_property(
         planet_actor,
         TEXT("Shader_Complexity"),
@@ -842,6 +932,8 @@ void configure_high_temperature_planet(
 
     // TODO
 
+    configure_rings(planet_actor, planet, rng_state);
+
     set_property(planet_actor, TEXT("dirty"), true);
 }
 
@@ -850,12 +942,16 @@ void configure_gas_giant_planet(
 {
     check(planet_actor);
 
+    auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
+
     set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
     set_property(
         planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
     set_property(planet_actor, TEXT("Dark_Side_Brightness"), 0.001f);
 
     // TODO
+
+    configure_rings(planet_actor, planet, rng_state);
 
     set_property(planet_actor, TEXT("dirty"), true);
 }
@@ -865,12 +961,16 @@ void configure_ice_giant_planet(
 {
     check(planet_actor);
 
+    auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
+
     set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
     set_property(
         planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
     set_property(planet_actor, TEXT("Dark_Side_Brightness"), 0.001f);
 
     // TODO
+
+    configure_rings(planet_actor, planet, rng_state);
 
     set_property(planet_actor, TEXT("dirty"), true);
 }
