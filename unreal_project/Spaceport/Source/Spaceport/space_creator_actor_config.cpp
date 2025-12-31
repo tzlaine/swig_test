@@ -588,6 +588,242 @@ namespace {
         FColor(0x8F, 0x72, 0x4C),
         FColor(0xFF, 0xD2, 0x8C),
     }};
+
+    struct giant_colors
+    {
+        FLinearColor scattering_color;
+        FLinearColor sunset_color_1;
+        FLinearColor sunset_color_2;
+
+        FLinearColor equator_tropics_clouds_color_1;
+        FLinearColor equator_tropics_clouds_color_2;
+        FLinearColor equator_tropics_clouds_color_3;
+        FLinearColor equator_tropics_clouds_color_4;
+
+        FLinearColor deep_clouds_color_1;
+        FLinearColor deep_clouds_color_2;
+        FLinearColor deep_clouds_color_3;
+        FLinearColor deep_clouds_color_4;
+
+        FLinearColor poles_clouds_color_1;
+        FLinearColor poles_clouds_color_2;
+        FLinearColor poles_clouds_color_3;
+        FLinearColor poles_clouds_color_4;
+    };
+}
+
+namespace detail {
+    // Playing games with operator overloading here so we can
+    // Shift+Right-Click to copy colors out of the Unreal editor, and then
+    // paste them here without modification.
+    template<int N>
+    struct color_channel_proxy;
+
+    struct color_proxy
+    {
+        constexpr operator FLinearColor() const
+        {
+            return {colors_[0], colors_[1], colors_[2], colors_[3]};
+        }
+
+        template<int N>
+        constexpr color_proxy operator,(color_channel_proxy<N> c)
+        {
+            color_proxy retval = *this;
+            retval.colors_[N] = c.color_;
+            return retval;
+        }
+
+        std::array<float, 4> colors_ = {};
+    };
+
+    template<int N>
+    struct color_channel_proxy
+    {
+        float color_ = 0.0;
+
+        constexpr color_proxy operator,(color_channel_proxy<1> c1)
+            requires(N == 0)
+        {
+            color_proxy retval;
+            retval.colors_[0] = color_;
+            retval.colors_[1] = c1.color_;
+            return retval;
+        }
+    };
+
+    template<int N>
+    struct color_proxy_tag
+    {
+        constexpr color_channel_proxy<N> operator=(double d)
+        {
+            return {float(d)};
+        }
+    };
+
+    // For the syntax below to work, these must be globals.  To quiet truly
+    // stupid MSVC warnings-as-errors enabled in Unreal builds, they must not
+    // be in the global namespace.  So they live here in namespace detail.
+    color_proxy_tag<0> R;
+    color_proxy_tag<1> G;
+    color_proxy_tag<2> B;
+    color_proxy_tag<3> A;
+
+    constexpr FLinearColor test_rgba = (R = 1.0, G = 2.0, B = 3.0, A = 4.0);
+    static_assert(test_rgba.R == 1.0f);
+    static_assert(test_rgba.G == 2.0f);
+    static_assert(test_rgba.B == 3.0f);
+    static_assert(test_rgba.A == 4.0f);
+
+    // TODO: -> Lua script
+    giant_colors const all_gas_giant_colors[] = {
+        // defaults from Space Creator's BP_Gas_Planet_...
+        giant_colors{
+            .scattering_color =
+                (R = 0.402777, G = 0.279992, B = 0.197445, A = 0.000000),
+            .sunset_color_1 =
+                (R = 0.260776, G = 0.429168, B = 1.000000, A = 1.000000),
+            .sunset_color_2 =
+                (R = 0.986111, G = 0.300067, B = 0.000000, A = 1.000000),
+
+            .equator_tropics_clouds_color_1 =
+                (R = 0.613108, G = 0.474955, B = 0.678819, A = 1.000000),
+            .equator_tropics_clouds_color_2 =
+                (R = 1.000000, G = 0.416886, B = 0.350444, A = 1.000000),
+            .equator_tropics_clouds_color_3 =
+                (R = 1.000000, G = 0.555718, B = 0.740559, A = 1.000000),
+            .equator_tropics_clouds_color_4 =
+                (R = 0.217057, G = 0.130974, B = 0.248264, A = 1.000000),
+
+            .deep_clouds_color_1 =
+                (R = 0.368034, G = 0.359555, B = 1.000000, A = 1.000000),
+            .deep_clouds_color_2 =
+                (R = 0.114281, G = 0.198232, B = 0.407986, A = 1.000000),
+            .deep_clouds_color_3 =
+                (R = 0.986836, G = 0.226007, B = 1.000000, A = 1.000000),
+            .deep_clouds_color_4 =
+                (R = 0.443815, G = 0.710699, B = 1.000000, A = 1.000000),
+
+            .poles_clouds_color_1 =
+                (R = 0.000000, G = 0.000000, B = 0.000000, A = 1.000000),
+            .poles_clouds_color_2 =
+                (R = 0.079554, G = 0.058569, B = 0.157986, A = 1.000000),
+            .poles_clouds_color_3 =
+                (R = 0.151064, G = 0.219453, B = 0.505208, A = 1.000000),
+            .poles_clouds_color_4 =
+                (R = 0.941485, G = 0.211042, B = 1.000000, A = 1.000000)},
+
+        // More like Saturn (i.e. without the blueish colors above)
+        giant_colors{
+            .scattering_color =
+                (R = 0.402777, G = 0.279992, B = 0.197445, A = 0.000000),
+            .sunset_color_1 =
+                (R = 0.104348, G = 0.056981, B = 0.003892, A = 1.000000),
+            .sunset_color_2 =
+                (R = 0.521739, G = 0.284905, B = 0.019459, A = 1.000000),
+
+            .equator_tropics_clouds_color_1 =
+                (R = 0.730461, G = 0.527115, B = 0.223228, A = 1.000000),
+            .equator_tropics_clouds_color_2 =
+                (R = 0.730461, G = 0.527115, B = 0.223228, A = 1.000000),
+            .equator_tropics_clouds_color_3 =
+                (R = 0.254152, G = 0.234551, B = 0.135633, A = 1.000000),
+            .equator_tropics_clouds_color_4 =
+                (R = 0.590619, G = 0.376262, B = 0.174647, A = 1.000000),
+
+            .deep_clouds_color_1 =
+                (R = 0.373913, G = 0.269823, B = 0.114267, A = 1.000000),
+            .deep_clouds_color_2 =
+                (R = 0.191304, G = 0.129079, B = 0.059495, A = 1.000000),
+            .deep_clouds_color_3 =
+                (R = 0.069565, G = 0.064200, B = 0.037125, A = 1.000000),
+            .deep_clouds_color_4 =
+                (R = 0.208696, G = 0.132952, B = 0.061712, A = 1.000000),
+
+            .poles_clouds_color_1 =
+                (R = 0.000000, G = 0.000000, B = 0.000000, A = 1.000000),
+            .poles_clouds_color_2 =
+                (R = 0.016026, G = 0.103665, B = 0.191304, A = 1.000000),
+            .poles_clouds_color_3 =
+                (R = 0.151064, G = 0.219453, B = 0.505208, A = 1.000000),
+            .poles_clouds_color_4 =
+                (R = 0.669565, G = 0.889855, B = 1.000000, A = 1.000000),
+        }};
+
+    // TODO: -> Lua script
+    giant_colors const all_ice_giant_colors[] = { // TODO
+        // colors from images of Neptune
+        giant_colors{
+            .scattering_color =
+                (R = 0.059511, G = 0.158961, B = 0.930111, A = 1.000000),
+            .sunset_color_1 =
+                (R = 0.059511, G = 0.158961, B = 0.930111, A = 1.000000),
+            .sunset_color_2 =
+                (R = 0.124719, G = 0.205254, B = 0.478261, A = 1.000000),
+
+            .equator_tropics_clouds_color_1 =
+                (R = 0.082283, G = 0.223228, B = 0.982251, A = 1.000000),
+            .equator_tropics_clouds_color_2 =
+                (R = 0.070360, G = 0.162029, B = 1.000000, A = 1.000000),
+            .equator_tropics_clouds_color_3 =
+                (R = 0.048172, G = 0.097587, B = 0.623960, A = 1.000000),
+            .equator_tropics_clouds_color_4 =
+                (R = 0.254152, G = 0.658375, B = 1.000000, A = 1.000000),
+
+            .deep_clouds_color_1 =
+                (R = 0.016026, G = 0.043476, B = 0.191304, A = 1.000000),
+            .deep_clouds_color_2 =
+                (R = 0.070360, G = 0.162029, B = 1.000000, A = 1.000000),
+            .deep_clouds_color_3 =
+                (R = 0.048172, G = 0.097587, B = 0.623960, A = 1.000000),
+            .deep_clouds_color_4 =
+                (R = 0.669565, G = 0.848649, B = 1.000000, A = 1.000000),
+
+            .poles_clouds_color_1 =
+                (R = 0.000000, G = 0.000000, B = 0.000000, A = 1.000000),
+            .poles_clouds_color_2 =
+                (R = 0.016026, G = 0.043476, B = 0.191304, A = 1.000000),
+            .poles_clouds_color_3 =
+                (R = 0.070360, G = 0.162029, B = 1.000000, A = 1.000000),
+            .poles_clouds_color_4 =
+                (R = 0.070360, G = 0.162029, B = 1.000000, A = 1.000000)},
+
+        // colors from images of Uranus
+        giant_colors{
+            .scattering_color =
+                (R = 0.057805, G = 0.428690, B = 0.590619, A = 1.000000),
+            .sunset_color_1 =
+                (R = 0.260776, G = 0.876796, B = 1.000000, A = 1.000000),
+            .sunset_color_2 =
+                (R = 0.124719, G = 0.478261, B = 0.419337, A = 1.000000),
+
+
+            .equator_tropics_clouds_color_1 =
+                (R = 0.082283, G = 0.832256, B = 0.982251, A = 1.000000),
+            .equator_tropics_clouds_color_2 =
+                (R = 0.070360, G = 1.000000, B = 0.845060, A = 1.000000),
+            .equator_tropics_clouds_color_3 =
+                (R = 0.048172, G = 0.623960, B = 0.623960, A = 1.000000),
+            .equator_tropics_clouds_color_4 =
+                (R = 0.254152, G = 1.000000, B = 0.875692, A = 1.000000),
+
+            .deep_clouds_color_1 =
+                (R = 0.016026, G = 0.162091, B = 0.191304, A = 1.000000),
+            .deep_clouds_color_2 =
+                (R = 0.070360, G = 1.000000, B = 1.000000, A = 1.000000),
+            .deep_clouds_color_3 =
+                (R = 0.048172, G = 0.527995, B = 0.623960, A = 1.000000),
+            .deep_clouds_color_4 =
+                (R = 0.669565, G = 1.000000, B = 1.000000, A = 1.000000),
+
+            .poles_clouds_color_1 =
+                (R = 0.000000, G = 0.000000, B = 0.000000, A = 1.000000),
+            .poles_clouds_color_2 =
+                (R = 0.016026, G = 0.103665, B = 0.191304, A = 1.000000),
+            .poles_clouds_color_3 =
+                (R = 0.016026, G = 0.103665, B = 0.191304, A = 1.000000),
+            .poles_clouds_color_4 =
+                (R = 0.669565, G = 0.889855, B = 1.000000, A = 1.000000)}};
 }
 
 // TODO: For very cold planets that get terraformed, use the BP_Planet_Ice
@@ -608,8 +844,8 @@ void configure_rocky_oxidized_planet(
     check(game_user_settings);
 
     // TODO: Also use a global seed so that a particular system+planet (say,
-    // system_id=3 and planet_id=4) doesn't always looks the same, game after
-    // game.
+    // system_id=3 and planet_id=4) doesn't always looks the same, game
+    // after game.
     auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
 
     set_property(
@@ -1054,6 +1290,9 @@ void configure_gas_giant_planet(
 
     auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
 
+    giant_colors const & colors =
+        random_color_set(std::span(detail::all_gas_giant_colors), rng_state);
+
     set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
     set_property(
         planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
@@ -1072,6 +1311,9 @@ void configure_ice_giant_planet(
     check(planet_actor);
 
     auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
+
+    giant_colors const & colors =
+        random_color_set(std::span(detail::all_ice_giant_colors), rng_state);
 
     set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
     set_property(
