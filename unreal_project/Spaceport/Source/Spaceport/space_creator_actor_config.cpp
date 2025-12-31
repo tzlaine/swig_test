@@ -98,11 +98,6 @@
    - Plains/Mountains_Transition: 0.5-1.5, normal dist
    - Plains/Mountains_Transition_Contrast: 0.5-1.5, normal dist
 
-   TODO: For these four, it might be best to come up with some preset,
-   self-consistent sets of four colors each.  (It may need to include cloud,
-   atmosphere and city tints.) NOTE: This does not apply to habitable planets,
-   but *does* apply to less-than-habitable ones).
-
    - Color_Mountains_{1,2}: Should be vaguely dun colored (default
      is linear E6C29EFF,74693AFF)
      Color_Mountains_1: color lerp between FFAF6FFF and 4A3320FF
@@ -169,14 +164,14 @@
 
 /* Gas giant planet notes:
    - Global_Tile_Ratio: 0.1-0.9, linear distribution
-   - Scattering_Color: AA907B00 TODO
+   - Scattering_Color: [from color set]
    - Night_Color: Set to linear 0.001 each channel
-   - Sunset_Color_1: 8CAFFFFF TODO
-   - Sunset_Color_2: FD9500FF
-   - Equator_Clouds_Color_{1,2,3,4}: TODO
-   - Tropics_Clouds_Color_{1,2,3,4}: TODO
-   - Deep_Clouds_Color_{1,2,3,4}: TODO
-   - Poles_Color_{1,2,3,4}:TODO
+   - Sunset_Color_1: [from color set]
+   - Sunset_Color_2: [from color set]
+   - Equator_Clouds_Color_{1,2,3,4}: [from color set]
+   - Tropics_Clouds_Color_{1,2,3,4}: [from color set]
+   - Deep_Clouds_Color_{1,2,3,4}: [from color set]
+   - Poles_Color_{1,2,3,4}: [from color set]
 
    - Equator Clouds Color Shift: 0-1.6 linear
    - Equator Clouds Color Uniformity: 0-4 linear
@@ -199,9 +194,9 @@
    - Edge_Hardness: 0.75-20.0, linear dist
    - Frequency: 1.25-4.0, linear dist
    - Position: 0.0-10, linear dist
-   - Rings_Color_{1,2,3}: TODO (mostly ice; should be very desaturated, like
+   - Rings_Color_{1,2,3}: [from color set] (mostly ice; should be very desaturated, like
    s=0.4-0.45)
-   - Rings_Scattering_Color: TODO
+   - Rings_Scattering_Color: [from color set]
  */
 
 /* reduced/carbon-rich planet notes:
@@ -210,8 +205,8 @@
    - Day_Brightness: 1.0
    - Night_Brightness: 0.001
 
-   - Continents_Color_{1,2,3,4}: TODO
-   _ Continents_Color_Overlay: TODO
+   - Continents_Color_{1,2,3,4}: [from color set]
+   _ Continents_Color_Overlay: [from color set]
 
    - {Large,Medium,Small}_Craters_Intensity: 0-2.0 linear for reduced; 0-1.0
    linear for carbon-rich
@@ -240,7 +235,7 @@
    - Equator_Clouds_Color_{Shift,Uniformity}: 0
    - Equator_Clouds_Coverage: 1-4 linear
    - Equator_Clouds_Shadows_{Size,Strength}: 0
-   - Equator_Clouds_Color_{1,2,3,4}: TODO
+   - Equator_Clouds_Color_{1,2,3,4}: [from color set]
 
    - {Tropics_Clouds_,Deep_Clouds_}*: Same as Equator_Clouds_*, except that
      Tropics_Clouds_Coverage is 1-=40 linear, and must be >= 10x
@@ -373,17 +368,20 @@ void configure_system_star(AActor * star_actor, star_t const & star)
     check(star_class_t::invalid_star_class < star.star_class);
     check(star.star_class <= star_class_t::m);
 
+    Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
+    check(game_user_settings);
+
     set_property(
         star_actor,
         TEXT("Atmospheric Phenomena"),
-        true); // TODO: Disable based on settings.
+        2 < game_user_settings->planet_detail);
     set_property(star_actor, TEXT("Coronal Rays Count"), 128);
     set_property(star_actor, TEXT("Surface Explosions Count"), 8);
     set_property(star_actor, TEXT("Coronal Ejections Count"), 8);
     set_property(
         star_actor,
         TEXT("Activate Surface Rays"),
-        true); // TODO: Disable based on settings.
+        2 < game_user_settings->planet_detail);
 
     // class O
     FLinearColor const o_atmosphere_color = FColor(0x06, 0x55, 0xFF, 0xFF);
@@ -751,7 +749,7 @@ namespace detail {
         }};
 
     // TODO: -> Lua script
-    giant_colors const all_ice_giant_colors[] = { // TODO
+    giant_colors const all_ice_giant_colors[] = {
         // colors from images of Neptune
         giant_colors{
             .scattering_color =
