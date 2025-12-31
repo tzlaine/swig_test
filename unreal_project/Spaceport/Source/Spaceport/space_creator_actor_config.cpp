@@ -254,8 +254,6 @@ namespace {
     }
 }
 
-// TODO: Move all the utilities above here somewhere else.
-
 Fsystem_graphical_properties generate_map_star(system_t const & system)
 {
     Fsystem_graphical_properties retval;
@@ -608,11 +606,11 @@ void configure_rocky_oxidized_planet(
     set_property(
         planet_actor,
         TEXT("Ice_Poles_Weight"),
-        std::max(0.0, std::lerp(0.4, 0.6, 1.0 - temperature_alpha)));
+        std::max(0.0, std::lerp(0.6, 0.7, 1.0 - temperature_alpha)));
     set_property(
         planet_actor,
         TEXT("Ice_Coverage"),
-        std::max(0.0, std::lerp(0.1, 0.5, 1.0 - temperature_alpha)));
+        std::max(0.0, std::lerp(0.0, 0.4, 1.0 - temperature_alpha)));
 
     // clouds
     double clouds_speed = 0.0001;
