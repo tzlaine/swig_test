@@ -229,6 +229,28 @@
    - Twilight_Color_2: white
  */
 
+/* high-temperature rocky planet notes:
+   [uses giant_planet BP]
+
+   - Scattering_Color: AA907B
+   - Night_Color: 0.001 per channel
+   - Sunset_Color_1: FFCD8C
+   - Sunset_Color_2: FD9500
+
+   - Equator_Clouds_Color_{Shift,Uniformity}: 0
+   - Equator_Clouds_Coverage: 1-4 linear
+   - Equator_Clouds_Shadows_{Size,Strength}: 0
+   - Equator_Clouds_Color_{1,2,3,4}: TODO
+
+   - {Tropics_Clouds_,Deep_Clouds_}*: Same as Equator_Clouds_*, except that
+     Tropics_Clouds_Coverage is 1-=40 linear, and must be >= 10x
+     Equator_Clouds_Coverage
+
+   - Poles_Latitude: 0.4-0.7 linear
+   - Poles_Clouds_Frequency: 0-0.6 linear
+ */
+
+// TODO: Put all the hardcoded numbers from this file into a Lua script.
 namespace {
     FVector light_dir(planet_t const & planet)
     {
@@ -448,6 +470,13 @@ void configure_system_star(AActor * star_actor, star_t const & star)
 }
 
 namespace {
+    template<typename T, size_t Extent>
+    T const & random_color_set(
+        std::span<T const, Extent> all_sets, detail::rng_state & rng_state)
+    {
+        return all_sets[random_int(0, all_sets.size() - 1, rng_state)];
+    }
+
     struct ring_colors
     {
         FLinearColor color_1;
@@ -517,8 +546,8 @@ namespace {
             random_double(0.0, 10.0, rng_state));
 
         double const desaturation = random_double(0.3, 0.5, rng_state);
-        ring_colors const & colors = all_ring_colors[random_int(
-            0, std::size(all_ring_colors) - 1, rng_state)];
+        ring_colors const & colors =
+            random_color_set(std::span(all_ring_colors), rng_state);
 
         set_property(
             planet_actor,
@@ -537,6 +566,28 @@ namespace {
             TEXT("Rings_Scattering_Color"),
             colors.scattering_color.Desaturate(desaturation));
     }
+
+    struct high_temp_colors
+    {
+        FLinearColor scattering_color;
+        FLinearColor sunset_color_1;
+        FLinearColor sunset_color_2;
+        FLinearColor clouds_color_1;
+        FLinearColor clouds_color_2;
+        FLinearColor clouds_color_3;
+        FLinearColor clouds_color_4;
+    };
+
+    // TODO: -> Lua script
+    high_temp_colors const all_high_temp_colors[] = {high_temp_colors{
+        FColor(0xAA, 0x90, 0x7B),
+        FColor(0xFF, 0xCD, 0x8C),
+        FColor(0xFD, 0x95, 0x00),
+        FColor(0xFF, 0xAC, 0x8C),
+        FColor(0xFF, 0xBA, 0x8C),
+        FColor(0x8F, 0x72, 0x4C),
+        FColor(0xFF, 0xD2, 0x8C),
+    }};
 }
 
 // TODO: For very cold planets that get terraformed, use the BP_Planet_Ice
@@ -917,21 +968,79 @@ void configure_high_temperature_planet(
 {
     check(planet_actor);
 
-    Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
-    check(game_user_settings);
-
     auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
+
+    high_temp_colors const & colors =
+        random_color_set(std::span(all_high_temp_colors), rng_state);
+
+    set_property(
+        planet_actor, TEXT("Scattering Color"), colors.scattering_color);
+    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
+    set_property(
+        planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
+    set_property(planet_actor, TEXT("Sunset Color 1"), colors.sunset_color_1);
+    set_property(planet_actor, TEXT("Sunset Color 2"), colors.sunset_color_2);
+
+    double const equator_clouds_coverage = random_double(1.0, 4.0, rng_state);
+    set_property(planet_actor, TEXT("Equator Clouds Color Shift"), 0.0);
+    set_property(planet_actor, TEXT("Equator Clouds Color Uniformity"), 0.0);
+    set_property(
+        planet_actor, TEXT("Equator Clouds Coverage"), equator_clouds_coverage);
+    set_property(planet_actor, TEXT("Equator Clouds Shadows Size"), 0.0);
+    set_property(planet_actor, TEXT("Equator Clouds Shadows Strength"), 0.0);
+    set_property(
+        planet_actor, TEXT("Equator Clouds Color 1"), colors.clouds_color_1);
+    set_property(
+        planet_actor, TEXT("Equator Clouds Color 2"), colors.clouds_color_2);
+    set_property(
+        planet_actor, TEXT("Equator Clouds Color 3"), colors.clouds_color_3);
+    set_property(
+        planet_actor, TEXT("Equator Clouds Color 4"), colors.clouds_color_4);
+
+    set_property(planet_actor, TEXT("Deep Clouds Color Shift"), 0.0);
+    set_property(planet_actor, TEXT("Deep Clouds Color Uniformity"), 0.0);
+    set_property(
+        planet_actor, TEXT("Deep Clouds Coverage"), equator_clouds_coverage);
+    set_property(planet_actor, TEXT("Deep Clouds Shadows Size"), 0.0);
+    set_property(planet_actor, TEXT("Deep Clouds Shadows Strength"), 0.0);
+    set_property(
+        planet_actor, TEXT("Deep Clouds Color 1"), colors.clouds_color_1);
+    set_property(
+        planet_actor, TEXT("Deep Clouds Color 2"), colors.clouds_color_2);
+    set_property(
+        planet_actor, TEXT("Deep Clouds Color 3"), colors.clouds_color_3);
+    set_property(
+        planet_actor, TEXT("Deep Clouds Color 4"), colors.clouds_color_4);
+
+    double const tropics_clouds_coverage = std::max(
+        equator_clouds_coverage * 10.0, random_double(10.0, 40.0, rng_state));
+    set_property(planet_actor, TEXT("Tropics Clouds Color Shift"), 0.0);
+    set_property(planet_actor, TEXT("Tropics Clouds Color Uniformity"), 0.0);
+    set_property(
+        planet_actor, TEXT("Tropics Clouds Coverage"), tropics_clouds_coverage);
+    set_property(planet_actor, TEXT("Tropics Clouds Shadows Size"), 0.0);
+    set_property(planet_actor, TEXT("Tropics Clouds Shadows Strength"), 0.0);
+    set_property(
+        planet_actor, TEXT("Tropics Clouds Color 1"), colors.clouds_color_1);
+    set_property(
+        planet_actor, TEXT("Tropics Clouds Color 2"), colors.clouds_color_2);
+    set_property(
+        planet_actor, TEXT("Tropics Clouds Color 3"), colors.clouds_color_3);
+    set_property(
+        planet_actor, TEXT("Tropics Clouds Color 4"), colors.clouds_color_4);
 
     set_property(
         planet_actor,
-        TEXT("Shader_Complexity"),
-        game_user_settings->planet_detail);
-    set_property(planet_actor, TEXT("Use_Directional_Light"), false);
-    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
-    set_property(planet_actor, TEXT("Night_Brightness"), 0.001f);
-    set_property(planet_actor, TEXT("Day_Brightness"), 1.0f);
-
-    // TODO
+        TEXT("Poles Latitude"),
+        random_double(0.4, 0.7, rng_state));
+    set_property(
+        planet_actor,
+        TEXT("Poles Clouds Frequency"),
+        random_double(0, 0.6, rng_state));
+    set_property(planet_actor, TEXT("Poles Color 1"), colors.clouds_color_1);
+    set_property(planet_actor, TEXT("Poles Color 2"), colors.clouds_color_2);
+    set_property(planet_actor, TEXT("Poles Color 3"), colors.clouds_color_3);
+    set_property(planet_actor, TEXT("Poles Color 4"), colors.clouds_color_4);
 
     configure_rings(planet_actor, planet, rng_state);
 

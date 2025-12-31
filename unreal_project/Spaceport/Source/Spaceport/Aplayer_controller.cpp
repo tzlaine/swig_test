@@ -897,6 +897,9 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                         planet->atmosphere_type ==
                             atmosphere_type_t::carbon_rich_type_c) {
                         planet_class = barren_planet_class_;
+                    } else if (planet->atmosphere_type ==
+                            atmosphere_type_t::high_temperature) {
+                        planet_class = gas_ice_giant_class_;
                     }
                     planet_actor = GetWorld()->SpawnActor<AActor>(
                         planet_class,
