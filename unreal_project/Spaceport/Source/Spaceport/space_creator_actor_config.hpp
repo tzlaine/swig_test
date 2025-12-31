@@ -24,11 +24,13 @@ void configure_rocky_oxidized_planet(
     float infrastructure);
 
 void configure_rocky_reduced_or_carbon_rich_planet(
-    AActor * planet_actor, planet_t const & planet);
+    AActor * planet_actor, planet_t const & planet, int planet_id);
 
 void configure_high_temperature_planet(
-    AActor * planet_actor, planet_t const & planet);
+    AActor * planet_actor, planet_t const & planet, int planet_id);
 
-void configure_gas_giant_planet(AActor * planet_actor, planet_t const & planet);
+void configure_gas_giant_planet(
+    AActor * planet_actor, planet_t const & planet, int planet_id);
 
-void configure_ice_giant_planet(AActor * planet_actor, planet_t const & planet);
+void configure_ice_giant_planet(
+    AActor * planet_actor, planet_t const & planet, int planet_id);

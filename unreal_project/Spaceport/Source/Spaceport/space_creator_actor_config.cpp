@@ -200,8 +200,34 @@
    - Frequency: 1.25-4.0, linear dist
    - Position: 0.0-10, linear dist
    - Dark_Side_Brightness: Set to 0.001
-   - Rings_Color_{1,2,3}: TODO (mostly ice; should be very desaturated, like s=0.4-0.45)
+   - Rings_Color_{1,2,3}: TODO (mostly ice; should be very desaturated, like
+   s=0.4-0.45)
    - Rings_Scattering_Color: Set to Rings_Color_3
+ */
+
+/* reduced/carbon-rich planet notes:
+   - Shader_Complexity: floor(planet shader complexity * 3.0 / 4.0 + 0.5)
+
+   - Day_Brightness: 1.0
+   - Night_Brightness: 0.001
+
+   - Continents_Color_{1,2,3,4}: TODO
+   _ Continents_Color_Overlay: TODO
+
+   - {Large,Medium,Small}_Craters_Intensity: 0-2.0 linear for reduced; 0-1.0
+   linear for carbon-rich
+   - Craters_Normal_Intensity: 2.0 for reduced; 0-1.0 linear for carbon-rich
+
+   - Clouds_Opacity: 0 for reduced; 0-0.8 linear for carbon-rich
+   - Clouds_Shadow_Offset: 6.0
+   - Under_Clouds_Brightness: 0.5
+
+   - Atmosphere_Direct_Brightness: 0 for reduced; 0.01-0.05 for carbon-rich
+   - Atmosphere_Edge_Brightness: 0-0.05 for reduced; 0.05-0.1 for carbon-rich
+   - Atmosphere_Exponent: 3.0-6.0 for reduced; 0-5.0 for carbon-rich
+   - Atmosphere_Color: white
+   - Twilight_Color_1: white
+   - Twilight_Color_2: white
  */
 
 namespace {
@@ -395,9 +421,7 @@ void configure_system_star(AActor * star_actor, star_t const & star)
         dark_filaments_color = f_dark_filaments_color;
         low_zones_color = f_low_zones_color;
         break;
-    case star_class_t::g:
-        set_property(star_actor, TEXT("dirty"), true);
-        return;
+    case star_class_t::g: set_property(star_actor, TEXT("dirty"), true); return;
     case star_class_t::k:
         atmosphere_color = k_atmosphere_color;
         explosions_color = k_explosions_color;
@@ -443,8 +467,9 @@ void configure_rocky_oxidized_planet(
     Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
     check(game_user_settings);
 
-    // TODO: Also use a global seed so that system_id=3 and planet_id=4 always
-    // looks the same.
+    // TODO: Also use a global seed so that a particular system+planet (say,
+    // system_id=3 and planet_id=4) doesn't always looks the same, game after
+    // game.
     auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
 
     set_property(
@@ -465,27 +490,27 @@ void configure_rocky_oxidized_planet(
     std::chi_squared_distribution oceans_transition_dist(2.5);
 
     // Continents
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Continents_Position"),
         random_double(0.0, 15.0, rng_state));
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Continents_Spread"),
         std::clamp(1.0, 10.0, random_number(one_to_ten_gamma_dist, rng_state)));
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Continents_Distortion"),
         random_number(around_one_dist, rng_state));
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Continents_Distortion_Scale"),
         random_number(distortion_scale_dist, rng_state));
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Plains/Mountains_Transition"),
         random_number(around_one_dist, rng_state));
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Plains/Mountains_Transition_Contrast"),
         random_number(around_one_dist, rng_state));
@@ -539,7 +564,7 @@ void configure_rocky_oxidized_planet(
     // oceans
     set_property(planet_actor, TEXT("Sea_Level"), planet.ocean_coverage);
 
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Oceans_Color_Transition"),
         std::lerp(
@@ -580,11 +605,11 @@ void configure_rocky_oxidized_planet(
     double const temperature_alpha =
         (planet.surface_temperature_k - min_habitable_nonsuit_temp_k) /
         (max_habitable_temp_k - min_habitable_nonsuit_temp_k);
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Ice_Poles_Weight"),
         std::max(0.0, std::lerp(0.4, 0.6, 1.0 - temperature_alpha)));
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Ice_Coverage"),
         std::max(0.0, std::lerp(0.1, 0.5, 1.0 - temperature_alpha)));
@@ -593,20 +618,20 @@ void configure_rocky_oxidized_planet(
     double clouds_speed = 0.0001;
     if (double alpha = seasons_intensity_factor(planet))
         clouds_speed = std::lerp(0.0001, 0.005, alpha);
-    set_property<float>(planet_actor, TEXT("Clouds_Speed"), clouds_speed);
+    set_property(planet_actor, TEXT("Clouds_Speed"), clouds_speed);
 
     double const plentiful_water_alpha =
         growth_factor_considered_habitable < planet.growth_factor
             ? 1.0
             : double(planet.water) / max_resource_value;
 
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Clouds_Opacity"),
         plentiful_water_alpha < 1.0 ? random_double(0.0, 2.0, rng_state)
                                     : random_double(2.0, 4.0, rng_state));
-    set_property<float>(planet_actor, TEXT("Clouds_Shadow_Offset"), 6.0);
-    set_property<float>(planet_actor, TEXT("Under_Clouds_Brightness"), 0.5);
+    set_property(planet_actor, TEXT("Clouds_Shadow_Offset"), 6.0);
+    set_property(planet_actor, TEXT("Under_Clouds_Brightness"), 0.5);
 
     set_property(
         planet_actor,
@@ -619,11 +644,11 @@ void configure_rocky_oxidized_planet(
 
     // atmosphere
 
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Atmosphere_Direct_Brightness"),
         0.1 * plentiful_water_alpha);
-    set_property<float>(
+    set_property(
         planet_actor,
         TEXT("Atmosphere_Edge_Brightness"),
         1.0 * plentiful_water_alpha);
@@ -643,12 +668,12 @@ void configure_rocky_oxidized_planet(
         set_property(planet_actor, TEXT("CityLights_Extent"), 0.0f);
         set_property(planet_actor, TEXT("CityLights_Halo"), 0.0f);
     } else {
-        set_property<float>(
+        set_property(
             planet_actor,
             TEXT("CityLights_Extent"),
             population / planet.max_population);
         set_property(planet_actor, TEXT("CityLights_Halo"), 0.005f);
-        set_property<float>(
+        set_property(
             planet_actor,
             TEXT("CityLights_Intensity"),
             std::lerp(0.0f, 20.0f, infrastructure / max_infrastructure));
@@ -669,29 +694,139 @@ void configure_rocky_oxidized_planet(
 }
 
 void configure_rocky_reduced_or_carbon_rich_planet(
-    AActor * planet_actor, planet_t const & planet)
+    AActor * planet_actor, planet_t const & planet, int planet_id)
 {
     check(planet_actor);
 
     Ugame_user_settings * game_user_settings = Ugame_user_settings::get();
     check(game_user_settings);
 
-    set_property(
-        planet_actor,
-        TEXT("Shader_Complexity"),
-        game_user_settings->planet_detail);
+    auto rng_state = detail::rng_state_from(planet.system_id, planet_id);
+
+    int complexity = game_user_settings->planet_detail;
+    if (complexity == 3)
+        complexity = 2;
+    else if (complexity == 4)
+        complexity = 3;
+    set_property(planet_actor, TEXT("Shader_Complexity"), complexity);
     set_property(planet_actor, TEXT("Use_Directional_Light"), false);
     set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
     set_property(planet_actor, TEXT("Night_Brightness"), 0.001f);
     set_property(planet_actor, TEXT("Day_Brightness"), 1.0f);
 
-    // TODO
+    set_property(
+        planet_actor,
+        TEXT("Continenets_Texture_1"),
+        textures().random_planet_texture(rng_state));
+    set_property(
+        planet_actor,
+        TEXT("Continenets_Texture_2"),
+        textures().random_planet_texture(rng_state));
+
+    // The colors here are from the Space Creator defaults, which are Mars
+    // like, redish-brown.  Reduced-atmosphere planets should not have a lot
+    // of surface chemistry, and so should be grey.  Carbon-rich atmosphere
+    // planets will be somewhere between grey and MArs-like, weighted hevily
+    // toward grey (hence the gamma distribution).
+    std::gamma_distribution<double> saturation_dist(1, 2);
+    double const desaturation =
+        planet.atmosphere_type == atmosphere_type_t::reduced_type_a
+            ? 1.0
+            : std::clamp(
+                  0.0,
+                  1.0,
+                  1 - random_number(saturation_dist, rng_state) / 2.0);
+    FLinearColor const continents_color_1 =
+        FLinearColor(FColor(0xF1, 0x77, 0x55, 0xFF)).Desaturate(desaturation);
+    FLinearColor const continents_color_2 =
+        FLinearColor(FColor(0xFF, 0x80, 0x54, 0xFF)).Desaturate(desaturation);
+    FLinearColor const continents_color_3 =
+        FLinearColor(FColor(0xFF, 0xA6, 0x67, 0xFF)).Desaturate(desaturation);
+    FLinearColor const continents_color_4 =
+        FLinearColor(FColor(0xD3, 0xE2, 0xED, 0xFF)).Desaturate(desaturation);
+    FLinearColor const continents_color_overlay =
+        FLinearColor(FColor(0xA0, 0x49, 0x40, 0xFF)).Desaturate(desaturation);
+    set_property(planet_actor, TEXT("Continents_Color_1"), continents_color_1);
+    set_property(planet_actor, TEXT("Continents_Color_2"), continents_color_2);
+    set_property(planet_actor, TEXT("Continents_Color_3"), continents_color_3);
+    set_property(planet_actor, TEXT("Continents_Color_4"), continents_color_4);
+    set_property(
+        planet_actor,
+        TEXT("Continents_Color_Overlay"),
+        continents_color_overlay);
+
+    if (planet.atmosphere_type == atmosphere_type_t::reduced_type_a) {
+        set_property(
+            planet_actor,
+            TEXT("Large_Craters_Intensity"),
+            random_double(0.0, 2.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Medium_Craters_Intensity"),
+            random_double(0.0, 2.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Small_Craters_Intensity"),
+            random_double(0.0, 2.0, rng_state));
+        set_property(planet_actor, TEXT("Craters_Normal_Intensity"), 2.0f);
+        set_property(planet_actor, TEXT("Clouds_Opacity"), 0.0f);
+        set_property(planet_actor, TEXT("Atmosphere_Direct_Brightness"), 0.0f);
+        set_property(
+            planet_actor,
+            TEXT("Atmosphere_Edge_Brightness"),
+            random_double(0.0, 0.05, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Atmosphere_Exponent"),
+            random_double(3.0, 6.0, rng_state));
+    } else {
+        set_property(
+            planet_actor,
+            TEXT("Large_Craters_Intensity"),
+            random_double(0.0, 1.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Medium_Craters_Intensity"),
+            random_double(0.0, 1.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Small_Craters_Intensity"),
+            random_double(0.0, 1.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Craters_Normal_Intensity"),
+            random_double(0.0, 1.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Clouds_Opacity"),
+            random_double(0.0, 0.8, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Atmosphere_Direct_Brightness"),
+            random_double(0.01, 0.05, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Atmosphere_Edge_Brightness"),
+            random_double(0.05, 0.1, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Atmosphere_Exponent"),
+            random_double(0.0, 5.0, rng_state));
+    }
+
+    set_property(planet_actor, TEXT("Clouds_Shadow_Offset"), 6.0f);
+    set_property(planet_actor, TEXT("Under_Clouds_Brightness"), 0.5f);
+    set_property(planet_actor, TEXT("Atmosphere_Color"), FLinearColor::White);
+    set_property(planet_actor, TEXT("Twilight_Color_1"), FLinearColor::White);
+    set_property(planet_actor, TEXT("Twilight_Color_2"), FLinearColor::White);
+
+    // TODO: Rings!
 
     set_property(planet_actor, TEXT("dirty"), true);
 }
 
 void configure_high_temperature_planet(
-    AActor * planet_actor, planet_t const & planet)
+    AActor * planet_actor, planet_t const & planet, int planet_id)
 {
     check(planet_actor);
 
@@ -712,7 +847,8 @@ void configure_high_temperature_planet(
     set_property(planet_actor, TEXT("dirty"), true);
 }
 
-void configure_gas_giant_planet(AActor * planet_actor, planet_t const & planet)
+void configure_gas_giant_planet(
+    AActor * planet_actor, planet_t const & planet, int planet_id)
 {
     check(planet_actor);
 
@@ -726,7 +862,8 @@ void configure_gas_giant_planet(AActor * planet_actor, planet_t const & planet)
     set_property(planet_actor, TEXT("dirty"), true);
 }
 
-void configure_ice_giant_planet(AActor * planet_actor, planet_t const & planet)
+void configure_ice_giant_planet(
+    AActor * planet_actor, planet_t const & planet, int planet_id)
 {
     check(planet_actor);
 

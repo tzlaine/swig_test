@@ -209,6 +209,16 @@ private:
         EditAnywhere,
         Category = "BP classes",
         meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<AActor> ice_planet_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "BP classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<AActor> barren_planet_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "BP classes",
+        meta = (AllowPrivateAccess = "true"))
     TSubclassOf<AActor> gas_ice_giant_class_;
 
     UPROPERTY()

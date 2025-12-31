@@ -891,8 +891,15 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
 
                 AActor * planet_actor = nullptr;
                 if (planet->planet_type == planet_type_t::rocky) {
+                    TSubclassOf<AActor> planet_class = rocky_planet_class_;
+                    if (planet->atmosphere_type ==
+                            atmosphere_type_t::reduced_type_a ||
+                        planet->atmosphere_type ==
+                            atmosphere_type_t::carbon_rich_type_c) {
+                        planet_class = barren_planet_class_;
+                    }
                     planet_actor = GetWorld()->SpawnActor<AActor>(
-                        rocky_planet_class_,
+                        planet_class,
                         star_location + planet_location,
                         FRotator(0, planet->axial_tilt_d, 0),
                         FActorSpawnParameters());
@@ -901,7 +908,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                     case atmosphere_type_t::reduced_type_a:
                     case atmosphere_type_t::carbon_rich_type_c:
                         configure_rocky_reduced_or_carbon_rich_planet(
-                            planet_actor, *planet);
+                            planet_actor, *planet, i);
                         break;
                     case atmosphere_type_t::oxidized_type_b:
                         configure_rocky_oxidized_planet(
@@ -915,7 +922,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                         break;
                     case atmosphere_type_t::high_temperature:
                         configure_high_temperature_planet(
-                            planet_actor, *planet);
+                            planet_actor, *planet, i);
                         break;
                     default:
                         UE_LOG(
@@ -933,9 +940,9 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                         FRotator(0, planet->axial_tilt_d, 0),
                         FActorSpawnParameters());
                     if (planet->planet_type == planet_type_t::gas_giant)
-                        configure_gas_giant_planet(planet_actor, *planet);
+                        configure_gas_giant_planet(planet_actor, *planet, i);
                     else
-                        configure_ice_giant_planet(planet_actor, *planet);
+                        configure_ice_giant_planet(planet_actor, *planet, i);
                 }
 
                 double const scale = 20 * /*TODO*/ planet->radius_km /
