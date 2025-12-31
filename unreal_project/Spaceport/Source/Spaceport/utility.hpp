@@ -212,18 +212,99 @@ void set_property(AActor * a, FName name, T value)
 
     FProperty * const p = a->GetClass()->FindPropertyByName(name);
     if (!p) {
-        throw std::runtime_error(std::format(
-            "Actor {} does not have property {}.", a->GetName(), name));
+        UE_LOG(
+            LogTemp,
+            Error,
+            TEXT("%s"),
+            *FString(
+                std::format(
+                    "Actor {} does not have property {}.", a->GetName(), name)
+                    .c_str()));
+        return;
     }
 
-    T * const ptr = p->ContainerPtrToValuePtr<T>(a);
-    if (!ptr) {
-        throw std::runtime_error(std::format(
-            "Could not get property {} of type {} from actor {}.",
-            name,
-            boost::typeindex::type_id<T>().pretty_name(),
-            a->GetName()));
+    if constexpr (
+        std::same_as<T, bool> || std::same_as<T, int> ||
+        std::same_as<T, FVector> || std::same_as<T, FLinearColor> ||
+        std::same_as<T, UTexture *>) {
+        if (T * const ptr = p->ContainerPtrToValuePtr<T>(a)) {
+            *ptr = std::move(value);
+        } else {
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT("%s"),
+                *FString(std::format(
+                             "Could not get property {} of type {} from "
+                             "actor {}.",
+                             name,
+                             boost::typeindex::type_id<T>().pretty_name(),
+                             a->GetName())
+                             .c_str()));
+        }
+        return;
     }
 
-    *ptr = std::move(value);
+    if constexpr (std::same_as<T, double> || std::same_as<T, float>) {
+        if (FDoubleProperty * double_p = CastField<FDoubleProperty>(p)) {
+            if (double * const ptr =
+                    double_p->ContainerPtrToValuePtr<double>(a)) {
+                *ptr = std::move(value);
+                return;
+            } else {
+                UE_LOG(
+                    LogTemp,
+                    Error,
+                    TEXT("%s"),
+                    *FString(
+                        std::format(
+                            "Could not get property {} of type double from "
+                            "actor {}.",
+                            name,
+                            a->GetName())
+                            .c_str()));
+            }
+        } else {
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT("%s"),
+                *FString(std::format(
+                             "Could not cast actor {}'s property {} to a "
+                             "FDoubleProperty.",
+                             a->GetName(),
+                             name)
+                             .c_str()));
+        }
+    }
+
+    if constexpr (std::same_as<T, float>) {
+        if (FFloatProperty * float_p = CastField<FFloatProperty>(p)) {
+            if (float * const ptr = float_p->ContainerPtrToValuePtr<float>(a)) {
+                *ptr = std::move(value);
+            } else {
+                UE_LOG(
+                    LogTemp,
+                    Error,
+                    TEXT("%s"),
+                    *FString(std::format(
+                                 "Could not get property {} of type float from "
+                                 "actor {}.",
+                                 name,
+                                 a->GetName())
+                                 .c_str()));
+            }
+        } else {
+            UE_LOG(
+                LogTemp,
+                Error,
+                TEXT("%s"),
+                *FString(std::format(
+                             "Could not cast actor {}'s property {} to a "
+                             "FFloatProperty.",
+                             a->GetName(),
+                             name)
+                             .c_str()));
+        }
+    }
 }
