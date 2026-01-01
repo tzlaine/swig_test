@@ -16,7 +16,6 @@
 #include <Widgets/SOverlay.h>
 #include <Widgets/Layout/SScaleBox.h>
 #include <Widgets/SUserWidget.h>
-#include <Widgets/Images/SImage.h>
 #include <Widgets/Input/SButton.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 #include <Widgets/Layout/SBackgroundBlur.h>
