@@ -7,6 +7,7 @@
 #include "Amap_hex.h"
 #include "Amap_system.h"
 #include "Aplayer_state.h"
+#include "Arender_target.h"
 #include "audio_assets.h"
 #include "game_user_settings.h"
 #include "game_data_formatters.hpp"
@@ -41,6 +42,35 @@ namespace {
         float const min_drag_distance = 5.0f;
         float const min_dist_sq = min_drag_distance * min_drag_distance;
         return min_dist_sq < (first - last).SquaredLength();
+    }
+
+    // the sphere static mesh the star+planet BPs use is 200x200x200
+    double const sphere_mesh_radius = 100;
+
+    void update_hud_renders(
+        TArray<Arender_target *> const & system_actor_renders,
+        TArray<AActor *> const & system_planets)
+    {
+        if (system_actor_renders.IsEmpty())
+            return;
+
+        check(system_actor_renders.Num() == system_planets.Num() + 1);
+
+        for (int i = 0, last = system_planets.Num(); i < last; ++i) {
+            auto * r = system_actor_renders[i + 1];
+            auto * a = system_planets[i];
+            FVector const planet_location = a->GetActorLocation();
+            FVector planet_direction = planet_location;
+            planet_direction.Normalize(0);
+            FVector const look_direction =
+                FQuat(FRotator(0, 112.5, 0)).RotateVector(planet_direction);
+            FVector const new_location =
+                a->GetActorLocation() - look_direction * -2 *
+                                            sphere_mesh_radius *
+                                            a->GetActorScale3D().X;
+            r->SetActorLocation(new_location);
+            r->SetActorRotation((planet_location - new_location).Rotation());
+        }
     }
 }
 
@@ -150,6 +180,8 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, movement_speedup, this](auto const & value) {
             if (!use_map_actions())
                 return;
+            if (showing_main_menu())
+                return;
 
             auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
             check(camera_pawn);
@@ -169,6 +201,8 @@ void Aplayer_controller::SetupInputComponent()
         ETriggerEvent::Triggered,
         [use_map_actions, movement_speedup, this](auto const & value) {
             if (!use_map_actions())
+                return;
+            if (showing_main_menu())
                 return;
 
             auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
@@ -204,6 +238,9 @@ void Aplayer_controller::SetupInputComponent()
                 -just_inside_system_map < camera_pawn->target_arm_length()) {
                 camera_pawn->target_arm_length(-just_inside_system_map);
                 map_transition_->to_galaxy_map(camera_pawn->camera_location());
+                system_actor_renders_.Empty();
+                if (auto * hud = ::hud(GetHUD()))
+                    hud->hide_map_ui();
             }
         });
 
@@ -395,6 +432,71 @@ void Aplayer_controller::Tick(float delta)
         check(system_star_);
         system_star_->SetActorLocation(*new_star_location);
     }
+    if (auto new_map_mode = map_transition_->new_map_mode()) {
+        if (new_map_mode == map_mode::system_map) {
+            system_actor_renders_.SetNum(system_planets_.Num() + 1);
+
+            std::vector<double> planet_scale_from_radius(system_planets_.Num());
+            std::transform(
+                begin(system_planets_),
+                end(system_planets_),
+                planet_scale_from_radius.begin(),
+                [&](auto e) { return e->GetActorScale3D().X; });
+            double const min_scale = std::ranges::min(planet_scale_from_radius);
+            // bring all scales up above 1
+            std::ranges::transform(
+                planet_scale_from_radius,
+                planet_scale_from_radius.begin(),
+                [&](auto e) { return e / min_scale; });
+            std::ranges::transform(
+                planet_scale_from_radius,
+                planet_scale_from_radius.begin(),
+                [&](auto e) { return std::log10(e); });
+            double const max_log_scale =
+                std::ranges::max(planet_scale_from_radius);
+            std::ranges::transform(
+                planet_scale_from_radius,
+                planet_scale_from_radius.begin(),
+                [&](auto e) { return e / max_log_scale; });
+            planet_scale_from_radius.push_back(1);
+
+            int next_scale_factor = 0;
+            auto const make_renderer = [&, this](AActor * a) {
+                auto * r = GetWorld()->SpawnActor<Arender_target>(
+                    render_target_class_,
+                    FVector(),
+                    FRotator(),
+                    FActorSpawnParameters());
+                float const scale =
+                    planet_scale_from_radius[next_scale_factor++] * 0.95;
+                r->render_actor(
+                    a, 2 * sphere_mesh_radius * a->GetActorScale3D().X / scale);
+                return r;
+            };
+            std::transform(
+                begin(system_planets_),
+                end(system_planets_),
+                begin(system_actor_renders_) + 1,
+                make_renderer);
+
+            system_actor_renders_[0] = make_renderer(system_star_);
+            system_actor_renders_[0]->SetActorLocation(
+                system_star_->GetActorLocation() +
+                FVector(
+                    0,
+                    -2 * sphere_mesh_radius * system_star_->GetActorScale3D().X,
+                    0));
+            system_actor_renders_[0]->SetActorRotation(FRotator(0, 90, 0));
+
+            if (auto * hud = ::hud(GetHUD()))
+                hud->show_system_map_ui();
+        } else {
+            // TODO if (auto * hud = ::hud(GetHUD()))
+            // TODO     hud->show_galaxy_map_ui();
+        }
+    }
+
+    update_hud_renders(system_actor_renders_, system_planets_);
 
     if (showing_main_menu())
         return;
@@ -662,6 +764,15 @@ TMap<FKey, FKey> Aplayer_controller::current_to_default_keys() const
     return retval;
 }
 
+std::span<Arender_target const * const>
+Aplayer_controller::system_map_object_renders() const
+{
+    Arender_target * const * data = system_actor_renders_.GetData();
+    Arender_target const * const * first = data;
+    return std::span<Arender_target const * const>(
+        first, system_actor_renders_.Num());
+}
+
 Uui_defaults_t const & Aplayer_controller::ui_defaults()
 {
     if (!ui_defaults_)
@@ -855,8 +966,6 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
 
         double const system_map_kms_per_world_unit = 500; // TODO -> constants
 
-        // the sphere static mesh the star+planet BPs use is 200x200x200
-        double const sphere_mesh_radius = 100;
         double const star_scale = system->star.solar_radii * sun_radius_km /
                                   system_map_kms_per_world_unit /
                                   sphere_mesh_radius;
@@ -972,6 +1081,8 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             system_star_,
             system_planets_,
             system_fleets_);
+        if (auto * hud = ::hud(GetHUD()))
+            hud->hide_map_ui();
     } else {
         UE_LOG(LogTemp, Warning, TEXT("Double click!")); // TODO
     }

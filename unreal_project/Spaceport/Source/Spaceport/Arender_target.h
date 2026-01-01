@@ -21,7 +21,7 @@ public:
 
     void BeginPlay() override;
 
-    void render_actor(AActor * a);
+    void render_actor(AActor * a, float ortho_width);
 
     FSlateBrush const & brush() const { return brush_; }
 

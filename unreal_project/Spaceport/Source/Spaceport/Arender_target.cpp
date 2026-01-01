@@ -18,12 +18,11 @@ Arender_target::Arender_target()
     capture_component_->bCaptureEveryFrame = true;
     capture_component_->PrimitiveRenderMode =
         ESceneCapturePrimitiveRenderMode::PRM_UseShowOnlyList;
+    capture_component_->ProjectionType = ECameraProjectionMode::Orthographic;
 }
 
 void Arender_target::BeginPlay()
 {
-    capture_component_->TextureTarget = render_target_;
-
     int const image_size = 512;
     render_target_ = UKismetRenderingLibrary::CreateRenderTarget2D(
         this,
@@ -31,6 +30,8 @@ void Arender_target::BeginPlay()
         image_size,
         ETextureRenderTargetFormat::RTF_RGBA16f,
         FLinearColor::Transparent);
+    render_target_->UpdateResource();
+    capture_component_->TextureTarget = render_target_;
 
     if (!material_)
         return;
@@ -42,8 +43,9 @@ void Arender_target::BeginPlay()
     brush_.SetResourceObject(material_instance_);
 }
 
-void Arender_target::render_actor(AActor * a)
+void Arender_target::render_actor(AActor * a, float ortho_width)
 {
     capture_component_->ShowOnlyActors.Empty();
     capture_component_->ShowOnlyActors.Add(a);
+    capture_component_->OrthoWidth = ortho_width;
 }

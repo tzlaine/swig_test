@@ -20,6 +20,7 @@
 #include "Aplayer_controller.generated.h"
 
 
+class Arender_target;
 class UMaterialInterface;
 class UInputMappingContext;
 class UInputAction;
@@ -120,6 +121,7 @@ public:
     TMap<FKey, FKey> current_to_default_keys() const;
     client_game_state const & gs() const { return client_gs_; }
     int nation_id() const { return nation_id_; }
+    std::span<Arender_target const * const> system_map_object_renders() const;
 
     Uui_defaults_t const & ui_defaults();
     Umaterials_t const & materials();
@@ -168,7 +170,7 @@ private:
 
     // system view
     UPROPERTY()
-    AActor * system_star_ = nullptr;
+    TObjectPtr<AActor> system_star_;
     UPROPERTY()
     TArray<AActor *> system_planets_;
     UPROPERTY()
@@ -220,6 +222,11 @@ private:
         Category = "BP classes",
         meta = (AllowPrivateAccess = "true"))
     TSubclassOf<AActor> gas_ice_giant_class_;
+    UPROPERTY(
+        EditAnywhere,
+        Category = "BP classes",
+        meta = (AllowPrivateAccess = "true"))
+    TSubclassOf<Arender_target> render_target_class_;
 
     UPROPERTY()
     TObjectPtr<Uui_defaults_t> ui_defaults_;
@@ -229,6 +236,8 @@ private:
     TObjectPtr<Utextures_t> textures_;
     UPROPERTY()
     TObjectPtr<Uaudio_assets_t> audio_assets_;
+    UPROPERTY()
+    TArray<Arender_target *> system_actor_renders_;
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))

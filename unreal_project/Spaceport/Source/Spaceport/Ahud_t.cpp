@@ -7,8 +7,9 @@
 #include "huds/Sgame_setup.h"
 #include "huds/Sgenerating_galaxy.h"
 #include "huds/Smain_menu.h"
-#include "huds/Ssave_load_dlg.h"
 #include "huds/Soptions.h"
+#include "huds/Ssave_load_dlg.h"
+#include "huds/Ssystem_map_ui.h"
 #include "huds/Uactivatable_widget.h"
 
 
@@ -289,6 +290,7 @@ void Ahud_t::remove_all_widgets()
         modal_stack()->RemoveWidget(*activatable);
     }
     main_menu_.Reset();
+    hide_map_ui();
     if (auto * pc = player_controller())
         pc->showing_main_menu(false);
 }
@@ -305,6 +307,20 @@ void Ahud_t::set_selection_box_last(FVector2D last)
 
 TArray<Amap_pawn_base *> & Ahud_t::selected_in_box() { return selected_pawns_; }
 
+void Ahud_t::show_system_map_ui()
+{
+    allocate_widgets();
+    system_map_ui_->rebuild();
+    use_map_ui(system_map_ui_);
+}
+
+void Ahud_t::hide_map_ui()
+{
+    allocate_widgets();
+    use_map_ui({});
+    system_map_ui_->reset();
+}
+
 void Ahud_t::allocate_widgets()
 {
     if (options_)
@@ -312,6 +328,7 @@ void Ahud_t::allocate_widgets()
     options_ = SNew(Soptions);
     game_setup_ = SNew(Sgame_setup);
     generating_galaxy_ = SNew(Sgenerating_galaxy);
+    system_map_ui_ = SNew(Ssystem_map_ui);
 }
 
 UCommonActivatableWidgetStack * Ahud_t::modal_stack()
@@ -321,4 +338,33 @@ UCommonActivatableWidgetStack * Ahud_t::modal_stack()
         stack_wrapper_->AddToViewport();
     check(stack_wrapper_->stack_);
     return stack_wrapper_->stack_;
+}
+
+UCommonActivatableWidgetStack * Ahud_t::map_ui_stack()
+{
+    check(map_ui_stack_wrapper_);
+    if (!map_ui_stack_wrapper_->IsInViewport())
+        map_ui_stack_wrapper_->AddToViewport();
+    check(map_ui_stack_wrapper_->stack_);
+    return map_ui_stack_wrapper_->stack_;
+}
+
+void Ahud_t::use_map_ui(TSharedPtr<Shud_widget_base> widget)
+{
+    auto const all_widgets = map_ui_stack()->GetWidgetList();
+    for (auto * activatable : all_widgets) {
+        map_ui_stack()->RemoveWidget(*activatable);
+    }
+
+    if (!widget)
+        return;
+
+    g_content_shared_ptr = widget;
+    map_ui_stack()->AddWidget<Uactivatable_widget>(
+        Uactivatable_widget::StaticClass(), [](Uactivatable_widget & w) {
+            w.content([] {
+                check(g_content_shared_ptr);
+                return g_content_shared_ptr.ToSharedRef();
+            });
+        });
 }

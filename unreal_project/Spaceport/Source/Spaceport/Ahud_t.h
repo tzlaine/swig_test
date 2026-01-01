@@ -21,6 +21,8 @@ class Smain_menu;
 class Ssave_load_dlg;
 class Soptions;
 class Shud_widget_base;
+class Shud_widget_base;
+class Ssystem_map_ui;
 
 UCLASS()
 class Ahud_t : public AHUD
@@ -78,9 +80,16 @@ public:
     void set_selection_box_last(FVector2D last);
     TArray<Amap_pawn_base *> & selected_in_box();
 
+    // Modeless UIs
+    void show_system_map_ui();
+    // TODO void show_galaxy_map_ui();
+    void hide_map_ui();
+
 private:
     void allocate_widgets();
     UCommonActivatableWidgetStack * modal_stack();
+    UCommonActivatableWidgetStack * map_ui_stack();
+    void use_map_ui(TSharedPtr<Shud_widget_base> widget);
 
     TSharedPtr<Smain_menu> main_menu_;
     TSharedPtr<Ssave_load_dlg> save_load_dlg_;
@@ -88,6 +97,8 @@ private:
     TSharedPtr<Sgame_setup> game_setup_;
     TSharedPtr<Sgenerating_galaxy> generating_galaxy_;
     int generating_progress_ = 0;
+
+    TSharedPtr<Ssystem_map_ui> system_map_ui_;
 
     std::list<confirm_dlg_info> confirm_dlg_infos_;
 
@@ -98,4 +109,7 @@ private:
     UPROPERTY(
         EditAnywhere, Category = "ui", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<Ucommonui_stack_wrapper> stack_wrapper_;
+    UPROPERTY(
+        EditAnywhere, Category = "ui", meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<Ucommonui_stack_wrapper> map_ui_stack_wrapper_;
 };
