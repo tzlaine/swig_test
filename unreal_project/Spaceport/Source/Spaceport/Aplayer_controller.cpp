@@ -892,7 +892,6 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                     1.0 * planet->orbital_pos_r,
                     planet_location.X,
                     planet_location.Y);
-                planet_location /= 100.0; // TODO
 
                 AActor * planet_actor = nullptr;
                 if (planet->planet_type == planet_type_t::rocky) {
@@ -953,7 +952,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
                         configure_ice_giant_planet(planet_actor, *planet, i);
                 }
 
-                double const scale = 20 * /*TODO*/ planet->radius_km /
+                double const scale = planet->radius_km /
                                      system_map_kms_per_world_unit /
                                      sphere_mesh_radius;
                 planet_actor->SetActorScale3D(FVector(scale));
