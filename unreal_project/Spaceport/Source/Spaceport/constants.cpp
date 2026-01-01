@@ -105,6 +105,7 @@ const float max_double_click_interval_s = lua()["max_double_click_interval_s"];
 const float system_view_transition_time_s =
     lua()["system_view_transition_time_s"];
 const float map_move_modififier_factor = lua()["map_move_modififier_factor"];
+const float system_map_move_factor = lua()["system_map_move_factor"];
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =

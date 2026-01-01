@@ -136,7 +136,12 @@ void Aplayer_controller::SetupInputComponent()
     };
 
     auto const movement_speedup = [this] {
-        return keep_selected_key_down_ ? map_move_modififier_factor : 1.0f;
+        float retval = 1.0f;
+        if (map_transition_->mode() == map_mode::system_map)
+            retval *= system_map_move_factor;
+        if (keep_selected_key_down_)
+            retval *= map_move_modififier_factor;
+        return retval;
     };
 
     eic->BindActionValueLambda(
