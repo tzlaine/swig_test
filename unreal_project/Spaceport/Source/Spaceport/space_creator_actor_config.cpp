@@ -180,7 +180,7 @@
 
    - Tropics *: same as above
 
-   - Poles Latitude: 0.5
+   - Poles Latitude: 0.2-0.5 linear
  */
 
 /* rings (for all planet types) notes:
@@ -1281,6 +1281,168 @@ void configure_high_temperature_planet(
     set_property(planet_actor, TEXT("dirty"), true);
 }
 
+namespace {
+    void configure_giant_planet_impl(
+        AActor * planet_actor,
+        planet_t const & planet,
+        detail::rng_state & rng_state,
+        giant_colors const & colors)
+    {
+        check(planet_actor);
+
+        set_property(
+            planet_actor,
+            TEXT("Global Tile Ratio"),
+            random_double(0.1, 0.9, rng_state));
+        set_property(
+            planet_actor, TEXT("Scattering Color"), colors.scattering_color);
+        set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
+        set_property(
+            planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
+        set_property(
+            planet_actor, TEXT("Sunset Color 1"), colors.sunset_color_1);
+        set_property(
+            planet_actor, TEXT("Sunset Color 2"), colors.sunset_color_2);
+
+        double const equator_clouds_coverage =
+            random_double(1.0, 3.0, rng_state);
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Color Shift"),
+            random_double(0.0, 1.6, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Color Uniformity"),
+            random_double(0.0, 4.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Coverage"),
+            equator_clouds_coverage);
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Shadows Size"),
+            random_double(0.0, 0.07, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Shadows Strength"),
+            random_double(0.0, 4.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Color 1"),
+            colors.equator_tropics_clouds_color_1);
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Color 2"),
+            colors.equator_tropics_clouds_color_2);
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Color 3"),
+            colors.equator_tropics_clouds_color_3);
+        set_property(
+            planet_actor,
+            TEXT("Equator Clouds Color 4"),
+            colors.equator_tropics_clouds_color_4);
+
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Color Shift"),
+            random_double(0.0, 1.6, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Color Uniformity"),
+            random_double(0.0, 4.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Coverage"),
+            equator_clouds_coverage);
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Shadows Size"),
+            random_double(0.0, 0.07, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Shadows Strength"),
+            random_double(0.0, 4.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Color 1"),
+            colors.deep_clouds_color_1);
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Color 2"),
+            colors.deep_clouds_color_2);
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Color 3"),
+            colors.deep_clouds_color_3);
+        set_property(
+            planet_actor,
+            TEXT("Deep Clouds Color 4"),
+            colors.deep_clouds_color_4);
+
+        double const tropics_clouds_coverage = std::max(
+            equator_clouds_coverage * 10.0,
+            random_double(10.0, 30.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Color Shift"),
+            random_double(0.0, 1.6, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Color Uniformity"),
+            random_double(0.0, 4.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Coverage"),
+            tropics_clouds_coverage);
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Shadows Size"),
+            random_double(0.0, 0.07, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Shadows Strength"),
+            random_double(0.0, 4.0, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Color 1"),
+            colors.equator_tropics_clouds_color_1);
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Color 2"),
+            colors.equator_tropics_clouds_color_2);
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Color 3"),
+            colors.equator_tropics_clouds_color_3);
+        set_property(
+            planet_actor,
+            TEXT("Tropics Clouds Color 4"),
+            colors.equator_tropics_clouds_color_4);
+
+        set_property(
+            planet_actor,
+            TEXT("Poles Latitude"),
+            random_double(0.2, 0.5, rng_state));
+        set_property(
+            planet_actor,
+            TEXT("Poles Clouds Frequency"),
+            random_double(0, 0.6, rng_state));
+        set_property(
+            planet_actor, TEXT("Poles Color 1"), colors.poles_clouds_color_1);
+        set_property(
+            planet_actor, TEXT("Poles Color 2"), colors.poles_clouds_color_2);
+        set_property(
+            planet_actor, TEXT("Poles Color 3"), colors.poles_clouds_color_3);
+        set_property(
+            planet_actor, TEXT("Poles Color 4"), colors.poles_clouds_color_4);
+
+        configure_rings(planet_actor, planet, rng_state);
+
+        set_property(planet_actor, TEXT("dirty"), true);
+    }
+}
+
 void configure_gas_giant_planet(
     AActor * planet_actor, planet_t const & planet, int planet_id)
 {
@@ -1291,16 +1453,7 @@ void configure_gas_giant_planet(
     giant_colors const & colors =
         random_color_set(std::span(detail::all_gas_giant_colors), rng_state);
 
-    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
-    set_property(
-        planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
-    set_property(planet_actor, TEXT("Dark_Side_Brightness"), 0.001f);
-
-    // TODO
-
-    configure_rings(planet_actor, planet, rng_state);
-
-    set_property(planet_actor, TEXT("dirty"), true);
+    configure_giant_planet_impl(planet_actor, planet, rng_state, colors);
 }
 
 void configure_ice_giant_planet(
@@ -1313,14 +1466,5 @@ void configure_ice_giant_planet(
     giant_colors const & colors =
         random_color_set(std::span(detail::all_ice_giant_colors), rng_state);
 
-    set_property(planet_actor, TEXT("light_vector"), light_dir(planet));
-    set_property(
-        planet_actor, TEXT("Night Color"), FLinearColor(FVector(0.001)));
-    set_property(planet_actor, TEXT("Dark_Side_Brightness"), 0.001f);
-
-    // TODO
-
-    configure_rings(planet_actor, planet, rng_state);
-
-    set_property(planet_actor, TEXT("dirty"), true);
+    configure_giant_planet_impl(planet_actor, planet, rng_state, colors);
 }
