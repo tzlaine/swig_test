@@ -25,12 +25,8 @@ void Ssystem_map_ui::Construct(FArguments const & args)
         [SNew(SOverlay) +
          SOverlay::Slot()
              .HAlign(HAlign_Fill)
-             .VAlign(VAlign_Fill)
-                 [SNew(SVerticalBox) + SVerticalBox::Slot().FillHeight(1) +
-                  SVerticalBox::Slot()
-                      .MinHeight(object_render_size)
-                      .MaxHeight(object_render_size)[SAssignNew(
-                          hbox_, SHorizontalBox)]]];
+             .VAlign(VAlign_Bottom)
+             .Padding(0, 10)[SAssignNew(hbox_, SHorizontalBox)]];
 }
 
 void Ssystem_map_ui::rebuild()
@@ -42,11 +38,13 @@ void Ssystem_map_ui::rebuild()
         pc->system_map_object_renders();
 
     for (auto * rt : object_renders) {
-        hbox_->AddSlot().MinWidth(
-            object_render_size)[SNew(SImage).Image(&rt->brush())];
+        hbox_->AddSlot().AutoWidth().Padding(
+            5,
+            0)[SNew(SBox)
+                   .WidthOverride(object_render_size)
+                   .HeightOverride(
+                       object_render_size)[SNew(SImage).Image(&rt->brush())]];
     }
-
-    hbox_->AddSlot().FillWidth(1);
 }
 
 void Ssystem_map_ui::reset() { hbox_->ClearChildren(); }
