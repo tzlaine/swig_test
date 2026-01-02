@@ -443,11 +443,11 @@ void Aplayer_controller::Tick(float delta)
                 planet_scale_from_radius.begin(),
                 [&](auto e) { return e->GetActorScale3D().X; });
             double const min_scale = std::ranges::min(planet_scale_from_radius);
-            // bring all scales up above 1
+            // bring all scales to >= 10
             std::ranges::transform(
                 planet_scale_from_radius,
                 planet_scale_from_radius.begin(),
-                [&](auto e) { return e / min_scale; });
+                [&](auto e) { return 10 * e / min_scale; });
             std::ranges::transform(
                 planet_scale_from_radius,
                 planet_scale_from_radius.begin(),
