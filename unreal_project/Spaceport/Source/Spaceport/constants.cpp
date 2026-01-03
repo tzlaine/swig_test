@@ -102,8 +102,9 @@ const float min_camera_dist =
 const float max_camera_dist =
     float(lua()["max_camera_dist"]) - map_actors_vertical_offset;
 const float max_double_click_interval_s = lua()["max_double_click_interval_s"];
+const float ui_fade_in_time_s = lua()["ui_fade_in_time_s"];
 const float system_view_transition_time_s =
-    lua()["system_view_transition_time_s"];
+    std::max(float(lua()["system_view_transition_time_s"]), ui_fade_in_time_s);
 const float map_move_modififier_factor = lua()["map_move_modififier_factor"];
 const float system_map_move_factor = lua()["system_map_move_factor"];
 const float system_map_zoom_to_time_s = lua()["system_map_zoom_to_time_s"];
