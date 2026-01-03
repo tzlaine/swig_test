@@ -307,10 +307,10 @@ void Ahud_t::set_selection_box_last(FVector2D last)
 
 TArray<Amap_pawn_base *> & Ahud_t::selected_in_box() { return selected_pawns_; }
 
-void Ahud_t::show_system_map_ui()
+void Ahud_t::show_system_map_ui(int system_id)
 {
     allocate_widgets();
-    system_map_ui_->rebuild();
+    system_map_ui_->rebuild(system_id);
     use_map_ui(system_map_ui_);
 }
 

@@ -81,7 +81,7 @@ public:
     TArray<Amap_pawn_base *> & selected_in_box();
 
     // Modeless UIs
-    void show_system_map_ui();
+    void show_system_map_ui(int system_id);
     // TODO void show_galaxy_map_ui();
     void hide_map_ui();
 

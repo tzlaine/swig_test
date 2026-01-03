@@ -175,6 +175,7 @@ private:
     TArray<AActor *> system_planets_;
     UPROPERTY()
     TArray<AActor *> system_fleets_;
+    int system_id_ = system_none;
 
     UPROPERTY(
         EditAnywhere,

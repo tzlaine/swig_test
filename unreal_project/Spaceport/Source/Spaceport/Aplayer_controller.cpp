@@ -486,7 +486,7 @@ void Aplayer_controller::Tick(float delta)
             system_actor_renders_[0]->SetActorRotation(FRotator(0, 90, 0));
 
             if (auto * hud = ::hud(GetHUD()))
-                hud->show_system_map_ui();
+                hud->show_system_map_ui(system_id_);
         } else {
             // TODO if (auto * hud = ::hud(GetHUD()))
             // TODO     hud->show_galaxy_map_ui();
@@ -978,6 +978,7 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             FActorSpawnParameters());
         configure_system_star(system_star_, system->star);
         system_star_->SetActorScale3D(FVector(star_scale));
+        system_id_ = map_system->id();
 
         FAttachmentTransformRules const planet_attachment_rules(
             EAttachmentRule::KeepWorld,
