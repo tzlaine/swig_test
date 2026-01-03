@@ -139,6 +139,22 @@ struct std::formatter<FName>
     }
 };
 
+template<>
+struct std::formatter<FVector>
+{
+    constexpr auto parse(std::format_parse_context & ctx)
+    {
+        return ctx.begin();
+    }
+
+    template<typename Ctx>
+    auto format(FVector const & v, Ctx & ctx) const
+    {
+        std::string s = std::format("[{}, {}, {}]", v.X, v.Y, v.Z);
+        return std::ranges::copy(s, ctx.out()).out;
+    }
+};
+
 template<typename T>
 T * begin(TArray<T> & a)
 {
