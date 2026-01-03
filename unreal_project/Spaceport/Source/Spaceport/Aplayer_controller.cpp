@@ -492,29 +492,7 @@ void Aplayer_controller::Tick(float delta)
         if (new_map_mode == map_mode::system_map) {
             system_actor_renders_.SetNum(system_planets_.Num() + 1);
 
-            std::vector<double> planet_scale_from_radius(system_planets_.Num());
-            std::transform(
-                begin(system_planets_),
-                end(system_planets_),
-                planet_scale_from_radius.begin(),
-                [&](auto e) { return system_object_radius(e); });
-            double const min_scale = std::ranges::min(planet_scale_from_radius);
-            // bring all scales to >= 10
-            std::ranges::transform(
-                planet_scale_from_radius,
-                planet_scale_from_radius.begin(),
-                [&](auto e) { return 10 * e / min_scale; });
-            std::ranges::transform(
-                planet_scale_from_radius,
-                planet_scale_from_radius.begin(),
-                [&](auto e) { return std::log10(e); });
-            double const max_log_scale =
-                std::ranges::max(planet_scale_from_radius);
-            std::ranges::transform(
-                planet_scale_from_radius,
-                planet_scale_from_radius.begin(),
-                [&](auto e) { return e / max_log_scale; });
-            planet_scale_from_radius.push_back(1);
+            std::vector<double> planet_scale_from_radius;
 
             int next_scale_factor = 0;
             auto const make_renderer = [&, this](AActor * a) {
@@ -528,12 +506,40 @@ void Aplayer_controller::Tick(float delta)
                 r->render_actor(a, 2 * system_object_radius(a) / scale);
                 return r;
             };
-            std::transform(
-                begin(system_planets_),
-                end(system_planets_),
-                begin(system_actor_renders_) + 1,
-                make_renderer);
 
+            if (!system_planets_.IsEmpty()) {
+                planet_scale_from_radius.resize(system_planets_.Num());
+                std::transform(
+                    begin(system_planets_),
+                    end(system_planets_),
+                    planet_scale_from_radius.begin(),
+                    [&](auto e) { return system_object_radius(e); });
+                double const min_scale =
+                    std::ranges::min(planet_scale_from_radius);
+                // bring all scales to >= 10
+                std::ranges::transform(
+                    planet_scale_from_radius,
+                    planet_scale_from_radius.begin(),
+                    [&](auto e) { return 10 * e / min_scale; });
+                std::ranges::transform(
+                    planet_scale_from_radius,
+                    planet_scale_from_radius.begin(),
+                    [&](auto e) { return std::log10(e); });
+                double const max_log_scale =
+                    std::ranges::max(planet_scale_from_radius);
+                std::ranges::transform(
+                    planet_scale_from_radius,
+                    planet_scale_from_radius.begin(),
+                    [&](auto e) { return e / max_log_scale; });
+
+                std::transform(
+                    begin(system_planets_),
+                    end(system_planets_),
+                    begin(system_actor_renders_) + 1,
+                    make_renderer);
+            }
+
+            planet_scale_from_radius.push_back(1);
             system_actor_renders_[0] = make_renderer(system_star_);
             system_actor_renders_[0]->SetActorLocation(
                 system_star_->GetActorLocation() +
