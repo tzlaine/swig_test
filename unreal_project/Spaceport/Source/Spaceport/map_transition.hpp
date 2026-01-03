@@ -52,7 +52,7 @@ struct map_transition_state
         TArray<AActor *> & system_planets,
         TArray<AActor *> & system_fleets);
     void to_galaxy_map(FVector camera_location);
-    void tick(float delta);
+    float tick(float delta);
 
 private:
     map_mode mode_ = map_mode::galaxy_map;

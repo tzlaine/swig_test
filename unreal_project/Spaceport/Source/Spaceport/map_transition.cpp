@@ -76,14 +76,14 @@ void map_transition_state::to_galaxy_map(FVector camera_location)
     camera_location_ = camera_location;
 }
 
-void map_transition_state::tick(float delta)
+float map_transition_state::tick(float delta)
 {
     new_map_mode_ = {};
     new_camera_location_ = {};
     new_star_location_ = {};
 
     if (!::in_transition(mode_))
-        return;
+        return -1.0f;
 
     float const close_enough = 0.00001f;
     if (system_view_transition_time_s - close_enough < transition_progress_) {
@@ -121,7 +121,7 @@ void map_transition_state::tick(float delta)
                 new_camera_location_ = final_location_;
             }
         }
-        return;
+        return -1.0f;
     }
 
     float const smooth_alpha = FMath::SmoothStep(
@@ -142,4 +142,6 @@ void map_transition_state::tick(float delta)
             FMath::Lerp(initial_location_, final_location_, smooth_alpha);
         transition_progress_ += delta;
     }
+
+    return std::max(0.0f, system_view_transition_time_s - transition_progress_);
 }
