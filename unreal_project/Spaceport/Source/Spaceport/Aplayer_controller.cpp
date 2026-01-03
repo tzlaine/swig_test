@@ -296,20 +296,17 @@ void Aplayer_controller::SetupInputComponent()
 
             end_drag();
 
-            auto double_selected = [&](auto * target) {
-                auto now = std::chrono::system_clock::now();
-                if (!keep_selected_key_down_ && prev_select_target_ == target &&
-                    (now - prev_select_time_) <
-                        std::chrono::duration<float>(
-                            max_double_click_interval_s)) {
+            auto double_selected = [this](Amap_pawn_base * target) {
+                if (keep_selected_key_down_)
+                    return false;
+                if (double_clicked(
+                        prev_select_target_,
+                        prev_select_time_,
+                        target,
+                        (Amap_pawn_base *)nullptr)) {
                     double_select(target);
-                    prev_select_target_ = nullptr;
-                    prev_select_time_ =
-                        std::chrono::time_point<std::chrono::system_clock>();
                     return true;
                 }
-                prev_select_target_ = target;
-                prev_select_time_ = now;
                 return false;
             };
 

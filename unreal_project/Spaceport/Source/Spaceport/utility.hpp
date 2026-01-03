@@ -308,3 +308,23 @@ void set_property(AActor * a, FName name, T value)
         }
     }
 }
+
+template<typename T>
+bool double_clicked(
+    T & prev_click_target,
+    std::chrono::time_point<std::chrono::system_clock> & prev_click_time,
+    T click_target,
+    T invalid_click_target)
+{
+    auto const now = std::chrono::system_clock::now();
+    if (prev_click_target == click_target &&
+        (now - prev_click_time) <
+            std::chrono::duration<float>(max_double_click_interval_s)) {
+        prev_click_time = std::chrono::time_point<std::chrono::system_clock>();
+        prev_click_target = invalid_click_target;
+        return true;
+    }
+    prev_click_time = now;
+    prev_click_target = click_target;
+    return false;
+}
