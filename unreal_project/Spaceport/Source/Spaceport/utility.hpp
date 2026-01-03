@@ -16,6 +16,25 @@
 #include <Sound/SoundMix.h>
 
 
+#define LOG_FORMAT(fmt_str, ...)                                               \
+    UE_LOG(                                                                    \
+        LogTemp,                                                               \
+        Log,                                                                   \
+        TEXT("%s"),                                                            \
+        *FString(std::format(fmt_str __VA_OPT__(, ) __VA_ARGS__).c_str()))
+#define WARN_FORMAT(fmt_str, ...)                                              \
+    UE_LOG(                                                                    \
+        LogTemp,                                                               \
+        Warning,                                                               \
+        TEXT("%s"),                                                            \
+        *FString(std::format(fmt_str __VA_OPT__(, ) __VA_ARGS__).c_str()))
+#define ERROR_FORMAT(fmt_str, ...)                                             \
+    UE_LOG(                                                                    \
+        LogTemp,                                                               \
+        Error,                                                                 \
+        TEXT("%s"),                                                            \
+        *FString(std::format(fmt_str __VA_OPT__(, ) __VA_ARGS__).c_str()))
+
 inline constexpr float meters = 100.0f;
 
 template<typename T>
