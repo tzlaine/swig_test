@@ -85,7 +85,7 @@ void map_transition_state::tick(float delta)
     if (!::in_transition(mode_))
         return;
 
-    float const close_enough = 0.001f;
+    float const close_enough = 0.00001f;
     if (system_view_transition_time_s - close_enough < transition_progress_) {
         if (mode_ == map_mode::transition_to_system_map) {
             if (moving_camera_) {
@@ -102,6 +102,7 @@ void map_transition_state::tick(float delta)
                     false, system_star_, *system_planets_, *system_fleets_);
             } else {
                 new_map_mode_ = mode_ = map_mode::system_map;
+                new_camera_location_ = entered_system_view_location_;
             }
         } else {
             if (!moving_camera_) {
@@ -117,6 +118,7 @@ void map_transition_state::tick(float delta)
                     true, system_star_, *system_planets_, *system_fleets_);
             } else {
                 new_map_mode_ = mode_ = map_mode::galaxy_map;
+                new_camera_location_ = final_location_;
             }
         }
         return;

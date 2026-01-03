@@ -295,7 +295,7 @@ void Aplayer_controller::SetupInputComponent()
             // to the galaxy map
             if (map_transition_->mode() == map_mode::system_map &&
                 -just_inside_system_map < camera_pawn->target_arm_length()) {
-                camera_pawn->target_arm_length(-just_inside_system_map); // TODO
+                camera_pawn->target_arm_length(-just_inside_system_map);
                 map_transition_->to_galaxy_map(camera_pawn->camera_location());
                 if (auto * hud = ::hud(GetHUD()))
                     hud->hide_map_ui();
