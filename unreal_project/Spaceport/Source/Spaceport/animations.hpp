@@ -6,20 +6,43 @@
 #include <adobe/name.hpp>
 
 #include <CoreMinimal.h>
-#include <Curves/CurveFloat.h>
 
 
 struct animations;
 
+enum struct animation_kind {
+    linear,
+    linear_quadratic,
+    linear_cubic,
+    smooth,
+    smooth_quadratic,
+    smooth_cubic
+};
+
+inline float animate(float alpha, animation_kind method)
+{
+    float power = 1.0;
+    switch (method) {
+    default:
+    case animation_kind::linear: return alpha;
+    case animation_kind::linear_quadratic: return alpha * alpha;
+    case animation_kind::linear_cubic: return alpha * alpha * alpha;
+    case animation_kind::smooth:
+    case animation_kind::smooth_quadratic: power = 2.0f;
+    case animation_kind::smooth_cubic:
+        power = 3.0f;
+        alpha = FMath::SmoothStep(0.0f, 1.0f, alpha);
+        return FMath::Pow(alpha, power);
+    }
+}
+
 struct animation
 {
     animation(
-        FString const & curve_object_path,
+        animation_kind method,
         float dur,
         std::function<void(float)> apply_value) :
-        // TODO curve_(curve_object_path),
-        apply_value_(std::move(apply_value)),
-        dur_(dur)
+        apply_value_(std::move(apply_value)), dur_(dur), method_(method)
     {
         check(0.0f < dur);
     }
@@ -31,15 +54,14 @@ struct animation
         t_ = 0.0f;
         if (running_count_)
             ++*running_count_;
-        curve_.LoadSynchronous();
         apply_value_(0.0f);
     }
 
-    void update(float dt)
+    void tick(float dt)
     {
         t_ += dt;
         float const alpha = std::min(t_ / dur_, 1.0f);
-        float const value = curve_->GetFloatValue(alpha);
+        float const value = animate(alpha, method_);
         apply_value_(value);
         if (dur_ < t_) {
             t_ = -1.0f;
@@ -49,11 +71,11 @@ struct animation
     }
 
 private:
-    TSoftObjectPtr<UCurveFloat> curve_;
     std::function<void(float)> apply_value_;
     int * running_count_ = nullptr;
     float t_ = -1.0f;
     float dur_ = 1.0f;
+    animation_kind method_ = animation_kind::linear;
 
     friend animations;
 };
@@ -71,6 +93,11 @@ private:
             this_->animations_[just_inserted_index_].run_next_index_ =
                 inserting_at_index;
         }
+        void then(std::function<void()> f)
+        {
+            int const inserting_at_index = (int)this_->animations_.size();
+            this_->animations_[just_inserted_index_].next_f_ = std::move(f);
+        }
 
         animations * this_ = nullptr;
         int just_inserted_index_ = 0;
@@ -82,13 +109,13 @@ public:
     animations(animations const &) = delete;
     animations & operator=(animations const &) = delete;
 
-    bool need_update() const { return 0 < running_count_; }
+    bool need_tick() const { return 0 < running_count_; }
 
     void start(adobe::name_t name)
     {
         using namespace adobe::literals;
         check(name != ""_name);
-        for (auto & [name_, anim, _] : animations_) {
+        for (auto & [name_, anim, _0, _1] : animations_) {
             if (name_ == name) {
                 anim.start();
                 break;
@@ -96,13 +123,17 @@ public:
         }
     }
 
-    void update(float dt)
+    void tick(float dt)
     {
-        for (auto & [name, anim, next] : animations_) {
+        for (auto & [name, anim, next_index, f] : animations_) {
             if (anim.running()) {
-                anim.update(dt);
-                if (!anim.running() && 0 < next)
-                    animations_[next].anim_.start();
+                anim.tick(dt);
+                if (!anim.running()) {
+                    if (0 <= next_index)
+                        animations_[next_index].anim_.start();
+                    else if (f)
+                        f();
+                }
             }
         }
     }
@@ -121,6 +152,7 @@ private:
         adobe::name_t name_;
         animation anim_;
         int run_next_index_ = -1;
+        std::function<void()> next_f_;
     };
 
     std::vector<animation_info> animations_;
