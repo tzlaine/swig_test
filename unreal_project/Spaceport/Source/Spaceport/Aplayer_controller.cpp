@@ -517,7 +517,7 @@ void Aplayer_controller::Tick(float delta)
     if (0.0f <= system_map_zoom_progress_) {
         auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
         check(camera_pawn);
-        if (system_view_transition_time_s /*TODO*/ - close_enough <
+        if (system_map_zoom_to_time_s - close_enough <
             system_map_zoom_progress_) {
             camera_pawn->camera_location(system_map_zoom_final_);
             system_map_zoom_progress_ = -1.0f;
@@ -526,7 +526,7 @@ void Aplayer_controller::Tick(float delta)
                 0.0f,
                 1.0f,
                 std::min(
-                    system_map_zoom_progress_ / system_view_transition_time_s,
+                    system_map_zoom_progress_ / system_map_zoom_to_time_s,
                     1.0f));
             FVector new_camera_location = FMath::Lerp(
                 system_map_zoom_initial_, system_map_zoom_final_, smooth_alpha);

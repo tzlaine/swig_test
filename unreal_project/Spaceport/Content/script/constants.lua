@@ -45,3 +45,4 @@ max_double_click_interval_s = 0.5
 system_view_transition_time_s = 0.75
 map_move_modififier_factor = 10
 system_map_move_factor = 10
+system_map_zoom_to_time_s = 0.25
