@@ -47,21 +47,34 @@ namespace {
     // the sphere static mesh the star+planet BPs use is 200x200x200
     double const sphere_mesh_radius = 100;
 
-    double system_object_radius(AActor * a)
+    double system_object_radius(AActor const * a)
     {
         return sphere_mesh_radius * a->GetActorScale3D().X;
     }
 
     // TODO: -> Lua
-    double system_object_min_camera_distance(AActor * a)
+    double system_object_min_camera_distance(AActor const * a)
     {
         return 2 * system_object_radius(a);
     }
 
     // TODO: -> Lua
-    double system_object_preferred_camera_distance(AActor * a)
+    double system_object_preferred_camera_distance(AActor const * a)
     {
         return 4 * system_object_radius(a);
+    }
+
+    bool camera_within_system_object_radius(
+        Acontroller_pawn const * camera_pawn,
+        FVector2D delta,
+        AActor const * object)
+    {
+        FVector camera_location = camera_pawn->camera_location();
+        camera_location.X += delta.X;
+        camera_location.Y += delta.Y;
+        camera_location.Z = 0;
+        return (camera_location - object->GetActorLocation()).Length() <
+            system_object_radius(object);
     }
 
     void update_hud_renders(
@@ -190,10 +203,36 @@ void Aplayer_controller::SetupInputComponent()
         return retval;
     };
 
+    auto const adjust_camera_min_dist =
+        [this](Acontroller_pawn * camera_pawn, FVector2D delta = {}) {
+            if (map_transition_->mode() == map_mode::system_map) {
+                check(system_star_);
+                AActor const * object = nullptr;
+                if (camera_within_system_object_radius(
+                        camera_pawn, delta, system_star_)) {
+                    object = system_star_;
+                } else {
+                    auto const it = std::find_if(
+                        begin(system_planets_),
+                        end(system_planets_),
+                        [camera_pawn, delta](auto const * e) {
+                            return camera_within_system_object_radius(
+                                camera_pawn, delta, e);
+                        });
+                    if (it != end(system_planets_))
+                        object = *it;
+                }
+                if (object) {
+                    auto const min_distance =
+                        system_object_min_camera_distance(object);
+                    if (camera_pawn->target_arm_length() < min_distance)
+                        camera_pawn->target_arm_length(min_distance);
+                }
+            }
+        };
+
     eic->BindActionValueLambda(
-        slide_action_,
-        ETriggerEvent::Triggered,
-        [use_map_actions, movement_speedup, this](auto const & value) {
+        slide_action_, ETriggerEvent::Triggered, [=, this](auto const & value) {
             if (!use_map_actions())
                 return;
             if (showing_main_menu())
@@ -202,23 +241,21 @@ void Aplayer_controller::SetupInputComponent()
             auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
             check(camera_pawn);
 
-            // TODO: In system map, move the camera up if it would move into
-            // the star or a planet.
+            FVector2D const delta = value.Get<FVector2D>() *
+                                    ui_defaults().camera_pan_speed_ *
+                                    movement_speedup();
+
+            adjust_camera_min_dist(camera_pawn, delta);
 
             // TODO: Put the map size in Agame_state, and use that here to
             // bound how far we can move in any direction.
 
-            FVector2D const delta = value.Get<FVector2D>() *
-                                    ui_defaults().camera_pan_speed_ *
-                                    movement_speedup();
             camera_pawn->AddMovementInput(FVector::UnitX(), delta.X);
             camera_pawn->AddMovementInput(FVector::UnitY(), delta.Y);
         });
 
     eic->BindActionValueLambda(
-        zoom_action_,
-        ETriggerEvent::Triggered,
-        [use_map_actions, movement_speedup, this](auto const & value) {
+        zoom_action_, ETriggerEvent::Triggered, [=, this](auto const & value) {
             if (!use_map_actions())
                 return;
             if (showing_main_menu())
@@ -234,9 +271,6 @@ void Aplayer_controller::SetupInputComponent()
             float const desired_arm_length =
                 camera_pawn->target_arm_length() + delta;
 
-            // TODO: In system map, limit the minimum based on whether the
-            // controller pawn is close to the star or a planet.
-
             // pushing down when already at the bottom of the galaxy map takes
             // us to the system map, if we're already pointing at a system
             if (map_transition_->mode() == map_mode::galaxy_map &&
@@ -246,6 +280,7 @@ void Aplayer_controller::SetupInputComponent()
                 if (auto * map_system =
                         Cast<Amap_system>(curr_hovers_.front())) {
                     double_select(curr_hovers_.front());
+                    return;
                 }
             }
 
@@ -254,15 +289,17 @@ void Aplayer_controller::SetupInputComponent()
                 min_camera_dist_for(map_transition_->mode()),
                 max_camera_dist_for(map_transition_->mode())));
 
+            adjust_camera_min_dist(camera_pawn);
+
             // pulling up when already at the top of the system map takes us
             // to the galaxy map
             if (map_transition_->mode() == map_mode::system_map &&
                 -just_inside_system_map < camera_pawn->target_arm_length()) {
-                camera_pawn->target_arm_length(-just_inside_system_map);
+                camera_pawn->target_arm_length(-just_inside_system_map); // TODO
                 map_transition_->to_galaxy_map(camera_pawn->camera_location());
-                system_actor_renders_.Empty();
                 if (auto * hud = ::hud(GetHUD()))
                     hud->hide_map_ui();
+                system_actor_renders_.Empty();
             }
         });
 
