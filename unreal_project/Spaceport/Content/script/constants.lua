@@ -41,6 +41,7 @@ large_map_height = 41
 -- camera
 min_camera_dist = 50.0
 max_camera_dist = 5000.0
+camera_arm_move_speed = 10.0
 max_double_click_interval_s = 0.5
 ui_fade_in_time_s = 0.4
 system_view_transition_time_s = 0.75

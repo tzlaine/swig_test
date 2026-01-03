@@ -100,6 +100,7 @@ extern const float map_actors_vertical_offset;
 extern const float just_inside_system_map;
 extern const float min_camera_dist;
 extern const float max_camera_dist;
+extern const float camera_arm_move_speed;
 extern const float max_double_click_interval_s;
 extern const float ui_fade_in_time_s;
 extern const float system_view_transition_time_s;

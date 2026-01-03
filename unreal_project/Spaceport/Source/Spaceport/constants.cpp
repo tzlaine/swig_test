@@ -101,6 +101,8 @@ const float min_camera_dist =
     float(lua()["min_camera_dist"]) - map_actors_vertical_offset;
 const float max_camera_dist =
     float(lua()["max_camera_dist"]) - map_actors_vertical_offset;
+const float camera_arm_move_speed =
+    std::max(1.0f, float(lua()["camera_arm_move_speed"]));
 const float max_double_click_interval_s = lua()["max_double_click_interval_s"];
 const float ui_fade_in_time_s = lua()["ui_fade_in_time_s"];
 const float system_view_transition_time_s =

@@ -1,5 +1,7 @@
 #include "Acontroller_pawn.h"
 
+#include "constants.hpp"
+
 #include <cmath>
 
 #include <Camera/CameraComponent.h>
@@ -26,14 +28,13 @@ Acontroller_pawn::Acontroller_pawn()
 
 void Acontroller_pawn::Tick(float dt)
 {
-    float const arm_move_speed = 10.0f; // TODO: -> Lua
-    check(0.0f < arm_move_speed);
+    check(0.0f < camera_arm_move_speed);
     float const dist = target_target_arm_length_ - spring_arm_->TargetArmLength;
     if (dist * dist < 0.1) {
         spring_arm_->TargetArmLength = target_target_arm_length_;
     } else {
         spring_arm_->TargetArmLength +=
-            dist / 2 * std::clamp(arm_move_speed * dt, 0.0f, 2.0f);
+            dist / 2 * std::clamp(camera_arm_move_speed * dt, 0.0f, 2.0f);
     }
 }
 
