@@ -1,7 +1,8 @@
 #pragma once
 
-#include "game_instance.h"
 #include "Ucommonui_stack_wrapper.h"
+#include "animations.hpp"
+#include "game_instance.h"
 #include "huds/Sconfirm_dlg.h"
 
 #include <functional>
@@ -88,8 +89,9 @@ public:
 private:
     void allocate_widgets();
     UCommonActivatableWidgetStack * modal_stack();
-    UCommonActivatableWidgetStack * map_ui_stack();
     void use_map_ui(TSharedPtr<Shud_widget_base> widget);
+
+    animations animations_;
 
     TSharedPtr<Smain_menu> main_menu_;
     TSharedPtr<Ssave_load_dlg> save_load_dlg_;
@@ -109,7 +111,4 @@ private:
     UPROPERTY(
         EditAnywhere, Category = "ui", meta = (AllowPrivateAccess = "true"))
     TObjectPtr<Ucommonui_stack_wrapper> stack_wrapper_;
-    UPROPERTY(
-        EditAnywhere, Category = "ui", meta = (AllowPrivateAccess = "true"))
-    TObjectPtr<Ucommonui_stack_wrapper> map_ui_stack_wrapper_;
 };

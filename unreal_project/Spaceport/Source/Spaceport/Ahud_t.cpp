@@ -1,6 +1,7 @@
 #include "Ahud_t.h"
 #include "Agame_state.h"
 #include "Amap_pawn_base.h"
+#include "animations.hpp"
 #include "game_instance.h"
 #include "ui_defaults.h"
 #include "utility.hpp"
@@ -11,6 +12,8 @@
 #include "huds/Ssave_load_dlg.h"
 #include "huds/Ssystem_map_ui.h"
 #include "huds/Uactivatable_widget.h"
+
+#include <Engine/GameViewportClient.h>
 
 
 namespace {
@@ -44,6 +47,8 @@ void Ahud_t::Tick(float dt)
         remove_widget(*info.dlg_);
         return true;
     });
+
+    animations_.tick(dt);
 }
 
 void Ahud_t::DrawHUD()
@@ -312,23 +317,50 @@ void Ahud_t::show_system_map_ui(int system_id)
     allocate_widgets();
     system_map_ui_->rebuild(system_id);
     use_map_ui(system_map_ui_);
+    using namespace adobe::literals;
+    animations_.start("map_ui_fade_in"_name);
 }
 
 void Ahud_t::hide_map_ui()
 {
     allocate_widgets();
-    use_map_ui({});
-    system_map_ui_->reset();
+    using namespace adobe::literals;
+    animations_.start("map_ui_fade_out"_name);
 }
 
 void Ahud_t::allocate_widgets()
 {
     if (options_)
         return;
+
     options_ = SNew(Soptions);
     game_setup_ = SNew(Sgame_setup);
     generating_galaxy_ = SNew(Sgenerating_galaxy);
     system_map_ui_ = SNew(Ssystem_map_ui);
+
+    using namespace adobe::literals;
+    animations_.insert(
+        "map_ui_fade_in"_name,
+        animation(
+            animation_kind::linear, ui_fade_in_time_s, [this](float alpha) {
+                system_map_ui_->SetColorAndOpacity(
+                    FLinearColor(1.0f, 1.0f, 1.0f, alpha));
+            }));
+    animations_
+        .insert(
+            "map_ui_fade_out"_name,
+            animation(
+                animation_kind::linear,
+                ui_fade_in_time_s,
+                [this](float alpha) {
+                    system_map_ui_->SetColorAndOpacity(
+                        FLinearColor(1.0f, 1.0f, 1.0f, 1 - alpha));
+                }))
+        .then([this] {
+            use_map_ui({});
+            system_map_ui_->reset();
+        });
+    // TODO: Same for galaxy map UI
 }
 
 UCommonActivatableWidgetStack * Ahud_t::modal_stack()
@@ -340,31 +372,15 @@ UCommonActivatableWidgetStack * Ahud_t::modal_stack()
     return stack_wrapper_->stack_;
 }
 
-UCommonActivatableWidgetStack * Ahud_t::map_ui_stack()
-{
-    check(map_ui_stack_wrapper_);
-    if (!map_ui_stack_wrapper_->IsInViewport())
-        map_ui_stack_wrapper_->AddToViewport();
-    check(map_ui_stack_wrapper_->stack_);
-    return map_ui_stack_wrapper_->stack_;
-}
-
 void Ahud_t::use_map_ui(TSharedPtr<Shud_widget_base> widget)
 {
-    auto const all_widgets = map_ui_stack()->GetWidgetList();
-    for (auto * activatable : all_widgets) {
-        map_ui_stack()->RemoveWidget(*activatable);
-    }
+    UGameViewportClient * viewport = ::world()->GetGameViewport();
+    check(viewport);
+    viewport->RemoveViewportWidgetContent(system_map_ui_->AsShared());
+    // TODO viewport->RemoveViewportWidgetContent(galaxy_map_ui_);
 
     if (!widget)
         return;
 
-    g_content_shared_ptr = widget;
-    map_ui_stack()->AddWidget<Uactivatable_widget>(
-        Uactivatable_widget::StaticClass(), [](Uactivatable_widget & w) {
-            w.content([] {
-                check(g_content_shared_ptr);
-                return g_content_shared_ptr.ToSharedRef();
-            });
-        });
+    viewport->AddViewportWidgetContent(widget->AsShared());
 }

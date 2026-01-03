@@ -62,11 +62,13 @@ struct animation
         t_ += dt;
         float const alpha = std::min(t_ / dur_, 1.0f);
         float const value = animate(alpha, method_);
-        apply_value_(value);
         if (dur_ < t_) {
+            apply_value_(1.0f);
             t_ = -1.0f;
             if (running_count_)
                 --*running_count_;
+        } else {
+            apply_value_(value);
         }
     }
 
@@ -125,6 +127,8 @@ public:
 
     void tick(float dt)
     {
+        if (!need_tick())
+            return;
         for (auto & [name, anim, next_index, f] : animations_) {
             if (anim.running()) {
                 anim.tick(dt);
