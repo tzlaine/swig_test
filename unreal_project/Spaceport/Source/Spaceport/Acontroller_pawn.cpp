@@ -28,14 +28,11 @@ Acontroller_pawn::Acontroller_pawn()
 
 void Acontroller_pawn::Tick(float dt)
 {
-    check(0.0f < camera_arm_move_speed);
-    float const dist = target_target_arm_length_ - spring_arm_->TargetArmLength;
-    if (dist * dist < 0.1) {
-        spring_arm_->TargetArmLength = target_target_arm_length_;
-    } else {
-        spring_arm_->TargetArmLength +=
-            dist / 2 * std::clamp(camera_arm_move_speed * dt, 0.0f, 2.0f);
-    }
+    spring_arm_->TargetArmLength = FMath::FInterpTo(
+        spring_arm_->TargetArmLength,
+        target_target_arm_length_,
+        dt,
+        camera_arm_move_speed);
 }
 
 FVector Acontroller_pawn::camera_location() const
