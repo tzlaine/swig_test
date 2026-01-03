@@ -131,6 +131,7 @@ public:
     void save_user_input_mappings();
     void showing_main_menu(bool b);
     void nation_id(int id) { nation_id_ = id; }
+    void zoom_to_system_object(int i);
 
 protected:
     bool showing_main_menu() const;
@@ -168,14 +169,19 @@ private:
 
     std::shared_ptr<map_transition_state> map_transition_;
 
-    // system view
+    // system map
     UPROPERTY()
     TObjectPtr<AActor> system_star_;
     UPROPERTY()
     TArray<AActor *> system_planets_;
     UPROPERTY()
     TArray<AActor *> system_fleets_;
+    UPROPERTY()
+    TArray<Arender_target *> system_actor_renders_;
     int system_id_ = system_none;
+    float system_map_zoom_progress_ = -1.0f;
+    FVector system_map_zoom_initial_{};
+    FVector system_map_zoom_final_;
 
     UPROPERTY(
         EditAnywhere,
@@ -237,8 +243,6 @@ private:
     TObjectPtr<Utextures_t> textures_;
     UPROPERTY()
     TObjectPtr<Uaudio_assets_t> audio_assets_;
-    UPROPERTY()
-    TArray<Arender_target *> system_actor_renders_;
 
     UPROPERTY(
         EditAnywhere, Category = "Input", meta = (AllowPrivateAccess = "true"))
