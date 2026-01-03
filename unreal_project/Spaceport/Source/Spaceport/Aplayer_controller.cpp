@@ -67,14 +67,15 @@ namespace {
     bool camera_within_system_object_radius(
         Acontroller_pawn const * camera_pawn,
         FVector2D delta,
-        AActor const * object)
+        AActor const * object,
+        float radius_factor = 1.0f)
     {
         FVector camera_location = camera_pawn->camera_location();
         camera_location.X += delta.X;
         camera_location.Y += delta.Y;
         camera_location.Z = 0;
         return (camera_location - object->GetActorLocation()).Length() <
-            system_object_radius(object);
+               system_object_radius(object) * radius_factor;
     }
 
     void update_hud_renders(
@@ -209,7 +210,7 @@ void Aplayer_controller::SetupInputComponent()
                 check(system_star_);
                 AActor const * object = nullptr;
                 if (camera_within_system_object_radius(
-                        camera_pawn, delta, system_star_)) {
+                        camera_pawn, delta, system_star_, 1.2f)) {
                     object = system_star_;
                 } else {
                     auto const it = std::find_if(
@@ -217,7 +218,7 @@ void Aplayer_controller::SetupInputComponent()
                         end(system_planets_),
                         [camera_pawn, delta](auto const * e) {
                             return camera_within_system_object_radius(
-                                camera_pawn, delta, e);
+                                camera_pawn, delta, e, 1.2f);
                         });
                     if (it != end(system_planets_))
                         object = *it;
@@ -273,8 +274,9 @@ void Aplayer_controller::SetupInputComponent()
 
             // pushing down when already at the bottom of the galaxy map takes
             // us to the system map, if we're already pointing at a system
-            if (map_transition_->mode() == map_mode::galaxy_map &&
-                camera_pawn->target_arm_length() <
+            if (delta < 0.0f &&
+                map_transition_->mode() == map_mode::galaxy_map &&
+                desired_arm_length <
                     min_camera_dist_for(map_mode::galaxy_map) + 0.1 &&
                 curr_hovers_.size() == 1u) {
                 if (auto * map_system =
@@ -293,7 +295,8 @@ void Aplayer_controller::SetupInputComponent()
 
             // pulling up when already at the top of the system map takes us
             // to the galaxy map
-            if (map_transition_->mode() == map_mode::system_map &&
+            if (0.0f < delta &&
+                map_transition_->mode() == map_mode::system_map &&
                 -just_inside_system_map < camera_pawn->target_arm_length()) {
                 camera_pawn->target_arm_length(-just_inside_system_map);
                 map_transition_->to_galaxy_map(camera_pawn->camera_location());
@@ -482,7 +485,7 @@ void Aplayer_controller::Tick(float delta)
         auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
         check(camera_pawn);
         if (new_camera_location)
-            camera_pawn->camera_location(*new_camera_location);
+            camera_pawn->camera_location(*new_camera_location, false);
     }
     if (auto new_star_location = map_transition_->new_star_location()) {
         check(system_star_);
