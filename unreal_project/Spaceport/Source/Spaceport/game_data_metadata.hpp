@@ -1107,6 +1107,75 @@ namespace detail {
         }
     };
 
+    template<> struct metadata<day_update_t>
+    {
+        static constexpr std::string_view struct_name()
+        {
+            using namespace std::literals;
+            return "day_update_t"sv;
+        }
+        static constexpr int lo_field_number() { return 1; }
+        static constexpr int hi_field_number() { return 1; }
+
+        static constexpr metadatum<day_update_t, date_t> date()
+        {
+            using namespace std::literals;
+            return {"date"sv, 1, &day_update_t::date};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(date());
+        }
+    };
+
+    template<> struct metadata<month_update_t>
+    {
+        static constexpr std::string_view struct_name()
+        {
+            using namespace std::literals;
+            return "month_update_t"sv;
+        }
+        static constexpr int lo_field_number() { return 1; }
+        static constexpr int hi_field_number() { return 1; }
+
+        static constexpr metadatum<month_update_t, date_t> date()
+        {
+            using namespace std::literals;
+            return {"date"sv, 1, &month_update_t::date};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(date());
+        }
+    };
+
+    template<> struct metadata<year_update_t>
+    {
+        static constexpr std::string_view struct_name()
+        {
+            using namespace std::literals;
+            return "year_update_t"sv;
+        }
+        static constexpr int lo_field_number() { return 1; }
+        static constexpr int hi_field_number() { return 1; }
+
+        static constexpr metadatum<year_update_t, date_t> date()
+        {
+            using namespace std::literals;
+            return {"date"sv, 1, &year_update_t::date};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(date());
+        }
+    };
+
 }
 
 

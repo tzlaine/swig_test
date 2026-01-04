@@ -8,8 +8,13 @@
 #include <boost/optional.hpp>
 
 #include <algorithm>
+#include <chrono>
 #include <span>
 #include <vector>
+
+#if !defined(BUILD_FOR_TEST)
+#include <CoreMinimal.h>
+#endif
 
 
 struct client_game_state;
@@ -463,4 +468,35 @@ float mean_infrastructure_of_planet_known_to_nation(
         retval = 0.0f;
 
     return retval;
+}
+
+#if !defined(BUILD_FOR_TEST)
+inline FDateTime to_fdatetime(date_t const & date)
+{
+    return {date.year, date.month, date.day};
+}
+
+inline FText to_ftext(date_t const & date)
+{
+    return FText::AsDate(
+        to_fdatetime(date),
+        EDateTimeStyle::Default,
+        FText::GetInvariantTimeZone());
+}
+#endif
+
+inline std::chrono::year_month_day to_chrono(date_t const & date)
+{
+    return {
+        std::chrono::year(date.year),
+        std::chrono::month(date.month),
+        std::chrono::day(date.day)};
+}
+
+inline date_t from_chrono(std::chrono::year_month_day const & date)
+{
+    return {
+        .year = static_cast<int>(date.year()),
+        .month = (int)static_cast<unsigned int>(date.month()),
+        .day = (int)static_cast<unsigned int>(date.day())};
 }

@@ -665,5 +665,65 @@ inline std::ostream & operator<<(std::ostream & os, game_state_t const & x)
 { return os << std::format("{}", x); }
 #endif
 
+template <>
+struct std::formatter<day_update_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(day_update_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "day_update_t(");
+
+        out = std::format_to(out, " date={}", x.date);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, day_update_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
+struct std::formatter<month_update_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(month_update_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "month_update_t(");
+
+        out = std::format_to(out, " date={}", x.date);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, month_update_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
+struct std::formatter<year_update_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(year_update_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "year_update_t(");
+
+        out = std::format_to(out, " date={}", x.date);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, year_update_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
 
 

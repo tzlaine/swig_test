@@ -89,9 +89,9 @@ void Agame_mode::BeginPlay()
     UE_LOG(LogTemp, Log, TEXT("EXIT Agame_mode::BeginPlay()"));
 }
 
-void Agame_mode::Tick(float secs)
+void Agame_mode::Tick(float dt)
 {
-    Super::Tick(secs);
+    Super::Tick(dt);
 
     if (cast(GameState)->play_state_ == play_state::generating) {
         int percent_update = 0;
@@ -106,11 +106,47 @@ void Agame_mode::Tick(float secs)
         }
     }
 
-    if (cast(GameState)->play_state_ == play_state::paused)
+    if (cast(GameState)->play_state_ != play_state::playing)
         return;
 
     // TODO: Update moving actors on the map; do the next day/month/year tick(s)
     // if necessary; send out model updates to clients.
+
+    float const seconds_per_day =
+        seconds_per_day_tick(cast(GameState)->play_speed_);
+    ddays const days_this_tick(dt / seconds_per_day);
+    day_progress_ += days_this_tick;
+    if (ddays(1.0) < day_progress_) {
+        auto * pc = player_controller();
+        day_progress_ -= ddays(1.0);
+
+        day_update_t day_update;
+        auto const [new_month, new_year] = model_->day_tick(day_update);
+        {
+            TArray<uint8> day_state;
+            detail::ostream_tarray_facade day_os(day_state);
+            serialize_message(day_update, day_os);
+            pc->client_recv_day_updates(day_state);
+        }
+
+        if (new_month) {
+            month_update_t month_update;
+            model_->month_tick(month_update);
+            TArray<uint8> month_state;
+            detail::ostream_tarray_facade month_os(month_state);
+            serialize_message(month_update, month_os);
+            pc->client_recv_month_updates(month_state);
+        }
+
+        if (new_year) {
+            year_update_t year_update;
+            model_->year_tick(year_update);
+            TArray<uint8> year_state;
+            detail::ostream_tarray_facade year_os(year_state);
+            serialize_message(year_update, year_os);
+            pc->client_recv_year_updates(year_state);
+        }
+    }
 }
 
 void Agame_mode::EndPlay(EEndPlayReason::Type reason)

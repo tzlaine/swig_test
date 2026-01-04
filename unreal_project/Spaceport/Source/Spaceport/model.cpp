@@ -125,14 +125,27 @@ void model::serialize_for_client(
     detail::serialize_for_client(*game_state_, nation_id, proximity_grid_, &os);
 }
 
-void model::day_tick()
+model::day_tick_result model::day_tick(day_update_t & update)
 {
+    std::chrono::year_month_day const prev_ymd = to_chrono(date());
+    std::chrono::year_month_day const curr_ymd(
+        ++std::chrono::sys_days(prev_ymd));
+
+    update.date = from_chrono(curr_ymd);
+    game_state_->date = update.date;
+
+    // TODO
+
+    return {
+        curr_ymd.day() < prev_ymd.day(), curr_ymd.month() < prev_ymd.month()};
 }
 
-void model::month_tick()
+void model::month_tick(month_update_t & update)
 {
+    // TODO
 }
 
-void model::year_tick()
+void model::year_tick(year_update_t & update)
 {
+    // TODO
 }

@@ -826,19 +826,32 @@ void Aplayer_controller::
 void Aplayer_controller::client_recv_day_updates_Implementation(
     TArray<uint8> const & state)
 {
+    LOG_FORMAT("Aplayer_controller::client_recv_day_updates()");
+
+    day_update_t day_update;
+    deserialize_message(day_update, state);
+    ::hud(GetHUD())->date_changed(day_update.date);
+
     // TODO
-    // TODO: Tell the hud about the new date.
 }
 
 void Aplayer_controller::client_recv_month_updates_Implementation(
     TArray<uint8> const & state)
 {
+    LOG_FORMAT("Aplayer_controller::client_recv_month_updates()");
+
+    month_update_t month_update;
+    deserialize_message(month_update, state);
     // TODO
 }
 
 void Aplayer_controller::client_recv_year_updates_Implementation(
     TArray<uint8> const & state)
 {
+    LOG_FORMAT("Aplayer_controller::client_recv_year_updates()");
+
+    year_update_t year_update;
+    deserialize_message(year_update, state);
     // TODO
 }
 

@@ -137,6 +137,8 @@ struct model
         return {game_state_};
     }
 
+    date_t date() const { return game_state_->date; }
+
     proximity_grid<fleet_t const> & proximity() { return proximity_grid_; }
 
     void generate_galaxy(game_start_params_t const & params,
@@ -152,9 +154,15 @@ struct model
     // calling Agame_state should provide the map with only the nation-IDs of
     // the active human players.  It can then send the updates to the
     // associated player(s).
-    void day_tick();
-    void month_tick();
-    void year_tick();
+    struct day_tick_result
+    {
+        bool new_month_ = false;
+        bool new_year_ = false;
+    };
+
+    day_tick_result day_tick(day_update_t & update);
+    void month_tick(month_update_t & update);
+    void year_tick(year_update_t & update);
 
     void set_speed(int speed) { mutable_state().play_speed = speed; }
 

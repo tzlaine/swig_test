@@ -276,6 +276,24 @@ struct game_state_t
     bool operator==(game_state_t const &) const = default;
 };
 
+struct day_update_t
+{
+    date_t date = {};
+    bool operator==(day_update_t const &) const = default;
+};
+
+struct month_update_t
+{
+    date_t date = {};
+    bool operator==(month_update_t const &) const = default;
+};
+
+struct year_update_t
+{
+    date_t date = {};
+    bool operator==(year_update_t const &) const = default;
+};
+
 
 
 pb_message::game_data::nation_and_object_id_t to_protobuf (const ::nation_and_object_id_t& value);
@@ -334,3 +352,12 @@ pb_message::game_data::date_t to_protobuf (const ::date_t& value);
 
 pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value);
 ::game_state_t from_protobuf (const pb_message::game_data::game_state_t& msg);
+
+pb_message::game_data::day_update_t to_protobuf (const ::day_update_t& value);
+::day_update_t from_protobuf (const pb_message::game_data::day_update_t& msg);
+
+pb_message::game_data::month_update_t to_protobuf (const ::month_update_t& value);
+::month_update_t from_protobuf (const pb_message::game_data::month_update_t& msg);
+
+pb_message::game_data::year_update_t to_protobuf (const ::year_update_t& value);
+::year_update_t from_protobuf (const pb_message::game_data::year_update_t& msg);

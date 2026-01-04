@@ -52,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[21]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[24]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -64,6 +64,9 @@ namespace game_data {
 class date_t;
 class date_tDefaultTypeInternal;
 extern date_tDefaultTypeInternal _date_t_default_instance_;
+class day_update_t;
+class day_update_tDefaultTypeInternal;
+extern day_update_tDefaultTypeInternal _day_update_t_default_instance_;
 class fleet_position_t;
 class fleet_position_tDefaultTypeInternal;
 extern fleet_position_tDefaultTypeInternal _fleet_position_t_default_instance_;
@@ -91,6 +94,9 @@ extern hex_tDefaultTypeInternal _hex_t_default_instance_;
 class location_object_t;
 class location_object_tDefaultTypeInternal;
 extern location_object_tDefaultTypeInternal _location_object_t_default_instance_;
+class month_update_t;
+class month_update_tDefaultTypeInternal;
+extern month_update_tDefaultTypeInternal _month_update_t_default_instance_;
 class nation_and_object_id_t;
 class nation_and_object_id_tDefaultTypeInternal;
 extern nation_and_object_id_tDefaultTypeInternal _nation_and_object_id_t_default_instance_;
@@ -124,10 +130,14 @@ extern unit_design_tDefaultTypeInternal _unit_design_t_default_instance_;
 class unit_t;
 class unit_tDefaultTypeInternal;
 extern unit_tDefaultTypeInternal _unit_t_default_instance_;
+class year_update_t;
+class year_update_tDefaultTypeInternal;
+extern year_update_tDefaultTypeInternal _year_update_t_default_instance_;
 }  // namespace game_data
 }  // namespace pb_message
 PROTOBUF_NAMESPACE_OPEN
 template<> ::pb_message::game_data::date_t* Arena::CreateMaybeMessage<::pb_message::game_data::date_t>(Arena*);
+template<> ::pb_message::game_data::day_update_t* Arena::CreateMaybeMessage<::pb_message::game_data::day_update_t>(Arena*);
 template<> ::pb_message::game_data::fleet_position_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleet_position_t>(Arena*);
 template<> ::pb_message::game_data::fleet_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleet_t>(Arena*);
 template<> ::pb_message::game_data::fleets_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleets_t>(Arena*);
@@ -137,6 +147,7 @@ template<> ::pb_message::game_data::game_start_params_t_PlayerIdToNationIdEntry_
 template<> ::pb_message::game_data::game_state_t* Arena::CreateMaybeMessage<::pb_message::game_data::game_state_t>(Arena*);
 template<> ::pb_message::game_data::hex_t* Arena::CreateMaybeMessage<::pb_message::game_data::hex_t>(Arena*);
 template<> ::pb_message::game_data::location_object_t* Arena::CreateMaybeMessage<::pb_message::game_data::location_object_t>(Arena*);
+template<> ::pb_message::game_data::month_update_t* Arena::CreateMaybeMessage<::pb_message::game_data::month_update_t>(Arena*);
 template<> ::pb_message::game_data::nation_and_object_id_t* Arena::CreateMaybeMessage<::pb_message::game_data::nation_and_object_id_t>(Arena*);
 template<> ::pb_message::game_data::nation_t* Arena::CreateMaybeMessage<::pb_message::game_data::nation_t>(Arena*);
 template<> ::pb_message::game_data::planet_effect_t* Arena::CreateMaybeMessage<::pb_message::game_data::planet_effect_t>(Arena*);
@@ -148,6 +159,7 @@ template<> ::pb_message::game_data::system_location_t* Arena::CreateMaybeMessage
 template<> ::pb_message::game_data::system_t* Arena::CreateMaybeMessage<::pb_message::game_data::system_t>(Arena*);
 template<> ::pb_message::game_data::unit_design_t* Arena::CreateMaybeMessage<::pb_message::game_data::unit_design_t>(Arena*);
 template<> ::pb_message::game_data::unit_t* Arena::CreateMaybeMessage<::pb_message::game_data::unit_t>(Arena*);
+template<> ::pb_message::game_data::year_update_t* Arena::CreateMaybeMessage<::pb_message::game_data::year_update_t>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace pb_message {
 namespace game_data {
@@ -4511,6 +4523,444 @@ class game_state_t PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
+// -------------------------------------------------------------------
+
+class day_update_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.day_update_t) */ {
+ public:
+  inline day_update_t() : day_update_t(nullptr) {}
+  virtual ~day_update_t();
+
+  day_update_t(const day_update_t& from);
+  day_update_t(day_update_t&& from) noexcept
+    : day_update_t() {
+    *this = ::std::move(from);
+  }
+
+  inline day_update_t& operator=(const day_update_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline day_update_t& operator=(day_update_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const day_update_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const day_update_t* internal_default_instance() {
+    return reinterpret_cast<const day_update_t*>(
+               &_day_update_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    21;
+
+  friend void swap(day_update_t& a, day_update_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(day_update_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(day_update_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline day_update_t* New() const final {
+    return CreateMaybeMessage<day_update_t>(nullptr);
+  }
+
+  day_update_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<day_update_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const day_update_t& from);
+  void MergeFrom(const day_update_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(day_update_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.day_update_t";
+  }
+  protected:
+  explicit day_update_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDateFieldNumber = 1,
+  };
+  // .pb_message.game_data.date_t date = 1;
+  bool has_date() const;
+  private:
+  bool _internal_has_date() const;
+  public:
+  void clear_date();
+  const ::pb_message::game_data::date_t& date() const;
+  ::pb_message::game_data::date_t* release_date();
+  ::pb_message::game_data::date_t* mutable_date();
+  void set_allocated_date(::pb_message::game_data::date_t* date);
+  private:
+  const ::pb_message::game_data::date_t& _internal_date() const;
+  ::pb_message::game_data::date_t* _internal_mutable_date();
+  public:
+  void unsafe_arena_set_allocated_date(
+      ::pb_message::game_data::date_t* date);
+  ::pb_message::game_data::date_t* unsafe_arena_release_date();
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.day_update_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::pb_message::game_data::date_t* date_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
+class month_update_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.month_update_t) */ {
+ public:
+  inline month_update_t() : month_update_t(nullptr) {}
+  virtual ~month_update_t();
+
+  month_update_t(const month_update_t& from);
+  month_update_t(month_update_t&& from) noexcept
+    : month_update_t() {
+    *this = ::std::move(from);
+  }
+
+  inline month_update_t& operator=(const month_update_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline month_update_t& operator=(month_update_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const month_update_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const month_update_t* internal_default_instance() {
+    return reinterpret_cast<const month_update_t*>(
+               &_month_update_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
+
+  friend void swap(month_update_t& a, month_update_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(month_update_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(month_update_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline month_update_t* New() const final {
+    return CreateMaybeMessage<month_update_t>(nullptr);
+  }
+
+  month_update_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<month_update_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const month_update_t& from);
+  void MergeFrom(const month_update_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(month_update_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.month_update_t";
+  }
+  protected:
+  explicit month_update_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDateFieldNumber = 1,
+  };
+  // .pb_message.game_data.date_t date = 1;
+  bool has_date() const;
+  private:
+  bool _internal_has_date() const;
+  public:
+  void clear_date();
+  const ::pb_message::game_data::date_t& date() const;
+  ::pb_message::game_data::date_t* release_date();
+  ::pb_message::game_data::date_t* mutable_date();
+  void set_allocated_date(::pb_message::game_data::date_t* date);
+  private:
+  const ::pb_message::game_data::date_t& _internal_date() const;
+  ::pb_message::game_data::date_t* _internal_mutable_date();
+  public:
+  void unsafe_arena_set_allocated_date(
+      ::pb_message::game_data::date_t* date);
+  ::pb_message::game_data::date_t* unsafe_arena_release_date();
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.month_update_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::pb_message::game_data::date_t* date_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
+class year_update_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.year_update_t) */ {
+ public:
+  inline year_update_t() : year_update_t(nullptr) {}
+  virtual ~year_update_t();
+
+  year_update_t(const year_update_t& from);
+  year_update_t(year_update_t&& from) noexcept
+    : year_update_t() {
+    *this = ::std::move(from);
+  }
+
+  inline year_update_t& operator=(const year_update_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline year_update_t& operator=(year_update_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const year_update_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const year_update_t* internal_default_instance() {
+    return reinterpret_cast<const year_update_t*>(
+               &_year_update_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  friend void swap(year_update_t& a, year_update_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(year_update_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(year_update_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline year_update_t* New() const final {
+    return CreateMaybeMessage<year_update_t>(nullptr);
+  }
+
+  year_update_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<year_update_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const year_update_t& from);
+  void MergeFrom(const year_update_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(year_update_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.year_update_t";
+  }
+  protected:
+  explicit year_update_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDateFieldNumber = 1,
+  };
+  // .pb_message.game_data.date_t date = 1;
+  bool has_date() const;
+  private:
+  bool _internal_has_date() const;
+  public:
+  void clear_date();
+  const ::pb_message::game_data::date_t& date() const;
+  ::pb_message::game_data::date_t* release_date();
+  ::pb_message::game_data::date_t* mutable_date();
+  void set_allocated_date(::pb_message::game_data::date_t* date);
+  private:
+  const ::pb_message::game_data::date_t& _internal_date() const;
+  ::pb_message::game_data::date_t* _internal_mutable_date();
+  public:
+  void unsafe_arena_set_allocated_date(
+      ::pb_message::game_data::date_t* date);
+  ::pb_message::game_data::date_t* unsafe_arena_release_date();
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.year_update_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::pb_message::game_data::date_t* date_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
 // ===================================================================
 
 
@@ -8521,9 +8971,276 @@ inline void game_state_t::set_allocated_date(::pb_message::game_data::date_t* da
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.game_state_t.date)
 }
 
+// -------------------------------------------------------------------
+
+// day_update_t
+
+// .pb_message.game_data.date_t date = 1;
+inline bool day_update_t::_internal_has_date() const {
+  return this != internal_default_instance() && date_ != nullptr;
+}
+inline bool day_update_t::has_date() const {
+  return _internal_has_date();
+}
+inline void day_update_t::clear_date() {
+  if (GetArena() == nullptr && date_ != nullptr) {
+    delete date_;
+  }
+  date_ = nullptr;
+}
+inline const ::pb_message::game_data::date_t& day_update_t::_internal_date() const {
+  const ::pb_message::game_data::date_t* p = date_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::date_t*>(
+      &::pb_message::game_data::_date_t_default_instance_);
+}
+inline const ::pb_message::game_data::date_t& day_update_t::date() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.day_update_t.date)
+  return _internal_date();
+}
+inline void day_update_t::unsafe_arena_set_allocated_date(
+    ::pb_message::game_data::date_t* date) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(date_);
+  }
+  date_ = date;
+  if (date) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.day_update_t.date)
+}
+inline ::pb_message::game_data::date_t* day_update_t::release_date() {
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::date_t* day_update_t::unsafe_arena_release_date() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.day_update_t.date)
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::date_t* day_update_t::_internal_mutable_date() {
+  
+  if (date_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::date_t>(GetArena());
+    date_ = p;
+  }
+  return date_;
+}
+inline ::pb_message::game_data::date_t* day_update_t::mutable_date() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.day_update_t.date)
+  return _internal_mutable_date();
+}
+inline void day_update_t::set_allocated_date(::pb_message::game_data::date_t* date) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete date_;
+  }
+  if (date) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(date);
+    if (message_arena != submessage_arena) {
+      date = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, date, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  date_ = date;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.day_update_t.date)
+}
+
+// -------------------------------------------------------------------
+
+// month_update_t
+
+// .pb_message.game_data.date_t date = 1;
+inline bool month_update_t::_internal_has_date() const {
+  return this != internal_default_instance() && date_ != nullptr;
+}
+inline bool month_update_t::has_date() const {
+  return _internal_has_date();
+}
+inline void month_update_t::clear_date() {
+  if (GetArena() == nullptr && date_ != nullptr) {
+    delete date_;
+  }
+  date_ = nullptr;
+}
+inline const ::pb_message::game_data::date_t& month_update_t::_internal_date() const {
+  const ::pb_message::game_data::date_t* p = date_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::date_t*>(
+      &::pb_message::game_data::_date_t_default_instance_);
+}
+inline const ::pb_message::game_data::date_t& month_update_t::date() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.month_update_t.date)
+  return _internal_date();
+}
+inline void month_update_t::unsafe_arena_set_allocated_date(
+    ::pb_message::game_data::date_t* date) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(date_);
+  }
+  date_ = date;
+  if (date) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.month_update_t.date)
+}
+inline ::pb_message::game_data::date_t* month_update_t::release_date() {
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::date_t* month_update_t::unsafe_arena_release_date() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.month_update_t.date)
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::date_t* month_update_t::_internal_mutable_date() {
+  
+  if (date_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::date_t>(GetArena());
+    date_ = p;
+  }
+  return date_;
+}
+inline ::pb_message::game_data::date_t* month_update_t::mutable_date() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.month_update_t.date)
+  return _internal_mutable_date();
+}
+inline void month_update_t::set_allocated_date(::pb_message::game_data::date_t* date) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete date_;
+  }
+  if (date) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(date);
+    if (message_arena != submessage_arena) {
+      date = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, date, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  date_ = date;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.month_update_t.date)
+}
+
+// -------------------------------------------------------------------
+
+// year_update_t
+
+// .pb_message.game_data.date_t date = 1;
+inline bool year_update_t::_internal_has_date() const {
+  return this != internal_default_instance() && date_ != nullptr;
+}
+inline bool year_update_t::has_date() const {
+  return _internal_has_date();
+}
+inline void year_update_t::clear_date() {
+  if (GetArena() == nullptr && date_ != nullptr) {
+    delete date_;
+  }
+  date_ = nullptr;
+}
+inline const ::pb_message::game_data::date_t& year_update_t::_internal_date() const {
+  const ::pb_message::game_data::date_t* p = date_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::date_t*>(
+      &::pb_message::game_data::_date_t_default_instance_);
+}
+inline const ::pb_message::game_data::date_t& year_update_t::date() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.year_update_t.date)
+  return _internal_date();
+}
+inline void year_update_t::unsafe_arena_set_allocated_date(
+    ::pb_message::game_data::date_t* date) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(date_);
+  }
+  date_ = date;
+  if (date) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.year_update_t.date)
+}
+inline ::pb_message::game_data::date_t* year_update_t::release_date() {
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::date_t* year_update_t::unsafe_arena_release_date() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.year_update_t.date)
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::date_t* year_update_t::_internal_mutable_date() {
+  
+  if (date_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::date_t>(GetArena());
+    date_ = p;
+  }
+  return date_;
+}
+inline ::pb_message::game_data::date_t* year_update_t::mutable_date() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.year_update_t.date)
+  return _internal_mutable_date();
+}
+inline void year_update_t::set_allocated_date(::pb_message::game_data::date_t* date) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete date_;
+  }
+  if (date) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(date);
+    if (message_arena != submessage_arena) {
+      date = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, date, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  date_ = date;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.year_update_t.date)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

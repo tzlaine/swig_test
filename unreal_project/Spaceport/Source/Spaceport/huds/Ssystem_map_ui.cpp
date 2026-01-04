@@ -3,6 +3,7 @@
 #include "Aplayer_controller.h"
 #include "Arender_target.h"
 #include "materials.h"
+#include "model_util.hpp"
 #include "utility.hpp"
 #include "game_data_formatters.hpp"
 #include "widgets/Sstyled_text_block.h"
@@ -61,12 +62,6 @@ namespace {
     }
 }
 
-// TODO: -> model_util.hpp
-inline FDateTime to_fdatetime(date_t const & date)
-{
-    return {date.year, date.month, date.day + 1};
-}
-
 void Ssystem_map_ui::Construct(FArguments const & args)
 {
     {
@@ -101,6 +96,7 @@ void Ssystem_map_ui::Construct(FArguments const & args)
                                .Padding(0, 0, 0, 5)
                                .FillHeight(
                                    1)[SAssignNew(date_text_, Sstyled_text_block)
+                                          .Text(to_ftext(date_))
                                           .Font(FSlateFontInfo(
                                               ui_defaults().font_.Get(),
                                               ui_defaults().font_size_ / 2))] +
@@ -240,8 +236,7 @@ void Ssystem_map_ui::date(date_t const & d)
     date_ = d;
     if (!date_text_)
         return;
-    FDateTime date_time = to_fdatetime(date_);
-    date_text_->SetText(FText::AsDate(date_time));
+    date_text_->SetText(to_ftext(date_));
 }
 
 void Ssystem_map_ui::reset()

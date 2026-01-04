@@ -710,3 +710,45 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
     retval.date = from_protobuf(msg.date());
     return retval;
 }
+
+pb_message::game_data::day_update_t to_protobuf (const ::day_update_t& value)
+{
+    pb_message::game_data::day_update_t retval;
+    retval.mutable_date()->CopyFrom(to_protobuf(value.date));
+    return retval;
+}
+
+::day_update_t from_protobuf (const pb_message::game_data::day_update_t& msg)
+{
+    ::day_update_t retval;
+    retval.date = from_protobuf(msg.date());
+    return retval;
+}
+
+pb_message::game_data::month_update_t to_protobuf (const ::month_update_t& value)
+{
+    pb_message::game_data::month_update_t retval;
+    retval.mutable_date()->CopyFrom(to_protobuf(value.date));
+    return retval;
+}
+
+::month_update_t from_protobuf (const pb_message::game_data::month_update_t& msg)
+{
+    ::month_update_t retval;
+    retval.date = from_protobuf(msg.date());
+    return retval;
+}
+
+pb_message::game_data::year_update_t to_protobuf (const ::year_update_t& value)
+{
+    pb_message::game_data::year_update_t retval;
+    retval.mutable_date()->CopyFrom(to_protobuf(value.date));
+    return retval;
+}
+
+::year_update_t from_protobuf (const pb_message::game_data::year_update_t& msg)
+{
+    ::year_update_t retval;
+    retval.date = from_protobuf(msg.date());
+    return retval;
+}

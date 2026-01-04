@@ -261,3 +261,21 @@ message game_state_t
     int32 play_speed = 8; // 1-4 have fixed rates; 5 is as fast as it will go
     date_t date = 9;
 }
+
+message day_update_t
+{
+    date_t date = 1;
+    // TODO
+}
+
+message month_update_t
+{
+    date_t date = 1; // TODO
+    // TODO
+}
+
+message year_update_t
+{
+    date_t date = 1; // TODO
+    // TODO
+}

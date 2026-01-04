@@ -2,6 +2,7 @@
 
 #include "model.hpp"
 #include "user_notification.h"
+#include "utility.hpp"
 
 #include <vector>
 
@@ -70,7 +71,7 @@ private:
 
     int players_ = 0;
 
-    float seconds_since_last_day_tick_ = 0.0;
+    ddays day_progress_;
     std::shared_ptr<model> model_;
 
     Urepl_graph * repl_graph_;

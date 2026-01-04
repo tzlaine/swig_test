@@ -885,3 +885,20 @@ void deserialize_message(T & x, std::filesystem::path const & path)
             e.what()));
     }
 }
+
+template<typename T>
+void serialize_message(T const & x, detail::ostream_tarray_facade & os)
+{
+    detail::
+        serialize_impl<detail::ser_op::write, detail::ser_field_op::dont_write>(
+            x, 0, &os);
+}
+
+#if !defined(BUILD_FOR_TEST)
+template<typename T>
+void deserialize_message(T & x, TArray<uint8> const & state)
+{
+    detail::deserialize_impl(
+        x, std::as_bytes(std::span(state.GetData(), state.Num())));
+}
+#endif
