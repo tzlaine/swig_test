@@ -15,7 +15,8 @@ Arender_target::Arender_target()
     RootComponent = root_;
 
     capture_component_->SetupAttachment(root_);
-    capture_component_->bCaptureEveryFrame = true;
+    capture_component_->bCaptureEveryFrame = false;
+    capture_component_->bCaptureOnMovement = true;
     capture_component_->PrimitiveRenderMode =
         ESceneCapturePrimitiveRenderMode::PRM_UseShowOnlyList;
     capture_component_->ProjectionType = ECameraProjectionMode::Orthographic;

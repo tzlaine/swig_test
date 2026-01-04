@@ -476,11 +476,11 @@ void Aplayer_controller::SetupInputComponent()
         [this](auto const &) { alternate_selection_key_down_ = false; });
 }
 
-void Aplayer_controller::Tick(float delta)
+void Aplayer_controller::Tick(float dt)
 {
-    Super::Tick(delta);
+    Super::Tick(dt);
 
-    map_transition_->tick(delta);
+    map_transition_->tick(dt);
     if (auto new_camera_location = map_transition_->new_camera_location()) {
         auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
         check(camera_pawn);
@@ -557,6 +557,43 @@ void Aplayer_controller::Tick(float delta)
         }
     }
 
+    auto * gs = GetWorld()->GetGameState<Agame_state>();
+    if (map_transition_->mode() == map_mode::system_map &&
+        gs->play_state_ == play_state::playing) {
+        float const seconds_per_day = seconds_per_day_tick(
+            GetWorld()->GetGameState<Agame_state>()->play_speed_);
+        auto const days = ddays(dt / seconds_per_day);
+        auto system = ::system(client_gs_, system_id_);
+        for (int i = 0, last = system->last_planet - system->first_planet;
+             i < last;
+             ++i) {
+            int const planet_id = system->first_planet + i;
+            auto planet = ::planet(client_gs_, planet_id);
+            AActor * a = system_planets_[i];
+
+            // update location
+            FVector const planet_location = a->GetActorLocation();
+            FVector const star_location = system_star_->GetActorLocation();
+            auto const orbital_period = dyears(planet->orbital_period_y);
+            double const radians_moved =
+                std::chrono::duration_cast<dyears>(days) / orbital_period *
+                2.0 * std::numbers::pi;
+            auto const location_rotation =
+                FQuat(FVector::ZAxisVector, radians_moved);
+            FVector const offset = planet_location - star_location;
+            FVector const rotated_offset =
+                location_rotation.RotateVector(offset);
+            a->SetActorLocation(star_location + rotated_offset);
+            set_property(
+                a, TEXT("light_vector"), rotated_offset.GetUnsafeNormal());
+            set_property(a, TEXT("light_vector_dirty"), true);
+
+            // update rotation
+            a->AddActorLocalRotation(
+                FRotator(0.0f, 360 * days.count() * 24 / planet->day_h, 0.0f));
+        }
+    }
+
     update_hud_renders(system_actor_renders_, system_planets_);
 
     float const close_enough = 0.00001f;
@@ -576,7 +613,7 @@ void Aplayer_controller::Tick(float delta)
                     1.0f));
             FVector new_camera_location = FMath::Lerp(
                 system_map_zoom_initial_, system_map_zoom_final_, smooth_alpha);
-            system_map_zoom_progress_ += delta;
+            system_map_zoom_progress_ += dt;
             camera_pawn->camera_location(new_camera_location);
         }
     }
