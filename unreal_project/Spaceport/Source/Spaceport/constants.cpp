@@ -110,6 +110,8 @@ const float system_view_transition_time_s =
 const float map_move_modififier_factor = lua()["map_move_modififier_factor"];
 const float system_map_move_factor = lua()["system_map_move_factor"];
 const float system_map_zoom_to_time_s = lua()["system_map_zoom_to_time_s"];
+const float min_time_between_day_ticks_s =
+    lua()["min_time_between_day_ticks_s"];
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =

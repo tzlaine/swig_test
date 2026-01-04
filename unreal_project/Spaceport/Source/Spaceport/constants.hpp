@@ -107,6 +107,7 @@ extern const float system_view_transition_time_s;
 extern const float map_move_modififier_factor;
 extern const float system_map_move_factor;
 extern const float system_map_zoom_to_time_s;
+extern const float min_time_between_day_ticks_s;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;
