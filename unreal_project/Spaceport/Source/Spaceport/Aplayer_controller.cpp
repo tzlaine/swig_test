@@ -799,6 +799,10 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
     pawn->start_game_at(location);
 
     server_confirm_received_initial_game_state();
+
+    auto * hud = ::hud(GetHUD());
+    check(hud);
+    hud->initial_game_state(client_gs_);
 }
 
 bool Aplayer_controller::
@@ -823,6 +827,7 @@ void Aplayer_controller::client_recv_day_updates_Implementation(
     TArray<uint8> const & state)
 {
     // TODO
+    // TODO: Tell the hud about the new date.
 }
 
 void Aplayer_controller::client_recv_month_updates_Implementation(

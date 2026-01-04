@@ -5,6 +5,7 @@
 #include "materials.h"
 #include "utility.hpp"
 #include "game_data_formatters.hpp"
+#include "widgets/Sstyled_text_block.h"
 #include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
@@ -60,6 +61,12 @@ namespace {
     }
 }
 
+// TODO: -> model_util.hpp
+inline FDateTime to_fdatetime(date_t const & date)
+{
+    return {date.year, date.month, date.day + 1};
+}
+
 void Ssystem_map_ui::Construct(FArguments const & args)
 {
     {
@@ -86,8 +93,17 @@ void Ssystem_map_ui::Construct(FArguments const & args)
              .Padding(0, 5)
                  [SNew(SBox)
                       .WidthOverride(side_panel_width)
-                      .HeightOverride(65)
+                      .HeightOverride(90)
                           [SNew(SVerticalBox) +
+                           SVerticalBox::Slot()
+                               .HAlign(HAlign_Center)
+                               .VAlign(VAlign_Center)
+                               .Padding(0, 0, 0, 5)
+                               .FillHeight(
+                                   1)[SAssignNew(date_text_, Sstyled_text_block)
+                                          .Font(FSlateFontInfo(
+                                              ui_defaults().font_.Get(),
+                                              ui_defaults().font_size_ / 2))] +
                            SVerticalBox::Slot()
                                .VAlign(VAlign_Center)
                                .Padding(0, 0, 0, 5)
@@ -217,6 +233,15 @@ void Ssystem_map_ui::paused(bool b)
         return;
     play_pause_button_->SetButtonStyle(
         b ? &play_style_.style_ : &pause_style_.style_);
+}
+
+void Ssystem_map_ui::date(date_t const & d)
+{
+    date_ = d;
+    if (!date_text_)
+        return;
+    FDateTime date_time = to_fdatetime(date_);
+    date_text_->SetText(FText::AsDate(date_time));
 }
 
 void Ssystem_map_ui::reset()

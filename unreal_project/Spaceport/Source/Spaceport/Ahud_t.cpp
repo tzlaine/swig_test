@@ -121,6 +121,19 @@ void Ahud_t::play_state_changed(play_state ps)
     // TODO galaxy_map_ui_->paused(ps == play_state::paused);
 }
 
+void Ahud_t::date_changed(date_t const & date)
+{
+    allocate_widgets();
+    system_map_ui_->date(date);
+    // TODO galaxy_map_ui_->date(date);
+}
+
+void Ahud_t::initial_game_state(client_game_state const & gs)
+{
+    play_speed_changed(gs.play_speed());
+    date_changed(gs.date());
+}
+
 void Ahud_t::show_main_menu(bool in_game)
 {
     main_menu_ = SNew(Smain_menu).in_game(in_game);

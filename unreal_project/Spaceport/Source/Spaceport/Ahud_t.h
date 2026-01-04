@@ -25,6 +25,8 @@ class Soptions;
 class Shud_widget_base;
 class Shud_widget_base;
 class Ssystem_map_ui;
+struct client_game_state;
+struct date_t;
 
 UCLASS()
 class Ahud_t : public AHUD
@@ -52,6 +54,9 @@ public:
 
     void play_speed_changed(int play_speed);
     void play_state_changed(play_state ps);
+    void date_changed(date_t const & date);
+
+    void initial_game_state(client_game_state const & gs);
 
     void show_main_menu(bool in_game);
     void show_save_load_dlg(bool saving);

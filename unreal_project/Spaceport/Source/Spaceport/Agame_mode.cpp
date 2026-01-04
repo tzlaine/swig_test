@@ -418,6 +418,7 @@ void Agame_mode::signal_start_of_play()
     }
 
     set_play_state(GameState, play_state::paused);
+    cast(GameState)->play_speed_ = gs.play_speed;
 }
 
 void Agame_mode::all_clients_received_initial_game_state()
