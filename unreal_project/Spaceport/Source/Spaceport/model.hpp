@@ -86,6 +86,8 @@ struct client_game_state
     boost::optional<system_t const &> system(int i) const;
     boost::optional<planet_t const &> planet(int i) const;
     boost::optional<nation_t const &> nation(int i) const;
+    int play_speed() const { return play_speed_; };
+    date_t date() const { return date_; };
 
 private:
     int map_width_ = 0;
@@ -94,6 +96,8 @@ private:
     std::vector<indexed_object<system_t>> systems_;
     std::vector<indexed_object<planet_t>> planets_;
     std::vector<indexed_object<nation_t>> nations_;
+    int play_speed_;
+    date_t date_;
 };
 
 struct model

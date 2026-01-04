@@ -21,7 +21,15 @@ client_game_state::client_game_state(std::span<std::byte const> src)
     planets_.clear();
     nations_.clear();
     detail::deserialize_for_client(
-        map_width_, map_height_, hexes_, systems_, planets_, nations_, src);
+        map_width_,
+        map_height_,
+        hexes_,
+        systems_,
+        planets_,
+        nations_,
+        play_speed_,
+        date_,
+        src);
 }
 
 boost::optional<hex_t const &> client_game_state::hex(int i) const

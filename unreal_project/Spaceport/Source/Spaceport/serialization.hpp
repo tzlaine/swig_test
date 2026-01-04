@@ -820,6 +820,11 @@ namespace detail {
 
         // TODO: Alliances too.
 
+        detail::serialize_impl<ser_op::write, ser_field_op::write>(
+            gs.play_speed, metadata<game_state_t>::play_speed().index_, os);
+        detail::serialize_impl<ser_op::write, ser_field_op::write>(
+            gs.date, metadata<game_state_t>::date().index_, os);
+
         detail::serialize_message_end<ser_op::write>(os);
     }
 
@@ -830,6 +835,8 @@ namespace detail {
         std::vector<indexed_object<system_t>> & systems,
         std::vector<indexed_object<planet_t>> & planets,
         std::vector<indexed_object<nation_t>> & nations,
+        int & play_speed,
+        date_t & date,
         std::span<std::byte const> src);
 }
 
