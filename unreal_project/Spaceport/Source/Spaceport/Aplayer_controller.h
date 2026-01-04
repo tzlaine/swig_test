@@ -184,6 +184,7 @@ private:
     float system_map_zoom_progress_ = -1.0f;
     FVector system_map_zoom_initial_{};
     FVector system_map_zoom_final_;
+    AActor * camera_follow_system_object_ = nullptr;
 
     UPROPERTY(
         EditAnywhere,

@@ -253,6 +253,8 @@ void Aplayer_controller::SetupInputComponent()
 
             camera_pawn->AddMovementInput(FVector::UnitX(), delta.X);
             camera_pawn->AddMovementInput(FVector::UnitY(), delta.Y);
+
+            camera_follow_system_object_ = nullptr;
         });
 
     eic->BindActionValueLambda(
@@ -303,6 +305,7 @@ void Aplayer_controller::SetupInputComponent()
                 if (auto * hud = ::hud(GetHUD()))
                     hud->hide_map_ui();
                 system_actor_renders_.Empty();
+                camera_follow_system_object_ = nullptr;
             }
         });
 
@@ -480,9 +483,10 @@ void Aplayer_controller::Tick(float dt)
 {
     Super::Tick(dt);
 
+    auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
+
     map_transition_->tick(dt);
     if (auto new_camera_location = map_transition_->new_camera_location()) {
-        auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
         check(camera_pawn);
         if (new_camera_location)
             camera_pawn->camera_location(*new_camera_location, false);
@@ -557,6 +561,8 @@ void Aplayer_controller::Tick(float dt)
         }
     }
 
+    // TODO: Every day tick, take the server-official values and use them to
+    // reconcile these positions.  The day rotations are not important.
     auto * gs = GetWorld()->GetGameState<Agame_state>();
     if (map_transition_->mode() == map_mode::system_map &&
         gs->play_state_ == play_state::playing) {
@@ -596,14 +602,22 @@ void Aplayer_controller::Tick(float dt)
 
     update_hud_renders(system_actor_renders_, system_planets_);
 
+    if (camera_follow_system_object_) {
+        check(camera_pawn);
+        FVector new_camera_location =
+            camera_follow_system_object_->GetActorLocation();
+        new_camera_location.Z = -camera_pawn->target_arm_length();
+        camera_pawn->camera_location(new_camera_location);
+    }
+
     float const close_enough = 0.00001f;
     if (0.0f <= system_map_zoom_progress_) {
-        auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
-        check(camera_pawn);
         if (system_map_zoom_to_time_s - close_enough <
             system_map_zoom_progress_) {
             camera_pawn->camera_location(system_map_zoom_final_);
             system_map_zoom_progress_ = -1.0f;
+            if (map_transition_->mode() != map_mode::system_map)
+                camera_follow_system_object_ = nullptr;
         } else {
             float const smooth_alpha = FMath::SmoothStep(
                 0.0f,
@@ -973,6 +987,8 @@ void Aplayer_controller::zoom_to_system_object(int i)
     AActor * a = i ? system_planets_[i - 1] : system_star_.Get();
     system_map_zoom_final_ = a->GetActorLocation();
     system_map_zoom_final_.Z = -system_object_preferred_camera_distance(a);
+
+    camera_follow_system_object_ = a;
 }
 
 void Aplayer_controller::decrease_play_speed()
