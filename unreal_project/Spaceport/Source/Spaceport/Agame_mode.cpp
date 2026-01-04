@@ -40,14 +40,6 @@ namespace {
         gs->play_state_changed();
     }
 
-    float seconds_between_day_ticks(int speed)
-    {
-        check(1 <= speed && speed <= 5);
-        if (speed == 5)
-            return 0.0f;
-        return 1.0f / speed;
-    }
-
     template<typename T>
     void destroy_actors_of_class(
         UWorld * w, TSubclassOf<T> subclass, TArray<AActor *> & actors)

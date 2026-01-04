@@ -363,3 +363,21 @@ bool double_clicked(
     prev_click_target = click_target;
     return false;
 }
+
+template<typename T>
+using days_t = std::chrono::duration<T, std::chrono::days::period>;
+template<typename T>
+using years_t = std::chrono::duration<T, std::chrono::years::period>;
+
+using ddays = days_t<double>;
+using fdays = days_t<float>;
+using dyears = years_t<double>;
+using fyears = years_t<float>;
+
+inline float seconds_per_day_tick(int speed)
+{
+    check(1 <= speed && speed <= 5);
+    if (speed == 5)
+        return min_time_between_day_ticks_s;
+    return 1.0f / speed;
+}
