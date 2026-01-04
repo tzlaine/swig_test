@@ -623,6 +623,24 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     return retval;
 }
 
+pb_message::game_data::date_t to_protobuf (const ::date_t& value)
+{
+    pb_message::game_data::date_t retval;
+    retval.set_year(value.year);
+    retval.set_month(value.month);
+    retval.set_day(value.day);
+    return retval;
+}
+
+::date_t from_protobuf (const pb_message::game_data::date_t& msg)
+{
+    ::date_t retval;
+    retval.year = msg.year();
+    retval.month = msg.month();
+    retval.day = msg.day();
+    return retval;
+}
+
 pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
 {
     pb_message::game_data::game_state_t retval;
@@ -644,6 +662,7 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
         retval.add_alliances(x);
     }
     retval.set_play_speed(value.play_speed);
+    retval.mutable_date()->CopyFrom(to_protobuf(value.date));
     return retval;
 }
 
@@ -688,5 +707,6 @@ pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value)
         }
     }
     retval.play_speed = msg.play_speed();
+    retval.date = from_protobuf(msg.date());
     return retval;
 }

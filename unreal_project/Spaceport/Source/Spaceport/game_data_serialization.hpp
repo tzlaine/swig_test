@@ -1028,6 +1028,54 @@ namespace detail {
     }
 
     template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
+    std::ptrdiff_t serialize_message_impl(date_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    {
+        std::ptrdiff_t retval = 0;
+    
+        if constexpr (FieldOp == ser_field_op::write) {
+            uint8_t buf[16];
+            uint8_t * out = buf;
+            out = os::WriteVarint32ToArray(field_number, out);
+            detail::count_or_write<Op>(retval, buf, out - buf, os);
+        }
+    
+        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.year, 1, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.month, 2, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.day, 3, os);
+    
+        retval += detail::serialize_message_end<Op>(os);
+    
+        return retval;
+    }
+    template<> inline std::span<std::byte const> deserialize_message_impl<date_t>(date_t & x, std::span<std::byte const> src)
+    {
+        using namespace std::literals;
+        constexpr auto this_message_name = "date_t"sv;
+        constexpr std::array<std::string_view, 4> field_names = {{"<UNKOWN_FIELD>"sv,
+          "year"sv, "month"sv, "day"sv}};
+        std::array<int, 3> expected_field_numbers = {{
+          1, 2, 3}};
+    
+        constexpr int lo_field_number = 1;
+        constexpr int hi_field_number = 3;
+    
+        auto read_field = [] (date_t & x, int i, std::span<std::byte const> src) {
+            switch (i) {
+            case 1: return detail::deserialize_impl(x.year, src);
+            case 2: return detail::deserialize_impl(x.month, src);
+            case 3: return detail::deserialize_impl(x.day, src);
+            default: return src; // unreachable
+            }
+        };
+    
+        return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+            x, src, this_message_name, field_names, expected_field_numbers, read_field);
+    }
+
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
     std::ptrdiff_t serialize_message_impl(game_state_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
     {
         std::ptrdiff_t retval = 0;
@@ -1055,6 +1103,8 @@ namespace detail {
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.alliances, 7, os);
         if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.play_speed, 8, os);
+        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.date, 9, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -1064,13 +1114,13 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "game_state_t"sv;
-        constexpr std::array<std::string_view, 9> field_names = {{"<UNKOWN_FIELD>"sv,
-          "map_width"sv, "map_height"sv, "hexes"sv, "systems"sv, "planets"sv, "nations"sv, "alliances"sv, "play_speed"sv}};
-        std::array<int, 8> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8}};
+        constexpr std::array<std::string_view, 10> field_names = {{"<UNKOWN_FIELD>"sv,
+          "map_width"sv, "map_height"sv, "hexes"sv, "systems"sv, "planets"sv, "nations"sv, "alliances"sv, "play_speed"sv, "date"sv}};
+        std::array<int, 9> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 8;
+        constexpr int hi_field_number = 9;
     
         auto read_field = [] (game_state_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
@@ -1082,6 +1132,7 @@ namespace detail {
             case 6: return detail::deserialize_impl(x.nations, src);
             case 7: return detail::deserialize_impl(x.alliances, src);
             case 8: return detail::deserialize_impl(x.play_speed, src);
+            case 9: return detail::deserialize_impl(x.date, src);
             default: return src; // unreachable
             }
         };

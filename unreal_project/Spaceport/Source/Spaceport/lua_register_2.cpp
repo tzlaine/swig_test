@@ -12,4 +12,5 @@ void detail::lua_register_2(sol::state & l)
     REGISTER_GAME_DATA_TYPE(l, star_t);
     REGISTER_GAME_DATA_TYPE(l, system_t);
     REGISTER_GAME_DATA_TYPE(l, hex_t);
+    REGISTER_GAME_DATA_TYPE(l, province_t);
 }

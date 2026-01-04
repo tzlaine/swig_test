@@ -52,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[20]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[21]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -61,6 +61,9 @@ struct TableStruct_game_5fdata_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fdata_2eproto;
 namespace pb_message {
 namespace game_data {
+class date_t;
+class date_tDefaultTypeInternal;
+extern date_tDefaultTypeInternal _date_t_default_instance_;
 class fleet_position_t;
 class fleet_position_tDefaultTypeInternal;
 extern fleet_position_tDefaultTypeInternal _fleet_position_t_default_instance_;
@@ -124,6 +127,7 @@ extern unit_tDefaultTypeInternal _unit_t_default_instance_;
 }  // namespace game_data
 }  // namespace pb_message
 PROTOBUF_NAMESPACE_OPEN
+template<> ::pb_message::game_data::date_t* Arena::CreateMaybeMessage<::pb_message::game_data::date_t>(Arena*);
 template<> ::pb_message::game_data::fleet_position_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleet_position_t>(Arena*);
 template<> ::pb_message::game_data::fleet_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleet_t>(Arena*);
 template<> ::pb_message::game_data::fleets_t* Arena::CreateMaybeMessage<::pb_message::game_data::fleets_t>(Arena*);
@@ -4066,6 +4070,165 @@ class nation_t PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class date_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.date_t) */ {
+ public:
+  inline date_t() : date_t(nullptr) {}
+  virtual ~date_t();
+
+  date_t(const date_t& from);
+  date_t(date_t&& from) noexcept
+    : date_t() {
+    *this = ::std::move(from);
+  }
+
+  inline date_t& operator=(const date_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline date_t& operator=(date_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const date_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const date_t* internal_default_instance() {
+    return reinterpret_cast<const date_t*>(
+               &_date_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  friend void swap(date_t& a, date_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(date_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(date_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline date_t* New() const final {
+    return CreateMaybeMessage<date_t>(nullptr);
+  }
+
+  date_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<date_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const date_t& from);
+  void MergeFrom(const date_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(date_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.date_t";
+  }
+  protected:
+  explicit date_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kYearFieldNumber = 1,
+    kMonthFieldNumber = 2,
+    kDayFieldNumber = 3,
+  };
+  // int32 year = 1;
+  void clear_year();
+  ::PROTOBUF_NAMESPACE_ID::int32 year() const;
+  void set_year(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_year() const;
+  void _internal_set_year(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 month = 2;
+  void clear_month();
+  ::PROTOBUF_NAMESPACE_ID::int32 month() const;
+  void set_month(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_month() const;
+  void _internal_set_month(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 day = 3;
+  void clear_day();
+  ::PROTOBUF_NAMESPACE_ID::int32 day() const;
+  void set_day(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_day() const;
+  void _internal_set_day(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.date_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::int32 year_;
+  ::PROTOBUF_NAMESPACE_ID::int32 month_;
+  ::PROTOBUF_NAMESPACE_ID::int32 day_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class game_state_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.game_state_t) */ {
  public:
@@ -4108,7 +4271,7 @@ class game_state_t PROTOBUF_FINAL :
                &_game_state_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(game_state_t& a, game_state_t& b) {
     a.Swap(&b);
@@ -4184,6 +4347,7 @@ class game_state_t PROTOBUF_FINAL :
     kPlanetsFieldNumber = 5,
     kNationsFieldNumber = 6,
     kAlliancesFieldNumber = 7,
+    kDateFieldNumber = 9,
     kMapWidthFieldNumber = 1,
     kMapHeightFieldNumber = 2,
     kPlaySpeedFieldNumber = 8,
@@ -4282,6 +4446,24 @@ class game_state_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 >*
       mutable_alliances();
 
+  // .pb_message.game_data.date_t date = 9;
+  bool has_date() const;
+  private:
+  bool _internal_has_date() const;
+  public:
+  void clear_date();
+  const ::pb_message::game_data::date_t& date() const;
+  ::pb_message::game_data::date_t* release_date();
+  ::pb_message::game_data::date_t* mutable_date();
+  void set_allocated_date(::pb_message::game_data::date_t* date);
+  private:
+  const ::pb_message::game_data::date_t& _internal_date() const;
+  ::pb_message::game_data::date_t* _internal_mutable_date();
+  public:
+  void unsafe_arena_set_allocated_date(
+      ::pb_message::game_data::date_t* date);
+  ::pb_message::game_data::date_t* unsafe_arena_release_date();
+
   // int32 map_width = 1;
   void clear_map_width();
   ::PROTOBUF_NAMESPACE_ID::int32 map_width() const;
@@ -4322,6 +4504,7 @@ class game_state_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_t > nations_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::uint32 > alliances_;
   mutable std::atomic<int> _alliances_cached_byte_size_;
+  ::pb_message::game_data::date_t* date_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_width_;
   ::PROTOBUF_NAMESPACE_ID::int32 map_height_;
   ::PROTOBUF_NAMESPACE_ID::int32 play_speed_;
@@ -7926,6 +8109,70 @@ inline void nation_t::set_defeated(bool value) {
 
 // -------------------------------------------------------------------
 
+// date_t
+
+// int32 year = 1;
+inline void date_t::clear_year() {
+  year_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 date_t::_internal_year() const {
+  return year_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 date_t::year() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.date_t.year)
+  return _internal_year();
+}
+inline void date_t::_internal_set_year(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  year_ = value;
+}
+inline void date_t::set_year(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_year(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.date_t.year)
+}
+
+// int32 month = 2;
+inline void date_t::clear_month() {
+  month_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 date_t::_internal_month() const {
+  return month_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 date_t::month() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.date_t.month)
+  return _internal_month();
+}
+inline void date_t::_internal_set_month(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  month_ = value;
+}
+inline void date_t::set_month(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_month(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.date_t.month)
+}
+
+// int32 day = 3;
+inline void date_t::clear_day() {
+  day_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 date_t::_internal_day() const {
+  return day_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 date_t::day() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.date_t.day)
+  return _internal_day();
+}
+inline void date_t::_internal_set_day(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  day_ = value;
+}
+inline void date_t::set_day(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_day(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.date_t.day)
+}
+
+// -------------------------------------------------------------------
+
 // game_state_t
 
 // int32 map_width = 1;
@@ -8191,9 +8438,94 @@ inline void game_state_t::set_play_speed(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.game_state_t.play_speed)
 }
 
+// .pb_message.game_data.date_t date = 9;
+inline bool game_state_t::_internal_has_date() const {
+  return this != internal_default_instance() && date_ != nullptr;
+}
+inline bool game_state_t::has_date() const {
+  return _internal_has_date();
+}
+inline void game_state_t::clear_date() {
+  if (GetArena() == nullptr && date_ != nullptr) {
+    delete date_;
+  }
+  date_ = nullptr;
+}
+inline const ::pb_message::game_data::date_t& game_state_t::_internal_date() const {
+  const ::pb_message::game_data::date_t* p = date_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::date_t*>(
+      &::pb_message::game_data::_date_t_default_instance_);
+}
+inline const ::pb_message::game_data::date_t& game_state_t::date() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.game_state_t.date)
+  return _internal_date();
+}
+inline void game_state_t::unsafe_arena_set_allocated_date(
+    ::pb_message::game_data::date_t* date) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(date_);
+  }
+  date_ = date;
+  if (date) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.game_state_t.date)
+}
+inline ::pb_message::game_data::date_t* game_state_t::release_date() {
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::date_t* game_state_t::unsafe_arena_release_date() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.game_state_t.date)
+  
+  ::pb_message::game_data::date_t* temp = date_;
+  date_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::date_t* game_state_t::_internal_mutable_date() {
+  
+  if (date_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::date_t>(GetArena());
+    date_ = p;
+  }
+  return date_;
+}
+inline ::pb_message::game_data::date_t* game_state_t::mutable_date() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.game_state_t.date)
+  return _internal_mutable_date();
+}
+inline void game_state_t::set_allocated_date(::pb_message::game_data::date_t* date) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete date_;
+  }
+  if (date) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(date);
+    if (message_arena != submessage_arena) {
+      date = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, date, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  date_ = date;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.game_state_t.date)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -596,6 +596,28 @@ inline std::ostream & operator<<(std::ostream & os, nation_t const & x)
 #endif
 
 template <>
+struct std::formatter<date_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(date_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "date_t(");
+
+        out = std::format_to(out, " year={}", x.year);
+        out = std::format_to(out, " month={}", x.month);
+        out = std::format_to(out, " day={}", x.day);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, date_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<game_state_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }
@@ -633,6 +655,7 @@ struct std::formatter<game_state_t> {
         };
         out = std::format_to(out, " ]");
         out = std::format_to(out, " play_speed={}", x.play_speed);
+        out = std::format_to(out, " date={}", x.date);
 
         return std::format_to(out, " )");
     }

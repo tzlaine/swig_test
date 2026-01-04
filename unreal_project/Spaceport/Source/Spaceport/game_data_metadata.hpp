@@ -1001,6 +1001,41 @@ namespace detail {
         }
     };
 
+    template<> struct metadata<date_t>
+    {
+        static constexpr std::string_view struct_name()
+        {
+            using namespace std::literals;
+            return "date_t"sv;
+        }
+        static constexpr int lo_field_number() { return 1; }
+        static constexpr int hi_field_number() { return 3; }
+
+        static constexpr metadatum<date_t, int> year()
+        {
+            using namespace std::literals;
+            return {"year"sv, 1, &date_t::year};
+        }
+        static constexpr metadatum<date_t, int> month()
+        {
+            using namespace std::literals;
+            return {"month"sv, 2, &date_t::month};
+        }
+        static constexpr metadatum<date_t, int> day()
+        {
+            using namespace std::literals;
+            return {"day"sv, 3, &date_t::day};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(year());
+            f(month());
+            f(day());
+        }
+    };
+
     template<> struct metadata<game_state_t>
     {
         static constexpr std::string_view struct_name()
@@ -1009,7 +1044,7 @@ namespace detail {
             return "game_state_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 8; }
+        static constexpr int hi_field_number() { return 9; }
 
         static constexpr metadatum<game_state_t, int> map_width()
         {
@@ -1051,6 +1086,11 @@ namespace detail {
             using namespace std::literals;
             return {"play_speed"sv, 8, &game_state_t::play_speed};
         }
+        static constexpr metadatum<game_state_t, date_t> date()
+        {
+            using namespace std::literals;
+            return {"date"sv, 9, &game_state_t::date};
+        }
 
         template<typename F>
         static void foreach_member(F && f)
@@ -1063,6 +1103,7 @@ namespace detail {
             f(nations());
             f(alliances());
             f(play_speed());
+            f(date());
         }
     };
 

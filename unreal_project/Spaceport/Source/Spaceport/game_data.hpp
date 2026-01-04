@@ -254,6 +254,14 @@ struct nation_t
     bool operator==(nation_t const &) const = default;
 };
 
+struct date_t
+{
+    int year = -1;
+    int month = -1;
+    int day = -1;
+    bool operator==(date_t const &) const = default;
+};
+
 struct game_state_t
 {
     int map_width = -1;
@@ -264,6 +272,7 @@ struct game_state_t
     std::vector<nation_t> nations = {};
     std::vector<unsigned int> alliances;
     int play_speed = -1;
+    date_t date = {};
     bool operator==(game_state_t const &) const = default;
 };
 
@@ -319,6 +328,9 @@ pb_message::game_data::province_t to_protobuf (const ::province_t& value);
 
 pb_message::game_data::nation_t to_protobuf (const ::nation_t& value);
 ::nation_t from_protobuf (const pb_message::game_data::nation_t& msg);
+
+pb_message::game_data::date_t to_protobuf (const ::date_t& value);
+::date_t from_protobuf (const pb_message::game_data::date_t& msg);
 
 pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value);
 ::game_state_t from_protobuf (const pb_message::game_data::game_state_t& msg);

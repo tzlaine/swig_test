@@ -242,6 +242,13 @@ message nation_t
     bool defeated = 15;
 }
 
+message date_t
+{
+    int32 year = 1;
+    int32 month = 2;
+    int32 day = 3;
+}
+
 message game_state_t
 {
     int32 map_width = 1;
@@ -252,4 +259,5 @@ message game_state_t
     repeated nation_t nations = 6;
     repeated uint32 alliances = 7; // packed bitfield
     int32 play_speed = 8; // 1-4 have fixed rates; 5 is as fast as it will go
+    date_t date = 9;
 }

@@ -14,6 +14,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_game_5fdata_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_date_t_game_5fdata_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_game_5fdata_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_fleet_position_t_game_5fdata_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_game_5fdata_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_fleet_t_game_5fdata_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_game_5fdata_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_fleets_t_game_5fdata_2eproto;
@@ -111,12 +112,30 @@ class nation_tDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<nation_t> _instance;
 } _nation_t_default_instance_;
+class date_tDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<date_t> _instance;
+} _date_t_default_instance_;
 class game_state_tDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<game_state_t> _instance;
 } _game_state_t_default_instance_;
 }  // namespace game_data
 }  // namespace pb_message
+static void InitDefaultsscc_info_date_t_game_5fdata_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::pb_message::game_data::_date_t_default_instance_;
+    new (ptr) ::pb_message::game_data::date_t();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::pb_message::game_data::date_t::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_date_t_game_5fdata_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_date_t_game_5fdata_2eproto}, {}};
+
 static void InitDefaultsscc_info_fleet_position_t_game_5fdata_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -215,12 +234,13 @@ static void InitDefaultsscc_info_game_state_t_game_5fdata_2eproto() {
   ::pb_message::game_data::game_state_t::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_game_state_t_game_5fdata_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_game_state_t_game_5fdata_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<5> scc_info_game_state_t_game_5fdata_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 5, 0, InitDefaultsscc_info_game_state_t_game_5fdata_2eproto}, {
       &scc_info_hex_t_game_5fdata_2eproto.base,
       &scc_info_system_t_game_5fdata_2eproto.base,
       &scc_info_planet_t_game_5fdata_2eproto.base,
-      &scc_info_nation_t_game_5fdata_2eproto.base,}};
+      &scc_info_nation_t_game_5fdata_2eproto.base,
+      &scc_info_date_t_game_5fdata_2eproto.base,}};
 
 static void InitDefaultsscc_info_hex_t_game_5fdata_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -422,7 +442,7 @@ static void InitDefaultsscc_info_unit_t_game_5fdata_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_unit_t_game_5fdata_2eproto}, {
       &scc_info_nation_and_object_id_t_game_5fdata_2eproto.base,}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_game_5fdata_2eproto[20];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_game_5fdata_2eproto[21];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_game_5fdata_2eproto[3];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_game_5fdata_2eproto = nullptr;
 
@@ -648,6 +668,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, foreign_designs_glimpsed_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::nation_t, defeated_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::date_t, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::date_t, year_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::date_t, month_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::date_t, day_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -660,6 +688,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_game_5fdata_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, nations_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, alliances_),
   PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, play_speed_),
+  PROTOBUF_FIELD_OFFSET(::pb_message::game_data::game_state_t, date_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::pb_message::game_data::nation_and_object_id_t)},
@@ -681,7 +710,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 184, -1, sizeof(::pb_message::game_data::hex_t)},
   { 193, -1, sizeof(::pb_message::game_data::province_t)},
   { 200, -1, sizeof(::pb_message::game_data::nation_t)},
-  { 220, -1, sizeof(::pb_message::game_data::game_state_t)},
+  { 220, -1, sizeof(::pb_message::game_data::date_t)},
+  { 228, -1, sizeof(::pb_message::game_data::game_state_t)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -704,6 +734,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pb_message::game_data::_hex_t_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pb_message::game_data::_province_t_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pb_message::game_data::_nation_t_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pb_message::game_data::_date_t_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pb_message::game_data::_game_state_t_default_instance_),
 };
 
@@ -810,28 +841,32 @@ const char descriptor_table_protodef_game_5fdata_2eproto[] PROTOBUF_SECTION_VARI
   "2,.pb_message.game_data.nation_and_objec"
   "t_id_t\022N\n\030foreign_designs_glimpsed\030\016 \003(\013"
   "2,.pb_message.game_data.nation_and_objec"
-  "t_id_t\022\020\n\010defeated\030\017 \001(\010\"\233\002\n\014game_state_"
-  "t\022\021\n\tmap_width\030\001 \001(\005\022\022\n\nmap_height\030\002 \001(\005"
-  "\022*\n\005hexes\030\003 \003(\0132\033.pb_message.game_data.h"
-  "ex_t\022/\n\007systems\030\004 \003(\0132\036.pb_message.game_"
-  "data.system_t\022/\n\007planets\030\005 \003(\0132\036.pb_mess"
-  "age.game_data.planet_t\022/\n\007nations\030\006 \003(\0132"
-  "\036.pb_message.game_data.nation_t\022\021\n\tallia"
-  "nces\030\007 \003(\r\022\022\n\nplay_speed\030\010 \001(\005*Q\n\rplanet"
-  "_type_t\022\027\n\023invalid_planet_type\020\000\022\t\n\005rock"
-  "y\020\001\022\r\n\tgas_giant\020\002\022\r\n\tice_giant\020\003*\273\001\n\021at"
-  "mosphere_type_t\022\033\n\027invalid_atmosphere_ty"
-  "pe\020\000\022\022\n\016reduced_type_a\020\001\022\023\n\017oxidized_typ"
-  "e_b\020\002\022\026\n\022carbon_rich_type_c\020\003\022\024\n\020high_te"
-  "mperature\020\004\022\030\n\024gas_giant_atmosphere\020\005\022\030\n"
-  "\024ice_giant_atmosphere\020\006*W\n\014star_class_t\022"
-  "\026\n\022invalid_star_class\020\000\022\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n"
-  "\001a\020\003\022\005\n\001f\020\004\022\005\n\001g\020\005\022\005\n\001k\020\006\022\005\n\001m\020\007b\006proto3"
+  "t_id_t\022\020\n\010defeated\030\017 \001(\010\"2\n\006date_t\022\014\n\004ye"
+  "ar\030\001 \001(\005\022\r\n\005month\030\002 \001(\005\022\013\n\003day\030\003 \001(\005\"\307\002\n"
+  "\014game_state_t\022\021\n\tmap_width\030\001 \001(\005\022\022\n\nmap_"
+  "height\030\002 \001(\005\022*\n\005hexes\030\003 \003(\0132\033.pb_message"
+  ".game_data.hex_t\022/\n\007systems\030\004 \003(\0132\036.pb_m"
+  "essage.game_data.system_t\022/\n\007planets\030\005 \003"
+  "(\0132\036.pb_message.game_data.planet_t\022/\n\007na"
+  "tions\030\006 \003(\0132\036.pb_message.game_data.natio"
+  "n_t\022\021\n\talliances\030\007 \003(\r\022\022\n\nplay_speed\030\010 \001"
+  "(\005\022*\n\004date\030\t \001(\0132\034.pb_message.game_data."
+  "date_t*Q\n\rplanet_type_t\022\027\n\023invalid_plane"
+  "t_type\020\000\022\t\n\005rocky\020\001\022\r\n\tgas_giant\020\002\022\r\n\tic"
+  "e_giant\020\003*\273\001\n\021atmosphere_type_t\022\033\n\027inval"
+  "id_atmosphere_type\020\000\022\022\n\016reduced_type_a\020\001"
+  "\022\023\n\017oxidized_type_b\020\002\022\026\n\022carbon_rich_typ"
+  "e_c\020\003\022\024\n\020high_temperature\020\004\022\030\n\024gas_giant"
+  "_atmosphere\020\005\022\030\n\024ice_giant_atmosphere\020\006*"
+  "W\n\014star_class_t\022\026\n\022invalid_star_class\020\000\022"
+  "\005\n\001o\020\001\022\005\n\001b\020\002\022\005\n\001a\020\003\022\005\n\001f\020\004\022\005\n\001g\020\005\022\005\n\001k\020"
+  "\006\022\005\n\001m\020\007b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_game_5fdata_2eproto_deps[1] = {
   &::descriptor_table_base_5ftypes_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_game_5fdata_2eproto_sccs[20] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_game_5fdata_2eproto_sccs[21] = {
+  &scc_info_date_t_game_5fdata_2eproto.base,
   &scc_info_fleet_position_t_game_5fdata_2eproto.base,
   &scc_info_fleet_t_game_5fdata_2eproto.base,
   &scc_info_fleets_t_game_5fdata_2eproto.base,
@@ -855,10 +890,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gam
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_5fdata_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_5fdata_2eproto = {
-  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4760,
-  &descriptor_table_game_5fdata_2eproto_once, descriptor_table_game_5fdata_2eproto_sccs, descriptor_table_game_5fdata_2eproto_deps, 20, 1,
+  false, false, descriptor_table_protodef_game_5fdata_2eproto, "game_data.proto", 4856,
+  &descriptor_table_game_5fdata_2eproto_once, descriptor_table_game_5fdata_2eproto_sccs, descriptor_table_game_5fdata_2eproto_deps, 21, 1,
   schemas, file_default_instances, TableStruct_game_5fdata_2eproto::offsets,
-  file_level_metadata_game_5fdata_2eproto, 20, file_level_enum_descriptors_game_5fdata_2eproto, file_level_service_descriptors_game_5fdata_2eproto,
+  file_level_metadata_game_5fdata_2eproto, 21, file_level_enum_descriptors_game_5fdata_2eproto, file_level_service_descriptors_game_5fdata_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -7200,12 +7235,273 @@ void nation_t::InternalSwap(nation_t* other) {
 
 // ===================================================================
 
-void game_state_t::InitAsDefaultInstance() {
+void date_t::InitAsDefaultInstance() {
 }
-class game_state_t::_Internal {
+class date_t::_Internal {
  public:
 };
 
+date_t::date_t(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:pb_message.game_data.date_t)
+}
+date_t::date_t(const date_t& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&year_, &from.year_,
+    static_cast<size_t>(reinterpret_cast<char*>(&day_) -
+    reinterpret_cast<char*>(&year_)) + sizeof(day_));
+  // @@protoc_insertion_point(copy_constructor:pb_message.game_data.date_t)
+}
+
+void date_t::SharedCtor() {
+  ::memset(&year_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&day_) -
+      reinterpret_cast<char*>(&year_)) + sizeof(day_));
+}
+
+date_t::~date_t() {
+  // @@protoc_insertion_point(destructor:pb_message.game_data.date_t)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void date_t::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+}
+
+void date_t::ArenaDtor(void* object) {
+  date_t* _this = reinterpret_cast< date_t* >(object);
+  (void)_this;
+}
+void date_t::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void date_t::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const date_t& date_t::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_date_t_game_5fdata_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void date_t::Clear() {
+// @@protoc_insertion_point(message_clear_start:pb_message.game_data.date_t)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&year_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&day_) -
+      reinterpret_cast<char*>(&year_)) + sizeof(day_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* date_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // int32 year = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          year_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 month = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          month_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 day = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          day_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* date_t::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:pb_message.game_data.date_t)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 year = 1;
+  if (this->year() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_year(), target);
+  }
+
+  // int32 month = 2;
+  if (this->month() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_month(), target);
+  }
+
+  // int32 day = 3;
+  if (this->day() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_day(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:pb_message.game_data.date_t)
+  return target;
+}
+
+size_t date_t::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pb_message.game_data.date_t)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 year = 1;
+  if (this->year() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_year());
+  }
+
+  // int32 month = 2;
+  if (this->month() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_month());
+  }
+
+  // int32 day = 3;
+  if (this->day() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_day());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void date_t::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pb_message.game_data.date_t)
+  GOOGLE_DCHECK_NE(&from, this);
+  const date_t* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<date_t>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pb_message.game_data.date_t)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pb_message.game_data.date_t)
+    MergeFrom(*source);
+  }
+}
+
+void date_t::MergeFrom(const date_t& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pb_message.game_data.date_t)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.year() != 0) {
+    _internal_set_year(from._internal_year());
+  }
+  if (from.month() != 0) {
+    _internal_set_month(from._internal_month());
+  }
+  if (from.day() != 0) {
+    _internal_set_day(from._internal_day());
+  }
+}
+
+void date_t::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pb_message.game_data.date_t)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void date_t::CopyFrom(const date_t& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pb_message.game_data.date_t)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool date_t::IsInitialized() const {
+  return true;
+}
+
+void date_t::InternalSwap(date_t* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(date_t, day_)
+      + sizeof(date_t::day_)
+      - PROTOBUF_FIELD_OFFSET(date_t, year_)>(
+          reinterpret_cast<char*>(&year_),
+          reinterpret_cast<char*>(&other->year_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata date_t::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void game_state_t::InitAsDefaultInstance() {
+  ::pb_message::game_data::_game_state_t_default_instance_._instance.get_mutable()->date_ = const_cast< ::pb_message::game_data::date_t*>(
+      ::pb_message::game_data::date_t::internal_default_instance());
+}
+class game_state_t::_Internal {
+ public:
+  static const ::pb_message::game_data::date_t& date(const game_state_t* msg);
+};
+
+const ::pb_message::game_data::date_t&
+game_state_t::_Internal::date(const game_state_t* msg) {
+  return *msg->date_;
+}
 game_state_t::game_state_t(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
   hexes_(arena),
@@ -7225,6 +7521,11 @@ game_state_t::game_state_t(const game_state_t& from)
       nations_(from.nations_),
       alliances_(from.alliances_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_date()) {
+    date_ = new ::pb_message::game_data::date_t(*from.date_);
+  } else {
+    date_ = nullptr;
+  }
   ::memcpy(&map_width_, &from.map_width_,
     static_cast<size_t>(reinterpret_cast<char*>(&play_speed_) -
     reinterpret_cast<char*>(&map_width_)) + sizeof(play_speed_));
@@ -7233,9 +7534,9 @@ game_state_t::game_state_t(const game_state_t& from)
 
 void game_state_t::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_game_state_t_game_5fdata_2eproto.base);
-  ::memset(&map_width_, 0, static_cast<size_t>(
+  ::memset(&date_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&play_speed_) -
-      reinterpret_cast<char*>(&map_width_)) + sizeof(play_speed_));
+      reinterpret_cast<char*>(&date_)) + sizeof(play_speed_));
 }
 
 game_state_t::~game_state_t() {
@@ -7246,6 +7547,7 @@ game_state_t::~game_state_t() {
 
 void game_state_t::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
+  if (this != internal_default_instance()) delete date_;
 }
 
 void game_state_t::ArenaDtor(void* object) {
@@ -7274,6 +7576,10 @@ void game_state_t::Clear() {
   planets_.Clear();
   nations_.Clear();
   alliances_.Clear();
+  if (GetArena() == nullptr && date_ != nullptr) {
+    delete date_;
+  }
+  date_ = nullptr;
   ::memset(&map_width_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&play_speed_) -
       reinterpret_cast<char*>(&map_width_)) + sizeof(play_speed_));
@@ -7367,6 +7673,13 @@ const char* game_state_t::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // .pb_message.game_data.date_t date = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+          ptr = ctx->ParseMessage(_internal_mutable_date(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -7454,6 +7767,14 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_play_speed(), target);
   }
 
+  // .pb_message.game_data.date_t date = 9;
+  if (this->has_date()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        9, _Internal::date(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -7513,6 +7834,13 @@ size_t game_state_t::ByteSizeLong() const {
     total_size += data_size;
   }
 
+  // .pb_message.game_data.date_t date = 9;
+  if (this->has_date()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *date_);
+  }
+
   // int32 map_width = 1;
   if (this->map_width() != 0) {
     total_size += 1 +
@@ -7570,6 +7898,9 @@ void game_state_t::MergeFrom(const game_state_t& from) {
   planets_.MergeFrom(from.planets_);
   nations_.MergeFrom(from.nations_);
   alliances_.MergeFrom(from.alliances_);
+  if (from.has_date()) {
+    _internal_mutable_date()->::pb_message::game_data::date_t::MergeFrom(from._internal_date());
+  }
   if (from.map_width() != 0) {
     _internal_set_map_width(from._internal_map_width());
   }
@@ -7610,9 +7941,9 @@ void game_state_t::InternalSwap(game_state_t* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(game_state_t, play_speed_)
       + sizeof(game_state_t::play_speed_)
-      - PROTOBUF_FIELD_OFFSET(game_state_t, map_width_)>(
-          reinterpret_cast<char*>(&map_width_),
-          reinterpret_cast<char*>(&other->map_width_));
+      - PROTOBUF_FIELD_OFFSET(game_state_t, date_)>(
+          reinterpret_cast<char*>(&date_),
+          reinterpret_cast<char*>(&other->date_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata game_state_t::GetMetadata() const {
@@ -7680,6 +8011,9 @@ template<> PROTOBUF_NOINLINE ::pb_message::game_data::province_t* Arena::CreateM
 }
 template<> PROTOBUF_NOINLINE ::pb_message::game_data::nation_t* Arena::CreateMaybeMessage< ::pb_message::game_data::nation_t >(Arena* arena) {
   return Arena::CreateMessageInternal< ::pb_message::game_data::nation_t >(arena);
+}
+template<> PROTOBUF_NOINLINE ::pb_message::game_data::date_t* Arena::CreateMaybeMessage< ::pb_message::game_data::date_t >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::pb_message::game_data::date_t >(arena);
 }
 template<> PROTOBUF_NOINLINE ::pb_message::game_data::game_state_t* Arena::CreateMaybeMessage< ::pb_message::game_data::game_state_t >(Arena* arena) {
   return Arena::CreateMessageInternal< ::pb_message::game_data::game_state_t >(arena);
