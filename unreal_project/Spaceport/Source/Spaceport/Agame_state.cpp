@@ -10,29 +10,38 @@ namespace {
     struct state_transtion
     {
         FString name_;
-        std::function<void()> f_;
+        std::function<void(play_state)> f_;
     };
     static_assert((int)play_state::ended + 1 == 7);
-    state_transtion const remove_all{TEXT("remove_all_widgets"), [] {
-                                         if (auto * hud = ::hud())
-                                             hud->remove_all_widgets();
-                                     }};
-    state_transtion const show_main_menu{TEXT("show_main_menu"), [] {
-                                             if (auto * hud = ::hud()) {
-                                                 hud->remove_all_widgets();
-                                                 hud->show_main_menu(false);
-                                             }
-                                         }};
-    state_transtion const show_setup{TEXT("show_setup"), [] {
+    state_transtion const remove_all{
+        TEXT("remove_all_widgets"), [](play_state ps) {
+            if (auto * hud = ::hud()) {
+                hud->remove_all_widgets();
+                hud->play_state_changed(ps);
+            }
+        }};
+    state_transtion const notify{TEXT("notify"), [](play_state ps) {
+                                     if (auto * hud = ::hud())
+                                         hud->play_state_changed(ps);
+                                 }};
+    state_transtion const show_main_menu{
+        TEXT("show_main_menu"), [](play_state ps) {
+            if (auto * hud = ::hud()) {
+                hud->remove_all_widgets();
+                hud->show_main_menu(false);
+            }
+        }};
+    state_transtion const show_setup{TEXT("show_setup"), [](play_state ps) {
                                          if (auto * hud = ::hud()) {
                                              hud->show_game_setup();
                                          }
                                      }};
-    state_transtion const show_generating{TEXT("show_generating"), [] {
-                                              if (auto * hud = ::hud()) {
-                                                  hud->show_generating_galaxy();
-                                              }
-                                          }};
+    state_transtion const show_generating{
+        TEXT("show_generating"), [](play_state ps) {
+            if (auto * hud = ::hud()) {
+                hud->show_generating_galaxy();
+            }
+        }};
 
     // Anything that needs to be done -- especially to the UI -- on a
     // play_state transition should go in the table below.  Note that
@@ -50,8 +59,8 @@ namespace {
 /* setup       */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
 /* waiting_... */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
 /* generating  */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
-/* playing     */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
-/* paused      */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* playing     */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {notify},     {notify},     {}}},
+/* paused      */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {notify},     {notify},     {}}},
 /* ended       */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}}
         }};
     // clang-format on
@@ -106,7 +115,7 @@ void Agame_state::play_state_changed()
             Log,
             TEXT("Executing associated transition '%s'..."),
             *transition.name_);
-        transition.f_();
+        transition.f_(play_state_);
     }
 
     if (!deferred_notification_.title_.IsEmpty()) {
@@ -122,7 +131,9 @@ void Agame_state::play_state_changed()
 
 void Agame_state::play_speed_changed()
 {
-    UE_LOG(LogTemp, Warning, TEXT("Client: play speed=%d"), (int)play_speed_);
+    UE_LOG(LogTemp, Warning, TEXT("Client: play speed=%d"), play_speed_);
+    if (auto * hud = ::hud())
+        hud->play_speed_changed(play_speed_);
 }
 
 void Agame_state::GetLifetimeReplicatedProps(

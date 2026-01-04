@@ -132,6 +132,8 @@ public:
     void showing_main_menu(bool b);
     void nation_id(int id) { nation_id_ = id; }
     void zoom_to_system_object(int i);
+    void decrease_play_speed();
+    void increase_play_speed();
 
 protected:
     bool showing_main_menu() const;

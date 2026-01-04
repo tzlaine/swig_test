@@ -19,6 +19,14 @@ public:
     TObjectPtr<UMaterialInterface> rotator_pip_;
     UPROPERTY(EditAnywhere, Category = "Materials")
     TObjectPtr<UMaterialInterface> slider_fill_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TObjectPtr<UMaterialInterface> slower_speed_button_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TObjectPtr<UMaterialInterface> play_button_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TObjectPtr<UMaterialInterface> pause_button_;
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    TObjectPtr<UMaterialInterface> faster_speed_button_;
 
     // Map stars
     UPROPERTY(EditAnywhere, Category = "Materials")

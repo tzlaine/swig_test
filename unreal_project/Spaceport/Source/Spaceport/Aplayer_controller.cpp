@@ -938,6 +938,22 @@ void Aplayer_controller::zoom_to_system_object(int i)
     system_map_zoom_final_.Z = -system_object_preferred_camera_distance(a);
 }
 
+void Aplayer_controller::decrease_play_speed()
+{
+    auto * gs = GetWorld()->GetGameState<Agame_state>();
+    if (!gs)
+        return;
+    server_change_play_speed(gs->play_speed_ - 1);
+}
+
+void Aplayer_controller::increase_play_speed()
+{
+    auto * gs = GetWorld()->GetGameState<Agame_state>();
+    if (!gs)
+        return;
+    server_change_play_speed(gs->play_speed_ + 1);
+}
+
 bool Aplayer_controller::showing_main_menu() const
 {
     return showing_main_menu_;

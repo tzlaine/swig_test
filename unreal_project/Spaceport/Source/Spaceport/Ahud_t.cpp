@@ -105,6 +105,22 @@ void Ahud_t::saves_list(TArray<FString> const & saves)
 
 void Ahud_t::saves_changed(TArray<Ffile_change> const & changes) {}
 
+void Ahud_t::play_speed_changed(int play_speed)
+{
+    allocate_widgets();
+    system_map_ui_->play_speed(play_speed);
+    // TODO galaxy_map_ui_->play_speed(play_speed);
+}
+
+void Ahud_t::play_state_changed(play_state ps)
+{
+    if (!playing_or_paused(ps))
+        return;
+    allocate_widgets();
+    system_map_ui_->paused(ps == play_state::paused);
+    // TODO galaxy_map_ui_->paused(ps == play_state::paused);
+}
+
 void Ahud_t::show_main_menu(bool in_game)
 {
     main_menu_ = SNew(Smain_menu).in_game(in_game);

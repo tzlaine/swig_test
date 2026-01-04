@@ -73,6 +73,16 @@ public:
     FLinearColor system_selected_color_ = FLinearColor(1, 1, 1, 1);
     UPROPERTY(EditAnywhere, Category = "UI")
     FLinearColor system_hovered_color_ = FLinearColor(1, 1, 1, 0.5);
+
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor speed_button_normal_color_ = FLinearColor(0.8, 0.8, 0.8, 1);
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor speed_button_hovered_color_ = FLinearColor(0.9, 0.9, 0.9, 1);
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor speed_button_pressed_color_ = FLinearColor(1, 1, 1, 1);
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor speed_button_disabled_color_ =
+        FLinearColor(0.5, 0.5, 0.5, 0.5);
 };
 
 Uui_defaults_t const & ui_defaults();

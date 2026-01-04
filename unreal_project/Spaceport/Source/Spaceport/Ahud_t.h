@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Ucommonui_stack_wrapper.h"
+#include "Agame_mode_fwd.h"
 #include "animations.hpp"
 #include "game_instance.h"
 #include "huds/Sconfirm_dlg.h"
@@ -48,6 +49,9 @@ public:
 
     void saves_list(TArray<FString> const & saves);
     void saves_changed(TArray<Ffile_change> const & changes);
+
+    void play_speed_changed(int play_speed);
+    void play_state_changed(play_state ps);
 
     void show_main_menu(bool in_game);
     void show_save_load_dlg(bool saving);
