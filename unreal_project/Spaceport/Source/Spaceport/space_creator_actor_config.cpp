@@ -975,6 +975,9 @@ void configure_rocky_oxidized_planet(
                 min, max, random_unit_double(rng_state)));
     }
 
+    // TODO: For very-high-tilt planets, make the ice intrude farther toward
+    // the equator.
+
     // ice
     double const temperature_alpha =
         (planet.surface_temperature_k - min_habitable_nonsuit_temp_k) /
