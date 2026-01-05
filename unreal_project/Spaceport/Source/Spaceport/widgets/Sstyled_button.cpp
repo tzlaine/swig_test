@@ -16,6 +16,7 @@ void Sstyled_button::Construct(FArguments const & args_)
         args.HAlign(HAlign_Center);
         args.VAlign(VAlign_Center);
     }
+    args.IsFocusable(false);
     SButton::Construct(args);
 
     if (has_text)

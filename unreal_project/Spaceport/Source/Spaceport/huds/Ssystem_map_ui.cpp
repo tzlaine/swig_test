@@ -114,7 +114,8 @@ void Ssystem_map_ui::Construct(FArguments const & args)
                                                  player_controller()
                                                      ->decrease_play_speed();
                                                  return FReply::Handled();
-                                             })] +
+                                             })
+                                             .IsFocusable(false)] +
                                     SHorizontalBox::Slot().FillWidth(1) +
                                     SHorizontalBox::Slot().AutoWidth()
                                         [SAssignNew(play_pause_button_, SButton)
@@ -123,7 +124,8 @@ void Ssystem_map_ui::Construct(FArguments const & args)
                                                  player_controller()
                                                      ->server_toggle_pause();
                                                  return FReply::Handled();
-                                             })] +
+                                             })
+                                             .IsFocusable(false)] +
                                     SHorizontalBox::Slot().FillWidth(1) +
                                     SHorizontalBox::Slot().AutoWidth()
                                         [SAssignNew(
@@ -134,7 +136,8 @@ void Ssystem_map_ui::Construct(FArguments const & args)
                                                  player_controller()
                                                      ->increase_play_speed();
                                                  return FReply::Handled();
-                                             })]] +
+                                             })
+                                             .IsFocusable(false)]] +
                            SVerticalBox ::Slot().FillHeight(
                                1)[SNew(SImage).Image(&speed_pip_brush_)]]] +
          SOverlay::Slot()
@@ -205,11 +208,14 @@ void Ssystem_map_ui::rebuild(int system_id)
         style.Pressed = rt->brush();
 
         hbox_->AddSlot().AutoWidth().Padding(
-            5, 0)[SNew(SBox)
-                      .WidthOverride(object_render_size)
-                      .HeightOverride(object_render_size)
-                          [SNew(SButton).ButtonStyle(&style).OnClicked_Lambda(
-                              handle_click)]];
+            5,
+            0)[SNew(SBox)
+                   .WidthOverride(object_render_size)
+                   .HeightOverride(
+                       object_render_size)[SNew(SButton)
+                                               .ButtonStyle(&style)
+                                               .OnClicked_Lambda(handle_click)
+                                               .IsFocusable(false)]];
         // TODO .ToolTipText(FText::FromString(TEXT("TODO")))
     }
 }
