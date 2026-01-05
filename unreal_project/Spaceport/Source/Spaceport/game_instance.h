@@ -110,6 +110,12 @@ inline FText loc_text(FTextKey const & key)
     return Ugame_instance::get()->loc_text(key);
 }
 
+inline FText loc_text(std::string_view const & key)
+{
+    return Ugame_instance::get()->loc_text(
+        FString::ConstructFromPtrSize(key.data(), key.size()));
+}
+
 inline void quit_game()
 {
     auto const world = ::world();

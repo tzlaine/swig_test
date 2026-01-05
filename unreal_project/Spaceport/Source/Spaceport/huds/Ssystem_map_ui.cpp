@@ -6,6 +6,8 @@
 #include "model_util.hpp"
 #include "utility.hpp"
 #include "game_data_formatters.hpp"
+#include "game_data_metadata.hpp"
+#include "widgets/Sstyled_scroll_box.h"
 #include "widgets/Sstyled_text_block.h"
 #include <ui_defaults.h>
 
@@ -25,7 +27,8 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 int const object_render_size = 150; // TODO
-int const side_panel_width = 200;   // TODO
+int const side_panel_width = 450;   // TODO
+int const padding = 5;
 
 namespace {
     void speed_button_material(
@@ -60,6 +63,51 @@ namespace {
         bmas.style_.Pressed = bmas.pressed_brush_;
         bmas.style_.Disabled = bmas.disabled_brush_;
     }
+
+    FText scientific_notation(double x)
+    {
+        int const exp = (int)std::floor(std::log10(double(x)));
+        double const largest_pow_10_before = std::pow(10.0, exp);
+        double const mantissa = x / largest_pow_10_before;
+        FNumberFormattingOptions options;
+        options.MaximumFractionalDigits = 4;
+        return FText::Format(
+            ::loc_text(TEXT("scientific_notation")),
+            FText::AsNumber(mantissa, &options),
+            FText::AsNumber(exp));
+    }
+
+    template<typename T, typename Meta>
+    FText sidepanel_value(
+        T const & x, Meta meta, std::string_view prefix, bool percentage)
+    {
+        std::string field_name(prefix);
+        field_name += "value_";
+        if constexpr (std::is_enum_v<T>) {
+            FText x_as_text = ::loc_text(std::format("{}{}", field_name, x));
+            field_name += meta.name_;
+            return FText::Format(::loc_text(field_name), x_as_text);
+        } else if constexpr (std::is_floating_point_v<T>) {
+            field_name += meta.name_;
+            FNumberFormattingOptions options;
+            if (percentage) {
+                options.MaximumFractionalDigits = 1;
+                return FText::Format(
+                    ::loc_text(field_name), FText::AsPercent(x, &options));
+            } else if (10e6 < x) {
+                return FText::Format(
+                    ::loc_text(field_name), scientific_notation(x));
+            } else {
+                options.MaximumFractionalDigits = 2;
+                return FText::Format(
+                    ::loc_text(field_name), FText::AsNumber(x, &options));
+            }
+        } else {
+            static_assert(std::is_integral_v<T>);
+            field_name += meta.name_;
+            return FText::Format(::loc_text(field_name), FText::AsNumber(x));
+        }
+    }
 }
 
 void Ssystem_map_ui::Construct(FArguments const & args)
@@ -80,30 +128,33 @@ void Ssystem_map_ui::Construct(FArguments const & args)
     speed_button_material(
         materials().faster_speed_button_, faster_speed_style_);
 
+    int const speed_panel_height = 100;
+    int const planets_panel_height = object_render_size + padding;
+
     ChildSlot
         [SNew(SOverlay) +
          SOverlay::Slot()
              .HAlign(HAlign_Right)
              .VAlign(VAlign_Top)
-             .Padding(0, 5)
+             .Padding(0, padding)
                  [SNew(SBox)
                       .WidthOverride(side_panel_width)
-                      .HeightOverride(90)
+                      .HeightOverride(speed_panel_height)
                           [SNew(SVerticalBox) +
                            SVerticalBox::Slot()
                                .HAlign(HAlign_Center)
                                .VAlign(VAlign_Center)
-                               .Padding(0, 0, 0, 5)
-                               .FillHeight(
-                                   1)[SAssignNew(date_text_, Sstyled_text_block)
-                                          .Text(to_ftext(date_))
-                                          .Font(FSlateFontInfo(
-                                              ui_defaults().font_.Get(),
-                                              ui_defaults().font_size_ / 2))] +
+                               .Padding(0, 0, 0, padding)
+                               .FillHeight(1)
+                                   [SAssignNew(date_text_, Sstyled_text_block)
+                                        .Text(to_ftext(date_))
+                                        .Font(FSlateFontInfo(
+                                            ui_defaults().font_.Get(),
+                                            ui_defaults().font_size_ * 0.75))] +
                            SVerticalBox::Slot()
                                .VAlign(VAlign_Center)
-                               .Padding(0, 0, 0, 5)
-                               .FillHeight(2)
+                               .Padding(0, 0, 0, padding)
+                               .FillHeight(1)
                                    [SNew(SHorizontalBox) +
                                     SHorizontalBox::Slot().AutoWidth()
                                         [SAssignNew(
@@ -138,12 +189,23 @@ void Ssystem_map_ui::Construct(FArguments const & args)
                                                  return FReply::Handled();
                                              })
                                              .IsFocusable(false)]] +
-                           SVerticalBox ::Slot().FillHeight(
+                           SVerticalBox::Slot().FillHeight(
                                1)[SNew(SImage).Image(&speed_pip_brush_)]]] +
+
+         SOverlay::Slot()
+             .HAlign(HAlign_Right)
+             .VAlign(VAlign_Fill)
+             .Padding(
+                 0,
+                 speed_panel_height + padding,
+                 0,
+                 planets_panel_height +
+                     padding)[ASSIGN_STYLED_SCROLL_BOX(sidepanel_scrollbox_)] +
+
          SOverlay::Slot()
              .HAlign(HAlign_Fill)
              .VAlign(VAlign_Bottom)
-             .Padding(0, 10)[SAssignNew(hbox_, SHorizontalBox)]];
+             .Padding(0, padding)[SAssignNew(hbox_, SHorizontalBox)]];
 
     auto * gs = ::world()->GetGameState<Agame_state>();
     if (!gs)
@@ -175,7 +237,38 @@ void Ssystem_map_ui::rebuild(int system_id)
             pc->zoom_to_system_object(i);
         };
 
-        auto const handle_click = [planet_id, handle_double_click, this] {
+        auto const add_panel_detail = [this](
+                                          auto const & x,
+                                          auto meta,
+                                          std::string_view field_prefix,
+                                          bool percentage = false) {
+            std::string field_name(field_prefix);
+            field_name += meta.name_;
+            sidepanel_scrollbox_->AddSlot()
+                .HAlign(HAlign_Fill)
+                .Padding(0, padding, 0, padding)
+                    [SNew(SBox).WidthOverride(side_panel_width)
+                         [SNew(SHorizontalBox) +
+                          SHorizontalBox::Slot().FillWidth(
+                              50)[SNew(Sstyled_text_block)
+                                      .Text(::loc_text(field_name))
+                                      .Font(FSlateFontInfo(
+                                          ui_defaults().font_.Get(),
+                                          ui_defaults().font_size_ * 0.75))] +
+                          SHorizontalBox::Slot().FillWidth(
+                              50)[SNew(Sstyled_text_block)
+                                      .Text(sidepanel_value(
+                                          x.*meta.ptr_,
+                                          meta,
+                                          field_prefix,
+                                          percentage))
+                                      .Font(FSlateFontInfo(
+                                          ui_defaults().font_.Get(),
+                                          ui_defaults().font_size_ * 0.75))
+                                      .Justification(ETextJustify::Right)]]];
+        };
+
+        auto const handle_click = [=, this] {
             if (double_clicked(
                     prev_click_object_,
                     prev_click_time_,
@@ -188,15 +281,144 @@ void Ssystem_map_ui::rebuild(int system_id)
             auto * pc = player_controller();
             check(pc);
 
+            sidepanel_scrollbox_->ClearChildren();
             if (planet_id < 0) {
                 int const system_id = -planet_id;
                 auto system = ::system(pc->gs(), system_id);
                 check(system);
-                // TODO: Show info on system->star in the left-side panel.
+                add_panel_detail(
+                    system->star,
+                    detail::metadata<star_t>::star_class(),
+                    "star_details_");
+                add_panel_detail(
+                    system->star,
+                    detail::metadata<star_t>::temperature_k(),
+                    "star_details_");
+                add_panel_detail(
+                    system->star,
+                    detail::metadata<star_t>::solar_masses(),
+                    "star_details_");
+                add_panel_detail(
+                    system->star,
+                    detail::metadata<star_t>::solar_luminosities(),
+                    "star_details_");
+                add_panel_detail(
+                    system->star,
+                    detail::metadata<star_t>::solar_radii(),
+                    "star_details_");
             } else {
                 auto planet = ::planet(pc->gs(), planet_id);
                 check(planet);
-                // TODO: Show info on planet in the left-side panel.
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::planet_type(),
+                    "planet_details_");
+                if (planet->planet_type == planet_type_t::rocky) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::atmosphere_type(),
+                        "planet_details_");
+                }
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::mass_kg(),
+                    "planet_details_");
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::radius_km(),
+                    "planet_details_");
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::gravity_g(),
+                    "planet_details_");
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::orbit_au(),
+                    "planet_details_");
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::orbital_period_y(),
+                    "planet_details_");
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::axial_tilt_d(),
+                    "planet_details_");
+                add_panel_detail(
+                    *planet,
+                    detail::metadata<planet_t>::day_h(),
+                    "planet_details_");
+                if (planet->planet_type == planet_type_t::rocky) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::surface_temperature_k(),
+                        "planet_details_");
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::magnetosphere_strength(),
+                        "planet_details_");
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::o2_co2_suitability(),
+                        "planet_details_",
+                        true);
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::atmospheric_pressure(),
+                        "planet_details_");
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::ocean_coverage(),
+                        "planet_details_",
+                        true);
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::max_population(),
+                        "planet_details_");
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::growth_factor(),
+                        "planet_details_",
+                        true);
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<
+                            planet_t>::infrastructure_cost_factor(),
+                        "planet_details_");
+                }
+                if (0 <= planet->water) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::water(),
+                        "planet_details_");
+                }
+                if (0 <= planet->food) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::food(),
+                        "planet_details_");
+                }
+                if (0 <= planet->energy) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::energy(),
+                        "planet_details_");
+                }
+                if (0 <= planet->metal) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::metal(),
+                        "planet_details_");
+                }
+                if (0 <= planet->fuel) {
+                    add_panel_detail(
+                        *planet,
+                        detail::metadata<planet_t>::fuel(),
+                        "planet_details_");
+                }
+
+                // TODO: effects
+
+                // TODO: settlements
             }
 
             return FReply::Handled();
@@ -208,7 +430,7 @@ void Ssystem_map_ui::rebuild(int system_id)
         style.Pressed = rt->brush();
 
         hbox_->AddSlot().AutoWidth().Padding(
-            5,
+            padding,
             0)[SNew(SBox)
                    .WidthOverride(object_render_size)
                    .HeightOverride(

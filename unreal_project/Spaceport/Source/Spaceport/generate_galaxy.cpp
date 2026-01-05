@@ -290,6 +290,8 @@ bool generation::detail::generate_planet(
 
     planet.orbital_pos_r = float(random_unit_double() * 2 * std::numbers::pi);
 
+    planet.infrastructure_cost_factor = 1.0f;
+
     return growth_factor_considered_habitable < growth_factor;
 }
 

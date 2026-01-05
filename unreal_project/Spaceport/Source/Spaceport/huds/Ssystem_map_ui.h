@@ -14,6 +14,7 @@
 
 class SHorizontalBox;
 class SButton;
+class SScrollBox;
 class Sstyled_text_block;
 class UMaterialInstanceDynamic;
 
@@ -62,6 +63,8 @@ private:
     TSharedPtr<SButton> slower_speed_button_;
     TSharedPtr<SButton> play_pause_button_;
     TSharedPtr<SButton> faster_speed_button_;
+
+    TSharedPtr<SScrollBox> sidepanel_scrollbox_;
 
     std::chrono::time_point<std::chrono::system_clock> prev_click_time_;
     int prev_click_object_ = object_none;

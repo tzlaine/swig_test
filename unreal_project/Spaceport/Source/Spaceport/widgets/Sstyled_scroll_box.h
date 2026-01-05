@@ -9,3 +9,7 @@
 // and adding some does not work.
 #define STYLED_SCROLL_BOX()                                                    \
     SNew(SScrollBox).ScrollBarStyle(ui_defaults().ScrollBar_style_.Get())
+
+#define ASSIGN_STYLED_SCROLL_BOX(w)                                            \
+    SAssignNew(w, SScrollBox)                                                  \
+        .ScrollBarStyle(ui_defaults().ScrollBar_style_.Get())
