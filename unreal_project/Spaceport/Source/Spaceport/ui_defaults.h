@@ -8,6 +8,8 @@
 #include "ui_defaults.generated.h"
 
 
+class UDataTable;
+
 UCLASS(BlueprintType, Blueprintable)
 class Uui_defaults_t : public UObject
 {
@@ -49,6 +51,9 @@ public:
     TObjectPtr<USlateWidgetStyleAsset> TextBlock_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     FSliderStyle Slider_style_;
+
+    UPROPERTY(EditAnywhere, Category = "UI")
+    UDataTable * rich_text_styles_;
 
     // Brushes
     UPROPERTY(EditAnywhere, Category = "UI")
