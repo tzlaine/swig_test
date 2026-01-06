@@ -9,11 +9,10 @@
 #include "game_data_metadata.hpp"
 #include "widgets/Sstyled_scroll_box.h"
 #include "widgets/Sstyled_text_block.h"
+#include "widgets/Sstyled_rich_text_block.h"
 #include <ui_defaults.h>
 
 #include <SlateOptMacros.h>
-#include <Components/RichTextBlock.h>
-#include <Engine/DataTable.h>
 #include <Internationalization/Internationalization.h>
 #include <Materials/MaterialInterface.h>
 #include <Widgets/SBoxPanel.h>
@@ -24,7 +23,6 @@
 #include <Widgets/Images/SImage.h>
 #include <Widgets/Layout/SConstraintCanvas.h>
 #include <Widgets/Layout/SScaleBox.h>
-#include <Widgets/Text/SRichTextBlock.h>
 
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -67,36 +65,6 @@ namespace {
         bmas.style_.Disabled = bmas.disabled_brush_;
     }
 
-    TSharedPtr<FSlateStyleSet> make_rich_text_styles()
-    {
-        auto const & defaults = ui_defaults();
-        check(defaults.rich_text_styles_);
-        TSharedPtr<FSlateStyleSet> retval(
-            new FSlateStyleSet("rich_text_styles"));
-        for (auto it =
-                 defaults.rich_text_styles_->GetRowMap().CreateConstIterator();
-             it;
-             ++it) {
-            if (auto const * row =
-                    reinterpret_cast<FRichTextStyleRow const *>(it.Value())) {
-                retval->Set(it.Key(), row->TextStyle);
-            }
-        }
-        return retval;
-    }
-
-    FSlateStyleSet const * get_rich_text_styles()
-    {
-        static TSharedPtr<FSlateStyleSet> retval = make_rich_text_styles();
-        return retval.Get();
-    }
-
-    FText wrap_default_style(FText const & text)
-    {
-        static const FText wrapper = FText::FromString(TEXT("<Default>{0}</>"));
-        return FText::Format(wrapper, text);
-    }
-
     FText scientific_notation(double x)
     {
         int const exp = (int)std::floor(std::log10(double(x)));
@@ -119,28 +87,26 @@ namespace {
         if constexpr (std::is_enum_v<T>) {
             FText x_as_text = ::loc_text(std::format("{}{}", field_name, x));
             field_name += meta.name_;
-            return wrap_default_style(
-                FText::Format(::loc_text(field_name), x_as_text));
+            return FText::Format(::loc_text(field_name), x_as_text);
         } else if constexpr (std::is_floating_point_v<T>) {
             field_name += meta.name_;
             FNumberFormattingOptions options;
             if (percentage) {
                 options.MaximumFractionalDigits = 1;
-                return wrap_default_style(FText::Format(
-                    ::loc_text(field_name), FText::AsPercent(x, &options)));
+                return FText::Format(
+                    ::loc_text(field_name), FText::AsPercent(x, &options));
             } else if (10e6 < x) {
-                return wrap_default_style(FText::Format(
-                    ::loc_text(field_name), scientific_notation(x)));
+                return FText::Format(
+                    ::loc_text(field_name), scientific_notation(x));
             } else {
                 options.MaximumFractionalDigits = 2;
-                return wrap_default_style(FText::Format(
-                    ::loc_text(field_name), FText::AsNumber(x, &options)));
+                return FText::Format(
+                    ::loc_text(field_name), FText::AsNumber(x, &options));
             }
         } else {
             static_assert(std::is_integral_v<T>);
             field_name += meta.name_;
-            return wrap_default_style(
-                FText::Format(::loc_text(field_name), FText::AsNumber(x)));
+            return FText::Format(::loc_text(field_name), FText::AsNumber(x));
         }
     }
 }
@@ -284,19 +250,16 @@ void Ssystem_map_ui::rebuild(int system_id)
                 .Padding(0, padding, 0, padding)
                     [SNew(SBox).WidthOverride(side_panel_width)
                          [SNew(SHorizontalBox) +
-                          SHorizontalBox::Slot().FillWidth(50)
-                              [SNew(SRichTextBlock)
-                                   .Text(wrap_default_style(
-                                       ::loc_text(field_name)))
-                                   .DecoratorStyleSet(get_rich_text_styles())] +
                           SHorizontalBox::Slot().FillWidth(
-                              50)[SNew(SRichTextBlock)
+                              50)[SNew(Sstyled_rich_text_block)
+                                      .Text(::loc_text(field_name))] +
+                          SHorizontalBox::Slot().FillWidth(
+                              50)[SNew(Sstyled_rich_text_block)
                                       .Text(sidepanel_value(
                                           x.*meta.ptr_,
                                           meta,
                                           field_prefix,
                                           percentage))
-                                      .DecoratorStyleSet(get_rich_text_styles())
                                       .Justification(ETextJustify::Right)]]];
         };
 

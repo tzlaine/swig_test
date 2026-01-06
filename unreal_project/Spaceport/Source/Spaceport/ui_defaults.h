@@ -27,6 +27,8 @@ public:
     TObjectPtr<UFont> font_;
     UPROPERTY(EditAnywhere, Category = "UI")
     int32 font_size_;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    int32 rich_text_font_size_;
 
     // Slate styles
     UPROPERTY(EditAnywhere, Category = "UI")
@@ -51,7 +53,8 @@ public:
     TObjectPtr<USlateWidgetStyleAsset> TextBlock_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     FSliderStyle Slider_style_;
-
+    UPROPERTY(EditAnywhere, Category = "UI")
+    TObjectPtr<USlateWidgetStyleAsset> RichTextBlock_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     UDataTable * rich_text_styles_;
 
