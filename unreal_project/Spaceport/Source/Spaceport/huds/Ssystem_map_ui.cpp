@@ -360,25 +360,30 @@ void Ssystem_map_ui::rebuild(int system_id)
                         *planet,
                         detail::metadata<planet_t>::atmospheric_pressure(),
                         "planet_details_");
-                    add_panel_detail(
-                        *planet,
-                        detail::metadata<planet_t>::ocean_coverage(),
-                        "planet_details_",
-                        true);
-                    add_panel_detail(
-                        *planet,
-                        detail::metadata<planet_t>::max_population(),
-                        "planet_details_");
-                    add_panel_detail(
-                        *planet,
-                        detail::metadata<planet_t>::growth_factor(),
-                        "planet_details_",
-                        true);
-                    add_panel_detail(
-                        *planet,
-                        detail::metadata<
-                            planet_t>::infrastructure_cost_factor(),
-                        "planet_details_");
+                    if (planet->atmosphere_type ==
+                        atmosphere_type_t::oxidized_type_b) {
+                        add_panel_detail(
+                            *planet,
+                            detail::metadata<planet_t>::ocean_coverage(),
+                            "planet_details_",
+                            true);
+                    }
+                    if (growth_uninhabitable < planet->growth_factor) {
+                        add_panel_detail(
+                            *planet,
+                            detail::metadata<planet_t>::max_population(),
+                            "planet_details_");
+                        add_panel_detail(
+                            *planet,
+                            detail::metadata<planet_t>::growth_factor(),
+                            "planet_details_",
+                            true);
+                        add_panel_detail(
+                            *planet,
+                            detail::metadata<
+                                planet_t>::infrastructure_cost_factor(),
+                            "planet_details_");
+                    }
                 }
                 if (0 <= planet->water) {
                     add_panel_detail(
