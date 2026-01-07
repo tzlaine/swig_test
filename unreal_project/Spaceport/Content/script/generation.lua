@@ -463,6 +463,12 @@ function create_starting_nation(gs, nation_id, home_planet, planet_id)
    nation.systems_present_in:add(home_planet.system_id)
    nation.systems_visited:add(home_planet.system_id)
    local system = planet_system(gs, home_planet)
+   local system_name_index = random_int(1, #system_names)
+   while system_names[system_name_index] == '' do
+      system_name_index = random_int(1, #system_names)
+   end
+   system.name = name_t.new(system_names[system_name_index])
+   system_names[system_name_index] = ''
    for i = system.first_planet, system.last_planet - 1 do
       nation.planets_surveyed:add(i)
    end

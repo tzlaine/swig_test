@@ -163,6 +163,7 @@ default_game_start_params.ai_opponents = to_integer(
     detail::lua_register_functions(retval);
 
     retval.script_file(script_path("effects.lua"));
+    retval.script_file(script_path("system_names.lua"));
     retval.script_file(script_path("generation.lua"));
 
     return retval;
