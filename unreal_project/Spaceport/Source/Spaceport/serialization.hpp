@@ -625,7 +625,7 @@ namespace detail {
         int nation_id,
         planet_t const & x,
         visibility_kind vis,
-        int,
+        int planet_id,
         ostream_tarray_facade * os);
 
     void serialize_for_client(

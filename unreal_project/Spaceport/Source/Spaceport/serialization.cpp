@@ -162,18 +162,12 @@ namespace detail {
         int nation_id,
         planet_t const & x,
         visibility_kind vis,
-        int,
+        int planet_id,
         ostream_tarray_facade * os)
     {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            std::array<int, 8> fields_to_elide = {
-                {metadata<planet_t>::water().index_,
-                 metadata<planet_t>::food().index_,
-                 metadata<planet_t>::energy().index_,
-                 metadata<planet_t>::metal().index_,
-                 metadata<planet_t>::fuel().index_}};
             auto const & nation = gs.nations[nation_id];
 
             planet_t copy = x;
@@ -197,8 +191,19 @@ namespace detail {
                 [](auto const & e) { return e.id; });
             copy.settlement_ids.erase(ids_last, copy.settlement_ids.end());
 
-            serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                copy, 0, os, fields_to_elide);
+            if (std::ranges::binary_search(nation.planets_surveyed, planet_id)) {
+                serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
+                    copy, 0, os);
+            } else {
+                std::array<int, 5> fields_to_elide = {
+                    {metadata<planet_t>::water().index_,
+                     metadata<planet_t>::food().index_,
+                     metadata<planet_t>::energy().index_,
+                     metadata<planet_t>::metal().index_,
+                     metadata<planet_t>::fuel().index_}};
+                serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
+                    copy, 0, os, fields_to_elide);
+            }
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }
