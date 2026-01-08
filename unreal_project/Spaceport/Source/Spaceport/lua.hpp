@@ -100,6 +100,8 @@ auto call_lua_func(std::string_view name, Args && ...args)
             TEXT("Call to Lua function '%s' failed; error: '%s'"),
             *FString(UTF8_TO_TCHAR(name_.c_str())),
             *FString(UTF8_TO_TCHAR(err.what())));
+        if (GLog)
+            GLog->Flush();
 #endif
     }
     return result;
