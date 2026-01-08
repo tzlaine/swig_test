@@ -66,7 +66,7 @@ void Ssave_load_dlg::Construct(FArguments const & args)
                     if (auto * hud = ::hud())
                         hud->remove_widget(*this);
                     if (auto * pc = player_controller())
-                        pc->server_load_game(filename_);
+                        pc->load_game(filename_);
                 },
                 TEXT("confirm_load"),
                 TEXT("unsaved_progress_lost"),

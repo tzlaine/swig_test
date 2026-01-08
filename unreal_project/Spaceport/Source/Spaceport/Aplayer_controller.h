@@ -59,6 +59,7 @@ public:
     void client_galaxy_generation_update(int percent_update);
     void client_galaxy_generation_update_Implementation(int percent_update);
 
+    void load_game(FString const & filename);
     UFUNCTION(Server, Reliable, WithValidation)
     void server_load_game(FString const & filename);
     bool server_load_game_Validate(FString const & filename);
@@ -152,6 +153,7 @@ private:
         map_pawn_kind kind);
     void select_in_box(map_pawn_kind selecting, deselect deselect_curr);
     void double_select(Amap_pawn_base * pawn);
+    void tear_down_game();
 
     int nation_id_ = nation_none;
     std::vector<Amap_pawn_base *> curr_hovers_;

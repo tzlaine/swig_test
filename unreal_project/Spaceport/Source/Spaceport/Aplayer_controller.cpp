@@ -698,6 +698,12 @@ void Aplayer_controller::client_galaxy_generation_update_Implementation(
         hud->generating_percent_update(percent_update);
 }
 
+void Aplayer_controller::load_game(FString const & filename)
+{
+    tear_down_game();
+    server_load_game(filename);
+}
+
 bool Aplayer_controller::server_load_game_Validate(FString const & filename)
 {
     return hosting_or_sp();
@@ -1157,6 +1163,10 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
             if (p)
                 p->Destroy();
         }
+        for (auto p : system_fleets_) {
+            if (p)
+                p->Destroy();
+        }
 
         double const system_map_kms_per_world_unit = 500; // TODO -> constants
 
@@ -1281,4 +1291,35 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
     } else {
         UE_LOG(LogTemp, Warning, TEXT("Double click!")); // TODO
     }
+}
+
+void Aplayer_controller::tear_down_game()
+{
+    dehover_all();
+    deselect_all();
+
+    if (system_star_)
+        system_star_->Destroy();
+    for (auto p : system_planets_) {
+        if (p)
+            p->Destroy();
+    }
+    system_planets_.Empty();
+    for (auto p : system_fleets_) {
+        if (p)
+            p->Destroy();
+    }
+    system_fleets_.Empty();
+    system_actor_renders_.Empty();
+
+    system_id_ = system_none;
+    system_map_zoom_progress_ = -1.0f;
+    system_map_zoom_initial_ = system_map_zoom_final_ = {};
+    camera_follow_system_object_ = nullptr;
+
+    auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
+    check(camera_pawn);
+    camera_pawn->camera_location(FVector(0, 0, just_inside_system_map), false);
+
+    map_transition_ = std::make_shared<map_transition_state>();
 }

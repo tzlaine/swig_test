@@ -207,10 +207,11 @@ void Agame_mode::load_and_start_newest_game()
 
 void Agame_mode::load_and_start_game(FString const & filename)
 {
+    set_play_state(GameState, play_state::loading);
+    tear_down_game();
     auto f = to_path(filename);
     f += TEXT(".sav");
     Ugame_instance::get()->game_to_load(save_dir_path() / f);
-    tear_down_game();
     ready_for_game();
 }
 

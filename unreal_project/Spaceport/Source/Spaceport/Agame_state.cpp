@@ -12,7 +12,7 @@ namespace {
         FString name_;
         std::function<void(play_state)> f_;
     };
-    static_assert((int)play_state::ended + 1 == 7);
+    static_assert((int)play_state::ended + 1 == 8);
     state_transtion const remove_all{
         TEXT("remove_all_widgets"), [](play_state ps) {
             if (auto * hud = ::hud()) {
@@ -38,15 +38,14 @@ namespace {
                                      }};
     state_transtion const show_generating{
         TEXT("show_generating"), [](play_state ps) {
-            if (auto * hud = ::hud()) {
+            if (auto * hud = ::hud())
                 hud->show_generating_galaxy();
-            }
         }};
 
     // Anything that needs to be done -- especially to the UI -- on a
     // play_state transition should go in the table below.  Note that
     // transitions like start_menu -> setup and setup -> generating do not,
-    // because each simply pushes a modal (UCommonActivatableWidget) widget
+    // because each simply pushes a modal widget (a UCommonActivatableWidget)
     // onto the stack, hiding the previous widget(s).
 
     // clang-format off
@@ -54,14 +53,15 @@ namespace {
         std::array<state_transtion, (int)play_state::ended + 1>,
         (int)play_state::ended + 1>
         g_state_transitions = {{
-// from:       to:  start_menu        setup         waiting generating         playing       paused        ended
-/* start_menu  */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
-/* setup       */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
-/* waiting_... */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
-/* generating  */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
-/* playing     */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {notify},     {notify},     {}}},
-/* paused      */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {notify},     {notify},     {}}},
-/* ended       */ {{{show_main_menu}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}}
+// from:       to:  start_menu        loading,      setup         waiting generating         playing       paused        ended
+/* start_menu  */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* loading     */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* setup       */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* waiting_... */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* generating  */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}},
+/* playing     */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {notify},     {notify},     {}}},
+/* paused      */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {notify},     {notify},     {}}},
+/* ended       */ {{{show_main_menu}, {remove_all}, {show_setup}, {},     {show_generating}, {remove_all}, {remove_all}, {}}}
         }};
     // clang-format on
 }
