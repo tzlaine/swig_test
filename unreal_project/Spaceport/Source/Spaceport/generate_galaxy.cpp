@@ -82,6 +82,11 @@ bool generation::detail::generate_planet(
     std::uniform_int_distribution<int> resource_dist(
         min_resource_value, max_resource_value);
 
+    // TODO: The probability of a rocky planet past the first gas/ice giant
+    // should be nearly zero.
+
+    // TODO: High-temp rocky planets with a very low atmospheric should not be
+    // a thing.
 
     // Arbitrary line between the gas giants and the ice giants, taken from
     // the boundary between the Saturn and Uranus orbits, and scaled by solar
