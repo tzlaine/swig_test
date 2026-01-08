@@ -117,15 +117,20 @@ void Smain_menu::rebuild()
 
     vbox_->AddSlot().FillHeight(1);
 
+    auto * pc = player_controller();
+    bool const hosting_or_sp = pc ? pc->hosting_or_sp() : true;
+
     if (in_game_) {
+        TSharedPtr<Sstyled_button> button;
         vbox_->AddSlot().AutoHeight()[
-            SNew(Sstyled_button)
+            SAssignNew(button, Sstyled_button)
             .Text(loc_text(TEXT("save_game")))
             .OnClicked_Lambda([] {
                 if (auto * hud = ::hud())
                     hud->show_save_load_dlg(true);
                 return FReply::Handled();
             })];
+        button->SetEnabled(hosting_or_sp);
     } else {
         vbox_->AddSlot().AutoHeight()[
             SNew(Sstyled_button)
@@ -147,6 +152,9 @@ void Smain_menu::rebuild()
                 hud->show_save_load_dlg(false);
             return FReply::Handled();
         })];
+
+    if (in_game_)
+        load_game_bn_->SetEnabled(hosting_or_sp);
 
     vbox_->AddSlot().FillHeight(1);
 

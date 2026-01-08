@@ -122,6 +122,7 @@ public:
     client_game_state const & gs() const { return client_gs_; }
     int nation_id() const { return nation_id_; }
     std::span<Arender_target const * const> system_map_object_renders() const;
+    bool hosting_or_sp() const;
 
     Uui_defaults_t const & ui_defaults();
     Umaterials_t const & materials();
@@ -151,7 +152,6 @@ private:
         map_pawn_kind kind);
     void select_in_box(map_pawn_kind selecting, deselect deselect_curr);
     void double_select(Amap_pawn_base * pawn);
-    bool hosting_or_sp() const;
 
     int nation_id_ = nation_none;
     std::vector<Amap_pawn_base *> curr_hovers_;

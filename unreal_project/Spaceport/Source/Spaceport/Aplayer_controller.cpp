@@ -925,6 +925,12 @@ Aplayer_controller::system_map_object_renders() const
         first, system_actor_renders_.Num());
 }
 
+bool Aplayer_controller::hosting_or_sp() const
+{
+    auto * ps = cast(PlayerState);
+    return ps ? ps->player_id() == 0 : true;
+}
+
 Uui_defaults_t const & Aplayer_controller::ui_defaults()
 {
     if (!ui_defaults_)
@@ -1275,9 +1281,4 @@ void Aplayer_controller::double_select(Amap_pawn_base * pawn)
     } else {
         UE_LOG(LogTemp, Warning, TEXT("Double click!")); // TODO
     }
-}
-
-bool Aplayer_controller::hosting_or_sp() const
-{
-    return cast(PlayerState)->player_id() == 0;
 }
