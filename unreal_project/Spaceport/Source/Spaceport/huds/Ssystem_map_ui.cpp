@@ -276,11 +276,28 @@ void Ssystem_map_ui::rebuild(int system_id)
             auto * pc = player_controller();
             check(pc);
 
+            auto system = ::system(pc->gs(), system_id_);
+            check(system);
+
             sidepanel_scrollbox_->ClearChildren();
+
+            std::string object_name = system->name.c_str();
+            if (0 < i) {
+                object_name += ' ';
+                object_name += roman_number(i);
+            }
+            sidepanel_scrollbox_->AddSlot()
+                .HAlign(HAlign_Fill)
+                .Padding(0, padding, 0, padding)[SNew(SBox).WidthOverride(
+                    side_panel_width)[SNew(Sstyled_rich_text_block)
+                                          .Text(FText::FromString(
+                                              FString(object_name.c_str())))
+                                          .Justification(
+                                              ETextJustify::Center)]];
+
             if (planet_id < 0) {
-                int const system_id = -planet_id;
-                auto system = ::system(pc->gs(), system_id);
-                check(system);
+                sidepanel_scrollbox_->AddSlot().Padding(0, 0, 0, 2 * padding);
+
                 add_panel_detail(
                     system->star,
                     detail::metadata<star_t>::star_class(),
@@ -304,16 +321,32 @@ void Ssystem_map_ui::rebuild(int system_id)
             } else {
                 auto planet = ::planet(pc->gs(), planet_id);
                 check(planet);
-                add_panel_detail(
-                    *planet,
-                    detail::metadata<planet_t>::planet_type(),
-                    "planet_details_");
-                if (planet->planet_type == planet_type_t::rocky) {
-                    add_panel_detail(
-                        *planet,
+
+                FText short_desc = FText::Format(
+                    ::loc_text(
+                        planet->planet_type == planet_type_t::rocky
+                            ? "sidepanel_rocky_planet_short_desc"
+                            : "sidepanel_nonrocky_planet_short_desc"),
+                    sidepanel_value(
+                        planet->planet_type,
+                        detail::metadata<planet_t>::planet_type(),
+                        "planet_details_",
+                        false),
+                    sidepanel_value(
+                        planet->atmosphere_type,
                         detail::metadata<planet_t>::atmosphere_type(),
-                        "planet_details_");
-                }
+                        "planet_details_",
+                        false));
+                sidepanel_scrollbox_->AddSlot()
+                    .HAlign(HAlign_Fill)
+                    .Padding(0, padding, 0, padding)[SNew(SBox).WidthOverride(
+                        side_panel_width)[SNew(Sstyled_rich_text_block)
+                                              .Text(std::move(short_desc))
+                                              .Justification(
+                                                  ETextJustify::Center)]];
+
+                sidepanel_scrollbox_->AddSlot().Padding(0, 0, 0, 2 * padding);
+
                 add_panel_detail(
                     *planet,
                     detail::metadata<planet_t>::mass_kg(),

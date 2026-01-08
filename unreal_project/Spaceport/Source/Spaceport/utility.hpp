@@ -381,3 +381,32 @@ inline float seconds_per_day_tick(int speed)
         return min_time_between_day_ticks_s;
     return 1.0f / speed;
 }
+
+inline std::string roman_number(int num)
+{
+    if (num < 1 || 3999 < num)
+        return "SOME_ROMAN_NUMBER";
+    using namespace std::literals;
+    std::pair<int, std::string_view> const all_numerals[] = {
+        {1000, "M"sv},
+        {900, "CM"sv},
+        {500, "D"sv},
+        {400, "CD"sv},
+        {100, "C"sv},
+        {90, "XC"sv},
+        {50, "L"sv},
+        {40, "XL"sv},
+        {10, "X"sv},
+        {9, "IX"sv},
+        {5, "V"sv},
+        {4, "IV"sv},
+        {1, "I"sv}};
+    std::string retval;
+    for (auto [value, numerals] : all_numerals) {
+        while (value <= num) {
+            retval += numerals;
+            num -= value;
+        }
+    }
+    return retval;
+}
