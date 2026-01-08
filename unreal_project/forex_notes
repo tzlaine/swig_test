@@ -197,6 +197,48 @@ Other:
 * Infrastructure is a thing too.  You need to improve it to get the full value of resource generation, research, etc.  Infrastructure starts at 0 on a new colony, and can be built up over time by spending money and other resources.  Max infra is limited by population.
 
 
+* The amount of available troops is dependent on the fighting-age population,
+  which is basically the working-age population.  Base it loosely on the
+  typical numbers from today:
+
+  Metric              Typical Value (2026)    Description
+  Working-Age Share   ~65%                    People aged 15–64.
+  Youth Share         ~24-25%                 People aged 0–14.
+  Elderly Share       ~10-11%                 People aged 65 and older.
+
+  There should be some kind of settlement troop mobilization policy setting
+  (like in HOI4), which will affect the number of available troops, and in
+  turn affect the number of pops available to work on other things.
+
+  The rations above should be different in a large, developed settlement,
+  vs. a fledgling colony.
+
+* Happiness/rebelliousness of a settlement should in part depend on how much
+  funding they receive per capita vs. other settlements, their mobilization
+  level vs. other settlements, etc.
+
+* Making changes to policy should cost political points.  PPs should be
+  generated indpendently for each settlement.  If you run out of PP in
+  settlement A, you cannot make changes there, even if the capitol is swimming
+  in PPs.  You should not be able to increase the amount of PPs through
+  military action (sending troops and/or fleets), but you should be able to
+  reduce the PP costs for taking actions by doing so.  The tradeoff is that
+  this intimidation-based discount will cause future PP generation to
+  decrease.  The mere presence of troops/ships is not enough; there must be a
+  positive action taken to get the discount and the reduced PPs aftwerward.
+
+* The cost in PPs of making a change should scale with the size of the change.
+  If you want to make a certain choice when a decision event comes up, or if
+  you want to change a settlement's governmental policy, you shoud pay more
+  than the base PP cost if that is not how things are typically done, or if
+  that is not in aligment with other current policies.  E.g., if a decision
+  would increase militarism (as in the militarism vs. pacifism scale), is
+  should be splightly cheaper in terms of PP if you are already militaristic,
+  and should be more PP-expensive if you are on the pacifist side.  The
+  farther you are from the center of the militarism vs. pacifism scale, the
+  greater the effect.
+
+
 Pinning:
 ========
 
