@@ -141,7 +141,7 @@ Resources, maintenance, industry, and tech:
 
 * Resources are produced by worlds (planets above T2 development).  The amount produced is proportional to the development above T2.  (TODO: Consider sigmoid dev growth, where the top of the curve is the max pop based on that planet's livable area.  Maybe high rate straight from the beginning, with a taper at the top/to the right).
 * Resources are split among tech, industry, and maintenance.  If the total amount of resources available is R, Rt + Ri + Rm = R.  (TODO: Consider allowing resources to be banked, lent out, given to, and/or borrowed from, other nations, or internally within one's own economy.  Lending and borrowing imply interest.  Inability to repay loans may result in bankruptcy.)
-* Maintenance must be paid for ships, divisions, mobile bases, and outposts.  If maintenance is M%, the combat factors for an affected unit are scaled by M%.  TODO: Consider allowing bases to be "turned off".  TODO: Consider an N-turn lag between increasing maintenacne/turning maintenance back on and full increase of combat strength.
+* Maintenance must be paid for ships, divisions, mobile bases, and outposts.  If maintenance is M%, the combat factors for an affected unit are scaled by M%.  TODO: Consider allowing bases to be "turned off".  TODO: Consider an N-turn lag between increasing maintenance/turning maintenance back on and full increase of combat strength.
 * Maintenance must be paid for colonies before they reach T1 development.
 * Industry is production of ships and other units.  To build everything in the build schedule, the right amount of resources must be supplied.  Provide less, and everything cannot be built.  Supply more if you want to over-build.
 * Resources may also be spent to upgrade the shipyard.  This is effectively an increase to the build schedule.
@@ -168,7 +168,7 @@ TODO: Consider having some properties derived from the tech levels of more than 
 
 There are 50 tech levels for each area.  Each tech has a schedule of what techs are available at what level.  E.g. ship armor 1 at Construction 3, ship armor 2 at Construction 6, etc.
 
-It should be very easy to fall behind on tech, but hard to speed up tech progress.  Tech progress is based on sqrt(total pop in areas above a threshold I1 of infrastructure) .  This implies a certain amount of resource spending X.  Spending Y > X will increas the speed of progress to X * sqrt(Y / X), not Y.
+It should be very easy to fall behind on tech, but hard to speed up tech progress.  Tech progress is based on sqrt(total pop in areas above a threshold I1 of infrastructure) .  This implies a certain amount of resource spending X.  Spending Y > X will increase the speed of progress to X * sqrt(Y / X), not Y.
 
 TODO: It would be nice to be able to put fewer resources into one or more of these, and thus to "specialize" in the other areas.  E.g. if you have tons of crew power, and are ahead on research, why not just use the resources for Automation research on something else -- like more ships?
 
@@ -191,7 +191,7 @@ Other:
 * Colony expansion increases national unity.
 * Attacks on a colony in times of peace reduce national unity.
 * Distant planets (colonies and worlds) have lower nationaly unity than ones near the home hex.  This changes over time, as the notion of what a "core" territory expands.  (TODO: Should this world sort of like supply, but measured among worlds -- that is, the effect is not in play aas long as you can trace N-hex hops from loyal world to loyal world?)
-* Recently conquered territory have low national unity.  Garrisons and fleets reduce this.  This fades over time.
+* Recently conquered territories have low national unity.  Garrisons and fleets reduce this.  This fades over time.
 * Worlds and provinces can secede, and worlds can do so independently of their containing province.  When a world or province drops below its loyalty threshold, it will secede.  The secession of a world will influence the loyalty of planets within the same province, and the secession of a province will influence the loyalty of neighboring provinces.  This may result in a slow-motion secession of a large section of the empire.
 
 * Infrastructure is a thing too.  You need to improve it to get the full value of resource generation, research, etc.  Infrastructure starts at 0 on a new colony, and can be built up over time by spending money and other resources.  Max infra is limited by population.
@@ -237,6 +237,66 @@ Other:
   and should be more PP-expensive if you are on the pacifist side.  The
   farther you are from the center of the militarism vs. pacifism scale, the
   greater the effect.
+
+* Making things costs money, resources, and pops to make (where the pops are
+  doing the work, not being consumed).  Things you might make this way are:
+  ships and bases, and other space assets; upgrading infrastructure;
+  maintaining infrastructure; repairing infrastructure; rounds, missiles, and
+  fighters for your fleets and bases to use; fuel (refining it -- what you
+  pull out of the ground is not usable directly); and supplies.  It also takes
+  money, resources, and pops to gather resources themselves.  Research is a
+  similar story; it costs money resurces and pops to do research.  Assigning
+  all your pops is the main way you "spend" on making things/gathering
+  resources/doing research.  Switching a pop from one task to another should
+  incur a penalty on that pop's output that decays over time.
+
+* There is a natural max number of pops needed/useful at doing a given
+  activity.  Any less, and the output goes down linearly.  Any more, and the
+  output goes up sublinearly, with a substantial penalty even for the first
+  pop.  When all activities are fully staffed, the leftover pops will want to
+  migrate to another settlement.  The amount of pops below refer to the pops
+  in a certain settlement, not the whole nation.  Also, there is an implicit
+  scale factor k for each of these, as game balance dictates.
+
+  - The natural max for space asset construction scales linearly with shipyard
+    capacity.
+
+  - The natural max for upgrading infrastructure is sqrt(infra).
+
+  - The natural max for maintaining infrastructure is infra.  This one is
+    special, in that dipping below it causes damages to infrastructure.
+
+  - The natural max for repairing infrastructure is sqrt(damage level), same
+    as upgrading.
+
+  - The natural max for a given resource R with a rating in [0, 100] is 100 /
+    rating(R) / infra, *per rating point*, up to rating(R).  That is, it's
+    inverse-linearly expensive to get a single point of R out of the ground,
+    based in rating(R).  Note that this simplifies to just 100 / infra.
+
+  - The natural max for manufacturing space consumables, refining fuel, and
+    manufacturing supply is sqrt(infra).
+
+  - The natural max for research is sqrt(pops) * ifra.
+
+  - Population is also required for crewing space assets (including
+    transports) and for ground forces (garrisons).
+
+  - TODO: Should pops be assigned to espionage and intelligence?
+
+* Resources, space consumables (rounds, missiles, fighters), fuel, and
+  supplies are all stockpiled when made.  The stockpile capacity of each
+  planet scales with pop * infra.  Stockpiles can be moved among settlements
+  via transports.  The amount that can be moved in/out is limited by
+  infrastructure and the presence/capacity of orbital bases at the
+  settlement's planet.
+
+* Note that idle pops want to migrate, and where better to migrate to than
+  that settlement right over there?  So, some pops might want to stay
+  on-world, and go to another nation's settlement (especially if they are
+  culturally and nationally similar, and on good terms).  This may cause
+  friction if they are not 100% embraced by their new neighbors -- this should
+  drive certain kinds of events.
 
 
 Pinning:
