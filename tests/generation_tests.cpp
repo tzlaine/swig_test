@@ -184,7 +184,7 @@ TEST(generation_tests, growth_factor_and_effects)
         .food = 100,
         .energy = 100,
         .metal = 100,
-        .fuel = 100,
+        .fuel_minerals = 100,
         .max_population = 100};
 
     {
@@ -783,7 +783,7 @@ TEST(generation_tests, growth_factor_and_effects)
         .food = 0,
         .energy = 3,
         .metal = 3,
-        .fuel = 3,
+        .fuel_minerals = 3,
         .max_population = 0};
     {
         planet_t planet = a_gas_giant;
@@ -815,7 +815,7 @@ TEST(generation_tests, growth_factor_and_effects)
         .food = 0,
         .energy = 3,
         .metal = 3,
-        .fuel = 3,
+        .fuel_minerals = 3,
         .max_population = 0};
     {
         planet_t planet = an_ice_giant;
@@ -1039,8 +1039,8 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.energy, 100);
         EXPECT_GE(planet.metal, 0);
         EXPECT_LE(planet.metal, 100);
-        EXPECT_GE(planet.fuel, 0);
-        EXPECT_LE(planet.fuel, 100);
+        EXPECT_GE(planet.fuel_minerals, 0);
+        EXPECT_LE(planet.fuel_minerals, 100);
     }
 
     {
@@ -1086,8 +1086,8 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.energy, 100);
         EXPECT_GE(planet.metal, 0);
         EXPECT_LE(planet.metal, 100);
-        EXPECT_GE(planet.fuel, 0);
-        EXPECT_LE(planet.fuel, 100);
+        EXPECT_GE(planet.fuel_minerals, 0);
+        EXPECT_LE(planet.fuel_minerals, 100);
     }
 
     {
@@ -1130,8 +1130,8 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.energy, 10);
         EXPECT_GE(planet.metal, 0);
         EXPECT_LE(planet.metal, 10);
-        EXPECT_GE(planet.fuel, 0);
-        EXPECT_LE(planet.fuel, 10);
+        EXPECT_GE(planet.fuel_minerals, 0);
+        EXPECT_LE(planet.fuel_minerals, 10);
     }
 
     {
@@ -1174,8 +1174,8 @@ TEST(generation_tests, generate_planet)
         EXPECT_LE(planet.energy, 10);
         EXPECT_GE(planet.metal, 0);
         EXPECT_LE(planet.metal, 10);
-        EXPECT_GE(planet.fuel, 0);
-        EXPECT_LE(planet.fuel, 10);
+        EXPECT_GE(planet.fuel_minerals, 0);
+        EXPECT_LE(planet.fuel_minerals, 10);
     }
 }
 
@@ -1242,11 +1242,11 @@ TEST(generation_tests, generate_galaxy)
         scored_planets(gs, f);
     for (int i = 0; i < 5; ++i) {
         std::cout << std::format(
-            "score: {} max_pop: {} metal: {} fuel: {} growth: {}\n\n",
+            "score: {} max_pop: {} metal: {} fuel_minerals: {} growth: {}\n\n",
             all_planets_scored[i].score_,
             all_planets_scored[i].planet_->max_population,
             all_planets_scored[i].planet_->metal,
-            all_planets_scored[i].planet_->fuel,
+            all_planets_scored[i].planet_->fuel_minerals,
             all_planets_scored[i].planet_->growth_factor);
     }
 
@@ -1256,11 +1256,11 @@ TEST(generation_tests, generate_galaxy)
         generation::detail::find_starting_locations(gs, 5);
     for (auto c : top_n) {
         std::cout << std::format(
-            "score: {} max_pop: {} metal: {} fuel: {} growth: {}\n\n",
+            "score: {} max_pop: {} metal: {} fuel_minerals: {} growth: {}\n\n",
             c.score_,
             c.planet_->max_population,
             c.planet_->metal,
-            c.planet_->fuel,
+            c.planet_->fuel_minerals,
             c.planet_->growth_factor);
     }
 }

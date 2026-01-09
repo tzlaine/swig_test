@@ -442,10 +442,10 @@ void Ssystem_map_ui::rebuild(int system_id)
                         detail::metadata<planet_t>::metal(),
                         "planet_details_");
                 }
-                if (0 <= planet->fuel) {
+                if (0 <= planet->fuel_minerals) {
                     add_panel_detail(
                         *planet,
-                        detail::metadata<planet_t>::fuel(),
+                        detail::metadata<planet_t>::fuel_minerals(),
                         "planet_details_");
                 }
 

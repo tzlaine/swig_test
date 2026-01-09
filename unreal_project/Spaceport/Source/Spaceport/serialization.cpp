@@ -200,7 +200,7 @@ namespace detail {
                      metadata<planet_t>::food().index_,
                      metadata<planet_t>::energy().index_,
                      metadata<planet_t>::metal().index_,
-                     metadata<planet_t>::fuel().index_}};
+                     metadata<planet_t>::fuel_minerals().index_}};
                 serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                     copy, 0, os, fields_to_elide);
             }

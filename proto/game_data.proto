@@ -78,6 +78,15 @@ message fleets_t
     map<int32, int32> fleet_ids = 1;
 }
 
+message resource_t
+{
+    int32 availability = 1;      // this settlement
+    int32 max_availability = 2;  // the whole planet
+    float stockpile = 3;
+    float max_stockpile = 4;
+    float stockpile_last_month = 5;
+}
+
 message settlement_t
 {
     nation_and_object_id_t id = 1;
@@ -90,15 +99,32 @@ message settlement_t
     float population = 4;
     float infrastructure = 5;
 
-    int32 water = 6;
-    int32 food = 7;
-    int32 energy = 8;
-    int32 metal = 9;
-    int32 fuel = 10;
+    resource_t water = 6;
+    resource_t food = 7;
+    resource_t energy = 8;
+    resource_t metal = 9;
+    resource_t fuel_minerals = 10;
+
+    int32 shipyard_pops = 11;
+    int32 infrastructure_upgrade_pops = 12;
+    int32 infrastructure_maintenance_pops = 13;
+    int32 infrastructure_repair_pops = 14;
+
+    int32 water_pops = 15;
+    int32 food_pops = 16;
+    int32 energy_pops = 17;
+    int32 metal_pops = 18;
+    int32 fuel_minerals_pops = 19;
+
+    int32 fuel_refining_pops = 20;
+    int32 supply_manufaturing_pops = 21;
+    int32 round_manufaturing_pops = 22;
+    int32 missile_manufaturing_pops = 23;
+    int32 fighter_manufaturing_pops = 24;
 
     // TODO: language, culture, religion
 
-    repeated nation_and_object_id_t garrison = 11;
+    repeated nation_and_object_id_t garrison = 25;
     // TODO: ground-to-space defenses
 }
 
@@ -126,8 +152,6 @@ message planet_effect_t
     float value = 3;
 }
 
-// TODO: We should add a notion of a settlement, so that there can be more
-// than one on a planet (one each from each nation present)
 message planet_t
 {
     int32 system_id = 1;
@@ -150,7 +174,7 @@ message planet_t
     int32 food = 18;
     int32 energy = 19;
     int32 metal = 20;
-    int32 fuel = 21;
+    int32 fuel_minerals = 21;
 
     float infrastructure_cost_factor = 22;
     float orbital_pos_r = 23;
@@ -158,8 +182,6 @@ message planet_t
     repeated planet_effect_t effects = 25;
 
     repeated nation_and_object_id_t settlement_ids = 26;
-
-    // TODO: visual properties (incl. rings)
 }
 
 message location_object_t
@@ -228,18 +250,20 @@ message nation_t
     int32 id = 1;
     int32 home_planet = 2;
     nation_and_object_id_t capitol_settlement = 3;
-    repeated unit_design_t unit_designs = 4;
-    repeated province_t provinces = 5;
-    repeated settlement_t settlements = 6; // may contain gaps (gaps have invald IDs)
-    repeated fleet_t fleets = 7; // may contain gaps (gaps have invald IDs)
-    repeated int32 hexes_seen = 8; // these lists of IDs must be kept sorted
-    repeated int32 systems_present_in = 9;
-    repeated int32 systems_visited = 10;
-    repeated int32 planets_surveyed = 11;
-    repeated settlement_t settlements_seen = 12;
-    repeated nation_and_object_id_t foreign_designs_seen = 13;
-    repeated nation_and_object_id_t foreign_designs_glimpsed = 14;
-    bool defeated = 15;
+    int32 money = 4;
+    repeated unit_design_t unit_designs = 5;
+    repeated province_t provinces = 6;
+    repeated settlement_t settlements = 7; // may contain gaps (gaps have invald IDs)
+    repeated fleet_t fleets = 8; // may contain gaps (gaps have invald IDs)
+    int32 transports = 9;
+    repeated int32 hexes_seen = 10; // these lists of IDs must be kept sorted
+    repeated int32 systems_present_in = 11;
+    repeated int32 systems_visited = 12;
+    repeated int32 planets_surveyed = 13;
+    repeated settlement_t settlements_seen = 14;
+    repeated nation_and_object_id_t foreign_designs_seen = 15;
+    repeated nation_and_object_id_t foreign_designs_glimpsed = 16;
+    bool defeated = 17;
 }
 
 message date_t

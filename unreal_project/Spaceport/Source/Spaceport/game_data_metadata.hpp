@@ -357,6 +357,53 @@ namespace detail {
         }
     };
 
+    template<> struct metadata<resource_t>
+    {
+        static constexpr std::string_view struct_name()
+        {
+            using namespace std::literals;
+            return "resource_t"sv;
+        }
+        static constexpr int lo_field_number() { return 1; }
+        static constexpr int hi_field_number() { return 5; }
+
+        static constexpr metadatum<resource_t, int> availability()
+        {
+            using namespace std::literals;
+            return {"availability"sv, 1, &resource_t::availability};
+        }
+        static constexpr metadatum<resource_t, int> max_availability()
+        {
+            using namespace std::literals;
+            return {"max_availability"sv, 2, &resource_t::max_availability};
+        }
+        static constexpr metadatum<resource_t, float> stockpile()
+        {
+            using namespace std::literals;
+            return {"stockpile"sv, 3, &resource_t::stockpile};
+        }
+        static constexpr metadatum<resource_t, float> max_stockpile()
+        {
+            using namespace std::literals;
+            return {"max_stockpile"sv, 4, &resource_t::max_stockpile};
+        }
+        static constexpr metadatum<resource_t, float> stockpile_last_month()
+        {
+            using namespace std::literals;
+            return {"stockpile_last_month"sv, 5, &resource_t::stockpile_last_month};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(availability());
+            f(max_availability());
+            f(stockpile());
+            f(max_stockpile());
+            f(stockpile_last_month());
+        }
+    };
+
     template<> struct metadata<settlement_t>
     {
         static constexpr std::string_view struct_name()
@@ -365,7 +412,7 @@ namespace detail {
             return "settlement_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 11; }
+        static constexpr int hi_field_number() { return 25; }
 
         static constexpr metadatum<settlement_t, nation_and_object_id_t> id()
         {
@@ -392,35 +439,105 @@ namespace detail {
             using namespace std::literals;
             return {"infrastructure"sv, 5, &settlement_t::infrastructure};
         }
-        static constexpr metadatum<settlement_t, int> water()
+        static constexpr metadatum<settlement_t, resource_t> water()
         {
             using namespace std::literals;
             return {"water"sv, 6, &settlement_t::water};
         }
-        static constexpr metadatum<settlement_t, int> food()
+        static constexpr metadatum<settlement_t, resource_t> food()
         {
             using namespace std::literals;
             return {"food"sv, 7, &settlement_t::food};
         }
-        static constexpr metadatum<settlement_t, int> energy()
+        static constexpr metadatum<settlement_t, resource_t> energy()
         {
             using namespace std::literals;
             return {"energy"sv, 8, &settlement_t::energy};
         }
-        static constexpr metadatum<settlement_t, int> metal()
+        static constexpr metadatum<settlement_t, resource_t> metal()
         {
             using namespace std::literals;
             return {"metal"sv, 9, &settlement_t::metal};
         }
-        static constexpr metadatum<settlement_t, int> fuel()
+        static constexpr metadatum<settlement_t, resource_t> fuel_minerals()
         {
             using namespace std::literals;
-            return {"fuel"sv, 10, &settlement_t::fuel};
+            return {"fuel_minerals"sv, 10, &settlement_t::fuel_minerals};
+        }
+        static constexpr metadatum<settlement_t, int> shipyard_pops()
+        {
+            using namespace std::literals;
+            return {"shipyard_pops"sv, 11, &settlement_t::shipyard_pops};
+        }
+        static constexpr metadatum<settlement_t, int> infrastructure_upgrade_pops()
+        {
+            using namespace std::literals;
+            return {"infrastructure_upgrade_pops"sv, 12, &settlement_t::infrastructure_upgrade_pops};
+        }
+        static constexpr metadatum<settlement_t, int> infrastructure_maintenance_pops()
+        {
+            using namespace std::literals;
+            return {"infrastructure_maintenance_pops"sv, 13, &settlement_t::infrastructure_maintenance_pops};
+        }
+        static constexpr metadatum<settlement_t, int> infrastructure_repair_pops()
+        {
+            using namespace std::literals;
+            return {"infrastructure_repair_pops"sv, 14, &settlement_t::infrastructure_repair_pops};
+        }
+        static constexpr metadatum<settlement_t, int> water_pops()
+        {
+            using namespace std::literals;
+            return {"water_pops"sv, 15, &settlement_t::water_pops};
+        }
+        static constexpr metadatum<settlement_t, int> food_pops()
+        {
+            using namespace std::literals;
+            return {"food_pops"sv, 16, &settlement_t::food_pops};
+        }
+        static constexpr metadatum<settlement_t, int> energy_pops()
+        {
+            using namespace std::literals;
+            return {"energy_pops"sv, 17, &settlement_t::energy_pops};
+        }
+        static constexpr metadatum<settlement_t, int> metal_pops()
+        {
+            using namespace std::literals;
+            return {"metal_pops"sv, 18, &settlement_t::metal_pops};
+        }
+        static constexpr metadatum<settlement_t, int> fuel_minerals_pops()
+        {
+            using namespace std::literals;
+            return {"fuel_minerals_pops"sv, 19, &settlement_t::fuel_minerals_pops};
+        }
+        static constexpr metadatum<settlement_t, int> fuel_refining_pops()
+        {
+            using namespace std::literals;
+            return {"fuel_refining_pops"sv, 20, &settlement_t::fuel_refining_pops};
+        }
+        static constexpr metadatum<settlement_t, int> supply_manufaturing_pops()
+        {
+            using namespace std::literals;
+            return {"supply_manufaturing_pops"sv, 21, &settlement_t::supply_manufaturing_pops};
+        }
+        static constexpr metadatum<settlement_t, int> round_manufaturing_pops()
+        {
+            using namespace std::literals;
+            return {"round_manufaturing_pops"sv, 22, &settlement_t::round_manufaturing_pops};
+        }
+        static constexpr metadatum<settlement_t, int> missile_manufaturing_pops()
+        {
+            using namespace std::literals;
+            return {"missile_manufaturing_pops"sv, 23, &settlement_t::missile_manufaturing_pops};
+        }
+        static constexpr metadatum<settlement_t, int> fighter_manufaturing_pops()
+        {
+            using namespace std::literals;
+            return {"fighter_manufaturing_pops"sv, 24, &settlement_t::fighter_manufaturing_pops};
         }
         static constexpr metadatum<settlement_t, std::vector<nation_and_object_id_t>> garrison()
         {
             using namespace std::literals;
-            return {"garrison"sv, 11, &settlement_t::garrison};
+            return {"garrison"sv, 25, &settlement_t::garrison};
         }
 
         template<typename F>
@@ -435,7 +552,21 @@ namespace detail {
             f(food());
             f(energy());
             f(metal());
-            f(fuel());
+            f(fuel_minerals());
+            f(shipyard_pops());
+            f(infrastructure_upgrade_pops());
+            f(infrastructure_maintenance_pops());
+            f(infrastructure_repair_pops());
+            f(water_pops());
+            f(food_pops());
+            f(energy_pops());
+            f(metal_pops());
+            f(fuel_minerals_pops());
+            f(fuel_refining_pops());
+            f(supply_manufaturing_pops());
+            f(round_manufaturing_pops());
+            f(missile_manufaturing_pops());
+            f(fighter_manufaturing_pops());
             f(garrison());
         }
     };
@@ -585,10 +716,10 @@ namespace detail {
             using namespace std::literals;
             return {"metal"sv, 20, &planet_t::metal};
         }
-        static constexpr metadatum<planet_t, int> fuel()
+        static constexpr metadatum<planet_t, int> fuel_minerals()
         {
             using namespace std::literals;
-            return {"fuel"sv, 21, &planet_t::fuel};
+            return {"fuel_minerals"sv, 21, &planet_t::fuel_minerals};
         }
         static constexpr metadatum<planet_t, float> infrastructure_cost_factor()
         {
@@ -639,7 +770,7 @@ namespace detail {
             f(food());
             f(energy());
             f(metal());
-            f(fuel());
+            f(fuel_minerals());
             f(infrastructure_cost_factor());
             f(orbital_pos_r());
             f(max_population());
@@ -902,7 +1033,7 @@ namespace detail {
             return "nation_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 15; }
+        static constexpr int hi_field_number() { return 17; }
 
         static constexpr metadatum<nation_t, int> id()
         {
@@ -919,65 +1050,75 @@ namespace detail {
             using namespace std::literals;
             return {"capitol_settlement"sv, 3, &nation_t::capitol_settlement};
         }
+        static constexpr metadatum<nation_t, int> money()
+        {
+            using namespace std::literals;
+            return {"money"sv, 4, &nation_t::money};
+        }
         static constexpr metadatum<nation_t, std::vector<unit_design_t>> unit_designs()
         {
             using namespace std::literals;
-            return {"unit_designs"sv, 4, &nation_t::unit_designs};
+            return {"unit_designs"sv, 5, &nation_t::unit_designs};
         }
         static constexpr metadatum<nation_t, std::vector<province_t>> provinces()
         {
             using namespace std::literals;
-            return {"provinces"sv, 5, &nation_t::provinces};
+            return {"provinces"sv, 6, &nation_t::provinces};
         }
         static constexpr metadatum<nation_t, std::vector<settlement_t>> settlements()
         {
             using namespace std::literals;
-            return {"settlements"sv, 6, &nation_t::settlements};
+            return {"settlements"sv, 7, &nation_t::settlements};
         }
         static constexpr metadatum<nation_t, std::vector<fleet_t>> fleets()
         {
             using namespace std::literals;
-            return {"fleets"sv, 7, &nation_t::fleets};
+            return {"fleets"sv, 8, &nation_t::fleets};
+        }
+        static constexpr metadatum<nation_t, int> transports()
+        {
+            using namespace std::literals;
+            return {"transports"sv, 9, &nation_t::transports};
         }
         static constexpr metadatum<nation_t, std::vector<int>> hexes_seen()
         {
             using namespace std::literals;
-            return {"hexes_seen"sv, 8, &nation_t::hexes_seen};
+            return {"hexes_seen"sv, 10, &nation_t::hexes_seen};
         }
         static constexpr metadatum<nation_t, std::vector<int>> systems_present_in()
         {
             using namespace std::literals;
-            return {"systems_present_in"sv, 9, &nation_t::systems_present_in};
+            return {"systems_present_in"sv, 11, &nation_t::systems_present_in};
         }
         static constexpr metadatum<nation_t, std::vector<int>> systems_visited()
         {
             using namespace std::literals;
-            return {"systems_visited"sv, 10, &nation_t::systems_visited};
+            return {"systems_visited"sv, 12, &nation_t::systems_visited};
         }
         static constexpr metadatum<nation_t, std::vector<int>> planets_surveyed()
         {
             using namespace std::literals;
-            return {"planets_surveyed"sv, 11, &nation_t::planets_surveyed};
+            return {"planets_surveyed"sv, 13, &nation_t::planets_surveyed};
         }
         static constexpr metadatum<nation_t, std::vector<settlement_t>> settlements_seen()
         {
             using namespace std::literals;
-            return {"settlements_seen"sv, 12, &nation_t::settlements_seen};
+            return {"settlements_seen"sv, 14, &nation_t::settlements_seen};
         }
         static constexpr metadatum<nation_t, std::vector<nation_and_object_id_t>> foreign_designs_seen()
         {
             using namespace std::literals;
-            return {"foreign_designs_seen"sv, 13, &nation_t::foreign_designs_seen};
+            return {"foreign_designs_seen"sv, 15, &nation_t::foreign_designs_seen};
         }
         static constexpr metadatum<nation_t, std::vector<nation_and_object_id_t>> foreign_designs_glimpsed()
         {
             using namespace std::literals;
-            return {"foreign_designs_glimpsed"sv, 14, &nation_t::foreign_designs_glimpsed};
+            return {"foreign_designs_glimpsed"sv, 16, &nation_t::foreign_designs_glimpsed};
         }
         static constexpr metadatum<nation_t, bool> defeated()
         {
             using namespace std::literals;
-            return {"defeated"sv, 15, &nation_t::defeated};
+            return {"defeated"sv, 17, &nation_t::defeated};
         }
 
         template<typename F>
@@ -986,10 +1127,12 @@ namespace detail {
             f(id());
             f(home_planet());
             f(capitol_settlement());
+            f(money());
             f(unit_designs());
             f(provinces());
             f(settlements());
             f(fleets());
+            f(transports());
             f(hexes_seen());
             f(systems_present_in());
             f(systems_visited());

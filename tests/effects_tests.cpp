@@ -96,7 +96,7 @@ TEST(effects_tests, planet_effects)
         .food = 100,
         .energy = 100,
         .metal = 100,
-        .fuel = 100,
+        .fuel_minerals = 100,
         .infrastructure_cost_factor = 1,
         .max_population = 100};
 

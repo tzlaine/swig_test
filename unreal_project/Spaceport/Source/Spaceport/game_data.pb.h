@@ -52,7 +52,7 @@ struct TableStruct_game_5fdata_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[24]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[25]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -112,6 +112,9 @@ extern planet_tDefaultTypeInternal _planet_t_default_instance_;
 class province_t;
 class province_tDefaultTypeInternal;
 extern province_tDefaultTypeInternal _province_t_default_instance_;
+class resource_t;
+class resource_tDefaultTypeInternal;
+extern resource_tDefaultTypeInternal _resource_t_default_instance_;
 class settlement_t;
 class settlement_tDefaultTypeInternal;
 extern settlement_tDefaultTypeInternal _settlement_t_default_instance_;
@@ -153,6 +156,7 @@ template<> ::pb_message::game_data::nation_t* Arena::CreateMaybeMessage<::pb_mes
 template<> ::pb_message::game_data::planet_effect_t* Arena::CreateMaybeMessage<::pb_message::game_data::planet_effect_t>(Arena*);
 template<> ::pb_message::game_data::planet_t* Arena::CreateMaybeMessage<::pb_message::game_data::planet_t>(Arena*);
 template<> ::pb_message::game_data::province_t* Arena::CreateMaybeMessage<::pb_message::game_data::province_t>(Arena*);
+template<> ::pb_message::game_data::resource_t* Arena::CreateMaybeMessage<::pb_message::game_data::resource_t>(Arena*);
 template<> ::pb_message::game_data::settlement_t* Arena::CreateMaybeMessage<::pb_message::game_data::settlement_t>(Arena*);
 template<> ::pb_message::game_data::star_t* Arena::CreateMaybeMessage<::pb_message::game_data::star_t>(Arena*);
 template<> ::pb_message::game_data::system_location_t* Arena::CreateMaybeMessage<::pb_message::game_data::system_location_t>(Arena*);
@@ -1687,6 +1691,187 @@ class fleets_t PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class resource_t PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.resource_t) */ {
+ public:
+  inline resource_t() : resource_t(nullptr) {}
+  virtual ~resource_t();
+
+  resource_t(const resource_t& from);
+  resource_t(resource_t&& from) noexcept
+    : resource_t() {
+    *this = ::std::move(from);
+  }
+
+  inline resource_t& operator=(const resource_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline resource_t& operator=(resource_t&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const resource_t& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const resource_t* internal_default_instance() {
+    return reinterpret_cast<const resource_t*>(
+               &_resource_t_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(resource_t& a, resource_t& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(resource_t* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(resource_t* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline resource_t* New() const final {
+    return CreateMaybeMessage<resource_t>(nullptr);
+  }
+
+  resource_t* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<resource_t>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const resource_t& from);
+  void MergeFrom(const resource_t& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(resource_t* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb_message.game_data.resource_t";
+  }
+  protected:
+  explicit resource_t(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_game_5fdata_2eproto);
+    return ::descriptor_table_game_5fdata_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAvailabilityFieldNumber = 1,
+    kMaxAvailabilityFieldNumber = 2,
+    kStockpileFieldNumber = 3,
+    kMaxStockpileFieldNumber = 4,
+    kStockpileLastMonthFieldNumber = 5,
+  };
+  // int32 availability = 1;
+  void clear_availability();
+  ::PROTOBUF_NAMESPACE_ID::int32 availability() const;
+  void set_availability(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_availability() const;
+  void _internal_set_availability(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 max_availability = 2;
+  void clear_max_availability();
+  ::PROTOBUF_NAMESPACE_ID::int32 max_availability() const;
+  void set_max_availability(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_max_availability() const;
+  void _internal_set_max_availability(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // float stockpile = 3;
+  void clear_stockpile();
+  float stockpile() const;
+  void set_stockpile(float value);
+  private:
+  float _internal_stockpile() const;
+  void _internal_set_stockpile(float value);
+  public:
+
+  // float max_stockpile = 4;
+  void clear_max_stockpile();
+  float max_stockpile() const;
+  void set_max_stockpile(float value);
+  private:
+  float _internal_max_stockpile() const;
+  void _internal_set_max_stockpile(float value);
+  public:
+
+  // float stockpile_last_month = 5;
+  void clear_stockpile_last_month();
+  float stockpile_last_month() const;
+  void set_stockpile_last_month(float value);
+  private:
+  float _internal_stockpile_last_month() const;
+  void _internal_set_stockpile_last_month(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb_message.game_data.resource_t)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::int32 availability_;
+  ::PROTOBUF_NAMESPACE_ID::int32 max_availability_;
+  float stockpile_;
+  float max_stockpile_;
+  float stockpile_last_month_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_game_5fdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class settlement_t PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb_message.game_data.settlement_t) */ {
  public:
@@ -1729,7 +1914,7 @@ class settlement_t PROTOBUF_FINAL :
                &_settlement_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(settlement_t& a, settlement_t& b) {
     a.Swap(&b);
@@ -1800,19 +1985,33 @@ class settlement_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kGarrisonFieldNumber = 11,
+    kGarrisonFieldNumber = 25,
     kIdFieldNumber = 1,
-    kPlanetIdFieldNumber = 2,
-    kOriginalOwnerFieldNumber = 3,
-    kPopulationFieldNumber = 4,
-    kInfrastructureFieldNumber = 5,
     kWaterFieldNumber = 6,
     kFoodFieldNumber = 7,
     kEnergyFieldNumber = 8,
     kMetalFieldNumber = 9,
-    kFuelFieldNumber = 10,
+    kFuelMineralsFieldNumber = 10,
+    kPlanetIdFieldNumber = 2,
+    kOriginalOwnerFieldNumber = 3,
+    kPopulationFieldNumber = 4,
+    kInfrastructureFieldNumber = 5,
+    kShipyardPopsFieldNumber = 11,
+    kInfrastructureUpgradePopsFieldNumber = 12,
+    kInfrastructureMaintenancePopsFieldNumber = 13,
+    kInfrastructureRepairPopsFieldNumber = 14,
+    kWaterPopsFieldNumber = 15,
+    kFoodPopsFieldNumber = 16,
+    kEnergyPopsFieldNumber = 17,
+    kMetalPopsFieldNumber = 18,
+    kFuelMineralsPopsFieldNumber = 19,
+    kFuelRefiningPopsFieldNumber = 20,
+    kSupplyManufaturingPopsFieldNumber = 21,
+    kRoundManufaturingPopsFieldNumber = 22,
+    kMissileManufaturingPopsFieldNumber = 23,
+    kFighterManufaturingPopsFieldNumber = 24,
   };
-  // repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
+  // repeated .pb_message.game_data.nation_and_object_id_t garrison = 25;
   int garrison_size() const;
   private:
   int _internal_garrison_size() const;
@@ -1847,6 +2046,96 @@ class settlement_t PROTOBUF_FINAL :
   void unsafe_arena_set_allocated_id(
       ::pb_message::game_data::nation_and_object_id_t* id);
   ::pb_message::game_data::nation_and_object_id_t* unsafe_arena_release_id();
+
+  // .pb_message.game_data.resource_t water = 6;
+  bool has_water() const;
+  private:
+  bool _internal_has_water() const;
+  public:
+  void clear_water();
+  const ::pb_message::game_data::resource_t& water() const;
+  ::pb_message::game_data::resource_t* release_water();
+  ::pb_message::game_data::resource_t* mutable_water();
+  void set_allocated_water(::pb_message::game_data::resource_t* water);
+  private:
+  const ::pb_message::game_data::resource_t& _internal_water() const;
+  ::pb_message::game_data::resource_t* _internal_mutable_water();
+  public:
+  void unsafe_arena_set_allocated_water(
+      ::pb_message::game_data::resource_t* water);
+  ::pb_message::game_data::resource_t* unsafe_arena_release_water();
+
+  // .pb_message.game_data.resource_t food = 7;
+  bool has_food() const;
+  private:
+  bool _internal_has_food() const;
+  public:
+  void clear_food();
+  const ::pb_message::game_data::resource_t& food() const;
+  ::pb_message::game_data::resource_t* release_food();
+  ::pb_message::game_data::resource_t* mutable_food();
+  void set_allocated_food(::pb_message::game_data::resource_t* food);
+  private:
+  const ::pb_message::game_data::resource_t& _internal_food() const;
+  ::pb_message::game_data::resource_t* _internal_mutable_food();
+  public:
+  void unsafe_arena_set_allocated_food(
+      ::pb_message::game_data::resource_t* food);
+  ::pb_message::game_data::resource_t* unsafe_arena_release_food();
+
+  // .pb_message.game_data.resource_t energy = 8;
+  bool has_energy() const;
+  private:
+  bool _internal_has_energy() const;
+  public:
+  void clear_energy();
+  const ::pb_message::game_data::resource_t& energy() const;
+  ::pb_message::game_data::resource_t* release_energy();
+  ::pb_message::game_data::resource_t* mutable_energy();
+  void set_allocated_energy(::pb_message::game_data::resource_t* energy);
+  private:
+  const ::pb_message::game_data::resource_t& _internal_energy() const;
+  ::pb_message::game_data::resource_t* _internal_mutable_energy();
+  public:
+  void unsafe_arena_set_allocated_energy(
+      ::pb_message::game_data::resource_t* energy);
+  ::pb_message::game_data::resource_t* unsafe_arena_release_energy();
+
+  // .pb_message.game_data.resource_t metal = 9;
+  bool has_metal() const;
+  private:
+  bool _internal_has_metal() const;
+  public:
+  void clear_metal();
+  const ::pb_message::game_data::resource_t& metal() const;
+  ::pb_message::game_data::resource_t* release_metal();
+  ::pb_message::game_data::resource_t* mutable_metal();
+  void set_allocated_metal(::pb_message::game_data::resource_t* metal);
+  private:
+  const ::pb_message::game_data::resource_t& _internal_metal() const;
+  ::pb_message::game_data::resource_t* _internal_mutable_metal();
+  public:
+  void unsafe_arena_set_allocated_metal(
+      ::pb_message::game_data::resource_t* metal);
+  ::pb_message::game_data::resource_t* unsafe_arena_release_metal();
+
+  // .pb_message.game_data.resource_t fuel_minerals = 10;
+  bool has_fuel_minerals() const;
+  private:
+  bool _internal_has_fuel_minerals() const;
+  public:
+  void clear_fuel_minerals();
+  const ::pb_message::game_data::resource_t& fuel_minerals() const;
+  ::pb_message::game_data::resource_t* release_fuel_minerals();
+  ::pb_message::game_data::resource_t* mutable_fuel_minerals();
+  void set_allocated_fuel_minerals(::pb_message::game_data::resource_t* fuel_minerals);
+  private:
+  const ::pb_message::game_data::resource_t& _internal_fuel_minerals() const;
+  ::pb_message::game_data::resource_t* _internal_mutable_fuel_minerals();
+  public:
+  void unsafe_arena_set_allocated_fuel_minerals(
+      ::pb_message::game_data::resource_t* fuel_minerals);
+  ::pb_message::game_data::resource_t* unsafe_arena_release_fuel_minerals();
 
   // int32 planet_id = 2;
   void clear_planet_id();
@@ -1884,49 +2173,130 @@ class settlement_t PROTOBUF_FINAL :
   void _internal_set_infrastructure(float value);
   public:
 
-  // int32 water = 6;
-  void clear_water();
-  ::PROTOBUF_NAMESPACE_ID::int32 water() const;
-  void set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 shipyard_pops = 11;
+  void clear_shipyard_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 shipyard_pops() const;
+  void set_shipyard_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_water() const;
-  void _internal_set_water(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_shipyard_pops() const;
+  void _internal_set_shipyard_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 food = 7;
-  void clear_food();
-  ::PROTOBUF_NAMESPACE_ID::int32 food() const;
-  void set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 infrastructure_upgrade_pops = 12;
+  void clear_infrastructure_upgrade_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_upgrade_pops() const;
+  void set_infrastructure_upgrade_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_food() const;
-  void _internal_set_food(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_infrastructure_upgrade_pops() const;
+  void _internal_set_infrastructure_upgrade_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 energy = 8;
-  void clear_energy();
-  ::PROTOBUF_NAMESPACE_ID::int32 energy() const;
-  void set_energy(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 infrastructure_maintenance_pops = 13;
+  void clear_infrastructure_maintenance_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_maintenance_pops() const;
+  void set_infrastructure_maintenance_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_energy() const;
-  void _internal_set_energy(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_infrastructure_maintenance_pops() const;
+  void _internal_set_infrastructure_maintenance_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 metal = 9;
-  void clear_metal();
-  ::PROTOBUF_NAMESPACE_ID::int32 metal() const;
-  void set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 infrastructure_repair_pops = 14;
+  void clear_infrastructure_repair_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_repair_pops() const;
+  void set_infrastructure_repair_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_metal() const;
-  void _internal_set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_infrastructure_repair_pops() const;
+  void _internal_set_infrastructure_repair_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 fuel = 10;
-  void clear_fuel();
-  ::PROTOBUF_NAMESPACE_ID::int32 fuel() const;
-  void set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 water_pops = 15;
+  void clear_water_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 water_pops() const;
+  void set_water_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fuel() const;
-  void _internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_water_pops() const;
+  void _internal_set_water_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 food_pops = 16;
+  void clear_food_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 food_pops() const;
+  void set_food_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_food_pops() const;
+  void _internal_set_food_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 energy_pops = 17;
+  void clear_energy_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 energy_pops() const;
+  void set_energy_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_energy_pops() const;
+  void _internal_set_energy_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 metal_pops = 18;
+  void clear_metal_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 metal_pops() const;
+  void set_metal_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_metal_pops() const;
+  void _internal_set_metal_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 fuel_minerals_pops = 19;
+  void clear_fuel_minerals_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 fuel_minerals_pops() const;
+  void set_fuel_minerals_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fuel_minerals_pops() const;
+  void _internal_set_fuel_minerals_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 fuel_refining_pops = 20;
+  void clear_fuel_refining_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 fuel_refining_pops() const;
+  void set_fuel_refining_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fuel_refining_pops() const;
+  void _internal_set_fuel_refining_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 supply_manufaturing_pops = 21;
+  void clear_supply_manufaturing_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 supply_manufaturing_pops() const;
+  void set_supply_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_supply_manufaturing_pops() const;
+  void _internal_set_supply_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 round_manufaturing_pops = 22;
+  void clear_round_manufaturing_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 round_manufaturing_pops() const;
+  void set_round_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_round_manufaturing_pops() const;
+  void _internal_set_round_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 missile_manufaturing_pops = 23;
+  void clear_missile_manufaturing_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 missile_manufaturing_pops() const;
+  void set_missile_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_missile_manufaturing_pops() const;
+  void _internal_set_missile_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 fighter_manufaturing_pops = 24;
+  void clear_fighter_manufaturing_pops();
+  ::PROTOBUF_NAMESPACE_ID::int32 fighter_manufaturing_pops() const;
+  void set_fighter_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fighter_manufaturing_pops() const;
+  void _internal_set_fighter_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // @@protoc_insertion_point(class_scope:pb_message.game_data.settlement_t)
@@ -1938,15 +2308,29 @@ class settlement_t PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t > garrison_;
   ::pb_message::game_data::nation_and_object_id_t* id_;
+  ::pb_message::game_data::resource_t* water_;
+  ::pb_message::game_data::resource_t* food_;
+  ::pb_message::game_data::resource_t* energy_;
+  ::pb_message::game_data::resource_t* metal_;
+  ::pb_message::game_data::resource_t* fuel_minerals_;
   ::PROTOBUF_NAMESPACE_ID::int32 planet_id_;
   ::PROTOBUF_NAMESPACE_ID::int32 original_owner_;
   float population_;
   float infrastructure_;
-  ::PROTOBUF_NAMESPACE_ID::int32 water_;
-  ::PROTOBUF_NAMESPACE_ID::int32 food_;
-  ::PROTOBUF_NAMESPACE_ID::int32 energy_;
-  ::PROTOBUF_NAMESPACE_ID::int32 metal_;
-  ::PROTOBUF_NAMESPACE_ID::int32 fuel_;
+  ::PROTOBUF_NAMESPACE_ID::int32 shipyard_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_upgrade_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_maintenance_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 infrastructure_repair_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 water_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 food_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 energy_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 metal_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 fuel_minerals_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 fuel_refining_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 supply_manufaturing_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 round_manufaturing_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 missile_manufaturing_pops_;
+  ::PROTOBUF_NAMESPACE_ID::int32 fighter_manufaturing_pops_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
 };
@@ -1994,7 +2378,7 @@ class planet_effect_t PROTOBUF_FINAL :
                &_planet_effect_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(planet_effect_t& a, planet_effect_t& b) {
     a.Swap(&b);
@@ -2167,7 +2551,7 @@ class planet_t PROTOBUF_FINAL :
                &_planet_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(planet_t& a, planet_t& b) {
     a.Swap(&b);
@@ -2260,7 +2644,7 @@ class planet_t PROTOBUF_FINAL :
     kFoodFieldNumber = 18,
     kEnergyFieldNumber = 19,
     kMetalFieldNumber = 20,
-    kFuelFieldNumber = 21,
+    kFuelMineralsFieldNumber = 21,
     kInfrastructureCostFactorFieldNumber = 22,
     kOrbitalPosRFieldNumber = 23,
     kMaxPopulationFieldNumber = 24,
@@ -2481,13 +2865,13 @@ class planet_t PROTOBUF_FINAL :
   void _internal_set_metal(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 fuel = 21;
-  void clear_fuel();
-  ::PROTOBUF_NAMESPACE_ID::int32 fuel() const;
-  void set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 fuel_minerals = 21;
+  void clear_fuel_minerals();
+  ::PROTOBUF_NAMESPACE_ID::int32 fuel_minerals() const;
+  void set_fuel_minerals(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fuel() const;
-  void _internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_fuel_minerals() const;
+  void _internal_set_fuel_minerals(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // float infrastructure_cost_factor = 22;
@@ -2546,7 +2930,7 @@ class planet_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::int32 food_;
   ::PROTOBUF_NAMESPACE_ID::int32 energy_;
   ::PROTOBUF_NAMESPACE_ID::int32 metal_;
-  ::PROTOBUF_NAMESPACE_ID::int32 fuel_;
+  ::PROTOBUF_NAMESPACE_ID::int32 fuel_minerals_;
   float infrastructure_cost_factor_;
   float orbital_pos_r_;
   ::PROTOBUF_NAMESPACE_ID::int32 max_population_;
@@ -2597,7 +2981,7 @@ class location_object_t PROTOBUF_FINAL :
                &_location_object_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(location_object_t& a, location_object_t& b) {
     a.Swap(&b);
@@ -2754,7 +3138,7 @@ class system_location_t PROTOBUF_FINAL :
                &_system_location_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(system_location_t& a, system_location_t& b) {
     a.Swap(&b);
@@ -2920,7 +3304,7 @@ class star_t PROTOBUF_FINAL :
                &_star_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(star_t& a, star_t& b) {
     a.Swap(&b);
@@ -3101,7 +3485,7 @@ class system_t PROTOBUF_FINAL :
                &_system_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(system_t& a, system_t& b) {
     a.Swap(&b);
@@ -3360,7 +3744,7 @@ class hex_t PROTOBUF_FINAL :
                &_hex_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(hex_t& a, hex_t& b) {
     a.Swap(&b);
@@ -3539,7 +3923,7 @@ class province_t PROTOBUF_FINAL :
                &_province_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(province_t& a, province_t& b) {
     a.Swap(&b);
@@ -3705,7 +4089,7 @@ class nation_t PROTOBUF_FINAL :
                &_nation_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   friend void swap(nation_t& a, nation_t& b) {
     a.Swap(&b);
@@ -3776,23 +4160,25 @@ class nation_t PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUnitDesignsFieldNumber = 4,
-    kProvincesFieldNumber = 5,
-    kSettlementsFieldNumber = 6,
-    kFleetsFieldNumber = 7,
-    kHexesSeenFieldNumber = 8,
-    kSystemsPresentInFieldNumber = 9,
-    kSystemsVisitedFieldNumber = 10,
-    kPlanetsSurveyedFieldNumber = 11,
-    kSettlementsSeenFieldNumber = 12,
-    kForeignDesignsSeenFieldNumber = 13,
-    kForeignDesignsGlimpsedFieldNumber = 14,
+    kUnitDesignsFieldNumber = 5,
+    kProvincesFieldNumber = 6,
+    kSettlementsFieldNumber = 7,
+    kFleetsFieldNumber = 8,
+    kHexesSeenFieldNumber = 10,
+    kSystemsPresentInFieldNumber = 11,
+    kSystemsVisitedFieldNumber = 12,
+    kPlanetsSurveyedFieldNumber = 13,
+    kSettlementsSeenFieldNumber = 14,
+    kForeignDesignsSeenFieldNumber = 15,
+    kForeignDesignsGlimpsedFieldNumber = 16,
     kCapitolSettlementFieldNumber = 3,
     kIdFieldNumber = 1,
     kHomePlanetFieldNumber = 2,
-    kDefeatedFieldNumber = 15,
+    kMoneyFieldNumber = 4,
+    kTransportsFieldNumber = 9,
+    kDefeatedFieldNumber = 17,
   };
-  // repeated .pb_message.game_data.unit_design_t unit_designs = 4;
+  // repeated .pb_message.game_data.unit_design_t unit_designs = 5;
   int unit_designs_size() const;
   private:
   int _internal_unit_designs_size() const;
@@ -3810,7 +4196,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::unit_design_t >&
       unit_designs() const;
 
-  // repeated .pb_message.game_data.province_t provinces = 5;
+  // repeated .pb_message.game_data.province_t provinces = 6;
   int provinces_size() const;
   private:
   int _internal_provinces_size() const;
@@ -3828,7 +4214,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::province_t >&
       provinces() const;
 
-  // repeated .pb_message.game_data.settlement_t settlements = 6;
+  // repeated .pb_message.game_data.settlement_t settlements = 7;
   int settlements_size() const;
   private:
   int _internal_settlements_size() const;
@@ -3846,7 +4232,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::settlement_t >&
       settlements() const;
 
-  // repeated .pb_message.game_data.fleet_t fleets = 7;
+  // repeated .pb_message.game_data.fleet_t fleets = 8;
   int fleets_size() const;
   private:
   int _internal_fleets_size() const;
@@ -3864,7 +4250,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::fleet_t >&
       fleets() const;
 
-  // repeated int32 hexes_seen = 8;
+  // repeated int32 hexes_seen = 10;
   int hexes_seen_size() const;
   private:
   int _internal_hexes_seen_size() const;
@@ -3886,7 +4272,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_hexes_seen();
 
-  // repeated int32 systems_present_in = 9;
+  // repeated int32 systems_present_in = 11;
   int systems_present_in_size() const;
   private:
   int _internal_systems_present_in_size() const;
@@ -3908,7 +4294,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_systems_present_in();
 
-  // repeated int32 systems_visited = 10;
+  // repeated int32 systems_visited = 12;
   int systems_visited_size() const;
   private:
   int _internal_systems_visited_size() const;
@@ -3930,7 +4316,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_systems_visited();
 
-  // repeated int32 planets_surveyed = 11;
+  // repeated int32 planets_surveyed = 13;
   int planets_surveyed_size() const;
   private:
   int _internal_planets_surveyed_size() const;
@@ -3952,7 +4338,7 @@ class nation_t PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_planets_surveyed();
 
-  // repeated .pb_message.game_data.settlement_t settlements_seen = 12;
+  // repeated .pb_message.game_data.settlement_t settlements_seen = 14;
   int settlements_seen_size() const;
   private:
   int _internal_settlements_seen_size() const;
@@ -3970,7 +4356,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::settlement_t >&
       settlements_seen() const;
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 15;
   int foreign_designs_seen_size() const;
   private:
   int _internal_foreign_designs_seen_size() const;
@@ -3988,7 +4374,7 @@ class nation_t PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::pb_message::game_data::nation_and_object_id_t >&
       foreign_designs_seen() const;
 
-  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
+  // repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 16;
   int foreign_designs_glimpsed_size() const;
   private:
   int _internal_foreign_designs_glimpsed_size() const;
@@ -4042,7 +4428,25 @@ class nation_t PROTOBUF_FINAL :
   void _internal_set_home_planet(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // bool defeated = 15;
+  // int32 money = 4;
+  void clear_money();
+  ::PROTOBUF_NAMESPACE_ID::int32 money() const;
+  void set_money(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_money() const;
+  void _internal_set_money(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 transports = 9;
+  void clear_transports();
+  ::PROTOBUF_NAMESPACE_ID::int32 transports() const;
+  void set_transports(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_transports() const;
+  void _internal_set_transports(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // bool defeated = 17;
   void clear_defeated();
   bool defeated() const;
   void set_defeated(bool value);
@@ -4076,6 +4480,8 @@ class nation_t PROTOBUF_FINAL :
   ::pb_message::game_data::nation_and_object_id_t* capitol_settlement_;
   ::PROTOBUF_NAMESPACE_ID::int32 id_;
   ::PROTOBUF_NAMESPACE_ID::int32 home_planet_;
+  ::PROTOBUF_NAMESPACE_ID::int32 money_;
+  ::PROTOBUF_NAMESPACE_ID::int32 transports_;
   bool defeated_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_game_5fdata_2eproto;
@@ -4124,7 +4530,7 @@ class date_t PROTOBUF_FINAL :
                &_date_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(date_t& a, date_t& b) {
     a.Swap(&b);
@@ -4283,7 +4689,7 @@ class game_state_t PROTOBUF_FINAL :
                &_game_state_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   friend void swap(game_state_t& a, game_state_t& b) {
     a.Swap(&b);
@@ -4567,7 +4973,7 @@ class day_update_t PROTOBUF_FINAL :
                &_day_update_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    22;
 
   friend void swap(day_update_t& a, day_update_t& b) {
     a.Swap(&b);
@@ -4713,7 +5119,7 @@ class month_update_t PROTOBUF_FINAL :
                &_month_update_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    23;
 
   friend void swap(month_update_t& a, month_update_t& b) {
     a.Swap(&b);
@@ -4859,7 +5265,7 @@ class year_update_t PROTOBUF_FINAL :
                &_year_update_t_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   friend void swap(year_update_t& a, year_update_t& b) {
     a.Swap(&b);
@@ -6051,6 +6457,110 @@ fleets_t::mutable_fleet_ids() {
 
 // -------------------------------------------------------------------
 
+// resource_t
+
+// int32 availability = 1;
+inline void resource_t::clear_availability() {
+  availability_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 resource_t::_internal_availability() const {
+  return availability_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 resource_t::availability() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.resource_t.availability)
+  return _internal_availability();
+}
+inline void resource_t::_internal_set_availability(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  availability_ = value;
+}
+inline void resource_t::set_availability(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_availability(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.resource_t.availability)
+}
+
+// int32 max_availability = 2;
+inline void resource_t::clear_max_availability() {
+  max_availability_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 resource_t::_internal_max_availability() const {
+  return max_availability_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 resource_t::max_availability() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.resource_t.max_availability)
+  return _internal_max_availability();
+}
+inline void resource_t::_internal_set_max_availability(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  max_availability_ = value;
+}
+inline void resource_t::set_max_availability(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_max_availability(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.resource_t.max_availability)
+}
+
+// float stockpile = 3;
+inline void resource_t::clear_stockpile() {
+  stockpile_ = 0;
+}
+inline float resource_t::_internal_stockpile() const {
+  return stockpile_;
+}
+inline float resource_t::stockpile() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.resource_t.stockpile)
+  return _internal_stockpile();
+}
+inline void resource_t::_internal_set_stockpile(float value) {
+  
+  stockpile_ = value;
+}
+inline void resource_t::set_stockpile(float value) {
+  _internal_set_stockpile(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.resource_t.stockpile)
+}
+
+// float max_stockpile = 4;
+inline void resource_t::clear_max_stockpile() {
+  max_stockpile_ = 0;
+}
+inline float resource_t::_internal_max_stockpile() const {
+  return max_stockpile_;
+}
+inline float resource_t::max_stockpile() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.resource_t.max_stockpile)
+  return _internal_max_stockpile();
+}
+inline void resource_t::_internal_set_max_stockpile(float value) {
+  
+  max_stockpile_ = value;
+}
+inline void resource_t::set_max_stockpile(float value) {
+  _internal_set_max_stockpile(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.resource_t.max_stockpile)
+}
+
+// float stockpile_last_month = 5;
+inline void resource_t::clear_stockpile_last_month() {
+  stockpile_last_month_ = 0;
+}
+inline float resource_t::_internal_stockpile_last_month() const {
+  return stockpile_last_month_;
+}
+inline float resource_t::stockpile_last_month() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.resource_t.stockpile_last_month)
+  return _internal_stockpile_last_month();
+}
+inline void resource_t::_internal_set_stockpile_last_month(float value) {
+  
+  stockpile_last_month_ = value;
+}
+inline void resource_t::set_stockpile_last_month(float value) {
+  _internal_set_stockpile_last_month(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.resource_t.stockpile_last_month)
+}
+
+// -------------------------------------------------------------------
+
 // settlement_t
 
 // .pb_message.game_data.nation_and_object_id_t id = 1;
@@ -6216,107 +6726,702 @@ inline void settlement_t::set_infrastructure(float value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.infrastructure)
 }
 
-// int32 water = 6;
+// .pb_message.game_data.resource_t water = 6;
+inline bool settlement_t::_internal_has_water() const {
+  return this != internal_default_instance() && water_ != nullptr;
+}
+inline bool settlement_t::has_water() const {
+  return _internal_has_water();
+}
 inline void settlement_t::clear_water() {
-  water_ = 0;
+  if (GetArena() == nullptr && water_ != nullptr) {
+    delete water_;
+  }
+  water_ = nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_water() const {
-  return water_;
+inline const ::pb_message::game_data::resource_t& settlement_t::_internal_water() const {
+  const ::pb_message::game_data::resource_t* p = water_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::resource_t*>(
+      &::pb_message::game_data::_resource_t_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::water() const {
+inline const ::pb_message::game_data::resource_t& settlement_t::water() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.water)
   return _internal_water();
 }
-inline void settlement_t::_internal_set_water(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  water_ = value;
+inline void settlement_t::unsafe_arena_set_allocated_water(
+    ::pb_message::game_data::resource_t* water) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(water_);
+  }
+  water_ = water;
+  if (water) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.settlement_t.water)
 }
-inline void settlement_t::set_water(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_water(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.water)
+inline ::pb_message::game_data::resource_t* settlement_t::release_water() {
+  
+  ::pb_message::game_data::resource_t* temp = water_;
+  water_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::unsafe_arena_release_water() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.settlement_t.water)
+  
+  ::pb_message::game_data::resource_t* temp = water_;
+  water_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::_internal_mutable_water() {
+  
+  if (water_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::resource_t>(GetArena());
+    water_ = p;
+  }
+  return water_;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::mutable_water() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.settlement_t.water)
+  return _internal_mutable_water();
+}
+inline void settlement_t::set_allocated_water(::pb_message::game_data::resource_t* water) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete water_;
+  }
+  if (water) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(water);
+    if (message_arena != submessage_arena) {
+      water = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, water, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  water_ = water;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.settlement_t.water)
 }
 
-// int32 food = 7;
+// .pb_message.game_data.resource_t food = 7;
+inline bool settlement_t::_internal_has_food() const {
+  return this != internal_default_instance() && food_ != nullptr;
+}
+inline bool settlement_t::has_food() const {
+  return _internal_has_food();
+}
 inline void settlement_t::clear_food() {
-  food_ = 0;
+  if (GetArena() == nullptr && food_ != nullptr) {
+    delete food_;
+  }
+  food_ = nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_food() const {
-  return food_;
+inline const ::pb_message::game_data::resource_t& settlement_t::_internal_food() const {
+  const ::pb_message::game_data::resource_t* p = food_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::resource_t*>(
+      &::pb_message::game_data::_resource_t_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::food() const {
+inline const ::pb_message::game_data::resource_t& settlement_t::food() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.food)
   return _internal_food();
 }
-inline void settlement_t::_internal_set_food(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  food_ = value;
+inline void settlement_t::unsafe_arena_set_allocated_food(
+    ::pb_message::game_data::resource_t* food) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(food_);
+  }
+  food_ = food;
+  if (food) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.settlement_t.food)
 }
-inline void settlement_t::set_food(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_food(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.food)
+inline ::pb_message::game_data::resource_t* settlement_t::release_food() {
+  
+  ::pb_message::game_data::resource_t* temp = food_;
+  food_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::unsafe_arena_release_food() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.settlement_t.food)
+  
+  ::pb_message::game_data::resource_t* temp = food_;
+  food_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::_internal_mutable_food() {
+  
+  if (food_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::resource_t>(GetArena());
+    food_ = p;
+  }
+  return food_;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::mutable_food() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.settlement_t.food)
+  return _internal_mutable_food();
+}
+inline void settlement_t::set_allocated_food(::pb_message::game_data::resource_t* food) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete food_;
+  }
+  if (food) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(food);
+    if (message_arena != submessage_arena) {
+      food = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, food, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  food_ = food;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.settlement_t.food)
 }
 
-// int32 energy = 8;
+// .pb_message.game_data.resource_t energy = 8;
+inline bool settlement_t::_internal_has_energy() const {
+  return this != internal_default_instance() && energy_ != nullptr;
+}
+inline bool settlement_t::has_energy() const {
+  return _internal_has_energy();
+}
 inline void settlement_t::clear_energy() {
-  energy_ = 0;
+  if (GetArena() == nullptr && energy_ != nullptr) {
+    delete energy_;
+  }
+  energy_ = nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_energy() const {
-  return energy_;
+inline const ::pb_message::game_data::resource_t& settlement_t::_internal_energy() const {
+  const ::pb_message::game_data::resource_t* p = energy_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::resource_t*>(
+      &::pb_message::game_data::_resource_t_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::energy() const {
+inline const ::pb_message::game_data::resource_t& settlement_t::energy() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.energy)
   return _internal_energy();
 }
-inline void settlement_t::_internal_set_energy(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  energy_ = value;
+inline void settlement_t::unsafe_arena_set_allocated_energy(
+    ::pb_message::game_data::resource_t* energy) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(energy_);
+  }
+  energy_ = energy;
+  if (energy) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.settlement_t.energy)
 }
-inline void settlement_t::set_energy(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_energy(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.energy)
+inline ::pb_message::game_data::resource_t* settlement_t::release_energy() {
+  
+  ::pb_message::game_data::resource_t* temp = energy_;
+  energy_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::unsafe_arena_release_energy() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.settlement_t.energy)
+  
+  ::pb_message::game_data::resource_t* temp = energy_;
+  energy_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::_internal_mutable_energy() {
+  
+  if (energy_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::resource_t>(GetArena());
+    energy_ = p;
+  }
+  return energy_;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::mutable_energy() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.settlement_t.energy)
+  return _internal_mutable_energy();
+}
+inline void settlement_t::set_allocated_energy(::pb_message::game_data::resource_t* energy) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete energy_;
+  }
+  if (energy) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(energy);
+    if (message_arena != submessage_arena) {
+      energy = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, energy, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  energy_ = energy;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.settlement_t.energy)
 }
 
-// int32 metal = 9;
+// .pb_message.game_data.resource_t metal = 9;
+inline bool settlement_t::_internal_has_metal() const {
+  return this != internal_default_instance() && metal_ != nullptr;
+}
+inline bool settlement_t::has_metal() const {
+  return _internal_has_metal();
+}
 inline void settlement_t::clear_metal() {
-  metal_ = 0;
+  if (GetArena() == nullptr && metal_ != nullptr) {
+    delete metal_;
+  }
+  metal_ = nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_metal() const {
-  return metal_;
+inline const ::pb_message::game_data::resource_t& settlement_t::_internal_metal() const {
+  const ::pb_message::game_data::resource_t* p = metal_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::resource_t*>(
+      &::pb_message::game_data::_resource_t_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::metal() const {
+inline const ::pb_message::game_data::resource_t& settlement_t::metal() const {
   // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.metal)
   return _internal_metal();
 }
-inline void settlement_t::_internal_set_metal(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  metal_ = value;
+inline void settlement_t::unsafe_arena_set_allocated_metal(
+    ::pb_message::game_data::resource_t* metal) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(metal_);
+  }
+  metal_ = metal;
+  if (metal) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.settlement_t.metal)
 }
-inline void settlement_t::set_metal(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_metal(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.metal)
+inline ::pb_message::game_data::resource_t* settlement_t::release_metal() {
+  
+  ::pb_message::game_data::resource_t* temp = metal_;
+  metal_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::unsafe_arena_release_metal() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.settlement_t.metal)
+  
+  ::pb_message::game_data::resource_t* temp = metal_;
+  metal_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::_internal_mutable_metal() {
+  
+  if (metal_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::resource_t>(GetArena());
+    metal_ = p;
+  }
+  return metal_;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::mutable_metal() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.settlement_t.metal)
+  return _internal_mutable_metal();
+}
+inline void settlement_t::set_allocated_metal(::pb_message::game_data::resource_t* metal) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete metal_;
+  }
+  if (metal) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(metal);
+    if (message_arena != submessage_arena) {
+      metal = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, metal, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  metal_ = metal;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.settlement_t.metal)
 }
 
-// int32 fuel = 10;
-inline void settlement_t::clear_fuel() {
-  fuel_ = 0;
+// .pb_message.game_data.resource_t fuel_minerals = 10;
+inline bool settlement_t::_internal_has_fuel_minerals() const {
+  return this != internal_default_instance() && fuel_minerals_ != nullptr;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_fuel() const {
-  return fuel_;
+inline bool settlement_t::has_fuel_minerals() const {
+  return _internal_has_fuel_minerals();
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::fuel() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.fuel)
-  return _internal_fuel();
+inline void settlement_t::clear_fuel_minerals() {
+  if (GetArena() == nullptr && fuel_minerals_ != nullptr) {
+    delete fuel_minerals_;
+  }
+  fuel_minerals_ = nullptr;
 }
-inline void settlement_t::_internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline const ::pb_message::game_data::resource_t& settlement_t::_internal_fuel_minerals() const {
+  const ::pb_message::game_data::resource_t* p = fuel_minerals_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::pb_message::game_data::resource_t*>(
+      &::pb_message::game_data::_resource_t_default_instance_);
+}
+inline const ::pb_message::game_data::resource_t& settlement_t::fuel_minerals() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.fuel_minerals)
+  return _internal_fuel_minerals();
+}
+inline void settlement_t::unsafe_arena_set_allocated_fuel_minerals(
+    ::pb_message::game_data::resource_t* fuel_minerals) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(fuel_minerals_);
+  }
+  fuel_minerals_ = fuel_minerals;
+  if (fuel_minerals) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:pb_message.game_data.settlement_t.fuel_minerals)
+}
+inline ::pb_message::game_data::resource_t* settlement_t::release_fuel_minerals() {
   
-  fuel_ = value;
+  ::pb_message::game_data::resource_t* temp = fuel_minerals_;
+  fuel_minerals_ = nullptr;
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
 }
-inline void settlement_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_fuel(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.fuel)
+inline ::pb_message::game_data::resource_t* settlement_t::unsafe_arena_release_fuel_minerals() {
+  // @@protoc_insertion_point(field_release:pb_message.game_data.settlement_t.fuel_minerals)
+  
+  ::pb_message::game_data::resource_t* temp = fuel_minerals_;
+  fuel_minerals_ = nullptr;
+  return temp;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::_internal_mutable_fuel_minerals() {
+  
+  if (fuel_minerals_ == nullptr) {
+    auto* p = CreateMaybeMessage<::pb_message::game_data::resource_t>(GetArena());
+    fuel_minerals_ = p;
+  }
+  return fuel_minerals_;
+}
+inline ::pb_message::game_data::resource_t* settlement_t::mutable_fuel_minerals() {
+  // @@protoc_insertion_point(field_mutable:pb_message.game_data.settlement_t.fuel_minerals)
+  return _internal_mutable_fuel_minerals();
+}
+inline void settlement_t::set_allocated_fuel_minerals(::pb_message::game_data::resource_t* fuel_minerals) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete fuel_minerals_;
+  }
+  if (fuel_minerals) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(fuel_minerals);
+    if (message_arena != submessage_arena) {
+      fuel_minerals = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, fuel_minerals, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  fuel_minerals_ = fuel_minerals;
+  // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.settlement_t.fuel_minerals)
 }
 
-// repeated .pb_message.game_data.nation_and_object_id_t garrison = 11;
+// int32 shipyard_pops = 11;
+inline void settlement_t::clear_shipyard_pops() {
+  shipyard_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_shipyard_pops() const {
+  return shipyard_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::shipyard_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.shipyard_pops)
+  return _internal_shipyard_pops();
+}
+inline void settlement_t::_internal_set_shipyard_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  shipyard_pops_ = value;
+}
+inline void settlement_t::set_shipyard_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_shipyard_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.shipyard_pops)
+}
+
+// int32 infrastructure_upgrade_pops = 12;
+inline void settlement_t::clear_infrastructure_upgrade_pops() {
+  infrastructure_upgrade_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_infrastructure_upgrade_pops() const {
+  return infrastructure_upgrade_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::infrastructure_upgrade_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.infrastructure_upgrade_pops)
+  return _internal_infrastructure_upgrade_pops();
+}
+inline void settlement_t::_internal_set_infrastructure_upgrade_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  infrastructure_upgrade_pops_ = value;
+}
+inline void settlement_t::set_infrastructure_upgrade_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_infrastructure_upgrade_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.infrastructure_upgrade_pops)
+}
+
+// int32 infrastructure_maintenance_pops = 13;
+inline void settlement_t::clear_infrastructure_maintenance_pops() {
+  infrastructure_maintenance_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_infrastructure_maintenance_pops() const {
+  return infrastructure_maintenance_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::infrastructure_maintenance_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.infrastructure_maintenance_pops)
+  return _internal_infrastructure_maintenance_pops();
+}
+inline void settlement_t::_internal_set_infrastructure_maintenance_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  infrastructure_maintenance_pops_ = value;
+}
+inline void settlement_t::set_infrastructure_maintenance_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_infrastructure_maintenance_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.infrastructure_maintenance_pops)
+}
+
+// int32 infrastructure_repair_pops = 14;
+inline void settlement_t::clear_infrastructure_repair_pops() {
+  infrastructure_repair_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_infrastructure_repair_pops() const {
+  return infrastructure_repair_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::infrastructure_repair_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.infrastructure_repair_pops)
+  return _internal_infrastructure_repair_pops();
+}
+inline void settlement_t::_internal_set_infrastructure_repair_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  infrastructure_repair_pops_ = value;
+}
+inline void settlement_t::set_infrastructure_repair_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_infrastructure_repair_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.infrastructure_repair_pops)
+}
+
+// int32 water_pops = 15;
+inline void settlement_t::clear_water_pops() {
+  water_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_water_pops() const {
+  return water_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::water_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.water_pops)
+  return _internal_water_pops();
+}
+inline void settlement_t::_internal_set_water_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  water_pops_ = value;
+}
+inline void settlement_t::set_water_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_water_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.water_pops)
+}
+
+// int32 food_pops = 16;
+inline void settlement_t::clear_food_pops() {
+  food_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_food_pops() const {
+  return food_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::food_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.food_pops)
+  return _internal_food_pops();
+}
+inline void settlement_t::_internal_set_food_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  food_pops_ = value;
+}
+inline void settlement_t::set_food_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_food_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.food_pops)
+}
+
+// int32 energy_pops = 17;
+inline void settlement_t::clear_energy_pops() {
+  energy_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_energy_pops() const {
+  return energy_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::energy_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.energy_pops)
+  return _internal_energy_pops();
+}
+inline void settlement_t::_internal_set_energy_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  energy_pops_ = value;
+}
+inline void settlement_t::set_energy_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_energy_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.energy_pops)
+}
+
+// int32 metal_pops = 18;
+inline void settlement_t::clear_metal_pops() {
+  metal_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_metal_pops() const {
+  return metal_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::metal_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.metal_pops)
+  return _internal_metal_pops();
+}
+inline void settlement_t::_internal_set_metal_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  metal_pops_ = value;
+}
+inline void settlement_t::set_metal_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_metal_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.metal_pops)
+}
+
+// int32 fuel_minerals_pops = 19;
+inline void settlement_t::clear_fuel_minerals_pops() {
+  fuel_minerals_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_fuel_minerals_pops() const {
+  return fuel_minerals_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::fuel_minerals_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.fuel_minerals_pops)
+  return _internal_fuel_minerals_pops();
+}
+inline void settlement_t::_internal_set_fuel_minerals_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  fuel_minerals_pops_ = value;
+}
+inline void settlement_t::set_fuel_minerals_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_fuel_minerals_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.fuel_minerals_pops)
+}
+
+// int32 fuel_refining_pops = 20;
+inline void settlement_t::clear_fuel_refining_pops() {
+  fuel_refining_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_fuel_refining_pops() const {
+  return fuel_refining_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::fuel_refining_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.fuel_refining_pops)
+  return _internal_fuel_refining_pops();
+}
+inline void settlement_t::_internal_set_fuel_refining_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  fuel_refining_pops_ = value;
+}
+inline void settlement_t::set_fuel_refining_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_fuel_refining_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.fuel_refining_pops)
+}
+
+// int32 supply_manufaturing_pops = 21;
+inline void settlement_t::clear_supply_manufaturing_pops() {
+  supply_manufaturing_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_supply_manufaturing_pops() const {
+  return supply_manufaturing_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::supply_manufaturing_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.supply_manufaturing_pops)
+  return _internal_supply_manufaturing_pops();
+}
+inline void settlement_t::_internal_set_supply_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  supply_manufaturing_pops_ = value;
+}
+inline void settlement_t::set_supply_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_supply_manufaturing_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.supply_manufaturing_pops)
+}
+
+// int32 round_manufaturing_pops = 22;
+inline void settlement_t::clear_round_manufaturing_pops() {
+  round_manufaturing_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_round_manufaturing_pops() const {
+  return round_manufaturing_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::round_manufaturing_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.round_manufaturing_pops)
+  return _internal_round_manufaturing_pops();
+}
+inline void settlement_t::_internal_set_round_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  round_manufaturing_pops_ = value;
+}
+inline void settlement_t::set_round_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_round_manufaturing_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.round_manufaturing_pops)
+}
+
+// int32 missile_manufaturing_pops = 23;
+inline void settlement_t::clear_missile_manufaturing_pops() {
+  missile_manufaturing_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_missile_manufaturing_pops() const {
+  return missile_manufaturing_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::missile_manufaturing_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.missile_manufaturing_pops)
+  return _internal_missile_manufaturing_pops();
+}
+inline void settlement_t::_internal_set_missile_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  missile_manufaturing_pops_ = value;
+}
+inline void settlement_t::set_missile_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_missile_manufaturing_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.missile_manufaturing_pops)
+}
+
+// int32 fighter_manufaturing_pops = 24;
+inline void settlement_t::clear_fighter_manufaturing_pops() {
+  fighter_manufaturing_pops_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::_internal_fighter_manufaturing_pops() const {
+  return fighter_manufaturing_pops_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 settlement_t::fighter_manufaturing_pops() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.settlement_t.fighter_manufaturing_pops)
+  return _internal_fighter_manufaturing_pops();
+}
+inline void settlement_t::_internal_set_fighter_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  fighter_manufaturing_pops_ = value;
+}
+inline void settlement_t::set_fighter_manufaturing_pops(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_fighter_manufaturing_pops(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.settlement_t.fighter_manufaturing_pops)
+}
+
+// repeated .pb_message.game_data.nation_and_object_id_t garrison = 25;
 inline int settlement_t::_internal_garrison_size() const {
   return garrison_.size();
 }
@@ -6907,24 +8012,24 @@ inline void planet_t::set_metal(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.metal)
 }
 
-// int32 fuel = 21;
-inline void planet_t::clear_fuel() {
-  fuel_ = 0;
+// int32 fuel_minerals = 21;
+inline void planet_t::clear_fuel_minerals() {
+  fuel_minerals_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::_internal_fuel() const {
-  return fuel_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::_internal_fuel_minerals() const {
+  return fuel_minerals_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::fuel() const {
-  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.fuel)
-  return _internal_fuel();
+inline ::PROTOBUF_NAMESPACE_ID::int32 planet_t::fuel_minerals() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.planet_t.fuel_minerals)
+  return _internal_fuel_minerals();
 }
-inline void planet_t::_internal_set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void planet_t::_internal_set_fuel_minerals(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  fuel_ = value;
+  fuel_minerals_ = value;
 }
-inline void planet_t::set_fuel(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_fuel(value);
-  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.fuel)
+inline void planet_t::set_fuel_minerals(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_fuel_minerals(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.planet_t.fuel_minerals)
 }
 
 // float infrastructure_cost_factor = 22;
@@ -8076,7 +9181,27 @@ inline void nation_t::set_allocated_capitol_settlement(::pb_message::game_data::
   // @@protoc_insertion_point(field_set_allocated:pb_message.game_data.nation_t.capitol_settlement)
 }
 
-// repeated .pb_message.game_data.unit_design_t unit_designs = 4;
+// int32 money = 4;
+inline void nation_t::clear_money() {
+  money_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_money() const {
+  return money_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::money() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.money)
+  return _internal_money();
+}
+inline void nation_t::_internal_set_money(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  money_ = value;
+}
+inline void nation_t::set_money(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_money(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.money)
+}
+
+// repeated .pb_message.game_data.unit_design_t unit_designs = 5;
 inline int nation_t::_internal_unit_designs_size() const {
   return unit_designs_.size();
 }
@@ -8115,7 +9240,7 @@ nation_t::unit_designs() const {
   return unit_designs_;
 }
 
-// repeated .pb_message.game_data.province_t provinces = 5;
+// repeated .pb_message.game_data.province_t provinces = 6;
 inline int nation_t::_internal_provinces_size() const {
   return provinces_.size();
 }
@@ -8154,7 +9279,7 @@ nation_t::provinces() const {
   return provinces_;
 }
 
-// repeated .pb_message.game_data.settlement_t settlements = 6;
+// repeated .pb_message.game_data.settlement_t settlements = 7;
 inline int nation_t::_internal_settlements_size() const {
   return settlements_.size();
 }
@@ -8193,7 +9318,7 @@ nation_t::settlements() const {
   return settlements_;
 }
 
-// repeated .pb_message.game_data.fleet_t fleets = 7;
+// repeated .pb_message.game_data.fleet_t fleets = 8;
 inline int nation_t::_internal_fleets_size() const {
   return fleets_.size();
 }
@@ -8232,7 +9357,27 @@ nation_t::fleets() const {
   return fleets_;
 }
 
-// repeated int32 hexes_seen = 8;
+// int32 transports = 9;
+inline void nation_t::clear_transports() {
+  transports_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::_internal_transports() const {
+  return transports_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 nation_t::transports() const {
+  // @@protoc_insertion_point(field_get:pb_message.game_data.nation_t.transports)
+  return _internal_transports();
+}
+inline void nation_t::_internal_set_transports(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  transports_ = value;
+}
+inline void nation_t::set_transports(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_transports(value);
+  // @@protoc_insertion_point(field_set:pb_message.game_data.nation_t.transports)
+}
+
+// repeated int32 hexes_seen = 10;
 inline int nation_t::_internal_hexes_seen_size() const {
   return hexes_seen_.size();
 }
@@ -8279,7 +9424,7 @@ nation_t::mutable_hexes_seen() {
   return _internal_mutable_hexes_seen();
 }
 
-// repeated int32 systems_present_in = 9;
+// repeated int32 systems_present_in = 11;
 inline int nation_t::_internal_systems_present_in_size() const {
   return systems_present_in_.size();
 }
@@ -8326,7 +9471,7 @@ nation_t::mutable_systems_present_in() {
   return _internal_mutable_systems_present_in();
 }
 
-// repeated int32 systems_visited = 10;
+// repeated int32 systems_visited = 12;
 inline int nation_t::_internal_systems_visited_size() const {
   return systems_visited_.size();
 }
@@ -8373,7 +9518,7 @@ nation_t::mutable_systems_visited() {
   return _internal_mutable_systems_visited();
 }
 
-// repeated int32 planets_surveyed = 11;
+// repeated int32 planets_surveyed = 13;
 inline int nation_t::_internal_planets_surveyed_size() const {
   return planets_surveyed_.size();
 }
@@ -8420,7 +9565,7 @@ nation_t::mutable_planets_surveyed() {
   return _internal_mutable_planets_surveyed();
 }
 
-// repeated .pb_message.game_data.settlement_t settlements_seen = 12;
+// repeated .pb_message.game_data.settlement_t settlements_seen = 14;
 inline int nation_t::_internal_settlements_seen_size() const {
   return settlements_seen_.size();
 }
@@ -8459,7 +9604,7 @@ nation_t::settlements_seen() const {
   return settlements_seen_;
 }
 
-// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 13;
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_seen = 15;
 inline int nation_t::_internal_foreign_designs_seen_size() const {
   return foreign_designs_seen_.size();
 }
@@ -8498,7 +9643,7 @@ nation_t::foreign_designs_seen() const {
   return foreign_designs_seen_;
 }
 
-// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 14;
+// repeated .pb_message.game_data.nation_and_object_id_t foreign_designs_glimpsed = 16;
 inline int nation_t::_internal_foreign_designs_glimpsed_size() const {
   return foreign_designs_glimpsed_.size();
 }
@@ -8537,7 +9682,7 @@ nation_t::foreign_designs_glimpsed() const {
   return foreign_designs_glimpsed_;
 }
 
-// bool defeated = 15;
+// bool defeated = 17;
 inline void nation_t::clear_defeated() {
   defeated_ = false;
 }
@@ -9235,6 +10380,8 @@ inline void year_update_t::set_allocated_date(::pb_message::game_data::date_t* d
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

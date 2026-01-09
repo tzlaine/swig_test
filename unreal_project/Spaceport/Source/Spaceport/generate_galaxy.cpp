@@ -272,7 +272,7 @@ bool generation::detail::generate_planet(
         planet.energy = clamp_res(moon_factor * random_number(resource_dist));
     }
 
-    // TODO: Give each hex a bias (+ive or -ive) for fuel and metal, since
+    // TODO: Give each hex a bias (+ive or -ive) for fuel_minerals and metal, since
     // presence of heavy elements is stellar-neighborhood-dependent.
 
     if (planet.planet_type == planet_type_t::rocky) {
@@ -286,11 +286,11 @@ bool generation::detail::generate_planet(
     }
 
     if (planet.planet_type == planet_type_t::rocky) {
-        planet.fuel = clamp_res(random_number(resource_dist));
+        planet.fuel_minerals = clamp_res(random_number(resource_dist));
         if (homeworld_reroll)
-            planet.fuel = clamp_res(planet.fuel + max_resource_value * 0.25);
+            planet.fuel_minerals = clamp_res(planet.fuel_minerals + max_resource_value * 0.25);
     } else {
-        planet.fuel = clamp_res(moon_factor * random_number(resource_dist));
+        planet.fuel_minerals = clamp_res(moon_factor * random_number(resource_dist));
     }
 
     planet.orbital_pos_r = float(random_unit_double() * 2 * std::numbers::pi);
@@ -392,12 +392,12 @@ generation::detail::find_starting_locations(game_state_t & gs, int n)
         system_t const & system = gs.systems[candidate.planet_->system_id];
 #if INSTRUMENT_REROLLS
         std::cout << std::format(
-            "planet initially: max_pop={} growth_factor={} metal={} fuel={} "
+            "planet initially: max_pop={} growth_factor={} metal={} fuel_minerals={} "
             "score={}\n{}\n\n",
             candidate.planet_->max_population,
             candidate.planet_->growth_factor,
             candidate.planet_->metal,
-            candidate.planet_->fuel,
+            candidate.planet_->fuel_minerals,
             candidate.score_,
             *candidate.planet_);
 #endif
@@ -412,11 +412,11 @@ generation::detail::find_starting_locations(game_state_t & gs, int n)
             candidate.score_ = score(*candidate.planet_);
 #if INSTRUMENT_REROLLS
             std::cout << std::format(
-                "planet reroll: max_pop={} growth_factor={} metal={} fuel={} score={}\n{}\n\n",
+                "planet reroll: max_pop={} growth_factor={} metal={} fuel_minerals={} score={}\n{}\n\n",
                 candidate.planet_->max_population,
                 candidate.planet_->growth_factor,
                 candidate.planet_->metal,
-                candidate.planet_->fuel,
+                candidate.planet_->fuel_minerals,
                 candidate.score_,
                 *candidate.planet_);
 #endif

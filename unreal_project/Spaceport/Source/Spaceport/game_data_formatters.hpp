@@ -251,6 +251,30 @@ inline std::ostream & operator<<(std::ostream & os, fleets_t const & x)
 #endif
 
 template <>
+struct std::formatter<resource_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(resource_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "resource_t(");
+
+        out = std::format_to(out, " availability={}", x.availability);
+        out = std::format_to(out, " max_availability={}", x.max_availability);
+        out = std::format_to(out, " stockpile={}", x.stockpile);
+        out = std::format_to(out, " max_stockpile={}", x.max_stockpile);
+        out = std::format_to(out, " stockpile_last_month={}", x.stockpile_last_month);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, resource_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<settlement_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }
@@ -269,7 +293,21 @@ struct std::formatter<settlement_t> {
         out = std::format_to(out, " food={}", x.food);
         out = std::format_to(out, " energy={}", x.energy);
         out = std::format_to(out, " metal={}", x.metal);
-        out = std::format_to(out, " fuel={}", x.fuel);
+        out = std::format_to(out, " fuel_minerals={}", x.fuel_minerals);
+        out = std::format_to(out, " shipyard_pops={}", x.shipyard_pops);
+        out = std::format_to(out, " infrastructure_upgrade_pops={}", x.infrastructure_upgrade_pops);
+        out = std::format_to(out, " infrastructure_maintenance_pops={}", x.infrastructure_maintenance_pops);
+        out = std::format_to(out, " infrastructure_repair_pops={}", x.infrastructure_repair_pops);
+        out = std::format_to(out, " water_pops={}", x.water_pops);
+        out = std::format_to(out, " food_pops={}", x.food_pops);
+        out = std::format_to(out, " energy_pops={}", x.energy_pops);
+        out = std::format_to(out, " metal_pops={}", x.metal_pops);
+        out = std::format_to(out, " fuel_minerals_pops={}", x.fuel_minerals_pops);
+        out = std::format_to(out, " fuel_refining_pops={}", x.fuel_refining_pops);
+        out = std::format_to(out, " supply_manufaturing_pops={}", x.supply_manufaturing_pops);
+        out = std::format_to(out, " round_manufaturing_pops={}", x.round_manufaturing_pops);
+        out = std::format_to(out, " missile_manufaturing_pops={}", x.missile_manufaturing_pops);
+        out = std::format_to(out, " fighter_manufaturing_pops={}", x.fighter_manufaturing_pops);
         out = std::format_to(out, " garrison=[");
         for (auto && e : x.garrison) {
             out = std::format_to(out, " {}", e);
@@ -336,7 +374,7 @@ struct std::formatter<planet_t> {
         out = std::format_to(out, " food={}", x.food);
         out = std::format_to(out, " energy={}", x.energy);
         out = std::format_to(out, " metal={}", x.metal);
-        out = std::format_to(out, " fuel={}", x.fuel);
+        out = std::format_to(out, " fuel_minerals={}", x.fuel_minerals);
         out = std::format_to(out, " infrastructure_cost_factor={}", x.infrastructure_cost_factor);
         out = std::format_to(out, " orbital_pos_r={}", x.orbital_pos_r);
         out = std::format_to(out, " max_population={}", x.max_population);
@@ -530,6 +568,7 @@ struct std::formatter<nation_t> {
         out = std::format_to(out, " id={}", x.id);
         out = std::format_to(out, " home_planet={}", x.home_planet);
         out = std::format_to(out, " capitol_settlement={}", x.capitol_settlement);
+        out = std::format_to(out, " money={}", x.money);
         out = std::format_to(out, " unit_designs=[");
         for (auto && e : x.unit_designs) {
             out = std::format_to(out, " {}", e);
@@ -550,6 +589,7 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " transports={}", x.transports);
         out = std::format_to(out, " hexes_seen=[");
         for (auto && e : x.hexes_seen) {
             out = std::format_to(out, " {}", e);

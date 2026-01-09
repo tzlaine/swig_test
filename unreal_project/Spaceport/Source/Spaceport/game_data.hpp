@@ -125,6 +125,16 @@ struct fleets_t
     bool operator==(fleets_t const &) const = default;
 };
 
+struct resource_t
+{
+    int availability = -1;
+    int max_availability = -1;
+    float stockpile = -1.0f;
+    float max_stockpile = -1.0f;
+    float stockpile_last_month = -1.0f;
+    bool operator==(resource_t const &) const = default;
+};
+
 struct settlement_t
 {
     nation_and_object_id_t id = {};
@@ -132,11 +142,25 @@ struct settlement_t
     int original_owner = -1;
     float population = -1.0f;
     float infrastructure = -1.0f;
-    int water = -1;
-    int food = -1;
-    int energy = -1;
-    int metal = -1;
-    int fuel = -1;
+    resource_t water = {};
+    resource_t food = {};
+    resource_t energy = {};
+    resource_t metal = {};
+    resource_t fuel_minerals = {};
+    int shipyard_pops = -1;
+    int infrastructure_upgrade_pops = -1;
+    int infrastructure_maintenance_pops = -1;
+    int infrastructure_repair_pops = -1;
+    int water_pops = -1;
+    int food_pops = -1;
+    int energy_pops = -1;
+    int metal_pops = -1;
+    int fuel_minerals_pops = -1;
+    int fuel_refining_pops = -1;
+    int supply_manufaturing_pops = -1;
+    int round_manufaturing_pops = -1;
+    int missile_manufaturing_pops = -1;
+    int fighter_manufaturing_pops = -1;
     std::vector<nation_and_object_id_t> garrison = {};
     bool operator==(settlement_t const &) const = default;
 };
@@ -171,7 +195,7 @@ struct planet_t
     int food = -1;
     int energy = -1;
     int metal = -1;
-    int fuel = -1;
+    int fuel_minerals = -1;
     float infrastructure_cost_factor = -1.0f;
     float orbital_pos_r = -1.0f;
     int max_population = -1;
@@ -239,10 +263,12 @@ struct nation_t
     int id = -1;
     int home_planet = -1;
     nation_and_object_id_t capitol_settlement = {};
+    int money = -1;
     std::vector<unit_design_t> unit_designs = {};
     std::vector<province_t> provinces = {};
     std::vector<settlement_t> settlements = {};
     std::vector<fleet_t> fleets = {};
+    int transports = -1;
     std::vector<int> hexes_seen;
     std::vector<int> systems_present_in;
     std::vector<int> systems_visited;
@@ -316,6 +342,9 @@ pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
 
 pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value);
 ::fleets_t from_protobuf (const pb_message::game_data::fleets_t& msg);
+
+pb_message::game_data::resource_t to_protobuf (const ::resource_t& value);
+::resource_t from_protobuf (const pb_message::game_data::resource_t& msg);
 
 pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value);
 ::settlement_t from_protobuf (const pb_message::game_data::settlement_t& msg);

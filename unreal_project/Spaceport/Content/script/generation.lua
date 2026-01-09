@@ -265,7 +265,7 @@ end
 function starting_planet_score(planet)
    if planet.growth_factor < growth_factor_considered_habitable or
       planet.metal < 0.2 * max_resource_value or
-      planet.fuel < 0.2 * max_resource_value or
+      planet.fuel_minerals < 0.2 * max_resource_value or
       mean_starting_pop + starting_pop_plus_minus < planet.max_population then
       return -1000.0
    end
@@ -352,11 +352,21 @@ function create_home_settlement(gs, nation, planet, planet_id)
    retval.original_owner = nation.id
    retval.population = planet.max_population
    retval.infrastructure = 100
-   retval.water = planet.water
-   retval.food = planet.food
-   retval.energy = planet.energy
-   retval.metal = planet.metal
-   retval.fuel = planet.fuel
+   retval.water = resource_t.new()
+   retval.water.availability = planet.water
+   retval.water.max_availability = planet.water
+   retval.food = resource_t.new()
+   retval.food.availability = planet.food
+   retval.food.max_availability = planet.food
+   retval.energy = resource_t.new()
+   retval.energy.availability = planet.energy
+   retval.energy.max_availability = planet.energy
+   retval.metal = resource_t.new()
+   retval.metal.availability = planet.metal
+   retval.metal.max_availability = planet.metal
+   retval.fuel_minerals = resource_t.new()
+   retval.fuel_minerals.availability = planet.fuel_minerals
+   retval.fuel_minerals.max_availability = planet.fuel_minerals
    return retval
 end
 

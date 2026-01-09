@@ -193,6 +193,28 @@ pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value)
     return retval;
 }
 
+pb_message::game_data::resource_t to_protobuf (const ::resource_t& value)
+{
+    pb_message::game_data::resource_t retval;
+    retval.set_availability(value.availability);
+    retval.set_max_availability(value.max_availability);
+    retval.set_stockpile(value.stockpile);
+    retval.set_max_stockpile(value.max_stockpile);
+    retval.set_stockpile_last_month(value.stockpile_last_month);
+    return retval;
+}
+
+::resource_t from_protobuf (const pb_message::game_data::resource_t& msg)
+{
+    ::resource_t retval;
+    retval.availability = msg.availability();
+    retval.max_availability = msg.max_availability();
+    retval.stockpile = msg.stockpile();
+    retval.max_stockpile = msg.max_stockpile();
+    retval.stockpile_last_month = msg.stockpile_last_month();
+    return retval;
+}
+
 pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value)
 {
     pb_message::game_data::settlement_t retval;
@@ -201,11 +223,25 @@ pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value)
     retval.set_original_owner(value.original_owner);
     retval.set_population(value.population);
     retval.set_infrastructure(value.infrastructure);
-    retval.set_water(value.water);
-    retval.set_food(value.food);
-    retval.set_energy(value.energy);
-    retval.set_metal(value.metal);
-    retval.set_fuel(value.fuel);
+    retval.mutable_water()->CopyFrom(to_protobuf(value.water));
+    retval.mutable_food()->CopyFrom(to_protobuf(value.food));
+    retval.mutable_energy()->CopyFrom(to_protobuf(value.energy));
+    retval.mutable_metal()->CopyFrom(to_protobuf(value.metal));
+    retval.mutable_fuel_minerals()->CopyFrom(to_protobuf(value.fuel_minerals));
+    retval.set_shipyard_pops(value.shipyard_pops);
+    retval.set_infrastructure_upgrade_pops(value.infrastructure_upgrade_pops);
+    retval.set_infrastructure_maintenance_pops(value.infrastructure_maintenance_pops);
+    retval.set_infrastructure_repair_pops(value.infrastructure_repair_pops);
+    retval.set_water_pops(value.water_pops);
+    retval.set_food_pops(value.food_pops);
+    retval.set_energy_pops(value.energy_pops);
+    retval.set_metal_pops(value.metal_pops);
+    retval.set_fuel_minerals_pops(value.fuel_minerals_pops);
+    retval.set_fuel_refining_pops(value.fuel_refining_pops);
+    retval.set_supply_manufaturing_pops(value.supply_manufaturing_pops);
+    retval.set_round_manufaturing_pops(value.round_manufaturing_pops);
+    retval.set_missile_manufaturing_pops(value.missile_manufaturing_pops);
+    retval.set_fighter_manufaturing_pops(value.fighter_manufaturing_pops);
     for (const auto& x : value.garrison) {
         retval.add_garrison()->CopyFrom(to_protobuf(x));
     }
@@ -220,11 +256,25 @@ pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value)
     retval.original_owner = msg.original_owner();
     retval.population = msg.population();
     retval.infrastructure = msg.infrastructure();
-    retval.water = msg.water();
-    retval.food = msg.food();
-    retval.energy = msg.energy();
-    retval.metal = msg.metal();
-    retval.fuel = msg.fuel();
+    retval.water = from_protobuf(msg.water());
+    retval.food = from_protobuf(msg.food());
+    retval.energy = from_protobuf(msg.energy());
+    retval.metal = from_protobuf(msg.metal());
+    retval.fuel_minerals = from_protobuf(msg.fuel_minerals());
+    retval.shipyard_pops = msg.shipyard_pops();
+    retval.infrastructure_upgrade_pops = msg.infrastructure_upgrade_pops();
+    retval.infrastructure_maintenance_pops = msg.infrastructure_maintenance_pops();
+    retval.infrastructure_repair_pops = msg.infrastructure_repair_pops();
+    retval.water_pops = msg.water_pops();
+    retval.food_pops = msg.food_pops();
+    retval.energy_pops = msg.energy_pops();
+    retval.metal_pops = msg.metal_pops();
+    retval.fuel_minerals_pops = msg.fuel_minerals_pops();
+    retval.fuel_refining_pops = msg.fuel_refining_pops();
+    retval.supply_manufaturing_pops = msg.supply_manufaturing_pops();
+    retval.round_manufaturing_pops = msg.round_manufaturing_pops();
+    retval.missile_manufaturing_pops = msg.missile_manufaturing_pops();
+    retval.fighter_manufaturing_pops = msg.fighter_manufaturing_pops();
     {
         retval.garrison.resize(msg.garrison_size());
         auto it = retval.garrison.begin();
@@ -276,7 +326,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.set_food(value.food);
     retval.set_energy(value.energy);
     retval.set_metal(value.metal);
-    retval.set_fuel(value.fuel);
+    retval.set_fuel_minerals(value.fuel_minerals);
     retval.set_infrastructure_cost_factor(value.infrastructure_cost_factor);
     retval.set_orbital_pos_r(value.orbital_pos_r);
     retval.set_max_population(value.max_population);
@@ -312,7 +362,7 @@ pb_message::game_data::planet_t to_protobuf (const ::planet_t& value)
     retval.food = msg.food();
     retval.energy = msg.energy();
     retval.metal = msg.metal();
-    retval.fuel = msg.fuel();
+    retval.fuel_minerals = msg.fuel_minerals();
     retval.infrastructure_cost_factor = msg.infrastructure_cost_factor();
     retval.orbital_pos_r = msg.orbital_pos_r();
     retval.max_population = msg.max_population();
@@ -499,6 +549,7 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     retval.set_id(value.id);
     retval.set_home_planet(value.home_planet);
     retval.mutable_capitol_settlement()->CopyFrom(to_protobuf(value.capitol_settlement));
+    retval.set_money(value.money);
     for (const auto& x : value.unit_designs) {
         retval.add_unit_designs()->CopyFrom(to_protobuf(x));
     }
@@ -511,6 +562,7 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     for (const auto& x : value.fleets) {
         retval.add_fleets()->CopyFrom(to_protobuf(x));
     }
+    retval.set_transports(value.transports);
     for (const auto& x : value.hexes_seen) {
         retval.add_hexes_seen(x);
     }
@@ -542,6 +594,7 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
     retval.id = msg.id();
     retval.home_planet = msg.home_planet();
     retval.capitol_settlement = from_protobuf(msg.capitol_settlement());
+    retval.money = msg.money();
     {
         retval.unit_designs.resize(msg.unit_designs_size());
         auto it = retval.unit_designs.begin();
@@ -570,6 +623,7 @@ pb_message::game_data::nation_t to_protobuf (const ::nation_t& value)
             *it++ = from_protobuf(x);
         }
     }
+    retval.transports = msg.transports();
     {
         retval.hexes_seen.resize(msg.hexes_seen_size());
         auto it = retval.hexes_seen.begin();

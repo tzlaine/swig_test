@@ -159,6 +159,7 @@ default_game_start_params.ai_opponents = to_integer(
     detail::lua_register_1(retval);
     detail::lua_register_2(retval);
     detail::lua_register_3(retval);
+    detail::lua_register_4(retval);
     detail::lua_register_enums(retval);
     detail::lua_register_functions(retval);
 

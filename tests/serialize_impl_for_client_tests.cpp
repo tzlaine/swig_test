@@ -84,7 +84,7 @@ nation_t nation(int nation_id, game_state_t & gs)
               .food = 50,
               .energy = 50,
               .metal = 50,
-              .fuel = 50}},
+              .fuel_minerals = 50}},
         .fleets = {fleet(nation_id)},
         .hexes_seen =
             {home_hex,
@@ -541,7 +541,8 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_EQ(client_planet.food, default_planet.food);
             EXPECT_EQ(client_planet.energy, default_planet.energy);
             EXPECT_EQ(client_planet.metal, default_planet.metal);
-            EXPECT_EQ(client_planet.fuel, default_planet.fuel);
+            EXPECT_EQ(
+                client_planet.fuel_minerals, default_planet.fuel_minerals);
             EXPECT_EQ(client_planet.orbital_pos_r, planet.orbital_pos_r);
             EXPECT_EQ(client_planet.max_population, planet.max_population);
             EXPECT_EQ(client_planet.effects, planet.effects);
