@@ -1,5 +1,8 @@
-ELEMENTS:
-=========
+NB: There are numerous values and formulas in this document.  Each of them is
+a rough, early-design representation.  Any value used in this document is
+subject to scaling during balancing.  Text that was added early on talks about
+scale factors in some cases.  After a while, I stopped mentioning them, since
+I now consider tham to be implicit.
 
 
 The map, and colonization:
@@ -159,6 +162,8 @@ Ships:
   - Detection equipment cost +
   - Stealth cost
 
+* Ship mass is hull + armor.
+
 * A ship design is made by picking the tech level for each stat (armor 1
   vs. armor 2, etc.).  The total cost would be in all the resources involved.
   Obviously, not all ships need all those elements (stealth, detection, and
@@ -166,12 +171,47 @@ Ships:
   used.  Older stuff should be cheaper.  Quantity over quality should be a
   viable strategy at times (or for your whole run).
 
+* 5 crew are requred for each point of hull.  An additional 100 crew are
+  required per point of equipment, far all these kinds of equipment:
+  Propulsion, Weapons, Shields, Detection, and Stealth.  TODO: Can you add an
+  increment of 100 troops as marines, to board enemy ships, or defend against
+  boarding?
+
+* Hull space is occupied by the drive, weapons, shields, and stealth tech, at
+  10 points per level of each equipped item.  So a design with these stats
+  (hull=100, propulsion=2, weapons=2, shields=2, stealth=1) would have 30
+  space left over after 20+20+20+10=70 space is used for all the listed
+  equipment.  1 point of space is also required for crew quarters per 1k crew.
+  Assuming a 1k crew size, that leaves 29 space for fuel, ordnance, water,
+  supplies, and general cargo/troops.
+
+* 1 unit of ship space is enough room for: 1000 people and their equipment,
+  which may be 1000 colonists, or 1000 troops, etc.; 1 unit of fuel, which is
+  enough fuel for a mass-100 ship to burn for one month in subspace, or for a
+  mass-100 ship to burn for one day at 1G (at starting tech levels); 1 unit of
+  supply or water, which is enough to eat or drink for 1k crew for one month;
+  1 unit of any resource as cargo; 10 shots; or 10 missiles.  Taking the 29
+  units of leftover space from before, 2 units each of fuel, water, and supply
+  would give the ship 2 months of operating time, plus a small buffer.  That
+  leaves 23.  1 point each of rounds and missiles would leave the ship with 21
+  units of space for general cargo, or just empty space.  A high-quality
+  design will use cargo and empty space as buffers around ammo and fuel.
+
+* Tech advances should: reduce the space requirements for a particular level
+  of equipment; lower the mass of a point of hull; lower the mass of a point
+  of armor; and reduce the fuel cost per unit of distance traveled (or per
+  unit of time spent accelerating in-system).  NB: This implies that physics
+  works like we expect in normal space -- you accelerate to move in acertain
+  direction.  However, in subspace, the rules are different; you constantly
+  expend fuel at a certain rate to move at a constant rate of speed.
+
 * Designs are rolled, a la Shadow Empire.  Given T, the tech level chosen for
   a particular stat (say, armor tech 3), the base stat in the ship design is T
   * 10 (or design armor 30 in this case).  The initial design is created from
   the base stats, but with some random values subtracted from the baseline
   values indicated by the tech levels.  Military tradition mitigates the
-  magnitude of the amount subtracted.  After having used the design for a
+  magnitude of the amount subtracted.  (Similarly, an amount may be added to
+  the space required for each component.)  After having used the design for a
   while, you should gain design-relevant knowledge that allows you to roll a
   new iteration of the design; the new design will benefit from the use of the
   previous design, proportional to the amount learned.  Design points are
@@ -180,15 +220,14 @@ Ships:
   Building ships should make the money/resource costs, build time, and
   reliability rolls improve.
 
-* New designs cannot change the hull size or the propulsion tech.
+* Design upgrades cannot change the hull size or the propulsion tech.
 
-* Subspace (interstellar) speed is based purely on the propulsion stat, P.
-  The ship will move P / 10 world units each month (times whatever scale
-  factor we choose).  In-system ship acceleration Asys is propulsion / hull;
-  system travel times are based on that, with an upper limit of 1.5G for
-  sustained acceleration.  At higher levels of propulsion+shield+construction
-  techs, this upper limit is raised, due to the invention of artificial
-  gravity.
+* Subspace (interstellar) speed is based purely on the propulsion equipment
+  level, P.  The ship will move P world units each month.  In-system ship
+  acceleration Asys is propulsion / mass; system travel times are based on
+  that, with an upper limit of 1.5G for sustained acceleration.  At higher
+  levels of propulsion+shield+construction techs, this upper limit is raised,
+  due to the invention of artificial gravity.
 
 NB: Distance formula for linear acceleration:
 d = 0.5 * a * pow(t, 2)
@@ -209,20 +248,33 @@ t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
 * When a hit occurs, the damage Ds through the shields is W1 - S2 (or W1 / 2 -
   S2 that if the missile was shot down).  This damages the ship like this.
   The damage to the armor is Da = Ds * A2_curr / A2_full.  The damage to the
-  hull is Ds - Da.  Each point of hull damage has a chance to damage the stat
-  of one of: Propulsion, Weapons, Shields, Detection, or Stealth.  The first
-  point has a 1 / H2 chance to damage one point from the listed stats.  The
-  second has a 2 / H2 chance, and so on.
+  hull is Ds - Da.  There is a damage table of in-hull locations that can be
+  damaged.  The table includes the space occupied by each equipment part
+  (weapons, drive, etc.), and points for the occupancy of all the other space
+  (fuel, cargo, supplies, etc.).  Each point of hull damage has a chance to
+  damage one slot in the damage table.  The first point has a 1 / H2 chance to
+  damage one point from the listed stats.  The second has a 2 / H2 chance, and
+  so on.  If a piece of ship equipment is damaged, its performance is degraded
+  accordingly.  If fuel is hit, the locations in the damage table on either
+  side are also hit; this could cause a chain reaction.  If ammo is hit, the
+  same thing happens, except that it is the two locations on either side that
+  are also hit.  Better designs will place fuel and ammo in isolated slots,
+  not near critical equipment; worse designs will have them wherever.
 
 * In fleet battles, ships are divided up into captials and screens.  Every
   ship below the mean Asys for the fleet is a screen; all others are capitals.
   Combat is comprised of rounds.  Each round, each ship chooses a target to
   attack.  The selected target is chosen at random from among the opposing
-  ships, except that each screen is represented twice.  Carriers with
-  dedicated escorts as part of a carrier group have each of their escorts
-  count 4 times.  NB: Ignoring the carrier group for a moment, this means that
-  in a fleet with 10 capitals and 20 escorts, only 1 in 5 attacks will be
-  directed toward a capital.
+  ships, except that each screen is represented twice.  Carriers with Ne
+  dedicated escorts are not attacked as part of the screens-vs-capitals target
+  selection.  Instead, the carrier and its escorts are all counted once, like
+  capital ships.  If the carrier itself gets selected for attack, a new roll
+  is done, [0, Ne]; the resulting carrier or escort gets attacked.  NB:
+  Ignoring the carrier group for a moment, this means that in a fleet with 10
+  capitals and 20 escorts, only 1 in 5 attacks will be directed toward a
+  capital.  TODO: Allow non-carrer capitals to get dedicated escorts too?
+  TODO: Are cloaked ships that attack allowed to go around these rules
+  somehow?
 
 * After a fleet ends its travel, it requires a certain number of days of
   cooldown before it can travel again.  This should change based on tech.
