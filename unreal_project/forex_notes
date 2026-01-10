@@ -2,199 +2,597 @@ ELEMENTS:
 =========
 
 
-TURNS:
-======
-
-* THE GAME is turn-based.  Each turn consists of three phases: orders, movement, and combat.
-* In the orders phase, all the choice of builds, ship movements, ship orders, etc., are done.  All players do the orders phase at the same time.
-* Ships that are being repaired may operate in the same turn if the repairs are less than some threashold percentage T4.  Other repairs take the entire turn.  If an in-repair ship is in a combat hex, half of its repairs will have been done before combat is resolved.
-* After all players have hit the "turn" button, the movement phase begins.  Players watch as the moves are executed.
-* Then begins the combat phase.  If friendly and enemy units end up in the same hex, combat is resolved there.  The only exceptions to this are: no side has attack capability; and N-1 or more sides are evading successfully.
-* Combat is resolved for all hexes.  Combat must result in the destruction or retreat of at least N-1 sides.
-* After all combats are resolved, each unit built during the turn is placed at the shipyard where it was built.
-
-
 The map, and colonization:
 ==========================
 
-* The map is comprised of hexes.
-* Each hex covers a lot of space, and may have multiple important locations within it.  Such locations include colonies, worlds (high-development colonies), homeworlds, starbases, outposts, etc.  Each such location is a "zone".  A zone may have multiple things in it.  For instance: the homeworld and the starting outpost are in the same zone.
-* Each hex has multiple habitable planets within it.  (TODO: How many?  Maybe you never run out, but just take longer and longer to find each one.)  They must be discovered via the Explore fleet mission.  As you find more of them, each one becomes harder to find.  The base discovery time should be normally distributed.
-* Colonies have a single value that represents their level of population, infrastructure, etc., "development".  1 development roughly corresponds to 1 million population on a highly developed world.
-* Hexes are colonized a planet at a time, using reusable colony ships.  Colony ships require resources to operate.  Colony ships can develop existing colonies (deliver development), or start new ones.  It takes more resources (maybe longer) to start new colonies.  Lifters can be used to deliver development to a colony too, at a reduced effectiveness (say, half).
-* Colonies consume resources in the early turns, then develop into resource-producers.
-* When C1 colonies exist in a hex, and their development is above a certain threshold T1, the hex is owned.
-* A hex can contain multiple colonies from multiple nations.  Nations can attack and/or force other nations' colonies to move.  More than one nation may "own" a hex.  Each nation may or may not know about other nations' colonies.
-* One or more significant worlds may exist within a hex.  Once a colony crosses a certain threshold T2 (> T1), it starts to generate resources (we'll call this a "world").  Each world is a supply node.
-* Each province of hexes earns you extra income from the planets in that province, and makes colonies cheaper within the province.  A province is 6 connected hexes.
+* The map is comprised of hexes.  Each hex contains multiple systems.
+
+* Each system may have multiple important locations within it.  Such locations
+  include settlements, starbases, outposts, etc.  Each such location may have
+  multiple things in it.  For instance: the homeworld and the starting outpost
+  are in the same system location.
+
+* Each hex has the smae number of systems, and those systems are discovered
+  when you enter an adjacent hex.  The lore is that these are the only systems
+  to which you can navigate using subspace.
+
+* Each hex has multiple habitable planets within it.  They must be discovered
+  via the Explore fleet mission.
+
+* Settlements have a single value that represents their level of population,
+  infrastructure, etc., "development".  1 development roughly corresponds to 1
+  million people (1 "pop") on a highly developed world.
+
+* Hexes are colonized a planet at a time, using reusable colony ships.  Colony
+  ships require resources to operate.  Colony ships can develop existing
+  settlements (deliver development), or start new ones.  It takes more
+  resources (maybe longer) to start new settlements.  Lifters can be used to
+  deliver development to a settlement too, at a reduced effectiveness (say,
+  half).
+
+* Settlements consume resources in the early turns, then develop into
+  resource-producers.  The threshold between needing resources and producing
+  them is I1.
+
+* A planet can contain multiple settlements from multiple nations.  Nations
+  can attack and/or force other nations' settlements to move.  Each nation may
+  or may not know about other nations' settlements.
+
+* Each province of hexes earns you extra income from the planets in that
+  province, and makes settlements cheaper within the province.  A province is
+  6 connected hexes.
+
 * Forming a province takes resources.
-* The home hex for each nation starts with multiple worlds, an outpost, a reasonably sized fleet of weak ships, and a colony ship.
+
+* The home hex for each nation starts with multiple worlds, an outpost, a
+  reasonably sized fleet of weak ships, and a colony ship.
 
 
 Planets:
 ========
 
-* Planets have resources in different degrees af availability.  Metal, energy (may be anything from fossil fuels to hydro), (ship) fuel (or the raw ingredients for same), water, food.  The availability of these are on a point scale, 0-10.  The actual amount produced is this factor, times the infrastructure score.
-* There are some properties that make a planet more or less suitable.  Different tech levels may mitigate some of the malus-inducing properties.  Some ideas here are: (-) abundant heavy metals, (-) left-chiral life, (-) high rotational tilt, (-) lack of water, (+) low rotational tilt, (+) domesticable local species.
+* Planets have resources in different degrees af availability.  Metal, energy
+  (may be anything from fossil fuels to hydro), (ship) fuel mineral (the raw
+  ingredients for ship fuel), water, food.  The availability of these are on a
+  point scale, 0-100.  The actual amount produced is this factor, times the
+  infrastructure score, when fully staffed with enough pops.
+
+* There are some properties that make a planet more or less suitable.
+  Different tech levels may mitigate some of the malus-inducing properties.
+  Some ideas here are: (-) abundant heavy metals, (-) left-chiral life, (-)
+  hostile fauna, (-) hostile flora, (-) high rotational tilt, (-) lack of
+  water, (+) low rotational tilt, (+) domesticable local species.
 
 
 Supply:
 =======
 
-* Supply starts in the home hex, and goes outward from there H1 hexes.  If supply encounters a mobile base, outpost, starbase, or world (a "supply node") owned by the same nation, supply radiates out from that supply node, etc.  Stated another way, a hex is in supply if it can trace a path from itself to the home hex, from supply node to supply node, without ever moving H1 + 1 hexes without reaching a supply node.
-* When tracing a supply path, the path is blocked by enemies, and unblocked by friendlies.  TODO!
-* If part of the empire is disconnected from the home hex, any world(s) within the disconnected portion generate supply.  TODO: How much dev does it take to supply one ship?
+* Supply starts in each system that that both produces supply and that has
+  supply throughput (which comes from available transports and bases+infra),
+  and goes outward from there S1 world units.  If supply encounters a mobile
+  base, outpost, starbase, or other supply-exporting system (owned by the same
+  nation) supply radiates out from that system, etc.  Stated another way, a
+  system is in supply if it can trace a path from itself to a supplying
+  system, from supply node to supply node, without ever moving more than S1.
+  Note that the amount of supply they receive depends upon supply throughput.
 
-TODO: Supply consumes resources (and money)
+* Supply may be disrupted by enemy actin, including destroying or capturing
+  transports.
 
-One unit of food is enough to feed one pop (1M people) for one turn.  Taking a "typical" crew size of 1k, it should then require 0.001 food to feed one ship for one turn.  Same thing for one unit of water.  There are replacement parts needed for ships, ordnance, and fighters.  Those all require metals, (ground) energy, and money.  A ship requires 1 unit of fuel per hull size per engine size.
+* One unit of food is enough to feed one pop (1M people) for one month.
+  Taking a "typical" crew size of 1k, it should then require 0.001 food to
+  feed one ship for one month.  Same thing for one unit of water.  There are
+  replacement parts needed for ships, ordnance, and fighters.  Those all
+  require metals, (ground) energy, and money.  A ship requires 1 unit of fuel
+  per hull size per engine size.
 
 
 Ships:
 ======
 
 * Ships should be relatively plentiful.
-* Each ship has a combat factor.  The earliest ships will have a factor of 1 or 2.  Large ships in the mid-game will have factors of 7-8.  Ships in the late game will have factors mich higher, perhaps up to 15 or 20.  The combat factor is the base value used for construction, shield, and weapons.  Some ships will have higher a defense factor than attack factor (e.g. carrier escorts), and others will have only a defense factor (e.g. colony ships and lifters).
-* Some ships carry fighers.  Each fighter factor is a combat factor of 1.  Each fighter factor may represent more than one actual fighter.
-* Non-combat operations (delivering ground forces, setting up outposts and bases, etc.) must be done by special craft, "lifters".  Lifters have large stealth and propulsion maluses, like the largest warships.  They have no attack factor, but have high defense factors.
-* Most ships should travel at the same speed: H1 hexes per turn.  H1 should depend on the current tech level.  The Lightest ships should get a bonus on top of H1.  The heaviest should get a malus.  This may apply to heavy warships, but must definitely apply to lifters and colony ships.
-* When the tech level goes up, a ship must be upgraded to get the new speed H1.  They can do this at a starbase (limit S1 ships/turn), or at the shipyard (unlimited upgrades).  The upgrades cost resources.
-* Each ship's tech level in each tech area is listed, along with the current tech level.  For instance, detection may be lited as 3/5 if the ship's detection hardware is level 3, and level 5 has been researched.
-* When ships are damaged in combat, they must be repaired at a mobile repair yard (limited to P1 points/turn), or the shipyard (unlimited upgrades).  The repairs cost money.
-* Ships must be in supply to operate normally.  If they move outside of supply, their speed and fighting strength are halved (rounding down, minimum 1) to H2.  If they move more than H2 hexes outside of supply, they are stuck.  If they do not re-enter supply within two turns of that, they are lost.
-* Each nation has a ship build schedule; builds are at the main shipyard in the home hex.  It is *extremely* expensive to establish new shipyards, including when the old one is destroyed.  All ships in the schedule may be built at face value.  Any ships in excess of that may only be built in times of war, and for double price.
-* The schedule includes a mix of small, medium, and large warships.  It also includes lifters, colony ships, and fighters.
-* When a new ship design N is created, that design must be added to the shipyard.  Lets say the old design O is very different.  Then adding the new design would be like adding a new production line from scratch.  If the designs are very similar, the cost (TODO or maybe loss in build speed?) is low-to-no.
-* Shipyards appear in the same zone as the starting outpost and homeworld.
-* The smallest ships have a bonus to their detection, stealth, and propulsion ratings.  The largest have maluses.
-* Transports should exist, and should be very soft targets.  You should have to produce them for resources just like other ships, a la HOI4.
 
-TODO: Increase the ship factors descibed above by 10, so that we can have increments in between (like transports, which should start with values like 0-3 or something -- well below 10 defense).
+* Each ship has a combat factor.  The earliest ships will have a factor of 10
+  or 20.  Large ships in the mid-game will have factors of 70-80.  Ships in the
+  late game will have factors mich higher, perhaps up to 150 or 200.  The combat
+  factor is the base value used for construction, shield, and weapons.  Some
+  ships will have higher a defense factor than attack factor (e.g. carrier
+  escorts), and others will have only a defense factor (e.g. colony ships and
+  lifters).
 
-Ship cost could be something like this:
-Hull cost (by volume, maybe) +
-Armor cost +
-Propulsion cost +
-Weapons cost +
-Shields cost +
-Detection equipment cost +
-Stealth cost
+* Some ships carry fighers.  Each fighter factor is a combat factor of 10.
+  Each fighter factor may represent more than one actual fighter.
 
-A ship design would consist of picking the level for each item (ship armor 1 vs. ship armor 2, etc.).  The total cost would be in all the resources involved.  Obviously, not all ships need all those elements (stealth, detection, and shields for instance).  Also, the latest available components need not be used.  Older stuff should be cheaper.  Quantity over quality should be a viable strategy at times (or for your whole run).
+* Non-combat operations (delivering ground forces, setting up outposts and
+  bases, etc.) must be done by special craft, "lifters".  Lifters have large
+  stealth and propulsion maluses, like the largest warships.  They have no
+  attack factor, but have high defense factors.
 
-After a fleet ends its travel, it should have a certain number of days of
-cooldown before it can travel again.  This should change based on tech.
-Consider having interdictor ships that increase this time, saceld by their
-proximity to the affected ships.  Also, a ship should be required to be at the
-edge of a system )far from its star, perhaps based on stellar masses), in the
-direction of the new system it want to go to.  Ships should not be able to
-travel to interstellar space.  The masses of stars interfere with subspace
-drives when they are too close, but are also necessary anchors for subspace
-travel.  A fleet can do an emergency departure (presumably to avoid getting
-destroyed), when they have not reached the end of the cooldaown timer, or are
-too close to the star in their current system.  This randomizes the place they
-end up at the end of their travel.  Friendlies (and enemies) cannot come to
-help or attack them.  If they have fuel and supplies enough, they can do a
-normal travel to a system after the cooldown.  Doing an emergency jump at that
-point should have dire consequences.  If they run out of supplies, they might
-lose crew (and thus operational capabilities).  If they lack fuel, they may
-end up stranded.
+* Most ships should travel at the same speed: S1 world units per month.  S1
+  should depend on the current tech level.  The lightest ships should get a
+  bonus on top of S1.  The heaviest should get a malus.  This may apply to
+  heavy warships, but must definitely apply to lifters, colony ships, and
+  transports.
+
+* When the tech level goes up, a ship must be upgraded to get the new speed
+  S1.  They can do this at a starbase (limit SB1 ships/month), or at the
+  shipyard (much higher limits).  The upgrades cost resources.
+
+* Each ship's tech level in each tech area is listed, along with the current
+  tech level.  For instance, detection may be listed as 2/5 if the ship's
+  detection hardware is level 2, and level 5 has been researched.
+
+* When ships are damaged in combat, they must be repaired at a mobile repair
+  yard (limited to P1 points/month), or the shipyard (many more repair points,
+  but taking away from production capacity).  The repairs cost money.
+
+* Each nation has a ship build schedule; builds are at the main shipyard in
+  the home system.  It is *extremely* expensive to establish new shipyards,
+  including if/when the old one is destroyed.  All ships in the schedule may
+  be built at face value.  Any ships in excess of that may only be built in
+  times of war, and for double price.
+
+* The schedule includes a mix of small, medium, and large warships.  It also
+  includes lifters, colony ships, and transports.
+
+* When a new ship design N is created, that design must be added to the
+  shipyard.  Lets say the old design O is very different.  Then adding the new
+  design would be like adding a new production line from scratch.  If the
+  designs are very similar, the cost (TODO or maybe loss in build speed?) is
+  low-to-no.
+
+* Shipyards appear in the same system location as the starting outpost and
+  homeworld.
+
+* The smallest ships have a bonuses to their detection, stealth, and
+  propulsion ratings.  The largest have maluses.
+
+* Transports should exist, and should be very soft targets.  You should have
+  to produce them for resources just like other ships, a la HOI4.
+
+* Ship cost is:
+  - Hull cost (by volume, maybe) +
+  - Armor cost +
+  - Propulsion cost +
+  - Weapons cost +
+  - Shields cost +
+  - Detection equipment cost +
+  - Stealth cost
+
+* A ship design is made by picking the tech level for each stat (armor 1
+  vs. armor 2, etc.).  The total cost would be in all the resources involved.
+  Obviously, not all ships need all those elements (stealth, detection, and
+  shields for instance).  Also, the latest available components need not be
+  used.  Older stuff should be cheaper.  Quantity over quality should be a
+  viable strategy at times (or for your whole run).
+
+* Designs are rolled, a la Shadow Empire.  Given T, the tech level chosen for
+  a particular stat (say, armor tech 3), the base stat in the ship design is T
+  * 10 (or design armor 30 in this case).  The initial design is created from
+  the base stats, but with some random values subtracted from the baseline
+  values indicated by the tech levels.  Military tradition mitigates the
+  magnitude of the amount subtracted.  After having used the design for a
+  while, you should gain design-relevant knowledge that allows you to roll a
+  new iteration of the design; the new design will benefit from the use of the
+  previous design, proportional to the amount learned.  Design points are
+  acumulated via combat for combat-related stats (including hull), successful
+  hiding/detection for those stats, and flying around for the propulsion stat.
+  Building ships should make the money/resource costs, build time, and
+  reliability rolls improve.
+
+* New designs cannot change the hull size or the propulsion tech.
+
+* Subspace (interstellar) speed is based purely on the propulsion stat, P.
+  The ship will move P / 10 world units each month (times whatever scale
+  factor we choose).  In-system ship acceleration Asys is propulsion / hull;
+  system travel times are based on that, with an upper limit of 1.5G for
+  sustained acceleration.  At higher levels of propulsion+shield+construction
+  techs, this upper limit is raised, due to the invention of artificial
+  gravity.
+
+NB: Distance formula for linear acceleration:
+d = 0.5 * a * pow(t, 2)
+
+NB: Time to travel distance d at accceleration a:
+t = sqrt(2 * d / a)
+
+NB: Time to travel distance d at acceleration a, with a flip and deceleration
+at the midpoint:
+t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
+
+* A ship attack works like this.  For ships 1 and 2, W1 (ship 1's weapons
+  rating) is the base damage.  This attack consumes one round and one missile.
+  If the defending ship has at least one round remaining, it fires it as a PD
+  salvo, and has a chance to destroy the incoming missile.  The success
+  probability is 0.25 * (1 + W2 - W1 + Asys2 - Asys1).
+
+* When a hit occurs, the damage Ds through the shields is W1 - S2 (or W1 / 2 -
+  S2 that if the missile was shot down).  This damages the ship like this.
+  The damage to the armor is Da = Ds * A2_curr / A2_full.  The damage to the
+  hull is Ds - Da.  Each point of hull damage has a chance to damage the stat
+  of one of: Propulsion, Weapons, Shields, Detection, or Stealth.  The first
+  point has a 1 / H2 chance to damage one point from the listed stats.  The
+  second has a 2 / H2 chance, and so on.
+
+* In fleet battles, ships are divided up into captials and screens.  Every
+  ship below the mean Asys for the fleet is a screen; all others are capitals.
+  Combat is comprised of rounds.  Each round, each ship chooses a target to
+  attack.  The selected target is chosen at random from among the opposing
+  ships, except that each screen is represented twice.  Carriers with
+  dedicated escorts as part of a carrier group have each of their escorts
+  count 4 times.  NB: Ignoring the carrier group for a moment, this means that
+  in a fleet with 10 capitals and 20 escorts, only 1 in 5 attacks will be
+  directed toward a capital.
+
+* After a fleet ends its travel, it requires a certain number of days of
+  cooldown before it can travel again.  This should change based on tech.
+  Consider having interdictor ships that increase this time, scaled by their
+  proximity to the affected ships.  Also, a ship should be required to be at
+  the edge of a system (far from its star, perhaps based on stellar masses),
+  in the direction of the new system it wants to go to.  Ships should not be
+  able to travel to interstellar space.  The masses of stars interfere with
+  subspace drives when they are too close, but are also necessary anchors for
+  subspace travel.  A fleet can do an emergency departure (presumably to avoid
+  getting destroyed), when they have not reached the end of the cooldown
+  timer, or are too close to the star in their current system.  This
+  randomizes the place they end up at the end of their travel.  Friendlies
+  (and enemies) cannot come to help or attack them.  If they have fuel and
+  supplies enough, they can do a normal travel to a system after the cooldown.
+  Doing an emergency jump at that point should have dire consequences.  If
+  they run out of supplies, they might lose crew (and thus operational
+  capabilities).  If they lack fuel, they may end up stranded.
+
+* Bases at planets should be able to be covered by planetary defenses.  If the
+  base is in LPO (like "LEO", but generic), the defenses should "come around"
+  every few months, and fire at enemies.  If the base is a GSO, only the
+  defenses on that side of the planet should be able to fire.  GSO bases can
+  be supported then by numerous planetary batteries, and are relatively safer.
+  LPO bases are cheaper (TODO: and maybe cheaper to build at?).
 
 
 Other units:
 ============
 
-* Mobile bases must be built.  They are part of the build schedule.  They can be over-built (for 2x cost, as always).
-* Mobile bases must be towed via lifter out to a location.  They are not operational until the beginning of the turn after they are placed.
-* A lifter is required to upgrade a mobile base to an outpost.  This takes multiple turns; a second lifter can be used to speed things up.  This upgrade takes resources.
-* A lifter is also required to upgrade an outpost to a starbase.  This takes multiple turns; up to two additional lifters can be used to speed things up.  This upgrade takes resources.
-* Starbases are always in supply; mobile bases and outposts may or may not be.
-* Mobile bases, outposts, and starbases are each supply nodes.
-* Ouposts and starbases have fighters.  Fighters can be used in the hex of the base, and can move into an adjacent hex.  In early game, they should not have fighters, and in mid game their fighters should only be usable in their hex.
+* Mobile bases must be built.  They are part of the build schedule.  They can
+  be over-built (for 2x cost, but only during war, as always).
 
-* Ground units are called divisions.  They exist to protect worlds; they have fighters.  Their fighters can only be used in the hex in which they are based.
-* Mobile repair yards exist to repair and upgrade ships in the field, so that they don't have to return to a starbase or the shipyard.  They must be built special, and towed with a lifter like a mobile base.  They may only be built during times of war.
+* Mobile bases must be towed via lifter out to a location.  They are not
+  operational until they have been assembled.  This requires the lifter.
+
+* A lifter is required to upgrade a mobile base to an outpost.  This takes
+  time; a second lifter can be used to speed things up.  This upgrade takes
+  resources and money.
+
+* A lifter is also required to upgrade an outpost to a starbase.  This takes
+  time; up to two additional lifters can be used to speed things up.  This
+  upgrade takes resources and money.
+
+* Starbases are always in full supply, and can manufacture their own ordnance
+  and fighters.  Mobile bases and outposts may or may not be in supply.  This
+  manufacturing capability is independent of the ones for settlements.  It
+  does not require pops, but should be modest in its capacity.
+
+* Mobile bases, outposts, and starbases are each supply nodes.  They have
+  varying degrees of stockpile capcity and supply throughout, depending on the
+  details of their design.  Higher-tech designs will have more; starbases will
+  have more than outposts, which will in turn have more than mobile bases.
+
+* Ouposts and starbases have fighters (past a certain tech level).  At higher
+  tech levels, fighters can be used anywhere in the system of the base; at
+  even higher tech levels, they can move into nearby systems, moving like
+  fleets.
+
+* Ground units are called divisions.  They exist to protect worlds; they have
+  fighters.  Their fighters can only be used on the planet on which they are
+  based, or, at later tech levels, in the system in which they are based.
+
+* Mobile repair yards exist to repair and upgrade ships in the field, so that
+  they don't have to return to a starbase or the shipyard.  They must be built
+  specially, and towed with a lifter like a mobile base.  They may only be
+  built during times of war.
 
 
 Fleets and missions:
 ====================
 
-* Ships can be organized into fleets.  Fleets can have several missions: Explore, Engage, Evade, Intercept, Guard Supply, Planetary attack, and Occupy.  TODO: Pirate mission to steal resources from other nations?  What would counter that?
-* Engage is the default.  The fleet will hold its position, and fight any units that enter its hex.
-* Evade is like engage, except that the fleet will will try not to fight units that enter its hex.  The fleet must remain undetected for this to work.  The detection chance increases turn by turn for uncloaked ships.
-* Intercept: the fleet should move to intercept ships moving toward the nation's hexes.  It will intercept them as far away as possible, given the detection done by all friendlies.  This makes it a good idea to have a picket line of small ships out in front of the area you want to defend.
-* Guard supply: the fleet should move to unblock supply to friendlies.  If it has no hex within range at which to do so, it moves to block supply to enemies.  It will move to (un)block the biggest force possible.  Guard supply moves happen after regular moves.  Guard fleets may not be able to reach some hexes that are otherwise within range, due to pinning effects.
-* Planetary attack: Reduce development on any and all planets within the hex.  Bigger fleets do more damage.  May only be done when at war with the target hex's nation.
-* Occupy: spread out and occupy captured territory.  One ship is required per world, and one additional ship is required per province.  Ships will automatically react into clumps when attacked, within the limit of their movement ratings.  May only be done at war.
-* Explore: find habitable worlds in a given hex.  Better detection and propulsion make this work better.  If all habitable worlds are found, the fleet will move on to the next hex.  Hexes in supply are preferred.
+* Ships can be organized into fleets.
+
+* Each ship has an organization rating [0, 1.0].  This is overall battle
+  readiness (which includes morale).  This value is multiplied by the raw
+  combat factors of the ship to get the effective values for each factor.
+
+* Each ship has an XP rating [-1.0, 1.0].  For each combat factor F, F is
+  modified by ship_xp * ship_xp_impact * F.  So, if ship_xp_impact is 0.5, a
+  top-XP unit would have 150% of its combat factors, and a bottom-XP crew
+  (i.e. that wasn't even fully trained) would have 50% of its combat factors.
+
+* Replacing crew due to attrition, servicemembers leaving the service, etc.,
+  will affect org and xp, proportional to the percentage of crew replaced.
+  Org eventually recovers; XP does not.  Note that this implies that having
+  longer service requirements keeps ship crew XPs up.
+
+* Each fleet has an fleet XP rating [0, 1.0].  Each fleet gets a bonus to each
+  ship's effective XP rating equal to fleet_xp * fleet_xp_impact.  This
+  represents their ability to work together as a single force.  Replacing
+  ships proprtionately affects fleet XP.
+
+* Fleets have an engagement posture setting, [0, 100].  It ranges from run
+  away no matter what (0), to fight no matter what (100).  The settings in
+  between are based on estimated chances of winning.  A setting of 50 would
+  mean that the fleet should take 50-50 fights.
+
+* Fleets will return to the nearest supply node to get more supply, water,
+  fuel, and ordnance.  They will do this when they are down to the lowest of
+  supply, water, or fuel that it would take to get back to resupply, plus a
+  configurable margin [0, 0.25].  Independently, they will return when down to
+  a configurable amount of remaining ordnance [0, 0.9].  Transports can be
+  assigned to fleets, which will increase their available amounts of all these
+  quantities, but the transports are also vulnerable to attack.
+
+* Fleets have repair settings as well.  Fleets will notify the user that they
+  need repairs, and ask which repair facility they should move to, unless they
+  have auto-detatch enabled.  Auto-detach will break off detachments of just
+  the ships that need repairs.  Repair detachments start with the fleet XP of
+  their original fleet, but slowly lose fleet XP.  They stop losing it when
+  they are reunited with their original fleet; over time, they will regain
+  half of what they lost.
+
+* Fleets can have several missions.  TODO: Privateer, Pirate, Disrupt
+  embargoed trade, Disrupt nonallied trade, ...?
+
+* Idle: Hold position.  This is the default.
+
+* Exercise: Conduct force-on-force exercises, slowly increasing
+  crew XP, but dramatically lowering org.  Exercises cost money and use
+  consumables like fuel and ordnance.
+
+* Explore: Fly about fro system to system and survey the planets in each, in
+  order to find habitable planets.  Better detection and propulsion make this
+  work better.
+
+* Hide: Try to remain undetected, and try not to fight units that enter the
+  target system.  The fleet must remain undetected for this to work.  The
+  detection chance increases month by month for uncloaked ships.  The fleet
+  may try to hide behind a large outer planet in the system.
+
+* Intercept in system: the fleet should move to intercept ships moving into or
+  through the target system.  It will intercept them as far away as possible,
+  given the detection done by all friendlies.  This makes it a good idea to
+  have a picket line of small ships throughout the system you want to defend.
+
+* Protect system location: the fleet will move to intercept ships moving
+  toward the target location.  It will intercept them only when they get
+  reasonably near.
+
+* Hunt enemy fleets: the fleet will move to likely engagement locations, and
+  engage enemies.
+
+* Guard supply: the fleet will guard supply transports.
+
+* Attack settlement defenses: Attack garrisons and any surface-to-space
+  planetary defenses in a settlement.  May only be done when at war with the
+  target settlement's nation.  There is a danger of attacking other nations'
+  settlements by mistake.
+
+* Attack settlement infrastructure: Reduce infra on the target settlement.  May
+  only be done when at war with the target settlement's nation.  There is a
+  danger of attacking other nations' settlements by mistake.
+
+* Attack settlement population: Kill pops in the target settlement.  May only
+  be done when at war with the target settlement's nation.  There is a danger
+  of attacking other nations' settlements by mistake.  This is considered a
+  war crime.
+
+* Blockade settlement: Capture or destroy all transports coming to or from the
+  target settlement.  There is a very high danger of captiring and/or
+  destroying other nations' transports by mistake.
 
 
 Special missions:
 =================
 
-* Colony ships have these missions: Found colonies, Expand colonies.  Each requires a target hex.  Founding starts as many new colonies as possible, then behaves as the Expand mission.  Expanding delivers development to existing colonies.  The number of times a colony ship may act during a turn is determined by H1; as many round-trip-and-back moves from the home hex to each colony in the target hex as possible will be done.  The colony ship may end the turn in some hex between the target hex and the home hex.  The colony ship moves during the normal movement phase (i.e. not the supply (un)blocking movement phase), and will never move out of supply.
-* Lifters have these missions: Deliver divisions, Deliver mobile repair yard, Deliver mobile base, Build outpost, Build starbase, Upgrade base, Expand colonies.  The deliver mission move to where the divisions or repair yard/mobile base is, and then deliver it to the target world or hex, respectively.  Lifters can carry multiple divisions.  (TODO: How many depends on tech level?)  Divisions are ready in the combat phase of the same turn in which they are placed; repair yards and mobile bases are available the next turn.  The Build missions each take a predecessor base and construct the next largest base from that.  Upgrade base is used to upgrade a base's tech levels once a new tech is available; this does not cost resources.  Just like with colony ships, lifters may perform multiple deliveries and/or colony expansions in a single turn, if their movement allows.
+* Fleeets which contain colony ships have additonal missions.
+
+* Found settlement: Start a settlement on the target planet.  Takes time,
+  during which the colony ship must stay at the planet.
+
+* Expand settlement: Increase the speed of infra construction at the target
+  settlement.  This implies a proportional increase in consumption of money
+  and resources.  This massively increase the drain on shipboard qunatities,
+  which will require the colony ship to have to return to a supply point for
+  resupply.  Assigning transports to the colony fleet mitigates this.
+
+* Fleeets which contain lifters have additonal missions.
+
+* Deliver divisions: Deliver garrison divisions to target settlement; requires
+  setup time.
+
+* Deliver mobile repair yard: Requires setup time.
+
+* Deliver mobile base: Requires setup time.
+
+* Build outpost: Requires build time.
+
+* Build starbase: Requires build time.
+
+* Upgrade base: Upgrades the design; requires build time.
+
+* Expand settlement: [See colony ships.]
 
 
 Resources, maintenance, industry, and tech:
 ===========================================
 
-* Resources are produced by worlds (planets above T2 development).  The amount produced is proportional to the development above T2.  (TODO: Consider sigmoid dev growth, where the top of the curve is the max pop based on that planet's livable area.  Maybe high rate straight from the beginning, with a taper at the top/to the right).
-* Resources are split among tech, industry, and maintenance.  If the total amount of resources available is R, Rt + Ri + Rm = R.  (TODO: Consider allowing resources to be banked, lent out, given to, and/or borrowed from, other nations, or internally within one's own economy.  Lending and borrowing imply interest.  Inability to repay loans may result in bankruptcy.)
-* Maintenance must be paid for ships, divisions, mobile bases, and outposts.  If maintenance is M%, the combat factors for an affected unit are scaled by M%.  TODO: Consider allowing bases to be "turned off".  TODO: Consider an N-turn lag between increasing maintenance/turning maintenance back on and full increase of combat strength.
-* Maintenance must be paid for colonies before they reach T1 development.
-* Industry is production of ships and other units.  To build everything in the build schedule, the right amount of resources must be supplied.  Provide less, and everything cannot be built.  Supply more if you want to over-build.
-* Resources may also be spent to upgrade the shipyard.  This is effectively an increase to the build schedule.
-* Tech consumes resources as well.  Spending on tech increases the per-turn chance of developing a given tech.  The chance starts at 0%, but maxes out at 94%
+* Resources are produced by settlements.
 
-Kinds of resources: money, metal, (planetarily-used) energy, (ship) fuel (TODO: maybe multiple kinds?), water, food.
-Energy may be needed in combination with one or more other resources in order to make ship components and other manufactured goods.
+* Resources can be stockpiled, lent out, given to, and/or borrowed from, other
+  nations.  Lending and borrowing imply interest.  Inability to repay loans
+  may result in bankruptcy.
 
-Refining ship fuel should be done at space refineries, which are subject to attack.
+* Maintenance must be paid for ships, divisions, mobile bases, and outposts.
+  If maintenance is M%, the combat factors for an affected unit are scaled by
+  M%.  TODO: Consider allowing bases to be "turned off".  TODO: Consider an
+  N-month lag between increasing maintenance/turning maintenance back on and
+  full increase of combat strength.
+
+* Maintenance (money and supply) must be paid for settlements before they
+  reach I1 development.
+
+* Shipyards produce ships and other units (except garrisons).  To build
+  everything in the build schedule, the right amount of resources, money, and
+  pops must be supplied.  Provide less of any of those, and everything cannot
+  be built.  Supply more resources if you want to over-build.  Overbuilds are
+  2x resource and money cost, and do not require more pops.
+
+* Resources and money may also be spent to upgrade the shipyard.  This is
+  effectively an increase to the build schedule.
+
+* Tech consumes resources as well.  Spending on tech increases the per-month
+  chance of developing a given tech.  The chance starts at 0%, but maxes out
+  at 94%
+
+* Kinds of resources: money, metal, (planetarily-used) energy, (ship) fuel
+  minerals, water, food.  Energy may be needed in combination with one or more
+  other resources in order to make ship components and other manufactured
+  goods.
+
+* Refining ship fuel should be done at space refineries, which are subject to
+  attack.  Planetside refineries should be the startgin default, but will
+  produce way less fuel.  After a certain tech, space refineries become
+  available.
 
 
 Tech:
 =====
 
-* There are multiple areas of tech: stealth, detection, construction, propulsion, weapons, shields (TODO: maybe automation?).
-* Stealth allows your cloaked variants to avoid detection. (You can build cloaked variants of some ships.)
-* Detection allows you to detect cloaked ships, uncloaked ships, and the presence and location of other nations' colonies.
+* There are multiple areas of tech: stealth, detection, construction,
+  propulsion, weapons, shields, and automation
+
+* Stealth allows your ships to avoid detection.
+
+* Detection allows you to condict planetary surveys more quickly; detect
+  cloaked ships and uncloaked ships; and the presence and location of other
+  nations' settlements.
+
 * Construction allows you to build larger and tougher ships and bases.
-* Propulsion lets you build faster ships, by increasing your H1.
+
+* Propulsion lets you build faster ships, by increasing your S1.
+
 * Weapons allows you to build more deadly ships and bases.
+
 * Shields allows you to build tougher ships and bases.
-* Automation reduces the crewpower needed to crew ships; reduces ship build time; reduces infrastucture build/repair time; and reduces the time to research other techs (except automation).
-TODO: Consider having some properties derived from the tech levels of more than one area.
 
-There are 50 tech levels for each area.  Each tech has a schedule of what techs are available at what level.  E.g. ship armor 1 at Construction 3, ship armor 2 at Construction 6, etc.
+* Automation reduces the crewpower needed to crew ships; reduces ship build
+  time and monetary cost (and resource cost to a lesser extent); reduces
+  infrastucture build/repair time; and reduces the time to research other
+  techs (except automation).
 
-It should be very easy to fall behind on tech, but hard to speed up tech progress.  Tech progress is based on sqrt(total pop in areas above a threshold I1 of infrastructure) .  This implies a certain amount of resource spending X.  Spending Y > X will increase the speed of progress to X * sqrt(Y / X), not Y.
+* At higher levels of stealth+propulsion, you unlock ship designs for staying
+  in subspace for prolonged periods, popping out, and popping back in.
+  Y'know, like a submarine.  Unlike a normal ship, such ships have no subspace
+  travel cooldown.  They can enter subspace more easily the farther they are
+  from a star; closer in, they can enter subspace for far less time.  This
+  implies they can arrive in a system, and then "cloak".  They must pop out of
+  subspace to take a peek at the system they are in.  At even higher tech
+  levels (including detection), they can see the system without leaving
+  subspace, though this gives enemies information about their position; the
+  more they use it, the more accurate their enemies' location estimates
+  become.  At even higher levels (including weapons), they can attack from
+  subspace; this gives away their location even more quickly.  Only very small
+  ships can use this kind of subspace submarine technology.
 
-TODO: It would be nice to be able to put fewer resources into one or more of these, and thus to "specialize" in the other areas.  E.g. if you have tons of crew power, and are ahead on research, why not just use the resources for Automation research on something else -- like more ships?
+* There are 50 tech levels for each tech area.  Each tech has a schedule of
+  what techs are available at what level.  E.g. ship armor 1 at Construction
+  3, ship armor 2 at Construction 6, etc.
 
-* Evaluation of tech effects is typically partially adversarial.  For instance, the chance to detect a cloaked ship is based primarily on the ship's stealth tech level, but is modified by the difference between its stealth level and the detection levels of its adversaries.  As another example, a bonus damage to shields is given if an attacker has a higher weapons tech than the target's shield tech; a bonus damage to the ship itself is given if the attacker's weapon level is higher than the target's construction level.
-* A given ship, base, or other unit may be unlocked when certain tech level minimums are met.  In other cases, capabilities are added to existing units.  For instance, when fighters are unlocked, the first carriers are unlocked along with them; starbases get fighters at the same time (they may get them a bit at a time over subsequent tech levels).
+* It should be easy to fall behind on tech, but hard to speed up tech
+  progress.  Tech progress is based on sqrt(total pop in areas above a
+  threshold I1 of infrastructure) .  This implies a certain amount of resource
+  spending X.  Spending Y > X will increase the speed of progress to X *
+  sqrt(Y / X), not Y.
+
+* Rtotal RPs are generated for a given nation.  All these RPs are allocated
+  among the tech areas.  The sum of all allocations is the Rtotal.  Not every
+  area needs to be given RPs.  Assuming Na tech areas, each area gets a
+  baseline of 1.0 / Na * private_research_factor, plus whatever is allocated
+  from Rtotal.
+
+* Evaluation of tech effects is typically partially adversarial.  For
+  instance, the chance to detect a cloaked ship is based primarily on the
+  ship's stealth tech level, but is modified by the difference between its
+  stealth level and the detection levels of its adversaries.  As another
+  example, a bonus damage to shields is given if an attacker has a higher
+  weapons tech than the target's shield tech; a bonus damage to the ship
+  itself is given if the attacker's weapon level is higher than the target's
+  construction level.
+
+* A given ship, base, or other unit may be unlocked when certain tech level
+  minimums are met.  In other cases, capabilities are added to existing units.
+  For instance, when fighters are unlocked, the first carriers are unlocked
+  along with them; starbases get fighters at the same time (they may get them
+  a bit at a time over subsequent tech levels).
 
 
 Other:
 ======
 
-* War support is a thing.  It can be manufactured in order to start a war, but when this is done it is not very high at the start of the war.  It is very high at the start of a defensive war.
-* War support increases when your development (which includes population) is attacked.
-* War support increases when you lose territory -- up to some threshold percentage of your territory, T3.  After that, it falls precipitously.
-* War support increases when you win battles, and decreases when you lose them.
-* Low war support will force peace treaties that are unfavorable to the nation that has it.
-* High war support dramatically reduces the likelihood of secessions by the nation's settled territories.  It does not affect secession likelihood of conquered territory.
+* War support is a thing.  It can be manufactured in order to start a war, but
+  when this is done it falls at the start of the war.  It rises dramatically
+  at the start of a defensive war.
 
-* National unity is a thing.  National unity is affected by integration of conquered territory; the balance of near and far territories; and the balance of colonies and worlds.
-* Colonies have lower national unity than worlds.
-* Colony expansion increases national unity.
-* Attacks on a colony in times of peace reduce national unity.
-* Distant planets (colonies and worlds) have lower nationaly unity than ones near the home hex.  This changes over time, as the notion of what a "core" territory expands.  (TODO: Should this world sort of like supply, but measured among worlds -- that is, the effect is not in play aas long as you can trace N-hex hops from loyal world to loyal world?)
-* Recently conquered territories have low national unity.  Garrisons and fleets reduce this.  This fades over time.
-* Worlds and provinces can secede, and worlds can do so independently of their containing province.  When a world or province drops below its loyalty threshold, it will secede.  The secession of a world will influence the loyalty of planets within the same province, and the secession of a province will influence the loyalty of neighboring provinces.  This may result in a slow-motion secession of a large section of the empire.
+* War support increases when your ifra, pops, and/or ships (including
+  transports) are attacked.
 
-* Infrastructure is a thing too.  You need to improve it to get the full value of resource generation, research, etc.  Infrastructure starts at 0 on a new colony, and can be built up over time by spending money and other resources.  Max infra is limited by population.
+* War support increases when you lose territory -- up to some threshold
+  percentage of your territory, T3.  After that, it falls precipitously.
+
+* War support increases when you win battles, and decreases when you lose
+  them.
+
+* Low war support will force peace treaties that are unfavorable to the nation
+  that has it.
+
+* High war support dramatically reduces the likelihood of rebellions by the
+  nation's settlements.  It does not affect rebellion likelihood of conquered
+  territory.
+
+
+* National unity is a thing.  National unity is affected by integration of
+  conquered territory; the balance of near and far territories; and the
+  balance of newer and more established settlements.
+
+* Newer settlements have lower national unity than more established ones.  The
+  smallest ones are the most independent.
+
+* Settlement foundings and expansions increase national unity.
+
+* Attacks on a settlement in times of peace reduce national unity.  Declaring
+  war on those who have done such attacks greatly increases national unity.
+
+* Distant planets have lower nationaly unity.  "Distant" here refers to their
+  distance from large, established "core" settlements.  This changes over
+  time, as the notion of what a "core" settlement is expands.  (TODO: Should
+  this work sort of like supply, but measured among worlds -- that is, the
+  effect is not in play as long as you can trace N-hex hops from loyal world
+  to loyal world?)
+
+* Recently conquered territories have low national unity.  Garrisons and
+  fleets reduce this.  This fades over time.
+
+* Settlements and provinces can secede, and settlements can do so
+  independently of their containing province.  When a settlement or province
+  drops below its loyalty threshold, it will secede.  The secession of a
+  settlement will influence the loyalty of settlements within the same
+  province, and the secession of a province will influence the loyalty of
+  neighboring provinces.  This may result in a slow-motion secession of a
+  large section of the empire.
+
+* Infrastructure is a thing too.  You need to improve it to get the full value
+  of resource generation, research, etc.  Infrastructure starts at 1 on a new
+  settlement, and can be built up over time by spending money and other
+  resources.  Max infra is limited by population.  Infra below 1 will cause
+  population loss.  This is mitigated by stockpiles, but not entirely -- the
+  infra is needed to get the stockpiles to those in need.
 
 
 * The amount of available troops is dependent on the fighting-age population,
@@ -208,14 +606,18 @@ Other:
 
   There should be some kind of settlement troop mobilization policy setting
   (like in HOI4), which will affect the number of available troops, and in
-  turn affect the number of pops available to work on other things.
+  turn affect the number of pops available to work on other things.  Troops
+  are used to create divisions and to crew space assets (except transports).
+  Troops take several months to be mobilized; this represents training time.
 
-  The rations above should be different in a large, developed settlement,
-  vs. a fledgling colony.
+  The ratios above should be different in a large, developed settlement, vs. a
+  fledgling settlement.
 
 * Happiness/rebelliousness of a settlement should in part depend on how much
   funding they receive per capita vs. other settlements, their mobilization
-  level vs. other settlements, etc.
+  level vs. other settlements, etc.  This is based on how much they are
+  above/below the mean.  The negative effect of being below the mean should be
+  twice the positive effect of being above it.
 
 * Making changes to policy should cost political points.  PPs should be
   generated indpendently for each settlement.  If you run out of PP in
@@ -245,10 +647,10 @@ Other:
   fighters for your fleets and bases to use; fuel (refining it -- what you
   pull out of the ground is not usable directly); and supplies.  It also takes
   money, resources, and pops to gather resources themselves.  Research is a
-  similar story; it costs money resurces and pops to do research.  Assigning
-  all your pops is the main way you "spend" on making things/gathering
-  resources/doing research.  Switching a pop from one task to another should
-  incur a penalty on that pop's output that decays over time.
+  similar story; it costs money resurces and pops to do generate RPs.
+  Assigning all your pops is the main way you "spend" on making
+  things/gathering resources/generating RPs.  Switching a pop from one task to
+  another should incur a penalty on that pop's output that decays over time.
 
 * There is a natural max number of pops needed/useful at doing a given
   activity.  Any less, and the output goes down linearly.  Any more, and the
@@ -279,10 +681,11 @@ Other:
 
   - The natural max for research is sqrt(pops) * ifra.
 
-  - Population is also required for crewing space assets (including
-    transports) and for ground forces (garrisons).
+  - Population (in the form of mobilized troops) is also required for crewing
+    space assets and for ground forces (garrisons).
 
-  - TODO: Should pops be assigned to espionage and intelligence?
+  - Population is required for crewing transports, but these are civilians,
+    not troops.
 
 * Resources, space consumables (rounds, missiles, fighters), fuel, and
   supplies are all stockpiled when made.  The stockpile capacity of each
@@ -298,50 +701,161 @@ Other:
   friction if they are not 100% embraced by their new neighbors -- this should
   drive certain kinds of events.
 
+* Some activities don't take resources and pops, just money.  Examples include
+  funding diplomatic efforts and funding espionage/intelligence agencies.
+  Such activities are fundable up to that max funding, and fundable beyond
+  that, for diminishing returns (like with the activities already mentioned
+  above).
 
-Pinning:
-========
+  - Diplomatic efforts are expressed in terms of diplo capacity.  Diplo
+    capacity should scale with sqrt(nation_pop).
 
-* At any time during the movement phase, if a fleet is moving and it either moves into a hex containing enemy ships, or it is met by enemy ships that react into its hex via an Intercept mission, it must leave behind a number of ships equal to the number of enemy ships.  The ships left behind are always chosen from lowest to highest combat rating.
-TODO: I Think we'll ditch this.
+  - Espionage/intelligence is also a capacity value, and also scales with
+    sqrt(nation_pop).
 
+  - Each settlement below S1 must be supported with money
 
-Capturing and disrupting provinces:
-===================================
+  - Transports cost money to operate.
 
-* In time of war, worlds and provinces can be captured.  For the explanations below, say countries A and B are at war.
-* A disrupted planet produces less income.  A disrupted province produces less income.  A captured planet produces partial income for the capturer.
-* For planets: A can "capture" B's world W by destroying all W's existing divisions, and putting 1 division on W per D1 development.  If W has no divisions, and A has placed less than 1 division per D1 development, the planet is "disrupted".  If A ends the turn with a ship in the hex where W is located, W is also disrupted if it is not captured.
-* For provinces: If B has no uncaptured planets in province P, and no ships in P, and A has at least one ship in P, A has captured the province.  Otherwise, if A has any ships at all in P, P is disrupted.
-* TODO: Does disruption level depend upon the size of the disrupting fleet?
-* A captured world or province must be "cored" (made into a "core" world/province).  This takes time and resources.  The process is faster and cheaper in peacetime.  If a world or province is cored during wartime, and then given back in the peace treaty at the end of the war, all the coring effects are reverted.
+* Capacities like diplo and espionage can be allocated to different specific
+  targets/activites.  Maintaining an alliance costs a certain amount,
+  improving relations a different amount, etc.  Espionage activities can have
+  more chance of success and less chance of detection the more you spend on
+  them, and from longer preparation time (during which they are paid for at
+  full cost).
 
-TODO: This would be better replaced with a HOI4-style transport ships/convoys/convoy raiding system.  Each planet is effecively an island that can produce/consume supply and resources.
+* Money is generated from pop * infra, settlement by settlement.  Money is
+  shared across the entire nation.  Settlements below a certain infra do not
+  generate any money.  They will require money and supplies simply to survive.
+  You can turn down the amount of funding (or amunt of supply) for a settlement,
+  but that will result in loss of pop (for supplies), and lack of migration
+  (for either).
+
 
 War and Peace:
 ==============
 
-* In order to declare war, a justification (cassus belli, "CB") is required.  "No-CB" wars can be declared, but they are more negatively impactful diplomatically.  The better the CB, the less war support is needed to declare.  CBs include: attacks on colonies (cummulative), attacks on fleets (cummulative), settlements in hexes where we have settled, TODO.
-* Once war has started, a war score is computed for each side.  The war score for a side will include: strength of each side's fleet (inlcuding tech differential), captured and disrupted territory (friendly and enemy), war support, the length of the war, TODO.  The differential can be used to force concessions in a peace deal.  Each concession has a point value based on the game-value of that concession.  Possible concessions include: war reparations, worlds, provinces, TODO.
+* In order to declare war, a justification (cassus belli, "CB") is required.
+  "No-CB" wars can be declared, but they are more negatively impactful
+  diplomatically.  The better the CB, the less war support is needed to
+  declare.  CBs include: attacks on settlements (cummulative -- the more there
+  are, the stronger the CB), attacks on fleets (cummulative), settlements on
+  planets/in systems where we have settled, TODO.
+
+* Once war has started, a war score is computed for each side.  The war score
+  for a side will include: strength of each side's fleet (including tech
+  differential), captured and disrupted territory (friendly and enemy), war
+  support, the length of the war, TODO.  The differential can be used to force
+  concessions in a peace deal.  Each concession has a point value based on the
+  game-value of that concession.  Possible concessions include: war
+  reparations, worlds, provinces, TODO.
 
 
-International relations and diplomacy:
-======================================
+Nations and diplomacy:
+======================
 
-* Similar to Stellaris and EU4, except without the vassal/subject business (TODO: maybe with vassals too?)
+* Nations have these axes that desribe their ethos:
+
+  - Individualist vs collectivist 
+  - Nationalist vs inclusive 
+  - Militarist vs pacifist 
+  - Expansionist vs isolationist 
+  - Order vs justice
+  - Wealth equality vs wealth inequality
+
+* Nations that are highly similar along these axes will be natural friends;
+  those highly dissimilar will be natural enemies; and others will be neutral.
+
+* These axes will also dictate AI behaviors, and will increase or decrease the
+  PP costs of doing various things for the AI and player.
+
+* Overall diplo system will be similar to Stellaris and EU4, except without
+  the vassal/subject business (TODO: maybe with vassals too?)
+
+* About relations: having very good relations for a long time should add
+  something like a historical friends modifier.  Longstanding bad relations
+  should add a historical enemies modifier.
+
+* About diplo relations: There should be no limit on the number of alliances
+  you have.  Most alliances should be defensive only.  Getting allies to join
+  your war should require extended persuasion.  There should be like diplo
+  points that you can spend to maintain good relations, persuade allies, etc.
+  You should get these points from nation size primarily; this should cost
+  resources and money.  You should also get them from soft power projects like
+  usaid-style foreign aid, and allowing arms sales.
+
+* TODO: Should there be some free points that you get, applied to just one
+  nation, for helping that nation?  Like the arms sales above, or maybe from
+  being historical friends/enemies?  Also, should enemies of the recipient be
+  upset that you give arms to some country?  Should pacifists be upset too?
+  Another idea would be to do something like the EU4 favor/trust system.
+
+* Larger mutual defense pacts like NATO should be a thing.
+
+* AE should be a thing, but it should cool off over the course of generations,
+  and the decay should decrease as it gets lower (basically, it should have
+  something like a half-life).
+
+* Allies should remember not just that you joined their war, but how hard you
+  fought.  Constantly white peacing out or not participating should be
+  noticed.  These behaviors should affect relations, but also diplo rep.
+  Diplo rep should be gained/lost over time.  It should be affected by war
+  participation, truce breaks, etc.  It should also be improved over time by
+  spending diplo points.  Should it also be improved by brokering peace deals
+  among other parties?
+
+* Military tradition is also a thing.  It should decay over time, modified by
+  lengths of service for troops.  Militarist nations should have an easier
+  time keeping tradition.
+
+* Surpluses and deficits of resources will drive trade with other nations.
+
+* Supply should benefit from planetary infra, and from space bases.  Having
+  only one or the other should give lower supply capacity.
+
+* Get list of contemporary names, first and last, from all over the world.
+  Come up with some substitutions like t vs th, ae vs a, etc.  Use the
+  substitutions to change the names, suggesting linguistic drift.  This is
+  just for flavor.
+
+* Consider generating flags.  Take two or three colors, make vertical or
+  horizontal stripes, the add other stuff, to include circles, stars, squares,
+  perhaps crosses and crescents too.
 
 
-Combat:
-=======
+Government types:
+=================
 
-TODO
+(A very early idea...)
 
-* Bases at planets should be able to be covered by planetary defenses.  If the
-  base is in LPO (like "LEO", but generic), the defenses should "come around"
-  every few turns, and fire at enemies.  If the base is a GSO, only the
-  defenses on that side of the planet should be able to fire.  GSO bases can
-  be supported then by numerous planetary batteries, and are relatively safer.
-  LPO bases are cheaper (TODO: and maybe cheaper to build at?).
+There should be multiple government types, like: Oligarchic Dictatorship,
+Monarchic Dictatorship, Presidential Republic, Perliamentary Republic, etc.
+
+The more democratic ones would give you better (more reliable) information
+about your own nation; the more dictatorial ones would give you a rosy picture
+that is not very accurate.
+
+The more democratic ones would require a lot more consensus building (red:
+spend more PP) to do major, controversial things like start wars.  The more
+dictatorial ones would let you do the same thing on the cheap.
+
+The primary tradeof would be between direct control (dictatorships) and
+quality and stability (democracies).  As a democratic nation, its harder to
+start wars. and easier to get reliable info on your enemies.  As a
+dictatorship, its easier to start wars, and also easier to get rebellions if
+you demonstrate weakness.
+
+Another way to describe this is ruling through strength vs. ruling through
+consensus.
+
+
+Factions:
+=========
+
+(Another early idea; this feels like a post-1.0 feature.)
+
+It might be nice to have factions within your nation.  Each would have its
+preferred government type(s), and have its own ethos alignment.
 
 
 Visibility of Other Nations' Data
@@ -398,10 +912,10 @@ they can scout it individually on the map, as described above.
 
 Clandestine operations:
 =======================
-Should be there a system for this?  It could include things like:
+Could include things like:
 
-- eliminating a small competing colony without its being a war crime
-  (super-lightspeed comms and colony's friendlies in orbit would increase
+- eliminating a small competing settlement without its being a war crime
+  (super-lightspeed comms and settlement's friendlies in orbit would increase
   chances of detection)
 
 - getting the resource amounts for a planet you have never been to, but which
@@ -416,8 +930,8 @@ You should be able to spy on friendlies and enemies alike.  The possibility of
 discovery and the diplomatic fallout from that should be an essential part of
 this feature.
 
-Stuff like stealing tech, stealing money, and blowing up ships is too much.
-It's always irritating in other games.
+Stuff like stealing tech, destroying tech, stealing money, and blowing up
+ships is too much.  It's always irritating in other games.
 
 
 ROADMAP:
