@@ -181,9 +181,9 @@ Ships:
   10 points per level of each equipped item.  So a design with these stats
   (hull=100, propulsion=2, weapons=2, shields=2, stealth=1) would have 30
   space left over after 20+20+20+10=70 space is used for all the listed
-  equipment.  1 point of space is also required for crew quarters per 1k crew.
-  Assuming a 1k crew size, that leaves 29 space for fuel, ordnance, water,
-  supplies, and general cargo/troops.
+  equipment.  3 points of space is required per 1k crew (quarters, life
+  support, whatever).  Assuming a 1k crew size, that leaves 29 space for fuel,
+  ordnance, water, supplies, and general cargo/troops.
 
 * 1 unit of ship space is enough room for: 1000 people and their equipment,
   which may be 1000 colonists, or 1000 troops, etc.; 1 unit of fuel, which is
@@ -260,6 +260,16 @@ t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
   same thing happens, except that it is the two locations on either side that
   are also hit.  Better designs will place fuel and ammo in isolated slots,
   not near critical equipment; worse designs will have them wherever.
+
+* TODO: How do hits cause crew casualties?  There should be more crew
+  casualties when taking hits at lower org.
+
+* If any hit destroys the last remaining fuel or point of propulsion, the ship
+  stops participating in combat.  Otherwise, it keeps participating as best it
+  can, given its remaining stats, ammo, etc.
+
+* After combat, any ship that has no remaining supplies, fuel, or ship-used
+  water, is scuttled; having water in cargo is not sufficient.
 
 * In fleet battles, ships are divided up into captials and screens.  Every
   ship below the mean Asys for the fleet is a screen; all others are capitals.
