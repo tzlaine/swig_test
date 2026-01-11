@@ -162,6 +162,10 @@ Ships:
   - Detection equipment cost +
   - Stealth cost
 
+* TODO: Possibly allow the automation level to be part of the design.  Lower
+  automation means more crew, and higher automation means less crew.  Higher
+  automation costs more materials and money though.
+
 * Ship mass is hull + armor.
 
 * A ship design is made by picking the tech level for each stat (armor 1
