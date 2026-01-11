@@ -131,14 +131,14 @@ public:
     Uaudio_assets_t const & audio_assets();
     void remap_key(FName name, FKey key);
     void save_user_input_mappings();
-    void showing_main_menu(bool b);
+    void showing_modal_ui(bool b);
     void nation_id(int id) { nation_id_ = id; }
     void zoom_to_system_object(int i);
     void decrease_play_speed();
     void increase_play_speed();
 
 protected:
-    bool showing_main_menu() const;
+    bool showing_modal_ui() const;
 
 private:
     enum struct deselect { no, yes };
@@ -165,7 +165,7 @@ private:
 
     client_game_state client_gs_;
 
-    bool showing_main_menu_ = false;
+    bool showing_modal_ui_ = false;
 
     // double-click tracking
     Amap_pawn_base * prev_select_target_ = nullptr;

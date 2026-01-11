@@ -144,10 +144,6 @@ void Ahud_t::show_main_menu(bool in_game)
         saves = !gs->saves_.IsEmpty();
     }
     main_menu_->have_saves(saves);
-    if (auto * pc = player_controller()) {
-        pc->showing_main_menu(true);
-        UE_LOG(LogTemp, Log, TEXT("Showing main menu"))
-    }
 }
 
 void Ahud_t::show_save_load_dlg(bool saving)
@@ -176,12 +172,12 @@ void Ahud_t::escape_pressed()
         if (Uactivatable_widget * w = Cast<Uactivatable_widget>(activatable)) {
             if (w->cancelable()) {
                 w->cancel();
-                if (auto * pc = player_controller();
-                    pc && main_menu_ && w->wraps(*main_menu_)) {
-                    pc->showing_main_menu(false);
-                    UE_LOG(LogTemp, Log, TEXT("No longer showing main menu"));
-                }
                 modal_stack()->RemoveWidget(*activatable);
+                if (auto * pc = player_controller();
+                    pc && modal_stack()->GetWidgetList().IsEmpty()) {
+                    pc->showing_modal_ui(false);
+                    UE_LOG(LogTemp, Log, TEXT("No longer showing modal UI"));
+                }
             }
             return;
         }
@@ -299,6 +295,10 @@ void Ahud_t::push_modal(TSharedPtr<Shud_widget_base> widget)
                 return g_content_shared_ptr.ToSharedRef();
             });
         });
+    if (auto * pc = player_controller()) {
+        pc->showing_modal_ui(true);
+        UE_LOG(LogTemp, Log, TEXT("Showing modal UI"));
+    }
 }
 
 void Ahud_t::remove_widget(Shud_widget_base & hud_widget)
@@ -306,14 +306,14 @@ void Ahud_t::remove_widget(Shud_widget_base & hud_widget)
     for (auto * activatable : modal_stack()->GetWidgetList()) {
         check(Cast<Uactivatable_widget>(activatable));
         if (Cast<Uactivatable_widget>(activatable)->wraps(hud_widget)) {
-            if (auto * pc = player_controller();
-                pc && main_menu_ && &hud_widget == main_menu_.Get()) {
-                pc->showing_main_menu(false);
-                UE_LOG(LogTemp, Log, TEXT("No longer showing main menu"));
-            }
             modal_stack()->RemoveWidget(*activatable);
-            return;
+            break;
         }
+    }
+    if (auto * pc = player_controller();
+        pc && modal_stack()->GetWidgetList().IsEmpty()) {
+        pc->showing_modal_ui(false);
+        UE_LOG(LogTemp, Log, TEXT("No longer showing modal UI"));
     }
 }
 
@@ -325,8 +325,10 @@ void Ahud_t::remove_all_widgets()
     }
     main_menu_.Reset();
     hide_map_ui();
-    if (auto * pc = player_controller())
-        pc->showing_main_menu(false);
+    if (auto * pc = player_controller()) {
+        pc->showing_modal_ui(false);
+        UE_LOG(LogTemp, Log, TEXT("No longer showing modal UI"));
+    }
 }
 
 void Ahud_t::set_selection_box_first(FVector2D first)

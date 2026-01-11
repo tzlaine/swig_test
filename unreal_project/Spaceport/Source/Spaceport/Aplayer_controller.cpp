@@ -236,7 +236,7 @@ void Aplayer_controller::SetupInputComponent()
         slide_action_, ETriggerEvent::Triggered, [=, this](auto const & value) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
 
             auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
@@ -261,7 +261,7 @@ void Aplayer_controller::SetupInputComponent()
         zoom_action_, ETriggerEvent::Triggered, [=, this](auto const & value) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
 
             auto * camera_pawn = Cast<Acontroller_pawn>(GetPawn());
@@ -315,7 +315,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
             auto * hud = cast(GetHUD());
             check(hud);
@@ -328,7 +328,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, end_drag, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu()) {
+            if (showing_modal_ui()) {
                 end_drag();
                 return;
             }
@@ -345,7 +345,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, end_drag, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu()) {
+            if (showing_modal_ui()) {
                 end_drag();
                 return;
             }
@@ -416,7 +416,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
             // TODO
         });
@@ -427,7 +427,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
             auto * gs = GetWorld()->GetGameState<Agame_state>();
             check(gs);
@@ -441,7 +441,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
             auto * gs = GetWorld()->GetGameState<Agame_state>();
             check(gs);
@@ -455,7 +455,7 @@ void Aplayer_controller::SetupInputComponent()
         [use_map_actions, this](auto const &) {
             if (!use_map_actions())
                 return;
-            if (showing_main_menu())
+            if (showing_modal_ui())
                 return;
             server_toggle_pause();
         });
@@ -632,7 +632,7 @@ void Aplayer_controller::Tick(float dt)
         }
     }
 
-    if (showing_main_menu())
+    if (showing_modal_ui())
         return;
 
     if (dragging(selection_box_first_, selection_box_last_))
@@ -996,7 +996,7 @@ void Aplayer_controller::save_user_input_mappings()
     }
 }
 
-void Aplayer_controller::showing_main_menu(bool b) { showing_main_menu_ = b; }
+void Aplayer_controller::showing_modal_ui(bool b) { showing_modal_ui_ = b; }
 
 void Aplayer_controller::zoom_to_system_object(int i)
 {
@@ -1034,9 +1034,9 @@ void Aplayer_controller::increase_play_speed()
     server_change_play_speed(gs->play_speed_ + 1);
 }
 
-bool Aplayer_controller::showing_main_menu() const
+bool Aplayer_controller::showing_modal_ui() const
 {
-    return showing_main_menu_;
+    return showing_modal_ui_;
 }
 
 void Aplayer_controller::dehover_all()
