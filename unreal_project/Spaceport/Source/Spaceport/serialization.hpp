@@ -188,6 +188,13 @@ namespace detail {
         } else if constexpr (std::is_same_v<T, adobe::name_t>) {
             std::string_view const sv(x.c_str());
             return detail::serialize_impl<Op, FieldOp>(sv, field_number, os);
+        } else if constexpr (std::same_as<T, std::vector<signed char>>) {
+            // 'bytes' in .proto files
+            if constexpr (FieldOp == ser_field_op::write)
+                out = os::WriteVarint32ToArray(field_number, out);
+            out = os::WriteVarint32ToArray(x.size(), out);
+            detail::count_or_write<Op>(retval, buf, out - buf, os);
+            detail::count_or_write<Op>(retval, x.data(), x.size(), os);
         } else if constexpr (is_vector_v<T>) {
             if constexpr (FieldOp == ser_field_op::write)
                 out = os::WriteVarint32ToArray(field_number, out);
@@ -434,6 +441,13 @@ namespace detail {
             str.resize(size);
             std::memcpy(str.data(), src.data(), size);
             x = adobe::name_t(str.c_str());
+            return detail::advance(src, size);
+        } else if constexpr (std::same_as<T, std::vector<signed char>>) {
+            // 'bytes' in .proto files
+            uint32_t size = 0;
+            src = detail::read_varint(size, src);
+            x.resize(size);
+            std::memcpy(x.data(), src.data(), size);
             return detail::advance(src, size);
         } else if constexpr (is_vector_v<T>) {
             // TODO: Add try/catch, and add info on which element failed (here

@@ -25,6 +25,37 @@ message game_start_params_t
     int32 ai_opponents = 6;
 }
 
+enum cargo_kind_t {
+    invalid_cargo_kind = 0;
+    water = -1;                 // part of the ship design; used by crew
+    supplies = -2;
+    fuel = -3;
+    rounds = -4;
+    missiles = -5;
+    troops = -6;
+    colonists = -7;
+    cargo_metal = -8;
+    cargo_energy = -9;
+    cargo_fuel_minerals = -10;
+    cargo_water = -11;          // not part of the ship design; just cargo
+    cargo_food = -12;
+}
+
+enum hit_table_entry_t {
+    invalid_hit_table_entry = 0;
+    hit_propulsion = 1;
+    hit_weapons = 2;
+    hit_shields = 3;
+    hit_detection = 4;
+    hit_stealth = 5;
+    hit_fuel = 6;
+    hit_water = 7;
+    hit_supplies = 8;
+    hit_rounds = 9;
+    hit_missiles = 10;
+    hit_cargo = 11;     // represents empty slot; if < 0, look it up in cargo_kind_t
+}
+
 message unit_design_t
 {
     nation_and_object_id_t id = 1;
@@ -35,16 +66,37 @@ message unit_design_t
     int32 shields = 6;
     int32 detection = 7;
     int32 stealth = 8;
-    int32 automation = 9;
-    int32 attack = 10;
-    int32 defense = 11;
-    int32 ground_attack = 12;
+    int32 fuel = 9;
+    int32 water = 10;
+    int32 supplies = 11;
+    int32 rounds = 12;      // storage units, not individual salvos
+    int32 missiles = 13;    // storage units, not individual salvos
+    int32 fighters = 14;    // each point is a fighter bay with 1 fighter factor
+    int32 cargo = 15;
+    bytes hit_table = 16;
 }
 
 message unit_t
 {
     nation_and_object_id_t id = 1;
-    int32 health = 2; // <= design.defense
+    int32 hull = 2;
+    int32 armor = 3;
+    int32 propulsion = 4;
+    int32 weapons = 5;
+    int32 shields = 6;
+    int32 detection = 7;
+    int32 stealth = 8;
+    int32 fuel = 9;
+    int32 water = 10;
+    int32 supplies = 11;
+    int32 rounds = 12;       // individual salvos
+    int32 missiles = 13;     // individual salvos
+    int32 fighters = 14;
+    bytes cargo = 15;        // must be kept in sync with hit_table
+    int32 organization = 16;
+    int32 experience = 17;
+    int32 crew = 18;
+    bytes hit_table = 19;    // populated during combat as hits are resolved; only kept outside of combat if cargo is hit
 }
 
 message fleet_position_t
@@ -66,11 +118,8 @@ message fleet_t
     nation_and_object_id_t id = 1; // -1 for both of these indicates this fleet is invalid
     pb_message.mission_t mission = 2;
     repeated unit_t units = 3;
-    float fuel = 4;
-    int32 rounds = 5;
-    int32 missiles = 6;
-    int32 fighters = 7;
-    fleet_position_t position = 8;
+    fleet_position_t position = 4;
+    int32 fleet_experience = 5;
 }
 
 message fleets_t
@@ -263,7 +312,14 @@ message nation_t
     repeated settlement_t settlements_seen = 14;
     repeated nation_and_object_id_t foreign_designs_seen = 15;
     repeated nation_and_object_id_t foreign_designs_glimpsed = 16;
-    bool defeated = 17;
+    int32 construction_tech = 17;
+    int32 propulsion_tech = 18;
+    int32 weapons_tech = 19;
+    int32 shields_tech = 20;
+    int32 stealth_tech = 21;
+    int32 detection_tech = 22;
+    int32 automation_tech = 23;
+    bool defeated = 100;
 }
 
 message date_t

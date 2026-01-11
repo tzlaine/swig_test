@@ -59,9 +59,9 @@ namespace detail {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
             fleet_t copy = x;
-            for (auto & unit : copy.units) {
-                unit.health = -1;
-            }
+            // TODO for (auto & unit : copy.units) {
+            // TODO     unit.health = -1;
+            // TODO }
             std::array<int, 3> fields_to_allow = {
                 {metadata<fleet_t>::id().index_,
                  metadata<fleet_t>::units().index_,

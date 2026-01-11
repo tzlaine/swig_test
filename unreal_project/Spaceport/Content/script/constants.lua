@@ -37,6 +37,7 @@ starting_pop_plus_minus = mean_starting_pop / 10
 small_map_height = 11
 medium_map_height = 21
 large_map_height = 41
+starting_tech_level = 2
 
 -- camera
 min_camera_dist = 50.0

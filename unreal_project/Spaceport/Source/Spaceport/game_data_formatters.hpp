@@ -13,6 +13,55 @@
 
 
 template <>
+struct std::formatter<cargo_kind_t> : std::formatter<std::string_view> {
+    template <typename FormatContext>
+    auto format(cargo_kind_t t, FormatContext & ctx) const {
+        std::string_view name;
+        using namespace std::literals;
+        switch (t) {
+            case cargo_kind_t::invalid_cargo_kind: name = "INVALID"sv; break;
+            case cargo_kind_t::water: name = "water"sv; break;
+            case cargo_kind_t::supplies: name = "supplies"sv; break;
+            case cargo_kind_t::fuel: name = "fuel"sv; break;
+            case cargo_kind_t::rounds: name = "rounds"sv; break;
+            case cargo_kind_t::missiles: name = "missiles"sv; break;
+            case cargo_kind_t::troops: name = "troops"sv; break;
+            case cargo_kind_t::colonists: name = "colonists"sv; break;
+            case cargo_kind_t::cargo_metal: name = "cargo_metal"sv; break;
+            case cargo_kind_t::cargo_energy: name = "cargo_energy"sv; break;
+            case cargo_kind_t::cargo_fuel_minerals: name = "cargo_fuel_minerals"sv; break;
+            case cargo_kind_t::cargo_water: name = "cargo_water"sv; break;
+            case cargo_kind_t::cargo_food: name = "cargo_food"sv; break;
+        }
+        return std::formatter<std::string_view>::format(name, ctx);
+    }
+};
+
+template <>
+struct std::formatter<hit_table_entry_t> : std::formatter<std::string_view> {
+    template <typename FormatContext>
+    auto format(hit_table_entry_t t, FormatContext & ctx) const {
+        std::string_view name;
+        using namespace std::literals;
+        switch (t) {
+            case hit_table_entry_t::invalid_hit_table_entry: name = "INVALID"sv; break;
+            case hit_table_entry_t::hit_propulsion: name = "hit_propulsion"sv; break;
+            case hit_table_entry_t::hit_weapons: name = "hit_weapons"sv; break;
+            case hit_table_entry_t::hit_shields: name = "hit_shields"sv; break;
+            case hit_table_entry_t::hit_detection: name = "hit_detection"sv; break;
+            case hit_table_entry_t::hit_stealth: name = "hit_stealth"sv; break;
+            case hit_table_entry_t::hit_fuel: name = "hit_fuel"sv; break;
+            case hit_table_entry_t::hit_water: name = "hit_water"sv; break;
+            case hit_table_entry_t::hit_supplies: name = "hit_supplies"sv; break;
+            case hit_table_entry_t::hit_rounds: name = "hit_rounds"sv; break;
+            case hit_table_entry_t::hit_missiles: name = "hit_missiles"sv; break;
+            case hit_table_entry_t::hit_cargo: name = "hit_cargo"sv; break;
+        }
+        return std::formatter<std::string_view>::format(name, ctx);
+    }
+};
+
+template <>
 struct std::formatter<planet_type_t> : std::formatter<std::string_view> {
     template <typename FormatContext>
     auto format(planet_type_t t, FormatContext & ctx) const {
@@ -135,10 +184,18 @@ struct std::formatter<unit_design_t> {
         out = std::format_to(out, " shields={}", x.shields);
         out = std::format_to(out, " detection={}", x.detection);
         out = std::format_to(out, " stealth={}", x.stealth);
-        out = std::format_to(out, " automation={}", x.automation);
-        out = std::format_to(out, " attack={}", x.attack);
-        out = std::format_to(out, " defense={}", x.defense);
-        out = std::format_to(out, " ground_attack={}", x.ground_attack);
+        out = std::format_to(out, " fuel={}", x.fuel);
+        out = std::format_to(out, " water={}", x.water);
+        out = std::format_to(out, " supplies={}", x.supplies);
+        out = std::format_to(out, " rounds={}", x.rounds);
+        out = std::format_to(out, " missiles={}", x.missiles);
+        out = std::format_to(out, " fighters={}", x.fighters);
+        out = std::format_to(out, " cargo={}", x.cargo);
+        out = std::format_to(out, " hit_table={{");
+        for (auto c : x.hit_table) {
+            out = std::format_to(out, " {}", (int)c);
+        };
+        out = std::format_to(out, " }}");
 
         return std::format_to(out, " )");
     }
@@ -159,7 +216,32 @@ struct std::formatter<unit_t> {
         out = std::format_to(out, "unit_t(");
 
         out = std::format_to(out, " id={}", x.id);
-        out = std::format_to(out, " health={}", x.health);
+        out = std::format_to(out, " hull={}", x.hull);
+        out = std::format_to(out, " armor={}", x.armor);
+        out = std::format_to(out, " propulsion={}", x.propulsion);
+        out = std::format_to(out, " weapons={}", x.weapons);
+        out = std::format_to(out, " shields={}", x.shields);
+        out = std::format_to(out, " detection={}", x.detection);
+        out = std::format_to(out, " stealth={}", x.stealth);
+        out = std::format_to(out, " fuel={}", x.fuel);
+        out = std::format_to(out, " water={}", x.water);
+        out = std::format_to(out, " supplies={}", x.supplies);
+        out = std::format_to(out, " rounds={}", x.rounds);
+        out = std::format_to(out, " missiles={}", x.missiles);
+        out = std::format_to(out, " fighters={}", x.fighters);
+        out = std::format_to(out, " cargo={{");
+        for (auto c : x.cargo) {
+            out = std::format_to(out, " {}", (int)c);
+        };
+        out = std::format_to(out, " }}");
+        out = std::format_to(out, " organization={}", x.organization);
+        out = std::format_to(out, " experience={}", x.experience);
+        out = std::format_to(out, " crew={}", x.crew);
+        out = std::format_to(out, " hit_table={{");
+        for (auto c : x.hit_table) {
+            out = std::format_to(out, " {}", (int)c);
+        };
+        out = std::format_to(out, " }}");
 
         return std::format_to(out, " )");
     }
@@ -212,11 +294,8 @@ struct std::formatter<fleet_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
-        out = std::format_to(out, " fuel={}", x.fuel);
-        out = std::format_to(out, " rounds={}", x.rounds);
-        out = std::format_to(out, " missiles={}", x.missiles);
-        out = std::format_to(out, " fighters={}", x.fighters);
         out = std::format_to(out, " position={}", x.position);
+        out = std::format_to(out, " fleet_experience={}", x.fleet_experience);
 
         return std::format_to(out, " )");
     }
@@ -625,6 +704,13 @@ struct std::formatter<nation_t> {
             out = std::format_to(out, " {}", e);
         };
         out = std::format_to(out, " ]");
+        out = std::format_to(out, " construction_tech={}", x.construction_tech);
+        out = std::format_to(out, " propulsion_tech={}", x.propulsion_tech);
+        out = std::format_to(out, " weapons_tech={}", x.weapons_tech);
+        out = std::format_to(out, " shields_tech={}", x.shields_tech);
+        out = std::format_to(out, " stealth_tech={}", x.stealth_tech);
+        out = std::format_to(out, " detection_tech={}", x.detection_tech);
+        out = std::format_to(out, " automation_tech={}", x.automation_tech);
         out = std::format_to(out, " defeated={}", x.defeated);
 
         return std::format_to(out, " )");

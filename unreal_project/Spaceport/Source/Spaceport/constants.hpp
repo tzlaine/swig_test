@@ -95,6 +95,7 @@ extern const double starting_pop_plus_minus;
 extern const int small_map_height;
 extern const int medium_map_height;
 extern const int large_map_height;
+extern const int starting_tech_level;
 
 extern const float map_actors_vertical_offset;
 extern const float just_inside_system_map;

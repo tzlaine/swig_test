@@ -94,6 +94,7 @@ const double starting_pop_plus_minus = lua()["starting_pop_plus_minus"];
 const int small_map_height = lua()["small_map_height"];
 const int medium_map_height = lua()["medium_map_height"];
 const int large_map_height = lua()["large_map_height"];
+const int starting_tech_level = lua()["starting_tech_level"];
 
 const float map_actors_vertical_offset = -25000.0f;
 const float just_inside_system_map = map_actors_vertical_offset + 50;

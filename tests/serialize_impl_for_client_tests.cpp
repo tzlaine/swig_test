@@ -26,11 +26,7 @@ unit_design_t design(int nation_id, int id)
         .weapons = factor,
         .shields = factor,
         .detection = 3 / factor,
-        .stealth = 3 / factor,
-        .automation = factor,
-        .attack = factor,
-        .defense = factor,
-        .ground_attack = factor};
+        .stealth = 3 / factor};
 }
 
 unit_design_t design(int nation_id, int id, game_state_t const & gs)
@@ -44,13 +40,9 @@ fleet_t fleet(int nation_id)
         .id = nation_and_object_id_t{nation_id, 0},
         .mission = mission_t::explore,
         .units =
-            {{.id = {nation_id, 0}, .health = 100},
-             {.id = {nation_id, 1}, .health = 100},
-             {.id = {nation_id, 2}, .health = 100}},
-        .fuel = 100.0f,
-        .rounds = 100,
-        .missiles = 100,
-        .fighters = 25,
+            {{.id = {nation_id, 0}},
+             {.id = {nation_id, 1}},
+             {.id = {nation_id, 2}}},
         .position = {
             .world_pos_x = 1000.0 * nation_id,
             .world_pos_y = 1000.0 * nation_id,
@@ -196,11 +188,6 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_EQ(client_design.shields, default_design.shields);
             EXPECT_EQ(client_design.detection, default_design.detection);
             EXPECT_EQ(client_design.stealth, default_design.stealth);
-            EXPECT_EQ(client_design.automation, default_design.automation);
-            EXPECT_EQ(client_design.attack, default_design.attack);
-            EXPECT_EQ(client_design.defense, default_design.defense);
-            EXPECT_EQ(
-                client_design.ground_attack, default_design.ground_attack);
         }
         {
             serialized.clear();
@@ -222,7 +209,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
         ostream_tarray_facade oss(serialized);
         int const nation_id = 0;
         std::vector<fleet_t const *> visible_fleets;
-        unit_t const unit = {.id = {3, 4}, .health = 100};
+        unit_t const unit = {.id = {3, 4}, .hull = 100};
 
         {
             serialized.clear();
@@ -259,7 +246,7 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
             EXPECT_EQ(client_unit.id, unit.id);
 
             unit_t const default_unit;
-            EXPECT_EQ(client_unit.health, default_unit.health);
+            EXPECT_EQ(client_unit.hull, default_unit.hull);
         }
         {
             serialized.clear();
@@ -319,20 +306,16 @@ TEST(client_serialization_tests, serialize_for_client_single_object)
 
             EXPECT_EQ(client_fleet.units.size(), fleet.units.size());
             EXPECT_EQ(client_fleet.units[0].id, fleet.units[0].id);
-            EXPECT_EQ(client_fleet.units[0].health, -1);
+            EXPECT_EQ(client_fleet.units[0].hull, -1);
             EXPECT_EQ(client_fleet.units[1].id, fleet.units[1].id);
-            EXPECT_EQ(client_fleet.units[1].health, -1);
+            EXPECT_EQ(client_fleet.units[1].hull, -1);
             EXPECT_EQ(client_fleet.units[2].id, fleet.units[2].id);
-            EXPECT_EQ(client_fleet.units[2].health, -1);
+            EXPECT_EQ(client_fleet.units[2].hull, -1);
 
             EXPECT_EQ(client_fleet.position, fleet.position);
 
             fleet_t const default_fleet;
             EXPECT_EQ(client_fleet.mission, default_fleet.mission);
-            EXPECT_EQ(client_fleet.fuel, default_fleet.fuel);
-            EXPECT_EQ(client_fleet.rounds, default_fleet.rounds);
-            EXPECT_EQ(client_fleet.missiles, default_fleet.missiles);
-            EXPECT_EQ(client_fleet.fighters, default_fleet.fighters);
         }
         {
             serialized.clear();
@@ -845,9 +828,9 @@ TEST(client_serialization_tests, serialize_for_client_array)
                 expected_fleet.id = gs().nations[this_nation.id].fleets[0].id;
                 expected_fleet.units =
                     gs().nations[this_nation.id].fleets[0].units;
-                expected_fleet.units[0].health = unit_t{}.health;
-                expected_fleet.units[1].health = unit_t{}.health;
-                expected_fleet.units[2].health = unit_t{}.health;
+                expected_fleet.units[0].hull = unit_t{}.hull;
+                expected_fleet.units[1].hull = unit_t{}.hull;
+                expected_fleet.units[2].hull = unit_t{}.hull;
                 expected_fleet.position =
                     gs().nations[this_nation.id].fleets[0].position;
 
@@ -866,9 +849,9 @@ TEST(client_serialization_tests, serialize_for_client_array)
                 expected_fleet.id = gs().nations[this_nation.id].fleets[0].id;
                 expected_fleet.units =
                     gs().nations[this_nation.id].fleets[0].units;
-                expected_fleet.units[0].health = unit_t{}.health;
-                expected_fleet.units[1].health = unit_t{}.health;
-                expected_fleet.units[2].health = unit_t{}.health;
+                expected_fleet.units[0].hull = unit_t{}.hull;
+                expected_fleet.units[1].hull = unit_t{}.hull;
+                expected_fleet.units[2].hull = unit_t{}.hull;
                 expected_fleet.position =
                     gs().nations[this_nation.id].fleets[0].position;
 
@@ -925,18 +908,6 @@ TEST(client_serialization_tests, metadata)
     constexpr auto units_meta = detail::metadata<fleet_t>::units();
     EXPECT_EQ(units_meta.name_, "units");
     EXPECT_EQ(units_meta.ptr_, &fleet_t::units);
-    constexpr auto fuel_meta = detail::metadata<fleet_t>::fuel();
-    EXPECT_EQ(fuel_meta.name_, "fuel");
-    EXPECT_EQ(fuel_meta.ptr_, &fleet_t::fuel);
-    constexpr auto rounds_meta = detail::metadata<fleet_t>::rounds();
-    EXPECT_EQ(rounds_meta.name_, "rounds");
-    EXPECT_EQ(rounds_meta.ptr_, &fleet_t::rounds);
-    constexpr auto missiles_meta = detail::metadata<fleet_t>::missiles();
-    EXPECT_EQ(missiles_meta.name_, "missiles");
-    EXPECT_EQ(missiles_meta.ptr_, &fleet_t::missiles);
-    constexpr auto fighters_meta = detail::metadata<fleet_t>::fighters();
-    EXPECT_EQ(fighters_meta.name_, "fighters");
-    EXPECT_EQ(fighters_meta.ptr_, &fleet_t::fighters);
     constexpr auto position_meta = detail::metadata<fleet_t>::position();
     EXPECT_EQ(position_meta.name_, "position");
     EXPECT_EQ(position_meta.ptr_, &fleet_t::position);

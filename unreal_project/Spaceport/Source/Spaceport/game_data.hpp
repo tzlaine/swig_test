@@ -15,6 +15,39 @@
 
 
 
+enum class cargo_kind_t {
+    invalid_cargo_kind = 0,
+    water = -1,
+    supplies = -2,
+    fuel = -3,
+    rounds = -4,
+    missiles = -5,
+    troops = -6,
+    colonists = -7,
+    cargo_metal = -8,
+    cargo_energy = -9,
+    cargo_fuel_minerals = -10,
+    cargo_water = -11,
+    cargo_food = -12,
+};
+inline auto operator<=>(cargo_kind_t x, cargo_kind_t y) { return (int)x <=> (int)y; }
+
+enum class hit_table_entry_t {
+    invalid_hit_table_entry = 0,
+    hit_propulsion = 1,
+    hit_weapons = 2,
+    hit_shields = 3,
+    hit_detection = 4,
+    hit_stealth = 5,
+    hit_fuel = 6,
+    hit_water = 7,
+    hit_supplies = 8,
+    hit_rounds = 9,
+    hit_missiles = 10,
+    hit_cargo = 11,
+};
+inline auto operator<=>(hit_table_entry_t x, hit_table_entry_t y) { return (int)x <=> (int)y; }
+
 enum class planet_type_t {
     invalid_planet_type = 0,
     rocky = 1,
@@ -74,17 +107,38 @@ struct unit_design_t
     int shields = -1;
     int detection = -1;
     int stealth = -1;
-    int automation = -1;
-    int attack = -1;
-    int defense = -1;
-    int ground_attack = -1;
+    int fuel = -1;
+    int water = -1;
+    int supplies = -1;
+    int rounds = -1;
+    int missiles = -1;
+    int fighters = -1;
+    int cargo = -1;
+    std::vector<signed char> hit_table;
     bool operator==(unit_design_t const &) const = default;
 };
 
 struct unit_t
 {
     nation_and_object_id_t id = {};
-    int health = -1;
+    int hull = -1;
+    int armor = -1;
+    int propulsion = -1;
+    int weapons = -1;
+    int shields = -1;
+    int detection = -1;
+    int stealth = -1;
+    int fuel = -1;
+    int water = -1;
+    int supplies = -1;
+    int rounds = -1;
+    int missiles = -1;
+    int fighters = -1;
+    std::vector<signed char> cargo;
+    int organization = -1;
+    int experience = -1;
+    int crew = -1;
+    std::vector<signed char> hit_table;
     bool operator==(unit_t const &) const = default;
 };
 
@@ -105,11 +159,8 @@ struct fleet_t
     nation_and_object_id_t id = {};
     mission_t mission = mission_t::invalid_mission;
     std::vector<unit_t> units = {};
-    float fuel = -1.0f;
-    int rounds = -1;
-    int missiles = -1;
-    int fighters = -1;
     fleet_position_t position = {};
+    int fleet_experience = -1;
     bool operator==(fleet_t const &) const = default;
 };
 
@@ -270,6 +321,13 @@ struct nation_t
     std::vector<settlement_t> settlements_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_glimpsed = {};
+    int construction_tech = -1;
+    int propulsion_tech = -1;
+    int weapons_tech = -1;
+    int shields_tech = -1;
+    int stealth_tech = -1;
+    int detection_tech = -1;
+    int automation_tech = -1;
     bool defeated = false;
     bool operator==(nation_t const &) const = default;
 };

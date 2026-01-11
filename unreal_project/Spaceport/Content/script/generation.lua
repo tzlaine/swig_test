@@ -283,10 +283,6 @@ function starting_small_ship_design(nation)
    retval.shields = 1
    retval.detection = 1
    retval.stealth = 1
-   retval.automation = 1
-   retval.attack = 2
-   retval.defense = 2
-   retval.ground_attack = 0
    return retval
 end
 function starting_large_ship_design(nation)
@@ -299,10 +295,6 @@ function starting_large_ship_design(nation)
    retval.shields = 1
    retval.detection = 1
    retval.stealth = 1
-   retval.automation = 1
-   retval.attack = 4
-   retval.defense = 4
-   retval.ground_attack = 0
    return retval
 end
 function starting_colony_ship_design(nation)
@@ -315,10 +307,6 @@ function starting_colony_ship_design(nation)
    retval.shields = 1
    retval.detection = 1
    retval.stealth = 1
-   retval.automation = 1
-   retval.attack = 0
-   retval.defense = 0
-   retval.ground_attack = 0
    return retval
 end
 function starting_lifter_design(nation)
@@ -331,10 +319,6 @@ function starting_lifter_design(nation)
    retval.shields = 1
    retval.detection = 1
    retval.stealth = 1
-   retval.automation = 1
-   retval.attack = 0
-   retval.defense = 0
-   retval.ground_attack = 0
    return retval
 end
 
@@ -377,23 +361,17 @@ function create_starting_fleet(gs, nation, planet)
 
    local unit = unit_t.new()
    unit.id = starting_small_ship_design(nation).id
-   unit.health = 100
    retval.units:add(unit)
    retval.units:add(unit)
    retval.units:add(unit)
 
    unit = unit_t.new()
    unit.id = starting_large_ship_design(nation).id
-   unit.health = 100
    retval.units:add(unit)
 
    unit = unit_t.new()
    unit.id = starting_colony_ship_design(nation).id
-   unit.health = 100
    retval.units:add(unit)
-
-   retval.fuel = 100
-   retval.rounds = 100
 
    retval.position = fleet_position_t.new()
    local system = planet_system(gs, planet)
@@ -489,6 +467,14 @@ function create_starting_nation(gs, nation_id, home_planet, planet_id)
    -- TODO: Add starting outpost here.
    location.objects:add(location_object)
    system.permanent_locations:add(location)
+
+   construction_tech = starting_tech_level;
+   propulsion_tech = starting_tech_level;
+   weapons_tech = starting_tech_level;
+   shields_tech = starting_tech_level;
+   stealth_tech = starting_tech_level;
+   detection_tech = starting_tech_level;
+   automation_tech = starting_tech_level;
 
    gs.nations:add(nation)
 end

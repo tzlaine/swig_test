@@ -386,6 +386,17 @@ def declare_field_descriptor_proto(field_descriptor_proto, depth, map_fields, pa
         formatters_file.write('''{0}        }};
 {0}        out = std::format_to(out, " }}}}");
 '''.format(indent_str(depth - 1)))
+    elif 'std::vector<signed char>' in typename:
+        hpp_file.write('{}{} {};\n'.format(indent_str(depth), typename, field_descriptor_proto.name))
+        formatters_file.write('''{0}        out = std::format_to(out, " {1}={{{{");
+'''.format(indent_str(depth - 1), field_descriptor_proto.name))
+        formatters_file.write('''{0}        for (auto c : x.{1}) {{
+'''.format(indent_str(depth - 1), field_descriptor_proto.name))
+        formatters_file.write('''{0}            out = std::format_to(out, " {{}}", (int)c);
+'''.format(indent_str(depth - 1)))
+        formatters_file.write('''{0}        }};
+{0}        out = std::format_to(out, " }}}}");
+'''.format(indent_str(depth - 1)))
     else:
         initializer = initializer_expr(field_descriptor_proto, 'cpp', map_fields)
         hpp_file.write('{}{} {}{};\n'.format(indent_str(depth), typename, field_descriptor_proto.name, initializer))

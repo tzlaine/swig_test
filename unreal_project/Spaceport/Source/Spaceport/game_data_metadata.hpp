@@ -100,7 +100,7 @@ namespace detail {
             return "unit_design_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 12; }
+        static constexpr int hi_field_number() { return 16; }
 
         static constexpr metadatum<unit_design_t, nation_and_object_id_t> id()
         {
@@ -142,25 +142,45 @@ namespace detail {
             using namespace std::literals;
             return {"stealth"sv, 8, &unit_design_t::stealth};
         }
-        static constexpr metadatum<unit_design_t, int> automation()
+        static constexpr metadatum<unit_design_t, int> fuel()
         {
             using namespace std::literals;
-            return {"automation"sv, 9, &unit_design_t::automation};
+            return {"fuel"sv, 9, &unit_design_t::fuel};
         }
-        static constexpr metadatum<unit_design_t, int> attack()
+        static constexpr metadatum<unit_design_t, int> water()
         {
             using namespace std::literals;
-            return {"attack"sv, 10, &unit_design_t::attack};
+            return {"water"sv, 10, &unit_design_t::water};
         }
-        static constexpr metadatum<unit_design_t, int> defense()
+        static constexpr metadatum<unit_design_t, int> supplies()
         {
             using namespace std::literals;
-            return {"defense"sv, 11, &unit_design_t::defense};
+            return {"supplies"sv, 11, &unit_design_t::supplies};
         }
-        static constexpr metadatum<unit_design_t, int> ground_attack()
+        static constexpr metadatum<unit_design_t, int> rounds()
         {
             using namespace std::literals;
-            return {"ground_attack"sv, 12, &unit_design_t::ground_attack};
+            return {"rounds"sv, 12, &unit_design_t::rounds};
+        }
+        static constexpr metadatum<unit_design_t, int> missiles()
+        {
+            using namespace std::literals;
+            return {"missiles"sv, 13, &unit_design_t::missiles};
+        }
+        static constexpr metadatum<unit_design_t, int> fighters()
+        {
+            using namespace std::literals;
+            return {"fighters"sv, 14, &unit_design_t::fighters};
+        }
+        static constexpr metadatum<unit_design_t, int> cargo()
+        {
+            using namespace std::literals;
+            return {"cargo"sv, 15, &unit_design_t::cargo};
+        }
+        static constexpr metadatum<unit_design_t, std::vector<signed char>> hit_table()
+        {
+            using namespace std::literals;
+            return {"hit_table"sv, 16, &unit_design_t::hit_table};
         }
 
         template<typename F>
@@ -174,10 +194,14 @@ namespace detail {
             f(shields());
             f(detection());
             f(stealth());
-            f(automation());
-            f(attack());
-            f(defense());
-            f(ground_attack());
+            f(fuel());
+            f(water());
+            f(supplies());
+            f(rounds());
+            f(missiles());
+            f(fighters());
+            f(cargo());
+            f(hit_table());
         }
     };
 
@@ -189,24 +213,126 @@ namespace detail {
             return "unit_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 2; }
+        static constexpr int hi_field_number() { return 19; }
 
         static constexpr metadatum<unit_t, nation_and_object_id_t> id()
         {
             using namespace std::literals;
             return {"id"sv, 1, &unit_t::id};
         }
-        static constexpr metadatum<unit_t, int> health()
+        static constexpr metadatum<unit_t, int> hull()
         {
             using namespace std::literals;
-            return {"health"sv, 2, &unit_t::health};
+            return {"hull"sv, 2, &unit_t::hull};
+        }
+        static constexpr metadatum<unit_t, int> armor()
+        {
+            using namespace std::literals;
+            return {"armor"sv, 3, &unit_t::armor};
+        }
+        static constexpr metadatum<unit_t, int> propulsion()
+        {
+            using namespace std::literals;
+            return {"propulsion"sv, 4, &unit_t::propulsion};
+        }
+        static constexpr metadatum<unit_t, int> weapons()
+        {
+            using namespace std::literals;
+            return {"weapons"sv, 5, &unit_t::weapons};
+        }
+        static constexpr metadatum<unit_t, int> shields()
+        {
+            using namespace std::literals;
+            return {"shields"sv, 6, &unit_t::shields};
+        }
+        static constexpr metadatum<unit_t, int> detection()
+        {
+            using namespace std::literals;
+            return {"detection"sv, 7, &unit_t::detection};
+        }
+        static constexpr metadatum<unit_t, int> stealth()
+        {
+            using namespace std::literals;
+            return {"stealth"sv, 8, &unit_t::stealth};
+        }
+        static constexpr metadatum<unit_t, int> fuel()
+        {
+            using namespace std::literals;
+            return {"fuel"sv, 9, &unit_t::fuel};
+        }
+        static constexpr metadatum<unit_t, int> water()
+        {
+            using namespace std::literals;
+            return {"water"sv, 10, &unit_t::water};
+        }
+        static constexpr metadatum<unit_t, int> supplies()
+        {
+            using namespace std::literals;
+            return {"supplies"sv, 11, &unit_t::supplies};
+        }
+        static constexpr metadatum<unit_t, int> rounds()
+        {
+            using namespace std::literals;
+            return {"rounds"sv, 12, &unit_t::rounds};
+        }
+        static constexpr metadatum<unit_t, int> missiles()
+        {
+            using namespace std::literals;
+            return {"missiles"sv, 13, &unit_t::missiles};
+        }
+        static constexpr metadatum<unit_t, int> fighters()
+        {
+            using namespace std::literals;
+            return {"fighters"sv, 14, &unit_t::fighters};
+        }
+        static constexpr metadatum<unit_t, std::vector<signed char>> cargo()
+        {
+            using namespace std::literals;
+            return {"cargo"sv, 15, &unit_t::cargo};
+        }
+        static constexpr metadatum<unit_t, int> organization()
+        {
+            using namespace std::literals;
+            return {"organization"sv, 16, &unit_t::organization};
+        }
+        static constexpr metadatum<unit_t, int> experience()
+        {
+            using namespace std::literals;
+            return {"experience"sv, 17, &unit_t::experience};
+        }
+        static constexpr metadatum<unit_t, int> crew()
+        {
+            using namespace std::literals;
+            return {"crew"sv, 18, &unit_t::crew};
+        }
+        static constexpr metadatum<unit_t, std::vector<signed char>> hit_table()
+        {
+            using namespace std::literals;
+            return {"hit_table"sv, 19, &unit_t::hit_table};
         }
 
         template<typename F>
         static void foreach_member(F && f)
         {
             f(id());
-            f(health());
+            f(hull());
+            f(armor());
+            f(propulsion());
+            f(weapons());
+            f(shields());
+            f(detection());
+            f(stealth());
+            f(fuel());
+            f(water());
+            f(supplies());
+            f(rounds());
+            f(missiles());
+            f(fighters());
+            f(cargo());
+            f(organization());
+            f(experience());
+            f(crew());
+            f(hit_table());
         }
     };
 
@@ -277,7 +403,7 @@ namespace detail {
             return "fleet_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 8; }
+        static constexpr int hi_field_number() { return 5; }
 
         static constexpr metadatum<fleet_t, nation_and_object_id_t> id()
         {
@@ -294,30 +420,15 @@ namespace detail {
             using namespace std::literals;
             return {"units"sv, 3, &fleet_t::units};
         }
-        static constexpr metadatum<fleet_t, float> fuel()
-        {
-            using namespace std::literals;
-            return {"fuel"sv, 4, &fleet_t::fuel};
-        }
-        static constexpr metadatum<fleet_t, int> rounds()
-        {
-            using namespace std::literals;
-            return {"rounds"sv, 5, &fleet_t::rounds};
-        }
-        static constexpr metadatum<fleet_t, int> missiles()
-        {
-            using namespace std::literals;
-            return {"missiles"sv, 6, &fleet_t::missiles};
-        }
-        static constexpr metadatum<fleet_t, int> fighters()
-        {
-            using namespace std::literals;
-            return {"fighters"sv, 7, &fleet_t::fighters};
-        }
         static constexpr metadatum<fleet_t, fleet_position_t> position()
         {
             using namespace std::literals;
-            return {"position"sv, 8, &fleet_t::position};
+            return {"position"sv, 4, &fleet_t::position};
+        }
+        static constexpr metadatum<fleet_t, int> fleet_experience()
+        {
+            using namespace std::literals;
+            return {"fleet_experience"sv, 5, &fleet_t::fleet_experience};
         }
 
         template<typename F>
@@ -326,11 +437,8 @@ namespace detail {
             f(id());
             f(mission());
             f(units());
-            f(fuel());
-            f(rounds());
-            f(missiles());
-            f(fighters());
             f(position());
+            f(fleet_experience());
         }
     };
 
@@ -1033,7 +1141,7 @@ namespace detail {
             return "nation_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 17; }
+        static constexpr int hi_field_number() { return 100; }
 
         static constexpr metadatum<nation_t, int> id()
         {
@@ -1115,10 +1223,45 @@ namespace detail {
             using namespace std::literals;
             return {"foreign_designs_glimpsed"sv, 16, &nation_t::foreign_designs_glimpsed};
         }
+        static constexpr metadatum<nation_t, int> construction_tech()
+        {
+            using namespace std::literals;
+            return {"construction_tech"sv, 17, &nation_t::construction_tech};
+        }
+        static constexpr metadatum<nation_t, int> propulsion_tech()
+        {
+            using namespace std::literals;
+            return {"propulsion_tech"sv, 18, &nation_t::propulsion_tech};
+        }
+        static constexpr metadatum<nation_t, int> weapons_tech()
+        {
+            using namespace std::literals;
+            return {"weapons_tech"sv, 19, &nation_t::weapons_tech};
+        }
+        static constexpr metadatum<nation_t, int> shields_tech()
+        {
+            using namespace std::literals;
+            return {"shields_tech"sv, 20, &nation_t::shields_tech};
+        }
+        static constexpr metadatum<nation_t, int> stealth_tech()
+        {
+            using namespace std::literals;
+            return {"stealth_tech"sv, 21, &nation_t::stealth_tech};
+        }
+        static constexpr metadatum<nation_t, int> detection_tech()
+        {
+            using namespace std::literals;
+            return {"detection_tech"sv, 22, &nation_t::detection_tech};
+        }
+        static constexpr metadatum<nation_t, int> automation_tech()
+        {
+            using namespace std::literals;
+            return {"automation_tech"sv, 23, &nation_t::automation_tech};
+        }
         static constexpr metadatum<nation_t, bool> defeated()
         {
             using namespace std::literals;
-            return {"defeated"sv, 17, &nation_t::defeated};
+            return {"defeated"sv, 100, &nation_t::defeated};
         }
 
         template<typename F>
@@ -1140,6 +1283,13 @@ namespace detail {
             f(settlements_seen());
             f(foreign_designs_seen());
             f(foreign_designs_glimpsed());
+            f(construction_tech());
+            f(propulsion_tech());
+            f(weapons_tech());
+            f(shields_tech());
+            f(stealth_tech());
+            f(detection_tech());
+            f(automation_tech());
             f(defeated());
         }
     };
