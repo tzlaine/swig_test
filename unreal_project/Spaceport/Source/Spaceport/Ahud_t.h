@@ -25,8 +25,10 @@ class Soptions;
 class Shud_widget_base;
 class Shud_widget_base;
 class Ssystem_map_ui;
+class Sunit_designer;
 struct client_game_state;
 struct date_t;
+struct nation_t;
 
 UCLASS()
 class Ahud_t : public AHUD
@@ -71,6 +73,8 @@ public:
     void generating_percent_update(int p);
     void remove_generating_widget();
 
+    void show_unit_designer(nation_t const & nation);
+
     void do_after_confirming(std::function<void()> action,
                              FString title = TEXT("confirm_leave_game"),
                              FString message = TEXT("unsaved_progress_lost"),
@@ -110,6 +114,7 @@ private:
     int generating_progress_ = 0;
 
     TSharedPtr<Ssystem_map_ui> system_map_ui_;
+    TSharedPtr<Sunit_designer> unit_designer_;
 
     std::list<confirm_dlg_info> confirm_dlg_infos_;
 

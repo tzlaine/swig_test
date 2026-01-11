@@ -110,6 +110,8 @@ extern const float system_map_move_factor;
 extern const float system_map_zoom_to_time_s;
 extern const float min_time_between_day_ticks_s;
 
+extern const float max_armor_per_hull_point;
+
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;
 extern const ECollisionChannel star_channel;

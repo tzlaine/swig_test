@@ -778,6 +778,11 @@ void Aplayer_controller::server_save_game_Implementation(
     gm->save_game(filename);
 }
 
+#define SHOW_UNIT_DESIGNER 0
+#if SHOW_UNIT_DESIGNER
+FTimerHandle timer_handle;
+#endif
+
 void Aplayer_controller::client_recv_initial_game_state_Implementation(
     int nation_id, TArray<uint8> const & state)
 {
@@ -809,6 +814,14 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
     auto * hud = ::hud(GetHUD());
     check(hud);
     hud->initial_game_state(client_gs_);
+
+#if SHOW_UNIT_DESIGNER
+    FTimerDelegate delegate;
+    delegate.BindLambda(
+        [hud, n = &*opt_nation] { hud->show_unit_designer(*n); });
+    GetWorldTimerManager().SetTimer(timer_handle, delegate, 2.0, false);
+    ERROR_FORMAT("nation={}", *opt_nation);
+#endif
 }
 
 bool Aplayer_controller::

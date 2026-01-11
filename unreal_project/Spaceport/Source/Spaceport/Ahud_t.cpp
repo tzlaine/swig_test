@@ -11,6 +11,7 @@
 #include "huds/Soptions.h"
 #include "huds/Ssave_load_dlg.h"
 #include "huds/Ssystem_map_ui.h"
+#include "huds/Sunit_designer.h"
 #include "huds/Uactivatable_widget.h"
 
 #include <Engine/GameViewportClient.h>
@@ -228,6 +229,13 @@ void Ahud_t::remove_generating_widget()
     remove_widget(*generating_galaxy_);
 }
 
+void Ahud_t::show_unit_designer(nation_t const & nation)
+{
+    allocate_widgets();
+    unit_designer_->rebuild(nation);
+    push_modal(unit_designer_);
+}
+
 void Ahud_t::do_after_confirming(std::function<void()> action,
                                     FString title,
                                     FString message,
@@ -368,6 +376,7 @@ void Ahud_t::allocate_widgets()
     game_setup_ = SNew(Sgame_setup);
     generating_galaxy_ = SNew(Sgenerating_galaxy);
     system_map_ui_ = SNew(Ssystem_map_ui);
+    unit_designer_ = SNew(Sunit_designer);
 
     using namespace adobe::literals;
     animations_.insert(

@@ -7,7 +7,7 @@
 #include <functional>
 
 
-template<typename T>
+template<typename T, int FontScalePct = 100>
 class Sstyled_spin_box : public SSpinBox<T>
 {
 public:
@@ -18,7 +18,8 @@ public:
         auto const & defaults = ui_defaults();
         auto args(args_);
         args.Style(defaults.SpinBox_style_.Get());
-        args.Font(FSlateFontInfo(defaults.font_.Get(), defaults.font_size_));
+        args.Font(FSlateFontInfo(
+            defaults.font_.Get(), defaults.font_size_ * FontScalePct / 100.0));
         SSpinBox<T>::Construct(args);
     }
 };

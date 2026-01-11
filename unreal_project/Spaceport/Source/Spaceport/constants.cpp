@@ -114,6 +114,8 @@ const float system_map_zoom_to_time_s = lua()["system_map_zoom_to_time_s"];
 const float min_time_between_day_ticks_s =
     lua()["min_time_between_day_ticks_s"];
 
+const float max_armor_per_hull_point = lua()["max_armor_per_hull_point"];
+
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =
     ECollisionChannel::ECC_GameTraceChannel1;

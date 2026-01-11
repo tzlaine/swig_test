@@ -177,9 +177,9 @@ Ships:
 
 * 5 crew are requred for each point of hull.  An additional 100 crew are
   required per point of equipment, far all these kinds of equipment:
-  Propulsion, Weapons, Shields, Detection, and Stealth.  TODO: Can you add an
-  increment of 100 troops as marines, to board enemy ships, or defend against
-  boarding?
+  Propulsion, Weapons, Shields, Detection, Stealth and Fighters.  TODO: Can
+  you add an increment of 100 troops as marines, to board enemy ships, or
+  defend against boarding?
 
 * Hull space is occupied by the drive, weapons, shields, and stealth tech, at
   10 points per level of each equipped item.  So a design with these stats
@@ -192,14 +192,15 @@ Ships:
 * 1 unit of ship space is enough room for: 1000 people and their equipment,
   which may be 1000 colonists, or 1000 troops, etc.; 1 unit of fuel, which is
   enough fuel for a mass-100 ship to burn for one month in subspace, or for a
-  mass-100 ship to burn for one day at 1G (at starting tech levels); 1 unit of
-  supply or water, which is enough to eat or drink for 1k crew for one month;
-  1 unit of any resource as cargo; 10 shots; or 10 missiles.  Taking the 29
-  units of leftover space from before, 2 units each of fuel, water, and supply
-  would give the ship 2 months of operating time, plus a small buffer.  That
-  leaves 23.  1 point each of rounds and missiles would leave the ship with 21
-  units of space for general cargo, or just empty space.  A high-quality
-  design will use cargo and empty space as buffers around ammo and fuel.
+  mass-100 ship to burn for one day at full accelaration (at starting tech
+  levels); 1 unit of supply or water, which is enough to eat or drink for 1k
+  crew for one month; 1 unit of any resource as cargo; 10 shots; or 10
+  missiles.  Taking the 29 units of leftover space from before, 2 units each
+  of fuel, water, and supply would give the ship 2 months of operating time,
+  plus a small buffer.  That leaves 23.  1 point each of rounds and missiles
+  would leave the ship with 21 units of space for general cargo, or just empty
+  space.  A high-quality design will use cargo and empty space as buffers
+  around ammo and fuel.
 
 * Tech advances should: reduce the space requirements for a particular level
   of equipment; lower the mass of a point of hull; lower the mass of a point

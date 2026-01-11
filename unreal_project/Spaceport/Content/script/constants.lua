@@ -50,3 +50,5 @@ map_move_modififier_factor = 10
 system_map_move_factor = 10
 system_map_zoom_to_time_s = 0.25
 min_time_between_day_ticks_s = 0.05
+
+max_armor_per_hull_point = 0.5
