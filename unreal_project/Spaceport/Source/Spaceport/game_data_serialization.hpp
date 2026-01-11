@@ -13,8 +13,8 @@
 
 namespace detail {
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(nation_and_object_id_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(nation_and_object_id_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -25,9 +25,15 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.nation_id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.object_id, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -58,8 +64,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(game_start_params_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(game_start_params_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -70,17 +76,23 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.habitable_systems_per_hex_mean, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.habitable_systems_per_hex_plus_minus, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_per_hex, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_height, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.player_id_to_nation_id, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.ai_opponents, 6, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -115,8 +127,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(unit_design_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(unit_design_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -127,29 +139,35 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.hull, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.armor, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth, 8, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+        if (allow(9))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.automation, 9, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
+        if (allow(10))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.attack, 10, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
+        if (allow(11))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.defense, 11, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
+        if (allow(12))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.ground_attack, 12, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -190,8 +208,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(unit_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(unit_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -202,9 +220,15 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.health, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -235,8 +259,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(fleet_position_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(fleet_position_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -247,19 +271,25 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_x, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_y, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.system_id, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.at_permanent_location, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.location_index, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.object_index, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.is_garrison, 7, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -295,8 +325,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(fleet_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(fleet_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -307,21 +337,27 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.mission, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.units, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.position, 8, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -358,8 +394,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(fleets_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(fleets_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -370,7 +406,13 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleet_ids, 1, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -400,8 +442,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(resource_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(resource_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -412,15 +454,21 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.availability, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.max_availability, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.stockpile, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.max_stockpile, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.stockpile_last_month, 5, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -454,8 +502,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(settlement_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(settlement_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -466,55 +514,61 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.planet_id, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.original_owner, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.population, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.water, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.food, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.energy, 8, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+        if (allow(9))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.metal, 9, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
+        if (allow(10))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel_minerals, 10, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
+        if (allow(11))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.shipyard_pops, 11, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
+        if (allow(12))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure_upgrade_pops, 12, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 13; }))
+        if (allow(13))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure_maintenance_pops, 13, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 14; }))
+        if (allow(14))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure_repair_pops, 14, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 15; }))
+        if (allow(15))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.water_pops, 15, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 16; }))
+        if (allow(16))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.food_pops, 16, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 17; }))
+        if (allow(17))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.energy_pops, 17, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 18; }))
+        if (allow(18))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.metal_pops, 18, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 19; }))
+        if (allow(19))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel_minerals_pops, 19, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 20; }))
+        if (allow(20))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel_refining_pops, 20, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 21; }))
+        if (allow(21))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.supply_manufaturing_pops, 21, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 22; }))
+        if (allow(22))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.round_manufaturing_pops, 22, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 23; }))
+        if (allow(23))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.missile_manufaturing_pops, 23, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 24; }))
+        if (allow(24))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighter_manufaturing_pops, 24, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 25; }))
+        if (allow(25))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.garrison, 25, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -568,8 +622,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(planet_effect_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(planet_effect_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -580,11 +634,17 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.name, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.reason, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.value, 3, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -616,8 +676,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(planet_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(planet_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -628,57 +688,63 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.system_id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.planet_type, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.mass_kg, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.radius_km, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.orbit_au, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.orbital_period_y, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.gravity_g, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.axial_tilt_d, 8, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+        if (allow(9))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.day_h, 9, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
+        if (allow(10))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.surface_temperature_k, 10, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
+        if (allow(11))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.magnetosphere_strength, 11, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
+        if (allow(12))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.atmospheric_pressure, 12, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 13; }))
+        if (allow(13))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.o2_co2_suitability, 13, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 14; }))
+        if (allow(14))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.ocean_coverage, 14, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 15; }))
+        if (allow(15))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.growth_factor, 15, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 16; }))
+        if (allow(16))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.atmosphere_type, 16, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 17; }))
+        if (allow(17))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.water, 17, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 18; }))
+        if (allow(18))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.food, 18, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 19; }))
+        if (allow(19))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.energy, 19, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 20; }))
+        if (allow(20))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.metal, 20, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 21; }))
+        if (allow(21))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel_minerals, 21, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 22; }))
+        if (allow(22))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.infrastructure_cost_factor, 22, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 23; }))
+        if (allow(23))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.orbital_pos_r, 23, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 24; }))
+        if (allow(24))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.max_population, 24, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 25; }))
+        if (allow(25))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.effects, 25, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 26; }))
+        if (allow(26))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlement_ids, 26, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -733,8 +799,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(location_object_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(location_object_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -745,9 +811,15 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.bases, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.planet_id, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -778,8 +850,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(system_location_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(system_location_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -790,9 +862,15 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.objects, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.units, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -823,8 +901,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(star_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(star_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -835,15 +913,21 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.star_class, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.temperature_k, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.solar_masses, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.solar_luminosities, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.solar_radii, 5, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -877,8 +961,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(system_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(system_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -889,23 +973,29 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.name, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.hex_id, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.star, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.permanent_locations, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.temporary_locations, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_x, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.world_pos_y, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.first_planet, 8, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+        if (allow(9))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.last_planet, 9, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -943,8 +1033,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(hex_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(hex_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -955,13 +1045,19 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.coord, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.province_id, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.first_system, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.last_system, 4, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -994,8 +1090,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(province_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(province_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1006,9 +1102,15 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.hex_coords, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -1039,8 +1141,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(nation_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(nation_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1051,39 +1153,45 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.home_planet, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.capitol_settlement, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.money, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.unit_designs, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.provinces, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleets, 8, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+        if (allow(9))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.transports, 9, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 10; }))
+        if (allow(10))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes_seen, 10, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 11; }))
+        if (allow(11))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_present_in, 11, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 12; }))
+        if (allow(12))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems_visited, 12, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 13; }))
+        if (allow(13))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets_surveyed, 13, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 14; }))
+        if (allow(14))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.settlements_seen, 14, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 15; }))
+        if (allow(15))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_seen, 15, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 16; }))
+        if (allow(16))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.foreign_designs_glimpsed, 16, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 17; }))
+        if (allow(17))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.defeated, 17, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -1129,8 +1237,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(date_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(date_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1141,11 +1249,17 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.year, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.month, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.day, 3, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -1177,8 +1291,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(game_state_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(game_state_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1189,23 +1303,29 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_width, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.map_height, 2, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 3; }))
+        if (allow(3))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.hexes, 3, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 4; }))
+        if (allow(4))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.systems, 4, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 5; }))
+        if (allow(5))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.planets, 5, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 6; }))
+        if (allow(6))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.nations, 6, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 7; }))
+        if (allow(7))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.alliances, 7, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 8; }))
+        if (allow(8))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.play_speed, 8, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 9; }))
+        if (allow(9))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.date, 9, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -1243,8 +1363,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(day_update_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(day_update_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1255,7 +1375,13 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.date, 1, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -1285,8 +1411,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(month_update_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(month_update_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1297,7 +1423,13 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.date, 1, os);
     
         retval += detail::serialize_message_end<Op>(os);
@@ -1327,8 +1459,8 @@ namespace detail {
             x, src, this_message_name, field_names, expected_field_numbers, read_field);
     }
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(year_update_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(year_update_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -1339,7 +1471,13 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.date, 1, os);
     
         retval += detail::serialize_message_end<Op>(os);

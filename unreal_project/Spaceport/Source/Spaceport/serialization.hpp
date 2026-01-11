@@ -497,13 +497,18 @@ namespace detail {
         return retval;
     }
 
-    template<int LoFieldNumber, int HiFieldNumber, typename T, typename F>
+    template<
+        int LoFieldNumber,
+        int HiFieldNumber,
+        int N,
+        typename T,
+        typename F>
     std::span<std::byte const> deserialize_message_impl_impl(
         T & x,
         std::span<std::byte const> src,
         std::string_view this_message_name,
         std::array<std::string_view, HiFieldNumber + 1> const & field_names,
-        std::array<int, HiFieldNumber> & expected_field_numbers,
+        std::array<int, N> & expected_field_numbers,
         F && read_field)
     {
         std::span<int, std::dynamic_extent> field_numbers_remaining(

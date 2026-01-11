@@ -31,31 +31,31 @@ proto_contents = args.proto_file.read()
 # generated types.  Comments below from descriptor.proto in the
 # Protobuf sources.
 types = [
-    ('void', 'void'),            #    // 0 is reserved for errors.
-    ('double', 'double'),        #    TYPE_DOUBLE         = 1;
-    ('float', 'float'),          #    TYPE_FLOAT          = 2;
-    ('std::ptrdiff_t', 'int'),   #    TYPE_INT64          = 3;
-    ('std::size_t', 'uint'),     #    TYPE_UINT64         = 4;
-    ('int', 'int'),              #    TYPE_INT32          = 5;
-    ('void', 'void'),            #    TYPE_FIXED64        = 6;
-    ('int', 'int'),              #    TYPE_FIXED32        = 7;
-    ('bool', 'bool'),            #    TYPE_BOOL           = 8;
-    ('adobe::name_t', 'string'), #    TYPE_STRING         = 9;
-    ('void', 'void'),            #    TYPE_GROUP          = 10;  // Tag-delimited aggregate.
-    ('void', 'void'),            #    TYPE_MESSAGE        = 11;  // Length-delimited aggregate.
-    ('void', 'void'),            #    TYPE_BYTES          = 12;
-    ('unsigned int', 'uint'),    #    TYPE_UINT32         = 13;
-    ('void', 'void'),            #    TYPE_ENUM           = 14;
-    ('int', 'int'),              #    TYPE_SFIXED32       = 15;
-    ('void', 'void'),            #    TYPE_SFIXED64       = 16;
-    ('int', 'int'),              #    TYPE_SINT32         = 17;  // Uses ZigZag encoding.
-    ('void', 'void')             #    TYPE_SINT64         = 18;  // Uses ZigZag encoding.
+    'void',                       #    // 0 is reserved for errors.
+    'double',                     #    TYPE_DOUBLE         = 1;
+    'float',                      #    TYPE_FLOAT          = 2;
+    'std::ptrdiff_t',             #    TYPE_INT64          = 3;
+    'std::size_t',                #    TYPE_UINT64         = 4;
+    'int',                        #    TYPE_INT32          = 5;
+    'void',                       #    TYPE_FIXED64        = 6;
+    'int',                        #    TYPE_FIXED32        = 7;
+    'bool',                       #    TYPE_BOOL           = 8;
+    'adobe::name_t',              #    TYPE_STRING         = 9;
+    'void',                       #    TYPE_GROUP          = 10;  // Tag-delimited aggregate.
+    'void',                       #    TYPE_MESSAGE        = 11;  // Length-delimited aggregate.
+    'std::vector<signed char>',   #    TYPE_BYTES          = 12;
+    'unsigned int',               #    TYPE_UINT32         = 13;
+    'void',                       #    TYPE_ENUM           = 14;
+    'int',                        #    TYPE_SFIXED32       = 15;
+    'void',                       #    TYPE_SFIXED64       = 16;
+    'int',                        #    TYPE_SINT32         = 17;  // Uses ZigZag encoding.
+    'void'                        #    TYPE_SINT64         = 18;  // Uses ZigZag encoding.
 ]
 
 def get_cpp_type(typecode):
     retval = 'void'
     if typecode < len(types):
-        retval = types[typecode][0]
+        retval = types[typecode]
     return retval
 
 def map_field_entry_type(descriptor_proto):
@@ -476,11 +476,11 @@ def declare_descriptor_proto(descriptor_proto, protobuf_namespace, user_namespac
     all_decl_data.append(decl_data)
 
 def print_serialization(depth, this_message_name, this_message_fields):
-    serialize_ops = '\n'.join(map(lambda tup: f'''{indent_str(depth)}    if (std::ranges::none_of(elisions, [](int i) {{ return i == {tup[1]}; }}))
+    serialize_ops = '\n'.join(map(lambda tup: f'''{indent_str(depth)}    if (allow({tup[1]}))
 {indent_str(depth)}        retval += detail::serialize_impl<Op, ser_field_op::write>(x.{tup[0]}, {tup[1]}, os);''', this_message_fields))
 
-    serialization_file.write('''{0}template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-{0}std::ptrdiff_t serialize_message_impl({1} const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{{{0}}}})
+    serialization_file.write('''{0}template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+{0}std::ptrdiff_t serialize_message_impl({1} const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {{}})
 {0}{{
 {0}    std::ptrdiff_t retval = 0;
 {0}
@@ -490,6 +490,12 @@ def print_serialization(depth, this_message_name, this_message_fields):
 {0}        out = os::WriteVarint32ToArray(field_number, out);
 {0}        detail::count_or_write<Op>(retval, buf, out - buf, os);
 {0}    }}
+{0}
+{0}    auto const allow = [&](int i) {{
+{0}        if constexpr (N == 0)
+{0}            return true;
+{0}        return std::ranges::find(allowlist, i) != allowlist.end();
+{0}    }};
 {0}
 {2}
 {0}

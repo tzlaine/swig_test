@@ -13,8 +13,8 @@
 
 namespace detail {
 
-    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 1>
-    std::ptrdiff_t serialize_message_impl(hex_coord_t const & x, int field_number, OStream * os, std::array<int, N> const & elisions = {{0}})
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(hex_coord_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;
     
@@ -25,9 +25,15 @@ namespace detail {
             detail::count_or_write<Op>(retval, buf, out - buf, os);
         }
     
-        if (std::ranges::none_of(elisions, [](int i) { return i == 1; }))
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.x, 1, os);
-        if (std::ranges::none_of(elisions, [](int i) { return i == 2; }))
+        if (allow(2))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.y, 2, os);
     
         retval += detail::serialize_message_end<Op>(os);

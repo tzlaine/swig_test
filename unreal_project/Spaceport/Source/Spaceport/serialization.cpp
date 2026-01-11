@@ -17,19 +17,11 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            std::array<int, 10> fields_to_elide = {
-                {metadata<unit_design_t>::armor().index_,
-                 metadata<unit_design_t>::propulsion().index_,
-                 metadata<unit_design_t>::weapons().index_,
-                 metadata<unit_design_t>::shields().index_,
-                 metadata<unit_design_t>::detection().index_,
-                 metadata<unit_design_t>::stealth().index_,
-                 metadata<unit_design_t>::automation().index_,
-                 metadata<unit_design_t>::attack().index_,
-                 metadata<unit_design_t>::defense().index_,
-                 metadata<unit_design_t>::ground_attack().index_}};
+            std::array<int, 2> fields_to_allow = {
+                {metadata<unit_design_t>::id().index_,
+                 metadata<unit_design_t>::hull().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                x, 0, os, fields_to_elide);
+                x, 0, os, fields_to_allow);
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }
@@ -46,10 +38,10 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            std::array<int, 1> fields_to_elide = {
-                {metadata<unit_t>::health().index_}};
+            std::array<int, 1> fields_to_allow = {
+                {metadata<unit_t>::id().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                x, 0, os, fields_to_elide);
+                x, 0, os, fields_to_allow);
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }
@@ -70,14 +62,12 @@ namespace detail {
             for (auto & unit : copy.units) {
                 unit.health = -1;
             }
-            std::array<int, 5> fields_to_elide = {
-                {metadata<fleet_t>::mission().index_,
-                 metadata<fleet_t>::fuel().index_,
-                 metadata<fleet_t>::rounds().index_,
-                 metadata<fleet_t>::missiles().index_,
-                 metadata<fleet_t>::fighters().index_}};
+            std::array<int, 3> fields_to_allow = {
+                {metadata<fleet_t>::id().index_,
+                 metadata<fleet_t>::units().index_,
+                 metadata<fleet_t>::position().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                copy, 0, os, fields_to_elide);
+                copy, 0, os, fields_to_allow);
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }
@@ -112,13 +102,14 @@ namespace detail {
         if (vis == visibility_kind::owner) {
             serialize_impl<ser_op::write, ser_field_op::dont_write>(x, 0, os);
         } else if (vis == visibility_kind::neutral_or_enemy) {
-            std::array<int, 4> fields_to_elide = {
-                {metadata<system_t>::permanent_locations().index_,
-                 metadata<system_t>::temporary_locations().index_,
-                 metadata<system_t>::first_planet().index_,
-                 metadata<system_t>::last_planet().index_}};
+            std::array<int, 5> fields_to_allow = {
+                {metadata<system_t>::name().index_,
+                 metadata<system_t>::hex_id().index_,
+                 metadata<system_t>::star().index_,
+                 metadata<system_t>::world_pos_x().index_,
+                 metadata<system_t>::world_pos_y().index_}};
             serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                x, 0, os, fields_to_elide);
+                x, 0, os, fields_to_allow);
         } else {
             detail::serialize_message_end<ser_op::write>(os);
         }
@@ -195,14 +186,30 @@ namespace detail {
                 serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
                     copy, 0, os);
             } else {
-                std::array<int, 5> fields_to_elide = {
-                    {metadata<planet_t>::water().index_,
-                     metadata<planet_t>::food().index_,
-                     metadata<planet_t>::energy().index_,
-                     metadata<planet_t>::metal().index_,
-                     metadata<planet_t>::fuel_minerals().index_}};
+                std::array<int, 21> fields_to_allow = {
+                    {metadata<planet_t>::system_id().index_,
+                     metadata<planet_t>::planet_type().index_,
+                     metadata<planet_t>::mass_kg().index_,
+                     metadata<planet_t>::radius_km().index_,
+                     metadata<planet_t>::orbit_au().index_,
+                     metadata<planet_t>::orbital_period_y().index_,
+                     metadata<planet_t>::gravity_g().index_,
+                     metadata<planet_t>::axial_tilt_d().index_,
+                     metadata<planet_t>::day_h().index_,
+                     metadata<planet_t>::surface_temperature_k().index_,
+                     metadata<planet_t>::magnetosphere_strength().index_,
+                     metadata<planet_t>::atmospheric_pressure().index_,
+                     metadata<planet_t>::o2_co2_suitability().index_,
+                     metadata<planet_t>::ocean_coverage().index_,
+                     metadata<planet_t>::growth_factor().index_,
+                     metadata<planet_t>::atmosphere_type().index_,
+                     metadata<planet_t>::infrastructure_cost_factor().index_,
+                     metadata<planet_t>::orbital_pos_r().index_,
+                     metadata<planet_t>::max_population().index_,
+                     metadata<planet_t>::effects().index_,
+                     metadata<planet_t>::settlement_ids().index_}};
                 serialize_message_impl<ser_op::write, ser_field_op::dont_write>(
-                    copy, 0, os, fields_to_elide);
+                    copy, 0, os, fields_to_allow);
             }
         } else {
             detail::serialize_message_end<ser_op::write>(os);
