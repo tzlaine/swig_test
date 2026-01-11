@@ -123,27 +123,21 @@ void Agame_mode::Tick(float dt)
         day_update_t day_update;
         auto const [new_month, new_year] = model_->day_tick(day_update);
         {
-            TArray<uint8> day_state;
-            detail::ostream_tarray_facade day_os(day_state);
-            serialize_message(day_update, day_os);
+            TArray<uint8> day_state = to_tarray(day_update);
             pc->client_recv_day_updates(day_state);
         }
 
         if (new_month) {
             month_update_t month_update;
             model_->month_tick(month_update);
-            TArray<uint8> month_state;
-            detail::ostream_tarray_facade month_os(month_state);
-            serialize_message(month_update, month_os);
+            TArray<uint8> month_state = to_tarray(month_update);
             pc->client_recv_month_updates(month_state);
         }
 
         if (new_year) {
             year_update_t year_update;
             model_->year_tick(year_update);
-            TArray<uint8> year_state;
-            detail::ostream_tarray_facade year_os(year_state);
-            serialize_message(year_update, year_os);
+            TArray<uint8> year_state = to_tarray(year_update);
             pc->client_recv_year_updates(year_state);
         }
     }
@@ -448,8 +442,8 @@ void Agame_mode::signal_start_of_play()
             game_params_.player_id_to_nation_id[ps->player_id()];
 
         TArray<uint8> state;
-        detail::ostream_tarray_facade os(state);
-        model_->serialize_for_client(nation_id, os);
+        model_->serialize_for_client(
+            nation_id, detail::ostream_tarray_facade(state));
         pc->client_recv_initial_game_state(nation_id, state);
         client_game_state_nation_ids_.push_back(nation_id);
     }

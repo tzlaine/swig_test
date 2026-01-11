@@ -1,10 +1,4 @@
 ########################################
-# start_data library
-########################################
-generate_protobuf(base_types base_types_message_target)
-generate_protobuf(game_data game_data_message_target)
-
-########################################
 # game_data
 ########################################
 add_library(
@@ -26,8 +20,6 @@ add_library(
     ${unreal_src_dir}/model_visibility.cpp
     ${unreal_src_dir}/rng.cpp
     ${unreal_src_dir}/serialization.cpp
-    ${unreal_src_dir}/base_types.pb.cc
-    ${unreal_src_dir}/game_data.pb.cc
 )
 
 target_link_libraries(
@@ -52,7 +44,6 @@ add_library(
     ${unreal_src_dir}/graph.cpp
     ${unreal_src_dir}/supply.cpp
     ${unreal_src_dir}/base_types.cpp
-    ${unreal_src_dir}/base_types.pb.cc
 )
 
 target_link_libraries(

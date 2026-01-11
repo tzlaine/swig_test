@@ -134,12 +134,6 @@ def add_header_comment_and_includes(proto_source, syntax, deps):
 #pragma once
 
 #include "config.hpp"
-PUSH_WARNING
-DISABLE_WARNING(4996)
-DISABLE_WARNING(4127)
-DISABLE_WARNING(4100)
-#include <{0}.pb.h>
-POP_WARNING
 {2}
 
 #include <flags.hpp>
@@ -1201,19 +1195,19 @@ public class convert
     close_namespace(user_namespace)
 
     for i in range(len(all_decl_data)):
-        hpp_file.write('''
+        if False:
+            hpp_file.write('''
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+pb+cpp'), make_decl(all_decl_data[i], 'from+pb+cpp')))
-        if False:
             hpp_file.write('''
 {0}{1};
 {0}{2};
 '''.format(indent_str(depth), make_decl(all_decl_data[i], 'to+bin+cpp'), make_decl(all_decl_data[i], 'from+bin+cpp')))
 
-        define_cpp_to_pb_impl(all_decl_data[i], depth, map_fields)
-        define_cpp_from_pb_impl(all_decl_data[i], depth, map_fields)
         if False:
+            define_cpp_to_pb_impl(all_decl_data[i], depth, map_fields)
+            define_cpp_from_pb_impl(all_decl_data[i], depth, map_fields)
             define_cpp_to_bin_impl(all_decl_data[i], depth, map_fields)
             define_cpp_from_bin_impl(all_decl_data[i], depth, map_fields)
 

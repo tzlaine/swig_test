@@ -834,8 +834,7 @@ void Aplayer_controller::client_recv_day_updates_Implementation(
 {
     LOG_FORMAT("Aplayer_controller::client_recv_day_updates()");
 
-    day_update_t day_update;
-    deserialize_message(day_update, state);
+    day_update_t day_update = from_tarray<day_update_t>(state);
     ::hud(GetHUD())->date_changed(day_update.date);
 
     // TODO
@@ -846,8 +845,7 @@ void Aplayer_controller::client_recv_month_updates_Implementation(
 {
     LOG_FORMAT("Aplayer_controller::client_recv_month_updates()");
 
-    month_update_t month_update;
-    deserialize_message(month_update, state);
+    month_update_t month_update = from_tarray<month_update_t>(state);
     // TODO
 }
 
@@ -856,8 +854,7 @@ void Aplayer_controller::client_recv_year_updates_Implementation(
 {
     LOG_FORMAT("Aplayer_controller::client_recv_year_updates()");
 
-    year_update_t year_update;
-    deserialize_message(year_update, state);
+    year_update_t year_update = from_tarray<year_update_t>(state);
     // TODO
 }
 

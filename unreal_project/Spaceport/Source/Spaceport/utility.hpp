@@ -1,8 +1,9 @@
 #pragma once
 
-#include "game_instance.h"
 #include "Aplayer_controller.h"
 #include "Ahud_t.h"
+#include "game_instance.h"
+#include "serialization.hpp"
 #include "text/beman_utf_view/utf_view.hpp"
 
 #include <boost/type_index.hpp>
@@ -179,19 +180,18 @@ T const * end(TArray<T> const & a)
 template<typename T>
 TArray<uint8> to_tarray(T const & x)
 {
-    auto as_protobuf = to_protobuf(x);
     TArray<uint8> buf;
-    buf.SetNum(as_protobuf.ByteSizeLong());
-    as_protobuf.SerializeWithCachedSizesToArray(buf.GetData());
-    return std::move(buf);
+    detail::ostream_tarray_facade os(buf);
+    serialize_message(x, os);
+    return buf;
 }
 
 template<typename T>
 T from_tarray(TArray<uint8> const & buf)
 {
-    decltype(to_protobuf(std::declval<T>())) as_protobuf;
-    as_protobuf.ParseFromArray(buf.GetData(), buf.Num());
-    return from_protobuf(as_protobuf);
+    T retval;
+    deserialize_message(retval, buf);
+    return retval;
 }
 
 inline Aplayer_controller * player_controller()

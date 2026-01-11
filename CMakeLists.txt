@@ -46,36 +46,6 @@ include_directories(${boost_dir})
 add_subdirectory(jansson)
 include_directories(${CMAKE_BINARY_DIR}/jansson/include)
 
-macro(generate_protobuf file_root target)
-    add_custom_command(
-        OUTPUT
-            ${unreal_src_dir}/${file_root}.pb.cc
-            ${unreal_src_dir}/${file_root}.pb.h
-        COMMAND
-            protoc
-                --proto_path=${CMAKE_SOURCE_DIR}/proto
-                --cpp_out=${unreal_src_dir}
-                ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
-        DEPENDS
-            ${CMAKE_SOURCE_DIR}/proto/${file_root}.proto
-        COMMENT "Create Protobuf messages."
-        VERBATIM
-    )
-    add_custom_target(
-        ${target}
-        DEPENDS
-        ${unreal_src_dir}/${file_root}.pb.h
-        ${unreal_src_dir}/${file_root}.pb.cc
-    )
-    set_source_files_properties(
-        ${unreal_src_dir}/${file_root}.pb.h
-        ${unreal_src_dir}/${file_root}.pb.cc
-        ${CMAKE_BINARY_DIR}}/${file_root}_pb2.py
-        PROPERTIES
-            GENERATED true
-    )
-endmacro()
-
 find_package(Python3 COMPONENTS Interpreter Development)
 if (Python3_FOUND)
     set(installed_token ${CMAKE_BINARY_DIR}/python_google_protobuf_installed_token)

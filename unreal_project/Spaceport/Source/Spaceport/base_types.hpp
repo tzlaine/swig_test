@@ -3,12 +3,6 @@
 #pragma once
 
 #include "config.hpp"
-PUSH_WARNING
-DISABLE_WARNING(4996)
-DISABLE_WARNING(4127)
-DISABLE_WARNING(4100)
-#include <base_types.pb.h>
-POP_WARNING
 
 
 #include <flags.hpp>
@@ -50,6 +44,3 @@ struct hex_coord_t
 };
 
 
-
-pb_message::hex_coord_t to_protobuf (const ::hex_coord_t& value);
-::hex_coord_t from_protobuf (const pb_message::hex_coord_t& msg);

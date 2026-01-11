@@ -3,12 +3,6 @@
 #pragma once
 
 #include "config.hpp"
-PUSH_WARNING
-DISABLE_WARNING(4996)
-DISABLE_WARNING(4127)
-DISABLE_WARNING(4100)
-#include <game_data.pb.h>
-POP_WARNING
 #include <base_types.hpp>
 
 #include <flags.hpp>
@@ -321,72 +315,3 @@ struct year_update_t
 };
 
 
-
-pb_message::game_data::nation_and_object_id_t to_protobuf (const ::nation_and_object_id_t& value);
-::nation_and_object_id_t from_protobuf (const pb_message::game_data::nation_and_object_id_t& msg);
-
-pb_message::game_data::game_start_params_t to_protobuf (const ::game_start_params_t& value);
-::game_start_params_t from_protobuf (const pb_message::game_data::game_start_params_t& msg);
-
-pb_message::game_data::unit_design_t to_protobuf (const ::unit_design_t& value);
-::unit_design_t from_protobuf (const pb_message::game_data::unit_design_t& msg);
-
-pb_message::game_data::unit_t to_protobuf (const ::unit_t& value);
-::unit_t from_protobuf (const pb_message::game_data::unit_t& msg);
-
-pb_message::game_data::fleet_position_t to_protobuf (const ::fleet_position_t& value);
-::fleet_position_t from_protobuf (const pb_message::game_data::fleet_position_t& msg);
-
-pb_message::game_data::fleet_t to_protobuf (const ::fleet_t& value);
-::fleet_t from_protobuf (const pb_message::game_data::fleet_t& msg);
-
-pb_message::game_data::fleets_t to_protobuf (const ::fleets_t& value);
-::fleets_t from_protobuf (const pb_message::game_data::fleets_t& msg);
-
-pb_message::game_data::resource_t to_protobuf (const ::resource_t& value);
-::resource_t from_protobuf (const pb_message::game_data::resource_t& msg);
-
-pb_message::game_data::settlement_t to_protobuf (const ::settlement_t& value);
-::settlement_t from_protobuf (const pb_message::game_data::settlement_t& msg);
-
-pb_message::game_data::planet_effect_t to_protobuf (const ::planet_effect_t& value);
-::planet_effect_t from_protobuf (const pb_message::game_data::planet_effect_t& msg);
-
-pb_message::game_data::planet_t to_protobuf (const ::planet_t& value);
-::planet_t from_protobuf (const pb_message::game_data::planet_t& msg);
-
-pb_message::game_data::location_object_t to_protobuf (const ::location_object_t& value);
-::location_object_t from_protobuf (const pb_message::game_data::location_object_t& msg);
-
-pb_message::game_data::system_location_t to_protobuf (const ::system_location_t& value);
-::system_location_t from_protobuf (const pb_message::game_data::system_location_t& msg);
-
-pb_message::game_data::star_t to_protobuf (const ::star_t& value);
-::star_t from_protobuf (const pb_message::game_data::star_t& msg);
-
-pb_message::game_data::system_t to_protobuf (const ::system_t& value);
-::system_t from_protobuf (const pb_message::game_data::system_t& msg);
-
-pb_message::game_data::hex_t to_protobuf (const ::hex_t& value);
-::hex_t from_protobuf (const pb_message::game_data::hex_t& msg);
-
-pb_message::game_data::province_t to_protobuf (const ::province_t& value);
-::province_t from_protobuf (const pb_message::game_data::province_t& msg);
-
-pb_message::game_data::nation_t to_protobuf (const ::nation_t& value);
-::nation_t from_protobuf (const pb_message::game_data::nation_t& msg);
-
-pb_message::game_data::date_t to_protobuf (const ::date_t& value);
-::date_t from_protobuf (const pb_message::game_data::date_t& msg);
-
-pb_message::game_data::game_state_t to_protobuf (const ::game_state_t& value);
-::game_state_t from_protobuf (const pb_message::game_data::game_state_t& msg);
-
-pb_message::game_data::day_update_t to_protobuf (const ::day_update_t& value);
-::day_update_t from_protobuf (const pb_message::game_data::day_update_t& msg);
-
-pb_message::game_data::month_update_t to_protobuf (const ::month_update_t& value);
-::month_update_t from_protobuf (const pb_message::game_data::month_update_t& msg);
-
-pb_message::game_data::year_update_t to_protobuf (const ::year_update_t& value);
-::year_update_t from_protobuf (const pb_message::game_data::year_update_t& msg);
