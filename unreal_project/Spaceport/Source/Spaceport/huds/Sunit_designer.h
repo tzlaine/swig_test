@@ -29,6 +29,10 @@ public:
     void rebuild(nation_t const & nation, int design_id = -1);
 
 private:
+    enum struct use_nation_t { no, yes };
+
+    FSlateFontInfo font_info() const;
+
     template<typename Meta, typename TechMeta = int>
     void setting(Meta meta, int min_value = 0, TechMeta tech_meta = -1)
     {
@@ -48,9 +52,6 @@ private:
 
         std::string name = std::format("unit_design_{}", meta.name_);
 
-        UFont * font = ui_defaults().font_.Get();
-        auto font_info = FSlateFontInfo(font, ui_defaults().font_size_ * 0.75);
-
         using spin_box_type = Sstyled_spin_box<int, 75>;
 
         // clang-format off
@@ -59,7 +60,7 @@ private:
             +SHorizontalBox::Slot().FillWidth(75)[
                 SNew(Sstyled_text_block)
                 .Text(loc_text(name))
-                .Font(font_info)
+                .Font(font_info())
             ]
             +SHorizontalBox::Slot().FillWidth(25)[
                 SNew(spin_box_type)
@@ -70,13 +71,14 @@ private:
                     design_.*p = x;
                     design_changed(i, x);
                 })
-                .Font(font_info)
+                .Font(font_info())
             ]
         ];
         // clang-format on
     }
 
     void design_changed(int field_index, int new_value);
+    void property(std::string_view name, use_nation_t use_nation);
 
     TSharedPtr<SVerticalBox> left_vbox_;
     TSharedPtr<SVerticalBox> right_vbox_;

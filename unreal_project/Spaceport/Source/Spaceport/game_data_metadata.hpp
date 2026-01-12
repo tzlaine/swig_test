@@ -1400,6 +1400,65 @@ namespace detail {
         }
     };
 
+    template<> struct metadata<cost_t>
+    {
+        static constexpr std::string_view struct_name()
+        {
+            using namespace std::literals;
+            return "cost_t"sv;
+        }
+        static constexpr int lo_field_number() { return 1; }
+        static constexpr int hi_field_number() { return 7; }
+
+        static constexpr metadatum<cost_t, float> money_cost()
+        {
+            using namespace std::literals;
+            return {"money_cost"sv, 1, &cost_t::money_cost};
+        }
+        static constexpr metadatum<cost_t, float> metal_cost()
+        {
+            using namespace std::literals;
+            return {"metal_cost"sv, 2, &cost_t::metal_cost};
+        }
+        static constexpr metadatum<cost_t, float> energy_cost()
+        {
+            using namespace std::literals;
+            return {"energy_cost"sv, 3, &cost_t::energy_cost};
+        }
+        static constexpr metadatum<cost_t, float> fuel_minerals_cost()
+        {
+            using namespace std::literals;
+            return {"fuel_minerals_cost"sv, 4, &cost_t::fuel_minerals_cost};
+        }
+        static constexpr metadatum<cost_t, float> fuel_cost()
+        {
+            using namespace std::literals;
+            return {"fuel_cost"sv, 5, &cost_t::fuel_cost};
+        }
+        static constexpr metadatum<cost_t, float> water_cost()
+        {
+            using namespace std::literals;
+            return {"water_cost"sv, 6, &cost_t::water_cost};
+        }
+        static constexpr metadatum<cost_t, float> food_cost()
+        {
+            using namespace std::literals;
+            return {"food_cost"sv, 7, &cost_t::food_cost};
+        }
+
+        template<typename F>
+        static void foreach_member(F && f)
+        {
+            f(money_cost());
+            f(metal_cost());
+            f(energy_cost());
+            f(fuel_minerals_cost());
+            f(fuel_cost());
+            f(water_cost());
+            f(food_cost());
+        }
+    };
+
     template<> struct metadata<day_update_t>
     {
         static constexpr std::string_view struct_name()

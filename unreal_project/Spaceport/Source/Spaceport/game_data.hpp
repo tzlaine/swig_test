@@ -354,6 +354,18 @@ struct game_state_t
     bool operator==(game_state_t const &) const = default;
 };
 
+struct cost_t
+{
+    float money_cost = -1.0f;
+    float metal_cost = -1.0f;
+    float energy_cost = -1.0f;
+    float fuel_minerals_cost = -1.0f;
+    float fuel_cost = -1.0f;
+    float water_cost = -1.0f;
+    float food_cost = -1.0f;
+    bool operator==(cost_t const &) const = default;
+};
+
 struct day_update_t
 {
     date_t date = {};

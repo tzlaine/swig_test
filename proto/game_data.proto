@@ -342,6 +342,17 @@ message game_state_t
     date_t date = 9;
 }
 
+message cost_t
+{
+   float money_cost = 1;
+   float metal_cost = 2;
+   float energy_cost = 3;
+   float fuel_minerals_cost = 4;
+   float fuel_cost = 5;
+   float water_cost = 6;
+   float food_cost = 7;
+}
+
 message day_update_t
 {
     date_t date = 1;

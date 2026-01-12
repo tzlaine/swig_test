@@ -1439,6 +1439,72 @@ namespace detail {
     }
 
     template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
+    std::ptrdiff_t serialize_message_impl(cost_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
+    {
+        std::ptrdiff_t retval = 0;
+    
+        if constexpr (FieldOp == ser_field_op::write) {
+            uint8_t buf[16];
+            uint8_t * out = buf;
+            out = os::WriteVarint32ToArray(field_number, out);
+            detail::count_or_write<Op>(retval, buf, out - buf, os);
+        }
+    
+        auto const allow = [&](int i) {
+            if constexpr (N == 0)
+                return true;
+            return std::ranges::find(allowlist, i) != allowlist.end();
+        };
+    
+        if (allow(1))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.money_cost, 1, os);
+        if (allow(2))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.metal_cost, 2, os);
+        if (allow(3))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.energy_cost, 3, os);
+        if (allow(4))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel_minerals_cost, 4, os);
+        if (allow(5))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel_cost, 5, os);
+        if (allow(6))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.water_cost, 6, os);
+        if (allow(7))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.food_cost, 7, os);
+    
+        retval += detail::serialize_message_end<Op>(os);
+    
+        return retval;
+    }
+    template<> inline std::span<std::byte const> deserialize_message_impl<cost_t>(cost_t & x, std::span<std::byte const> src)
+    {
+        using namespace std::literals;
+        constexpr auto this_message_name = "cost_t"sv;
+        constexpr std::array<std::string_view, 8> field_names = {{"<UNKOWN_FIELD>"sv,
+          "money_cost"sv, "metal_cost"sv, "energy_cost"sv, "fuel_minerals_cost"sv, "fuel_cost"sv, "water_cost"sv, "food_cost"sv}};
+        std::array<int, 7> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7}};
+    
+        constexpr int lo_field_number = 1;
+        constexpr int hi_field_number = 7;
+    
+        auto read_field = [] (cost_t & x, int i, std::span<std::byte const> src) {
+            switch (i) {
+            case 1: return detail::deserialize_impl(x.money_cost, src);
+            case 2: return detail::deserialize_impl(x.metal_cost, src);
+            case 3: return detail::deserialize_impl(x.energy_cost, src);
+            case 4: return detail::deserialize_impl(x.fuel_minerals_cost, src);
+            case 5: return detail::deserialize_impl(x.fuel_cost, src);
+            case 6: return detail::deserialize_impl(x.water_cost, src);
+            case 7: return detail::deserialize_impl(x.food_cost, src);
+            default: return src; // unreachable
+            }
+        };
+    
+        return detail::deserialize_message_impl_impl<lo_field_number, hi_field_number>(
+            x, src, this_message_name, field_names, expected_field_numbers, read_field);
+    }
+
+    template<ser_op Op, ser_field_op FieldOp, typename OStream, int N = 0>
     std::ptrdiff_t serialize_message_impl(day_update_t const & x, int field_number, OStream * os, std::array<int, N> const & allowlist = {})
     {
         std::ptrdiff_t retval = 0;

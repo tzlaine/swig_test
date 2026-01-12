@@ -792,6 +792,32 @@ inline std::ostream & operator<<(std::ostream & os, game_state_t const & x)
 #endif
 
 template <>
+struct std::formatter<cost_t> {
+    constexpr auto parse(std::format_parse_context & ctx)
+    { return ctx.begin(); }
+
+    template <typename Ctx>
+    auto format(cost_t const & x, Ctx & ctx) const {
+        auto out = ctx.out();
+        out = std::format_to(out, "cost_t(");
+
+        out = std::format_to(out, " money_cost={}", x.money_cost);
+        out = std::format_to(out, " metal_cost={}", x.metal_cost);
+        out = std::format_to(out, " energy_cost={}", x.energy_cost);
+        out = std::format_to(out, " fuel_minerals_cost={}", x.fuel_minerals_cost);
+        out = std::format_to(out, " fuel_cost={}", x.fuel_cost);
+        out = std::format_to(out, " water_cost={}", x.water_cost);
+        out = std::format_to(out, " food_cost={}", x.food_cost);
+
+        return std::format_to(out, " )");
+    }
+};
+#if defined(BUILD_FOR_TEST)
+inline std::ostream & operator<<(std::ostream & os, cost_t const & x)
+{ return os << std::format("{}", x); }
+#endif
+
+template <>
 struct std::formatter<day_update_t> {
     constexpr auto parse(std::format_parse_context & ctx)
     { return ctx.begin(); }

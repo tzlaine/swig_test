@@ -58,7 +58,7 @@ Planets:
   (may be anything from fossil fuels to hydro), (ship) fuel mineral (the raw
   ingredients for ship fuel), water, food.  The availability of these are on a
   point scale, 0-100.  The actual amount produced is this factor, times the
-  infrastructure score, when fully staffed with enough pops.
+  infrastructure score [0.0, 1.0], when fully staffed with enough pops.
 
 * There are some properties that make a planet more or less suitable.
   Different tech levels may mitigate some of the malus-inducing properties.
@@ -161,6 +161,11 @@ Ships:
   - Shields cost +
   - Detection equipment cost +
   - Stealth cost
+
+* TODO: Reliability!  It should be expressed as a fuzzy number to the user (or
+  maybe not at all?), but should represent the monthly chance that a single
+  point in the damage table will be destroyed at random during non-combat
+  operation.
 
 * TODO: Possibly allow the automation level to be part of the design.  Lower
   automation means more crew, and higher automation means less crew.  Higher

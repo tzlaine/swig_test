@@ -500,3 +500,15 @@ inline date_t from_chrono(std::chrono::year_month_day const & date)
         .month = (int)static_cast<unsigned int>(date.month()),
         .day = (int)static_cast<unsigned int>(date.day())};
 }
+
+inline cost_t operator+(cost_t const & l, cost_t const & r)
+{
+    return {
+        .money_cost = l.money_cost + r.money_cost,
+        .metal_cost = l.metal_cost + r.metal_cost,
+        .energy_cost = l.energy_cost + r.energy_cost,
+        .fuel_minerals_cost = l.fuel_minerals_cost + r.fuel_minerals_cost,
+        .fuel_cost = l.fuel_cost + r.fuel_cost,
+        .water_cost = l.water_cost + r.water_cost,
+        .food_cost = l.food_cost + r.food_cost};
+}

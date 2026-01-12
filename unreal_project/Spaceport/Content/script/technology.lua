@@ -13,3 +13,14 @@ function base_fighter_factor_strength(nation)
    end
    return 10 + from_propulsion + from_weapons
 end
+
+-- in Gs
+function max_sustained_acceleration(nation)
+   -- TODO: tech should increase this
+   return 1.5
+end
+
+function fuel_efficiency(nation)
+   -- TODO: tech should increase this
+   return 1
+end

@@ -15,8 +15,6 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 void Sunit_designer::Construct(FArguments const & args)
 {
-    UFont * font = ui_defaults().font_.Get();
-
     // clang-format off
     ChildSlot[SNew(SBackgroundBlur).BlurStrength(5.0f)[
         SNew(SConstraintCanvas)
@@ -57,7 +55,8 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     design_.cargo = 0;
 
     UFont * font = ui_defaults().font_.Get();
-    auto font_info = FSlateFontInfo(font, ui_defaults().font_size_ * 0.75);
+
+    // left side: chosen settings
 
     // clang-format off
     left_vbox_->AddSlot().AutoHeight()[
@@ -109,7 +108,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
         +SHorizontalBox::Slot().FillWidth(75).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
             .Text(loc_text("unit_design_non_equipment_space"))
-            .Font(font_info)
+            .Font(font_info())
         ]
         +SHorizontalBox::Slot().FillWidth(25).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
@@ -120,7 +119,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
                     loc_text("unit_design_value_non_equipment_space"),
                     FText::AsNumber(space));
             })
-            .Font(font_info)
+            .Font(font_info())
         ]
     ];
     // clang-format on
@@ -158,7 +157,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
         +SHorizontalBox::Slot().FillWidth(75).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
             .Text(loc_text("unit_design_unused_space"))
-            .Font(font_info)
+            .Font(font_info())
         ]
         +SHorizontalBox::Slot().FillWidth(25).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
@@ -168,31 +167,113 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
                     loc_text("unit_design_value_unused_space"),
                     FText::AsNumber(space));
             })
-            .Font(font_info)
+            .Font(font_info())
         ]
     ];
     // clang-format on
+
+    // right side: properties of the design resulting from the chosen settings
+
+    // clang-format off
+    right_vbox_->AddSlot().AutoHeight()[
+        SNew(Sstyled_text_block)
+        .Text(loc_text("unit_design_ideal_design"))
+        .Font(FSlateFontInfo(font, ui_defaults().font_size_))
+    ];
+    // clang-format on
+
+    property("crew", use_nation_t::no);
+    property("subspace_speed", use_nation_t::no);
+    property("subspace_range", use_nation_t::no);
+    property("mass", use_nation_t::no);
+    property("max_acceleration", use_nation_t::no);
+    property("sustained_acceleration", use_nation_t::yes);
+    property("days_at_sustained_acceleration", use_nation_t::yes);
+    property("months_of_water", use_nation_t::no);
+    property("months_of_supplies", use_nation_t::no);
+    property("pd_volleys", use_nation_t::no);
+    property("missile_volleys", use_nation_t::no);
+}
+
+FSlateFontInfo Sunit_designer::font_info() const
+{
+    UFont * font = ui_defaults().font_.Get();
+    return FSlateFontInfo(font, ui_defaults().font_size_ * 0.75);
 }
 
 void Sunit_designer::design_changed(int field_index, int new_value)
 {
-    // TODO
     switch (field_index) {
-    case detail::metadata<unit_design_t>::hull().index_:
+    case detail::metadata<unit_design_t>::hull().index_: break;
+
     case detail::metadata<unit_design_t>::armor().index_:
-    case detail::metadata<unit_design_t>::propulsion().index_:
+        design_.armor = std::min(
+            design_.armor, int(design_.hull * max_armor_per_hull_point));
+        break;
+
+    case detail::metadata<unit_design_t>::propulsion().index_: break;
+
     case detail::metadata<unit_design_t>::weapons().index_:
-    case detail::metadata<unit_design_t>::shields().index_:
-    case detail::metadata<unit_design_t>::detection().index_:
-    case detail::metadata<unit_design_t>::stealth().index_:
-    case detail::metadata<unit_design_t>::fuel().index_:
-    case detail::metadata<unit_design_t>::water().index_:
-    case detail::metadata<unit_design_t>::supplies().index_:
+        if (new_value == 0) {
+            design_.rounds = 0;
+            design_.missiles = 0;
+        }
+        break;
+
+    case detail::metadata<unit_design_t>::shields().index_: break;
+    case detail::metadata<unit_design_t>::detection().index_: break;
+    case detail::metadata<unit_design_t>::stealth().index_: break;
+    case detail::metadata<unit_design_t>::fuel().index_: break;
+    case detail::metadata<unit_design_t>::water().index_: break;
+    case detail::metadata<unit_design_t>::supplies().index_: break;
+
     case detail::metadata<unit_design_t>::rounds().index_:
     case detail::metadata<unit_design_t>::missiles().index_:
-    case detail::metadata<unit_design_t>::fighters().index_:
+        if (design_.weapons == 0) {
+            design_.rounds = 0;
+            design_.missiles = 0;
+        }
+        break;
+
+    case detail::metadata<unit_design_t>::fighters().index_: break;
     case detail::metadata<unit_design_t>::cargo().index_: break;
     }
+}
+
+void Sunit_designer::property(std::string_view name, use_nation_t use_nation)
+{
+    std::string label_name = "unit_design_";
+    label_name += name;
+    std::string value_name = "unit_design_value_";
+    value_name += name;
+    std::string func_name = "unit_";
+    func_name += name;
+
+    // clang-format off
+    right_vbox_->AddSlot().AutoHeight()[
+        SNew(SHorizontalBox)
+        +SHorizontalBox::Slot().FillWidth(75).Padding(0, 10, 0, 0)[
+            SNew(Sstyled_text_block)
+            .Text(loc_text(label_name))
+            .Font(font_info())
+        ]
+        +SHorizontalBox::Slot().FillWidth(25).Padding(0, 10, 0, 0)[
+            SNew(Sstyled_text_block)
+            .Justification(ETextJustify::Right)
+            .Text_Lambda([=, this] {
+                FNumberFormattingOptions options;
+                options.MaximumFractionalDigits = 2;
+                double const value = use_nation == use_nation_t::yes ?
+                    call_lua_func(func_name, design_, *nation_) :
+                    call_lua_func(func_name, design_);
+                return FText::Format(
+                    loc_text(value_name),
+                    FText::AsNumber(value, &options));
+            })
+            .Font(font_info())
+        ]
+    ];
+    // clang-format on
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

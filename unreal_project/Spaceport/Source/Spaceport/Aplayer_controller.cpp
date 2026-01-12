@@ -778,7 +778,7 @@ void Aplayer_controller::server_save_game_Implementation(
     gm->save_game(filename);
 }
 
-#define SHOW_UNIT_DESIGNER 0
+#define SHOW_UNIT_DESIGNER 1 // TODO
 #if SHOW_UNIT_DESIGNER
 FTimerHandle timer_handle;
 #endif
