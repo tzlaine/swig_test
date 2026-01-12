@@ -161,6 +161,12 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
         ]
         +SHorizontalBox::Slot().FillWidth(25).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
+            .ColorAndOpacity_Lambda([this] {
+                int const space = call_lua_func("unit_unused_space", design_);
+                if (space < 0)
+                    return FSlateColor(ui_defaults().error_text_color_);
+                return FSlateColor(FLinearColor::White);
+            })
             .Text_Lambda([this] {
                 int const space = call_lua_func("unit_unused_space", design_);
                 return FText::Format(
@@ -191,8 +197,24 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     property("days_at_sustained_acceleration", use_nation_t::yes);
     property("months_of_water", use_nation_t::no);
     property("months_of_supplies", use_nation_t::no);
-    property("pd_volleys", use_nation_t::no);
-    property("missile_volleys", use_nation_t::no);
+    property("pd_volleys", use_nation_t::no, [this] {
+        if (0 < design_.weapons && design_.rounds == 0){
+            if (design_.missiles == 0)
+                return FSlateColor(ui_defaults().error_text_color_);
+            else
+                return FSlateColor(ui_defaults().warning_text_color_);
+        }
+        return FSlateColor(FLinearColor::White);
+    });
+    property("missile_volleys", use_nation_t::no, [this] {
+        if (0 < design_.weapons && design_.missiles == 0) {
+            if (design_.rounds == 0)
+                return FSlateColor(ui_defaults().error_text_color_);
+            else
+                return FSlateColor(ui_defaults().warning_text_color_);
+        }
+        return FSlateColor(FLinearColor::White);
+    });
 }
 
 FSlateFontInfo Sunit_designer::font_info() const
@@ -240,7 +262,10 @@ void Sunit_designer::design_changed(int field_index, int new_value)
     }
 }
 
-void Sunit_designer::property(std::string_view name, use_nation_t use_nation)
+void Sunit_designer::property(
+    std::string_view name,
+    use_nation_t use_nation,
+    std::function<FSlateColor()> color_func)
 {
     std::string label_name = "unit_design_";
     label_name += name;
@@ -248,6 +273,9 @@ void Sunit_designer::property(std::string_view name, use_nation_t use_nation)
     value_name += name;
     std::string func_name = "unit_";
     func_name += name;
+
+    if (!color_func)
+        color_func = [] { return FSlateColor(FLinearColor::White); };
 
     // clang-format off
     right_vbox_->AddSlot().AutoHeight()[
@@ -270,6 +298,7 @@ void Sunit_designer::property(std::string_view name, use_nation_t use_nation)
                     loc_text(value_name),
                     FText::AsNumber(value, &options));
             })
+            .ColorAndOpacity_Lambda(color_func)
             .Font(font_info())
         ]
     ];

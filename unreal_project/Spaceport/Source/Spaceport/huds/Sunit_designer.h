@@ -78,7 +78,10 @@ private:
     }
 
     void design_changed(int field_index, int new_value);
-    void property(std::string_view name, use_nation_t use_nation);
+    void property(
+        std::string_view name,
+        use_nation_t use_nation,
+        std::function<FSlateColor()> color_func = {});
 
     TSharedPtr<SVerticalBox> left_vbox_;
     TSharedPtr<SVerticalBox> right_vbox_;

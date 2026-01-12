@@ -58,9 +58,13 @@ public:
     UPROPERTY(EditAnywhere, Category = "UI")
     UDataTable * rich_text_styles_;
 
-    // Brushes
+    // Brushes and colors
     UPROPERTY(EditAnywhere, Category = "UI")
     FSlateBrush border_background_;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor error_text_color_ = FLinearColor(1, 0, 0, 1);
+    UPROPERTY(EditAnywhere, Category = "UI")
+    FLinearColor warning_text_color_ = FLinearColor(1, 1, 0, 1);
 
     // SListView rows
     FTableRowStyle table_row_style_;
