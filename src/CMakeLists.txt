@@ -18,6 +18,7 @@ add_library(
     ${unreal_src_dir}/lua_register_functions.cpp
     ${unreal_src_dir}/model.cpp
     ${unreal_src_dir}/model_visibility.cpp
+    ${unreal_src_dir}/name_generator.cpp
     ${unreal_src_dir}/rng.cpp
     ${unreal_src_dir}/serialization.cpp
 )
