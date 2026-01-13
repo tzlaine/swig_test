@@ -57,6 +57,8 @@ public:
     TObjectPtr<USlateWidgetStyleAsset> RichTextBlock_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     UDataTable * rich_text_styles_;
+    UPROPERTY(EditAnywhere, Category = "UI")
+    UDataTable * rich_text_icons_;
 
     // Brushes and colors
     UPROPERTY(EditAnywhere, Category = "UI")
