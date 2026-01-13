@@ -541,3 +541,32 @@ TEST(name_generation_tests, culture_names)
     }
     std::cout << "\n\n\n";
 }
+
+TEST(name_generation_tests, idividual_names)
+{
+    detail::rng_state rng = detail::rng_state_from(0);
+
+    lua().script(R"(
+general_names = cultures[1].general_male_first_names
+subculture_names = cultures[1].subcultures[1].male_first_names)");
+
+    std::vector<std::string> male_first_names =
+        lua().get<std::vector<std::string>>("general_names");
+    {
+        std::vector<std::string> subculture_male_first_names =
+            lua().get<std::vector<std::string>>("subculture_names");
+        male_first_names.insert(
+            male_first_names.end(),
+            subculture_male_first_names.begin(),
+            subculture_male_first_names.end());
+    }
+
+    name_generator g(4);
+    g.train_on(male_first_names);
+    g.training_complete();
+
+    for (int i = 0; i < 50; ++i) {
+        std::cout << g.generate(15, rng) << "\n";
+    }
+    std::cout << "\n\n\n";
+}
