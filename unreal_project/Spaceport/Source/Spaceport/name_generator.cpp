@@ -40,31 +40,39 @@ void name_generator::training_complete()
 
 std::string name_generator::generate(detail::rng_state & state)
 {
+    return generate(-1, state);
+}
+
+std::string name_generator::generate(int max_size, detail::rng_state & state)
+{
     check(!prefixes_.empty());
 
     if (!training_complete_)
         training_complete();
 
     std::string retval;
-    std::string_view key = pick(prefixes_, state);
-    retval += key;
 
-    if (key.size() < order_)
-        return retval;
+    do {
+        std::string_view key = pick(prefixes_, state);
+        retval = key;
 
-    auto const end_of = [this](std::string const & s) {
-        auto const first = s.data() + s.size() - order_;
-        return std::string_view(first, order_);
-    };
+        if (key.size() < order_)
+            return retval;
 
-    while (!key.empty()) {
-        key = end_of(retval);
-        auto const it = all_productions_.find(key);
-        if (it == all_productions_.end())
-            break;
-        key = pick(it->second, state);
-        retval += key;
-    }
+        auto const end_of = [this](std::string const & s) {
+            auto const first = s.data() + s.size() - order_;
+            return std::string_view(first, order_);
+        };
+
+        while (!key.empty()) {
+            key = end_of(retval);
+            auto const it = all_productions_.find(key);
+            if (it == all_productions_.end())
+                break;
+            key = pick(it->second, state);
+            retval += key;
+        }
+    } while (0 < max_size && max_size < (int)retval.size());
 
     // TODO: result to title case
     return retval;

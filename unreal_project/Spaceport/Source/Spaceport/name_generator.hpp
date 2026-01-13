@@ -14,7 +14,9 @@ struct name_generator
 
     void train_on(std::vector<std::string> training_set);
     void training_complete();
-    std::string generate(detail::rng_state & state = detail::g_rng_state);
+    std::string generate(detail::rng_state & state);
+    std::string generate(
+        int max_size = -1, detail::rng_state & state = detail::g_rng_state);
 
 private:
     struct production
