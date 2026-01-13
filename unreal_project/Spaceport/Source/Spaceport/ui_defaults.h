@@ -53,8 +53,7 @@ public:
     TObjectPtr<USlateWidgetStyleAsset> TextBlock_style_;
     UPROPERTY(EditAnywhere, Category = "UI")
     FSliderStyle Slider_style_;
-    UPROPERTY(EditAnywhere, Category = "UI")
-    TObjectPtr<USlateWidgetStyleAsset> RichTextBlock_style_;
+
     UPROPERTY(EditAnywhere, Category = "UI")
     UDataTable * rich_text_styles_;
     UPROPERTY(EditAnywhere, Category = "UI")

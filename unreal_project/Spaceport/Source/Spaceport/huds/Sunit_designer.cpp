@@ -1,5 +1,9 @@
 #include "Sunit_designer.h"
 
+#include "constants.hpp"
+#include "lua.hpp"
+#include "widgets/Sstyled_rich_text_block.h"
+
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
 #include <Widgets/SOverlay.h>
@@ -13,6 +17,10 @@
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
+namespace {
+    int const margin = 5;
+}
+
 void Sunit_designer::Construct(FArguments const & args)
 {
     // clang-format off
@@ -20,16 +28,29 @@ void Sunit_designer::Construct(FArguments const & args)
         SNew(SConstraintCanvas)
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.2, 0.2, 0.4, 0.8))
-        .Offset(FMargin(0, 0, 5, 0))[
+        .Anchors(FAnchors(0.2, 0.2, 0.4, 0.6))
+        .Offset(FMargin(0, 0, margin, 0))[
             SAssignNew(left_vbox_, SVerticalBox)
         ]
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.4, 0.2, 0.8, 0.8))
-        .Offset(FMargin(5, 0, 0, 0))[
+        .Anchors(FAnchors(0.4, 0.2, 0.8, 0.6))
+        .Offset(FMargin(margin, 0, 0, 0))[
             SAssignNew(right_vbox_, SVerticalBox)
         ]
+
+#if 1
+        +SConstraintCanvas::Slot()
+        .Anchors(FAnchors(0.2, 0.6, 0.8, 0.8))
+        .Offset(FMargin(margin, margin, 0, margin))[
+            SNew(SHorizontalBox)
+
+            +SHorizontalBox::Slot()[
+                SNew(Sstyled_rich_text_block)
+                .Text(FText::FromString(TEXT("<img src=\"metal\"/> 0 <img src=\"energy\"/> 0 <img src=\"fuel\"/> 0 <img src=\"water\"/> 0 <img src=\"food\"/> 0 ")))
+            ]
+        ]
+#endif
     ]];
     // clang-format on
 }

@@ -6,7 +6,6 @@
 #include "game_data.hpp"
 #include "game_data_metadata.hpp"
 #include "ui_defaults.h"
-#include "utility.hpp" // TODO
 #include "widgets/Sstyled_spin_box.h"
 #include "widgets/Sstyled_text_block.h"
 

@@ -6,6 +6,7 @@
 
 
 class FSlateStyleSet;
+struct FTextBlockStyle;
 
 class Sstyled_rich_text_block : public SRichTextBlock
 {
@@ -17,7 +18,6 @@ public:
 private:
     static FSlateStyleSet const * get_rich_text_styles();
 
-    std::unique_ptr<FTextBlockStyle> default_style_;
-
+    static FTextBlockStyle const * default_style_;
     static TSharedPtr<FSlateStyleSet> styles_;
 };

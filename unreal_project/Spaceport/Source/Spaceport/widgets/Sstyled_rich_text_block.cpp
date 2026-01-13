@@ -1,5 +1,6 @@
 #include "Sstyled_rich_text_block.h"
 
+#include "icon_data.h"
 #include <ui_defaults.h>
 
 #include <CommonUIRichTextData.h>
@@ -9,7 +10,7 @@
 
 namespace {
     TSharedPtr<FSlateStyleSet>
-        make_rich_text_styles(/* TODO FTextBlockStyle *& default_style*/)
+    make_rich_text_styles(FTextBlockStyle const *& default_style)
     {
         auto const & defaults = ui_defaults();
         check(defaults.rich_text_styles_);
@@ -23,6 +24,8 @@ namespace {
             if (auto const * row =
                     reinterpret_cast<FRichTextStyleRow const *>(it.Value())) {
                 retval->Set(it.Key(), row->TextStyle);
+                if (it.Key() == FName(TEXT("Default")))
+                    default_style = &row->TextStyle;
             }
         }
         for (auto it =
@@ -30,10 +33,11 @@ namespace {
              it;
              ++it) {
             if (auto const * row =
-                    reinterpret_cast<FRichTextIconData const *>(it.Value())) {
+                    reinterpret_cast<Ficon_data const *>(it.Value())) {
                 FInlineTextImageStyle image_style;
                 row->ResourceObject.LoadSynchronous();
                 image_style.Image.SetResourceObject(row->ResourceObject.Get());
+                image_style.Image.TintColor = row->color_and_opacity_;
                 retval->Set(it.Key(), image_style);
             }
         }
@@ -41,7 +45,7 @@ namespace {
     }
 }
 
-// TODO FTextBlockStyle * Sstyled_rich_text_block::default_style_ = nullptr;
+FTextBlockStyle const * Sstyled_rich_text_block::default_style_ = nullptr;
 TSharedPtr<FSlateStyleSet> Sstyled_rich_text_block::styles_;
 
 void Sstyled_rich_text_block::Construct(FArguments const & args_)
@@ -55,20 +59,14 @@ void Sstyled_rich_text_block::Construct(FArguments const & args_)
     decorators.Add(SRichTextBlock::ImageDecorator());
     args.Decorators(decorators);
 
-    default_style_ = std::make_unique<FTextBlockStyle>(
-        *ui_defaults()
-             .RichTextBlock_style_->GetStyleChecked<FTextBlockStyle>());
-    // TODO: Set default style as a static from the row->TextStyle called
-    // "Default" (or "default"?).
-    default_style_->SetFont(
-        FSlateFontInfo(defaults.font_.Get(), defaults.rich_text_font_size_));
-    args.TextStyle(default_style_.get());
+    args.TextStyle(default_style_);
+
     SRichTextBlock::Construct(args);
 }
 
 FSlateStyleSet const * Sstyled_rich_text_block::get_rich_text_styles()
 {
     if (!styles_)
-        styles_ = make_rich_text_styles();
+        styles_ = make_rich_text_styles(default_style_);
     return styles_.Get();
 }
