@@ -1,6 +1,8 @@
 #include <name_generator.hpp>
+#include <lua.hpp>
 
 #include <gtest/gtest.h>
+
 
 std::vector<std::string> system_names = {
     "Siwarha",
@@ -507,7 +509,9 @@ std::vector<std::string> system_names = {
     "Titawin",
     "Veritate"};
 
-TEST(name_generation_tests, basic)
+// More eyeball tests....
+
+TEST(name_generation_tests, system_names)
 {
     detail::rng_state rng = detail::rng_state_from(0);
 
@@ -518,6 +522,22 @@ TEST(name_generation_tests, basic)
     for (int i = 0; i < 50; ++i) {
         std::cout << g.generate(rng) << "\n";
     }
+    std::cout << "\n\n\n";
+}
 
-    // Another eyeball test....
+TEST(name_generation_tests, culture_names)
+{
+    detail::rng_state rng = detail::rng_state_from(0);
+
+    std::vector<std::string> culture_names =
+        lua().get<std::vector<std::string>>("culture_names");
+
+    name_generator g(2);
+    g.train_on(culture_names);
+    g.training_complete();
+
+    for (int i = 0; i < 50; ++i) {
+        std::cout << g.generate(15, rng) << "\n";
+    }
+    std::cout << "\n\n\n";
 }
