@@ -1009,7 +1009,24 @@ void Aplayer_controller::save_user_input_mappings()
     }
 }
 
-void Aplayer_controller::showing_modal_ui(bool b) { showing_modal_ui_ = b; }
+void Aplayer_controller::showing_modal_ui(bool b)
+{
+    dehover_all();
+    if (showing_modal_ui_ != b) {
+        if (showing_modal_ui_) {
+            // UI is going down; redo all selections
+            for (auto * p : curr_selections_) {
+                p->select(true);
+            }
+        } else {
+            // UI is coming up; hide all selections
+            for (auto * p : curr_selections_) {
+                p->select(false);
+            }
+        }
+    }
+    showing_modal_ui_ = b;
+}
 
 void Aplayer_controller::zoom_to_system_object(int i)
 {
