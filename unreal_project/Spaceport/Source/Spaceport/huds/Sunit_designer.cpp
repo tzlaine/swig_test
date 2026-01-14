@@ -1,7 +1,9 @@
 #include "Sunit_designer.h"
 
 #include "constants.hpp"
+#include "game_data_metadata.hpp"
 #include "lua.hpp"
+#include "utility.hpp" // *_FORMAT
 #include "widgets/Sstyled_rich_text_block.h"
 
 #include <SlateOptMacros.h>
@@ -19,6 +21,93 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 
 namespace {
     int const margin = 5;
+
+    FText
+    make_resource_cost_text(cost_t const & cost, std::string_view separator)
+    {
+        std::string format_str;
+        std::vector<float> values;
+        detail::metadata<cost_t>::foreach_member([&](auto meta) {
+            float const value = cost.*meta.ptr_;
+            if (value == n_a)
+                return;
+            std::string_view sep = "";
+            if (!format_str.empty())
+                sep = separator;
+            format_str += std::format(
+                "{} <img src=\"{}\"/> {{{}}}",
+                sep,
+                meta.name_,
+                values.size());
+            values.push_back(value);
+        });
+        WARN_FORMAT("{}", format_str);
+        FText format_text = FText::FromString(FString(format_str.c_str()));
+        FNumberFormattingOptions options;
+        options.MaximumFractionalDigits = 2;
+        switch (values.size()) {
+        default:
+        case 0u: return FText();
+        case 1u:
+            return FText::Format(
+                format_text, FText::AsNumber(values[0], &options));
+        case 2u:
+            return FText::Format(
+                format_text,
+                FText::AsNumber(values[0], &options),
+                FText::AsNumber(values[1], &options));
+        case 3u:
+            return FText::Format(
+                format_text,
+                FText::AsNumber(values[0], &options),
+                FText::AsNumber(values[1], &options),
+                FText::AsNumber(values[2], &options));
+        case 4u:
+            return FText::Format(
+                format_text,
+                FText::AsNumber(values[0], &options),
+                FText::AsNumber(values[1], &options),
+                FText::AsNumber(values[2], &options),
+                FText::AsNumber(values[3], &options));
+        case 5u:
+            return FText::Format(
+                format_text,
+                FText::AsNumber(values[0], &options),
+                FText::AsNumber(values[1], &options),
+                FText::AsNumber(values[2], &options),
+                FText::AsNumber(values[3], &options),
+                FText::AsNumber(values[4], &options));
+        case 6u:
+            return FText::Format(
+                format_text,
+                FText::AsNumber(values[0], &options),
+                FText::AsNumber(values[1], &options),
+                FText::AsNumber(values[2], &options),
+                FText::AsNumber(values[3], &options),
+                FText::AsNumber(values[4], &options),
+                FText::AsNumber(values[5], &options));
+        case 7u:
+            return FText::Format(
+                format_text,
+                FText::AsNumber(values[0], &options),
+                FText::AsNumber(values[1], &options),
+                FText::AsNumber(values[2], &options),
+                FText::AsNumber(values[3], &options),
+                FText::AsNumber(values[4], &options),
+                FText::AsNumber(values[5], &options),
+                FText::AsNumber(values[6], &options));
+        }
+    }
+
+    template<typename F>
+        requires std::is_invocable_r_v<cost_t, F>
+    auto resource_cost_text(F && f, std::string separator = " ")
+    {
+        return [f = (F &&)f, separator = std::move(separator)] {
+            cost_t const & cost = f();
+            return make_resource_cost_text(cost, separator);
+        };
+    }
 }
 
 void Sunit_designer::Construct(FArguments const & args)
@@ -28,29 +117,32 @@ void Sunit_designer::Construct(FArguments const & args)
         SNew(SConstraintCanvas)
 
         +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.2, 0.2, 0.4, 0.6))
-        .Offset(FMargin(0, 0, margin, 0))[
-            SAssignNew(left_vbox_, SVerticalBox)
-        ]
+        .Anchors(FAnchors(0.2, 0.1, 0.8, 0.9))[
+            SNew(SVerticalBox)
 
-        +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.4, 0.2, 0.8, 0.6))
-        .Offset(FMargin(margin, 0, 0, 0))[
-            SAssignNew(right_vbox_, SVerticalBox)
-        ]
+            +SVerticalBox::Slot().FillHeight(90)[
+                SNew(SHorizontalBox)
+                +SHorizontalBox::Slot().FillWidth(50)[
+                    ASSIGN_STYLED_SCROLL_BOX(left_vbox_)
+                ]
+                +SHorizontalBox::Slot().FillWidth(50)[
+                    ASSIGN_STYLED_SCROLL_BOX(right_vbox_)
+                ]
+            ]
 
-#if 1
-        +SConstraintCanvas::Slot()
-        .Anchors(FAnchors(0.2, 0.6, 0.8, 0.8))
-        .Offset(FMargin(margin, margin, 0, margin))[
-            SNew(SHorizontalBox)
-
-            +SHorizontalBox::Slot()[
+            +SVerticalBox::Slot()
+            .FillHeight(10).VAlign(VAlign_Bottom).HAlign(HAlign_Fill)[
                 SNew(Sstyled_rich_text_block)
-                .Text(FText::FromString(TEXT("<img src=\"metal\"/> 0 <img src=\"energy\"/> 0 <img src=\"fuel\"/> 0 <img src=\"water\"/> 0 <img src=\"food\"/> 0 ")))
+                .Text_Lambda(resource_cost_text([this] {
+                    cost_t retval = call_lua_func("unit_cost", design_);
+                    detail::metadata<cost_t>::foreach_member([&](auto meta) {
+                        if (retval.*meta.ptr_ == 0.0f)
+                            retval.*meta.ptr_ = n_a;
+                    });
+                    return retval;
+                }, "   "))
             ]
         ]
-#endif
     ]];
     // clang-format on
 }
@@ -80,7 +172,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     // left side: chosen settings
 
     // clang-format off
-    left_vbox_->AddSlot().AutoHeight()[
+    left_vbox_->AddSlot()[
         SNew(Sstyled_text_block)
         .Text(loc_text("unit_design_hull_and_armor"))
         .Font(FSlateFontInfo(font, ui_defaults().font_size_))
@@ -95,7 +187,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
         int(max_hull * max_armor_per_hull_point));
 
     // clang-format off
-    left_vbox_->AddSlot().AutoHeight().Padding(0, 10, 0, 0)[
+    left_vbox_->AddSlot().Padding(0, 10, 0, 0)[
         SNew(Sstyled_text_block)
         .Text(loc_text("unit_design_equipment"))
         .Font(FSlateFontInfo(font, ui_defaults().font_size_))
@@ -124,7 +216,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
         detail::metadata<nation_t>::stealth_tech());
 
     // clang-format off
-    left_vbox_->AddSlot().AutoHeight()[
+    left_vbox_->AddSlot()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().FillWidth(75).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
@@ -146,7 +238,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     // clang-format on
 
     // clang-format off
-    left_vbox_->AddSlot().AutoHeight().Padding(0, 10, 0, 0)[
+    left_vbox_->AddSlot().Padding(0, 10, 0, 0)[
         SNew(Sstyled_text_block)
         .Text(loc_text("unit_design_storage_space"))
         .Font(FSlateFontInfo(font, ui_defaults().font_size_))
@@ -156,7 +248,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     if (fighter_factor_strength_ =
             call_lua_func("base_fighter_factor_strength", *nation_)) {
         // clang-format off
-        left_vbox_->AddSlot().AutoHeight().Padding(0, 10, 0, 0)[
+        left_vbox_->AddSlot().Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
             .Text(loc_text("unit_design_fighters"))
             .Font(FSlateFontInfo(font, ui_defaults().font_size_))
@@ -173,7 +265,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     setting(detail::metadata<unit_design_t>::cargo(), 0);
 
     // clang-format off
-    left_vbox_->AddSlot().AutoHeight()[
+    left_vbox_->AddSlot()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().FillWidth(75).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
@@ -202,7 +294,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     // right side: properties of the design resulting from the chosen settings
 
     // clang-format off
-    right_vbox_->AddSlot().AutoHeight()[
+    right_vbox_->AddSlot()[
         SNew(Sstyled_text_block)
         .Text(loc_text("unit_design_ideal_design"))
         .Font(FSlateFontInfo(font, ui_defaults().font_size_))
@@ -299,7 +391,7 @@ void Sunit_designer::property(
         color_func = [] { return FSlateColor(FLinearColor::White); };
 
     // clang-format off
-    right_vbox_->AddSlot().AutoHeight()[
+    right_vbox_->AddSlot()[
         SNew(SHorizontalBox)
         +SHorizontalBox::Slot().FillWidth(75).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)

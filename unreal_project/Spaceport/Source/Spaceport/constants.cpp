@@ -134,4 +134,7 @@ int make_nation_none() { return -1; }
 int make_hex_none() { return -1; }
 int make_system_none() { return -1; }
 int make_object_none() { return -1; }
-double make_n_a() { return -4321.0; }
+double make_n_a() {
+    unsigned int mantissa = 1u << FLT_MANT_DIG;
+    return -double(mantissa);
+}

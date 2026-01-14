@@ -6,6 +6,7 @@
 #include "game_data.hpp"
 #include "game_data_metadata.hpp"
 #include "ui_defaults.h"
+#include "widgets/Sstyled_scroll_box.h"
 #include "widgets/Sstyled_spin_box.h"
 #include "widgets/Sstyled_text_block.h"
 
@@ -13,7 +14,7 @@
 #include <Widgets/SBoxPanel.h>
 
 
-class SVerticalBox;
+class SScrollBox;
 struct nation_t;
 
 class Sunit_designer : public Shud_widget_base
@@ -54,7 +55,7 @@ private:
         using spin_box_type = Sstyled_spin_box<int, 75>;
 
         // clang-format off
-        left_vbox_->AddSlot().AutoHeight()[
+        left_vbox_->AddSlot()[
             SNew(SHorizontalBox)
             +SHorizontalBox::Slot().FillWidth(75)[
                 SNew(Sstyled_text_block)
@@ -82,8 +83,8 @@ private:
         use_nation_t use_nation,
         std::function<FSlateColor()> color_func = {});
 
-    TSharedPtr<SVerticalBox> left_vbox_;
-    TSharedPtr<SVerticalBox> right_vbox_;
+    TSharedPtr<SScrollBox> left_vbox_;
+    TSharedPtr<SScrollBox> right_vbox_;
     nation_t const * nation_;
     unit_design_t design_;
     int fighter_factor_strength_ = 0;

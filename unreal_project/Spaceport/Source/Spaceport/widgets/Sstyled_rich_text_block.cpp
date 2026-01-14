@@ -38,6 +38,7 @@ namespace {
                 row->ResourceObject.LoadSynchronous();
                 image_style.Image.SetResourceObject(row->ResourceObject.Get());
                 image_style.Image.TintColor = row->color_and_opacity_;
+                image_style.Image.ImageSize = row->ImageSize;
                 retval->Set(it.Key(), image_style);
             }
         }
