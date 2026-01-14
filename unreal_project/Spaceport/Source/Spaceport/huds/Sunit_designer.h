@@ -15,6 +15,7 @@
 
 
 class SScrollBox;
+class Sstyled_button;
 struct nation_t;
 
 class Sunit_designer : public Shud_widget_base
@@ -82,9 +83,16 @@ private:
         std::string_view name,
         use_nation_t use_nation,
         std::function<FSlateColor()> color_func = {});
+    void insert_reason(
+        std::vector<std::string_view> & reasons, std::string_view reason);
+    void erase_reason(
+        std::vector<std::string_view> & reasons, std::string_view reason);
 
     TSharedPtr<SScrollBox> left_vbox_;
     TSharedPtr<SScrollBox> right_vbox_;
+    TSharedPtr<Sstyled_button> start_design_button_;
+    std::vector<std::string_view> warnings_about_design_;
+    std::vector<std::string_view> reasons_design_is_broken_;
     nation_t const * nation_;
     unit_design_t design_;
     int fighter_factor_strength_ = 0;

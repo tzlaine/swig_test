@@ -2,9 +2,10 @@
 
 #include "constants.hpp"
 #include "game_data_metadata.hpp"
+#include "game_instance.h"
 #include "lua.hpp"
-#include "utility.hpp" // *_FORMAT
 #include "widgets/Sstyled_rich_text_block.h"
+#include "widgets/Sstyled_button.h"
 
 #include <SlateOptMacros.h>
 #include <Internationalization/Internationalization.h>
@@ -41,7 +42,6 @@ namespace {
                 values.size());
             values.push_back(value);
         });
-        WARN_FORMAT("{}", format_str);
         FText format_text = FText::FromString(FString(format_str.c_str()));
         FNumberFormattingOptions options;
         options.MaximumFractionalDigits = 2;
@@ -131,16 +131,80 @@ void Sunit_designer::Construct(FArguments const & args)
             ]
 
             +SVerticalBox::Slot()
-            .FillHeight(10).VAlign(VAlign_Bottom).HAlign(HAlign_Fill)[
-                SNew(Sstyled_rich_text_block)
-                .Text_Lambda(resource_cost_text([this] {
-                    cost_t retval = call_lua_func("unit_cost", design_);
-                    detail::metadata<cost_t>::foreach_member([&](auto meta) {
-                        if (retval.*meta.ptr_ == 0.0f)
-                            retval.*meta.ptr_ = n_a;
-                    });
-                    return retval;
-                }, "   "))
+            .FillHeight(10).VAlign(VAlign_Top).HAlign(HAlign_Fill)[
+                SNew(SHorizontalBox)
+
+                +SHorizontalBox::Slot().FillWidth(75)[
+                    SNew(SVerticalBox)
+
+                    +SVerticalBox::Slot().FillHeight(50)[
+                        SNew(SHorizontalBox)
+
+                        +SHorizontalBox::Slot().AutoWidth()[
+                            SNew(Sstyled_rich_text_block)
+                            .Text(loc_text("estimated_design_cost"))
+                        ]
+
+                        +SHorizontalBox::Slot().AutoWidth()[
+                            SNew(Sstyled_rich_text_block)
+                            .Text_Lambda([this] {
+                                FNumberFormattingOptions options;
+                                options.MaximumFractionalDigits = 2;
+                                float est_monthly_cost = 25.0f;
+                                float est_months = 4.0f;
+                                float const est_total =
+                                    est_monthly_cost * est_months;
+                                return FText::Format(
+                                    loc_text("estimated_design_cost_value"),
+                                    FText::AsNumber(est_total, &options),
+                                    FText::AsNumber(est_monthly_cost, &options),
+                                    FText::AsNumber(est_months, &options));
+                            })
+                        ]
+                    ]
+
+                    +SVerticalBox::Slot().FillHeight(50)[
+                        SNew(SHorizontalBox)
+
+                        +SHorizontalBox::Slot().AutoWidth()[
+                            SNew(Sstyled_rich_text_block)
+                            .Text(loc_text("estimated_unit_cost"))
+                        ]
+
+                        +SHorizontalBox::Slot().FillWidth(75)[
+                            SNew(Sstyled_rich_text_block)
+                            .Text_Lambda(resource_cost_text([this] {
+                                cost_t retval =
+                                    call_lua_func("unit_cost", design_);
+                                detail::metadata<cost_t>::foreach_member(
+                                    [&](auto meta) {
+                                        if (retval.*meta.ptr_ == 0.0f)
+                                            retval.*meta.ptr_ = n_a;
+                                    });
+                                return retval;
+                            }, "   "))
+                        ]
+                    ]
+                ]
+
+                +SHorizontalBox::Slot().FillWidth(25).VAlign(VAlign_Center)[
+                    SAssignNew(start_design_button_, Sstyled_button)
+                    .Text(loc_text("start_design"))
+                    // TODO: Need a custom tooltip for sure.  The current
+                    // default is unreadably small.
+                    .ToolTipText_Lambda([this] {
+                        if (reasons_design_is_broken_.empty())
+                            return FText();
+                        TArray<FText> errors;
+                        errors.SetNum(reasons_design_is_broken_.size());
+                        std::ranges::transform(
+                            reasons_design_is_broken_,
+                            errors.GetData(),
+                            [](auto e) { return loc_text(e); });
+                        return FText::Join(
+                            FText::FromString(TEXT("\n")), errors);
+                    })
+                ]
             ]
         ]
     ]];
@@ -276,8 +340,13 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
             SNew(Sstyled_text_block)
             .ColorAndOpacity_Lambda([this] {
                 int const space = call_lua_func("unit_unused_space", design_);
-                if (space < 0)
+                if (space < 0 ) {
+                    insert_reason(reasons_design_is_broken_,
+                                  "broken_design_not_enough_space");
                     return FSlateColor(ui_defaults().error_text_color_);
+                }
+                erase_reason(reasons_design_is_broken_,
+                             "broken_design_not_enough_space");
                 return FSlateColor(FLinearColor::White);
             })
             .Text_Lambda([this] {
@@ -311,20 +380,36 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
     property("months_of_water", use_nation_t::no);
     property("months_of_supplies", use_nation_t::no);
     property("pd_volleys", use_nation_t::no, [this] {
-        if (0 < design_.weapons && design_.rounds == 0){
-            if (design_.missiles == 0)
+        erase_reason(warnings_about_design_, "design_warning_no_rounds");
+        if (0 < design_.weapons && design_.rounds == 0) {
+            if (design_.missiles == 0) {
+                insert_reason(
+                    reasons_design_is_broken_, "broken_design_no_ammo");
                 return FSlateColor(ui_defaults().error_text_color_);
-            else
+            } else {
+                insert_reason(
+                    warnings_about_design_, "design_warning_no_rounds");
                 return FSlateColor(ui_defaults().warning_text_color_);
+            }
+        } else {
+            erase_reason(reasons_design_is_broken_, "broken_design_no_ammo");
         }
         return FSlateColor(FLinearColor::White);
     });
     property("missile_volleys", use_nation_t::no, [this] {
+        erase_reason(warnings_about_design_, "design_warning_no_missles");
         if (0 < design_.weapons && design_.missiles == 0) {
-            if (design_.rounds == 0)
+            if (design_.rounds == 0) {
+                insert_reason(
+                    reasons_design_is_broken_, "broken_design_no_ammo");
                 return FSlateColor(ui_defaults().error_text_color_);
-            else
+            } else {
+                insert_reason(
+                    warnings_about_design_, "design_warning_no_missles");
                 return FSlateColor(ui_defaults().warning_text_color_);
+            }
+        } else {
+            erase_reason(reasons_design_is_broken_, "broken_design_no_ammo");
         }
         return FSlateColor(FLinearColor::White);
     });
@@ -416,6 +501,23 @@ void Sunit_designer::property(
         ]
     ];
     // clang-format on
+}
+
+void Sunit_designer::insert_reason(
+    std::vector<std::string_view> & reasons, std::string_view reason)
+{
+    erase_reason(reasons, reason);
+    reasons.push_back(reason);
+    if (!reasons_design_is_broken_.empty())
+        start_design_button_->SetEnabled(false);
+}
+
+void Sunit_designer::erase_reason(
+    std::vector<std::string_view> & reasons, std::string_view reason)
+{
+    std::erase(reasons, reason);
+    if (reasons_design_is_broken_.empty())
+        start_design_button_->SetEnabled(true);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
