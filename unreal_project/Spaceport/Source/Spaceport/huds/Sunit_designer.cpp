@@ -193,16 +193,7 @@ void Sunit_designer::Construct(FArguments const & args)
                     // TODO: Need a custom tooltip for sure.  The current
                     // default is unreadably small.
                     .ToolTipText_Lambda([this] {
-                        if (reasons_design_is_broken_.empty())
-                            return FText();
-                        TArray<FText> errors;
-                        errors.SetNum(reasons_design_is_broken_.size());
-                        std::ranges::transform(
-                            reasons_design_is_broken_,
-                            errors.GetData(),
-                            [](auto e) { return loc_text(e); });
-                        return FText::Join(
-                            FText::FromString(TEXT("\n")), errors);
+                        return reasons_design_is_broken_.text();
                     })
                 ]
             ]
@@ -503,19 +494,16 @@ void Sunit_designer::property(
     // clang-format on
 }
 
-void Sunit_designer::insert_reason(
-    std::vector<std::string_view> & reasons, std::string_view reason)
+void Sunit_designer::insert_reason(reasons & rs, std::string_view r)
 {
-    erase_reason(reasons, reason);
-    reasons.push_back(reason);
+    rs.insert(r);
     if (!reasons_design_is_broken_.empty())
         start_design_button_->SetEnabled(false);
 }
 
-void Sunit_designer::erase_reason(
-    std::vector<std::string_view> & reasons, std::string_view reason)
+void Sunit_designer::erase_reason(reasons & rs, std::string_view r)
 {
-    std::erase(reasons, reason);
+    rs.erase(r);
     if (reasons_design_is_broken_.empty())
         start_design_button_->SetEnabled(true);
 }

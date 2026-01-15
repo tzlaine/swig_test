@@ -5,6 +5,7 @@
 #include "game_instance.h"
 #include "game_data.hpp"
 #include "game_data_metadata.hpp"
+#include "reason.hpp"
 #include "ui_defaults.h"
 #include "widgets/Sstyled_scroll_box.h"
 #include "widgets/Sstyled_spin_box.h"
@@ -83,16 +84,14 @@ private:
         std::string_view name,
         use_nation_t use_nation,
         std::function<FSlateColor()> color_func = {});
-    void insert_reason(
-        std::vector<std::string_view> & reasons, std::string_view reason);
-    void erase_reason(
-        std::vector<std::string_view> & reasons, std::string_view reason);
+    void insert_reason(reasons & rs, std::string_view r);
+    void erase_reason(reasons & rs, std::string_view r);
 
     TSharedPtr<SScrollBox> left_vbox_;
     TSharedPtr<SScrollBox> right_vbox_;
     TSharedPtr<Sstyled_button> start_design_button_;
-    std::vector<std::string_view> warnings_about_design_;
-    std::vector<std::string_view> reasons_design_is_broken_;
+    reasons warnings_about_design_;
+    reasons reasons_design_is_broken_;
     nation_t const * nation_;
     unit_design_t design_;
     int fighter_factor_strength_ = 0;
