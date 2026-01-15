@@ -820,7 +820,6 @@ void Aplayer_controller::client_recv_initial_game_state_Implementation(
     delegate.BindLambda(
         [hud, n = &*opt_nation] { hud->show_unit_designer(*n); });
     GetWorldTimerManager().SetTimer(timer_handle, delegate, 2.0, false);
-    ERROR_FORMAT("nation={}", *opt_nation);
 #endif
 }
 
