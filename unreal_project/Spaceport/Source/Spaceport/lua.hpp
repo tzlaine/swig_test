@@ -14,6 +14,7 @@ POP_WARNING
 #include <iostream>
 #else
 #include <CoreMinimal.h>
+#include <Misc/OutputDeviceRedirector.h>
 #endif
 
 
