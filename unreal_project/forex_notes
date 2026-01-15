@@ -219,16 +219,40 @@ Ships:
   a particular stat (say, armor tech 3), the base stat in the ship design is T
   * 10 (or design armor 30 in this case).  The initial design is created from
   the base stats, but with some random values subtracted from the baseline
-  values indicated by the tech levels.  Military tradition mitigates the
-  magnitude of the amount subtracted.  (Similarly, an amount may be added to
-  the space required for each component.)  After having used the design for a
-  while, you should gain design-relevant knowledge that allows you to roll a
-  new iteration of the design; the new design will benefit from the use of the
-  previous design, proportional to the amount learned.  Design points are
-  acumulated via combat for combat-related stats (including hull), successful
-  hiding/detection for those stats, and flying around for the propulsion stat.
+  values indicated by the tech levels.  Military tradition and engineering
+  traditions mitigate the magnitude of the amount subtracted.  (Similarly, an
+  amount may be added to the space required for each component.)  After having
+  used the design for a while, you should gain design-relevant knowledge that
+  allows you to roll a new iteration of the design; the new design will
+  benefit from the use of the previous design, proportional to the amount
+  learned.  Design points are acumulated via: combat for combat-related stats
+  (including hull); successful hiding/detection for stealth and
+  detection. respectively; and flying around for the propulsion stat.
   Building ships should make the money/resource costs, build time, and
   reliability rolls improve.
+
+* More detail about rolling designs.  A design takes a certain number of
+  months to create.  The time required is influenced by the newness of the
+  tech used; the newness of the hull size; and engineering traditions.  Each
+  month, the design process costs a certain amount.  The cost is proportional
+  to the unit cost.  Harder/more novel designs cost more per month than
+  easier/less novel ones.  Hard designs are more likely to face increases in
+  the monthly design cost, and have an unexpectedly longer design process.
+  Once a new design is finished, it will not be the idealized design the user
+  selected in the unit designer.  Its ship equipment may take more space than
+  the ideal, and may have a lower effective rating than the ideal.  The costs
+  in all resources may be higher as well.  Also, there is a reliability score
+  for each kind of ship equipment (including hull).  Reliability is more
+  likely to be lower for harder designs.  Engineering traditions affect all
+  these mechanics.  If a design runs out of space for equipment, say because
+  the equipment is rolled larger than the spec due to bad design rolls, the
+  space is made up by reducing cargo, then by reducing other storage slightly,
+  and finally by making the hull larger.  Making the hull more than just a bit
+  larger will mean the whole design is a failure.
+
+* Each nation has design capacity.  They can only make progress on so many
+  designs at once.  The capacity is determined from past (but fairly recent)
+  spending on designing and building units.
 
 * Design upgrades cannot change the hull size or the propulsion tech.
 
@@ -879,6 +903,12 @@ Nations and diplomacy:
 * Military tradition is also a thing.  It should decay over time, modified by
   lengths of service for troops.  Militarist nations should have an easier
   time keeping tradition.
+
+* Engineering traditions are also a thing; there is a separate one for each
+  tech area except automation.  They indicate how good your nation is at each
+  aspect of designing and building units.  It affects: the actual cost and
+  duration of designing a new unit; the actual cost of building each unit once
+  designed; and the quality/reliability of the design.
 
 * Surpluses and deficits of resources will drive trade with other nations.
 
