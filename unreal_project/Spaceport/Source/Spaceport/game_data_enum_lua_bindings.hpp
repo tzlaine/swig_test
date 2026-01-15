@@ -40,7 +40,10 @@ namespace detail {
                 {"hit_supplies", hit_table_entry_t::hit_supplies},
                 {"hit_rounds", hit_table_entry_t::hit_rounds},
                 {"hit_missiles", hit_table_entry_t::hit_missiles},
+                {"hit_fighters", hit_table_entry_t::hit_fighters},
                 {"hit_cargo", hit_table_entry_t::hit_cargo},
+                {"hit_destroyed", hit_table_entry_t::hit_destroyed},
+                {"hit_unused", hit_table_entry_t::hit_unused},
         });
 
         auto planet_type_t_enum = l.new_enum<planet_type_t>("planet_type_t", {

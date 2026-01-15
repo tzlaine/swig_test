@@ -20,7 +20,9 @@ add_library(
     ${unreal_src_dir}/model_visibility.cpp
     ${unreal_src_dir}/name_generator.cpp
     ${unreal_src_dir}/rng.cpp
+    ${unreal_src_dir}/reason.cpp
     ${unreal_src_dir}/serialization.cpp
+    ${unreal_src_dir}/unit_design.cpp
 )
 
 target_link_libraries(

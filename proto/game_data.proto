@@ -53,12 +53,17 @@ enum hit_table_entry_t {
     hit_supplies = 8;
     hit_rounds = 9;
     hit_missiles = 10;
-    hit_cargo = 11;     // represents empty slot; if < 0, look it up in cargo_kind_t
+    hit_fighters = 11;
+    hit_cargo = 12;     // represents storage/cargo/empty slot; if < 0, look it up in cargo_kind_t
+    hit_destroyed = 13;
+    hit_unused = 14;
 }
 
 message unit_design_t
 {
     nation_and_object_id_t id = 1;
+
+    // user design; some values may differ after the design is complete; see below
     int32 hull = 2;
     int32 armor = 3;
     int32 propulsion = 4;
@@ -73,7 +78,40 @@ message unit_design_t
     int32 missiles = 13;    // storage units, not individual salvos
     int32 fighters = 14;    // each point is a fighter bay with 1 fighter factor
     int32 cargo = 15;
-    bytes hit_table = 16;
+
+    // hull space occupied by each; will be >= than ideal; ideal is 10 per level
+    int32 propulsion_space = 16;
+    int32 weapons_space = 17;
+    int32 shields_space = 18;
+    int32 detection_space = 19;
+    int32 stealth_space = 20;
+
+    // actual level of each equipment in the design; will be <= than ideal; ideal is the level above
+    float effective_propulsion = 21;
+    float effective_weapons = 22;
+    float effective_shields = 23;
+    float effective_detection = 24;
+    float effective_stealth = 25;
+
+    // each out of 100
+    int32 propulsion_reliability = 26;
+    int32 weapons_reliability = 27;
+    int32 shields_reliability = 28;
+    int32 detection_reliability = 29;
+    int32 stealth_reliability = 30;
+
+    int32 known_propulsion_failures = 31;
+    int32 known_weapons_failures = 32;
+    int32 known_shields_failures = 33;
+    int32 known_detection_failures = 34;
+    int32 known_stealth_failures = 35;
+
+    float design_months_remaining = 36;
+
+    bytes hit_table = 100;
+
+    bool failed_design = 101;
+    bool obsolete = 102;
 }
 
 message unit_t
@@ -81,14 +119,14 @@ message unit_t
     nation_and_object_id_t id = 1;
     int32 hull = 2;
     int32 armor = 3;
-    int32 propulsion = 4;
-    int32 weapons = 5;
-    int32 shields = 6;
-    int32 detection = 7;
-    int32 stealth = 8;
-    int32 fuel = 9;
-    int32 water = 10;
-    int32 supplies = 11;
+    float propulsion = 4;
+    float weapons = 5;
+    float shields = 6;
+    float detection = 7;
+    float stealth = 8;
+    float fuel = 9;
+    float water = 10;
+    float supplies = 11;
     int32 rounds = 12;       // individual salvos
     int32 missiles = 13;     // individual salvos
     int32 fighters = 14;
@@ -96,7 +134,7 @@ message unit_t
     int32 organization = 16;
     int32 experience = 17;
     int32 crew = 18;
-    bytes hit_table = 19;    // populated during combat as hits are resolved; only kept outside of combat if cargo is hit
+    bytes hit_table = 19;    // populated during combat as hits are resolved; only kept outside of combat if there is damage
 }
 
 message fleet_position_t
@@ -299,12 +337,16 @@ message nation_t
     int32 id = 1;
     int32 home_planet = 2;
     nation_and_object_id_t capitol_settlement = 3;
+
     int32 money = 4;
+
     repeated unit_design_t unit_designs = 5;
+
     repeated province_t provinces = 6;
     repeated settlement_t settlements = 7; // may contain gaps (gaps have invald IDs)
     repeated fleet_t fleets = 8; // may contain gaps (gaps have invald IDs)
     int32 transports = 9;
+
     repeated int32 hexes_seen = 10; // these lists of IDs must be kept sorted
     repeated int32 systems_present_in = 11;
     repeated int32 systems_visited = 12;
@@ -312,13 +354,24 @@ message nation_t
     repeated settlement_t settlements_seen = 14;
     repeated nation_and_object_id_t foreign_designs_seen = 15;
     repeated nation_and_object_id_t foreign_designs_glimpsed = 16;
-    int32 construction_tech = 17;
-    int32 propulsion_tech = 18;
-    int32 weapons_tech = 19;
-    int32 shields_tech = 20;
-    int32 stealth_tech = 21;
-    int32 detection_tech = 22;
-    int32 automation_tech = 23;
+
+    // techs are [1, 50]; partial values are research in progress
+    float construction_tech = 17;
+    float propulsion_tech = 18;
+    float weapons_tech = 19;
+    float shields_tech = 20;
+    float stealth_tech = 21;
+    float detection_tech = 22;
+    float automation_tech = 23;
+
+    // engineering traditions are [0, 100]
+    int32 construction_tradition = 24;
+    int32 propulsion_tradition = 25;
+    int32 weapons_tradition = 26;
+    int32 shields_tradition = 27;
+    int32 stealth_tradition = 28;
+    int32 detection_tradition = 29;
+
     bool defeated = 100;
 }
 

@@ -95,6 +95,8 @@ const int small_map_height = lua()["small_map_height"];
 const int medium_map_height = lua()["medium_map_height"];
 const int large_map_height = lua()["large_map_height"];
 const int starting_tech_level = lua()["starting_tech_level"];
+const int starting_engineering_tradition =
+    lua()["starting_engineering_tradition"];
 
 const float map_actors_vertical_offset = -25000.0f;
 const float just_inside_system_map = map_actors_vertical_offset + 50;
@@ -114,7 +116,22 @@ const float system_map_zoom_to_time_s = lua()["system_map_zoom_to_time_s"];
 const float min_time_between_day_ticks_s =
     lua()["min_time_between_day_ticks_s"];
 
+// unit design
 const float max_armor_per_hull_point = lua()["max_armor_per_hull_point"];
+const float negligible_hull_size_design_difference =
+    lua()["negligible_hull_size_design_difference"];
+const float close_to_max_hull_size = lua()["close_to_max_hull_size"];
+const float base_unit_design_months = lua()["base_unit_design_months"];
+const float unit_design_months_per_novelty_point =
+    lua()["unit_design_months_per_novelty_point"];
+const float base_unit_design_monthly_cost_factor =
+    lua()["base_unit_design_monthly_cost_factor"];
+const float unit_design_monthly_cost_factor_per_novelty_point =
+    lua()["unit_design_monthly_cost_factor_per_novelty_point"];
+const double max_unit_design_space_factor =
+    lua()["max_unit_design_space_factor"];
+const double min_unit_design_effectiveness_factor =
+    lua()["min_unit_design_effectiveness_factor"];
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =
@@ -123,18 +140,19 @@ const ECollisionChannel star_channel = ECollisionChannel::ECC_GameTraceChannel2;
 const ECollisionChannel hex_channel = ECollisionChannel::ECC_GameTraceChannel3;
 #endif
 
-int make_prov_none() { return -1; }
-int make_prov_off_map() { return -2; }
-int make_prov_galactic_bulge() { return -3; }
-int make_prov_galactic_center() { return -4; }
-double make_atmos_thousands() { return -1234.0; }
-double make_atmos_millions() { return -2345.0; }
-double make_growth_uninhabitable() { return -1000.0; }
-int make_nation_none() { return -1; }
-int make_hex_none() { return -1; }
-int make_system_none() { return -1; }
-int make_object_none() { return -1; }
-double make_n_a() {
-    unsigned int mantissa = 1u << FLT_MANT_DIG;
-    return -double(mantissa);
+ int make_prov_none() { return -1; }
+ int make_prov_off_map() { return -2; }
+ int make_prov_galactic_bulge() { return -3; }
+ int make_prov_galactic_center() { return -4; }
+ double make_atmos_thousands() { return -1234.0; }
+ double make_atmos_millions() { return -2345.0; }
+ double make_growth_uninhabitable() { return -1000.0; }
+ int make_nation_none() { return -1; }
+ int make_hex_none() { return -1; }
+ int make_system_none() { return -1; }
+ int make_object_none() { return -1; }
+ double make_n_a()
+ {
+     unsigned int mantissa = 1u << FLT_MANT_DIG;
+     return -double(mantissa);
 }

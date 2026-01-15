@@ -1,5 +1,5 @@
 function max_hull_space(nation)
-   return nation.construction_tech * 100
+   return to_integer(nation.construction_tech * 100)
 end
 
 -- A value of 0 means that fighters are not available at all.

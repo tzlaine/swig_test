@@ -38,6 +38,7 @@ small_map_height = 11
 medium_map_height = 21
 large_map_height = 41
 starting_tech_level = 2
+starting_engineering_tradition = 30
 
 -- camera
 min_camera_dist = 50.0
@@ -51,4 +52,13 @@ system_map_move_factor = 10
 system_map_zoom_to_time_s = 0.25
 min_time_between_day_ticks_s = 0.05
 
+-- unit design
 max_armor_per_hull_point = 0.5
+negligible_hull_size_design_difference = 0.1
+close_to_max_hull_size = 0.8
+base_unit_design_months = 6
+unit_design_months_per_novelty_point = 6
+base_unit_design_monthly_cost_factor = 1.0
+unit_design_monthly_cost_factor_per_novelty_point = 0.25
+max_unit_design_space_factor = 1.2
+min_unit_design_effectiveness_factor = 0.8

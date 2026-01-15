@@ -20,13 +20,29 @@ function unit_crew(design)
    return shipwide_crew + equipment_crew
 end
 
-function unit_nonequipment_space(design)
+function unit_ideal_nonequipment_space(design)
    return design.hull -
       space_required_per_equipment_point * unit_equipment_points(design)
 end
 
+function unit_nonequipment_space(design)
+   return design.hull -
+      design.propulsion_space -
+      design.weapons_space -
+      design.shields_space -
+      design.detection_space -
+      design.stealth_space
+end
+
 function unit_crew_space(crew)
    return to_integer(crew / 1000 * space_required_per_1k_crew + 0.5)
+end
+
+function unit_ideal_unused_space(design)
+   local storage_space = design.fuel + design.water + design.supplies +
+      design.rounds + design.missiles + design.cargo
+   return unit_ideal_nonequipment_space(design) -
+      storage_space - unit_crew_space(unit_crew(design))
 end
 
 function unit_unused_space(design)
@@ -106,7 +122,7 @@ function fighters_cost(level)
    return retval
 end
 
-function unit_cost(design)
+function unit_ideal_cost(design)
    return hull_cost(design.hull) +
       armor_cost(design.armor) +
       propulsion_cost(design.propulsion) +
@@ -115,6 +131,21 @@ function unit_cost(design)
       detection_cost(design.detection) +
       stealth_cost(design.stealth) +
       fighters_cost(design.fighters)
+end
+
+function unit_cost(design)
+   return hull_cost(design.hull) +
+      armor_cost(design.armor) +
+      propulsion_cost(design.propulsion_space) +
+      weapons_cost(design.weapons_space) +
+      shields_cost(design.shields_space) +
+      detection_cost(design.detection_space) +
+      stealth_cost(design.stealth_space) +
+      fighters_cost(design.fighters_space)
+end
+
+function unit_ideal_mass(design)
+   return unit_ideal_cost(design).metal_cost
 end
 
 function unit_mass(design)
@@ -127,14 +158,31 @@ function unit_subspace_speed(design)
 end
 
 -- world units
+function unit_ideal_subspace_range(design)
+   return design.fuel * fuel_efficiency(nation) /
+      (unit_ideal_mass(design) / mass_moved_through_subspace_per_unit_fuel)
+end
+
+-- world units
 function unit_subspace_range(design)
    return design.fuel * fuel_efficiency(nation) /
       (unit_mass(design) / mass_moved_through_subspace_per_unit_fuel)
 end
 
 -- value is in Gs
+function unit_ideal_max_acceleration(design)
+   return design.propulsion * propulsion_force_per_level / unit_ideal_mass(design)
+end
+
+-- value is in Gs
 function unit_max_acceleration(design)
-   return design.propulsion * propulsion_force_per_level / unit_mass(design)
+   return design.effective_propulsion * propulsion_force_per_level / unit_mass(design)
+end
+
+-- value is in Gs
+function unit_ideal_sustained_acceleration(design, nation)
+   return math.min(unit_ideal_max_acceleration(design),
+                   max_sustained_acceleration(nation))
 end
 
 -- value is in Gs
@@ -162,3 +210,8 @@ end
 function unit_missile_volleys(design)
    return design.missiles * missile_volleys_per_unit_storage
 end
+
+-- the design novelty score for a single ship equipment level, based on how
+-- many times it was ued in previous design (first velua is for 0 times, not
+-- oncce)
+iteration_design_novelty = {1.0, 0.5, 0.25}

@@ -468,13 +468,22 @@ function create_starting_nation(gs, nation_id, home_planet, planet_id)
    location.objects:add(location_object)
    system.permanent_locations:add(location)
 
-   nation.construction_tech = starting_tech_level;
-   nation.propulsion_tech = starting_tech_level;
-   nation.weapons_tech = starting_tech_level;
-   nation.shields_tech = starting_tech_level;
-   nation.stealth_tech = starting_tech_level;
-   nation.detection_tech = starting_tech_level;
-   nation.automation_tech = starting_tech_level;
+   -- TODO: Add some randomness here
+   nation.construction_tech = starting_tech_level
+   nation.propulsion_tech = starting_tech_level
+   nation.weapons_tech = starting_tech_level
+   nation.shields_tech = starting_tech_level
+   nation.stealth_tech = starting_tech_level
+   nation.detection_tech = starting_tech_level
+   nation.automation_tech = starting_tech_level
+
+   -- TODO: Add some randomness here
+   nation.construction_tradition = starting_engineering_tradition
+   nation.propulsion_tradition = starting_engineering_tradition
+   nation.weapons_tradition = starting_engineering_tradition
+   nation.shields_tradition = starting_engineering_tradition
+   nation.stealth_tradition = starting_engineering_tradition
+   nation.detection_tradition = starting_engineering_tradition
 
    gs.nations:add(nation)
 end

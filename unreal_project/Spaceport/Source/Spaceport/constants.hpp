@@ -96,6 +96,7 @@ extern const int small_map_height;
 extern const int medium_map_height;
 extern const int large_map_height;
 extern const int starting_tech_level;
+extern const int starting_engineering_tradition;
 
 extern const float map_actors_vertical_offset;
 extern const float just_inside_system_map;
@@ -110,7 +111,17 @@ extern const float system_map_move_factor;
 extern const float system_map_zoom_to_time_s;
 extern const float min_time_between_day_ticks_s;
 
+// unit design
 extern const float max_armor_per_hull_point;
+extern const float negligible_hull_size_design_difference;
+extern const float close_to_max_hull_size;
+extern const float base_unit_design_months;
+extern const float unit_design_months_per_novelty_point;
+extern const float base_unit_design_monthly_cost_factor;
+extern const float unit_design_monthly_cost_factor_per_novelty_point;
+extern const double max_unit_design_space_factor;
+extern const double min_unit_design_effectiveness_factor;
+
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

@@ -55,7 +55,10 @@ struct std::formatter<hit_table_entry_t> : std::formatter<std::string_view> {
             case hit_table_entry_t::hit_supplies: name = "hit_supplies"sv; break;
             case hit_table_entry_t::hit_rounds: name = "hit_rounds"sv; break;
             case hit_table_entry_t::hit_missiles: name = "hit_missiles"sv; break;
+            case hit_table_entry_t::hit_fighters: name = "hit_fighters"sv; break;
             case hit_table_entry_t::hit_cargo: name = "hit_cargo"sv; break;
+            case hit_table_entry_t::hit_destroyed: name = "hit_destroyed"sv; break;
+            case hit_table_entry_t::hit_unused: name = "hit_unused"sv; break;
         }
         return std::formatter<std::string_view>::format(name, ctx);
     }
@@ -191,11 +194,34 @@ struct std::formatter<unit_design_t> {
         out = std::format_to(out, " missiles={}", x.missiles);
         out = std::format_to(out, " fighters={}", x.fighters);
         out = std::format_to(out, " cargo={}", x.cargo);
+        out = std::format_to(out, " propulsion_space={}", x.propulsion_space);
+        out = std::format_to(out, " weapons_space={}", x.weapons_space);
+        out = std::format_to(out, " shields_space={}", x.shields_space);
+        out = std::format_to(out, " detection_space={}", x.detection_space);
+        out = std::format_to(out, " stealth_space={}", x.stealth_space);
+        out = std::format_to(out, " effective_propulsion={}", x.effective_propulsion);
+        out = std::format_to(out, " effective_weapons={}", x.effective_weapons);
+        out = std::format_to(out, " effective_shields={}", x.effective_shields);
+        out = std::format_to(out, " effective_detection={}", x.effective_detection);
+        out = std::format_to(out, " effective_stealth={}", x.effective_stealth);
+        out = std::format_to(out, " propulsion_reliability={}", x.propulsion_reliability);
+        out = std::format_to(out, " weapons_reliability={}", x.weapons_reliability);
+        out = std::format_to(out, " shields_reliability={}", x.shields_reliability);
+        out = std::format_to(out, " detection_reliability={}", x.detection_reliability);
+        out = std::format_to(out, " stealth_reliability={}", x.stealth_reliability);
+        out = std::format_to(out, " known_propulsion_failures={}", x.known_propulsion_failures);
+        out = std::format_to(out, " known_weapons_failures={}", x.known_weapons_failures);
+        out = std::format_to(out, " known_shields_failures={}", x.known_shields_failures);
+        out = std::format_to(out, " known_detection_failures={}", x.known_detection_failures);
+        out = std::format_to(out, " known_stealth_failures={}", x.known_stealth_failures);
+        out = std::format_to(out, " design_months_remaining={}", x.design_months_remaining);
         out = std::format_to(out, " hit_table={{");
         for (auto c : x.hit_table) {
             out = std::format_to(out, " {}", (int)c);
         };
         out = std::format_to(out, " }}");
+        out = std::format_to(out, " failed_design={}", x.failed_design);
+        out = std::format_to(out, " obsolete={}", x.obsolete);
 
         return std::format_to(out, " )");
     }
@@ -711,6 +737,12 @@ struct std::formatter<nation_t> {
         out = std::format_to(out, " stealth_tech={}", x.stealth_tech);
         out = std::format_to(out, " detection_tech={}", x.detection_tech);
         out = std::format_to(out, " automation_tech={}", x.automation_tech);
+        out = std::format_to(out, " construction_tradition={}", x.construction_tradition);
+        out = std::format_to(out, " propulsion_tradition={}", x.propulsion_tradition);
+        out = std::format_to(out, " weapons_tradition={}", x.weapons_tradition);
+        out = std::format_to(out, " shields_tradition={}", x.shields_tradition);
+        out = std::format_to(out, " stealth_tradition={}", x.stealth_tradition);
+        out = std::format_to(out, " detection_tradition={}", x.detection_tradition);
         out = std::format_to(out, " defeated={}", x.defeated);
 
         return std::format_to(out, " )");

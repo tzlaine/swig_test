@@ -175,7 +175,7 @@ void Sunit_designer::Construct(FArguments const & args)
                             SNew(Sstyled_rich_text_block)
                             .Text_Lambda(resource_cost_text([this] {
                                 cost_t retval =
-                                    call_lua_func("unit_cost", design_);
+                                    call_lua_func("unit_ideal_cost", design_);
                                 detail::metadata<cost_t>::foreach_member(
                                     [&](auto meta) {
                                         if (retval.*meta.ptr_ == 0.0f)
@@ -201,6 +201,8 @@ void Sunit_designer::Construct(FArguments const & args)
     ]];
     // clang-format on
 }
+
+bool Sunit_designer::cancelable() { return true; }
 
 void Sunit_designer::rebuild(nation_t const & nation, int design_id)
 {
@@ -282,7 +284,7 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
             SNew(Sstyled_text_block)
             .Text_Lambda([this] {
                 int const space =
-                    call_lua_func("unit_nonequipment_space", design_);
+                    call_lua_func("unit_ideal_nonequipment_space", design_);
                 return FText::Format(
                     loc_text("unit_design_value_non_equipment_space"),
                     FText::AsNumber(space));
@@ -330,7 +332,8 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
         +SHorizontalBox::Slot().FillWidth(25).Padding(0, 10, 0, 0)[
             SNew(Sstyled_text_block)
             .ColorAndOpacity_Lambda([this] {
-                int const space = call_lua_func("unit_unused_space", design_);
+                int const space =
+                    call_lua_func("unit_ideal_unused_space", design_);
                 if (space < 0 ) {
                     insert_reason(reasons_design_is_broken_,
                                   "broken_design_not_enough_space");
@@ -341,7 +344,8 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
                 return FSlateColor(FLinearColor::White);
             })
             .Text_Lambda([this] {
-                int const space = call_lua_func("unit_unused_space", design_);
+                int const space =
+                    call_lua_func("unit_ideal_unused_space", design_);
                 return FText::Format(
                     loc_text("unit_design_value_unused_space"),
                     FText::AsNumber(space));
@@ -363,10 +367,10 @@ void Sunit_designer::rebuild(nation_t const & nation, int design_id)
 
     property("crew", use_nation_t::no);
     property("subspace_speed", use_nation_t::no);
-    property("subspace_range", use_nation_t::no);
-    property("mass", use_nation_t::no);
-    property("max_acceleration", use_nation_t::no);
-    property("sustained_acceleration", use_nation_t::yes);
+    property("ideal_subspace_range", use_nation_t::no);
+    property("ideal_mass", use_nation_t::no);
+    property("ideal_max_acceleration", use_nation_t::no);
+    property("ideal_sustained_acceleration", use_nation_t::yes);
     property("days_at_sustained_acceleration", use_nation_t::yes);
     property("months_of_water", use_nation_t::no);
     property("months_of_supplies", use_nation_t::no);

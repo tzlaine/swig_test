@@ -44,7 +44,10 @@ enum class hit_table_entry_t {
     hit_supplies = 8,
     hit_rounds = 9,
     hit_missiles = 10,
-    hit_cargo = 11,
+    hit_fighters = 11,
+    hit_cargo = 12,
+    hit_destroyed = 13,
+    hit_unused = 14,
 };
 inline auto operator<=>(hit_table_entry_t x, hit_table_entry_t y) { return (int)x <=> (int)y; }
 
@@ -114,7 +117,30 @@ struct unit_design_t
     int missiles = -1;
     int fighters = -1;
     int cargo = -1;
+    int propulsion_space = -1;
+    int weapons_space = -1;
+    int shields_space = -1;
+    int detection_space = -1;
+    int stealth_space = -1;
+    float effective_propulsion = -1.0f;
+    float effective_weapons = -1.0f;
+    float effective_shields = -1.0f;
+    float effective_detection = -1.0f;
+    float effective_stealth = -1.0f;
+    int propulsion_reliability = -1;
+    int weapons_reliability = -1;
+    int shields_reliability = -1;
+    int detection_reliability = -1;
+    int stealth_reliability = -1;
+    int known_propulsion_failures = -1;
+    int known_weapons_failures = -1;
+    int known_shields_failures = -1;
+    int known_detection_failures = -1;
+    int known_stealth_failures = -1;
+    float design_months_remaining = -1.0f;
     std::vector<signed char> hit_table;
+    bool failed_design = false;
+    bool obsolete = false;
     bool operator==(unit_design_t const &) const = default;
 };
 
@@ -123,14 +149,14 @@ struct unit_t
     nation_and_object_id_t id = {};
     int hull = -1;
     int armor = -1;
-    int propulsion = -1;
-    int weapons = -1;
-    int shields = -1;
-    int detection = -1;
-    int stealth = -1;
-    int fuel = -1;
-    int water = -1;
-    int supplies = -1;
+    float propulsion = -1.0f;
+    float weapons = -1.0f;
+    float shields = -1.0f;
+    float detection = -1.0f;
+    float stealth = -1.0f;
+    float fuel = -1.0f;
+    float water = -1.0f;
+    float supplies = -1.0f;
     int rounds = -1;
     int missiles = -1;
     int fighters = -1;
@@ -321,13 +347,19 @@ struct nation_t
     std::vector<settlement_t> settlements_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_seen = {};
     std::vector<nation_and_object_id_t> foreign_designs_glimpsed = {};
-    int construction_tech = -1;
-    int propulsion_tech = -1;
-    int weapons_tech = -1;
-    int shields_tech = -1;
-    int stealth_tech = -1;
-    int detection_tech = -1;
-    int automation_tech = -1;
+    float construction_tech = -1.0f;
+    float propulsion_tech = -1.0f;
+    float weapons_tech = -1.0f;
+    float shields_tech = -1.0f;
+    float stealth_tech = -1.0f;
+    float detection_tech = -1.0f;
+    float automation_tech = -1.0f;
+    int construction_tradition = -1;
+    int propulsion_tradition = -1;
+    int weapons_tradition = -1;
+    int shields_tradition = -1;
+    int stealth_tradition = -1;
+    int detection_tradition = -1;
     bool defeated = false;
     bool operator==(nation_t const &) const = default;
 };

@@ -28,6 +28,8 @@ public:
 
     void Construct(FArguments const & args);
 
+    bool cancelable() override;
+
     void rebuild(nation_t const & nation, int design_id = -1);
 
 private:
