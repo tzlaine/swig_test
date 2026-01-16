@@ -40,6 +40,7 @@ add_executable_and_test(
     ${CMAKE_SOURCE_DIR}/unreal_project/Spaceport/Source/Spaceport/dir_watcher.cpp)
 add_executable_and_test(effects_tests)
 add_executable_and_test(name_generation_tests)
+add_executable_and_test(unit_design_tests)
 
 if (false)
 add_executable_and_test(graph_tests)

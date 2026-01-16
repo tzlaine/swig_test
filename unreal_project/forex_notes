@@ -280,9 +280,9 @@ t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
   probability is 0.25 * (1 + W2 - W1 + Asys2 - Asys1).
 
 * When a hit occurs, the damage Ds through the shields is W1 - S2 (or W1 / 2 -
-  S2 that if the missile was shot down).  This damages the ship like this.
-  The damage to the armor is Da = Ds * A2_curr / A2_full.  The damage to the
-  hull is Ds - Da.  There is a damage table of in-hull locations that can be
+  S2 if the missile was shot down).  This damages the ship like this.  The
+  damage to the armor is Da = Ds * A2_curr / A2_full.  The damage to the hull
+  is Ds - Da.  There is a damage table of in-hull locations that can be
   damaged.  The table includes the space occupied by each equipment part
   (weapons, drive, etc.), and points for the occupancy of all the other space
   (fuel, cargo, supplies, etc.).  Each point of hull damage has a chance to

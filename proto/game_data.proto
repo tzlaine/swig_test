@@ -57,6 +57,7 @@ enum hit_table_entry_t {
     hit_cargo = 12;     // represents storage/cargo/empty slot; if < 0, look it up in cargo_kind_t
     hit_destroyed = 13;
     hit_unused = 14;
+    hit_crew_space = 15;
 }
 
 message unit_design_t
@@ -118,7 +119,7 @@ message unit_t
 {
     nation_and_object_id_t id = 1;
     int32 hull = 2;
-    int32 armor = 3;
+    float armor = 3;
     float propulsion = 4;
     float weapons = 5;
     float shields = 6;

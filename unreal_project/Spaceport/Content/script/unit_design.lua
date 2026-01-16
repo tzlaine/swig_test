@@ -6,6 +6,8 @@ space_required_per_1k_crew = 3
 propulsion_force_per_level = 100
 pd_volleys_per_unit_storage = 10
 missile_volleys_per_unit_storage = 10
+pd_ammo_explosion_radius = 1
+missile_ammo_explosion_radius = 2
 mass_moved_through_subspace_per_unit_fuel = 100
 
 function unit_equipment_points(design)
@@ -40,14 +42,14 @@ end
 
 function unit_ideal_unused_space(design)
    local storage_space = design.fuel + design.water + design.supplies +
-      design.rounds + design.missiles + design.cargo
+      design.rounds + design.missiles + design.fighters + design.cargo
    return unit_ideal_nonequipment_space(design) -
       storage_space - unit_crew_space(unit_crew(design))
 end
 
 function unit_unused_space(design)
    local storage_space = design.fuel + design.water + design.supplies +
-      design.rounds + design.missiles + design.cargo
+      design.rounds + design.missiles + design.fighters + design.cargo
    return unit_nonequipment_space(design) -
       storage_space - unit_crew_space(unit_crew(design))
 end

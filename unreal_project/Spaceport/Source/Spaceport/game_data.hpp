@@ -48,6 +48,7 @@ enum class hit_table_entry_t {
     hit_cargo = 12,
     hit_destroyed = 13,
     hit_unused = 14,
+    hit_crew_space = 15,
 };
 inline auto operator<=>(hit_table_entry_t x, hit_table_entry_t y) { return (int)x <=> (int)y; }
 
@@ -148,7 +149,7 @@ struct unit_t
 {
     nation_and_object_id_t id = {};
     int hull = -1;
-    int armor = -1;
+    float armor = -1.0f;
     float propulsion = -1.0f;
     float weapons = -1.0f;
     float shields = -1.0f;

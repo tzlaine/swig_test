@@ -363,7 +363,7 @@ namespace detail {
             using namespace std::literals;
             return {"hull"sv, 2, &unit_t::hull};
         }
-        static constexpr metadatum<unit_t, int> armor()
+        static constexpr metadatum<unit_t, float> armor()
         {
             using namespace std::literals;
             return {"armor"sv, 3, &unit_t::armor};

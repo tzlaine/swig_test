@@ -1,5 +1,7 @@
 #include "reason.hpp"
 
+#include "check.hpp"
+
 #if !defined(BUILD_FOR_TEST)
 #include "game_instance.h"
 
@@ -46,6 +48,14 @@ std::string const & reason::description_format() const
 }
 
 bool reasons::empty() const { return reasons_.empty(); }
+
+int reasons::size() const { return (int)reasons_.size(); }
+
+reason const & reasons::operator[](int i) const
+{
+    check(0 <= i && i < (int)reasons_.size());
+    return reasons_[i];
+}
 
 #if defined(BUILD_FOR_TEST)
 std::string reasons::text() const

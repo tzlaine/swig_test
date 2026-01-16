@@ -34,6 +34,8 @@ enum struct deduplicate { no, yes };
 struct reasons
 {
     bool empty() const;
+    int size() const;
+    reason const & operator[](int i) const;
 #if defined(BUILD_FOR_TEST)
     std::string text() const;
 #else

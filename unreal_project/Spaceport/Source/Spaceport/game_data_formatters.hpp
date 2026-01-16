@@ -59,6 +59,7 @@ struct std::formatter<hit_table_entry_t> : std::formatter<std::string_view> {
             case hit_table_entry_t::hit_cargo: name = "hit_cargo"sv; break;
             case hit_table_entry_t::hit_destroyed: name = "hit_destroyed"sv; break;
             case hit_table_entry_t::hit_unused: name = "hit_unused"sv; break;
+            case hit_table_entry_t::hit_crew_space: name = "hit_crew_space"sv; break;
         }
         return std::formatter<std::string_view>::format(name, ctx);
     }
