@@ -306,7 +306,7 @@ t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
   water, is scuttled; having water in cargo is not sufficient.
 
 * In fleet battles, ships are divided up into captials and screens.  Every
-  ship below the mean Asys for the fleet is a screen; all others are capitals.
+  ship above the mean Asys for the fleet is a screen; all others are capitals.
   Combat is comprised of rounds.  Each round, each ship chooses a target to
   attack.  The selected target is chosen at random from among the opposing
   ships, except that each screen is represented twice.  Carriers with Ne
@@ -316,7 +316,7 @@ t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
   is done, [0, Ne]; the resulting carrier or escort gets attacked.  NB:
   Ignoring the carrier group for a moment, this means that in a fleet with 10
   capitals and 20 escorts, only 1 in 5 attacks will be directed toward a
-  capital.  TODO: Allow non-carrer capitals to get dedicated escorts too?
+  capital.  TODO: Allow non-carrier capitals to get dedicated escorts too?
   TODO: Are cloaked ships that attack allowed to go around these rules
   somehow?
 

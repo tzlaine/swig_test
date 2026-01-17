@@ -132,6 +132,9 @@ extern const int pd_hit_acceleration_factor;
 extern const int base_missile_attack_factor;
 extern const int missile_hit_weapons_factor;
 extern const int missile_hit_acceleration_factor;
+extern const int screen_combat_selection_factor;
+extern const int capital_combat_selection_factor;
+extern const double keep_previous_combat_target_probability;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

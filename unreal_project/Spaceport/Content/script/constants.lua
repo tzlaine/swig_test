@@ -73,3 +73,6 @@ pd_hit_acceleration_factor = 0.5
 base_missile_attack_factor = 0.75
 missile_hit_weapons_factor = 0.5
 missile_hit_acceleration_factor = 0.25
+screen_combat_selection_factor = 2
+capital_combat_selection_factor = 1
+keep_previous_combat_target_probability = 0.5

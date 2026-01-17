@@ -1,87 +1,54 @@
 #include "combat.hpp"
 
-#include "check.hpp"
-#include "constants.hpp"
-#include "game_data.hpp"
 #include "rng.hpp"
 
 #include <ranges>
 
 
-double next_roll(std::vector<double> const & rolls, int & i)
-{
-    check(i < (int)rolls.size());
-    ++i;
-    if (i == (int)rolls.size())
-        i = 0;
-    return rolls[i];
-}
-
 float pd_defense_probability(
-    unit_t const & attacker,
-    unit_design_t const & attacker_design,
-    nation_t const & attacker_nation,
-    unit_t const & defender,
-    unit_design_t const & defender_design,
-    nation_t const & defender_nation)
+    combat_unit const & attacker, combat_unit const & defender)
 {
     return base_pd_attack_factor *
-           (1 + pd_hit_weapons_factor * (defender.weapons - attacker.weapons) +
-            pd_hit_acceleration_factor *
-                (combat_acceleration(
-                     defender, defender_design, defender_nation) -
-                 combat_acceleration(
-                     attacker, attacker_design, attacker_nation)));
+           (1 +
+            pd_hit_weapons_factor *
+                (defender.unit_->weapons - attacker.unit_->weapons) +
+            pd_hit_acceleration_factor * (combat_acceleration(defender) -
+                                          combat_acceleration(attacker)));
 }
 
 float pd_hit_probability(
-    unit_t const & attacker,
-    unit_design_t const & attacker_design,
-    nation_t const & attacker_nation,
-    unit_t const & defender,
-    unit_design_t const & defender_design,
-    nation_t const & defender_nation)
+    combat_unit const & attacker, combat_unit const & defender)
 {
     return base_pd_attack_factor *
-           (1 + pd_hit_acceleration_factor *
-                    (combat_acceleration(
-                         defender, defender_design, defender_nation) -
-                     combat_acceleration(
-                         attacker, attacker_design, attacker_nation)));
+           (1 + pd_hit_acceleration_factor * (combat_acceleration(defender) -
+                                              combat_acceleration(attacker)));
 }
 
 float missile_hit_probability(
-    unit_t const & attacker,
-    unit_design_t const & attacker_design,
-    nation_t const & attacker_nation,
-    unit_t const & defender,
-    unit_design_t const & defender_design,
-    nation_t const & defender_nation)
+    combat_unit const & attacker, combat_unit const & defender)
 {
     return base_missile_attack_factor *
-           (1 + missile_hit_acceleration_factor *
-                    (combat_acceleration(
-                         defender, defender_design, defender_nation) -
-                     combat_acceleration(
-                         attacker, attacker_design, attacker_nation)));
+           (1 +
+            missile_hit_acceleration_factor * (combat_acceleration(defender) -
+                                               combat_acceleration(attacker)));
 }
 
-float combat_acceleration(
-    unit_t const & unit, unit_design_t const & design, nation_t const & nation)
+float combat_acceleration(combat_unit const & cu)
 {
     float const max_combat_acceleration =
-        call_lua_func("max_combat_acceleration", nation);
+        call_lua_func("max_combat_acceleration", *cu.nation_);
     float const unit_max_acceleration =
-        call_lua_func("unit_max_acceleration", design);
+        call_lua_func("unit_max_acceleration", *cu.design_);
     return std::min(unit_max_acceleration, max_combat_acceleration);
 }
 
 void apply_hit(
-    unit_t & unit,
+    combat_unit const & cu,
     int hit_location,
-    unit_design_t const & design,
     ignore_explosions_t ignore_explosions)
 {
+    unit_t & unit = *cu.unit_;
+    unit_design_t const & design = *cu.design_;
     auto & table = unit.hit_table;
 
     if (table[hit_location] < 0) {
@@ -91,13 +58,13 @@ void apply_hit(
         unit.cargo.erase(end_r.begin());
         if (cargo_kind[0] == (signed char)cargo_kind_t::fuel) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_fuel;
-            apply_hit(unit, hit_location, design, ignore_explosions_t::no);
+            apply_hit(cu, hit_location, ignore_explosions_t::no);
         } else if (cargo_kind[0] == (signed char)cargo_kind_t::rounds) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_rounds;
-            apply_hit(unit, hit_location, design, ignore_explosions_t::no);
+            apply_hit(cu, hit_location, ignore_explosions_t::no);
         } else if (cargo_kind[0] == (signed char)cargo_kind_t::missiles) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_missiles;
-            apply_hit(unit, hit_location, design, ignore_explosions_t::no);
+            apply_hit(cu, hit_location, ignore_explosions_t::no);
         } else {
             table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
         }
@@ -184,7 +151,7 @@ void apply_hit(
         }
 
         for (int i = explosion_lo; i < explosion_hi; ++i) {
-            apply_hit(unit, i, design, ignore_explosions_t::yes);
+            apply_hit(cu, i, ignore_explosions_t::yes);
         }
 
         break;
@@ -205,13 +172,13 @@ void apply_hit(
             if (hit_location + i < table.size() &&
                 hit_table_entry_t(table[hit_location + i]) !=
                     hit_table_entry_t::hit_destroyed) {
-                apply_hit(unit, hit_location + i, design, ignore_explosions);
+                apply_hit(cu, hit_location + i, ignore_explosions);
                 break;
             } else if (
                 0 < hit_location - i &&
                 hit_table_entry_t(table[hit_location - i]) !=
                     hit_table_entry_t::hit_destroyed) {
-                apply_hit(unit, hit_location - i, design, ignore_explosions);
+                apply_hit(cu, hit_location - i, ignore_explosions);
                 break;
             }
         }
@@ -241,13 +208,12 @@ void load_cargo(
     }
 }
 
-void damage_unit(
-    float damage,
-    unit_t & unit,
-    unit_design_t const & design,
-    std::vector<double> & rolls,
-    int & roll_index)
+void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
 {
+    unit_t & unit = *ud.combat_unit_->unit_;
+    unit_design_t const & design = *ud.combat_unit_->design_;
+    float damage = ud.damage_;
+
     damage -= unit.shields;
 
     if (damage < 0.0f)
@@ -270,39 +236,46 @@ void damage_unit(
         int const roll = next_roll(rolls, roll_index) * unit.hit_table.size();
         int const hit_location =
             roll == (int)unit.hit_table.size() ? roll - 1 : roll;
-        apply_hit(unit, hit_location, design, ignore_explosions_t::no);
+        apply_hit(*ud.combat_unit_, hit_location, ignore_explosions_t::no);
     }
 }
 
-void attack(
-    unit_t & attacker,
-    unit_design_t const & attacker_design,
-    nation_t const & attacker_nation,
-    unit_t & defender,
-    unit_design_t const & defender_design,
-    nation_t const & defender_nation,
-    std::vector<double> & rolls,
-    int roll_index)
+bool unit_disabled(combat_unit const & cu)
 {
-    float const attack_strength = attacker.weapons / 2.0f;
+    if (cu.disabled_)
+        return true;
+    // TODO
+    return false;
+}
 
-    bool const pd_attack = attacker.rounds;
+bool unit_destroyed(combat_unit const & cu)
+{
+    if (cu.destroyed_)
+        return true;
+    // TODO
+    return false;
+}
+
+void attack(
+    combat_unit & attacker,
+    combat_unit & defender,
+    std::vector<double> & rolls,
+    int roll_index,
+    std::vector<unit_damage> & damage,
+    bool defender_is_from_side_2)
+{
+    bool const pd_attack = attacker.unit_->rounds;
     if (pd_attack)
-        --attacker.rounds;
+        --attacker.unit_->rounds;
 
-    bool missile_attack = attacker.missiles;
+    bool missile_attack = attacker.unit_->missiles;
     if (missile_attack)
-        --attacker.missiles;
+        --attacker.unit_->missiles;
 
-    if (missile_attack && defender.rounds) {
-        --defender.rounds;
-        if (next_roll(rolls, roll_index) < pd_defense_probability(
-                                               attacker,
-                                               attacker_design,
-                                               attacker_nation,
-                                               defender,
-                                               defender_design,
-                                               defender_nation)) {
+    if (missile_attack && defender.unit_->rounds) {
+        --defender.unit_->rounds;
+        if (next_roll(rolls, roll_index) <
+            pd_defense_probability(attacker, defender)) {
             missile_attack = false;
         }
     }
@@ -310,25 +283,97 @@ void attack(
     if (!pd_attack && !missile_attack)
         return;
 
-    if (pd_attack && next_roll(rolls, roll_index) < pd_hit_probability(
-                                                        attacker,
-                                                        attacker_design,
-                                                        attacker_nation,
-                                                        defender,
-                                                        defender_design,
-                                                        defender_nation)) {
-        damage_unit(
-            attack_strength, defender, defender_design, rolls, roll_index);
+    float const attack_strength = attacker.unit_->weapons;
+    if (pd_attack &&
+        next_roll(rolls, roll_index) < pd_hit_probability(attacker, defender)) {
+        damage.push_back(
+            {&defender, attack_strength / 2.0f, defender_is_from_side_2});
     }
-    if (missile_attack &&
-        next_roll(rolls, roll_index) < missile_hit_probability(
-                                           attacker,
-                                           attacker_design,
-                                           attacker_nation,
-                                           defender,
-                                           defender_design,
-                                           defender_nation)) {
-        damage_unit(
-            attack_strength, defender, defender_design, rolls, roll_index);
+    if (missile_attack && next_roll(rolls, roll_index) <
+                              missile_hit_probability(attacker, defender)) {
+        damage.push_back(
+            {&defender, attack_strength / 2.0f, defender_is_from_side_2});
+    }
+}
+
+combat_unit & pick_target(
+    combat_unit & attacker,
+    combat_units & side,
+    std::vector<double> & rolls,
+    int & roll_index)
+{
+    if (attacker.prev_target_ && !attacker.prev_target_->destroyed_ &&
+        !attacker.prev_target_->disabled_) {
+        if (next_roll(rolls, roll_index) <
+            keep_previous_combat_target_probability) {
+            return *attacker.prev_target_;
+        }
+    }
+    int const roll = next_roll(rolls, roll_index) * side.target_table_.size();
+    int const i = roll == side.target_table_.size() ? roll - 1 : roll;
+    return side.combat_units_[side.target_table_[i]];
+}
+
+void battle_round(
+    combat_units & side_1,
+    combat_units & side_2,
+    std::vector<double> & rolls,
+    int roll_index,
+    std::vector<unit_damage> & damage)
+{
+    damage.clear();
+    for (auto & attacker : side_1.combat_units_) {
+        if (attacker.destroyed_ || attacker.disabled_)
+            continue;
+        auto & defender = pick_target(attacker, side_2, rolls, roll_index);
+        attacker.prev_target_ = &defender;
+        attack(attacker, defender, rolls, roll_index, damage, true);
+    }
+    for (auto & attacker : side_2.combat_units_) {
+        if (attacker.destroyed_ || attacker.disabled_)
+            continue;
+        auto & defender = pick_target(attacker, side_1, rolls, roll_index);
+        attacker.prev_target_ = &defender;
+        attack(attacker, defender, rolls, roll_index, damage, false);
+    }
+    for (auto const & d : damage) {
+        damage_unit(d, rolls, roll_index);
+        if (unit_disabled(*d.combat_unit_))
+            (d.unit_is_from_side_2_ ? side_2 : side_1).disable(*d.combat_unit_);
+        if (unit_destroyed(*d.combat_unit_))
+            (d.unit_is_from_side_2_ ? side_2 : side_1).destroy(*d.combat_unit_);
+    }
+}
+
+void battle(
+    game_state_t const & gs,
+    std::vector<fleet_t *> const & fleets_1,
+    std::vector<fleet_t *> const & fleets_2,
+    std::vector<double> & rolls,
+    int roll_index,
+    std::vector<unit_damage> & damage)
+{
+    combat_units side_1(gs, fleets_1);
+    combat_units side_2(gs, fleets_2);
+    bool keep_fighting = false;
+    while (keep_fighting) {
+        battle_round(side_1, side_2, rolls, roll_index, damage);
+    }
+}
+
+void encounter(
+    game_state_t const & gs,
+    std::vector<fleet_t *> const & fleets_1,
+    std::vector<fleet_t *> const & fleets_2,
+    std::vector<double> & rolls,
+    int roll_index,
+    std::vector<unit_damage> & damage)
+{
+    // TODO: handle all the posible cases of fleets wanting to engage or not,
+    // etc.
+    bool fight = false; // TODO
+    if (fight) {
+        std::vector<unit_damage> damage;
+        battle(gs, fleets_1, fleets_2, rolls, roll_index, damage);
     }
 }

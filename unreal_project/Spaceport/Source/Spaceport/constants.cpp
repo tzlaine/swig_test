@@ -140,7 +140,6 @@ const int pd_ammo_explosion_radius =
     lua().script("return to_integer(pd_ammo_explosion_radius)");
 const int missile_ammo_explosion_radius =
     lua().script("return to_integer(missile_ammo_explosion_radius)");
-
 const int base_pd_attack_factors =
     lua().script("return to_integer(base_pd_attack_factors)");
 const int pd_hit_weapons_factors =
@@ -153,6 +152,12 @@ const int missile_hit_weapons_factors =
     lua().script("return to_integer(missile_hit_weapons_factors)");
 const int missile_hit_acceleration_factors =
     lua().script("return to_integer(missile_hit_acceleration_factors)");
+const int screen_combat_selection_factor =
+    lua().script("return to_integer(screen_combat_selection_factor)");
+const int capital_combat_selection_factor =
+    lua().script("return to_integer(capital_combat_selection_factor)");
+const double keep_previous_combat_target_probability =
+    lua()["keep_previous_combat_target_probability"];
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =
