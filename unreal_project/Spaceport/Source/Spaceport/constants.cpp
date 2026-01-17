@@ -132,6 +132,8 @@ const double max_unit_design_space_factor =
     lua()["max_unit_design_space_factor"];
 const double min_unit_design_effectiveness_factor =
     lua()["min_unit_design_effectiveness_factor"];
+const int space_required_per_equipment_point =
+    lua().script("return to_integer(space_required_per_equipment_point)");
 
 // combat
 const int pd_ammo_explosion_radius =
@@ -139,6 +141,18 @@ const int pd_ammo_explosion_radius =
 const int missile_ammo_explosion_radius =
     lua().script("return to_integer(missile_ammo_explosion_radius)");
 
+const int base_pd_attack_factors =
+    lua().script("return to_integer(base_pd_attack_factors)");
+const int pd_hit_weapons_factors =
+    lua().script("return to_integer(pd_hit_weapons_factors)");
+const int pd_hit_acceleration_factors =
+    lua().script("return to_integer(pd_hit_acceleration_factors)");
+const int base_missile_attack_factors =
+    lua().script("return to_integer(base_missile_attack_factors)");
+const int missile_hit_weapons_factors =
+    lua().script("return to_integer(missile_hit_weapons_factors)");
+const int missile_hit_acceleration_factors =
+    lua().script("return to_integer(missile_hit_acceleration_factors)");
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =
@@ -147,19 +161,19 @@ const ECollisionChannel star_channel = ECollisionChannel::ECC_GameTraceChannel2;
 const ECollisionChannel hex_channel = ECollisionChannel::ECC_GameTraceChannel3;
 #endif
 
- int make_prov_none() { return -1; }
- int make_prov_off_map() { return -2; }
- int make_prov_galactic_bulge() { return -3; }
- int make_prov_galactic_center() { return -4; }
- double make_atmos_thousands() { return -1234.0; }
- double make_atmos_millions() { return -2345.0; }
- double make_growth_uninhabitable() { return -1000.0; }
- int make_nation_none() { return -1; }
- int make_hex_none() { return -1; }
- int make_system_none() { return -1; }
- int make_object_none() { return -1; }
- double make_n_a()
- {
-     unsigned int mantissa = 1u << FLT_MANT_DIG;
-     return -double(mantissa);
+int make_prov_none() { return -1; }
+int make_prov_off_map() { return -2; }
+int make_prov_galactic_bulge() { return -3; }
+int make_prov_galactic_center() { return -4; }
+double make_atmos_thousands() { return -1234.0; }
+double make_atmos_millions() { return -2345.0; }
+double make_growth_uninhabitable() { return -1000.0; }
+int make_nation_none() { return -1; }
+int make_hex_none() { return -1; }
+int make_system_none() { return -1; }
+int make_object_none() { return -1; }
+double make_n_a()
+{
+    unsigned int mantissa = 1u << FLT_MANT_DIG;
+    return -double(mantissa);
 }

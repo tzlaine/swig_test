@@ -121,10 +121,17 @@ extern const float base_unit_design_monthly_cost_factor;
 extern const float unit_design_monthly_cost_factor_per_novelty_point;
 extern const double max_unit_design_space_factor;
 extern const double min_unit_design_effectiveness_factor;
+extern const int space_required_per_equipment_point;
 
 // combat
 extern const int pd_ammo_explosion_radius;
 extern const int missile_ammo_explosion_radius;
+extern const int base_pd_attack_factor;
+extern const int pd_hit_weapons_factor;
+extern const int pd_hit_acceleration_factor;
+extern const int base_missile_attack_factor;
+extern const int missile_hit_weapons_factor;
+extern const int missile_hit_acceleration_factor;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

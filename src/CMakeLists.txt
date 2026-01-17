@@ -5,6 +5,7 @@ add_library(
     game_data
     STATIC
     ${unreal_src_dir}/base_types.cpp
+    ${unreal_src_dir}/combat.cpp
     ${unreal_src_dir}/constants.cpp
     ${unreal_src_dir}/game_data.cpp
     ${unreal_src_dir}/generate_galaxy.cpp

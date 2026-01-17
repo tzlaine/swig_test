@@ -20,6 +20,12 @@ function max_sustained_acceleration(nation)
    return 1.5
 end
 
+-- in Gs
+function max_combat_acceleration(nation)
+   -- TODO: tech should increase this
+   return 15
+end
+
 function fuel_efficiency(nation)
    -- TODO: tech should increase this
    return 1

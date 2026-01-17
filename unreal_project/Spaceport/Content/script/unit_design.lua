@@ -1,13 +1,10 @@
 -- TODO: To constants?
 crew_required_per_hull_point = 5
 crew_required_per_equipment_point = 100
-space_required_per_equipment_point = 10
 space_required_per_1k_crew = 3
 propulsion_force_per_level = 100
 pd_volleys_per_unit_storage = 10
 missile_volleys_per_unit_storage = 10
-pd_ammo_explosion_radius = 1
-missile_ammo_explosion_radius = 2
 mass_moved_through_subspace_per_unit_fuel = 100
 
 function unit_equipment_points(design)
@@ -72,66 +69,66 @@ function armor_cost(points)
    return retval
 end
 
-function propulsion_cost(level)
+function propulsion_cost(points)
    local retval = cost_t.new()
-   retval.money_cost = level * 10
-   retval.metal_cost = level * 10
-   retval.energy_cost = level * 10
-   retval.fuel_cost = level * 0.1
-   retval.water_cost = level * 0.01
+   retval.money_cost = points
+   retval.metal_cost = points
+   retval.energy_cost = points
+   retval.fuel_cost = points * 0.01
+   retval.water_cost = points * 0.001
    return retval
 end
 
-function weapons_cost(level)
+function weapons_cost(points)
    local retval = cost_t.new()
-   retval.money_cost = level * 15
-   retval.metal_cost = level * 2
-   retval.energy_cost = level * 5
-   retval.water_cost = level * 0.01
+   retval.money_cost = points * 1.5
+   retval.metal_cost = points * 0.2
+   retval.energy_cost = points * 0.5
+   retval.water_cost = points * 0.001
    return retval
 end
 
-function shields_cost(level)
+function shields_cost(points)
    local retval = cost_t.new()
-   retval.money_cost = level * 20
-   retval.metal_cost = level * 2
-   retval.energy_cost = level * 10
-   retval.water_cost = level * 0.01
+   retval.money_cost = points * 2.0
+   retval.metal_cost = points * 0.2
+   retval.energy_cost = points
+   retval.water_cost = points * 0.001
    return retval
 end
 
-function detection_cost(level)
+function detection_cost(points)
    local retval = cost_t.new()
-   retval.money_cost = level
-   retval.metal_cost = level * 0.01
-   retval.energy_cost = level
+   retval.money_cost = points * 0.1
+   retval.metal_cost = points * 0.001
+   retval.energy_cost = points * 0.1
    return retval
 end
 
-function stealth_cost(level)
+function stealth_cost(points)
    local retval = cost_t.new()
-   retval.money_cost = level * 10
-   retval.metal_cost = level * 0.01
-   retval.energy_cost = level * 10
+   retval.money_cost = points
+   retval.metal_cost = points * 0.001
+   retval.energy_cost = points
    return retval
 end
 
-function fighters_cost(level)
+function fighters_cost(points)
    local retval = cost_t.new()
-   retval.money_cost = level
-   retval.metal_cost = level * 0.1
-   retval.energy_cost = level * 0.1
+   retval.money_cost = points * 0.1
+   retval.metal_cost = points * 0.01
+   retval.energy_cost = points * 0.01
    return retval
 end
 
 function unit_ideal_cost(design)
    return hull_cost(design.hull) +
       armor_cost(design.armor) +
-      propulsion_cost(design.propulsion) +
-      weapons_cost(design.weapons) +
-      shields_cost(design.shields) +
-      detection_cost(design.detection) +
-      stealth_cost(design.stealth) +
+      propulsion_cost(design.propulsion * 10) +
+      weapons_cost(design.weapons * 10) +
+      shields_cost(design.shields * 10) +
+      detection_cost(design.detection * 10) +
+      stealth_cost(design.stealth * 10) +
       fighters_cost(design.fighters)
 end
 
@@ -144,6 +141,26 @@ function unit_cost(design)
       detection_cost(design.detection_space) +
       stealth_cost(design.stealth_space) +
       fighters_cost(design.fighters_space)
+end
+
+function repair_cost(unit, design)
+   local retval = hull_cost(design.hull - unit.hull)
+   for i = 1, #unit.hit_table do
+      if unit.hit_table[i] == hit_destroyed then
+         if design[i] == hit_propulsion then
+            retval = retval + propulsion_cost(1)
+         elseif design[i] == hit_weapons then
+            retval = retval + weapons_cost(1)
+         elseif design[i] == hit_shields then
+            retval = retval + shields_cost(1)
+         elseif design[i] == hit_detection then
+            retval = retval + detection_cost(1)
+         elseif design[i] == hit_stealth then
+            retval = retval + stealth_cost(1)
+         end
+      end
+   end
+   return retval
 end
 
 function unit_ideal_mass(design)
