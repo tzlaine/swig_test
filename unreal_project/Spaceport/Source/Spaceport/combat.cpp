@@ -247,10 +247,15 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
         load_cargo(unit.cargo, unit.hit_table);
     }
 
-    for (int i = 0, last = int(damage + 0.5f); i < last; ++i) {
+    auto const roll_location = [&] {
         int const roll = next_roll(rolls, roll_index) * unit.hit_table.size();
-        int const hit_location =
-            roll == (int)unit.hit_table.size() ? roll - 1 : roll;
+        return roll == (int)unit.hit_table.size() ? roll - 1 : roll;
+    };
+
+    int hit_location = roll_location();
+    for (int i = 0, last = int(damage + 0.5f); i < last; ++i) {
+        if (!ud.missile_damage_)
+            hit_location = roll_location();
         apply_hit(*ud.combat_unit_, hit_location, ignore_explosions_t::no);
     }
 }
@@ -307,13 +312,15 @@ void attack(
     if (pd_attack &&
         next_roll(rolls, roll_index) < pd_hit_probability(attacker, defender)) {
         damage.push_back(
-            {&defender, attack_strength / 2.0f, defender_is_from_side_2});
+            {&defender,
+             attack_strength / 2.0f,
+             false,
+             defender_is_from_side_2});
     }
     if (missile_attack && next_roll(rolls, roll_index) <
                               missile_hit_probability(attacker, defender)) {
-        // TODO: Apply all missile damage to one location.
         damage.push_back(
-            {&defender, attack_strength / 2.0f, defender_is_from_side_2});
+            {&defender, attack_strength / 2.0f, true, defender_is_from_side_2});
     }
 }
 

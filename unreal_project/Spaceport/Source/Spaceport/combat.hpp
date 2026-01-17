@@ -28,6 +28,7 @@ struct unit_damage
 {
     combat_unit * combat_unit_ = nullptr;
     float damage_ = 0.0f;
+    bool missile_damage_ = false;
     bool unit_is_from_side_2_ = false;
 };
 
