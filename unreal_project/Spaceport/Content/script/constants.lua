@@ -62,3 +62,7 @@ base_unit_design_monthly_cost_factor = 1.0
 unit_design_monthly_cost_factor_per_novelty_point = 0.25
 max_unit_design_space_factor = 1.2
 min_unit_design_effectiveness_factor = 0.8
+
+-- combat
+pd_ammo_explosion_radius = 1
+missile_ammo_explosion_radius = 2

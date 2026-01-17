@@ -157,21 +157,13 @@ namespace detail {
                 &hit_table_block::entry_);
         };
 
-        // Except in the worst designs, put empty spaces around fuel and ammo
+        // Except in the worst designs, put empty spaces before fuel and ammo
         // to prevent chain reactions.
-        if (design_grade == design_grade_t::f) {
-            // nothing to do here
-        } else if (num_spacers() == 0) {
-            // nothing to do here
-        } else if (num_spacers() == 1) {
-            // TODO: Use explosion radius constants.
-            insert_spacers(first_fuel(), 1);
-        } else if (num_spacers() == 2) {
-            insert_spacers(first_fuel(), 1);
-            insert_spacers(first_ammo(), 1);
-        } else {
-            insert_spacers(first_fuel(), 1);
-            insert_spacers(first_ammo(), 2);
+        if (design_grade != design_grade_t::f) {
+            if (pd_ammo_explosion_radius <= num_spacers())
+                insert_spacers(first_fuel(), pd_ammo_explosion_radius);
+            if (missile_ammo_explosion_radius <= num_spacers())
+                insert_spacers(first_ammo(), missile_ammo_explosion_radius);
         }
 
         // Move all remaining cargo into this block, so that it does not get

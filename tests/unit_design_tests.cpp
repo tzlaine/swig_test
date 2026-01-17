@@ -883,11 +883,11 @@ TEST(unit_design_tests, detail_generate_hit_table_quality_a)
         it = std::fill_n(it, 1, (signed char)hit_table_entry_t::hit_unused);
         it = std::fill_n(
             it, design.fuel, (signed char)hit_table_entry_t::hit_fuel);
-        it = std::fill_n(it, 1, (signed char)hit_table_entry_t::hit_cargo);
         it = std::fill_n(
             it, design.rounds, (signed char)hit_table_entry_t::hit_rounds);
         it = std::fill_n(
             it, design.missiles, (signed char)hit_table_entry_t::hit_missiles);
+        it = std::fill_n(it, 1, (signed char)hit_table_entry_t::hit_cargo);
         EXPECT_EQ(design.hit_table, expected);
     }
 

@@ -133,6 +133,13 @@ const double max_unit_design_space_factor =
 const double min_unit_design_effectiveness_factor =
     lua()["min_unit_design_effectiveness_factor"];
 
+// combat
+const int pd_ammo_explosion_radius =
+    lua().script("return to_integer(pd_ammo_explosion_radius)");
+const int missile_ammo_explosion_radius =
+    lua().script("return to_integer(missile_ammo_explosion_radius)");
+
+
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =
     ECollisionChannel::ECC_GameTraceChannel1;
