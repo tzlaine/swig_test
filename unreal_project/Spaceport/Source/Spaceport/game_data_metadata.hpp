@@ -177,110 +177,115 @@ namespace detail {
             using namespace std::literals;
             return {"cargo"sv, 15, &unit_design_t::cargo};
         }
+        static constexpr metadatum<unit_design_t, int> crew()
+        {
+            using namespace std::literals;
+            return {"crew"sv, 16, &unit_design_t::crew};
+        }
         static constexpr metadatum<unit_design_t, int> propulsion_space()
         {
             using namespace std::literals;
-            return {"propulsion_space"sv, 16, &unit_design_t::propulsion_space};
+            return {"propulsion_space"sv, 17, &unit_design_t::propulsion_space};
         }
         static constexpr metadatum<unit_design_t, int> weapons_space()
         {
             using namespace std::literals;
-            return {"weapons_space"sv, 17, &unit_design_t::weapons_space};
+            return {"weapons_space"sv, 18, &unit_design_t::weapons_space};
         }
         static constexpr metadatum<unit_design_t, int> shields_space()
         {
             using namespace std::literals;
-            return {"shields_space"sv, 18, &unit_design_t::shields_space};
+            return {"shields_space"sv, 19, &unit_design_t::shields_space};
         }
         static constexpr metadatum<unit_design_t, int> detection_space()
         {
             using namespace std::literals;
-            return {"detection_space"sv, 19, &unit_design_t::detection_space};
+            return {"detection_space"sv, 20, &unit_design_t::detection_space};
         }
         static constexpr metadatum<unit_design_t, int> stealth_space()
         {
             using namespace std::literals;
-            return {"stealth_space"sv, 20, &unit_design_t::stealth_space};
+            return {"stealth_space"sv, 21, &unit_design_t::stealth_space};
         }
         static constexpr metadatum<unit_design_t, float> effective_propulsion()
         {
             using namespace std::literals;
-            return {"effective_propulsion"sv, 21, &unit_design_t::effective_propulsion};
+            return {"effective_propulsion"sv, 22, &unit_design_t::effective_propulsion};
         }
         static constexpr metadatum<unit_design_t, float> effective_weapons()
         {
             using namespace std::literals;
-            return {"effective_weapons"sv, 22, &unit_design_t::effective_weapons};
+            return {"effective_weapons"sv, 23, &unit_design_t::effective_weapons};
         }
         static constexpr metadatum<unit_design_t, float> effective_shields()
         {
             using namespace std::literals;
-            return {"effective_shields"sv, 23, &unit_design_t::effective_shields};
+            return {"effective_shields"sv, 24, &unit_design_t::effective_shields};
         }
         static constexpr metadatum<unit_design_t, float> effective_detection()
         {
             using namespace std::literals;
-            return {"effective_detection"sv, 24, &unit_design_t::effective_detection};
+            return {"effective_detection"sv, 25, &unit_design_t::effective_detection};
         }
         static constexpr metadatum<unit_design_t, float> effective_stealth()
         {
             using namespace std::literals;
-            return {"effective_stealth"sv, 25, &unit_design_t::effective_stealth};
+            return {"effective_stealth"sv, 26, &unit_design_t::effective_stealth};
         }
         static constexpr metadatum<unit_design_t, int> propulsion_reliability()
         {
             using namespace std::literals;
-            return {"propulsion_reliability"sv, 26, &unit_design_t::propulsion_reliability};
+            return {"propulsion_reliability"sv, 27, &unit_design_t::propulsion_reliability};
         }
         static constexpr metadatum<unit_design_t, int> weapons_reliability()
         {
             using namespace std::literals;
-            return {"weapons_reliability"sv, 27, &unit_design_t::weapons_reliability};
+            return {"weapons_reliability"sv, 28, &unit_design_t::weapons_reliability};
         }
         static constexpr metadatum<unit_design_t, int> shields_reliability()
         {
             using namespace std::literals;
-            return {"shields_reliability"sv, 28, &unit_design_t::shields_reliability};
+            return {"shields_reliability"sv, 29, &unit_design_t::shields_reliability};
         }
         static constexpr metadatum<unit_design_t, int> detection_reliability()
         {
             using namespace std::literals;
-            return {"detection_reliability"sv, 29, &unit_design_t::detection_reliability};
+            return {"detection_reliability"sv, 30, &unit_design_t::detection_reliability};
         }
         static constexpr metadatum<unit_design_t, int> stealth_reliability()
         {
             using namespace std::literals;
-            return {"stealth_reliability"sv, 30, &unit_design_t::stealth_reliability};
+            return {"stealth_reliability"sv, 31, &unit_design_t::stealth_reliability};
         }
         static constexpr metadatum<unit_design_t, int> known_propulsion_failures()
         {
             using namespace std::literals;
-            return {"known_propulsion_failures"sv, 31, &unit_design_t::known_propulsion_failures};
+            return {"known_propulsion_failures"sv, 32, &unit_design_t::known_propulsion_failures};
         }
         static constexpr metadatum<unit_design_t, int> known_weapons_failures()
         {
             using namespace std::literals;
-            return {"known_weapons_failures"sv, 32, &unit_design_t::known_weapons_failures};
+            return {"known_weapons_failures"sv, 33, &unit_design_t::known_weapons_failures};
         }
         static constexpr metadatum<unit_design_t, int> known_shields_failures()
         {
             using namespace std::literals;
-            return {"known_shields_failures"sv, 33, &unit_design_t::known_shields_failures};
+            return {"known_shields_failures"sv, 34, &unit_design_t::known_shields_failures};
         }
         static constexpr metadatum<unit_design_t, int> known_detection_failures()
         {
             using namespace std::literals;
-            return {"known_detection_failures"sv, 34, &unit_design_t::known_detection_failures};
+            return {"known_detection_failures"sv, 35, &unit_design_t::known_detection_failures};
         }
         static constexpr metadatum<unit_design_t, int> known_stealth_failures()
         {
             using namespace std::literals;
-            return {"known_stealth_failures"sv, 35, &unit_design_t::known_stealth_failures};
+            return {"known_stealth_failures"sv, 36, &unit_design_t::known_stealth_failures};
         }
         static constexpr metadatum<unit_design_t, float> design_months_remaining()
         {
             using namespace std::literals;
-            return {"design_months_remaining"sv, 36, &unit_design_t::design_months_remaining};
+            return {"design_months_remaining"sv, 37, &unit_design_t::design_months_remaining};
         }
         static constexpr metadatum<unit_design_t, std::vector<signed char>> hit_table()
         {
@@ -316,6 +321,7 @@ namespace detail {
             f(missiles());
             f(fighters());
             f(cargo());
+            f(crew());
             f(propulsion_space());
             f(weapons_space());
             f(shields_space());

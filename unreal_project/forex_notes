@@ -340,10 +340,10 @@ t = sqrt(d / a) + sqrt(d / a) = 2 * sqrt(d / a)
 
 * Bases at planets should be able to be covered by planetary defenses.  If the
   base is in LPO (like "LEO", but generic), the defenses should "come around"
-  every few months, and fire at enemies.  If the base is a GSO, only the
-  defenses on that side of the planet should be able to fire.  GSO bases can
-  be supported then by numerous planetary batteries, and are relatively safer.
-  LPO bases are cheaper (TODO: and maybe cheaper to build at?).
+  every few time increments, and fire at enemies.  If the base is a GSO, only
+  the defenses on that side of the planet should be able to fire.  GSO bases
+  can be supported then by numerous planetary batteries, and are relatively
+  safer.  LPO bases are cheaper (TODO: and maybe cheaper to build at?).
 
 
 Other units:

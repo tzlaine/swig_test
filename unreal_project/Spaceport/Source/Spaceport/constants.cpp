@@ -158,6 +158,13 @@ const int capital_combat_selection_factor =
     lua().script("return to_integer(capital_combat_selection_factor)");
 const double keep_previous_combat_target_probability =
     lua()["keep_previous_combat_target_probability"];
+const float crew_required_per_hull_point =
+    lua()["crew_required_per_hull_point"];
+const float crew_required_per_equipment_point =
+    lua()["crew_required_per_equipment_point"];
+const float space_required_per_1k_crew = lua()["space_required_per_1k_crew"];
+const float crew_onduty_factor = 1 / 3.0f;
+const float minimum_viable_crew_factor = 1 / 3.0f;
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =

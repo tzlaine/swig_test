@@ -135,6 +135,11 @@ extern const int missile_hit_acceleration_factor;
 extern const int screen_combat_selection_factor;
 extern const int capital_combat_selection_factor;
 extern const double keep_previous_combat_target_probability;
+extern const float crew_required_per_hull_point;
+extern const float crew_required_per_equipment_point;
+extern const float space_required_per_1k_crew;
+extern const float crew_onduty_factor;
+extern const float minimum_viable_crew_factor;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

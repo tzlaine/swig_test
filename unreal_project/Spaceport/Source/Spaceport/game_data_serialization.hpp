@@ -176,47 +176,49 @@ namespace detail {
         if (allow(15))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.cargo, 15, os);
         if (allow(16))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion_space, 16, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.crew, 16, os);
         if (allow(17))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons_space, 17, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion_space, 17, os);
         if (allow(18))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields_space, 18, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons_space, 18, os);
         if (allow(19))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection_space, 19, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields_space, 19, os);
         if (allow(20))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth_space, 20, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection_space, 20, os);
         if (allow(21))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_propulsion, 21, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth_space, 21, os);
         if (allow(22))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_weapons, 22, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_propulsion, 22, os);
         if (allow(23))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_shields, 23, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_weapons, 23, os);
         if (allow(24))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_detection, 24, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_shields, 24, os);
         if (allow(25))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_stealth, 25, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_detection, 25, os);
         if (allow(26))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion_reliability, 26, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.effective_stealth, 26, os);
         if (allow(27))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons_reliability, 27, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion_reliability, 27, os);
         if (allow(28))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields_reliability, 28, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons_reliability, 28, os);
         if (allow(29))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection_reliability, 29, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields_reliability, 29, os);
         if (allow(30))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth_reliability, 30, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection_reliability, 30, os);
         if (allow(31))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_propulsion_failures, 31, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth_reliability, 31, os);
         if (allow(32))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_weapons_failures, 32, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_propulsion_failures, 32, os);
         if (allow(33))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_shields_failures, 33, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_weapons_failures, 33, os);
         if (allow(34))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_detection_failures, 34, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_shields_failures, 34, os);
         if (allow(35))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_stealth_failures, 35, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_detection_failures, 35, os);
         if (allow(36))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.design_months_remaining, 36, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.known_stealth_failures, 36, os);
+        if (allow(37))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.design_months_remaining, 37, os);
         if (allow(100))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.hit_table, 100, os);
         if (allow(101))
@@ -233,9 +235,9 @@ namespace detail {
         using namespace std::literals;
         constexpr auto this_message_name = "unit_design_t"sv;
         constexpr std::array<std::string_view, 103> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "hull"sv, "armor"sv, "propulsion"sv, "weapons"sv, "shields"sv, "detection"sv, "stealth"sv, "fuel"sv, "water"sv, "supplies"sv, "rounds"sv, "missiles"sv, "fighters"sv, "cargo"sv, "propulsion_space"sv, "weapons_space"sv, "shields_space"sv, "detection_space"sv, "stealth_space"sv, "effective_propulsion"sv, "effective_weapons"sv, "effective_shields"sv, "effective_detection"sv, "effective_stealth"sv, "propulsion_reliability"sv, "weapons_reliability"sv, "shields_reliability"sv, "detection_reliability"sv, "stealth_reliability"sv, "known_propulsion_failures"sv, "known_weapons_failures"sv, "known_shields_failures"sv, "known_detection_failures"sv, "known_stealth_failures"sv, "design_months_remaining"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "hit_table"sv, "failed_design"sv, "obsolete"sv}};
-        std::array<int, 39> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 100, 101, 102}};
+          "id"sv, "hull"sv, "armor"sv, "propulsion"sv, "weapons"sv, "shields"sv, "detection"sv, "stealth"sv, "fuel"sv, "water"sv, "supplies"sv, "rounds"sv, "missiles"sv, "fighters"sv, "cargo"sv, "crew"sv, "propulsion_space"sv, "weapons_space"sv, "shields_space"sv, "detection_space"sv, "stealth_space"sv, "effective_propulsion"sv, "effective_weapons"sv, "effective_shields"sv, "effective_detection"sv, "effective_stealth"sv, "propulsion_reliability"sv, "weapons_reliability"sv, "shields_reliability"sv, "detection_reliability"sv, "stealth_reliability"sv, "known_propulsion_failures"sv, "known_weapons_failures"sv, "known_shields_failures"sv, "known_detection_failures"sv, "known_stealth_failures"sv, "design_months_remaining"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "<UNKOWN_FIELD>"sv, "hit_table"sv, "failed_design"sv, "obsolete"sv}};
+        std::array<int, 40> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 100, 101, 102}};
     
         constexpr int lo_field_number = 1;
         constexpr int hi_field_number = 102;
@@ -257,27 +259,28 @@ namespace detail {
             case 13: return detail::deserialize_impl(x.missiles, src);
             case 14: return detail::deserialize_impl(x.fighters, src);
             case 15: return detail::deserialize_impl(x.cargo, src);
-            case 16: return detail::deserialize_impl(x.propulsion_space, src);
-            case 17: return detail::deserialize_impl(x.weapons_space, src);
-            case 18: return detail::deserialize_impl(x.shields_space, src);
-            case 19: return detail::deserialize_impl(x.detection_space, src);
-            case 20: return detail::deserialize_impl(x.stealth_space, src);
-            case 21: return detail::deserialize_impl(x.effective_propulsion, src);
-            case 22: return detail::deserialize_impl(x.effective_weapons, src);
-            case 23: return detail::deserialize_impl(x.effective_shields, src);
-            case 24: return detail::deserialize_impl(x.effective_detection, src);
-            case 25: return detail::deserialize_impl(x.effective_stealth, src);
-            case 26: return detail::deserialize_impl(x.propulsion_reliability, src);
-            case 27: return detail::deserialize_impl(x.weapons_reliability, src);
-            case 28: return detail::deserialize_impl(x.shields_reliability, src);
-            case 29: return detail::deserialize_impl(x.detection_reliability, src);
-            case 30: return detail::deserialize_impl(x.stealth_reliability, src);
-            case 31: return detail::deserialize_impl(x.known_propulsion_failures, src);
-            case 32: return detail::deserialize_impl(x.known_weapons_failures, src);
-            case 33: return detail::deserialize_impl(x.known_shields_failures, src);
-            case 34: return detail::deserialize_impl(x.known_detection_failures, src);
-            case 35: return detail::deserialize_impl(x.known_stealth_failures, src);
-            case 36: return detail::deserialize_impl(x.design_months_remaining, src);
+            case 16: return detail::deserialize_impl(x.crew, src);
+            case 17: return detail::deserialize_impl(x.propulsion_space, src);
+            case 18: return detail::deserialize_impl(x.weapons_space, src);
+            case 19: return detail::deserialize_impl(x.shields_space, src);
+            case 20: return detail::deserialize_impl(x.detection_space, src);
+            case 21: return detail::deserialize_impl(x.stealth_space, src);
+            case 22: return detail::deserialize_impl(x.effective_propulsion, src);
+            case 23: return detail::deserialize_impl(x.effective_weapons, src);
+            case 24: return detail::deserialize_impl(x.effective_shields, src);
+            case 25: return detail::deserialize_impl(x.effective_detection, src);
+            case 26: return detail::deserialize_impl(x.effective_stealth, src);
+            case 27: return detail::deserialize_impl(x.propulsion_reliability, src);
+            case 28: return detail::deserialize_impl(x.weapons_reliability, src);
+            case 29: return detail::deserialize_impl(x.shields_reliability, src);
+            case 30: return detail::deserialize_impl(x.detection_reliability, src);
+            case 31: return detail::deserialize_impl(x.stealth_reliability, src);
+            case 32: return detail::deserialize_impl(x.known_propulsion_failures, src);
+            case 33: return detail::deserialize_impl(x.known_weapons_failures, src);
+            case 34: return detail::deserialize_impl(x.known_shields_failures, src);
+            case 35: return detail::deserialize_impl(x.known_detection_failures, src);
+            case 36: return detail::deserialize_impl(x.known_stealth_failures, src);
+            case 37: return detail::deserialize_impl(x.design_months_remaining, src);
             case 100: return detail::deserialize_impl(x.hit_table, src);
             case 101: return detail::deserialize_impl(x.failed_design, src);
             case 102: return detail::deserialize_impl(x.obsolete, src);

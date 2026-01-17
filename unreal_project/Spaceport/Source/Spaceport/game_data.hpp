@@ -118,6 +118,7 @@ struct unit_design_t
     int missiles = -1;
     int fighters = -1;
     int cargo = -1;
+    int crew = -1;
     int propulsion_space = -1;
     int weapons_space = -1;
     int shields_space = -1;

@@ -1,7 +1,4 @@
 -- TODO: To constants?
-crew_required_per_hull_point = 5
-crew_required_per_equipment_point = 100
-space_required_per_1k_crew = 3
 propulsion_force_per_level = 100
 pd_volleys_per_unit_storage = 10
 missile_volleys_per_unit_storage = 10

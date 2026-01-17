@@ -43,13 +43,18 @@ float combat_acceleration(combat_unit const & cu)
 }
 
 void apply_hit(
-    combat_unit const & cu,
-    int hit_location,
-    ignore_explosions_t ignore_explosions)
+    combat_unit & cu, int hit_location, ignore_explosions_t ignore_explosions)
 {
     unit_t & unit = *cu.unit_;
     unit_design_t const & design = *cu.design_;
     auto & table = unit.hit_table;
+
+    auto const destroy_location = [&](bool equipment_here) {
+        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        unit.crew -= int(crew_required_per_hull_point);
+        if (equipment_here)
+            unit.crew -= int(crew_required_per_equipment_point);
+    };
 
     if (table[hit_location] < 0) {
         signed char const cargo_kind[1] = {table[hit_location]};
@@ -66,7 +71,7 @@ void apply_hit(
             table[hit_location] = (signed char)hit_table_entry_t::hit_missiles;
             apply_hit(cu, hit_location, ignore_explosions_t::no);
         } else {
-            table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+            destroy_location(false);
         }
         return;
     }
@@ -79,32 +84,33 @@ void apply_hit(
 
     case hit_table_entry_t::hit_propulsion:
         unit.propulsion -= 1.0f / space_required_per_equipment_point;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        cu.acceleration_ = combat_acceleration(cu);
+        destroy_location(true);
         break;
     case hit_table_entry_t::hit_weapons:
         unit.weapons -= 1.0f / space_required_per_equipment_point;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(true);
         break;
     case hit_table_entry_t::hit_shields:
         unit.shields -= 1.0f / space_required_per_equipment_point;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(true);
         break;
     case hit_table_entry_t::hit_detection:
         unit.detection -= 1.0f / space_required_per_equipment_point;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(true);
         break;
     case hit_table_entry_t::hit_stealth:
         unit.stealth -= 1.0f / space_required_per_equipment_point;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(true);
         break;
 
     case hit_table_entry_t::hit_water:
         unit.water -= 1.0f;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(false);
         break;
     case hit_table_entry_t::hit_supplies:
         unit.supplies -= 1.0f;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(false);
         break;
 
     case hit_table_entry_t::hit_fuel:
@@ -116,7 +122,7 @@ void apply_hit(
             unit.rounds -= unit.rounds / design.rounds;
         if (entry == hit_table_entry_t::hit_missiles)
             unit.missiles -= unit.missiles / design.missiles;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(false);
 
         int explosion_lo = hit_location;
         for (int i = explosion_lo; 0 <= i && explosion_lo <= i; --i) {
@@ -162,7 +168,7 @@ void apply_hit(
         // fighters cannot land.  Need to have a story for fighter attacks and
         // pd defenses against them too.
         unit.fighters -= 1;
-        table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        destroy_location(true);
         break;
 
     case hit_table_entry_t::hit_cargo: /* unreachable */ break;
@@ -183,6 +189,15 @@ void apply_hit(
             }
         }
         break;
+
+    case hit_table_entry_t::hit_crew_space: {
+        float const assigned_crew = 1.0f / space_required_per_1k_crew;
+        int const offduty_assigned_crew =
+            assigned_crew * (1 - crew_onduty_factor) + 0.5f;
+        unit.crew -= offduty_assigned_crew;
+        destroy_location(false);
+        break;
+    }
     }
 }
 
@@ -244,7 +259,12 @@ bool unit_disabled(combat_unit const & cu)
 {
     if (cu.disabled_)
         return true;
-    // TODO
+    if (cu.unit_->fuel < 0.0000001f || cu.unit_->propulsion < 1.0f)
+        return true;
+    if (cu.unit_->crew / float(cu.design_->crew) <
+        crew_onduty_factor * minimum_viable_crew_factor) {
+        return true;
+    }
     return false;
 }
 
@@ -291,6 +311,7 @@ void attack(
     }
     if (missile_attack && next_roll(rolls, roll_index) <
                               missile_hit_probability(attacker, defender)) {
+        // TODO: Apply all missile damage to one location.
         damage.push_back(
             {&defender, attack_strength / 2.0f, defender_is_from_side_2});
     }
@@ -361,6 +382,7 @@ void battle(
     }
 }
 
+// TODO: Take unit and fleet XP into account.
 void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,

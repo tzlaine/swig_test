@@ -195,6 +195,7 @@ struct std::formatter<unit_design_t> {
         out = std::format_to(out, " missiles={}", x.missiles);
         out = std::format_to(out, " fighters={}", x.fighters);
         out = std::format_to(out, " cargo={}", x.cargo);
+        out = std::format_to(out, " crew={}", x.crew);
         out = std::format_to(out, " propulsion_space={}", x.propulsion_space);
         out = std::format_to(out, " weapons_space={}", x.weapons_space);
         out = std::format_to(out, " shields_space={}", x.shields_space);

@@ -79,35 +79,36 @@ message unit_design_t
     int32 missiles = 13;    // storage units, not individual salvos
     int32 fighters = 14;    // each point is a fighter bay with 1 fighter factor
     int32 cargo = 15;
+    int32 crew = 16;
 
     // hull space occupied by each; will be >= than ideal; ideal is 10 per level
-    int32 propulsion_space = 16;
-    int32 weapons_space = 17;
-    int32 shields_space = 18;
-    int32 detection_space = 19;
-    int32 stealth_space = 20;
+    int32 propulsion_space = 17;
+    int32 weapons_space = 18;
+    int32 shields_space = 19;
+    int32 detection_space = 20;
+    int32 stealth_space = 21;
 
     // actual level of each equipment in the design; will be <= than ideal; ideal is the level above
-    float effective_propulsion = 21;
-    float effective_weapons = 22;
-    float effective_shields = 23;
-    float effective_detection = 24;
-    float effective_stealth = 25;
+    float effective_propulsion = 22;
+    float effective_weapons = 23;
+    float effective_shields = 24;
+    float effective_detection = 25;
+    float effective_stealth = 26;
 
     // each out of 100
-    int32 propulsion_reliability = 26;
-    int32 weapons_reliability = 27;
-    int32 shields_reliability = 28;
-    int32 detection_reliability = 29;
-    int32 stealth_reliability = 30;
+    int32 propulsion_reliability = 27;
+    int32 weapons_reliability = 28;
+    int32 shields_reliability = 29;
+    int32 detection_reliability = 30;
+    int32 stealth_reliability = 31;
 
-    int32 known_propulsion_failures = 31;
-    int32 known_weapons_failures = 32;
-    int32 known_shields_failures = 33;
-    int32 known_detection_failures = 34;
-    int32 known_stealth_failures = 35;
+    int32 known_propulsion_failures = 32;
+    int32 known_weapons_failures = 33;
+    int32 known_shields_failures = 34;
+    int32 known_detection_failures = 35;
+    int32 known_stealth_failures = 36;
 
-    float design_months_remaining = 36;
+    float design_months_remaining = 37;
 
     bytes hit_table = 100;
 

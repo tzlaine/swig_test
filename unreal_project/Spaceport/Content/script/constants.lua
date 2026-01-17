@@ -76,3 +76,6 @@ missile_hit_acceleration_factor = 0.25
 screen_combat_selection_factor = 2
 capital_combat_selection_factor = 1
 keep_previous_combat_target_probability = 0.5
+crew_required_per_hull_point = 5
+crew_required_per_equipment_point = 100
+space_required_per_1k_crew = 3
