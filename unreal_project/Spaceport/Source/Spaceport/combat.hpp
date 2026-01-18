@@ -24,15 +24,19 @@ struct combat_unit
     bool disabled_ = false;
 };
 
+inline bool valid_target(combat_unit const & cu)
+{
+    return !cu.destroyed_ && !cu.disabled_;
+}
+
 struct unit_damage
 {
     combat_unit * combat_unit_ = nullptr;
     float damage_ = 0.0f;
     bool missile_damage_ = false;
-    bool unit_is_from_side_2_ = false;
 };
 
-double next_roll(std::vector<double> const & rolls, int & i)
+inline double next_roll(std::vector<double> const & rolls, int & i)
 {
     check(i < (int)rolls.size());
     ++i;
@@ -51,6 +55,27 @@ float missile_hit_probability(
     combat_unit const & attacker, combat_unit const & defender);
 
 float combat_acceleration(combat_unit const & cu);
+
+// Evaluates elements (excluding begin(r) + pos), returning the one at
+// position I for which pred(*(begin(r) + I)) is true, such that abs(pos - I)
+// is minimized.  For N = abs(pos - i), returns i + N if pred(*(begin(r) + pos
+// + N)) and pred(*(begin(r) + pos - N)) are both true.  Returns end(r) if no
+// element meets the predicate.
+template<std::ranges::random_access_range R, typename Pred>
+std::ranges::borrowed_iterator_t<R>
+find_nearest_if(R && r, int pos, Pred && pred)
+{
+    auto const size = std::ranges::size(r);
+    check(0 <= pos && pos < size);
+    auto const first = std::ranges::begin(r);
+    for (int i = 1; i < size; ++i) {
+        if (pos + i < size && pred(r[pos + i]))
+            return first + (pos + i);
+        if (0 <= pos - i && pred(r[pos - i]))
+            return first + (pos - i);
+    }
+    return std::ranges::end(r);
+}
 
 // TODO: Add a pre-generated array of unit doubles, and use these instead of
 // doing each roll individually.  This will make the code race free, and
@@ -80,8 +105,7 @@ void attack(
     combat_unit & defender,
     std::vector<double> & rolls,
     int roll_index,
-    std::vector<unit_damage> & damage,
-    bool defender_is_from_side_2);
+    std::vector<unit_damage> & damage);
 
 struct combat_units
 {
@@ -107,16 +131,16 @@ struct combat_units
                 unit_t & unit = fleet.units[i];
                 unit_design_t const & design =
                     nation.unit_designs[unit.id.object_id];
-                combat_unit cu{
+                combat_units_.push_back({
                     .unit_ = &unit,
                     .design_ = &design,
                     .fleet_ = &fleet,
                     .nation_ = &nation,
-                    .fleet_unit_index_ = i};
-                combat_units_.push_back(cu);
-                float const acceleration =
-                    combat_acceleration(combat_units_.back());
-                combat_units_.back().acceleration_ = acceleration;
+                    .fleet_unit_index_ = i});
+                combat_unit & just_added = combat_units_.back();
+                float const acceleration = combat_acceleration(just_added);
+                just_added.acceleration_ = acceleration;
+                just_added.disabled_ = unit_disabled(just_added);
                 ++n;
                 mean_acceleration += acceleration;
             }
@@ -173,16 +197,15 @@ combat_unit & pick_target(
     int & roll_index);
 
 void battle_round(
-    std::vector<fleet_t *> const & fleets_1,
-    std::vector<fleet_t *> const & fleets_2,
+    combat_units & side_1,
+    combat_units & side_2,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage);
 
 void battle(
-    game_state_t const & gs,
-    std::vector<fleet_t *> const & fleets_1,
-    std::vector<fleet_t *> const & fleets_2,
+    combat_units & side_1,
+    combat_units & side_2,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage);

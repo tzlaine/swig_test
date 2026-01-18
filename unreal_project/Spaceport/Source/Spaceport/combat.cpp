@@ -173,22 +173,14 @@ void apply_hit(
 
     case hit_table_entry_t::hit_cargo: /* unreachable */ break;
 
-    case hit_table_entry_t::hit_destroyed:
-        for (int i = 0; i < 1 << 20; ++i) {
-            if (hit_location + i < table.size() &&
-                hit_table_entry_t(table[hit_location + i]) !=
-                    hit_table_entry_t::hit_destroyed) {
-                apply_hit(cu, hit_location + i, ignore_explosions);
-                break;
-            } else if (
-                0 < hit_location - i &&
-                hit_table_entry_t(table[hit_location - i]) !=
-                    hit_table_entry_t::hit_destroyed) {
-                apply_hit(cu, hit_location - i, ignore_explosions);
-                break;
-            }
-        }
+    case hit_table_entry_t::hit_destroyed: {
+        auto it = find_nearest_if(table, hit_location, [](auto entry) {
+            return hit_table_entry_t(entry) != hit_table_entry_t::hit_destroyed;
+        });
+        if (it != table.end())
+            apply_hit(cu, it - table.begin(), ignore_explosions);
         break;
+    }
 
     case hit_table_entry_t::hit_crew_space: {
         float const assigned_crew = 1.0f / space_required_per_1k_crew;
@@ -286,8 +278,7 @@ void attack(
     combat_unit & defender,
     std::vector<double> & rolls,
     int roll_index,
-    std::vector<unit_damage> & damage,
-    bool defender_is_from_side_2)
+    std::vector<unit_damage> & damage)
 {
     bool const pd_attack = attacker.unit_->rounds;
     if (pd_attack)
@@ -311,16 +302,11 @@ void attack(
     float const attack_strength = attacker.unit_->weapons;
     if (pd_attack &&
         next_roll(rolls, roll_index) < pd_hit_probability(attacker, defender)) {
-        damage.push_back(
-            {&defender,
-             attack_strength / 2.0f,
-             false,
-             defender_is_from_side_2});
+        damage.push_back({&defender, attack_strength / 2.0f, false});
     }
     if (missile_attack && next_roll(rolls, roll_index) <
                               missile_hit_probability(attacker, defender)) {
-        damage.push_back(
-            {&defender, attack_strength / 2.0f, true, defender_is_from_side_2});
+        damage.push_back({&defender, attack_strength / 2.0f, true});
     }
 }
 
@@ -330,16 +316,29 @@ combat_unit & pick_target(
     std::vector<double> & rolls,
     int & roll_index)
 {
-    if (attacker.prev_target_ && !attacker.prev_target_->destroyed_ &&
-        !attacker.prev_target_->disabled_) {
+    check(!side.target_table_.empty());
+
+    if (attacker.prev_target_ && valid_target(*attacker.prev_target_)) {
         if (next_roll(rolls, roll_index) <
             keep_previous_combat_target_probability) {
             return *attacker.prev_target_;
         }
     }
+
     int const roll = next_roll(rolls, roll_index) * side.target_table_.size();
     int const i = roll == side.target_table_.size() ? roll - 1 : roll;
-    return side.combat_units_[side.target_table_[i]];
+    combat_unit & target = side.combat_units_[side.target_table_[i]];
+    if (!valid_target(target)) {
+        auto const it = find_nearest_if(side.combat_units_, i, &valid_target);
+        // If you're seeing this check fail, it means that the combat should
+        // already have been ended, since 'side' contains no valid targets.
+        check(it != side.combat_units_.end());
+        if (it == side.combat_units_.end())
+            return target;
+        return *it;
+    }
+
+    return target;
 }
 
 void battle_round(
@@ -355,41 +354,51 @@ void battle_round(
             continue;
         auto & defender = pick_target(attacker, side_2, rolls, roll_index);
         attacker.prev_target_ = &defender;
-        attack(attacker, defender, rolls, roll_index, damage, true);
+        attack(attacker, defender, rolls, roll_index, damage);
     }
     for (auto & attacker : side_2.combat_units_) {
         if (attacker.destroyed_ || attacker.disabled_)
             continue;
         auto & defender = pick_target(attacker, side_1, rolls, roll_index);
         attacker.prev_target_ = &defender;
-        attack(attacker, defender, rolls, roll_index, damage, false);
+        attack(attacker, defender, rolls, roll_index, damage);
     }
     for (auto const & d : damage) {
         damage_unit(d, rolls, roll_index);
-        if (unit_disabled(*d.combat_unit_))
-            (d.unit_is_from_side_2_ ? side_2 : side_1).disable(*d.combat_unit_);
-        if (unit_destroyed(*d.combat_unit_))
-            (d.unit_is_from_side_2_ ? side_2 : side_1).destroy(*d.combat_unit_);
+    }
+    for (auto & cu : side_1.combat_units_) {
+        if (unit_disabled(cu))
+            side_1.disable(cu);
+        if (unit_destroyed(cu))
+            side_1.destroy(cu);
     }
 }
 
 void battle(
-    game_state_t const & gs,
-    std::vector<fleet_t *> const & fleets_1,
-    std::vector<fleet_t *> const & fleets_2,
+    combat_units & side_1,
+    combat_units & side_2,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage)
 {
-    combat_units side_1(gs, fleets_1);
-    combat_units side_2(gs, fleets_2);
     bool keep_fighting = false;
     while (keep_fighting) {
         battle_round(side_1, side_2, rolls, roll_index, damage);
     }
 }
 
+// TODO: Attacks should cause weapons and shield failure rolls, based on
+// reliability ratings for those systems.
+
+// TODO: Propulsion reliability rolls during combat too.
+
+// TODO: Propulsion and shield reliability rolls should happen when moving
+// through subspace.
+
 // TODO: Take unit and fleet XP into account.
+
+// TODO: Take unit org into account.
+
 void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,
@@ -402,7 +411,8 @@ void encounter(
     // etc.
     bool fight = false; // TODO
     if (fight) {
-        std::vector<unit_damage> damage;
-        battle(gs, fleets_1, fleets_2, rolls, roll_index, damage);
+        combat_units side_1(gs, fleets_1);
+        combat_units side_2(gs, fleets_2);
+        battle(side_1, side_2, rolls, roll_index, damage);
     }
 }
