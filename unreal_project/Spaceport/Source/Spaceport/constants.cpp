@@ -134,6 +134,10 @@ const double min_unit_design_effectiveness_factor =
     lua()["min_unit_design_effectiveness_factor"];
 const int space_required_per_equipment_point =
     lua().script("return to_integer(space_required_per_equipment_point)");
+const int pd_volleys_per_unit_storage =
+    lua().script("return to_integer(pd_volleys_per_unit_storage)");
+const int missile_volleys_per_unit_storage =
+    lua().script("return to_integer(missile_volleys_per_unit_storage)");
 
 // combat
 const int pd_ammo_explosion_radius =

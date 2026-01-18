@@ -122,6 +122,8 @@ extern const float unit_design_monthly_cost_factor_per_novelty_point;
 extern const double max_unit_design_space_factor;
 extern const double min_unit_design_effectiveness_factor;
 extern const int space_required_per_equipment_point;
+extern const int pd_volleys_per_unit_storage;
+extern const int missile_volleys_per_unit_storage;
 
 // combat
 extern const int pd_ammo_explosion_radius;

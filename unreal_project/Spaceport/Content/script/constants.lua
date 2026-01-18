@@ -63,6 +63,8 @@ unit_design_monthly_cost_factor_per_novelty_point = 0.25
 max_unit_design_space_factor = 1.2
 min_unit_design_effectiveness_factor = 0.8
 space_required_per_equipment_point = 10
+pd_volleys_per_unit_storage = 10
+missile_volleys_per_unit_storage = 10
 
 -- combat
 pd_ammo_explosion_radius = 1
