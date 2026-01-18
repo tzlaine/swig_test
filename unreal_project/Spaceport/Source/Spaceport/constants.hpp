@@ -126,8 +126,8 @@ extern const int pd_volleys_per_unit_storage;
 extern const int missile_volleys_per_unit_storage;
 
 // combat
-extern const int pd_ammo_explosion_radius;
-extern const int missile_ammo_explosion_radius;
+extern const int fuel_explosion_radius;
+extern const int ammo_explosion_radius;
 extern const int base_pd_attack_factor;
 extern const int pd_hit_weapons_factor;
 extern const int pd_hit_acceleration_factor;

@@ -160,10 +160,10 @@ namespace detail {
         // Except in the worst designs, put empty spaces before fuel and ammo
         // to prevent chain reactions.
         if (design_grade != design_grade_t::f) {
-            if (pd_ammo_explosion_radius <= num_spacers())
-                insert_spacers(first_fuel(), pd_ammo_explosion_radius);
-            if (missile_ammo_explosion_radius <= num_spacers())
-                insert_spacers(first_ammo(), missile_ammo_explosion_radius);
+            if (fuel_explosion_radius <= num_spacers())
+                insert_spacers(first_fuel(), fuel_explosion_radius);
+            if (ammo_explosion_radius <= num_spacers())
+                insert_spacers(first_ammo(), ammo_explosion_radius);
         }
 
         // Move all remaining cargo into this block, so that it does not get

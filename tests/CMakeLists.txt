@@ -41,6 +41,7 @@ add_executable_and_test(
 add_executable_and_test(effects_tests)
 add_executable_and_test(name_generation_tests)
 add_executable_and_test(unit_design_tests)
+add_executable_and_test(combat_tests)
 
 if (false)
 add_executable_and_test(graph_tests)

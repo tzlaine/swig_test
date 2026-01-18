@@ -49,20 +49,20 @@ function resupply_unit(unit, design, settlement)
    unit.supplies = unit.supplies + transferred
    settlement.supplies.stockpile = settlement.supplies.stockpile - transferred
 
-   transferred = math.min(
+   transferred = to_integer(math.min(
       design.rounds * pd_volleys_per_unit_storage - unit.rounds,
-      settlement.rounds.stockpile)
+      settlement.rounds.stockpile))
    unit.rounds = unit.rounds + transferred
    settlement.rounds.stockpile = settlement.rounds.stockpile - transferred
 
-   transferred = math.min(
+   transferred = to_integer(math.min(
       design.missiles * missile_volleys_per_unit_storage - unit.missiles,
-      settlement.missiles.stockpile)
+      settlement.missiles.stockpile))
    unit.missiles = unit.missiles + transferred
    settlement.missiles.stockpile = settlement.missiles.stockpile - transferred
 
-   transferred =
-      math.min(design.fighters - unit.fighters, settlement.fighters.stockpile)
+   transferred = to_integer(math.min(
+      design.fighters - unit.fighters, settlement.fighters.stockpile))
    unit.fighters = unit.fighters + transferred
    settlement.fighters.stockpile = settlement.fighters.stockpile - transferred
 
@@ -75,7 +75,7 @@ function resupply_unit(unit, design, settlement)
       fresh_recruits * -100                -- randos that signed up today
    unit.crew = unit.crew + transferred + fresh_recruits
    settlement.crewpower.stockpile = settlement.crewpower.stockpile - transferred
-   unit.combat_experience = weighted_xp_total / unit.crew
+   unit.combat_experience = to_integer(weighted_xp_total / unit.crew)
 end
 
 function repair_cost(unit, design)

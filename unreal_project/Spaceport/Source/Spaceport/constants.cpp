@@ -140,22 +140,22 @@ const int missile_volleys_per_unit_storage =
     lua().script("return to_integer(missile_volleys_per_unit_storage)");
 
 // combat
-const int pd_ammo_explosion_radius =
-    lua().script("return to_integer(pd_ammo_explosion_radius)");
-const int missile_ammo_explosion_radius =
-    lua().script("return to_integer(missile_ammo_explosion_radius)");
-const int base_pd_attack_factors =
-    lua().script("return to_integer(base_pd_attack_factors)");
-const int pd_hit_weapons_factors =
-    lua().script("return to_integer(pd_hit_weapons_factors)");
-const int pd_hit_acceleration_factors =
-    lua().script("return to_integer(pd_hit_acceleration_factors)");
-const int base_missile_attack_factors =
-    lua().script("return to_integer(base_missile_attack_factors)");
-const int missile_hit_weapons_factors =
-    lua().script("return to_integer(missile_hit_weapons_factors)");
-const int missile_hit_acceleration_factors =
-    lua().script("return to_integer(missile_hit_acceleration_factors)");
+const int fuel_explosion_radius =
+    lua().script("return to_integer(fuel_explosion_radius)");
+const int ammo_explosion_radius =
+    lua().script("return to_integer(ammo_explosion_radius)");
+const int base_pd_attack_factor =
+    lua().script("return to_integer(base_pd_attack_factor)");
+const int pd_hit_weapons_factor =
+    lua().script("return to_integer(pd_hit_weapons_factor)");
+const int pd_hit_acceleration_factor =
+    lua().script("return to_integer(pd_hit_acceleration_factor)");
+const int base_missile_attack_factor =
+    lua().script("return to_integer(base_missile_attack_factor)");
+const int missile_hit_weapons_factor =
+    lua().script("return to_integer(missile_hit_weapons_factor)");
+const int missile_hit_acceleration_factor =
+    lua().script("return to_integer(missile_hit_acceleration_factor)");
 const int screen_combat_selection_factor =
     lua().script("return to_integer(screen_combat_selection_factor)");
 const int capital_combat_selection_factor =

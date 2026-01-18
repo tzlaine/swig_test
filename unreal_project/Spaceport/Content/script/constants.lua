@@ -67,8 +67,8 @@ pd_volleys_per_unit_storage = 10
 missile_volleys_per_unit_storage = 10
 
 -- combat
-pd_ammo_explosion_radius = 1
-missile_ammo_explosion_radius = 2
+fuel_explosion_radius = 1
+ammo_explosion_radius = 2
 base_pd_attack_factor = 0.25
 pd_hit_weapons_factor = 0.25
 pd_hit_acceleration_factor = 0.5

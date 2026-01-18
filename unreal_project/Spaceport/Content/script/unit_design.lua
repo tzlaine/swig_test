@@ -120,11 +120,11 @@ end
 function unit_ideal_cost(design)
    return hull_cost(design.hull) +
       armor_cost(design.armor) +
-      propulsion_cost(design.propulsion * 10) +
-      weapons_cost(design.weapons * 10) +
-      shields_cost(design.shields * 10) +
-      detection_cost(design.detection * 10) +
-      stealth_cost(design.stealth * 10) +
+      propulsion_cost(design.propulsion * space_required_per_equipment_point) +
+      weapons_cost(design.weapons * space_required_per_equipment_point) +
+      shields_cost(design.shields * space_required_per_equipment_point) +
+      detection_cost(design.detection * space_required_per_equipment_point) +
+      stealth_cost(design.stealth * space_required_per_equipment_point) +
       fighters_cost(design.fighters)
 end
 
@@ -136,7 +136,7 @@ function unit_cost(design)
       shields_cost(design.shields_space) +
       detection_cost(design.detection_space) +
       stealth_cost(design.stealth_space) +
-      fighters_cost(design.fighters_space)
+      fighters_cost(design.fighters)
 end
 
 function unit_ideal_mass(design)
@@ -170,8 +170,8 @@ function unit_ideal_max_acceleration(design)
 end
 
 -- value is in Gs
-function unit_max_acceleration(design)
-   return design.effective_propulsion * propulsion_force_per_level / unit_mass(design)
+function unit_max_acceleration(unit, design)
+   return unit.propulsion * propulsion_force_per_level / unit_mass(design)
 end
 
 -- value is in Gs

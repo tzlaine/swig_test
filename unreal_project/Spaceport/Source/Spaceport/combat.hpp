@@ -87,9 +87,9 @@ find_nearest_if(R && r, int pos, Pred && pred)
 enum struct ignore_explosions_t { no, yes };
 
 void apply_hit(
-    combat_unit const & cu,
+    combat_unit & cu,
     int hit_location,
-    ignore_explosions_t ignore_explosions);
+    ignore_explosions_t ignore_explosions = ignore_explosions_t::no);
 
 void load_cargo(
     std::vector<signed char> & cargo, std::vector<signed char> & hit_table);

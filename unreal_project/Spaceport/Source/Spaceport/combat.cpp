@@ -38,7 +38,7 @@ float combat_acceleration(combat_unit const & cu)
     float const max_combat_acceleration =
         call_lua_func("max_combat_acceleration", *cu.nation_);
     float const unit_max_acceleration =
-        call_lua_func("unit_max_acceleration", *cu.design_);
+        call_lua_func("unit_max_acceleration", *cu.unit_, *cu.design_);
     return std::min(unit_max_acceleration, max_combat_acceleration);
 }
 
@@ -56,20 +56,28 @@ void apply_hit(
             unit.crew -= int(crew_required_per_equipment_point);
     };
 
+    auto const is_fuel = [&](int entry) {
+        return entry == (signed char)hit_table_entry_t::hit_fuel ||
+               entry == (signed char)cargo_kind_t::fuel;
+    };
+    auto const is_ammo = [&](int entry) {
+        return entry == (signed char)hit_table_entry_t::hit_rounds ||
+               entry == (signed char)hit_table_entry_t::hit_missiles ||
+               entry == (signed char)cargo_kind_t::rounds ||
+               entry == (signed char)cargo_kind_t::missiles;
+    };
+
     if (table[hit_location] < 0) {
         signed char const cargo_kind[1] = {table[hit_location]};
         auto end_r = std::ranges::find_end(unit.cargo, cargo_kind);
         check(!end_r.empty());
         unit.cargo.erase(end_r.begin());
-        if (cargo_kind[0] == (signed char)cargo_kind_t::fuel) {
+        if (is_fuel(table[hit_location])) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_fuel;
-            apply_hit(cu, hit_location, ignore_explosions_t::no);
-        } else if (cargo_kind[0] == (signed char)cargo_kind_t::rounds) {
+            apply_hit(cu, hit_location, ignore_explosions);
+        } else if (is_ammo(table[hit_location])) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_rounds;
-            apply_hit(cu, hit_location, ignore_explosions_t::no);
-        } else if (cargo_kind[0] == (signed char)cargo_kind_t::missiles) {
-            table[hit_location] = (signed char)hit_table_entry_t::hit_missiles;
-            apply_hit(cu, hit_location, ignore_explosions_t::no);
+            apply_hit(cu, hit_location, ignore_explosions);
         } else {
             destroy_location(false);
         }
@@ -105,56 +113,63 @@ void apply_hit(
         break;
 
     case hit_table_entry_t::hit_water:
-        unit.water -= 1.0f;
+        unit.water -= unit.water / design.water;
         destroy_location(false);
         break;
     case hit_table_entry_t::hit_supplies:
-        unit.supplies -= 1.0f;
+        unit.supplies -= unit.supplies / design.supplies;
         destroy_location(false);
         break;
 
     case hit_table_entry_t::hit_fuel:
     case hit_table_entry_t::hit_rounds:
     case hit_table_entry_t::hit_missiles: {
-        if (entry == hit_table_entry_t::hit_fuel)
-            unit.fuel -= unit.fuel / design.fuel;
-        if (entry == hit_table_entry_t::hit_rounds)
-            unit.rounds -= unit.rounds / design.rounds;
-        if (entry == hit_table_entry_t::hit_missiles)
-            unit.missiles -= unit.missiles / design.missiles;
-        destroy_location(false);
+        if (ignore_explosions == ignore_explosions_t::yes) {
+            if (entry == hit_table_entry_t::hit_fuel)
+                unit.fuel -= unit.fuel / design.fuel;
+            if (entry == hit_table_entry_t::hit_rounds)
+                unit.rounds -= unit.rounds / design.rounds;
+            if (entry == hit_table_entry_t::hit_missiles)
+                unit.missiles -= unit.missiles / design.missiles;
+            destroy_location(false);
+            break;
+        }
 
         int explosion_lo = hit_location;
-        for (int i = explosion_lo; 0 <= i && explosion_lo <= i; --i) {
-            if (table[i] == (signed char)hit_table_entry_t::hit_fuel) {
+        int explosion_hi = hit_location + 1;
+
+        for (int i = hit_location; 0 <= i && explosion_lo <= i; --i) {
+            if (is_fuel(table[i])) {
                 explosion_lo =
-                    std::min(explosion_lo, i - pd_ammo_explosion_radius);
-            } else if (
-                table[explosion_lo] ==
-                    (signed char)hit_table_entry_t::hit_rounds ||
-                table[explosion_lo] ==
-                    (signed char)hit_table_entry_t::hit_missiles) {
+                    std::min(explosion_lo, i - fuel_explosion_radius);
+                explosion_hi =
+                    std::max(explosion_hi, i + 1 + fuel_explosion_radius);
+            } else if (is_ammo(table[i])) {
                 explosion_lo =
-                    std::min(explosion_lo, i - missile_ammo_explosion_radius);
+                    std::min(explosion_lo, i - ammo_explosion_radius);
+                explosion_hi =
+                    std::max(explosion_hi, i + 1 + ammo_explosion_radius);
             }
         }
 
-        int explosion_hi = hit_location + 1;
-        for (int i = explosion_hi - 1, last = (int)table.size();
+        for (int i = hit_location, last = (int)table.size();
              i < last && i < explosion_hi;
              ++i) {
-            if (table[i] == (signed char)hit_table_entry_t::hit_fuel) {
+            if (is_fuel(table[i])) {
+                explosion_lo =
+                    std::min(explosion_lo, i - fuel_explosion_radius);
                 explosion_hi =
-                    std::max(explosion_hi, i + pd_ammo_explosion_radius);
-            } else if (
-                table[explosion_hi] ==
-                    (signed char)hit_table_entry_t::hit_rounds ||
-                table[explosion_hi] ==
-                    (signed char)hit_table_entry_t::hit_missiles) {
+                    std::max(explosion_hi, i + 1 + fuel_explosion_radius);
+            } else if (is_ammo(table[i])) {
+                explosion_lo =
+                    std::min(explosion_lo, i - ammo_explosion_radius);
                 explosion_hi =
-                    std::max(explosion_hi, i + missile_ammo_explosion_radius);
+                    std::max(explosion_hi, i + 1 + ammo_explosion_radius);
             }
         }
+
+        explosion_lo = std::max(0, explosion_lo);
+        explosion_hi = std::min(explosion_hi, (int)table.size());
 
         for (int i = explosion_lo; i < explosion_hi; ++i) {
             apply_hit(cu, i, ignore_explosions_t::yes);
@@ -171,7 +186,7 @@ void apply_hit(
         destroy_location(true);
         break;
 
-    case hit_table_entry_t::hit_cargo: /* unreachable */ break;
+    case hit_table_entry_t::hit_cargo: destroy_location(false); break;
 
     case hit_table_entry_t::hit_destroyed: {
         auto it = find_nearest_if(table, hit_location, [](auto entry) {
@@ -183,7 +198,7 @@ void apply_hit(
     }
 
     case hit_table_entry_t::hit_crew_space: {
-        float const assigned_crew = 1.0f / space_required_per_1k_crew;
+        float const assigned_crew = 1000.0f / space_required_per_1k_crew;
         int const offduty_assigned_crew =
             assigned_crew * (1 - crew_onduty_factor) + 0.5f;
         unit.crew -= offduty_assigned_crew;
@@ -248,7 +263,7 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
     for (int i = 0, last = int(damage + 0.5f); i < last; ++i) {
         if (!ud.missile_damage_)
             hit_location = roll_location();
-        apply_hit(*ud.combat_unit_, hit_location, ignore_explosions_t::no);
+        apply_hit(*ud.combat_unit_, hit_location);
     }
 }
 
