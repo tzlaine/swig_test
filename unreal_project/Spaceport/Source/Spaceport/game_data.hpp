@@ -164,7 +164,7 @@ struct unit_t
     int fighters = -1;
     std::vector<signed char> cargo;
     int organization = -1;
-    int experience = -1;
+    int combat_experience = -1;
     int crew = -1;
     std::vector<signed char> hit_table;
     bool operator==(unit_t const &) const = default;
@@ -188,7 +188,7 @@ struct fleet_t
     mission_t mission = mission_t::invalid_mission;
     std::vector<unit_t> units = {};
     fleet_position_t position = {};
-    int fleet_experience = -1;
+    int fleet_combat_experience = -1;
     bool operator==(fleet_t const &) const = default;
 };
 
@@ -200,7 +200,7 @@ struct fleets_t
 
 struct resource_t
 {
-    int availability = -1;
+    int available = -1;
     int max_availability = -1;
     float stockpile = -1.0f;
     float max_stockpile = -1.0f;
@@ -220,6 +220,12 @@ struct settlement_t
     resource_t energy = {};
     resource_t metal = {};
     resource_t fuel_minerals = {};
+    resource_t fuel = {};
+    resource_t supplies = {};
+    resource_t crewpower = {};
+    resource_t rounds = {};
+    resource_t missiles = {};
+    resource_t fighters = {};
     int shipyard_pops = -1;
     int infrastructure_upgrade_pops = -1;
     int infrastructure_maintenance_pops = -1;

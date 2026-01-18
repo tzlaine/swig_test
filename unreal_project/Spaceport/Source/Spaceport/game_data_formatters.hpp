@@ -263,7 +263,7 @@ struct std::formatter<unit_t> {
         };
         out = std::format_to(out, " }}");
         out = std::format_to(out, " organization={}", x.organization);
-        out = std::format_to(out, " experience={}", x.experience);
+        out = std::format_to(out, " combat_experience={}", x.combat_experience);
         out = std::format_to(out, " crew={}", x.crew);
         out = std::format_to(out, " hit_table={{");
         for (auto c : x.hit_table) {
@@ -323,7 +323,7 @@ struct std::formatter<fleet_t> {
         };
         out = std::format_to(out, " ]");
         out = std::format_to(out, " position={}", x.position);
-        out = std::format_to(out, " fleet_experience={}", x.fleet_experience);
+        out = std::format_to(out, " fleet_combat_experience={}", x.fleet_combat_experience);
 
         return std::format_to(out, " )");
     }
@@ -367,7 +367,7 @@ struct std::formatter<resource_t> {
         auto out = ctx.out();
         out = std::format_to(out, "resource_t(");
 
-        out = std::format_to(out, " availability={}", x.availability);
+        out = std::format_to(out, " available={}", x.available);
         out = std::format_to(out, " max_availability={}", x.max_availability);
         out = std::format_to(out, " stockpile={}", x.stockpile);
         out = std::format_to(out, " max_stockpile={}", x.max_stockpile);
@@ -401,6 +401,12 @@ struct std::formatter<settlement_t> {
         out = std::format_to(out, " energy={}", x.energy);
         out = std::format_to(out, " metal={}", x.metal);
         out = std::format_to(out, " fuel_minerals={}", x.fuel_minerals);
+        out = std::format_to(out, " fuel={}", x.fuel);
+        out = std::format_to(out, " supplies={}", x.supplies);
+        out = std::format_to(out, " crewpower={}", x.crewpower);
+        out = std::format_to(out, " rounds={}", x.rounds);
+        out = std::format_to(out, " missiles={}", x.missiles);
+        out = std::format_to(out, " fighters={}", x.fighters);
         out = std::format_to(out, " shipyard_pops={}", x.shipyard_pops);
         out = std::format_to(out, " infrastructure_upgrade_pops={}", x.infrastructure_upgrade_pops);
         out = std::format_to(out, " infrastructure_maintenance_pops={}", x.infrastructure_maintenance_pops);

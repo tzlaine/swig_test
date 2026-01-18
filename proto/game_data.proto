@@ -134,7 +134,7 @@ message unit_t
     int32 fighters = 14;
     bytes cargo = 15;        // must be kept in sync with hit_table
     int32 organization = 16;
-    int32 experience = 17;
+    int32 combat_experience = 17;
     int32 crew = 18;
     bytes hit_table = 19;    // populated during combat as hits are resolved; only kept outside of combat if there is damage
 }
@@ -159,7 +159,7 @@ message fleet_t
     pb_message.mission_t mission = 2;
     repeated unit_t units = 3;
     fleet_position_t position = 4;
-    int32 fleet_experience = 5;
+    int32 fleet_combat_experience = 5;
 }
 
 message fleets_t
@@ -169,7 +169,7 @@ message fleets_t
 
 message resource_t
 {
-    int32 availability = 1;      // this settlement
+    int32 available = 1;         // this settlement
     int32 max_availability = 2;  // the whole planet
     float stockpile = 3;
     float max_stockpile = 4;
@@ -183,37 +183,46 @@ message settlement_t
 
     int32 original_owner = 3;
 
-    // These two are floats because they grow over time; the effeective
+    // These two are floats because they grow over time; the effective
     // property is the truncated integral value though.
     float population = 4;
     float infrastructure = 5;
 
+    // proper resources
     resource_t water = 6;
     resource_t food = 7;
     resource_t energy = 8;
     resource_t metal = 9;
     resource_t fuel_minerals = 10;
 
-    int32 shipyard_pops = 11;
-    int32 infrastructure_upgrade_pops = 12;
-    int32 infrastructure_maintenance_pops = 13;
-    int32 infrastructure_repair_pops = 14;
+    // manufactored/trained (*availability is -1)
+    resource_t fuel = 11;
+    resource_t supplies = 12;
+    resource_t crewpower = 13;
+    resource_t rounds = 14;
+    resource_t missiles = 15;
+    resource_t fighters = 16;
 
-    int32 water_pops = 15;
-    int32 food_pops = 16;
-    int32 energy_pops = 17;
-    int32 metal_pops = 18;
-    int32 fuel_minerals_pops = 19;
+    int32 shipyard_pops = 17;
+    int32 infrastructure_upgrade_pops = 18;
+    int32 infrastructure_maintenance_pops = 19;
+    int32 infrastructure_repair_pops = 20;
 
-    int32 fuel_refining_pops = 20;
-    int32 supply_manufaturing_pops = 21;
-    int32 round_manufaturing_pops = 22;
-    int32 missile_manufaturing_pops = 23;
-    int32 fighter_manufaturing_pops = 24;
+    int32 water_pops = 21;
+    int32 food_pops = 22;
+    int32 energy_pops = 23;
+    int32 metal_pops = 24;
+    int32 fuel_minerals_pops = 25;
+
+    int32 fuel_refining_pops = 26;
+    int32 supply_manufaturing_pops = 27;
+    int32 round_manufaturing_pops = 28;
+    int32 missile_manufaturing_pops = 29;
+    int32 fighter_manufaturing_pops = 30;
 
     // TODO: language, culture, religion
 
-    repeated nation_and_object_id_t garrison = 25;
+    repeated nation_and_object_id_t garrison = 31;
     // TODO: ground-to-space defenses
 }
 
