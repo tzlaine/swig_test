@@ -1,7 +1,5 @@
 -- TODO: To constants?
 propulsion_force_per_level = 100
-pd_volleys_per_unit_storage = 10
-missile_volleys_per_unit_storage = 10
 mass_moved_through_subspace_per_unit_fuel = 100
 
 function unit_equipment_points(design)
@@ -118,6 +116,7 @@ function fighters_cost(points)
    return retval
 end
 
+-- TODO: Add crew to cost_t; return it as part of these costs.
 function unit_ideal_cost(design)
    return hull_cost(design.hull) +
       armor_cost(design.armor) +
@@ -138,26 +137,6 @@ function unit_cost(design)
       detection_cost(design.detection_space) +
       stealth_cost(design.stealth_space) +
       fighters_cost(design.fighters_space)
-end
-
-function repair_cost(unit, design)
-   local retval = hull_cost(design.hull - unit.hull)
-   for i = 1, #unit.hit_table do
-      if unit.hit_table[i] == hit_destroyed then
-         if design[i] == hit_propulsion then
-            retval = retval + propulsion_cost(1)
-         elseif design[i] == hit_weapons then
-            retval = retval + weapons_cost(1)
-         elseif design[i] == hit_shields then
-            retval = retval + shields_cost(1)
-         elseif design[i] == hit_detection then
-            retval = retval + detection_cost(1)
-         elseif design[i] == hit_stealth then
-            retval = retval + stealth_cost(1)
-         end
-      end
-   end
-   return retval
 end
 
 function unit_ideal_mass(design)

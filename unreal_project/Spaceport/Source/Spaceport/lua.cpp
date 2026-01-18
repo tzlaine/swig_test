@@ -169,6 +169,7 @@ default_game_start_params.ai_opponents = to_integer(
     retval.script_file(script_path("generation.lua"));
     retval.script_file(script_path("technology.lua"));
     retval.script_file(script_path("unit_design.lua"));
+    retval.script_file(script_path("unit_operations.lua"));
 
     return retval;
 }
