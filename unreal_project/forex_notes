@@ -407,10 +407,24 @@ Fleets and missions:
   Org eventually recovers; XP does not.  Note that this implies that having
   longer service requirements keeps ship crew XPs up.
 
-* Each fleet has an fleet XP rating [0, 1.0].  Each fleet gets a bonus to each
+* Each fleet has a fleet XP rating [0, 1.0].  Each fleet gets a bonus to each
   ship's effective XP rating equal to fleet_xp * fleet_xp_impact.  This
   represents their ability to work together as a single force.  Replacing
   ships proprtionately affects fleet XP.
+
+* Each crew member has a combat xp rating, and a length of service.  When crew
+  reach the end of their term of service, they are discharged from the
+  service, and their unit's xp gets adjusted accordingly.  End-of-service
+  checks are only done at resupply events, whether at a settlement or at a
+  transport ship.  Settlement policies should dictate the term of service.  At
+  war, a stop-loss order can be issued, and all service lengths are extended
+  until the end of the war.  This should negatively affect PP production for
+  that settlement, modified by war support.  Lengthening the term of service,
+  or using conscription should also have similar negative effects.
+
+* Crews of disbanded units are placed in the ready reserve for the settlement
+  where they are disbanded.  They are the first to be used to replace existing
+  crews, and/or crew newly constructed units.
 
 * Fleets have an engagement posture setting, [0, 100].  It ranges from run
   away no matter what (0), to fight no matter what (100).  The settings in
@@ -442,7 +456,7 @@ Fleets and missions:
   crew XP, but dramatically lowering org.  Exercises cost money and use
   consumables like fuel and ordnance.
 
-* Explore: Fly about fro system to system and survey the planets in each, in
+* Explore: Fly about from system to system and survey the planets in each, in
   order to find habitable planets.  Better detection and propulsion make this
   work better.
 
@@ -723,7 +737,9 @@ Other:
   reduce the PP costs for taking actions by doing so.  The tradeoff is that
   this intimidation-based discount will cause future PP generation to
   decrease.  The mere presence of troops/ships is not enough; there must be a
-  positive action taken to get the discount and the reduced PPs aftwerward.
+  positive action taken to get the discount and the reduced PPs afterward.
+
+* PP are generated based on the happiness of the settlement.
 
 * The cost in PPs of making a change should scale with the size of the change.
   If you want to make a certain choice when a decision event comes up, or if
