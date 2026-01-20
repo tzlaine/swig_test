@@ -15,7 +15,7 @@ The map, and colonization:
   multiple things in it.  For instance: the homeworld and the starting outpost
   are in the same system location.
 
-* Each hex has the smae number of systems, and those systems are discovered
+* Each hex has the same number of systems, and those systems are discovered
   when you enter an adjacent hex.  The lore is that these are the only systems
   to which you can navigate using subspace.
 
@@ -383,7 +383,7 @@ Other units:
   based, or, at later tech levels, in the system in which they are based.
 
 * Mobile repair yards exist to repair and upgrade ships in the field, so that
-  they don't have to return to a starbase or the shipyard.  They must be built
+  they don't have to return to a starbase or shipyard.  They must be built
   specially, and towed with a lifter like a mobile base.  They may only be
   built during times of war.
 
@@ -391,7 +391,7 @@ Other units:
 Fleets and missions:
 ====================
 
-* Ships can be organized into fleets.
+* Ships are organized into fleets.
 
 * Each ship has an organization rating [0, 1.0].  This is overall battle
   readiness (which includes morale).  This value is multiplied by the raw
@@ -424,7 +424,11 @@ Fleets and missions:
 
 * Crews of disbanded units are placed in the ready reserve for the settlement
   where they are disbanded.  They are the first to be used to replace existing
-  crews, and/or crew newly constructed units.
+  crews, and/or crew newly constructed units.  That is, crew are placed in
+  descending order of xp (regardless of reamining service time).
+
+* When service members are recruited, they join the ready reserve.  They each
+  have -100xp, and start gaining xp while they are training, up to 0.
 
 * Fleets have an engagement posture setting, [0, 100].  It ranges from run
   away no matter what (0), to fight no matter what (100).  The settings in
@@ -458,10 +462,12 @@ Fleets and missions:
 
 * Explore: Fly about from system to system and survey the planets in each, in
   order to find habitable planets.  Better detection and propulsion make this
-  work better.
+  work better and/or faster.
 
 * Hide: Try to remain undetected, and try not to fight units that enter the
-  target system.  The fleet must remain undetected for this to work.  The
+  target system.  The fleet must remain undetected for this to work; once
+  detected, they revert to their previous order.  (This probably implies a
+  bool for hiding status, which may be set to false once detected.)  The
   detection chance increases month by month for uncloaked ships.  The fleet
   may try to hide behind a large outer planet in the system.
 
@@ -501,18 +507,18 @@ Fleets and missions:
 Special missions:
 =================
 
-* Fleeets which contain colony ships have additonal missions.
+* Fleets which contain colony ships have additonal missions.
 
 * Found settlement: Start a settlement on the target planet.  Takes time,
   during which the colony ship must stay at the planet.
 
 * Expand settlement: Increase the speed of infra construction at the target
   settlement.  This implies a proportional increase in consumption of money
-  and resources.  This massively increase the drain on shipboard qunatities,
+  and resources.  This massively increase the drain on shipboard quantities,
   which will require the colony ship to have to return to a supply point for
   resupply.  Assigning transports to the colony fleet mitigates this.
 
-* Fleeets which contain lifters have additonal missions.
+* Fleets which contain lifters have additonal missions.
 
 * Deliver divisions: Deliver garrison divisions to target settlement; requires
   setup time.
@@ -521,9 +527,9 @@ Special missions:
 
 * Deliver mobile base: Requires setup time.
 
-* Build outpost: Requires build time.
+* Build outpost: Requires build time and a mobile base to build from.
 
-* Build starbase: Requires build time.
+* Build starbase: Requires build time and an outpost to build from.
 
 * Upgrade base: Upgrades the design; requires build time.
 
