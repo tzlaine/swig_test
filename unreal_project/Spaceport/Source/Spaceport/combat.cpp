@@ -333,7 +333,7 @@ combat_unit & pick_target(
 {
     check(!side.target_table_.empty());
 
-    if (attacker.prev_target_ && valid_target(*attacker.prev_target_)) {
+    if (attacker.prev_target_ && unit_still_viable(*attacker.prev_target_)) {
         if (next_roll(rolls, roll_index) <
             keep_previous_combat_target_probability) {
             return *attacker.prev_target_;
@@ -343,8 +343,9 @@ combat_unit & pick_target(
     int const roll = next_roll(rolls, roll_index) * side.target_table_.size();
     int const i = roll == side.target_table_.size() ? roll - 1 : roll;
     combat_unit & target = side.combat_units_[side.target_table_[i]];
-    if (!valid_target(target)) {
-        auto const it = find_nearest_if(side.combat_units_, i, &valid_target);
+    if (!unit_still_viable(target)) {
+        auto const it =
+            find_nearest_if(side.combat_units_, i, &unit_still_viable);
         // If you're seeing this check fail, it means that the combat should
         // already have been ended, since 'side' contains no valid targets.
         check(it != side.combat_units_.end());
@@ -356,49 +357,130 @@ combat_unit & pick_target(
     return target;
 }
 
-void battle_round(
+battle_round_result battle_round(
     combat_units & side_1,
     combat_units & side_2,
     std::vector<double> & rolls,
     int & roll_index,
-    std::vector<unit_damage> & damage)
+    std::vector<unit_damage> & damage,
+    battle_round_kind_t kind)
 {
     damage.clear();
+
     for (auto & attacker : side_1.combat_units_) {
-        if (attacker.destroyed_ || attacker.disabled_)
+        if (!unit_still_viable(attacker))
             continue;
         auto & defender = pick_target(attacker, side_2, rolls, roll_index);
         attacker.prev_target_ = &defender;
         attack(attacker, defender, rolls, roll_index, damage);
     }
+    float const side_1_damage = std::transform_reduce(
+        damage.begin(), damage.end(), 0.0f, std::plus{}, [](auto const & e) {
+            return e.damage_;
+        });
+
+    int const damage_first_index = damage.size();
     for (auto & attacker : side_2.combat_units_) {
-        if (attacker.destroyed_ || attacker.disabled_)
+        if (!unit_still_viable(attacker))
             continue;
         auto & defender = pick_target(attacker, side_1, rolls, roll_index);
         attacker.prev_target_ = &defender;
         attack(attacker, defender, rolls, roll_index, damage);
     }
-    for (auto const & d : damage) {
-        damage_unit(d, rolls, roll_index);
+    float const side_2_damage = std::transform_reduce(
+        damage.begin() + damage_first_index,
+        damage.end(),
+        0.0f,
+        std::plus{},
+        [](auto const & e) { return e.damage_; });
+
+    if (kind != battle_round_kind_t::simulated) {
+        for (auto const & d : damage) {
+            damage_unit(d, rolls, roll_index);
+        }
+        for (auto & cu : side_1.combat_units_) {
+            if (unit_disabled(cu))
+                side_1.disable(cu);
+            if (unit_destroyed(cu))
+                side_1.destroy(cu);
+        }
     }
-    for (auto & cu : side_1.combat_units_) {
-        if (unit_disabled(cu))
-            side_1.disable(cu);
-        if (unit_destroyed(cu))
-            side_1.destroy(cu);
-    }
+
+    return {side_1_damage, side_2_damage};
 }
 
-void battle(
+battle_result battle(
     combat_units & side_1,
     combat_units & side_2,
+    std::vector<fleet_t *> const & fleets_1,
+    std::vector<fleet_t *> const & fleets_2,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage)
 {
-    bool keep_fighting = false;
-    while (keep_fighting) {
-        battle_round(side_1, side_2, rolls, roll_index, damage);
+    while (true) {
+        auto [side_1_damage, side_2_damage] =
+            battle_round(side_1, side_2, rolls, roll_index, damage);
+        if (!side_1.still_fighting_ || !side_2.still_fighting_) {
+            return {
+                side_1.still_fighting_ ? battle_result_t::controls_ao
+                                       : battle_result_t::destroyed,
+                side_2.still_fighting_ ? battle_result_t::controls_ao
+                                       : battle_result_t::destroyed};
+        }
+        if (side_1_damage < 0.001 || side_2_damage < 0.001) {
+            battle_result_t side_1_result = battle_result_t::retreated;
+            battle_result_t side_2_result = battle_result_t::retreated;
+            if (0.001 < side_1_damage && !can_escape_from(side_2, side_1)) {
+                side_1_result = battle_result_t::controls_ao;
+                side_2_result = battle_result_t::surrendered;
+            }
+            if (0.001 < side_2_damage && !can_escape_from(side_1, side_2)) {
+                side_1_result = battle_result_t::surrendered;
+                side_2_result = battle_result_t::controls_ao;
+            }
+            return {side_1_result, side_2_result};
+        }
+
+        float const side_1_damage_ratio = std::clamp(
+            (side_1_damage - side_2_damage) / side_1_damage, -1.0f, 1.0f);
+        float const side_2_damage_ratio = std::clamp(
+            (side_2_damage - side_1_damage) / side_2_damage, -1.0f, 1.0f);
+
+        bool const side_1_wants_out =
+            std::ranges::any_of(fleets_1, [&](auto * f) {
+                return side_1_damage_ratio < f->engagement_posture / 100.0f;
+            });
+        bool const side_2_wants_out =
+            std::ranges::any_of(fleets_2, [&](auto * f) {
+                return side_2_damage_ratio < f->engagement_posture / 100.0f;
+            });
+
+        if (side_1_wants_out && side_2_wants_out)
+            return {battle_result_t::retreated, battle_result_t::retreated};
+
+        if (side_1_wants_out) {
+            // TODO: There may be an opportunity for interesting flavor events
+            // here, if one or more of the fleets on a side abandon(s) the
+            // remaining fleet(s), if the leving fleet(s) have the
+            // acceleration to escape but the fleet(s) left behind do not.
+            if (can_escape_from(side_1, side_2)) {
+                return {battle_result_t::retreated, battle_result_t::controls_ao};
+            } else {
+                // A trapped fleet will fight like hell.
+                for (auto & cu : side_1.combat_units_) {
+                    cu.unit_->organization = (cu.unit_->organization + 100) / 2;
+                }
+            }
+        } else if (side_2_wants_out) {
+            if (can_escape_from(side_2, side_1)) {
+                return {battle_result_t::controls_ao, battle_result_t::retreated};
+            } else {
+                for (auto & cu : side_2.combat_units_) {
+                    cu.unit_->organization = (cu.unit_->organization + 100) / 2;
+                }
+            }
+        }
     }
 }
 
@@ -422,12 +504,10 @@ void encounter(
     int roll_index,
     std::vector<unit_damage> & damage)
 {
+    combat_units side_1(gs, fleets_1);
+    combat_units side_2(gs, fleets_2);
+
     // TODO: handle all the posible cases of fleets wanting to engage or not,
     // etc.
-    bool fight = false; // TODO
-    if (fight) {
-        combat_units side_1(gs, fleets_1);
-        combat_units side_2(gs, fleets_2);
-        battle(side_1, side_2, rolls, roll_index, damage);
-    }
+    battle(side_1, side_2, fleets_1, fleets_2, rolls, roll_index, damage);
 }

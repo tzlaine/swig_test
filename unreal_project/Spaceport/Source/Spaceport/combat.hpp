@@ -24,7 +24,7 @@ struct combat_unit
     bool disabled_ = false;
 };
 
-inline bool valid_target(combat_unit const & cu)
+inline bool unit_still_viable(combat_unit const & cu)
 {
     return !cu.destroyed_ && !cu.disabled_;
 }
@@ -141,8 +141,16 @@ struct combat_units
                 float const acceleration = combat_acceleration(just_added);
                 just_added.acceleration_ = acceleration;
                 just_added.disabled_ = unit_disabled(just_added);
+
                 ++n;
                 mean_acceleration += acceleration;
+
+                if (min_acceleration_ == 0.0f)
+                    min_acceleration_ = acceleration;
+                min_acceleration_ = std::min(acceleration, min_acceleration_);
+                if (max_acceleration_ == 0.0f)
+                    max_acceleration_ = acceleration;
+                max_acceleration_ = std::max(acceleration, max_acceleration_);
             }
         }
 
@@ -176,19 +184,37 @@ struct combat_units
         for (auto & unit : combat_units_) {
             unit.combat_unit_index_ = i++;
         }
+
+        still_fighting_ = (int)combat_units_.size();
     }
 
-    void disable(combat_unit & cu) { cu.disabled_ = true; }
+    void disable(combat_unit & cu)
+    {
+        if (unit_still_viable(cu))
+            --still_fighting_;
+        cu.disabled_ = true;
+    }
 
     void destroy(combat_unit & cu)
     {
+        if (unit_still_viable(cu))
+            --still_fighting_;
         cu.destroyed_ = true;
         std::erase(target_table_, cu.combat_unit_index_);
     }
 
     std::vector<combat_unit> combat_units_;
     std::vector<int> target_table_;
+    float min_acceleration_ = 0.0f;
+    float max_acceleration_ = 0.0f;
+    int still_fighting_ = 0;
 };
+
+inline bool
+can_escape_from(combat_units const & side_1, combat_units const & side_2)
+{
+    return side_2.max_acceleration_ - 0.1f < side_1.min_acceleration_;
+}
 
 combat_unit & pick_target(
     combat_unit & attacker,
@@ -196,14 +222,31 @@ combat_unit & pick_target(
     std::vector<double> & rolls,
     int & roll_index);
 
-void battle_round(
+struct battle_round_result
+{
+    float side_1_damage_ = 0.0f;
+    float side_2_damage_ = 0.0f;
+};
+
+enum struct battle_round_kind_t { simulated, real };
+
+battle_round_result battle_round(
     combat_units & side_1,
     combat_units & side_2,
     std::vector<double> & rolls,
     int & roll_index,
-    std::vector<unit_damage> & damage);
+    std::vector<unit_damage> & damage,
+    battle_round_kind_t kind = battle_round_kind_t::real);
 
-void battle(
+enum struct battle_result_t { controls_ao, destroyed, surrendered, retreated };
+
+struct battle_result
+{
+    battle_result_t side_1_result_ = battle_result_t::retreated;
+    battle_result_t side_2_result_ = battle_result_t::retreated;
+};
+
+battle_result battle(
     combat_units & side_1,
     combat_units & side_2,
     std::vector<double> & rolls,
