@@ -317,6 +317,13 @@ struct std::formatter<fleet_t> {
 
         out = std::format_to(out, " id={}", x.id);
         out = std::format_to(out, " mission={}", x.mission);
+        out = std::format_to(out, " hide={}", x.hide);
+        out = std::format_to(out, " engagement_posture={}", x.engagement_posture);
+        out = std::format_to(out, " supply_margin={}", x.supply_margin);
+        out = std::format_to(out, " ordnance_margin={}", x.ordnance_margin);
+        out = std::format_to(out, " return_for_repairs_health={}", x.return_for_repairs_health);
+        out = std::format_to(out, " auto_detach_repair_fleets={}", x.auto_detach_repair_fleets);
+        out = std::format_to(out, " detached_from={}", x.detached_from);
         out = std::format_to(out, " units=[");
         for (auto && e : x.units) {
             out = std::format_to(out, " {}", e);

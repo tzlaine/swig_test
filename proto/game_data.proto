@@ -157,9 +157,16 @@ message fleet_t
 {
     nation_and_object_id_t id = 1; // -1 for both of these indicates this fleet is invalid
     pb_message.mission_t mission = 2;
-    repeated unit_t units = 3;
-    fleet_position_t position = 4;
-    int32 fleet_combat_experience = 5;
+    bool hide = 3;
+    int32 engagement_posture = 4;
+    int32 supply_margin = 5;             // percent
+    int32 ordnance_margin = 6;           // percent
+    int32 return_for_repairs_health = 7; // percent
+    bool auto_detach_repair_fleets = 8;
+    nation_and_object_id_t detached_from = 9;
+    repeated unit_t units = 10;
+    fleet_position_t position = 11;
+    int32 fleet_combat_experience = 12;
 }
 
 message fleets_t

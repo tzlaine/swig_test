@@ -186,6 +186,13 @@ struct fleet_t
 {
     nation_and_object_id_t id = {};
     mission_t mission = mission_t::invalid_mission;
+    bool hide = false;
+    int engagement_posture = -1;
+    int supply_margin = -1;
+    int ordnance_margin = -1;
+    int return_for_repairs_health = -1;
+    bool auto_detach_repair_fleets = false;
+    nation_and_object_id_t detached_from = {};
     std::vector<unit_t> units = {};
     fleet_position_t position = {};
     int fleet_combat_experience = -1;

@@ -151,7 +151,7 @@ TEST(combat_tests, combat_units_ctor)
         nation.unit_designs.push_back(design_200);
         fleet_t fleet{
             .id = {0, 0},
-            .mission = mission_t::attack,
+            .mission = mission_t::hunt_enemy_fleets,
             .fleet_combat_experience = 0};
         fleet.units.push_back(create_and_supply_unit(design_150));
         fleet.units.push_back(create_and_supply_unit(design_150));
@@ -747,7 +747,7 @@ TEST(combat_tests, TODO)
         this_nation.unit_designs.push_back(design_200);
         fleet_t fleet{
             .id = {0, 0},
-            .mission = mission_t::attack,
+            .mission = mission_t::hunt_enemy_fleets,
             .fleet_combat_experience = 0};
         fleet.units.push_back(create_and_supply_unit(design_150));
         fleet.units.push_back(create_and_supply_unit(design_150));
@@ -765,7 +765,7 @@ TEST(combat_tests, TODO)
         this_nation.unit_designs.push_back(design_200);
         fleet_t fleet{
             .id = {1, 0},
-            .mission = mission_t::attack,
+            .mission = mission_t::hunt_enemy_fleets,
             .fleet_combat_experience = 0};
         fleet.units.push_back(create_and_supply_unit(design_150));
         fleet.units.push_back(create_and_supply_unit(design_150));

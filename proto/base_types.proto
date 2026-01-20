@@ -5,24 +5,31 @@ package pb_message;
 
 enum mission_t {
     invalid_mission = 0;
-    no_mission = 1;
-    explore = 2;
-    attack = 3;
-    evade = 4;
-    intercept = 5;
-    convoy_guard = 6;
-    ground_attack = 7;
-    privateer = 8;
-    found_coloy = 9;
-    expand_colony = 10;
+    idle = 1;
+    exercise = 2;
+    explore = 3;
+    intercept_in_system = 4;
+    protect_system_location = 5;
+    hunt_enemy_fleets = 6;
+    guard_supply = 7;
+    attack_settlement_defenses = 8;
+    attack_settlement_infrastructure = 9;
+    attack_settlement_population = 10;
+    blockade_settlement = 11;
 
-    // Lifters only from here down.
-    deliver_armies = 64;
-    deliver_repair_yard = 65;
-    deliver_mobile_base = 66;
-    build_outpost = 67;
-    build_starbase = 68;
-    upgrade_base = 69;
+    // colony ships only
+    found_settlement = 64;
+
+    // colony ships or lifters
+    expand_settlement = 65;
+
+    // lifters only
+    deliver_divisions = 66;
+    deliver_mobile_repair_yard = 67;
+    deliver_mobile_base = 68;
+    build_outpost = 69;
+    build_starbase = 70;
+    upgrade_base = 71;
 }
 
 message hex_coord_t

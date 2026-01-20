@@ -104,7 +104,7 @@ void attack(
     combat_unit & attacker,
     combat_unit & defender,
     std::vector<double> & rolls,
-    int roll_index,
+    int & roll_index,
     std::vector<unit_damage> & damage);
 
 struct combat_units
@@ -200,7 +200,7 @@ void battle_round(
     combat_units & side_1,
     combat_units & side_2,
     std::vector<double> & rolls,
-    int roll_index,
+    int & roll_index,
     std::vector<unit_damage> & damage);
 
 void battle(

@@ -547,7 +547,7 @@ namespace detail {
             return "fleet_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 5; }
+        static constexpr int hi_field_number() { return 12; }
 
         static constexpr metadatum<fleet_t, nation_and_object_id_t> id()
         {
@@ -559,20 +559,55 @@ namespace detail {
             using namespace std::literals;
             return {"mission"sv, 2, &fleet_t::mission};
         }
+        static constexpr metadatum<fleet_t, bool> hide()
+        {
+            using namespace std::literals;
+            return {"hide"sv, 3, &fleet_t::hide};
+        }
+        static constexpr metadatum<fleet_t, int> engagement_posture()
+        {
+            using namespace std::literals;
+            return {"engagement_posture"sv, 4, &fleet_t::engagement_posture};
+        }
+        static constexpr metadatum<fleet_t, int> supply_margin()
+        {
+            using namespace std::literals;
+            return {"supply_margin"sv, 5, &fleet_t::supply_margin};
+        }
+        static constexpr metadatum<fleet_t, int> ordnance_margin()
+        {
+            using namespace std::literals;
+            return {"ordnance_margin"sv, 6, &fleet_t::ordnance_margin};
+        }
+        static constexpr metadatum<fleet_t, int> return_for_repairs_health()
+        {
+            using namespace std::literals;
+            return {"return_for_repairs_health"sv, 7, &fleet_t::return_for_repairs_health};
+        }
+        static constexpr metadatum<fleet_t, bool> auto_detach_repair_fleets()
+        {
+            using namespace std::literals;
+            return {"auto_detach_repair_fleets"sv, 8, &fleet_t::auto_detach_repair_fleets};
+        }
+        static constexpr metadatum<fleet_t, nation_and_object_id_t> detached_from()
+        {
+            using namespace std::literals;
+            return {"detached_from"sv, 9, &fleet_t::detached_from};
+        }
         static constexpr metadatum<fleet_t, std::vector<unit_t>> units()
         {
             using namespace std::literals;
-            return {"units"sv, 3, &fleet_t::units};
+            return {"units"sv, 10, &fleet_t::units};
         }
         static constexpr metadatum<fleet_t, fleet_position_t> position()
         {
             using namespace std::literals;
-            return {"position"sv, 4, &fleet_t::position};
+            return {"position"sv, 11, &fleet_t::position};
         }
         static constexpr metadatum<fleet_t, int> fleet_combat_experience()
         {
             using namespace std::literals;
-            return {"fleet_combat_experience"sv, 5, &fleet_t::fleet_combat_experience};
+            return {"fleet_combat_experience"sv, 12, &fleet_t::fleet_combat_experience};
         }
 
         template<typename F>
@@ -580,6 +615,13 @@ namespace detail {
         {
             f(id());
             f(mission());
+            f(hide());
+            f(engagement_posture());
+            f(supply_margin());
+            f(ordnance_margin());
+            f(return_for_repairs_health());
+            f(auto_detach_repair_fleets());
+            f(detached_from());
             f(units());
             f(position());
             f(fleet_combat_experience());
