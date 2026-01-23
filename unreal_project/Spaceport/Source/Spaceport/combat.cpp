@@ -57,7 +57,7 @@ float combat_acceleration(combat_unit const & cu)
 void apply_hit(
     combat_unit & cu,
     int hit_location,
-    combat_log & log,
+    combat_log * log,
     ignore_explosions_t ignore_explosions)
 {
     unit_t & unit = *cu.unit_;
@@ -276,7 +276,7 @@ void load_cargo(
 
 void damage_unit(
     unit_damage ud,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int & roll_index)
 {
@@ -390,7 +390,7 @@ bool unit_destroyed(combat_unit const & cu)
 bool attack(
     combat_unit & attacker,
     combat_unit & defender,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage)
@@ -514,7 +514,7 @@ combat_unit & pick_target(
 battle_round_result battle_round(
     combat_units & side_1,
     combat_units & side_2,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage,
@@ -605,7 +605,7 @@ battle_result battle(
     combat_units & side_2,
     std::vector<fleet_t *> const & fleets_1,
     std::vector<fleet_t *> const & fleets_2,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage)
@@ -719,7 +719,7 @@ void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,
     std::vector<fleet_t *> const & fleets_2,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage)

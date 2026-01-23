@@ -73,10 +73,11 @@ struct combat_log
 };
 
 template<typename... Args>
-void append(combat_log & log, Args &&... args)
+void append(combat_log * log, Args &&... args)
     requires requires { ::combat_log_entry((Args &&)args...); }
 {
-    log.entries_.push_back(combat_log_entry((Args &&)args...));
+    if (log)
+        log->entries_.push_back(combat_log_entry((Args &&)args...));
 }
 
 struct combat_unit
@@ -173,7 +174,7 @@ enum struct ignore_explosions_t { no, yes };
 void apply_hit(
     combat_unit & cu,
     int hit_location,
-    combat_log & log,
+    combat_log * log = nullptr,
     ignore_explosions_t ignore_explosions = ignore_explosions_t::no);
 
 void load_cargo(
@@ -181,7 +182,7 @@ void load_cargo(
 
 void damage_unit(
     unit_damage damage,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int & roll_index);
 
@@ -230,7 +231,7 @@ std::optional<unit_damage> roll_reliability(
 bool attack(
     combat_unit & attacker,
     combat_unit & defender,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage);
@@ -363,7 +364,7 @@ enum struct battle_round_kind_t { simulated, real };
 battle_round_result battle_round(
     combat_units & side_1,
     combat_units & side_2,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage,
@@ -386,7 +387,7 @@ inline combat_log_desc_t battle_result_to_combat_log_desc(battle_result_t result
 battle_result battle(
     combat_units & side_1,
     combat_units & side_2,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage);
@@ -397,7 +398,7 @@ void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,
     std::vector<fleet_t *> const & fleets_2,
-    combat_log & log,
+    combat_log * log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage);
