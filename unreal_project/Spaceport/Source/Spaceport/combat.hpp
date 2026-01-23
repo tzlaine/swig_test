@@ -17,6 +17,8 @@ struct combat_unit
     fleet_t * fleet_ = nullptr;
     nation_t const * nation_ = nullptr;
     float acceleration_ = 0.0f;
+    float initial_organization_ = 0.0f;
+    float curr_organization_ = 0.0f;
     int fleet_unit_index_ = -1;
     int combat_unit_index_ = -1;
     bool capital_ = false;
@@ -182,12 +184,14 @@ struct combat_units
                 unit_t & unit = fleet.units[i];
                 unit_design_t const & design =
                     nation.unit_designs[unit.id.object_id];
-                combat_units_.push_back({
-                    .unit_ = &unit,
-                    .design_ = &design,
-                    .fleet_ = &fleet,
-                    .nation_ = &nation,
-                    .fleet_unit_index_ = i});
+                combat_units_.push_back(
+                    {.unit_ = &unit,
+                     .design_ = &design,
+                     .fleet_ = &fleet,
+                     .nation_ = &nation,
+                     .initial_organization_ = unit.organization / 100.0f,
+                     .curr_organization_ = unit.organization / 100.0f,
+                     .fleet_unit_index_ = i});
                 combat_unit & just_added = combat_units_.back();
                 float const acceleration = combat_acceleration(just_added);
                 just_added.acceleration_ = acceleration;

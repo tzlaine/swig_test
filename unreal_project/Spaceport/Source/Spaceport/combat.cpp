@@ -63,9 +63,13 @@ void apply_hit(
 
     auto const destroy_location = [&](bool equipment_here) {
         table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
+        int const prev_crew = unit.crew;
         unit.crew -= int(crew_required_per_hull_point);
         if (equipment_here)
             unit.crew -= int(crew_required_per_equipment_point);
+        cu.curr_organization_ -=
+            cu.initial_organization_ * (prev_crew - unit.crew) / design.crew;
+        unit.organization = cu.curr_organization_ * 100 + 0.5f;
     };
 
     auto const is_fuel = [&](int entry) {
@@ -213,6 +217,8 @@ void apply_hit(
         float const assigned_crew = 1000.0f / space_required_per_1k_crew;
         int const offduty_assigned_crew =
             assigned_crew * (1 - crew_onduty_factor) + 0.5f;
+        // These are casualties among the off-duty crew, so they do not affect
+        // org.
         unit.crew -= offduty_assigned_crew;
         destroy_location(false);
         break;
@@ -573,8 +579,6 @@ battle_result battle(
 
 // TODO: Propulsion and shield reliability rolls should happen when moving
 // through subspace.
-
-// TODO: Unit org needs to drop when the unit is hit.
 
 void encounter(
     game_state_t const & gs,
