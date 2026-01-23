@@ -580,6 +580,9 @@ battle_result battle(
 // TODO: Propulsion and shield reliability rolls should happen when moving
 // through subspace.
 
+// TODO: All the events that transpire in combat need to be recorded
+// somewhere.
+
 void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,
