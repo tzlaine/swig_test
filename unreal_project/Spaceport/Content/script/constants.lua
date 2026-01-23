@@ -83,3 +83,4 @@ crew_required_per_equipment_point = 100
 space_required_per_1k_crew = 3
 unit_combat_experience_impact = 0.25
 fleet_combat_experience_impact = 0.5
+reliability_exponent = 4

@@ -173,6 +173,7 @@ const float unit_combat_experience_impact =
     lua()["unit_combat_experience_impact"];
 const float fleet_combat_experience_impact =
     lua()["fleet_combat_experience_impact"];
+extern const float reliability_exponent = lua()["reliability_exponent"];
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =

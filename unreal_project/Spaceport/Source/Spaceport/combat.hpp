@@ -29,11 +29,21 @@ inline bool unit_still_viable(combat_unit const & cu)
     return !cu.destroyed_ && !cu.disabled_;
 }
 
+enum struct reliability_t {
+    invalid_reliability,
+    propulsion,
+    weapons,
+    shields,
+    detection,
+    stealth
+};
+
 struct unit_damage
 {
     combat_unit * combat_unit_ = nullptr;
     float damage_ = 0.0f;
     bool missile_damage_ = false;
+    reliability_t reliability_damage_ = reliability_t::invalid_reliability;
 };
 
 inline double next_roll(std::vector<double> const & rolls, int & i)
@@ -102,7 +112,46 @@ void damage_unit(
 bool unit_disabled(combat_unit const & cu);
 bool unit_destroyed(combat_unit const & cu);
 
-void attack(
+template<reliability_t Kind, auto Ptr>
+std::optional<unit_damage> roll_reliability_impl(
+    combat_unit & cu, std::vector<double> & rolls, int & roll_index)
+{
+    if (next_roll(rolls, roll_index) <
+        std::pow(
+            effective_value(cu.design_->*Ptr, cu) / 100.0f,
+            1 / reliability_exponent)) {
+        return unit_damage{.combat_unit_ = &cu, .reliability_damage_ = Kind};
+    }
+    return {};
+}
+
+template<reliability_t Kind>
+std::optional<unit_damage> roll_reliability(
+    combat_unit & cu, std::vector<double> & rolls, int & roll_index)
+{
+    switch (Kind) {
+    case reliability_t::propulsion:
+        return roll_reliability_impl<
+            Kind,
+            &unit_design_t::propulsion_reliability>(cu, rolls, roll_index);
+    case reliability_t::weapons:
+        return roll_reliability_impl<Kind, &unit_design_t::weapons_reliability>(
+            cu, rolls, roll_index);
+    case reliability_t::shields:
+        return roll_reliability_impl<Kind, &unit_design_t::shields_reliability>(
+            cu, rolls, roll_index);
+    case reliability_t::detection:
+        return roll_reliability_impl<
+            Kind,
+            &unit_design_t::detection_reliability>(cu, rolls, roll_index);
+    case reliability_t::stealth:
+        return roll_reliability_impl<Kind, &unit_design_t::stealth_reliability>(
+            cu, rolls, roll_index);
+    }
+    return {};
+}
+
+bool attack(
     combat_unit & attacker,
     combat_unit & defender,
     std::vector<double> & rolls,

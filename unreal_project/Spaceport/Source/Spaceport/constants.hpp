@@ -144,6 +144,7 @@ extern const float crew_onduty_factor;
 extern const float minimum_viable_crew_factor;
 extern const float unit_combat_experience_impact;
 extern const float fleet_combat_experience_impact;
+extern const float reliability_exponent;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

@@ -246,6 +246,44 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
 {
     unit_t & unit = *ud.combat_unit_->unit_;
     unit_design_t const & design = *ud.combat_unit_->design_;
+
+    auto const populate_unit_hit_table = [&] {
+        if (unit.hit_table.empty()) {
+            unit.hit_table = design.hit_table;
+            load_cargo(unit.cargo, unit.hit_table);
+        }
+    };
+
+    if (ud.reliability_damage_ != reliability_t::invalid_reliability) {
+        populate_unit_hit_table();
+        signed char entry = 0;
+        switch (ud.reliability_damage_) {
+        case reliability_t::propulsion:
+            entry = (signed char)hit_table_entry_t::hit_propulsion;
+            break;
+        case reliability_t::weapons:
+            entry = (signed char)hit_table_entry_t::hit_weapons;
+            break;
+        case reliability_t::shields:
+            entry = (signed char)hit_table_entry_t::hit_shields;
+            break;
+        case reliability_t::detection:
+            entry = (signed char)hit_table_entry_t::hit_detection;
+            break;
+        case reliability_t::stealth:
+            entry = (signed char)hit_table_entry_t::hit_stealth;
+            break;
+        }
+        auto location_it = std::ranges::find(unit.hit_table, entry);
+        if (location_it != unit.hit_table.end()) {
+            apply_hit(
+                *ud.combat_unit_,
+                location_it - unit.hit_table.begin(),
+                ignore_explosions_t::yes);
+        }
+        return;
+    }
+
     float damage = ud.damage_;
 
     damage -= unit.shields;
@@ -261,10 +299,7 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
     if (damage < 0.001)
         return;
 
-    if (unit.hit_table.empty()) {
-        unit.hit_table = design.hit_table;
-        load_cargo(unit.cargo, unit.hit_table);
-    }
+    populate_unit_hit_table();
 
     auto const roll_location = [&] {
         int const roll = next_roll(rolls, roll_index) * unit.hit_table.size();
@@ -300,7 +335,7 @@ bool unit_destroyed(combat_unit const & cu)
     return false;
 }
 
-void attack(
+bool attack(
     combat_unit & attacker,
     combat_unit & defender,
     std::vector<double> & rolls,
@@ -308,12 +343,24 @@ void attack(
     std::vector<unit_damage> & damage)
 {
     bool const pd_attack = attacker.unit_->rounds;
-    if (pd_attack)
+    bool attacker_fired = false;
+    if (pd_attack) {
         --attacker.unit_->rounds;
+        attacker_fired = true;
+    }
 
     bool missile_attack = attacker.unit_->missiles;
-    if (missile_attack)
+    if (missile_attack) {
         --attacker.unit_->missiles;
+        attacker_fired = true;
+    }
+
+    if (attacker_fired) {
+        if (auto dmg = roll_reliability<reliability_t::weapons>(
+                attacker, rolls, roll_index)) {
+            damage.push_back(*dmg);
+        }
+    }
 
     if (missile_attack && defender.unit_->rounds) {
         --defender.unit_->rounds;
@@ -321,20 +368,28 @@ void attack(
             pd_defense_probability(attacker, defender)) {
             missile_attack = false;
         }
+        if (auto dmg = roll_reliability<reliability_t::weapons>(
+                defender, rolls, roll_index)) {
+            damage.push_back(*dmg);
+        }
     }
 
     if (!pd_attack && !missile_attack)
-        return;
+        return false;
 
+    bool retval = false;
     float const attack_strength = attacker.unit_->weapons;
     if (pd_attack &&
         next_roll(rolls, roll_index) < pd_hit_probability(attacker, defender)) {
         damage.push_back({&defender, attack_strength / 2.0f, false});
+        retval = true;
     }
     if (missile_attack && next_roll(rolls, roll_index) <
                               missile_hit_probability(attacker, defender)) {
         damage.push_back({&defender, attack_strength / 2.0f, true});
+        retval = true;
     }
+    return retval;
 }
 
 combat_unit & pick_target(
@@ -384,7 +439,16 @@ battle_round_result battle_round(
             continue;
         auto & defender = pick_target(attacker, side_2, rolls, roll_index);
         attacker.prev_target_ = &defender;
-        attack(attacker, defender, rolls, roll_index, damage);
+        bool const damage_dome =
+            attack(attacker, defender, rolls, roll_index, damage);
+        if (damage_dome && 0.01 < defender.unit_->shields) {
+            if (auto dmg = roll_reliability<reliability_t::shields>(
+                    defender, rolls, roll_index)) {
+                damage.push_back(unit_damage{
+                    .combat_unit_ = &defender,
+                    .reliability_damage_ = reliability_t::shields});
+            }
+        }
     }
     float const side_1_damage = std::transform_reduce(
         damage.begin(), damage.end(), 0.0f, std::plus{}, [](auto const & e) {
@@ -397,7 +461,16 @@ battle_round_result battle_round(
             continue;
         auto & defender = pick_target(attacker, side_1, rolls, roll_index);
         attacker.prev_target_ = &defender;
-        attack(attacker, defender, rolls, roll_index, damage);
+        bool const damage_dome =
+            attack(attacker, defender, rolls, roll_index, damage);
+        if (damage_dome && 0.01 < defender.unit_->shields) {
+            if (auto dmg = roll_reliability<reliability_t::shields>(
+                    defender, rolls, roll_index)) {
+                damage.push_back(unit_damage{
+                    .combat_unit_ = &defender,
+                    .reliability_damage_ = reliability_t::shields});
+            }
+        }
     }
     float const side_2_damage = std::transform_reduce(
         damage.begin() + damage_first_index,
@@ -496,13 +569,12 @@ battle_result battle(
     }
 }
 
-// TODO: Attacks should cause weapons and shield failure rolls, based on
-// reliability ratings for those systems.
-
 // TODO: Propulsion reliability rolls during combat too.
 
 // TODO: Propulsion and shield reliability rolls should happen when moving
 // through subspace.
+
+// TODO: Unit org needs to drop when the unit is hit.
 
 void encounter(
     game_state_t const & gs,
