@@ -313,41 +313,43 @@ namespace detail {
         if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
         if (allow(2))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hull, 2, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.name, 2, os);
         if (allow(3))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.armor, 3, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hull, 3, os);
         if (allow(4))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion, 4, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.armor, 4, os);
         if (allow(5))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons, 5, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.propulsion, 5, os);
         if (allow(6))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields, 6, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.weapons, 6, os);
         if (allow(7))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection, 7, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.shields, 7, os);
         if (allow(8))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth, 8, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detection, 8, os);
         if (allow(9))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 9, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.stealth, 9, os);
         if (allow(10))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.water, 10, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fuel, 10, os);
         if (allow(11))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.supplies, 11, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.water, 11, os);
         if (allow(12))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 12, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.supplies, 12, os);
         if (allow(13))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 13, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.rounds, 13, os);
         if (allow(14))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 14, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.missiles, 14, os);
         if (allow(15))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.cargo, 15, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fighters, 15, os);
         if (allow(16))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.organization, 16, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.cargo, 16, os);
         if (allow(17))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.combat_experience, 17, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.organization, 17, os);
         if (allow(18))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.crew, 18, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.combat_experience, 18, os);
         if (allow(19))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hit_table, 19, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.crew, 19, os);
+        if (allow(20))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hit_table, 20, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -357,35 +359,36 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "unit_t"sv;
-        constexpr std::array<std::string_view, 20> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "hull"sv, "armor"sv, "propulsion"sv, "weapons"sv, "shields"sv, "detection"sv, "stealth"sv, "fuel"sv, "water"sv, "supplies"sv, "rounds"sv, "missiles"sv, "fighters"sv, "cargo"sv, "organization"sv, "combat_experience"sv, "crew"sv, "hit_table"sv}};
-        std::array<int, 19> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}};
+        constexpr std::array<std::string_view, 21> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "name"sv, "hull"sv, "armor"sv, "propulsion"sv, "weapons"sv, "shields"sv, "detection"sv, "stealth"sv, "fuel"sv, "water"sv, "supplies"sv, "rounds"sv, "missiles"sv, "fighters"sv, "cargo"sv, "organization"sv, "combat_experience"sv, "crew"sv, "hit_table"sv}};
+        std::array<int, 20> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 19;
+        constexpr int hi_field_number = 20;
     
         auto read_field = [] (unit_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
             case 1: return detail::deserialize_impl(x.id, src);
-            case 2: return detail::deserialize_impl(x.hull, src);
-            case 3: return detail::deserialize_impl(x.armor, src);
-            case 4: return detail::deserialize_impl(x.propulsion, src);
-            case 5: return detail::deserialize_impl(x.weapons, src);
-            case 6: return detail::deserialize_impl(x.shields, src);
-            case 7: return detail::deserialize_impl(x.detection, src);
-            case 8: return detail::deserialize_impl(x.stealth, src);
-            case 9: return detail::deserialize_impl(x.fuel, src);
-            case 10: return detail::deserialize_impl(x.water, src);
-            case 11: return detail::deserialize_impl(x.supplies, src);
-            case 12: return detail::deserialize_impl(x.rounds, src);
-            case 13: return detail::deserialize_impl(x.missiles, src);
-            case 14: return detail::deserialize_impl(x.fighters, src);
-            case 15: return detail::deserialize_impl(x.cargo, src);
-            case 16: return detail::deserialize_impl(x.organization, src);
-            case 17: return detail::deserialize_impl(x.combat_experience, src);
-            case 18: return detail::deserialize_impl(x.crew, src);
-            case 19: return detail::deserialize_impl(x.hit_table, src);
+            case 2: return detail::deserialize_impl(x.name, src);
+            case 3: return detail::deserialize_impl(x.hull, src);
+            case 4: return detail::deserialize_impl(x.armor, src);
+            case 5: return detail::deserialize_impl(x.propulsion, src);
+            case 6: return detail::deserialize_impl(x.weapons, src);
+            case 7: return detail::deserialize_impl(x.shields, src);
+            case 8: return detail::deserialize_impl(x.detection, src);
+            case 9: return detail::deserialize_impl(x.stealth, src);
+            case 10: return detail::deserialize_impl(x.fuel, src);
+            case 11: return detail::deserialize_impl(x.water, src);
+            case 12: return detail::deserialize_impl(x.supplies, src);
+            case 13: return detail::deserialize_impl(x.rounds, src);
+            case 14: return detail::deserialize_impl(x.missiles, src);
+            case 15: return detail::deserialize_impl(x.fighters, src);
+            case 16: return detail::deserialize_impl(x.cargo, src);
+            case 17: return detail::deserialize_impl(x.organization, src);
+            case 18: return detail::deserialize_impl(x.combat_experience, src);
+            case 19: return detail::deserialize_impl(x.crew, src);
+            case 20: return detail::deserialize_impl(x.hit_table, src);
             default: return src; // unreachable
             }
         };
@@ -481,27 +484,29 @@ namespace detail {
         if (allow(1))
             retval += detail::serialize_impl<Op, ser_field_op::write>(x.id, 1, os);
         if (allow(2))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.mission, 2, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.name, 2, os);
         if (allow(3))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hide, 3, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.mission, 3, os);
         if (allow(4))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.engagement_posture, 4, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.hide, 4, os);
         if (allow(5))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.supply_margin, 5, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.engagement_posture, 5, os);
         if (allow(6))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.ordnance_margin, 6, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.supply_margin, 6, os);
         if (allow(7))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.return_for_repairs_health, 7, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.ordnance_margin, 7, os);
         if (allow(8))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.auto_detach_repair_fleets, 8, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.return_for_repairs_health, 8, os);
         if (allow(9))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detached_from, 9, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.auto_detach_repair_fleets, 9, os);
         if (allow(10))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.units, 10, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.detached_from, 10, os);
         if (allow(11))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.position, 11, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.units, 11, os);
         if (allow(12))
-            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleet_combat_experience, 12, os);
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.position, 12, os);
+        if (allow(13))
+            retval += detail::serialize_impl<Op, ser_field_op::write>(x.fleet_combat_experience, 13, os);
     
         retval += detail::serialize_message_end<Op>(os);
     
@@ -511,28 +516,29 @@ namespace detail {
     {
         using namespace std::literals;
         constexpr auto this_message_name = "fleet_t"sv;
-        constexpr std::array<std::string_view, 13> field_names = {{"<UNKOWN_FIELD>"sv,
-          "id"sv, "mission"sv, "hide"sv, "engagement_posture"sv, "supply_margin"sv, "ordnance_margin"sv, "return_for_repairs_health"sv, "auto_detach_repair_fleets"sv, "detached_from"sv, "units"sv, "position"sv, "fleet_combat_experience"sv}};
-        std::array<int, 12> expected_field_numbers = {{
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}};
+        constexpr std::array<std::string_view, 14> field_names = {{"<UNKOWN_FIELD>"sv,
+          "id"sv, "name"sv, "mission"sv, "hide"sv, "engagement_posture"sv, "supply_margin"sv, "ordnance_margin"sv, "return_for_repairs_health"sv, "auto_detach_repair_fleets"sv, "detached_from"sv, "units"sv, "position"sv, "fleet_combat_experience"sv}};
+        std::array<int, 13> expected_field_numbers = {{
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}};
     
         constexpr int lo_field_number = 1;
-        constexpr int hi_field_number = 12;
+        constexpr int hi_field_number = 13;
     
         auto read_field = [] (fleet_t & x, int i, std::span<std::byte const> src) {
             switch (i) {
             case 1: return detail::deserialize_impl(x.id, src);
-            case 2: return detail::deserialize_impl(x.mission, src);
-            case 3: return detail::deserialize_impl(x.hide, src);
-            case 4: return detail::deserialize_impl(x.engagement_posture, src);
-            case 5: return detail::deserialize_impl(x.supply_margin, src);
-            case 6: return detail::deserialize_impl(x.ordnance_margin, src);
-            case 7: return detail::deserialize_impl(x.return_for_repairs_health, src);
-            case 8: return detail::deserialize_impl(x.auto_detach_repair_fleets, src);
-            case 9: return detail::deserialize_impl(x.detached_from, src);
-            case 10: return detail::deserialize_impl(x.units, src);
-            case 11: return detail::deserialize_impl(x.position, src);
-            case 12: return detail::deserialize_impl(x.fleet_combat_experience, src);
+            case 2: return detail::deserialize_impl(x.name, src);
+            case 3: return detail::deserialize_impl(x.mission, src);
+            case 4: return detail::deserialize_impl(x.hide, src);
+            case 5: return detail::deserialize_impl(x.engagement_posture, src);
+            case 6: return detail::deserialize_impl(x.supply_margin, src);
+            case 7: return detail::deserialize_impl(x.ordnance_margin, src);
+            case 8: return detail::deserialize_impl(x.return_for_repairs_health, src);
+            case 9: return detail::deserialize_impl(x.auto_detach_repair_fleets, src);
+            case 10: return detail::deserialize_impl(x.detached_from, src);
+            case 11: return detail::deserialize_impl(x.units, src);
+            case 12: return detail::deserialize_impl(x.position, src);
+            case 13: return detail::deserialize_impl(x.fleet_combat_experience, src);
             default: return src; // unreachable
             }
         };

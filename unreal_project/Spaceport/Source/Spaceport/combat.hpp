@@ -9,6 +9,76 @@
 #include <vector>
 
 
+enum struct combat_log_desc_t {
+    invalid_combat_log_desc,
+    unit_changed_target,
+    unit_fired_missiles,
+    unit_fired_pd,
+    unit_fired_defensive_pd,
+    unit_defended_against_missiles,
+    unit_equipment_failure,
+    unit_hit_by_missiles,
+    unit_hit_by_pd,
+    unit_shield_blocked_all,
+    unit_lost_armor,
+    unit_armor_blocked_all,
+    unit_explosion,
+    unit_equipment_hit,
+    unit_hit_crew_space,
+    unit_crew_casualties,
+    unit_disabled,
+    unit_destroyed,
+    fleet_zero_damage,
+    fleet_break_contact,
+    fleet_cannot_outrun_enemies,
+    fleet_controls_ao,
+    fleet_destroyed,
+    fleet_surrendered,
+    fleet_retreated
+};
+
+struct combat_log_entry_t
+{
+    combat_log_desc_t description_ = combat_log_desc_t::invalid_combat_log_desc;
+    adobe::name_t unit_ = adobe::name_t();
+    adobe::name_t str_param_ = adobe::name_t();
+    int int_param_ = -1;
+    float float_param_ = -1.0f;
+};
+
+inline combat_log_entry_t
+combat_log_entry(combat_log_desc_t desc, adobe::name_t unit)
+{
+    return {.description_ = desc, .unit_ = unit};
+}
+inline combat_log_entry_t combat_log_entry(
+    combat_log_desc_t desc, adobe::name_t unit, adobe::name_t param)
+{
+    return {.description_ = desc, .unit_ = unit, .str_param_ = param};
+}
+inline combat_log_entry_t
+combat_log_entry(combat_log_desc_t desc, adobe::name_t unit, int param)
+{
+    return {.description_ = desc, .unit_ = unit, .int_param_ = param};
+}
+inline combat_log_entry_t
+combat_log_entry(combat_log_desc_t desc, adobe::name_t unit, float param)
+{
+    return {.description_ = desc, .unit_ = unit, .float_param_ = param};
+}
+
+struct combat_log
+{
+    std::vector<combat_log_entry_t> entries_;
+};
+
+template<typename... Args>
+void append(combat_log & log, Args &&... args)
+    requires requires { ::combat_log_entry((Args &&)args...); }
+{
+    log.entries_.push_back(combat_log_entry((Args &&)args...));
+}
+
 struct combat_unit
 {
     unit_t * unit_ = nullptr;
@@ -103,13 +173,17 @@ enum struct ignore_explosions_t { no, yes };
 void apply_hit(
     combat_unit & cu,
     int hit_location,
+    combat_log & log,
     ignore_explosions_t ignore_explosions = ignore_explosions_t::no);
 
 void load_cargo(
     std::vector<signed char> & cargo, std::vector<signed char> & hit_table);
 
 void damage_unit(
-    unit_damage damage, std::vector<double> & rolls, int & roll_index);
+    unit_damage damage,
+    combat_log & log,
+    std::vector<double> & rolls,
+    int & roll_index);
 
 bool unit_disabled(combat_unit const & cu);
 bool unit_destroyed(combat_unit const & cu);
@@ -156,6 +230,7 @@ std::optional<unit_damage> roll_reliability(
 bool attack(
     combat_unit & attacker,
     combat_unit & defender,
+    combat_log & log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage);
@@ -288,6 +363,7 @@ enum struct battle_round_kind_t { simulated, real };
 battle_round_result battle_round(
     combat_units & side_1,
     combat_units & side_2,
+    combat_log & log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage,
@@ -301,9 +377,16 @@ struct battle_result
     battle_result_t side_2_result_ = battle_result_t::retreated;
 };
 
+inline combat_log_desc_t battle_result_to_combat_log_desc(battle_result_t result)
+{
+    auto const base = (int)combat_log_desc_t::fleet_controls_ao;
+    return combat_log_desc_t(base + (int)result);
+}
+
 battle_result battle(
     combat_units & side_1,
     combat_units & side_2,
+    combat_log & log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage);
@@ -314,6 +397,7 @@ void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,
     std::vector<fleet_t *> const & fleets_2,
+    combat_log & log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage);

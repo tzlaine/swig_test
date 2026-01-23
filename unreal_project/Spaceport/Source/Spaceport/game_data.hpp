@@ -24,11 +24,12 @@ enum class cargo_kind_t {
     missiles = -5,
     troops = -6,
     colonists = -7,
-    cargo_metal = -8,
-    cargo_energy = -9,
-    cargo_fuel_minerals = -10,
-    cargo_water = -11,
-    cargo_food = -12,
+    pioneer_equipment = -8,
+    cargo_metal = -9,
+    cargo_energy = -10,
+    cargo_fuel_minerals = -11,
+    cargo_water = -12,
+    cargo_food = -13,
 };
 inline auto operator<=>(cargo_kind_t x, cargo_kind_t y) { return (int)x <=> (int)y; }
 
@@ -149,6 +150,7 @@ struct unit_design_t
 struct unit_t
 {
     nation_and_object_id_t id = {};
+    adobe::name_t name = adobe::name_t("");
     int hull = -1;
     float armor = -1.0f;
     float propulsion = -1.0f;
@@ -185,6 +187,7 @@ struct fleet_position_t
 struct fleet_t
 {
     nation_and_object_id_t id = {};
+    adobe::name_t name = adobe::name_t("");
     mission_t mission = mission_t::invalid_mission;
     bool hide = false;
     int engagement_posture = -1;

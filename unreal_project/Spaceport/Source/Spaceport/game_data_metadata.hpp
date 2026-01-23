@@ -357,108 +357,114 @@ namespace detail {
             return "unit_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 19; }
+        static constexpr int hi_field_number() { return 20; }
 
         static constexpr metadatum<unit_t, nation_and_object_id_t> id()
         {
             using namespace std::literals;
             return {"id"sv, 1, &unit_t::id};
         }
+        static constexpr metadatum<unit_t, adobe::name_t> name()
+        {
+            using namespace std::literals;
+            return {"name"sv, 2, &unit_t::name};
+        }
         static constexpr metadatum<unit_t, int> hull()
         {
             using namespace std::literals;
-            return {"hull"sv, 2, &unit_t::hull};
+            return {"hull"sv, 3, &unit_t::hull};
         }
         static constexpr metadatum<unit_t, float> armor()
         {
             using namespace std::literals;
-            return {"armor"sv, 3, &unit_t::armor};
+            return {"armor"sv, 4, &unit_t::armor};
         }
         static constexpr metadatum<unit_t, float> propulsion()
         {
             using namespace std::literals;
-            return {"propulsion"sv, 4, &unit_t::propulsion};
+            return {"propulsion"sv, 5, &unit_t::propulsion};
         }
         static constexpr metadatum<unit_t, float> weapons()
         {
             using namespace std::literals;
-            return {"weapons"sv, 5, &unit_t::weapons};
+            return {"weapons"sv, 6, &unit_t::weapons};
         }
         static constexpr metadatum<unit_t, float> shields()
         {
             using namespace std::literals;
-            return {"shields"sv, 6, &unit_t::shields};
+            return {"shields"sv, 7, &unit_t::shields};
         }
         static constexpr metadatum<unit_t, float> detection()
         {
             using namespace std::literals;
-            return {"detection"sv, 7, &unit_t::detection};
+            return {"detection"sv, 8, &unit_t::detection};
         }
         static constexpr metadatum<unit_t, float> stealth()
         {
             using namespace std::literals;
-            return {"stealth"sv, 8, &unit_t::stealth};
+            return {"stealth"sv, 9, &unit_t::stealth};
         }
         static constexpr metadatum<unit_t, float> fuel()
         {
             using namespace std::literals;
-            return {"fuel"sv, 9, &unit_t::fuel};
+            return {"fuel"sv, 10, &unit_t::fuel};
         }
         static constexpr metadatum<unit_t, float> water()
         {
             using namespace std::literals;
-            return {"water"sv, 10, &unit_t::water};
+            return {"water"sv, 11, &unit_t::water};
         }
         static constexpr metadatum<unit_t, float> supplies()
         {
             using namespace std::literals;
-            return {"supplies"sv, 11, &unit_t::supplies};
+            return {"supplies"sv, 12, &unit_t::supplies};
         }
         static constexpr metadatum<unit_t, int> rounds()
         {
             using namespace std::literals;
-            return {"rounds"sv, 12, &unit_t::rounds};
+            return {"rounds"sv, 13, &unit_t::rounds};
         }
         static constexpr metadatum<unit_t, int> missiles()
         {
             using namespace std::literals;
-            return {"missiles"sv, 13, &unit_t::missiles};
+            return {"missiles"sv, 14, &unit_t::missiles};
         }
         static constexpr metadatum<unit_t, int> fighters()
         {
             using namespace std::literals;
-            return {"fighters"sv, 14, &unit_t::fighters};
+            return {"fighters"sv, 15, &unit_t::fighters};
         }
         static constexpr metadatum<unit_t, std::vector<signed char>> cargo()
         {
             using namespace std::literals;
-            return {"cargo"sv, 15, &unit_t::cargo};
+            return {"cargo"sv, 16, &unit_t::cargo};
         }
         static constexpr metadatum<unit_t, int> organization()
         {
             using namespace std::literals;
-            return {"organization"sv, 16, &unit_t::organization};
+            return {"organization"sv, 17, &unit_t::organization};
         }
         static constexpr metadatum<unit_t, int> combat_experience()
         {
             using namespace std::literals;
-            return {"combat_experience"sv, 17, &unit_t::combat_experience};
+            return {"combat_experience"sv, 18, &unit_t::combat_experience};
         }
         static constexpr metadatum<unit_t, int> crew()
         {
             using namespace std::literals;
-            return {"crew"sv, 18, &unit_t::crew};
+            return {"crew"sv, 19, &unit_t::crew};
         }
         static constexpr metadatum<unit_t, std::vector<signed char>> hit_table()
         {
             using namespace std::literals;
-            return {"hit_table"sv, 19, &unit_t::hit_table};
+            return {"hit_table"sv, 20, &unit_t::hit_table};
         }
 
         template<typename F>
         static void foreach_member(F && f)
         {
             f(id());
+            f(name());
             f(hull());
             f(armor());
             f(propulsion());
@@ -547,73 +553,79 @@ namespace detail {
             return "fleet_t"sv;
         }
         static constexpr int lo_field_number() { return 1; }
-        static constexpr int hi_field_number() { return 12; }
+        static constexpr int hi_field_number() { return 13; }
 
         static constexpr metadatum<fleet_t, nation_and_object_id_t> id()
         {
             using namespace std::literals;
             return {"id"sv, 1, &fleet_t::id};
         }
+        static constexpr metadatum<fleet_t, adobe::name_t> name()
+        {
+            using namespace std::literals;
+            return {"name"sv, 2, &fleet_t::name};
+        }
         static constexpr metadatum<fleet_t, mission_t> mission()
         {
             using namespace std::literals;
-            return {"mission"sv, 2, &fleet_t::mission};
+            return {"mission"sv, 3, &fleet_t::mission};
         }
         static constexpr metadatum<fleet_t, bool> hide()
         {
             using namespace std::literals;
-            return {"hide"sv, 3, &fleet_t::hide};
+            return {"hide"sv, 4, &fleet_t::hide};
         }
         static constexpr metadatum<fleet_t, int> engagement_posture()
         {
             using namespace std::literals;
-            return {"engagement_posture"sv, 4, &fleet_t::engagement_posture};
+            return {"engagement_posture"sv, 5, &fleet_t::engagement_posture};
         }
         static constexpr metadatum<fleet_t, int> supply_margin()
         {
             using namespace std::literals;
-            return {"supply_margin"sv, 5, &fleet_t::supply_margin};
+            return {"supply_margin"sv, 6, &fleet_t::supply_margin};
         }
         static constexpr metadatum<fleet_t, int> ordnance_margin()
         {
             using namespace std::literals;
-            return {"ordnance_margin"sv, 6, &fleet_t::ordnance_margin};
+            return {"ordnance_margin"sv, 7, &fleet_t::ordnance_margin};
         }
         static constexpr metadatum<fleet_t, int> return_for_repairs_health()
         {
             using namespace std::literals;
-            return {"return_for_repairs_health"sv, 7, &fleet_t::return_for_repairs_health};
+            return {"return_for_repairs_health"sv, 8, &fleet_t::return_for_repairs_health};
         }
         static constexpr metadatum<fleet_t, bool> auto_detach_repair_fleets()
         {
             using namespace std::literals;
-            return {"auto_detach_repair_fleets"sv, 8, &fleet_t::auto_detach_repair_fleets};
+            return {"auto_detach_repair_fleets"sv, 9, &fleet_t::auto_detach_repair_fleets};
         }
         static constexpr metadatum<fleet_t, nation_and_object_id_t> detached_from()
         {
             using namespace std::literals;
-            return {"detached_from"sv, 9, &fleet_t::detached_from};
+            return {"detached_from"sv, 10, &fleet_t::detached_from};
         }
         static constexpr metadatum<fleet_t, std::vector<unit_t>> units()
         {
             using namespace std::literals;
-            return {"units"sv, 10, &fleet_t::units};
+            return {"units"sv, 11, &fleet_t::units};
         }
         static constexpr metadatum<fleet_t, fleet_position_t> position()
         {
             using namespace std::literals;
-            return {"position"sv, 11, &fleet_t::position};
+            return {"position"sv, 12, &fleet_t::position};
         }
         static constexpr metadatum<fleet_t, int> fleet_combat_experience()
         {
             using namespace std::literals;
-            return {"fleet_combat_experience"sv, 12, &fleet_t::fleet_combat_experience};
+            return {"fleet_combat_experience"sv, 13, &fleet_t::fleet_combat_experience};
         }
 
         template<typename F>
         static void foreach_member(F && f)
         {
             f(id());
+            f(name());
             f(mission());
             f(hide());
             f(engagement_posture());

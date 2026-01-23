@@ -27,6 +27,7 @@ struct std::formatter<cargo_kind_t> : std::formatter<std::string_view> {
             case cargo_kind_t::missiles: name = "missiles"sv; break;
             case cargo_kind_t::troops: name = "troops"sv; break;
             case cargo_kind_t::colonists: name = "colonists"sv; break;
+            case cargo_kind_t::pioneer_equipment: name = "pioneer_equipment"sv; break;
             case cargo_kind_t::cargo_metal: name = "cargo_metal"sv; break;
             case cargo_kind_t::cargo_energy: name = "cargo_energy"sv; break;
             case cargo_kind_t::cargo_fuel_minerals: name = "cargo_fuel_minerals"sv; break;
@@ -244,6 +245,7 @@ struct std::formatter<unit_t> {
         out = std::format_to(out, "unit_t(");
 
         out = std::format_to(out, " id={}", x.id);
+        out = std::format_to(out, " name={}", x.name);
         out = std::format_to(out, " hull={}", x.hull);
         out = std::format_to(out, " armor={}", x.armor);
         out = std::format_to(out, " propulsion={}", x.propulsion);
@@ -316,6 +318,7 @@ struct std::formatter<fleet_t> {
         out = std::format_to(out, "fleet_t(");
 
         out = std::format_to(out, " id={}", x.id);
+        out = std::format_to(out, " name={}", x.name);
         out = std::format_to(out, " mission={}", x.mission);
         out = std::format_to(out, " hide={}", x.hide);
         out = std::format_to(out, " engagement_posture={}", x.engagement_posture);

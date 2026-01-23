@@ -315,10 +315,12 @@ TEST(combat_tests, apply_hit_design_grade_a)
              4,  4,  4,  4, 4,  4,  4, 5,  5,  5,  5,  5,  5,  5,  5,  5, 5, 7,
              8,  11, 14, 6, 14, 14, 9, 14, 14, 10, 14, 12, 12, 12, 12, 12}));
 
+    combat_log log;
+
     // Check that multiple hits to the same location gets transferred to the
     // next non-destroyed location.
 
-    apply_hit(cu, 0); // crew space
+    apply_hit(cu, 0, log); // crew space
     EXPECT_EQ(unit.hit_table[0], (signed char)hit_table_entry_t::hit_destroyed);
     EXPECT_EQ(
         std::ranges::count(
@@ -329,7 +331,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
         design.crew -
             1000.0f / space_required_per_1k_crew * (1 - crew_onduty_factor));
 
-    apply_hit(cu, 0); // same spot -- crew space, now destroyed
+    apply_hit(cu, 0, log); // same spot -- crew space, now destroyed
     EXPECT_EQ(unit.hit_table[1], (signed char)hit_table_entry_t::hit_destroyed);
     EXPECT_EQ(
         std::ranges::count(
@@ -340,7 +342,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
         design.crew -
             2000.0f / space_required_per_1k_crew * (1 - crew_onduty_factor));
 
-    apply_hit(cu, 0); // same spot again -- crew space, now destroyed
+    apply_hit(cu, 0, log); // same spot again -- crew space, now destroyed
     EXPECT_EQ(unit.hit_table[2], (signed char)hit_table_entry_t::hit_destroyed);
     EXPECT_EQ(
         std::ranges::count(
@@ -351,7 +353,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
         design.crew -
             3000.0f / space_required_per_1k_crew * (1 - crew_onduty_factor));
 
-    apply_hit(cu, 0); // same spot again -- crew space, now destroyed
+    apply_hit(cu, 0, log); // same spot again -- crew space, now destroyed
     EXPECT_EQ(unit.hit_table[3], (signed char)hit_table_entry_t::hit_destroyed);
     EXPECT_EQ(
         std::ranges::count(
@@ -360,7 +362,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
     EXPECT_NEAR(unit.propulsion, 0.9f, eps);
     EXPECT_NEAR(cu.acceleration_, cu_copy.acceleration_ * 0.9f, eps);
 
-    apply_hit(cu, unit.hit_table.size() - 1); // empty cargo hold
+    apply_hit(cu, unit.hit_table.size() - 1, log); // empty cargo hold
     EXPECT_EQ(
         unit.hit_table[unit.hit_table.size() - 1],
         (signed char)hit_table_entry_t::hit_destroyed);
@@ -369,7 +371,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
             unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
         5u);
 
-    apply_hit(cu, unit.hit_table.size() - 1); // same spot again -- empty cargo hold
+    apply_hit(cu, unit.hit_table.size() - 1, log); // same spot again -- empty cargo hold
     EXPECT_EQ(
         unit.hit_table[unit.hit_table.size() - 2],
         (signed char)hit_table_entry_t::hit_destroyed);
@@ -378,7 +380,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
             unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
         6u);
 
-    apply_hit(cu, unit.hit_table.size() - 1); // same spot again -- empty cargo hold
+    apply_hit(cu, unit.hit_table.size() - 1, log); // same spot again -- empty cargo hold
     EXPECT_EQ(
         unit.hit_table[unit.hit_table.size() - 3],
         (signed char)hit_table_entry_t::hit_destroyed);
@@ -389,7 +391,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
 
     // Check damage to explosive locations, with lots of unused padding.
 
-    apply_hit(cu, unit.hit_table.size() - 7); // missiles
+    apply_hit(cu, unit.hit_table.size() - 7, log); // missiles
     EXPECT_EQ(unit.missiles, 0);
     EXPECT_EQ(
         unit.hit_table[unit.hit_table.size() - 9],
@@ -411,7 +413,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
             unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
         9u);
 
-    apply_hit(cu, unit.hit_table.size() - 10); // rounds
+    apply_hit(cu, unit.hit_table.size() - 10, log); // rounds
     EXPECT_EQ(unit.rounds, 0);
     EXPECT_EQ(
         unit.hit_table[unit.hit_table.size() - 12],
@@ -433,7 +435,7 @@ TEST(combat_tests, apply_hit_design_grade_a)
             unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
         10u);
 
-    apply_hit(cu, unit.hit_table.size() - 13); // fuel
+    apply_hit(cu, unit.hit_table.size() - 13, log); // fuel
     EXPECT_NEAR(unit.fuel, 0.0f, eps);
     EXPECT_EQ(
         unit.hit_table[unit.hit_table.size() - 14],
@@ -513,8 +515,10 @@ TEST(combat_tests, apply_hit_design_grade_f)
              4,  4,  4,  4, 4,  4,  4,  4,  4,  4,  5,  5,  5,  5,  5,  5, 5, 5,
              5,  5,  7,  8, 11, 14, 14, 14, 14, 14, 14, 12, 12, 12, 12, 12}));
 
+    combat_log log;
+
     EXPECT_EQ(unit.hit_table[13], (signed char)hit_table_entry_t::hit_fuel);
-    apply_hit(cu, 13);
+    apply_hit(cu, 13, log);
     EXPECT_NEAR(unit.fuel, 0.0f, eps);
     EXPECT_EQ(
         unit.hit_table[12], (signed char)hit_table_entry_t::hit_destroyed);
@@ -528,7 +532,7 @@ TEST(combat_tests, apply_hit_design_grade_f)
         3u);
 
     EXPECT_EQ(unit.hit_table[24], (signed char)hit_table_entry_t::hit_rounds);
-    apply_hit(cu, 24);
+    apply_hit(cu, 24, log);
     EXPECT_EQ(unit.rounds, 0);
     EXPECT_EQ(unit.missiles, 0);
     EXPECT_EQ(
@@ -550,7 +554,7 @@ TEST(combat_tests, apply_hit_design_grade_f)
 
     EXPECT_EQ(unit.hit_table[56], (signed char)hit_table_entry_t::hit_water);
     unit.water = 0.5;
-    apply_hit(cu, 56);
+    apply_hit(cu, 56, log);
     EXPECT_NEAR(unit.water, 0.0f, eps);
     EXPECT_EQ(
         std::ranges::count(
@@ -559,7 +563,7 @@ TEST(combat_tests, apply_hit_design_grade_f)
 
     EXPECT_EQ(unit.hit_table[57], (signed char)hit_table_entry_t::hit_supplies);
     unit.supplies = 0.5;
-    apply_hit(cu, 57);
+    apply_hit(cu, 57, log);
     EXPECT_NEAR(unit.supplies, 0.0f, eps);
     EXPECT_EQ(
         std::ranges::count(
@@ -630,6 +634,8 @@ TEST(combat_tests, apply_hit_design_explosion_chaining)
              4,  4,  4,  4, 4,  4,  4,  4,  4,  4,  5,  5,  5,  5,  5,  5, 5, 5,
              5,  5,  7,  8, 11, 14, 14, 14, 14, 14, 14, 12, 12, 12, 12, 12}));
 
+    combat_log log;
+
     for (int i = (int)unit.hit_table.size() - 4,
              last = (int)unit.hit_table.size();
          i < last;
@@ -650,7 +656,7 @@ TEST(combat_tests, apply_hit_design_explosion_chaining)
              (signed char)hit_table_entry_t::hit_rounds,
              (signed char)cargo_kind_t::missiles});
 
-        apply_hit(cu, i);
+        apply_hit(cu, i, log);
         EXPECT_EQ(
             std::ranges::count(
                 unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
@@ -678,7 +684,7 @@ TEST(combat_tests, apply_hit_design_explosion_chaining)
              (signed char)cargo_kind_t::fuel,
              (signed char)cargo_kind_t::missiles});
 
-        apply_hit(cu, i);
+        apply_hit(cu, i, log);
         EXPECT_EQ(
             std::ranges::count(
                 unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
@@ -701,7 +707,7 @@ TEST(combat_tests, apply_hit_design_explosion_chaining)
          (signed char)hit_table_entry_t::hit_rounds,
          (signed char)cargo_kind_t::fuel,
          (signed char)cargo_kind_t::missiles});
-    apply_hit(cu, unit.hit_table.size() - 5);
+    apply_hit(cu, unit.hit_table.size() - 5, log);
     EXPECT_EQ(
         std::ranges::count(
             unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),
@@ -722,7 +728,7 @@ TEST(combat_tests, apply_hit_design_explosion_chaining)
          (signed char)hit_table_entry_t::hit_rounds,
          (signed char)cargo_kind_t::fuel,
          (signed char)cargo_kind_t::missiles});
-    apply_hit(cu, unit.hit_table.size() - 3);
+    apply_hit(cu, unit.hit_table.size() - 3, log);
     EXPECT_EQ(
         std::ranges::count(
             unit.hit_table, (signed char)hit_table_entry_t::hit_destroyed),

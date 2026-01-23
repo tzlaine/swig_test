@@ -55,7 +55,10 @@ float combat_acceleration(combat_unit const & cu)
 }
 
 void apply_hit(
-    combat_unit & cu, int hit_location, ignore_explosions_t ignore_explosions)
+    combat_unit & cu,
+    int hit_location,
+    combat_log & log,
+    ignore_explosions_t ignore_explosions)
 {
     unit_t & unit = *cu.unit_;
     unit_design_t const & design = *cu.design_;
@@ -65,11 +68,23 @@ void apply_hit(
         table[hit_location] = (signed char)hit_table_entry_t::hit_destroyed;
         int const prev_crew = unit.crew;
         unit.crew -= int(crew_required_per_hull_point);
-        if (equipment_here)
+        if (equipment_here) {
             unit.crew -= int(crew_required_per_equipment_point);
+            append(
+                log,
+                combat_log_desc_t::unit_equipment_hit,
+                cu.unit_->name,
+                table[hit_location]);
+        }
+        int const casualties = prev_crew - unit.crew;
         cu.curr_organization_ -=
-            cu.initial_organization_ * (prev_crew - unit.crew) / design.crew;
+            cu.initial_organization_ * casualties / design.crew;
         unit.organization = cu.curr_organization_ * 100 + 0.5f;
+        append(
+            log,
+            combat_log_desc_t::unit_crew_casualties,
+            cu.unit_->name,
+            casualties);
     };
 
     auto const is_fuel = [&](int entry) {
@@ -90,10 +105,10 @@ void apply_hit(
         unit.cargo.erase(end_r.begin());
         if (is_fuel(table[hit_location])) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_fuel;
-            apply_hit(cu, hit_location, ignore_explosions);
+            apply_hit(cu, hit_location, log, ignore_explosions);
         } else if (is_ammo(table[hit_location])) {
             table[hit_location] = (signed char)hit_table_entry_t::hit_rounds;
-            apply_hit(cu, hit_location, ignore_explosions);
+            apply_hit(cu, hit_location, log, ignore_explosions);
         } else {
             destroy_location(false);
         }
@@ -187,8 +202,14 @@ void apply_hit(
         explosion_lo = std::max(0, explosion_lo);
         explosion_hi = std::min(explosion_hi, (int)table.size());
 
+        append(
+            log,
+            combat_log_desc_t::unit_explosion,
+            cu.unit_->name,
+            explosion_hi - explosion_lo);
+
         for (int i = explosion_lo; i < explosion_hi; ++i) {
-            apply_hit(cu, i, ignore_explosions_t::yes);
+            apply_hit(cu, i, log, ignore_explosions_t::yes);
         }
 
         break;
@@ -209,7 +230,7 @@ void apply_hit(
             return hit_table_entry_t(entry) != hit_table_entry_t::hit_destroyed;
         });
         if (it != table.end())
-            apply_hit(cu, it - table.begin(), ignore_explosions);
+            apply_hit(cu, it - table.begin(), log, ignore_explosions);
         break;
     }
 
@@ -220,6 +241,11 @@ void apply_hit(
         // These are casualties among the off-duty crew, so they do not affect
         // org.
         unit.crew -= offduty_assigned_crew;
+        append(
+            log,
+            combat_log_desc_t::unit_hit_crew_space,
+            cu.unit_->name,
+            offduty_assigned_crew);
         destroy_location(false);
         break;
     }
@@ -248,7 +274,11 @@ void load_cargo(
     }
 }
 
-void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
+void damage_unit(
+    unit_damage ud,
+    combat_log & log,
+    std::vector<double> & rolls,
+    int & roll_index)
 {
     unit_t & unit = *ud.combat_unit_->unit_;
     unit_design_t const & design = *ud.combat_unit_->design_;
@@ -280,11 +310,14 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
             entry = (signed char)hit_table_entry_t::hit_stealth;
             break;
         }
+        append(
+            log, combat_log_desc_t::unit_equipment_failure, unit.name, entry);
         auto location_it = std::ranges::find(unit.hit_table, entry);
         if (location_it != unit.hit_table.end()) {
             apply_hit(
                 *ud.combat_unit_,
                 location_it - unit.hit_table.begin(),
+                log,
                 ignore_explosions_t::yes);
         }
         return;
@@ -292,18 +325,31 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
 
     float damage = ud.damage_;
 
+    append(
+        log,
+        ud.missile_damage_ ? combat_log_desc_t::unit_hit_by_missiles
+                           : combat_log_desc_t::unit_hit_by_pd,
+        unit.name,
+        damage);
+
     damage -= unit.shields;
 
-    if (damage < 0.0f)
+    if (damage < 0.0f) {
+        append(log, combat_log_desc_t::unit_shield_blocked_all, unit.name);
         return;
+    }
 
     float const armor_damage =
         std::min(damage * unit.armor / design.armor, unit.armor);
     unit.armor -= armor_damage;
     damage -= armor_damage;
 
-    if (damage < 0.001)
+    append(log, combat_log_desc_t::unit_lost_armor, unit.name, armor_damage);
+
+    if (damage < 0.001) {
+        append(log, combat_log_desc_t::unit_armor_blocked_all, unit.name);
         return;
+    }
 
     populate_unit_hit_table();
 
@@ -316,7 +362,7 @@ void damage_unit(unit_damage ud, std::vector<double> & rolls, int & roll_index)
     for (int i = 0, last = int(damage + 0.5f); i < last; ++i) {
         if (!ud.missile_damage_)
             hit_location = roll_location();
-        apply_hit(*ud.combat_unit_, hit_location);
+        apply_hit(*ud.combat_unit_, hit_location, log);
     }
 }
 
@@ -344,6 +390,7 @@ bool unit_destroyed(combat_unit const & cu)
 bool attack(
     combat_unit & attacker,
     combat_unit & defender,
+    combat_log & log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage)
@@ -353,12 +400,22 @@ bool attack(
     if (pd_attack) {
         --attacker.unit_->rounds;
         attacker_fired = true;
+        append(
+            log,
+            combat_log_desc_t::unit_fired_pd,
+            attacker.unit_->name,
+            defender.unit_->name);
     }
 
     bool missile_attack = attacker.unit_->missiles;
     if (missile_attack) {
         --attacker.unit_->missiles;
         attacker_fired = true;
+        append(
+            log,
+            combat_log_desc_t::unit_fired_missiles,
+            attacker.unit_->name,
+            defender.unit_->name);
     }
 
     if (attacker_fired) {
@@ -378,9 +435,19 @@ bool attack(
 
     if (missile_attack && defender.unit_->rounds) {
         --defender.unit_->rounds;
+        append(
+            log,
+            combat_log_desc_t::unit_fired_defensive_pd,
+            attacker.unit_->name,
+            defender.unit_->name);
         if (next_roll(rolls, roll_index) <
             pd_defense_probability(attacker, defender)) {
             missile_attack = false;
+            append(
+                log,
+                combat_log_desc_t::unit_defended_against_missiles,
+                attacker.unit_->name,
+                defender.unit_->name);
         } else {
             // Dodging torpedoes is especially hard on the equipment.
             if (auto dmg = roll_reliability<reliability_t::propulsion>(
@@ -447,6 +514,7 @@ combat_unit & pick_target(
 battle_round_result battle_round(
     combat_units & side_1,
     combat_units & side_2,
+    combat_log & log,
     std::vector<double> & rolls,
     int & roll_index,
     std::vector<unit_damage> & damage,
@@ -458,10 +526,17 @@ battle_round_result battle_round(
         if (!unit_still_viable(attacker))
             continue;
         auto & defender = pick_target(attacker, side_2, rolls, roll_index);
+        if (&defender != attacker.prev_target_) {
+            append(
+                log,
+                combat_log_desc_t::unit_changed_target,
+                attacker.unit_->name,
+                defender.unit_->name);
+        }
         attacker.prev_target_ = &defender;
-        bool const damage_dome =
-            attack(attacker, defender, rolls, roll_index, damage);
-        if (damage_dome && 0.01 < defender.unit_->shields) {
+        bool const damage_done =
+            attack(attacker, defender, log, rolls, roll_index, damage);
+        if (damage_done && 0.01 < defender.unit_->shields) {
             if (auto dmg = roll_reliability<reliability_t::shields>(
                     defender, rolls, roll_index)) {
                 damage.push_back(unit_damage{
@@ -480,10 +555,17 @@ battle_round_result battle_round(
         if (!unit_still_viable(attacker))
             continue;
         auto & defender = pick_target(attacker, side_1, rolls, roll_index);
+        if (&defender != attacker.prev_target_) {
+            append(
+                log,
+                combat_log_desc_t::unit_changed_target,
+                attacker.unit_->name,
+                defender.unit_->name);
+        }
         attacker.prev_target_ = &defender;
-        bool const damage_dome =
-            attack(attacker, defender, rolls, roll_index, damage);
-        if (damage_dome && 0.01 < defender.unit_->shields) {
+        bool const damage_done =
+            attack(attacker, defender, log, rolls, roll_index, damage);
+        if (damage_done && 0.01 < defender.unit_->shields) {
             if (auto dmg = roll_reliability<reliability_t::shields>(
                     defender, rolls, roll_index)) {
                 damage.push_back(unit_damage{
@@ -501,13 +583,17 @@ battle_round_result battle_round(
 
     if (kind != battle_round_kind_t::simulated) {
         for (auto const & d : damage) {
-            damage_unit(d, rolls, roll_index);
+            damage_unit(d, log, rolls, roll_index);
         }
         for (auto & cu : side_1.combat_units_) {
-            if (unit_disabled(cu))
+            if (unit_disabled(cu)) {
+                append(log, combat_log_desc_t::unit_disabled, cu.unit_->name);
                 side_1.disable(cu);
-            if (unit_destroyed(cu))
+            }
+            if (unit_destroyed(cu)) {
+                append(log, combat_log_desc_t::unit_destroyed, cu.unit_->name);
                 side_1.destroy(cu);
+            }
         }
     }
 
@@ -519,13 +605,14 @@ battle_result battle(
     combat_units & side_2,
     std::vector<fleet_t *> const & fleets_1,
     std::vector<fleet_t *> const & fleets_2,
+    combat_log & log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage)
 {
     while (true) {
         auto [side_1_damage, side_2_damage] =
-            battle_round(side_1, side_2, rolls, roll_index, damage);
+            battle_round(side_1, side_2, log, rolls, roll_index, damage);
         if (!side_1.still_fighting_ || !side_2.still_fighting_) {
             return {
                 side_1.still_fighting_ ? battle_result_t::controls_ao
@@ -534,6 +621,16 @@ battle_result battle(
                                        : battle_result_t::destroyed};
         }
         if (side_1_damage < 0.001 || side_2_damage < 0.001) {
+            if (side_1_damage < 0.001) {
+                for (auto * f : fleets_1) {
+                    append(log, combat_log_desc_t::fleet_zero_damage, f->name);
+                }
+            }
+            if (side_2_damage < 0.001) {
+                for (auto * f : fleets_2) {
+                    append(log, combat_log_desc_t::fleet_zero_damage, f->name);
+                }
+            }
             battle_result_t side_1_result = battle_result_t::retreated;
             battle_result_t side_2_result = battle_result_t::retreated;
             if (0.001 < side_1_damage && !can_escape_from(side_2, side_1)) {
@@ -561,6 +658,17 @@ battle_result battle(
                 return side_2_damage_ratio < f->engagement_posture / 100.0f;
             });
 
+        if (side_1_wants_out) {
+            for (auto * f : fleets_1) {
+                append(log, combat_log_desc_t::fleet_break_contact, f->name);
+            }
+        }
+        if (side_2_wants_out) {
+            for (auto * f : fleets_2) {
+                append(log, combat_log_desc_t::fleet_break_contact, f->name);
+            }
+        }
+
         if (side_1_wants_out && side_2_wants_out)
             return {battle_result_t::retreated, battle_result_t::retreated};
 
@@ -573,6 +681,12 @@ battle_result battle(
                 return {battle_result_t::retreated, battle_result_t::controls_ao};
             } else {
                 // A trapped fleet will fight like hell.
+                for (auto * f : fleets_1) {
+                    append(
+                        log,
+                        combat_log_desc_t::fleet_cannot_outrun_enemies,
+                        f->name);
+                }
                 for (auto & cu : side_1.combat_units_) {
                     cu.unit_->organization = (cu.unit_->organization + 100) / 2;
                 }
@@ -581,6 +695,12 @@ battle_result battle(
             if (can_escape_from(side_2, side_1)) {
                 return {battle_result_t::controls_ao, battle_result_t::retreated};
             } else {
+                for (auto * f : fleets_2) {
+                    append(
+                        log,
+                        combat_log_desc_t::fleet_cannot_outrun_enemies,
+                        f->name);
+                }
                 for (auto & cu : side_2.combat_units_) {
                     cu.unit_->organization = (cu.unit_->organization + 100) / 2;
                 }
@@ -599,6 +719,7 @@ void encounter(
     game_state_t const & gs,
     std::vector<fleet_t *> const & fleets_1,
     std::vector<fleet_t *> const & fleets_2,
+    combat_log & log,
     std::vector<double> & rolls,
     int roll_index,
     std::vector<unit_damage> & damage)
@@ -608,5 +729,13 @@ void encounter(
 
     // TODO: handle all the posible cases of fleets wanting to engage or not,
     // etc.
-    battle(side_1, side_2, fleets_1, fleets_2, rolls, roll_index, damage);
+    auto const [side_1_result, side_2_result] = battle(
+        side_1, side_2, fleets_1, fleets_2, log, rolls, roll_index, damage);
+
+    for (auto * f : fleets_1) {
+        append(log, battle_result_to_combat_log_desc(side_1_result), f->name);
+    }
+    for (auto * f : fleets_2) {
+        append(log, battle_result_to_combat_log_desc(side_2_result), f->name);
+    }
 }

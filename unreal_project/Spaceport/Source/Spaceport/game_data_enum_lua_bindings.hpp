@@ -21,6 +21,7 @@ namespace detail {
                 {"missiles", cargo_kind_t::missiles},
                 {"troops", cargo_kind_t::troops},
                 {"colonists", cargo_kind_t::colonists},
+                {"pioneer_equipment", cargo_kind_t::pioneer_equipment},
                 {"cargo_metal", cargo_kind_t::cargo_metal},
                 {"cargo_energy", cargo_kind_t::cargo_energy},
                 {"cargo_fuel_minerals", cargo_kind_t::cargo_fuel_minerals},

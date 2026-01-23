@@ -34,11 +34,12 @@ enum cargo_kind_t {
     missiles = -5;
     troops = -6;
     colonists = -7;
-    cargo_metal = -8;
-    cargo_energy = -9;
-    cargo_fuel_minerals = -10;
-    cargo_water = -11;          // not part of the ship design; just cargo
-    cargo_food = -12;
+    pioneer_equipment = -8;
+    cargo_metal = -9;
+    cargo_energy = -10;
+    cargo_fuel_minerals = -11;
+    cargo_water = -12;          // not part of the ship design; just cargo
+    cargo_food = -13;
 }
 
 enum hit_table_entry_t {
@@ -119,24 +120,25 @@ message unit_design_t
 message unit_t
 {
     nation_and_object_id_t id = 1;
-    int32 hull = 2;
-    float armor = 3;
-    float propulsion = 4;
-    float weapons = 5;
-    float shields = 6;
-    float detection = 7;
-    float stealth = 8;
-    float fuel = 9;
-    float water = 10;
-    float supplies = 11;
-    int32 rounds = 12;       // individual salvos
-    int32 missiles = 13;     // individual salvos
-    int32 fighters = 14;
-    bytes cargo = 15;        // must be kept in sync with hit_table
-    int32 organization = 16;
-    int32 combat_experience = 17;
-    int32 crew = 18;
-    bytes hit_table = 19;    // populated during combat as hits are resolved; only kept outside of combat if there is damage
+    string name = 2;
+    int32 hull = 3;
+    float armor = 4;
+    float propulsion = 5;
+    float weapons = 6;
+    float shields = 7;
+    float detection = 8;
+    float stealth = 9;
+    float fuel = 10;
+    float water = 11;
+    float supplies = 12;
+    int32 rounds = 13;       // individual salvos
+    int32 missiles = 14;     // individual salvos
+    int32 fighters = 15;
+    bytes cargo = 16;        // must be kept in sync with hit_table
+    int32 organization = 17;
+    int32 combat_experience = 18;
+    int32 crew = 19;
+    bytes hit_table = 20;    // populated during combat as hits are resolved; only kept outside of combat if there is damage
 }
 
 message fleet_position_t
@@ -156,17 +158,18 @@ message fleet_position_t
 message fleet_t
 {
     nation_and_object_id_t id = 1; // -1 for both of these indicates this fleet is invalid
-    pb_message.mission_t mission = 2;
-    bool hide = 3;
-    int32 engagement_posture = 4;        // [-100, 100]
-    int32 supply_margin = 5;             // percent
-    int32 ordnance_margin = 6;           // percent
-    int32 return_for_repairs_health = 7; // percent
-    bool auto_detach_repair_fleets = 8;
-    nation_and_object_id_t detached_from = 9;
-    repeated unit_t units = 10;
-    fleet_position_t position = 11;
-    int32 fleet_combat_experience = 12;
+    string name = 2;
+    pb_message.mission_t mission = 3;
+    bool hide = 4;
+    int32 engagement_posture = 5;        // [-100, 100]
+    int32 supply_margin = 6;             // percent
+    int32 ordnance_margin = 7;           // percent
+    int32 return_for_repairs_health = 8; // percent
+    bool auto_detach_repair_fleets = 9;
+    nation_and_object_id_t detached_from = 10;
+    repeated unit_t units = 11;
+    fleet_position_t position = 12;
+    int32 fleet_combat_experience = 13;
 }
 
 message fleets_t
