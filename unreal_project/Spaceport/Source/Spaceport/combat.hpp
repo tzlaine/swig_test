@@ -45,6 +45,8 @@ inline double next_roll(std::vector<double> const & rolls, int & i)
     return rolls[i];
 }
 
+float effective_value(float base_value, combat_unit const & cu);
+
 float pd_defense_probability(
     combat_unit const & attacker, combat_unit const & defender);
 

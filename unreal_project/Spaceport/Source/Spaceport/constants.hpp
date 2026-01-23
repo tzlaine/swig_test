@@ -142,6 +142,8 @@ extern const float crew_required_per_equipment_point;
 extern const float space_required_per_1k_crew;
 extern const float crew_onduty_factor;
 extern const float minimum_viable_crew_factor;
+extern const float unit_combat_experience_impact;
+extern const float fleet_combat_experience_impact;
 
 #if !defined(BUILD_FOR_TEST)
 extern const ECollisionChannel fleet_channel;

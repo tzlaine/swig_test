@@ -81,3 +81,5 @@ keep_previous_combat_target_probability = 0.5
 crew_required_per_hull_point = 5
 crew_required_per_equipment_point = 100
 space_required_per_1k_crew = 3
+unit_combat_experience_impact = 0.25
+fleet_combat_experience_impact = 0.5

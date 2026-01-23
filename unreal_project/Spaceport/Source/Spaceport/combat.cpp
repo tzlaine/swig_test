@@ -5,32 +5,44 @@
 #include <ranges>
 
 
+float effective_value(float base_value, combat_unit const & cu)
+{
+    return base_value * cu.unit_->organization *
+           (1 + cu.unit_->combat_experience / 100.0f *
+                    unit_combat_experience_impact) *
+           (1 + cu.fleet_->fleet_combat_experience / 100.0f *
+                    fleet_combat_experience_impact);
+}
+
 float pd_defense_probability(
     combat_unit const & attacker, combat_unit const & defender)
 {
     return base_pd_attack_factor *
            (1 +
             pd_hit_weapons_factor *
-                (defender.unit_->weapons - attacker.unit_->weapons) +
-            pd_hit_acceleration_factor * (combat_acceleration(defender) -
-                                          combat_acceleration(attacker)));
+                (effective_value(defender.unit_->weapons, defender) -
+                 effective_value(attacker.unit_->weapons, attacker)) +
+            pd_hit_acceleration_factor *
+                (effective_value(combat_acceleration(defender), defender) -
+                 effective_value(combat_acceleration(attacker), attacker)));
 }
 
 float pd_hit_probability(
     combat_unit const & attacker, combat_unit const & defender)
 {
     return base_pd_attack_factor *
-           (1 + pd_hit_acceleration_factor * (combat_acceleration(defender) -
-                                              combat_acceleration(attacker)));
+           (1 + pd_hit_acceleration_factor *
+                    (effective_value(combat_acceleration(defender), defender) -
+                     effective_value(combat_acceleration(attacker), attacker)));
 }
 
 float missile_hit_probability(
     combat_unit const & attacker, combat_unit const & defender)
 {
     return base_missile_attack_factor *
-           (1 +
-            missile_hit_acceleration_factor * (combat_acceleration(defender) -
-                                               combat_acceleration(attacker)));
+           (1 + missile_hit_acceleration_factor *
+                    (effective_value(combat_acceleration(defender), defender) -
+                     effective_value(combat_acceleration(attacker), attacker)));
 }
 
 float combat_acceleration(combat_unit const & cu)
@@ -491,10 +503,6 @@ battle_result battle(
 
 // TODO: Propulsion and shield reliability rolls should happen when moving
 // through subspace.
-
-// TODO: Take unit and fleet XP into account.
-
-// TODO: Take unit org into account.
 
 void encounter(
     game_state_t const & gs,

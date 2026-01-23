@@ -169,6 +169,10 @@ const float crew_required_per_equipment_point =
 const float space_required_per_1k_crew = lua()["space_required_per_1k_crew"];
 const float crew_onduty_factor = 1 / 3.0f;
 const float minimum_viable_crew_factor = 1 / 3.0f;
+const float unit_combat_experience_impact =
+    lua()["unit_combat_experience_impact"];
+const float fleet_combat_experience_impact =
+    lua()["fleet_combat_experience_impact"];
 
 #if !defined(BUILD_FOR_TEST)
 const ECollisionChannel fleet_channel =
