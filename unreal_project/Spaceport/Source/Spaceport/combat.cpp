@@ -366,6 +366,14 @@ bool attack(
                 attacker, rolls, roll_index)) {
             damage.push_back(*dmg);
         }
+        if (auto dmg = roll_reliability<reliability_t::propulsion>(
+                attacker, rolls, roll_index)) {
+            damage.push_back(*dmg);
+        }
+        if (auto dmg = roll_reliability<reliability_t::propulsion>(
+                defender, rolls, roll_index)) {
+            damage.push_back(*dmg);
+        }
     }
 
     if (missile_attack && defender.unit_->rounds) {
@@ -373,6 +381,12 @@ bool attack(
         if (next_roll(rolls, roll_index) <
             pd_defense_probability(attacker, defender)) {
             missile_attack = false;
+        } else {
+            // Dodging torpedoes is especially hard on the equipment.
+            if (auto dmg = roll_reliability<reliability_t::propulsion>(
+                    defender, rolls, roll_index)) {
+                damage.push_back(*dmg);
+            }
         }
         if (auto dmg = roll_reliability<reliability_t::weapons>(
                 defender, rolls, roll_index)) {
@@ -574,8 +588,6 @@ battle_result battle(
         }
     }
 }
-
-// TODO: Propulsion reliability rolls during combat too.
 
 // TODO: Propulsion and shield reliability rolls should happen when moving
 // through subspace.
